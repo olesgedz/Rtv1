@@ -1,0 +1,3 @@
+/Users/olesgedz/Documents/GitHub/tinyraytracer/CMakeFiles/rebuild_cache.dir
+/Users/olesgedz/Documents/GitHub/tinyraytracer/CMakeFiles/edit_cache.dir
+/Users/olesgedz/Documents/GitHub/tinyraytracer/CMakeFiles/tinyraytracer.dir

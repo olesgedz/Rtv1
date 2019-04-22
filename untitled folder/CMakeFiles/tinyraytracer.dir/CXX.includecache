@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/olesgedz/Documents/GitHub/tinyraytracer/geometry.h
+cmath
+-
+vector
+-
+cassert
+-
+iostream
+-
+
+/Users/olesgedz/Documents/GitHub/tinyraytracer/tinyraytracer.cpp
+limits
+-
+cmath
+-
+iostream
+-
+fstream
+-
+vector
+-
+geometry.h
+/Users/olesgedz/Documents/GitHub/tinyraytracer/geometry.h
+
