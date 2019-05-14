@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/Users/olesgedz/Documents/GitHub/tinyraytracer/geometry.h
+/Users/jblack-b/Documents/Rtv1/c++_test/geometry.h
 cmath
 -
 vector
@@ -16,7 +16,7 @@ cassert
 iostream
 -
 
-/Users/olesgedz/Documents/GitHub/tinyraytracer/tinyraytracer.cpp
+/Users/jblack-b/Documents/Rtv1/c++_test/tinyraytracer.cpp
 limits
 -
 cmath
@@ -28,5 +28,5 @@ fstream
 vector
 -
 geometry.h
-/Users/olesgedz/Documents/GitHub/tinyraytracer/geometry.h
+/Users/jblack-b/Documents/Rtv1/c++_test/geometry.h
 

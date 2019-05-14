@@ -11,13 +11,22 @@ typedef struct s_vertex t_vertex;
 typedef struct s_sector t_sector;
 typedef struct s_object t_object;
 typedef struct s_coord t_coord;
+typedef	struct 	s_p3d t_p3d;
 
-typedef	struct 	s_p3d
+
+struct 	s_p3d
 {
 	float x;
 	float y;
 	float z;
-} t_p3d;
+};
+
+typedef struct s_sphere
+{
+	t_p3d center;
+	float radious;
+} t_sphere;
+
 
 struct s_vertex
 {

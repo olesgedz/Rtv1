@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:53:03 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/04/22 15:45:44 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/05/14 22:36:21 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include <stdio.h>
 #include "libsdl.h"
 #include "rtv1.h"
+#include <limits.h>
+#include <float.h>
 
 	t_game game;
 
@@ -93,18 +95,82 @@ int		ft_input_keys(t_sdl *sdl, SDL_Event *ev)
 	return (1);
 }
 
+
+int ray_intersect(t_sphere *sphere, t_p3d *orig, t_p3d dir, float t0)
+{
+	t_p3d L = sphere->center - orig;
+	float tca = L*dir;
+	float d2 = L*L - tca*tca;
+	if (d2 > radius*radius) return false;
+	float thc = sqrtf(radius*radius - d2);
+	t0       = tca - thc;
+	float t1 = tca + thc;
+	if (t0 < 0) t0 = t1;
+	if (t0 < 0) return false;
+	return true;
+}
+
+
+t_p3d *cast_ray (t_p3d *orig, t_p3d *dir, t_sphere *sphere) {
+    float sphere_dist = FLT_MAX;
+    if (!ray_intersect(orig, dir, sphere_dist)) {
+        return Vec3f(0.2, 0.7, 0.8); // background color
+    }
+    return Vec3f(0.4, 0.4, 0.3);
+}
+
+
+void 	ft_render(t_game* game, t_sphere *sphere)
+{
+	int width = game->sdl->surface->width;
+	int height = game->sdl->surface->height;
+	for (size_t j = 0; j<height ; j++)
+	{
+		for (size_t i = 0; i< width; i++) {
+			float x =  (2*(i + 0.5)/(float)width  - 1)*tan(90/2.)*width/(float)height;
+			float y = -(2*(j + 0.5)/(float)height - 1)*tan(90/2.);
+			t_p3d dir = (t_p3d){x, y, -1};//.normalize();
+			game->sdl->surface->data[i+j*width] = cast_ray(Vec3f(0,0,0), dir, sphere);
+		}
+	}
+}
+
+
 void ft_update(t_game *game)
 {
 	t_rectangle r = (t_rectangle){(t_point){0,0},(t_size){WIN_W, WIN_H}};
+	t_sphere sphere = {(t_p3d){50, 50, 0}, 100};
 	while(1)
 	{
 		ft_surface_clear(game->sdl->surface);
 		ft_input(game->sdl, &ft_input_keys);
-		ft_put_pixel(game->sdl->surface, &(t_point){500,500}, 0xFF0000);
+		ft_render(game, &sphere);
+		//ft_put_pixel(game->sdl->surface, &(t_point){500,500}, 0xFF0000);
 		ft_surface_combine(game->sdl->surface, game->image, &r);
 		ft_surface_present(game->sdl, game->sdl->surface);
 	}
 }
+
+
+// void Sphere(const t_p3d *c, const float r)
+// {
+
+// }
+
+// bool ray_intersect(const t_p3d *orig, const t_p3d dir, float *t0)
+// {
+// 	t_p3d L = center - orig;
+// 	float tca = L*dir;
+// 	float d2 = L*L - tca*tca;
+// 	if (d2 > radius*radius) return false;
+// 	float thc = sqrtf(radius*radius - d2);
+// 	t0       = tca - thc;
+// 	float t1 = tca + thc;
+// 	if (t0 < 0) t0 = t1;
+// 	if (t0 < 0) return false;
+// 	return true;
+// }
+
 
 int main()
 {
