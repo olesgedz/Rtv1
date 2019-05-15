@@ -15,8 +15,11 @@ struct Sphere {
 
     bool ray_intersect(const Vec3f &orig, const Vec3f &dir, float &t0) const {
         Vec3f L = center - orig;
+        //printf("%f %f %f \n", L.x, L.y, L.z);
         float tca = L*dir;
+        printf("tca %f\n", tca);
         float d2 = L*L - tca*tca;
+        //std::cout << d2 << " "<< radius*radius << std::endl;
         if (d2 > radius*radius) return false;
         float thc = sqrtf(radius*radius - d2);
         t0       = tca - thc;
@@ -68,7 +71,9 @@ void render() {
 }
 
 int main() {
-    render();
+    //render();
+//printf("%d",ray_intersect(&sphere, ft_p3d_create(0,0,0), ft_p3d_normalize(&(t_p3d){650, 650, -1}, 1), FLT_MAX));
+  std::cout << Vec3f(-3,0,-16) * Vec3f(0.707106, 0.707106, -0.001088) <<std::endl;
     return 0;
 }
 

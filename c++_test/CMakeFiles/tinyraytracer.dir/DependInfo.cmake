@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/jblack-b/Documents/Rtv1/c++_test/tinyraytracer.cpp" "/Users/jblack-b/Documents/Rtv1/c++_test/CMakeFiles/tinyraytracer.dir/tinyraytracer.cpp.o"
+  "/Users/olesgedz/Documents/GitHub/Rtv1/c++_test/tinyraytracer.cpp" "/Users/olesgedz/Documents/GitHub/Rtv1/c++_test/CMakeFiles/tinyraytracer.dir/tinyraytracer.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "Clang")
 

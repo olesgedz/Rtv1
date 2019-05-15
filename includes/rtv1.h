@@ -24,7 +24,7 @@ struct 	s_p3d
 typedef struct s_sphere
 {
 	t_p3d center;
-	float radious;
+	float radius;
 } t_sphere;
 
 

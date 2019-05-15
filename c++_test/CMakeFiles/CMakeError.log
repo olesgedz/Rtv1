@@ -24,3 +24,29 @@ make: *** [cmTC_ac162/fast] Error 2
 
 Source file was:
 int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: /Users/olesgedz/Documents/GitHub/Rtv1/c++_test/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_0f025/fast 
+/Library/Developer/CommandLineTools/usr/bin/make -f CMakeFiles/cmTC_0f025.dir/build.make CMakeFiles/cmTC_0f025.dir/build
+Building CXX object CMakeFiles/cmTC_0f025.dir/src.cxx.o
+/Library/Developer/CommandLineTools/usr/bin/c++    -Wall -Wextra -pedantic -std=c++11 -O3 -Dflag_supported -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk   -fopenmp -o CMakeFiles/cmTC_0f025.dir/src.cxx.o -c /Users/olesgedz/Documents/GitHub/Rtv1/c++_test/CMakeFiles/CMakeTmp/src.cxx
+clang: error: unsupported option '-fopenmp'
+make[1]: *** [CMakeFiles/cmTC_0f025.dir/src.cxx.o] Error 1
+make: *** [cmTC_0f025/fast] Error 2
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: /Users/olesgedz/Documents/GitHub/Rtv1/c++_test/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_a61c8/fast 
+/Library/Developer/CommandLineTools/usr/bin/make -f CMakeFiles/cmTC_a61c8.dir/build.make CMakeFiles/cmTC_a61c8.dir/build
+Building CXX object CMakeFiles/cmTC_a61c8.dir/src.cxx.o
+/Library/Developer/CommandLineTools/usr/bin/c++    -Wall -Wextra -pedantic -std=c++11 -O3 -Dflag_supported -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk   -fopenmp -o CMakeFiles/cmTC_a61c8.dir/src.cxx.o -c /Users/olesgedz/Documents/GitHub/Rtv1/c++_test/CMakeFiles/CMakeTmp/src.cxx
+clang: error: unsupported option '-fopenmp'
+make[1]: *** [CMakeFiles/cmTC_a61c8.dir/src.cxx.o] Error 1
+make: *** [cmTC_a61c8/fast] Error 2
+
+Source file was:
+int main() { return 0; }

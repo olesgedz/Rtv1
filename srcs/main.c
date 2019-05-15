@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:53:03 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/05/14 22:36:21 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/05/15 10:32:58 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void ft_mouse_pressed(t_game *game, SDL_Event *ev)
 	 		&(t_point){game->sdl->mouse.x, game->sdl->mouse.y}, 0x00FF00);
 }
 
-int		ft_input_keys(t_sdl *sdl, SDL_Event *ev)
+int		ft_input_keys(void *sdl, SDL_Event *ev)
 {
 	switch (ev->type)
 		{
@@ -95,30 +95,80 @@ int		ft_input_keys(t_sdl *sdl, SDL_Event *ev)
 	return (1);
 }
 
-
-int ray_intersect(t_sphere *sphere, t_p3d *orig, t_p3d dir, float t0)
+t_p3d *ft_p3d_create(float x, float y, float z)
 {
-	t_p3d L = sphere->center - orig;
-	float tca = L*dir;
-	float d2 = L*L - tca*tca;
-	if (d2 > radius*radius) return false;
-	float thc = sqrtf(radius*radius - d2);
+	t_p3d *new;
+	
+	new = malloc (sizeof(t_p3d));
+	new->x = x;
+	new->y = y;
+	new->z = z;
+	return (new);
+}
+
+t_p3d *ft_p3d_substract(t_p3d *a, t_p3d *b)
+{
+	t_p3d *new;
+	
+	new = malloc (sizeof(t_p3d));
+	new->x = (a->x - b->x);
+	new->y = (a->y - b->y);
+	new->z = (a->z - b->z);
+	return (new);
+}
+
+void ft_p3d_print(t_p3d *a)
+{
+	printf("x:%f y:%f z:%f\n", a->x, a->y, a->z);
+}
+
+float ft_p3d_scalar_multiply(t_p3d *a, t_p3d *b)
+{
+	return (a->x * b->x + a->y * b->y + a->z * b->z);
+}
+
+
+
+int ray_intersect(t_sphere *sphere, t_p3d *orig, t_p3d *dir, float t0)
+{
+	t_p3d L = *ft_p3d_substract(&sphere->center, orig);
+	//printf("%f %f %f \n", L.x, L.y, L.z);
+	float tca = ft_p3d_scalar_multiply(&L, dir);
+	printf("tca %f\n", tca);
+	float d2 = ft_p3d_scalar_multiply(&L,&L) - tca*tca;
+	//printf("d2 %f %f \n", d2, sphere->radius * sphere->radius);
+	if (d2 > sphere->radius * sphere->radius) return FALSE;
+	float thc = sqrtf( sphere->radius * sphere->radius - d2);
 	t0       = tca - thc;
 	float t1 = tca + thc;
 	if (t0 < 0) t0 = t1;
-	if (t0 < 0) return false;
-	return true;
+	if (t0 < 0) return FALSE;
+	return TRUE;
 }
 
 
 t_p3d *cast_ray (t_p3d *orig, t_p3d *dir, t_sphere *sphere) {
     float sphere_dist = FLT_MAX;
-    if (!ray_intersect(orig, dir, sphere_dist)) {
-        return Vec3f(0.2, 0.7, 0.8); // background color
+    if (!ray_intersect(sphere, orig, dir, sphere_dist)) {
+        return ft_p3d_create(0, 0, 0); // background color
     }
-    return Vec3f(0.4, 0.4, 0.3);
+    return ft_p3d_create(255, 0, 0);
 }
 
+float ft_p3d_norm(t_p3d *vect)
+{
+	return (sqrt(vect->x* vect->x+ vect->y* vect->y+ vect->z * vect->z));
+}
+
+//*this = (*this)*(l/norm())
+t_p3d *ft_p3d_normalize(t_p3d *vect, float l)
+{
+	float norm = ft_p3d_norm(vect);
+	vect->x = vect->x * (l / norm);
+	vect->y = vect->y * (l / norm);
+	vect->z = vect->z * (l / norm);
+	return (vect);
+}
 
 void 	ft_render(t_game* game, t_sphere *sphere)
 {
@@ -129,8 +179,15 @@ void 	ft_render(t_game* game, t_sphere *sphere)
 		for (size_t i = 0; i< width; i++) {
 			float x =  (2*(i + 0.5)/(float)width  - 1)*tan(90/2.)*width/(float)height;
 			float y = -(2*(j + 0.5)/(float)height - 1)*tan(90/2.);
-			t_p3d dir = (t_p3d){x, y, -1};//.normalize();
-			game->sdl->surface->data[i+j*width] = cast_ray(Vec3f(0,0,0), dir, sphere);
+			t_p3d dir = *ft_p3d_normalize(&(t_p3d){x, y, -1}, 1);//.normalize();
+			t_p3d temp = *cast_ray(ft_p3d_create(0,0,0), &dir, sphere);
+			game->sdl->surface->data[i+j*width] = ft_rgb_to_hex(temp.x, temp.y, temp.z);
+			// if (sqrt(pow(i - sphere->center.x, 2) + pow(j - sphere->center.y, 2)) <= sphere->radius)
+			// {
+				//game->sdl->surface->data[i+j*width] = 0xFF0000;
+			 	//game->sdl->surface->data[i+j*width] = ft_rgb_to_hex(temp.x, temp.y, temp.z);
+				 
+			//}
 		}
 	}
 }
@@ -139,7 +196,7 @@ void 	ft_render(t_game* game, t_sphere *sphere)
 void ft_update(t_game *game)
 {
 	t_rectangle r = (t_rectangle){(t_point){0,0},(t_size){WIN_W, WIN_H}};
-	t_sphere sphere = {(t_p3d){50, 50, 0}, 100};
+	t_sphere sphere = {(t_p3d){500, 500, 0}, 100};
 	while(1)
 	{
 		ft_surface_clear(game->sdl->surface);
@@ -148,6 +205,7 @@ void ft_update(t_game *game)
 		//ft_put_pixel(game->sdl->surface, &(t_point){500,500}, 0xFF0000);
 		ft_surface_combine(game->sdl->surface, game->image, &r);
 		ft_surface_present(game->sdl, game->sdl->surface);
+		SDL_Delay(2000);
 	}
 }
 
@@ -177,9 +235,11 @@ int main()
 
 	game.sdl = malloc(sizeof(t_sdl));
 	game.image = ft_surface_create(WIN_W, WIN_H);
-	ft_init_window(game.sdl, WIN_W, WIN_H);
-	printf("%zu, %zu\n", game.sdl->surface->height, game.sdl->surface->width);
+	t_sphere sphere = {(t_p3d){-3,    0,   -16}, 2};
+	printf("%d",ray_intersect(&sphere, ft_p3d_create(0,0,0), ft_p3d_normalize(&(t_p3d){650, 650, -1}, 1), FLT_MAX));
+	// ft_init_window(game.sdl, WIN_W, WIN_H);
+	// printf("%zu, %zu\n", game.sdl->surface->height, game.sdl->surface->width);
 
-	ft_update(&game);
+	// ft_update(&game);
 	ft_exit(NULL);
 }
