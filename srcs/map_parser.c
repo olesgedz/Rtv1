@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_parcer.c                                       :+:      :+:    :+:   */
+/*   map_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sdurgan <sdurgan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 15:12:04 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/05/15 16:02:44 by sdurgan          ###   ########.fr       */
+/*   Updated: 2019/05/15 16:07:25 by sdurgan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,5 @@ t_sphere	configure_sphere(char **map_name)
 		ft_strchr(line, 'r') ? sphere.radius = ret : 0;
 		ret = ft_2darrayclean(&split);
 	}
+	return (sphere);
 }
