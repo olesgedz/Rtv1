@@ -6,7 +6,7 @@
 /*   By: sdurgan <sdurgan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 15:12:04 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/05/15 16:26:45 by sdurgan          ###   ########.fr       */
+/*   Updated: 2019/05/15 16:27:57 by sdurgan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,3 @@ void	configure_sphere(char *map_name, t_sphere *sphere)
 		ret = ft_2darrayclean(&split);
 	}
 }
-
-/*int			main(int argc, char **argv)
-{
-	t_sphere	s;
-
-	configure_sphere(argv[1], &s);
-	printf("x: %f\ny: %f\nz: %f\nr: %f\n", s.center.x, s.center.y, s.center.z,
-		s.radius);
-	return (0);
-}*/
