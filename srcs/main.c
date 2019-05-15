@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:53:03 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/05/15 14:44:18 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/05/15 21:40:35 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,14 +106,13 @@ t_p3d *ft_p3d_create(float x, float y, float z)
 	return (new);
 }
 
-t_p3d *ft_p3d_substract(t_p3d *a, t_p3d *b)
+t_p3d ft_p3d_substract(t_p3d *a, t_p3d *b)
 {
-	t_p3d *new;
+	t_p3d new;
 	
-	new = malloc (sizeof(t_p3d));
-	new->x = (a->x - b->x);
-	new->y = (a->y - b->y);
-	new->z = (a->z - b->z);
+	new.x = (a->x - b->x);
+	new.y = (a->y - b->y);
+	new.z = (a->z - b->z);
 	return (new);
 }
 
@@ -127,12 +126,27 @@ float ft_p3d_scalar_multiply(t_p3d *a, t_p3d *b)
 	return (a->x * b->x + a->y * b->y + a->z * b->z);
 }
 
+t_p3d ft_p3d_const_multiply(t_p3d *a, float b)
+{
+	return ((t_p3d){a->x * b, a->y * b, a->z * b});
+}
+
+t_p3d ft_p3d_sum(t_p3d *a, t_p3d *b)
+{
+	t_p3d new;
+
+	new.x = a->x + b->x;
+	new.y = a->y + b->y;
+	new.z = a->z + b->z;
+	return (new);
+}
+
 int ray_intersect(t_sphere *sphere, t_p3d *orig, t_p3d *dir, float t0)
 {
-	t_p3d L = *ft_p3d_substract(&sphere->center, orig);
-	 printf("%f %f %f, dir: %f %f %f\n", L.x, L.y, L.z, dir->x, dir->y, dir->z);
+	t_p3d L = ft_p3d_substract(&sphere->center, orig);
+	// printf("%f %f %f, dir: %f %f %f\n", L.x, L.y, L.z, dir->x, dir->y, dir->z);
 	float tca = ft_p3d_scalar_multiply(&L, dir);
-	printf("tca %f\n", tca);
+	//printf("tca %f\n", tca);
 	float d2 = ft_p3d_scalar_multiply(&L,&L) - tca*tca;
 	//printf("d2 %f %f \n", d2, sphere->radius * sphere->radius);
 	if (d2 > sphere->radius * sphere->radius) return FALSE;
@@ -143,14 +157,40 @@ int ray_intersect(t_sphere *sphere, t_p3d *orig, t_p3d *dir, float t0)
 	if (t0 < 0) return FALSE;
 	return TRUE;
 }
+int scene_intersect( t_p3d *orig, t_p3d *dir, t_sphere *spheres, t_p3d *hit, t_p3d *N, t_material *material)
+{
+	float spheres_dist = FLT_MAX; // WHY
+	size_t i=0;
+	// ft_p3d_print(&spheres[0].center);
+	// ft_p3d_print(&spheres[1].center);
+	//ft_exit(NULL);
+	while (i < 3) {
+		float dist_i;
+		if (ray_intersect(&spheres[i], orig, dir, dist_i) && dist_i < spheres_dist) {
+			spheres_dist = dist_i;
+			t_p3d temp = ft_p3d_const_multiply(dir, dist_i);
+			*hit = ft_p3d_sum(orig, &temp);
+			*N = ft_p3d_substract(hit, &spheres[i].center);
+			*material = spheres[i].material;
+		}
+		i++;
+	}
+	return spheres_dist<1000;
+}
+
+t_p3d cast_ray (t_p3d *orig, t_p3d *dir, t_sphere *spheres) {
+	t_p3d point;
+	t_p3d N;
+	t_material material;
+
+	// ft_p3d_print(&spheres[0].center);
+	// ft_p3d_print(&spheres[1].center);
 
 
-t_p3d *cast_ray (t_p3d *orig, t_p3d *dir, t_sphere *sphere) {
-    float sphere_dist = FLT_MAX;
-    if (!ray_intersect(sphere, orig, dir, sphere_dist)) {
-        return ft_p3d_create(0, 255, 0); // background color
-    }
-    return ft_p3d_create(255, 0, 0);
+	if (!scene_intersect(orig, dir, spheres, &point, &N, &material)) {
+		return *ft_p3d_create(0, 255, 0); // background color
+	}
+	return material.diffuse_color;
 }
 
 float ft_p3d_norm(t_p3d *vect)
@@ -180,12 +220,12 @@ void 	ft_render(t_game* game, t_sphere *sphere)
 			float x =  (2*(i + 0.5)/(float)width  - 1)*tan(fov/2.)*width/(float)height;
 			float y = -(2*(j + 0.5)/(float)height - 1)*tan(fov/2.);
 			t_p3d dir = *ft_p3d_normalize(&(t_p3d){x, y, -1}, 1);//.normalize();
-			t_p3d temp = *cast_ray(ft_p3d_create(0,0,0), &dir, sphere);
+			t_p3d temp = cast_ray(ft_p3d_create(0,0,0), &dir, game->spheres);
 			game->sdl->surface->data[i+j*width] = ft_rgb_to_hex(temp.x, temp.y, temp.z);
 			// if (sqrt(pow(i - sphere->center.x, 2) + pow(j - sphere->center.y, 2)) <= sphere->radius)
 			// {
 			// 	game->sdl->surface->data[i+j*width] = 0xFF0000;
-			//  	game->sdl->surface->data[i+j*width] = ft_rgb_to_hex(temp.x, temp.y, temp.z);
+ 		//  	game->sdl->surface->data[i+j*width] = ft_rgb_to_hex(temp.x, temp.y, temp.z);
 				 
 			// }
 		}
@@ -235,7 +275,15 @@ int main()
 
 	game.sdl = malloc(sizeof(t_sdl));
 	game.image = ft_surface_create(WIN_W, WIN_H);
-	t_sphere sphere = {(t_p3d){-3, 0, -16}, 2};
+	t_material ivory = (t_material){0.3, 0.1, 0.1};
+	//game.elum.lights[0] = (t_light){(t_p3d){7, 10, -16}, 50};
+	game.elum.number = 1;
+	game.spheres = malloc(sizeof(t_sphere) * 5);
+	game.spheres[0] = (t_sphere){(t_p3d){-3, 0, -16}, ivory, 2};
+	game.spheres[1] = (t_sphere){(t_p3d){2, 1, -16}, ivory, 2};
+
+	// ft_p3d_print(&game.spheres[0].center);
+	// ft_p3d_print(&game.spheres[1].center);
 	//printf("%d",ray_intersect(&sphere, ft_p3d_create(0,0,0), ft_p3d_normalize(&(t_p3d){650, 650, -1}, 1), FLT_MAX));
 	ft_init_window(game.sdl, WIN_W, WIN_H);
 	printf("%zu, %zu\n", game.sdl->surface->height, game.sdl->surface->width);

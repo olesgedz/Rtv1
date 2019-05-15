@@ -21,9 +21,24 @@ struct 	s_p3d
 	float z;
 };
 
+typedef struct Material {
+	t_p3d diffuse_color;
+} t_material;
+
+typedef struct s_light {
+	t_p3d position;
+	float intensity;
+} t_light;
+
+typedef struct s_lights {
+	t_light *lights;
+	int number;
+} t_lights;
+
 typedef struct s_sphere
 {
 	t_p3d center;
+	t_material material;
 	float radius;
 } t_sphere;
 
@@ -72,5 +87,7 @@ typedef struct s_game
 	t_sdl *sdl;
 	t_surface *image;
 	t_list *verties;
+	t_lights elum;
+	t_sphere *spheres;
 } t_game;
 #endif
