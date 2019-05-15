@@ -6,7 +6,7 @@
 /*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:53:03 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/05/16 01:20:35 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/05/16 01:21:13 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,7 +286,7 @@ int main()
 	game.elum.number = 1;
 	game.spheres = malloc(sizeof(t_sphere) * 5);
 	game.spheres[0] = (t_sphere){(t_p3d){-3, 0, -16}, ivory, 2};
-	game.spheres[1] = (t_sphere){(t_p3d){-3.0, 0, -12}, ivory, 5};
+	game.spheres[1] = (t_sphere){(t_p3d){-3.0, 0, -12}, bb, 5};
 
 	// ft_p3d_print(&game.spheres[0].center);
 	// ft_p3d_print(&game.spheres[1].center);
