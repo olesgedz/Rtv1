@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:53:03 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/05/15 10:32:58 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/05/15 14:13:55 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,6 @@ float ft_p3d_scalar_multiply(t_p3d *a, t_p3d *b)
 	return (a->x * b->x + a->y * b->y + a->z * b->z);
 }
 
-
-
 int ray_intersect(t_sphere *sphere, t_p3d *orig, t_p3d *dir, float t0)
 {
 	t_p3d L = *ft_p3d_substract(&sphere->center, orig);
@@ -139,7 +137,7 @@ int ray_intersect(t_sphere *sphere, t_p3d *orig, t_p3d *dir, float t0)
 	//printf("d2 %f %f \n", d2, sphere->radius * sphere->radius);
 	if (d2 > sphere->radius * sphere->radius) return FALSE;
 	float thc = sqrtf( sphere->radius * sphere->radius - d2);
-	t0       = tca - thc;
+	t0	= tca - thc;
 	float t1 = tca + thc;
 	if (t0 < 0) t0 = t1;
 	if (t0 < 0) return FALSE;
@@ -150,7 +148,7 @@ int ray_intersect(t_sphere *sphere, t_p3d *orig, t_p3d *dir, float t0)
 t_p3d *cast_ray (t_p3d *orig, t_p3d *dir, t_sphere *sphere) {
     float sphere_dist = FLT_MAX;
     if (!ray_intersect(sphere, orig, dir, sphere_dist)) {
-        return ft_p3d_create(0, 0, 0); // background color
+        return ft_p3d_create(0, 255, 0); // background color
     }
     return ft_p3d_create(255, 0, 0);
 }
@@ -235,11 +233,11 @@ int main()
 
 	game.sdl = malloc(sizeof(t_sdl));
 	game.image = ft_surface_create(WIN_W, WIN_H);
-	t_sphere sphere = {(t_p3d){-3,    0,   -16}, 2};
-	printf("%d",ray_intersect(&sphere, ft_p3d_create(0,0,0), ft_p3d_normalize(&(t_p3d){650, 650, -1}, 1), FLT_MAX));
-	// ft_init_window(game.sdl, WIN_W, WIN_H);
-	// printf("%zu, %zu\n", game.sdl->surface->height, game.sdl->surface->width);
+	t_sphere sphere = {(t_p3d){-3, 0, -16}, 2};
+	//printf("%d",ray_intersect(&sphere, ft_p3d_create(0,0,0), ft_p3d_normalize(&(t_p3d){650, 650, -1}, 1), FLT_MAX));
+	ft_init_window(game.sdl, WIN_W, WIN_H);
+	printf("%zu, %zu\n", game.sdl->surface->height, game.sdl->surface->width);
 
-	// ft_update(&game);
+	ft_update(&game);
 	ft_exit(NULL);
 }
