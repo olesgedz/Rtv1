@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+         #
+#    By: sdurgan <sdurgan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/16 12:58:07 by jblack-b          #+#    #+#              #
-#    Updated: 2019/04/22 15:45:46 by olesgedz         ###   ########.fr        #
+#    Updated: 2019/05/15 16:18:37 by sdurgan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ LIB_LIST =	libSDL2.a\
 			libSDL2main.a
 
 SRCS_DIRECTORY = ./srcs/
-SRCS_LIST = main.c
+SRCS_LIST = main.c map_parser.c
 OBJS_DIRECTORY = objects/
 OBJS_LIST = $(patsubst %.c, %.o, $(SRCS_LIST))
 OBJS = $(addprefix $(OBJS_DIRECTORY), $(OBJS_LIST))

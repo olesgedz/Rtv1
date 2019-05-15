@@ -6,19 +6,18 @@
 /*   By: sdurgan <sdurgan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 15:12:04 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/05/15 16:07:25 by sdurgan          ###   ########.fr       */
+/*   Updated: 2019/05/15 16:24:02 by sdurgan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-t_sphere	configure_sphere(char **map_name)
+void	configure_sphere(char *map_name, t_sphere *sphere)
 {
 	int			fd;
 	char		*line;
-	float			ret;
+	int			ret;
 	char		**split;
-	t_sphere	sphere;
 
 	fd = open(map_name, O_RDONLY);
 	line = ft_strnew(0);
@@ -31,11 +30,20 @@ t_sphere	configure_sphere(char **map_name)
 		}
 		split = ft_strsplit(line, ':');
 		ret = ft_atoi(split[1]);
-		ft_strchr(line, 'x') ? sphere.center.x = ret : 0;
-		ft_strchr(line, 'y') ? sphere.center.y = ret : 0;
-		ft_strchr(line, 'z') ? sphere.center.z = ret : 0;
-		ft_strchr(line, 'r') ? sphere.radius = ret : 0;
+		ft_strchr(line, 'x') ? sphere->center.x = ret : 0;
+		ft_strchr(line, 'y') ? sphere->center.y = ret : 0;
+		ft_strchr(line, 'z') ? sphere->center.z = ret : 0;
+		ft_strchr(line, 'r') ? sphere->radius = ret : 0;
 		ret = ft_2darrayclean(&split);
 	}
-	return (sphere);
 }
+
+/*int			main(int argc, char **argv)
+{
+	t_sphere	s;
+
+	configure_sphere(argv[1], &s);
+	printf("x: %f\ny: %f\nz: %f\nr: %f\n", s.center.x, s.center.y, s.center.z,
+		s.radius);
+	return (0);
+}*/

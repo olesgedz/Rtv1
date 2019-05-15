@@ -77,4 +77,7 @@ typedef struct s_game
 	t_surface *image;
 	t_list *verties;
 } t_game;
+
+void	configure_sphere(char *map_name, t_sphere *sphere);
+
 #endif

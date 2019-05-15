@@ -6,7 +6,7 @@
 /*   By: sdurgan <sdurgan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:53:03 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/05/15 15:28:26 by sdurgan          ###   ########.fr       */
+/*   Updated: 2019/05/15 16:25:29 by sdurgan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,12 +226,12 @@ void ft_update(t_game *game)
 // }
 
 
-int main()
+int	main(int argc, char **argv)
 {
-
 	game.sdl = malloc(sizeof(t_sdl));
 	game.image = ft_surface_create(WIN_W, WIN_H);
-	t_sphere sphere = {(t_p3d){-3, 0, -16}, 2};
+	t_sphere sphere;
+	configure_sphere(argv[1], &sphere);
 	//printf("%d",ray_intersect(&sphere, ft_p3d_create(0,0,0), ft_p3d_normalize(&(t_p3d){650, 650, -1}, 1), FLT_MAX));
 	ft_init_window(game.sdl, WIN_W, WIN_H);
 	printf("%zu, %zu\n", game.sdl->surface->height, game.sdl->surface->width);
