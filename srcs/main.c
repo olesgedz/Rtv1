@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:53:03 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/05/15 14:13:55 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/05/15 14:44:18 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ float ft_p3d_scalar_multiply(t_p3d *a, t_p3d *b)
 int ray_intersect(t_sphere *sphere, t_p3d *orig, t_p3d *dir, float t0)
 {
 	t_p3d L = *ft_p3d_substract(&sphere->center, orig);
-	//printf("%f %f %f \n", L.x, L.y, L.z);
+	 printf("%f %f %f, dir: %f %f %f\n", L.x, L.y, L.z, dir->x, dir->y, dir->z);
 	float tca = ft_p3d_scalar_multiply(&L, dir);
 	printf("tca %f\n", tca);
 	float d2 = ft_p3d_scalar_multiply(&L,&L) - tca*tca;
@@ -168,6 +168,8 @@ t_p3d *ft_p3d_normalize(t_p3d *vect, float l)
 	return (vect);
 }
 
+  const float fov      = M_PI/3.;
+
 void 	ft_render(t_game* game, t_sphere *sphere)
 {
 	int width = game->sdl->surface->width;
@@ -175,17 +177,17 @@ void 	ft_render(t_game* game, t_sphere *sphere)
 	for (size_t j = 0; j<height ; j++)
 	{
 		for (size_t i = 0; i< width; i++) {
-			float x =  (2*(i + 0.5)/(float)width  - 1)*tan(90/2.)*width/(float)height;
-			float y = -(2*(j + 0.5)/(float)height - 1)*tan(90/2.);
+			float x =  (2*(i + 0.5)/(float)width  - 1)*tan(fov/2.)*width/(float)height;
+			float y = -(2*(j + 0.5)/(float)height - 1)*tan(fov/2.);
 			t_p3d dir = *ft_p3d_normalize(&(t_p3d){x, y, -1}, 1);//.normalize();
 			t_p3d temp = *cast_ray(ft_p3d_create(0,0,0), &dir, sphere);
 			game->sdl->surface->data[i+j*width] = ft_rgb_to_hex(temp.x, temp.y, temp.z);
 			// if (sqrt(pow(i - sphere->center.x, 2) + pow(j - sphere->center.y, 2)) <= sphere->radius)
 			// {
-				//game->sdl->surface->data[i+j*width] = 0xFF0000;
-			 	//game->sdl->surface->data[i+j*width] = ft_rgb_to_hex(temp.x, temp.y, temp.z);
+			// 	game->sdl->surface->data[i+j*width] = 0xFF0000;
+			//  	game->sdl->surface->data[i+j*width] = ft_rgb_to_hex(temp.x, temp.y, temp.z);
 				 
-			//}
+			// }
 		}
 	}
 }
@@ -194,7 +196,7 @@ void 	ft_render(t_game* game, t_sphere *sphere)
 void ft_update(t_game *game)
 {
 	t_rectangle r = (t_rectangle){(t_point){0,0},(t_size){WIN_W, WIN_H}};
-	t_sphere sphere = {(t_p3d){500, 500, 0}, 100};
+	t_sphere sphere = {(t_p3d){-3, 0, -16}, 2};
 	while(1)
 	{
 		ft_surface_clear(game->sdl->surface);
@@ -204,7 +206,7 @@ void ft_update(t_game *game)
 		ft_surface_combine(game->sdl->surface, game->image, &r);
 		ft_surface_present(game->sdl, game->sdl->surface);
 		SDL_Delay(2000);
-	}
+	 }
 }
 
 

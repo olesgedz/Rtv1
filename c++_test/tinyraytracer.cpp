@@ -15,7 +15,7 @@ struct Sphere {
 
     bool ray_intersect(const Vec3f &orig, const Vec3f &dir, float &t0) const {
         Vec3f L = center - orig;
-        //printf("%f %f %f \n", L.x, L.y, L.z);
+        printf("%f %f %f, dir: %f %f %f\n", L.x, L.y, L.z, dir.x, dir.y, dir.z);
         float tca = L*dir;
         printf("tca %f\n", tca);
         float d2 = L*L - tca*tca;
@@ -41,8 +41,10 @@ Vec3f cast_ray(const Vec3f &orig, const Vec3f &dir, const Sphere &sphere) {
 
   const float fov      = M_PI/3.;
 void render() {
-    const int width    = 1024;
-    const int height   = 768;
+     size_t width    = 1024;
+    size_t height   = 768;
+		width    = 10;
+    	height   = 10;
     std::vector<Vec3f> framebuffer(width*height);
 
   for (size_t j = 0; j<height; j++) {
@@ -71,9 +73,9 @@ void render() {
 }
 
 int main() {
-    //render();
+    render();
 //printf("%d",ray_intersect(&sphere, ft_p3d_create(0,0,0), ft_p3d_normalize(&(t_p3d){650, 650, -1}, 1), FLT_MAX));
-  std::cout << Vec3f(-3,0,-16) * Vec3f(0.707106, 0.707106, -0.001088) <<std::endl;
+ // std::cout << Vec3f(-3,0,-16) * Vec3f(0.707106, 0.707106, -0.001088) <<std::endl;
     return 0;
 }
 
