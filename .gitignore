@@ -31,8 +31,5 @@
 *.out
 *.app
 rtv1
-<<<<<<< HEAD
 .DS_Store
-=======
->>>>>>> jblack-b
 .vscode
