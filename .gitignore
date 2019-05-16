@@ -31,3 +31,5 @@
 *.out
 *.app
 rtv1
+.DS_Store
+.vscode

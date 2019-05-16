@@ -6,16 +6,12 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:53:03 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/05/15 21:40:35 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/05/16 17:40:26 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include <stdio.h>
-#include "libsdl.h"
 #include "rtv1.h"
-#include <limits.h>
-#include <float.h>
 
 	t_game game;
 
@@ -270,9 +266,8 @@ void ft_update(t_game *game)
 // }
 
 
-int main()
+int	main(int argc, char **argv)
 {
-
 	game.sdl = malloc(sizeof(t_sdl));
 	game.image = ft_surface_create(WIN_W, WIN_H);
 	t_material ivory = (t_material){0.3, 0.1, 0.1};
@@ -284,6 +279,9 @@ int main()
 
 	// ft_p3d_print(&game.spheres[0].center);
 	// ft_p3d_print(&game.spheres[1].center);
+	t_sphere sphere;
+	
+	configure_sphere(argv[1], &sphere);
 	//printf("%d",ray_intersect(&sphere, ft_p3d_create(0,0,0), ft_p3d_normalize(&(t_p3d){650, 650, -1}, 1), FLT_MAX));
 	ft_init_window(game.sdl, WIN_W, WIN_H);
 	printf("%zu, %zu\n", game.sdl->surface->height, game.sdl->surface->width);

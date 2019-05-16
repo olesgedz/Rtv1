@@ -6,6 +6,10 @@
 
 #include "SDL2/SDL.h"
 #include "libsdl.h"
+#include "libft.h"
+#include <fcntl.h>
+#include <limits.h>
+#include <float.h>
 
 typedef struct s_vertex t_vertex;
 typedef struct s_sector t_sector;
@@ -90,4 +94,7 @@ typedef struct s_game
 	t_lights elum;
 	t_sphere *spheres;
 } t_game;
+
+void	configure_sphere(char *map_name, t_sphere *sphere);
+
 #endif
