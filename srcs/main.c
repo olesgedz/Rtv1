@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:53:03 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/05/16 19:36:35 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/05/16 21:16:34 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,14 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 					case SDLK_LCTRL:
 					case SDLK_RCTRL:
 					case SDLK_ESCAPE: ft_exit(NULL); break;
-					case SDLK_z: ; break;
-					case SDLK_x: ; break;
-					case SDLK_c: ; break;
+					case 'w': game.wsad[0] = ev->type==SDL_KEYDOWN; break;
+					case 's': game.wsad[1] = ev->type==SDL_KEYDOWN; break;
+					case 'a': game.wsad[2] = ev->type==SDL_KEYDOWN; break;
+					case 'd': game.wsad[3] = ev->type==SDL_KEYDOWN; break;
+					case 'q': game.wsad[4] = ev->type==SDL_KEYDOWN; break;
+					case 'e': game.wsad[5] = ev->type==SDL_KEYDOWN; break;
+					case 'z': game.wsad[6] = ev->type==SDL_KEYDOWN; break;
+					case 'x': game.wsad[7] = ev->type==SDL_KEYDOWN; break;
 					default: break;
 				}
 				break;
@@ -168,15 +173,31 @@ float ft_p3d_dot_multiply(t_p3d *a, t_p3d *b)
 }
 
 /*
-*	Fucntion: vector multiplication, cross product
+*	Fucntion: vector multiplication by scalar
 *	Parameters: two vectors no parameters change 
 *	Return: t_p3d vector result of multiplication,
 */
 
-t_p3d ft_p3d_cross_multiply(t_p3d *a, float b)
+t_p3d ft_p3d_scalar_multiply(t_p3d *a, float b)
 {
 	return ((t_p3d){a->x * b, a->y * b, a->z * b});
 }
+/*
+*	Fucntion: vector multiplication by vector
+*	Parameters: two vectors no parameters change 
+*	Return: t_p3d vector result of multiplication,
+*/
+
+t_p3d ft_p3d_cross_multiply(t_p3d *a, t_p3d *b)
+{
+	t_p3d result;
+
+	result.x = a->y * b->z - a->z * b->y;
+	result.y = a->z * b->x - a->x * b->z;
+	result.z = a->x * b->y - a->y * b->x;
+	return (result);
+}
+
 
 /*
 *	Fucntion: vector multiplication, cross product
@@ -263,7 +284,7 @@ int scene_intersect( t_p3d *orig, t_p3d *dir, t_sphere *spheres, t_p3d *hit, t_p
 		if (ray_intersect(&spheres[i], orig, dir, &dist_i) && dist_i < spheres_dist)
 		{
 			spheres_dist = dist_i;
-			t_p3d temp = ft_p3d_cross_multiply(dir, dist_i);
+			t_p3d temp = ft_p3d_scalar_multiply(dir, dist_i);
 			*hit = ft_p3d_sum(orig, &temp);
 			t_p3d tmp = ft_p3d_substract(hit, &spheres[i].center);
 			*N = *ft_p3d_normalize(&tmp, 1);
@@ -290,9 +311,18 @@ t_p3d cast_ray (t_p3d *orig, t_p3d *dir, t_sphere *spheres) {
 	 float sphere_dist = FLT_MAX;
 	//if (!ray_intersect(&spheres[0], orig, dir, &sphere_dist))
 	if(!scene_intersect(orig, dir, spheres, &point, &N, &material)) {
-		return *ft_p3d_create(0, 255, 0); // background color
+		return *ft_p3d_create(120, 120, 120); // background color
 	}
-	return material.diffuse_color;
+	float diffuse_light_intensity = 0;
+		for (size_t i=0; i<game.elum.number; i++)
+		{
+			t_p3d temp = ft_p3d_substract(&game.elum.lights[i].position, &point);
+			t_p3d light_dir      = *ft_p3d_normalize(&temp, 1);
+			diffuse_light_intensity  += game.elum.lights[i].intensity * max(0.f, ft_p3d_dot_multiply(&light_dir, &N));
+		}
+	
+
+	return ft_p3d_scalar_multiply(&material.diffuse_color, diffuse_light_intensity);
 }
 
 
@@ -344,13 +374,22 @@ void ft_update(t_game *game)
 	t_sphere sphere = {(t_p3d){-3, 0, -16}, 2};
 	while(1)
 	{
+		game->spheres[2].center = game->elum.lights[0].position;
 		ft_surface_clear(game->sdl->surface);
 		ft_input(game->sdl, &ft_input_keys);
+		if(game->wsad[0]) { game->elum.lights[0].position.z -= 1;}
+		if(game->wsad[1]) { game->elum.lights[0].position.z += 1;}
+		if(game->wsad[2]) { game->elum.lights[0].position.x -= 1;}
+		if(game->wsad[3]) { game->elum.lights[0].position.x += 1;}
+		if(game->wsad[4]) { game->elum.lights[0].position.y += 1;}
+		if(game->wsad[5]) { game->elum.lights[0].position.y -= 1; }
+		if(game->wsad[6]) { game->elum.lights[0].intensity += 0.1; }
+		if(game->wsad[7]) { game->elum.lights[0].intensity -= 0.1; }
 		ft_render(game, &sphere);
 		//ft_put_pixel(game->sdl->surface, &(t_point){500,500}, 0xFF0000);
 		ft_surface_combine(game->sdl->surface, game->image, &r);
 		ft_surface_present(game->sdl, game->sdl->surface);
-		SDL_Delay(2000);
+		//SDL_Delay(20);
 	 }
 }
 
@@ -377,16 +416,19 @@ void ft_update(t_game *game)
 
 int	main(int argc, char **argv)
 {
+	printf("move light source with wasdqe \nchange intensity with zx\n");
 	game.sdl = malloc(sizeof(t_sdl));
 	game.image = ft_surface_create(WIN_W, WIN_H);
 	t_material ivory = (t_material){0, 0, 255};
 	t_material bb = (t_material){0, 125, 125};
-	//game.elum.lights[0] = (t_light){(t_p3d){7, 10, -16}, 50};
+	game.elum.lights = ft_memalloc(sizeof(t_light) * 5);
+	game.elum.lights[0] = (t_light){(t_p3d){7, 10, -16}, .7};
 	game.elum.number = 1;
-	game.n_spheres = 2;
+	game.n_spheres = 3;
 	game.spheres = ft_memalloc(sizeof(t_sphere) * 5);
 	game.spheres[0] = (t_sphere){(t_p3d){-3, 0, -16}, ivory, 2};
 	game.spheres[1] = (t_sphere){(t_p3d){-3.0, 0, -12}, bb, 1};
+	game.spheres[2] = (t_sphere){(t_p3d){-3.0, 0, -12}, bb, 1}; // this is a light source, move with wasdqe
 
 	// ft_p3d_print(&game.spheres[0].center);
 	// ft_p3d_print(&game.spheres[1].center);

@@ -94,6 +94,7 @@ typedef struct s_game
 	t_lights elum;
 	t_sphere *spheres;
 	int n_spheres;
+	int wsad[8];
 } t_game;
 
 void	configure_sphere(char *map_name, t_sphere *sphere);
