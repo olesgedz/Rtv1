@@ -93,6 +93,7 @@ typedef struct s_game
 	t_list *verties;
 	t_lights elum;
 	t_sphere *spheres;
+	int n_spheres;
 } t_game;
 
 void	configure_sphere(char *map_name, t_sphere *sphere);

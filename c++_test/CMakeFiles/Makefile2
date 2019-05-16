@@ -50,19 +50,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /Users/jblack-b/.brew/Cellar/cmake/3.14.3/bin/cmake
+CMAKE_COMMAND = /Applications/CMake.app/Contents/bin/cmake
 
 # The command to remove a file.
-RM = /Users/jblack-b/.brew/Cellar/cmake/3.14.3/bin/cmake -E remove -f
+RM = /Applications/CMake.app/Contents/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/jblack-b/Documents/Rtv1/c++_test
+CMAKE_SOURCE_DIR = /Users/olesgedz/Documents/GitHub/Rtv1/c++_test
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/jblack-b/Documents/Rtv1/c++_test
+CMAKE_BINARY_DIR = /Users/olesgedz/Documents/GitHub/Rtv1/c++_test
 
 #=============================================================================
 # Target rules for target CMakeFiles/tinyraytracer.dir
@@ -71,7 +71,7 @@ CMAKE_BINARY_DIR = /Users/jblack-b/Documents/Rtv1/c++_test
 CMakeFiles/tinyraytracer.dir/all:
 	$(MAKE) -f CMakeFiles/tinyraytracer.dir/build.make CMakeFiles/tinyraytracer.dir/depend
 	$(MAKE) -f CMakeFiles/tinyraytracer.dir/build.make CMakeFiles/tinyraytracer.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/jblack-b/Documents/Rtv1/c++_test/CMakeFiles --progress-num=1,2 "Built target tinyraytracer"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/olesgedz/Documents/GitHub/Rtv1/c++_test/CMakeFiles --progress-num=1,2 "Built target tinyraytracer"
 .PHONY : CMakeFiles/tinyraytracer.dir/all
 
 # Include target in all.
@@ -81,9 +81,9 @@ all: CMakeFiles/tinyraytracer.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/tinyraytracer.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jblack-b/Documents/Rtv1/c++_test/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/olesgedz/Documents/GitHub/Rtv1/c++_test/CMakeFiles 2
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/tinyraytracer.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jblack-b/Documents/Rtv1/c++_test/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/olesgedz/Documents/GitHub/Rtv1/c++_test/CMakeFiles 0
 .PHONY : CMakeFiles/tinyraytracer.dir/rule
 
 # Convenience name for target.

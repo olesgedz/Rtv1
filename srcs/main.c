@@ -6,14 +6,21 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:53:03 by jblack-b          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2019/05/16 17:40:26 by jblack-b         ###   ########.fr       */
+=======
+/*   Updated: 2019/05/16 18:43:33 by jblack-b         ###   ########.fr       */
+>>>>>>> jblack-b
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "rtv1.h"
 
-	t_game game;
+/*
+* ! We can't use global variables 
+*/
+t_game game;
 
 int ft_point_compare(t_list *list, void *target)
 {
@@ -54,6 +61,10 @@ void ft_put_vertex(t_game *game)
 	printf("%d %d\n", ((t_point *)game->verties->content)->x, ((t_point *)game->verties->content)->y);
 }
 
+/*
+* Drawing from doom/hadnling mouse
+*/
+
 void ft_mouse_pressed(t_game *game, SDL_Event *ev)
 {
 	game->sdl->mouse.pressed = 1;
@@ -67,6 +78,17 @@ void ft_mouse_pressed(t_game *game, SDL_Event *ev)
 	 		&(t_point){game->sdl->mouse.x, game->sdl->mouse.y}, 0x00FF00);
 }
 
+/*
+*	End of Doom stuff
+*/
+
+/*
+*	Funtion: handles presses mouse/keyboard
+* 	Return:value, doesnt change any parameters
+*
+*	- can handle multiple presses at once
+*	- that goes into libsdl void ft_input(void *main, int (*f)(void *main, SDL_Event *ev))
+*/
 int		ft_input_keys(void *sdl, SDL_Event *ev)
 {
 	switch (ev->type)
@@ -91,6 +113,14 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 	return (1);
 }
 
+/*
+*	Function: creates 3d point from coordinates
+*	Parameters: x y z coodinates of the 3d point as float 
+*	Return: malloced t_p3d, no parameters change
+*
+* ? probably suppose to be t_vector3d or smth
+*/
+
 t_p3d *ft_p3d_create(float x, float y, float z)
 {
 	t_p3d *new;
@@ -102,6 +132,13 @@ t_p3d *ft_p3d_create(float x, float y, float z)
 	return (new);
 }
 
+/*
+*	Fucntion: substact two vectors
+*	Parameters: two vectors
+*	Return: difference of two vectors, no parammeters change
+*/
+
+
 t_p3d ft_p3d_substract(t_p3d *a, t_p3d *b)
 {
 	t_p3d new;
@@ -112,21 +149,44 @@ t_p3d ft_p3d_substract(t_p3d *a, t_p3d *b)
 	return (new);
 }
 
+/*
+*	Fucntion: prints a 3d point
+*	Parameters: 3d point, no parameters change
+*	Return: none
+* ! printf delete it
+*/
+
 void ft_p3d_print(t_p3d *a)
 {
 	printf("x:%f y:%f z:%f\n", a->x, a->y, a->z);
 }
 
-float ft_p3d_scalar_multiply(t_p3d *a, t_p3d *b)
+/*
+*	Fucntion: vector multiplication, dot product
+*	Parameters: two vectors no parameters change 
+*	Return: scalar float result of multiplication,
+*/
+float ft_p3d_dot_multiply(t_p3d *a, t_p3d *b)
 {
 	return (a->x * b->x + a->y * b->y + a->z * b->z);
 }
 
-t_p3d ft_p3d_const_multiply(t_p3d *a, float b)
+/*
+*	Fucntion: vector multiplication, cross product
+*	Parameters: two vectors no parameters change 
+*	Return: t_p3d vector result of multiplication,
+*/
+
+t_p3d ft_p3d_cross_multiply(t_p3d *a, float b)
 {
 	return ((t_p3d){a->x * b, a->y * b, a->z * b});
 }
 
+/*
+*	Fucntion: vector multiplication, cross product
+*	Parameters: two vectors no parameters change 
+*	Return: t_p3d vector result of multiplication,
+*/
 t_p3d ft_p3d_sum(t_p3d *a, t_p3d *b)
 {
 	t_p3d new;
@@ -137,64 +197,23 @@ t_p3d ft_p3d_sum(t_p3d *a, t_p3d *b)
 	return (new);
 }
 
-int ray_intersect(t_sphere *sphere, t_p3d *orig, t_p3d *dir, float t0)
-{
-	t_p3d L = ft_p3d_substract(&sphere->center, orig);
-	// printf("%f %f %f, dir: %f %f %f\n", L.x, L.y, L.z, dir->x, dir->y, dir->z);
-	float tca = ft_p3d_scalar_multiply(&L, dir);
-	//printf("tca %f\n", tca);
-	float d2 = ft_p3d_scalar_multiply(&L,&L) - tca*tca;
-	//printf("d2 %f %f \n", d2, sphere->radius * sphere->radius);
-	if (d2 > sphere->radius * sphere->radius) return FALSE;
-	float thc = sqrtf( sphere->radius * sphere->radius - d2);
-	t0	= tca - thc;
-	float t1 = tca + thc;
-	if (t0 < 0) t0 = t1;
-	if (t0 < 0) return FALSE;
-	return TRUE;
-}
-int scene_intersect( t_p3d *orig, t_p3d *dir, t_sphere *spheres, t_p3d *hit, t_p3d *N, t_material *material)
-{
-	float spheres_dist = FLT_MAX; // WHY
-	size_t i=0;
-	// ft_p3d_print(&spheres[0].center);
-	// ft_p3d_print(&spheres[1].center);
-	//ft_exit(NULL);
-	while (i < 3) {
-		float dist_i;
-		if (ray_intersect(&spheres[i], orig, dir, dist_i) && dist_i < spheres_dist) {
-			spheres_dist = dist_i;
-			t_p3d temp = ft_p3d_const_multiply(dir, dist_i);
-			*hit = ft_p3d_sum(orig, &temp);
-			*N = ft_p3d_substract(hit, &spheres[i].center);
-			*material = spheres[i].material;
-		}
-		i++;
-	}
-	return spheres_dist<1000;
-}
-
-t_p3d cast_ray (t_p3d *orig, t_p3d *dir, t_sphere *spheres) {
-	t_p3d point;
-	t_p3d N;
-	t_material material;
-
-	// ft_p3d_print(&spheres[0].center);
-	// ft_p3d_print(&spheres[1].center);
-
-
-	if (!scene_intersect(orig, dir, spheres, &point, &N, &material)) {
-		return *ft_p3d_create(0, 255, 0); // background color
-	}
-	return material.diffuse_color;
-}
+/*
+*	Fucntion: scalar value of vector
+*	Parameters: vector, no parameters change 
+*	Return: (float) scalar value of a vector
+*/
 
 float ft_p3d_norm(t_p3d *vect)
 {
 	return (sqrt(vect->x* vect->x+ vect->y* vect->y+ vect->z * vect->z));
 }
 
-//*this = (*this)*(l/norm())
+/*
+*	Fucntion: changes scalar value of a vector
+*	Parameters: vector (changes), needed length
+*	Return: normalized vector
+*/
+
 t_p3d *ft_p3d_normalize(t_p3d *vect, float l)
 {
 	float norm = ft_p3d_norm(vect);
@@ -204,8 +223,91 @@ t_p3d *ft_p3d_normalize(t_p3d *vect, float l)
 	return (vect);
 }
 
-  const float fov      = M_PI/3.;
+/*
+*	Fucntion: checks of ray hits sphere
+*	Parameters: stuff, sphere, ray
+*	Return: true or false
+*/
+int ray_intersect(t_sphere *sphere, t_p3d *orig, t_p3d *dir, float *t0)
+{
+	t_p3d L = ft_p3d_substract(&sphere->center, orig);
+	// printf("%f %f %f, dir: %f %f %f\n", L.x, L.y, L.z, dir->x, dir->y, dir->z);
+	float tca = ft_p3d_dot_multiply(&L, dir);
+	//printf("tca %f\n", tca);
+	float d2 = ft_p3d_dot_multiply(&L,&L) - tca*tca;
+	//printf("d2 %f %f \n", d2, sphere->radius * sphere->radius);
+	if (d2 > sphere->radius * sphere->radius) return FALSE;
+	float thc = sqrtf( sphere->radius * sphere->radius - d2);
+	*t0	= tca - thc;
+	float t1 = tca + thc;
+	if (t0 < 0) *t0 = t1;
+	if (t0 < 0) return FALSE;
+	return TRUE;
+}
 
+/*
+*	Fucntion: checks all objects on the scene
+*	Parameters: stuff, sphere, ray
+*	Return: true or false
+*/
+
+int scene_intersect( t_p3d *orig, t_p3d *dir, t_sphere *spheres, t_p3d *hit, t_p3d *N, t_material *material)
+{
+	float spheres_dist = FLT_MAX; // WHY
+	size_t i=0;
+	// ft_p3d_print(&spheres[0].center);
+	// ft_p3d_print(&spheres[1].center);
+	//ft_exit(NULL);
+	while (i < game.n_spheres) {
+		float dist_i;
+
+		//printf("%d", ray_intersect(&spheres[i], orig, dir, dist_i));
+		// printf("%f, %f\n", dist_i, spheres_dist);
+		// ft_exit(NULL);
+		if (ray_intersect(&spheres[i], orig, dir, &dist_i) && dist_i < spheres_dist)
+		{
+			spheres_dist = dist_i;
+			t_p3d temp = ft_p3d_cross_multiply(dir, dist_i);
+			*hit = ft_p3d_sum(orig, &temp);
+			t_p3d tmp = ft_p3d_substract(hit, &spheres[i].center);
+			*N = *ft_p3d_normalize(&tmp, 1);
+			*material = spheres[i].material;
+		}
+		i++;
+	}
+	return spheres_dist<1000;
+}
+
+/*
+*	Fucntion: casts ray for that pixel
+*	Parameters: stuff, sphere, ray
+*	Return: returns matiral(color) for that pixel
+*/
+
+t_p3d cast_ray (t_p3d *orig, t_p3d *dir, t_sphere *spheres) {
+	t_p3d point;
+	t_p3d N;
+	t_material material;
+
+	// ft_p3d_print(&spheres[0].center);
+	// ft_p3d_print(&spheres[1].center);
+	 float sphere_dist = FLT_MAX;
+	//if (!ray_intersect(&spheres[0], orig, dir, &sphere_dist))
+	if(!scene_intersect(orig, dir, spheres, &point, &N, &material)) {
+		return *ft_p3d_create(0, 255, 0); // background color
+	}
+	return material.diffuse_color;
+}
+
+
+
+	const float fov      = M_PI/3.; // field of vision
+
+/*
+*	Fucntion: render all pixels on the surface
+*	Parameters: game, sdl
+*	Return: none
+*/
 void 	ft_render(t_game* game, t_sphere *sphere)
 {
 	int width = game->sdl->surface->width;
@@ -228,6 +330,17 @@ void 	ft_render(t_game* game, t_sphere *sphere)
 	}
 }
 
+/*
+*	Fucntion: Main loop
+*		1. Clear the screen
+*		2. Handle input
+*		3. Render
+*	!	4. surface_combine is redrawing only part of the screen, not used yet
+*		5. Put surface to texture and then to on Screen
+*			? don't use surfaces and use just textures for speed
+*	Parameters: game, sdl
+*	Return: none
+*/
 
 void ft_update(t_game *game)
 {
@@ -270,12 +383,14 @@ int	main(int argc, char **argv)
 {
 	game.sdl = malloc(sizeof(t_sdl));
 	game.image = ft_surface_create(WIN_W, WIN_H);
-	t_material ivory = (t_material){0.3, 0.1, 0.1};
+	t_material ivory = (t_material){0, 0, 255};
+	t_material bb = (t_material){0, 125, 125};
 	//game.elum.lights[0] = (t_light){(t_p3d){7, 10, -16}, 50};
 	game.elum.number = 1;
-	game.spheres = malloc(sizeof(t_sphere) * 5);
+	game.n_spheres = 2;
+	game.spheres = ft_memalloc(sizeof(t_sphere) * 5);
 	game.spheres[0] = (t_sphere){(t_p3d){-3, 0, -16}, ivory, 2};
-	game.spheres[1] = (t_sphere){(t_p3d){2, 1, -16}, ivory, 2};
+	game.spheres[1] = (t_sphere){(t_p3d){-3.0, 0, -12}, bb, 1};
 
 	// ft_p3d_print(&game.spheres[0].center);
 	// ft_p3d_print(&game.spheres[1].center);
