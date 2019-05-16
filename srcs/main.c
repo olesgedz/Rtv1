@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:53:03 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/05/16 21:16:34 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/05/16 22:39:46 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,19 @@ t_p3d *ft_p3d_normalize(t_p3d *vect, float l)
 }
 
 /*
+*	Fucntion:
+*	Parameters:
+*	Return:
+*/
+
+t_p3d	reflect(t_p3d *I, t_p3d *n)
+{
+	t_p3d temp;
+	
+	temp = ft_p3d_scalar_multiply(n, 2.f * ft_p3d_dot_multiply(I, n));
+	return ft_p3d_substract(I, &temp);
+}
+/*
 *	Fucntion: checks of ray hits sphere
 *	Parameters: stuff, sphere, ray
 *	Return: true or false
@@ -314,11 +327,15 @@ t_p3d cast_ray (t_p3d *orig, t_p3d *dir, t_sphere *spheres) {
 		return *ft_p3d_create(120, 120, 120); // background color
 	}
 	float diffuse_light_intensity = 0;
+	float specular_light_intensity = 0;
 		for (size_t i=0; i<game.elum.number; i++)
 		{
 			t_p3d temp = ft_p3d_substract(&game.elum.lights[i].position, &point);
 			t_p3d light_dir      = *ft_p3d_normalize(&temp, 1);
 			diffuse_light_intensity  += game.elum.lights[i].intensity * max(0.f, ft_p3d_dot_multiply(&light_dir, &N));
+			specular_light_intensity += powf(max(0.f, ft_p3d_dot_multiply(-reflect(-light_dir, N),dir)), material.specular_exponent)*game.elum.lights[i].intensity;
+		
+			// write negative * -1
 		}
 	
 

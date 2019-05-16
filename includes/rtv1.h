@@ -27,6 +27,8 @@ struct 	s_p3d
 
 typedef struct Material {
 	t_p3d diffuse_color;
+	t_p3d albendo;
+	float specular_exponent;
 } t_material;
 
 typedef struct s_light {
