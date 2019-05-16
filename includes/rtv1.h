@@ -25,6 +25,12 @@ struct 	s_p3d
 	float z;
 };
 
+typedef struct s_p2d
+{
+	float x;
+	float y;
+} t_p2d;
+
 typedef struct Material {
 	t_p3d diffuse_color;
 	t_p3d albendo;

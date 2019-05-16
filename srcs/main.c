@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:53:03 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/05/16 22:39:46 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/05/17 02:04:56 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,22 @@ t_p3d *ft_p3d_create(float x, float y, float z)
 	new->z = z;
 	return (new);
 }
+/*
+*	Fucntion: sum of two vectors
+*	Parameters: two vectors
+*	Return: sum of two vectors, no parammeters change
+*/
+
+
+t_p3d ft_p3d_sum(t_p3d *a, t_p3d *b)
+{
+	t_p3d new;
+	
+	new.x = (a->x + b->x);
+	new.y = (a->y + b->y);
+	new.z = (a->z + b->z);
+	return (new);
+}
 
 /*
 *	Fucntion: substact two vectors
@@ -157,9 +173,9 @@ t_p3d ft_p3d_substract(t_p3d *a, t_p3d *b)
 * ! printf delete it
 */
 
-void ft_p3d_print(t_p3d *a)
+void ft_p3d_print(t_p3d a)
 {
-	printf("x:%f y:%f z:%f\n", a->x, a->y, a->z);
+	printf("x:%f y:%f z:%f\n", a.x, a.y, a.z);
 }
 
 /*
@@ -199,20 +215,20 @@ t_p3d ft_p3d_cross_multiply(t_p3d *a, t_p3d *b)
 }
 
 
-/*
-*	Fucntion: vector multiplication, cross product
-*	Parameters: two vectors no parameters change 
-*	Return: t_p3d vector result of multiplication,
-*/
-t_p3d ft_p3d_sum(t_p3d *a, t_p3d *b)
-{
-	t_p3d new;
+// /*
+// *	Fucntion: vector multiplication, cross product
+// *	Parameters: two vectors no parameters change 
+// *	Return: t_p3d vector result of multiplication,
+// */
+// t_p3d ft_p3d_sum(t_p3d *a, t_p3d *b)
+// {
+// 	t_p3d new;
 
-	new.x = a->x + b->x;
-	new.y = a->y + b->y;
-	new.z = a->z + b->z;
-	return (new);
-}
+// 	new.x = a->x + b->x;
+// 	new.y = a->y + b->y;
+// 	new.z = a->z + b->z;
+// 	return (new);
+// }
 
 /*
 *	Fucntion: scalar value of vector
@@ -332,14 +348,23 @@ t_p3d cast_ray (t_p3d *orig, t_p3d *dir, t_sphere *spheres) {
 		{
 			t_p3d temp = ft_p3d_substract(&game.elum.lights[i].position, &point);
 			t_p3d light_dir      = *ft_p3d_normalize(&temp, 1);
+			temp = ft_p3d_scalar_multiply(&light_dir, -1);
 			diffuse_light_intensity  += game.elum.lights[i].intensity * max(0.f, ft_p3d_dot_multiply(&light_dir, &N));
-			specular_light_intensity += powf(max(0.f, ft_p3d_dot_multiply(-reflect(-light_dir, N),dir)), material.specular_exponent)*game.elum.lights[i].intensity;
+			t_p3d temp3 = reflect(&temp, &N);
+			t_p3d temp2 = ft_p3d_scalar_multiply(&temp3, -1);
+			specular_light_intensity += powf(max(0.f, ft_p3d_dot_multiply(&temp2,dir)), material.specular_exponent)*game.elum.lights[i].intensity;
 		
 			// write negative * -1
 		}
-	
-
-	return ft_p3d_scalar_multiply(&material.diffuse_color, diffuse_light_intensity);
+		//printf("1:");
+		//ft_p3d_print(ft_p3d_scalar_multiply(&material.diffuse_color, diffuse_light_intensity));
+		//printf("x:%f y:%f light:%f \n", material.albendo.x, material.albendo.y, specular_light_intensity);
+	t_p3d temp = ft_p3d_scalar_multiply(&material.diffuse_color, diffuse_light_intensity * material.albendo.x);
+	t_p3d temp2 = ft_p3d_scalar_multiply(&(t_p3d){1,1,1}, specular_light_intensity * material.albendo.y);
+	//material.diffuse_color * diffuse_light_intensity * material.albedo[0] + Vec3f(1., 1., 1.)*specular_light_intensity * material.albedo[1];
+	//printf("2:");
+	//ft_p3d_print(ft_p3d_sum(&temp, &temp2));
+	return ft_p3d_sum(&temp, &temp2);//ft_p3d_scalar_multiply(&material.diffuse_color, diffuse_light_intensity);
 }
 
 
@@ -436,8 +461,9 @@ int	main(int argc, char **argv)
 	printf("move light source with wasdqe \nchange intensity with zx\n");
 	game.sdl = malloc(sizeof(t_sdl));
 	game.image = ft_surface_create(WIN_W, WIN_H);
-	t_material ivory = (t_material){0, 0, 255};
-	t_material bb = (t_material){0, 125, 125};
+	t_material ivory = (t_material){(t_p3d){0, 0, 255}, (t_p3d){1, 1, 0}, 50};
+	t_material bb = (t_material){(t_p3d){0, 125, 125}, (t_p3d){0.6, 0.3, 0}, 50};
+	//printf("%f %f %f\n", bb.albendo.x, bb.albendo.y, bb.specular_exponent);
 	game.elum.lights = ft_memalloc(sizeof(t_light) * 5);
 	game.elum.lights[0] = (t_light){(t_p3d){7, 10, -16}, .7};
 	game.elum.number = 1;
