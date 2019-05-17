@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sdurgan <sdurgan@student.42.fr>            +#+  +:+       +#+         #
+#    By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/16 12:58:07 by jblack-b          #+#    #+#              #
-#    Updated: 2019/05/15 16:18:37 by sdurgan          ###   ########.fr        #
+#    Updated: 2019/05/17 14:44:54 by jblack-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,6 +78,8 @@ CURRENT_FILES = $(shell find $(DIRECTORY)/objects/ -type f 2> /dev/null | wc -l 
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(LIBSDL) $(OBJS_DIRECTORY) $(OBJS)
+	@$(MAKE) -sC $(LIBFT_DIRECTORY)
+	@$(MAKE) -sC $(LIBSDL_DIRECTORY)
 	@$(CC) $(FLAGS) $(LIBRARIES) $(INCLUDES) $(OBJS) $(SDL_CFLAGS) $(SDL_LDFLAGS) -o $(NAME)
 	@echo "$(CLEAR_LINE)[`expr $(CURRENT_FILES) '*' 100 / $(TOTAL_FILES)`%] $(COL_BLUE)[$(NAME)] $(COL_GREEN)Finished compilation. Output file : $(COL_VIOLET)$(PWD)/$(NAME)$(COL_END)"
 
