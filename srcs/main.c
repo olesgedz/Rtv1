@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:53:03 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/05/17 02:04:56 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/05/17 18:58:13 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,14 +122,14 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 * ? probably suppose to be t_vector3d or smth
 */
 
-t_p3d *ft_p3d_create(float x, float y, float z)
+t_p3d ft_p3d_create(float x, float y, float z)
 {
-	t_p3d *new;
+	t_p3d new;
 	
-	new = malloc (sizeof(t_p3d));
-	new->x = x;
-	new->y = y;
-	new->z = z;
+	//new = malloc (sizeof(t_p3d));
+	new.x = x;
+	new.y = y;
+	new.z = z;
 	return (new);
 }
 /*
@@ -139,13 +139,13 @@ t_p3d *ft_p3d_create(float x, float y, float z)
 */
 
 
-t_p3d ft_p3d_sum(t_p3d *a, t_p3d *b)
+t_p3d ft_p3d_sum(t_p3d a, t_p3d b)
 {
 	t_p3d new;
 	
-	new.x = (a->x + b->x);
-	new.y = (a->y + b->y);
-	new.z = (a->z + b->z);
+	new.x = (a.x + b.x);
+	new.y = (a.y + b.y);
+	new.z = (a.z + b.z);
 	return (new);
 }
 
@@ -156,13 +156,13 @@ t_p3d ft_p3d_sum(t_p3d *a, t_p3d *b)
 */
 
 
-t_p3d ft_p3d_substract(t_p3d *a, t_p3d *b)
+t_p3d ft_p3d_substract(t_p3d a, t_p3d b)
 {
 	t_p3d new;
 	
-	new.x = (a->x - b->x);
-	new.y = (a->y - b->y);
-	new.z = (a->z - b->z);
+	new.x = (a.x - b.x);
+	new.y = (a.y - b.y);
+	new.z = (a.z - b.z);
 	return (new);
 }
 
@@ -183,9 +183,9 @@ void ft_p3d_print(t_p3d a)
 *	Parameters: two vectors no parameters change 
 *	Return: scalar float result of multiplication,
 */
-float ft_p3d_dot_multiply(t_p3d *a, t_p3d *b)
+float ft_p3d_dot_multiply(t_p3d a, t_p3d b)
 {
-	return (a->x * b->x + a->y * b->y + a->z * b->z);
+	return (a.x * b.x + a.y * b.y + a.z * b.z);
 }
 
 /*
@@ -194,9 +194,9 @@ float ft_p3d_dot_multiply(t_p3d *a, t_p3d *b)
 *	Return: t_p3d vector result of multiplication,
 */
 
-t_p3d ft_p3d_scalar_multiply(t_p3d *a, float b)
+t_p3d ft_p3d_scalar_multiply(t_p3d a, float b)
 {
-	return ((t_p3d){a->x * b, a->y * b, a->z * b});
+	return ((t_p3d){a.x * b, a.y * b, a.z * b});
 }
 /*
 *	Fucntion: vector multiplication by vector
@@ -204,13 +204,13 @@ t_p3d ft_p3d_scalar_multiply(t_p3d *a, float b)
 *	Return: t_p3d vector result of multiplication,
 */
 
-t_p3d ft_p3d_cross_multiply(t_p3d *a, t_p3d *b)
+t_p3d ft_p3d_cross_multiply(t_p3d a, t_p3d b)
 {
 	t_p3d result;
 
-	result.x = a->y * b->z - a->z * b->y;
-	result.y = a->z * b->x - a->x * b->z;
-	result.z = a->x * b->y - a->y * b->x;
+	result.x = a.y * b.z - a.z * b.y;
+	result.y = a.z * b.x - a.x * b.z;
+	result.z = a.x * b.y - a.y * b.x;
 	return (result);
 }
 
@@ -236,9 +236,9 @@ t_p3d ft_p3d_cross_multiply(t_p3d *a, t_p3d *b)
 *	Return: (float) scalar value of a vector
 */
 
-float ft_p3d_norm(t_p3d *vect)
+float ft_p3d_norm(t_p3d vect)
 {
-	return (sqrt(vect->x* vect->x+ vect->y* vect->y+ vect->z * vect->z));
+	return (sqrt(vect.x * vect.x + vect.y * vect.y + vect.z * vect.z));
 }
 
 /*
@@ -247,12 +247,12 @@ float ft_p3d_norm(t_p3d *vect)
 *	Return: normalized vector
 */
 
-t_p3d *ft_p3d_normalize(t_p3d *vect, float l)
+t_p3d ft_p3d_normalize(t_p3d vect)
 {
 	float norm = ft_p3d_norm(vect);
-	vect->x = vect->x * (l / norm);
-	vect->y = vect->y * (l / norm);
-	vect->z = vect->z * (l / norm);
+	vect.x = vect.x / norm;
+	vect.y = vect.y / norm;
+	vect.z = vect.z / norm;
 	return (vect);
 }
 
@@ -262,12 +262,12 @@ t_p3d *ft_p3d_normalize(t_p3d *vect, float l)
 *	Return:
 */
 
-t_p3d	reflect(t_p3d *I, t_p3d *n)
+t_p3d	reflect(t_p3d I, t_p3d n)
 {
 	t_p3d temp;
 	
 	temp = ft_p3d_scalar_multiply(n, 2.f * ft_p3d_dot_multiply(I, n));
-	return ft_p3d_substract(I, &temp);
+	return ft_p3d_substract(I, temp);
 }
 /*
 *	Fucntion: checks of ray hits sphere
@@ -276,11 +276,11 @@ t_p3d	reflect(t_p3d *I, t_p3d *n)
 */
 int ray_intersect(t_sphere *sphere, t_p3d *orig, t_p3d *dir, float *t0)
 {
-	t_p3d L = ft_p3d_substract(&sphere->center, orig);
+	t_p3d L = ft_p3d_substract(sphere->center, *orig);
 	// printf("%f %f %f, dir: %f %f %f\n", L.x, L.y, L.z, dir->x, dir->y, dir->z);
-	float tca = ft_p3d_dot_multiply(&L, dir);
+	float tca = ft_p3d_dot_multiply(L, *dir);
 	//printf("tca %f\n", tca);
-	float d2 = ft_p3d_dot_multiply(&L,&L) - tca*tca;
+	float d2 = ft_p3d_dot_multiply(L, L) - tca*tca;
 	//printf("d2 %f %f \n", d2, sphere->radius * sphere->radius);
 	if (d2 > sphere->radius * sphere->radius) return FALSE;
 	float thc = sqrtf( sphere->radius * sphere->radius - d2);
@@ -313,10 +313,10 @@ int scene_intersect( t_p3d *orig, t_p3d *dir, t_sphere *spheres, t_p3d *hit, t_p
 		if (ray_intersect(&spheres[i], orig, dir, &dist_i) && dist_i < spheres_dist)
 		{
 			spheres_dist = dist_i;
-			t_p3d temp = ft_p3d_scalar_multiply(dir, dist_i);
-			*hit = ft_p3d_sum(orig, &temp);
-			t_p3d tmp = ft_p3d_substract(hit, &spheres[i].center);
-			*N = *ft_p3d_normalize(&tmp, 1);
+			t_p3d temp = ft_p3d_scalar_multiply(*dir, dist_i);
+			*hit = ft_p3d_sum(*orig, temp);
+			t_p3d tmp = ft_p3d_substract(*hit, spheres[i].center);
+			*N = ft_p3d_normalize(tmp);
 			*material = spheres[i].material;
 		}
 		i++;
@@ -340,31 +340,39 @@ t_p3d cast_ray (t_p3d *orig, t_p3d *dir, t_sphere *spheres) {
 	 float sphere_dist = FLT_MAX;
 	//if (!ray_intersect(&spheres[0], orig, dir, &sphere_dist))
 	if(!scene_intersect(orig, dir, spheres, &point, &N, &material)) {
-		return *ft_p3d_create(120, 120, 120); // background color
+		return ft_p3d_create(120, 120, 120); // background color
 	}
 	float diffuse_light_intensity = 0;
 	float specular_light_intensity = 0;
 		for (size_t i=0; i<game.elum.number; i++)
 		{
-			t_p3d temp = ft_p3d_substract(&game.elum.lights[i].position, &point);
-			t_p3d light_dir      = *ft_p3d_normalize(&temp, 1);
-			temp = ft_p3d_scalar_multiply(&light_dir, -1);
-			diffuse_light_intensity  += game.elum.lights[i].intensity * max(0.f, ft_p3d_dot_multiply(&light_dir, &N));
-			t_p3d temp3 = reflect(&temp, &N);
-			t_p3d temp2 = ft_p3d_scalar_multiply(&temp3, -1);
-			specular_light_intensity += powf(max(0.f, ft_p3d_dot_multiply(&temp2,dir)), material.specular_exponent)*game.elum.lights[i].intensity;
+			t_p3d temp = ft_p3d_substract(game.elum.lights[i].position, point);
+			t_p3d light_dir      = ft_p3d_normalize(temp);
+			temp = ft_p3d_scalar_multiply(light_dir, -1);
+			diffuse_light_intensity  += game.elum.lights[i].intensity * max(0, ft_p3d_dot_multiply(light_dir, N));
+			t_p3d temp3 = reflect(temp, N);
+			t_p3d temp2 = ft_p3d_scalar_multiply(temp3, -1);
+			specular_light_intensity += powf(max(0.f, ft_p3d_dot_multiply(temp2,*dir)), material.specular_exponent)*game.elum.lights[i].intensity;
 		
 			// write negative * -1
 		}
 		//printf("1:");
 		//ft_p3d_print(ft_p3d_scalar_multiply(&material.diffuse_color, diffuse_light_intensity));
 		//printf("x:%f y:%f light:%f \n", material.albendo.x, material.albendo.y, specular_light_intensity);
-	t_p3d temp = ft_p3d_scalar_multiply(&material.diffuse_color, diffuse_light_intensity * material.albendo.x);
-	t_p3d temp2 = ft_p3d_scalar_multiply(&(t_p3d){1,1,1}, specular_light_intensity * material.albendo.y);
+	t_p3d temp = ft_p3d_scalar_multiply(material.diffuse_color, diffuse_light_intensity * material.albendo.x);
+	t_p3d temp2 = ft_p3d_scalar_multiply((t_p3d){1,1,1}, specular_light_intensity * material.albendo.y);
 	//material.diffuse_color * diffuse_light_intensity * material.albedo[0] + Vec3f(1., 1., 1.)*specular_light_intensity * material.albedo[1];
 	//printf("2:");
 	//ft_p3d_print(ft_p3d_sum(&temp, &temp2));
-	return ft_p3d_sum(&temp, &temp2);//ft_p3d_scalar_multiply(&material.diffuse_color, diffuse_light_intensity);
+	// if (ft_p3d_sum(&temp, &temp2).x != 0)
+	// {
+	// 	// printf("\n\n");
+	// 	// ft_p3d_print(ft_p3d_scalar_multiply(&material.diffuse_color, diffuse_light_intensity));
+	// 	// printf("\n");
+	// 	// ft_p3d_print(ft_p3d_sum(&temp, &temp2));
+	// 	// printf("\n\n");
+	// }
+	return ft_p3d_sum(temp, temp2);//ft_p3d_scalar_multiply(&material.diffuse_color, diffuse_light_intensity);
 }
 
 
@@ -385,8 +393,9 @@ void 	ft_render(t_game* game, t_sphere *sphere)
 		for (size_t i = 0; i< width; i++) {
 			float x =  (2*(i + 0.5)/(float)width  - 1)*tan(fov/2.)*width/(float)height;
 			float y = -(2*(j + 0.5)/(float)height - 1)*tan(fov/2.);
-			t_p3d dir = *ft_p3d_normalize(&(t_p3d){x, y, -1}, 1);//.normalize();
-			t_p3d temp = cast_ray(ft_p3d_create(0,0,0), &dir, game->spheres);
+			t_p3d dir = ft_p3d_normalize((t_p3d){x, y, -1});//.normalize();
+			t_p3d orign = ft_p3d_create(0,0,0);
+			t_p3d temp = cast_ray(&orign, &dir, game->spheres);
 			game->sdl->surface->data[i+j*width] = ft_rgb_to_hex(temp.x, temp.y, temp.z);
 			// if (sqrt(pow(i - sphere->center.x, 2) + pow(j - sphere->center.y, 2)) <= sphere->radius)
 			// {
@@ -462,7 +471,7 @@ int	main(int argc, char **argv)
 	game.sdl = malloc(sizeof(t_sdl));
 	game.image = ft_surface_create(WIN_W, WIN_H);
 	t_material ivory = (t_material){(t_p3d){0, 0, 255}, (t_p3d){1, 1, 0}, 50};
-	t_material bb = (t_material){(t_p3d){0, 125, 125}, (t_p3d){0.6, 0.3, 0}, 50};
+	t_material bb = (t_material){(t_p3d){0, 125, 125}, (t_p3d){0.6, 0.3, 0}, 10};
 	//printf("%f %f %f\n", bb.albendo.x, bb.albendo.y, bb.specular_exponent);
 	game.elum.lights = ft_memalloc(sizeof(t_light) * 5);
 	game.elum.lights[0] = (t_light){(t_p3d){7, 10, -16}, .7};
