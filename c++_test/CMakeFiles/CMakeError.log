@@ -89,3 +89,16 @@ make: *** [cmTC_f0ef7/fast] Error 2
 
 Source file was:
 int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: /Users/jblack-b/Documents/Rtv1/c++_test/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_6037f/fast 
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_6037f.dir/build.make CMakeFiles/cmTC_6037f.dir/build
+Building CXX object CMakeFiles/cmTC_6037f.dir/src.cxx.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++    -Wall -Wextra -pedantic -std=c++11 -O3 -Dflag_supported   -fopenmp -o CMakeFiles/cmTC_6037f.dir/src.cxx.o -c /Users/jblack-b/Documents/Rtv1/c++_test/CMakeFiles/CMakeTmp/src.cxx
+clang: error: unsupported option '-fopenmp'
+make[2]: *** [CMakeFiles/cmTC_6037f.dir/src.cxx.o] Error 1
+make[1]: *** [cmTC_6037f/fast] Error 2
+
+Source file was:
+int main() { return 0; }

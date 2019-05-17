@@ -97,8 +97,8 @@ void render(const std::vector<Sphere> &spheres, const std::vector<Light> &lights
     ofs << "P6\n" << width << " " << height << "\n255\n";
     for (size_t i = 0; i < height*width; ++i) {
         Vec3f &c = framebuffer[i];
-        float max = std::max(c[0], std::max(c[1], c[2]));
-        if (max>1) c = c*(1./max);
+        //float max = std::max(c[0], std::max(c[1], c[2]));
+        //if (max>1) c = c*(1./max);
         for (size_t j = 0; j<3; j++) {
             ofs << (char)(255 * std::max(0.f, std::min(1.f, framebuffer[i][j])));
         }
@@ -107,8 +107,8 @@ void render(const std::vector<Sphere> &spheres, const std::vector<Light> &lights
 }
 
 int main() {
-    Material      ivory(Vec2f(0.6,  0.3), Vec3f(0.4, 0.4, 0.3),   50.);
-    Material red_rubber(Vec2f(0.9,  0.1), Vec3f(0.3, 0.1, 0.1),   10.);
+    Material      ivory(Vec2f(0.6,  0.3), Vec3f(0.4, 0.4, 0.3),   70.);
+    Material red_rubber(Vec2f(0.3,  0.5), Vec3f(0.3, 0.1, 0.1),   10000.);
 
     std::vector<Sphere> spheres;
     spheres.push_back(Sphere(Vec3f(-3,    0,   -16), 2,      ivory));

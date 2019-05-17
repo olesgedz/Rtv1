@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:53:03 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/05/17 18:58:13 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/05/17 19:49:45 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -340,27 +340,24 @@ t_p3d cast_ray (t_p3d *orig, t_p3d *dir, t_sphere *spheres) {
 	 float sphere_dist = FLT_MAX;
 	//if (!ray_intersect(&spheres[0], orig, dir, &sphere_dist))
 	if(!scene_intersect(orig, dir, spheres, &point, &N, &material)) {
-		return ft_p3d_create(120, 120, 120); // background color
+		return ft_p3d_create(0.4, 0.4, 0.4); // background color
 	}
 	float diffuse_light_intensity = 0;
 	float specular_light_intensity = 0;
 		for (size_t i=0; i<game.elum.number; i++)
 		{
-			t_p3d temp = ft_p3d_substract(game.elum.lights[i].position, point);
-			t_p3d light_dir      = ft_p3d_normalize(temp);
-			temp = ft_p3d_scalar_multiply(light_dir, -1);
+			t_p3d light_dir      = ft_p3d_normalize(ft_p3d_substract(game.elum.lights[i].position, point));
 			diffuse_light_intensity  += game.elum.lights[i].intensity * max(0, ft_p3d_dot_multiply(light_dir, N));
-			t_p3d temp3 = reflect(temp, N);
-			t_p3d temp2 = ft_p3d_scalar_multiply(temp3, -1);
-			specular_light_intensity += powf(max(0.f, ft_p3d_dot_multiply(temp2,*dir)), material.specular_exponent)*game.elum.lights[i].intensity;
+			specular_light_intensity += powf(max(0.f, ft_p3d_dot_multiply(ft_p3d_scalar_multiply(reflect(ft_p3d_scalar_multiply(light_dir, -1), N), -1),*dir)),\
+			 material.specular_exponent)*game.elum.lights[i].intensity;
 		
 			// write negative * -1
 		}
 		//printf("1:");
 		//ft_p3d_print(ft_p3d_scalar_multiply(&material.diffuse_color, diffuse_light_intensity));
 		//printf("x:%f y:%f light:%f \n", material.albendo.x, material.albendo.y, specular_light_intensity);
-	t_p3d temp = ft_p3d_scalar_multiply(material.diffuse_color, diffuse_light_intensity * material.albendo.x);
-	t_p3d temp2 = ft_p3d_scalar_multiply((t_p3d){1,1,1}, specular_light_intensity * material.albendo.y);
+	// t_p3d temp = ft_p3d_scalar_multiply(material.diffuse_color, diffuse_light_intensity * material.albendo.x);
+	// t_p3d temp2 = ft_p3d_scalar_multiply((t_p3d){1,1,1}, specular_light_intensity * material.albendo.y);
 	//material.diffuse_color * diffuse_light_intensity * material.albedo[0] + Vec3f(1., 1., 1.)*specular_light_intensity * material.albedo[1];
 	//printf("2:");
 	//ft_p3d_print(ft_p3d_sum(&temp, &temp2));
@@ -372,7 +369,7 @@ t_p3d cast_ray (t_p3d *orig, t_p3d *dir, t_sphere *spheres) {
 	// 	// ft_p3d_print(ft_p3d_sum(&temp, &temp2));
 	// 	// printf("\n\n");
 	// }
-	return ft_p3d_sum(temp, temp2);//ft_p3d_scalar_multiply(&material.diffuse_color, diffuse_light_intensity);
+	return ft_p3d_sum(ft_p3d_scalar_multiply(material.diffuse_color, diffuse_light_intensity * material.albendo.x),  ft_p3d_scalar_multiply((t_p3d){1,1,1}, specular_light_intensity *  material.albendo.y));					//ft_p3d_scalar_multiply(&material.diffuse_color, diffuse_light_intensity);
 }
 
 
@@ -396,7 +393,8 @@ void 	ft_render(t_game* game, t_sphere *sphere)
 			t_p3d dir = ft_p3d_normalize((t_p3d){x, y, -1});//.normalize();
 			t_p3d orign = ft_p3d_create(0,0,0);
 			t_p3d temp = cast_ray(&orign, &dir, game->spheres);
-			game->sdl->surface->data[i+j*width] = ft_rgb_to_hex(temp.x, temp.y, temp.z);
+			game->sdl->surface->data[i+j*width] = ft_rgb_to_hex(225 * max(0, min(1, temp.x)), 225 * max(0, min(1, temp.y)), 225 * max(0, min(1, temp.z)));
+			//255 * std::max(0.f, std::min(1.f, framebuffer[i][j]))
 			// if (sqrt(pow(i - sphere->center.x, 2) + pow(j - sphere->center.y, 2)) <= sphere->radius)
 			// {
 			// 	game->sdl->surface->data[i+j*width] = 0xFF0000;
@@ -470,11 +468,11 @@ int	main(int argc, char **argv)
 	printf("move light source with wasdqe \nchange intensity with zx\n");
 	game.sdl = malloc(sizeof(t_sdl));
 	game.image = ft_surface_create(WIN_W, WIN_H);
-	t_material ivory = (t_material){(t_p3d){0, 0, 255}, (t_p3d){1, 1, 0}, 50};
-	t_material bb = (t_material){(t_p3d){0, 125, 125}, (t_p3d){0.6, 0.3, 0}, 10};
+	t_material ivory = (t_material){(t_p3d){1, 0.4, 0.3}, (t_p3d){0.5, 0.4, 0.5}, 150};
+	t_material bb = (t_material){(t_p3d){0.3, 0.1, 0.1}, (t_p3d){0.6, 0.3, 0}, 10};
 	//printf("%f %f %f\n", bb.albendo.x, bb.albendo.y, bb.specular_exponent);
 	game.elum.lights = ft_memalloc(sizeof(t_light) * 5);
-	game.elum.lights[0] = (t_light){(t_p3d){7, 10, -16}, .7};
+	game.elum.lights[0] = (t_light){(t_p3d){7, 10, -16}, .8};
 	game.elum.number = 1;
 	game.n_spheres = 3;
 	game.spheres = ft_memalloc(sizeof(t_sphere) * 5);

@@ -4206,3 +4206,68 @@ Linking CXX executable cmTC_a91e3
 
 Source file was:
 int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported succeeded with the following output:
+Change Dir: /Users/jblack-b/Documents/Rtv1/c++_test/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_dd5f7/fast 
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_dd5f7.dir/build.make CMakeFiles/cmTC_dd5f7.dir/build
+Building CXX object CMakeFiles/cmTC_dd5f7.dir/src.cxx.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++    -Dflag_supported   -Wall -o CMakeFiles/cmTC_dd5f7.dir/src.cxx.o -c /Users/jblack-b/Documents/Rtv1/c++_test/CMakeFiles/CMakeTmp/src.cxx
+Linking CXX executable cmTC_dd5f7
+/Users/jblack-b/.brew/Cellar/cmake/3.14.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_dd5f7.dir/link.txt --verbose=1
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   -Dflag_supported -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_dd5f7.dir/src.cxx.o  -o cmTC_dd5f7 
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported succeeded with the following output:
+Change Dir: /Users/jblack-b/Documents/Rtv1/c++_test/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_8e6ed/fast 
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_8e6ed.dir/build.make CMakeFiles/cmTC_8e6ed.dir/build
+Building CXX object CMakeFiles/cmTC_8e6ed.dir/src.cxx.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++    -Wall -Dflag_supported   -Wextra -o CMakeFiles/cmTC_8e6ed.dir/src.cxx.o -c /Users/jblack-b/Documents/Rtv1/c++_test/CMakeFiles/CMakeTmp/src.cxx
+Linking CXX executable cmTC_8e6ed
+/Users/jblack-b/.brew/Cellar/cmake/3.14.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8e6ed.dir/link.txt --verbose=1
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   -Wall -Dflag_supported -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_8e6ed.dir/src.cxx.o  -o cmTC_8e6ed 
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported succeeded with the following output:
+Change Dir: /Users/jblack-b/Documents/Rtv1/c++_test/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_18883/fast 
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_18883.dir/build.make CMakeFiles/cmTC_18883.dir/build
+Building CXX object CMakeFiles/cmTC_18883.dir/src.cxx.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++    -Wall -Wextra -Dflag_supported   -pedantic -o CMakeFiles/cmTC_18883.dir/src.cxx.o -c /Users/jblack-b/Documents/Rtv1/c++_test/CMakeFiles/CMakeTmp/src.cxx
+Linking CXX executable cmTC_18883
+/Users/jblack-b/.brew/Cellar/cmake/3.14.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_18883.dir/link.txt --verbose=1
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   -Wall -Wextra -Dflag_supported -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_18883.dir/src.cxx.o  -o cmTC_18883 
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported succeeded with the following output:
+Change Dir: /Users/jblack-b/Documents/Rtv1/c++_test/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_b6c5f/fast 
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_b6c5f.dir/build.make CMakeFiles/cmTC_b6c5f.dir/build
+Building CXX object CMakeFiles/cmTC_b6c5f.dir/src.cxx.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++    -Wall -Wextra -pedantic -Dflag_supported   -std=c++11 -o CMakeFiles/cmTC_b6c5f.dir/src.cxx.o -c /Users/jblack-b/Documents/Rtv1/c++_test/CMakeFiles/CMakeTmp/src.cxx
+Linking CXX executable cmTC_b6c5f
+/Users/jblack-b/.brew/Cellar/cmake/3.14.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b6c5f.dir/link.txt --verbose=1
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   -Wall -Wextra -pedantic -Dflag_supported -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_b6c5f.dir/src.cxx.o  -o cmTC_b6c5f 
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported succeeded with the following output:
+Change Dir: /Users/jblack-b/Documents/Rtv1/c++_test/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_1df0e/fast 
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_1df0e.dir/build.make CMakeFiles/cmTC_1df0e.dir/build
+Building CXX object CMakeFiles/cmTC_1df0e.dir/src.cxx.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++    -Wall -Wextra -pedantic -std=c++11 -Dflag_supported   -O3 -o CMakeFiles/cmTC_1df0e.dir/src.cxx.o -c /Users/jblack-b/Documents/Rtv1/c++_test/CMakeFiles/CMakeTmp/src.cxx
+Linking CXX executable cmTC_1df0e
+/Users/jblack-b/.brew/Cellar/cmake/3.14.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1df0e.dir/link.txt --verbose=1
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   -Wall -Wextra -pedantic -std=c++11 -Dflag_supported -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_1df0e.dir/src.cxx.o  -o cmTC_1df0e 
+
+Source file was:
+int main() { return 0; }
