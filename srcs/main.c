@@ -6,7 +6,7 @@
 /*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:53:03 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/05/18 02:14:01 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/05/18 10:51:39 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -429,7 +429,10 @@ void ft_update(t_game *game)
 	t_sphere sphere = {(t_p3d){-3, 0, -16}, 2};
 	while(1)
 	{
-		game->spheres[2].center = game->elum.lights[0].position;
+		((t_light *)game->elum.light.get(&game->elum.light, 0))->position = game->elum.lights[0].position; //  Because VECTORS!
+		game->spheres[2].center =  ((t_light *)game->elum.light.get(&game->elum.light, 0))->position;       //game->elum.lights[0].position;
+		//printf("%f %f\n", ((t_light *)game->elum.light.get(&game->elum.light, 0))->position.x);
+		
 		ft_surface_clear(game->sdl->surface);
 		ft_input(game->sdl, &ft_input_keys);
 		if(game->wsad[0]) { game->elum.lights[0].position.z -= 1;}
@@ -440,11 +443,11 @@ void ft_update(t_game *game)
 		if(game->wsad[5]) { game->elum.lights[0].position.y -= 1; }
 		if(game->wsad[6]) { game->elum.lights[0].intensity += 0.1; }
 		if(game->wsad[7]) { game->elum.lights[0].intensity -= 0.1; }
+		
 		ft_render(game, &sphere);
 		//ft_put_pixel(game->sdl->surface, &(t_point){500,500}, 0xFF0000);
 		ft_surface_combine(game->sdl->surface, game->image, &r);
 		ft_surface_present(game->sdl, game->sdl->surface);
-		//SDL_Delay(20);
 	 }
 }
 
@@ -482,7 +485,9 @@ int	main(int argc, char **argv)
 	game.elum.lights[1] = (t_light){(t_p3d){-20, 20, 20}, 1.5};
 	game.elum.lights[2] = (t_light){(t_p3d){30, 50, -25}, 1.8};
 	game.elum.lights[3] = (t_light){(t_p3d){30, 20, 30}, 1.7};
-	game.elum.number = 4;
+	vector_init(&game.elum.light);
+	vector_add(&game.elum.light,  &(t_light){(t_p3d){7, 10, -16}, 1.5});
+	game.elum.number = vector_total(&game.elum.light);
 	game.n_spheres = 5;
 	game.spheres = ft_memalloc(sizeof(t_sphere) * 6);
 	game.spheres[0] = (t_sphere){(t_p3d){-3, 0, -16}, ivory, 2};
