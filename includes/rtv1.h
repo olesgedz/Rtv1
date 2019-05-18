@@ -44,6 +44,7 @@ typedef struct s_light {
 
 typedef struct s_lights {
 	t_light *lights;
+	t_vector light;
 	int number;
 } t_lights;
 
