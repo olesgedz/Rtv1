@@ -6,7 +6,7 @@
 /*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:53:03 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/05/18 10:51:39 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/05/18 11:08:18 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -486,7 +486,7 @@ int	main(int argc, char **argv)
 	game.elum.lights[2] = (t_light){(t_p3d){30, 50, -25}, 1.8};
 	game.elum.lights[3] = (t_light){(t_p3d){30, 20, 30}, 1.7};
 	vector_init(&game.elum.light);
-	vector_add(&game.elum.light,  &(t_light){(t_p3d){7, 10, -16}, 1.5});
+	game.elum.light.add(&game.elum.light,  &(t_light){(t_p3d){7, 10, -16}, 1.5});
 	game.elum.number = vector_total(&game.elum.light);
 	game.n_spheres = 5;
 	game.spheres = ft_memalloc(sizeof(t_sphere) * 6);
