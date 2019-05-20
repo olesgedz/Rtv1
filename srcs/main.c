@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdurgan <sdurgan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:53:03 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/05/20 14:01:48 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/05/20 14:39:25 by sdurgan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void ft_mouse_pressed(t_game *game, SDL_Event *ev)
 
 /*
 *	Funtion: handles presses mouse/keyboard
-* 	Return:value, doesnt change any parameters
+* 	Return: value, doesnt change any parameters
 *
 *	- can handle multiple presses at once
 *	- that goes into libsdl void ft_input(void *main, int (*f)(void *main, SDL_Event *ev))
@@ -125,8 +125,7 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 t_p3d ft_p3d_create(float x, float y, float z)
 {
 	t_p3d new;
-	
-	//new = malloc (sizeof(t_p3d));
+
 	new.x = x;
 	new.y = y;
 	new.z = z;
@@ -139,10 +138,10 @@ t_p3d ft_p3d_create(float x, float y, float z)
 */
 
 
-t_p3d ft_p3d_sum(t_p3d a, t_p3d b)
+t_p3d	ft_p3d_sum(t_p3d a, t_p3d b)
 {
 	t_p3d new;
-	
+
 	new.x = (a.x + b.x);
 	new.y = (a.y + b.y);
 	new.z = (a.z + b.z);
@@ -156,10 +155,10 @@ t_p3d ft_p3d_sum(t_p3d a, t_p3d b)
 */
 
 
-t_p3d ft_p3d_substract(t_p3d a, t_p3d b)
+t_p3d	ft_p3d_substract(t_p3d a, t_p3d b)
 {
 	t_p3d new;
-	
+
 	new.x = (a.x - b.x);
 	new.y = (a.y - b.y);
 	new.z = (a.z - b.z);
@@ -270,7 +269,7 @@ t_p3d	reflect(t_p3d I, t_p3d n)
 	return ft_p3d_substract(I, temp);
 }
 /*
-*	Fucntion: checks of ray hits sphere
+*	Fucntion: checks if a ray hits the sphere
 *	Parameters: stuff, sphere, ray
 *	Return: true or false
 */
@@ -280,14 +279,16 @@ int ray_intersect(t_sphere *sphere, t_p3d *orig, t_p3d *dir, float *t0)
 	// printf("%f %f %f, dir: %f %f %f\n", L.x, L.y, L.z, dir->x, dir->y, dir->z);
 	float tca = ft_p3d_dot_multiply(L, *dir);
 	//printf("tca %f\n", tca);
-	float d2 = ft_p3d_dot_multiply(L, L) - tca*tca;
+	float d2 = ft_p3d_dot_multiply(L, L) - tca * tca;
 	//printf("d2 %f %f \n", d2, sphere->radius * sphere->radius);
 	if (d2 > sphere->radius * sphere->radius) return FALSE;
-	float thc = sqrtf( sphere->radius * sphere->radius - d2);
+	float thc = sqrtf(sphere->radius * sphere->radius - d2);
 	*t0	= tca - thc;
 	float t1 = tca + thc;
-	if (t0 < 0) *t0 = t1;
-	if (t0 < 0) return FALSE;
+	if (t0 < 0)
+		*t0 = t1;
+	if (t0 < 0)
+		return FALSE;
 	return TRUE;
 }
 
@@ -300,7 +301,7 @@ int ray_intersect(t_sphere *sphere, t_p3d *orig, t_p3d *dir, float *t0)
 int scene_intersect( t_p3d *orig, t_p3d *dir, t_sphere *spheres, t_p3d *hit, t_p3d *N, t_material *material)
 {
 	float spheres_dist = FLT_MAX; // WHY
-	size_t i=0;
+	size_t i = 0;
 	// ft_p3d_print(&spheres[0].center);
 	// ft_p3d_print(&spheres[1].center);
 	//ft_exit(NULL);
@@ -321,7 +322,7 @@ int scene_intersect( t_p3d *orig, t_p3d *dir, t_sphere *spheres, t_p3d *hit, t_p
 		}
 		i++;
 	}
-	return spheres_dist<1000;
+	return spheres_dist < 1000;
 }
 
 /*
@@ -330,34 +331,34 @@ int scene_intersect( t_p3d *orig, t_p3d *dir, t_sphere *spheres, t_p3d *hit, t_p
 *	Return: returns matiral(color) for that pixel
 */
 
-t_p3d cast_ray (t_p3d *orig, t_p3d *dir, t_sphere *spheres) {
+t_p3d cast_ray(t_p3d *orig, t_p3d *dir, t_sphere *spheres)
+{
 	t_p3d point;
 	t_p3d N;
 	t_material material;
 
 	// ft_p3d_print(&spheres[0].center);
 	// ft_p3d_print(&spheres[1].center);
-	 float sphere_dist = FLT_MAX;
+	float sphere_dist = FLT_MAX;
 	//if (!ray_intersect(&spheres[0], orig, dir, &sphere_dist))
-	if(!scene_intersect(orig, dir, spheres, &point, &N, &material)) {
+	if(!scene_intersect(orig, dir, spheres, &point, &N, &material))
 		return ft_p3d_create(0.4, 0.4, 0.4); // background color
-	}
 	float diffuse_light_intensity = 0;
 	float specular_light_intensity = 0;
-		for (size_t i=0; i<game.elum.number; i++)
-		{
-			t_p3d light_dir      = ft_p3d_normalize(ft_p3d_substract(game.elum.lights[i].position, point));
-			float light_distance = ft_p3d_norm(ft_p3d_substract(game.elum.lights[i].position, point));
-			t_p3d shadow_orig = ((ft_p3d_dot_multiply(light_dir, N) < 0) ? ft_p3d_substract(point, ft_p3d_scalar_multiply(N, 1e-3)) : ft_p3d_sum(point, ft_p3d_scalar_multiply(N, 1e-3)));
-			t_p3d shadow_pt, shadow_N;
-			t_material temp_material;
-			if (scene_intersect(&shadow_orig, &light_dir, spheres, &shadow_pt, &shadow_N, &temp_material) && ((ft_p3d_norm(ft_p3d_substract(shadow_pt, shadow_orig)) < light_distance)))
-			diffuse_light_intensity  += game.elum.lights[i].intensity * max(0, ft_p3d_dot_multiply(light_dir, N));
-			specular_light_intensity += powf(max(0.f, ft_p3d_dot_multiply(ft_p3d_scalar_multiply(reflect(ft_p3d_scalar_multiply(light_dir, -1), N), -1),*dir)),\
-			 material.specular_exponent)*game.elum.lights[i].intensity;
+	for (size_t i=0; i<game.elum.number; i++)
+	{
+		t_p3d light_dir      = ft_p3d_normalize(ft_p3d_substract(game.elum.lights[i].position, point));
+		float light_distance = ft_p3d_norm(ft_p3d_substract(game.elum.lights[i].position, point));
+		t_p3d shadow_orig = ((ft_p3d_dot_multiply(light_dir, N) < 0) ? ft_p3d_substract(point, ft_p3d_scalar_multiply(N, 1e-3)) : ft_p3d_sum(point, ft_p3d_scalar_multiply(N, 1e-3)));
+		t_p3d shadow_pt, shadow_N;
+		t_material temp_material;
+		if (scene_intersect(&shadow_orig, &light_dir, spheres, &shadow_pt, &shadow_N, &temp_material) && ((ft_p3d_norm(ft_p3d_substract(shadow_pt, shadow_orig)) < light_distance)))
+		diffuse_light_intensity  += game.elum.lights[i].intensity * max(0, ft_p3d_dot_multiply(light_dir, N));
+		specular_light_intensity += powf(max(0.f, ft_p3d_dot_multiply(ft_p3d_scalar_multiply(reflect(ft_p3d_scalar_multiply(light_dir, -1), N), -1),*dir)),\
+		 	material.specular_exponent)*game.elum.lights[i].intensity;
 		
 			// write negative * -1
-		}
+	}
 		//printf("1:");
 		//ft_p3d_print(ft_p3d_scalar_multiply(&material.diffuse_color, diffuse_light_intensity));
 		//printf("x:%f y:%f light:%f \n", material.albendo.x, material.albendo.y, specular_light_intensity);
@@ -375,7 +376,7 @@ t_p3d cast_ray (t_p3d *orig, t_p3d *dir, t_sphere *spheres) {
 	// 	// printf("\n\n");
 	// }
 	return ft_p3d_sum(ft_p3d_scalar_multiply(material.diffuse_color, diffuse_light_intensity * material.albendo.x), \
-	 ft_p3d_scalar_multiply((t_p3d){1,1,1}, specular_light_intensity *  material.albendo.y));					//ft_p3d_scalar_multiply(&material.diffuse_color, diffuse_light_intensity);
+	 	ft_p3d_scalar_multiply((t_p3d){1,1,1}, specular_light_intensity *  material.albendo.y));					//ft_p3d_scalar_multiply(&material.diffuse_color, diffuse_light_intensity);
 }
 
 
@@ -389,15 +390,20 @@ t_p3d cast_ray (t_p3d *orig, t_p3d *dir, t_sphere *spheres) {
 */
 void 	ft_render(t_game* game, t_sphere *sphere)
 {
+	int		i;
+	int		j;
 	int width = game->sdl->surface->width;
 	int height = game->sdl->surface->height;
-	for (size_t j = 0; j<height ; j++)
+	j = -1;
+	while (++j < height)
 	{
-		for (size_t i = 0; i< width; i++) {
-			float x =  (2*(i + 0.5)/(float)width  - 1)*tan(fov/2.)*width/(float)height;
-			float y = -(2*(j + 0.5)/(float)height - 1)*tan(fov/2.);
-			t_p3d dir = ft_p3d_normalize((t_p3d){x, y, -1});//.normalize();
-			t_p3d orign = ft_p3d_create(0,0,0);
+		i = -1;
+		while (++i < width)
+		{
+			float x = (2 * (i + 0.5) / (float)width  - 1) * tan(fov / 2.) * width / (float)height;
+			float y = -(2 * (j + 0.5) / (float)height - 1) * tan(fov / 2.);
+			t_p3d dir = ft_p3d_normalize((t_p3d){x, y, -1});
+			t_p3d orign = ft_p3d_create(0, 0, 0);
 			t_p3d temp = cast_ray(&orign, &dir, game->spheres);
 			game->sdl->surface->data[i+j*width] = ft_rgb_to_hex(225 * max(0, min(1, temp.x)), 225 * max(0, min(1, temp.y)), 225 * max(0, min(1, temp.z)));
 			//255 * std::max(0.f, std::min(1.f, framebuffer[i][j]))
@@ -432,22 +438,21 @@ void ft_update(t_game *game)
 		// ((t_light *)game->elum.light.get(&game->elum.light, 0))->position = game->elum.lights[0].position; //  Because VECTORS!
 		// game->spheres[2].center =  ((t_light *)game->elum.light.get(&game->elum.light, 0))->position;       //game->elum.lights[0].position;
 		//printf("%f %f\n", ((t_light *)game->elum.light.get(&game->elum.light, 0))->position.x);
-		
 		game->spheres[2].center = game->elum.lights[0].position;
 		ft_surface_clear(game->sdl->surface);
 		ft_input(game->sdl, &ft_input_keys);
-		if(game->wsad[0]) { game->elum.lights[0].position.z -= 1;}
-		if(game->wsad[1]) { game->elum.lights[0].position.z += 1;}
-		if(game->wsad[2]) { game->elum.lights[0].position.x -= 1;}
-		if(game->wsad[3]) { game->elum.lights[0].position.x += 1;}
-		if(game->wsad[4]) { game->elum.lights[0].position.y += 1;}
-		if(game->wsad[5]) { game->elum.lights[0].position.y -= 1; }
-		if(game->wsad[6]) { game->elum.lights[0].intensity += 0.1; }
-		if(game->wsad[7]) { game->elum.lights[0].intensity -= 0.1; }
+		game->wsad[0] ? game->elum.lights[0].position.z -= 1 : 0;
+		game->wsad[1] ? game->elum.lights[0].position.z += 1 : 0;
+		game->wsad[2] ? game->elum.lights[0].position.x -= 1 : 0;
+		game->wsad[3] ? game->elum.lights[0].position.x += 1 : 0;
+		game->wsad[4] ? game->elum.lights[0].position.y += 1 : 0;
+		game->wsad[5] ? game->elum.lights[0].position.y -= 1 : 0;
+		game->wsad[6] ? game->elum.lights[0].intensity += 0.1 : 0;
+		game->wsad[7] ? game->elum.lights[0].intensity -= 0.1 : 0;
 		
 		ft_render(game, &sphere);
 		//ft_put_pixel(game->sdl->surface, &(t_point){500,500}, 0xFF0000);
-		ft_surface_combine(game->sdl->surface, game->image, &r);
+		//ft_surface_combine(game->sdl->surface, game->image, &r);
 		ft_surface_present(game->sdl, game->sdl->surface);
 	 }
 }
@@ -506,7 +511,6 @@ int	main(int argc, char **argv)
 	//printf("%d",ray_intersect(&sphere, ft_p3d_create(0,0,0), ft_p3d_normalize(&(t_p3d){650, 650, -1}, 1), FLT_MAX));
 	ft_init_window(game.sdl, WIN_W, WIN_H);
 	printf("%zu, %zu\n", game.sdl->surface->height, game.sdl->surface->width);
-
 	ft_update(&game);
 	ft_exit(NULL);
 }
