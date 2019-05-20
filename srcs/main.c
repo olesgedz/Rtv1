@@ -6,7 +6,7 @@
 /*   By: sdurgan <sdurgan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:53:03 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/05/20 15:39:35 by sdurgan          ###   ########.fr       */
+/*   Updated: 2019/05/20 16:25:03 by sdurgan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -326,13 +326,14 @@ int scene_intersect( t_p3d *orig, t_p3d *dir, t_sphere *spheres, t_p3d *hit, t_p
     if (fabs(dir->y) > 1e-3)
 	{
         float d = -(orig->y + 4) / dir->y; // the checkerboard plane has equation y = -4
-        t_p3d pt = ft_p3d_sum(*orig, ft_p3d_scalar_multiply(*dir, d));
-        if (d > 0 && fabs(pt.x) < 10 && pt.z < -10 && pt.z > -30 && d < spheres_dist)
+        t_p3d board = ft_p3d_sum(*orig, ft_p3d_scalar_multiply(*dir, d));
+        if (d > 0 && fabs(board.x) < 10 && board.z < -10 && board.z > -30 && d < spheres_dist)
 		{
             checkerboard_dist = d;
-            *hit = pt;
+            *hit = board;
             *N = ft_p3d_create(0, 1, 0);
-            material->diffuse_color = ((int)(0.5*(hit->x+1000)) + (int)(0.5*hit->z)) & 1 ? ft_p3d_create(0.3, 0.3, 0.3) : ft_p3d_create(0.3, 0.2, 0.1);
+			/* Here a color for a sector is chosen */
+            material->diffuse_color = ((int)(0.5*(hit->x+1000)) + (int)(0.5*(hit->z)) & 1) ? ft_p3d_create(0.1, 0.1, 0.1) : ft_p3d_create(0.8, 0.7, 0.6);
         }
     }
 	if (spheres_dist < checkerboard_dist)
@@ -370,7 +371,12 @@ t_p3d cast_ray(t_p3d *orig, t_p3d *dir, t_sphere *spheres)
 		t_p3d shadow_orig = ((ft_p3d_dot_multiply(light_dir, N) < 0) ? ft_p3d_substract(point, ft_p3d_scalar_multiply(N, 1e-3)) : ft_p3d_sum(point, ft_p3d_scalar_multiply(N, 1e-3)));
 		t_p3d shadow_pt, shadow_N;
 		t_material temp_material;
+		/* 
+		* Если раскомментить этот иф, то тени на доску правильные, а свет на сферах - нет 
+		* Если убрать - то на доску бросается свет, а не тень
+		*/
 		if (scene_intersect(&shadow_orig, &light_dir, spheres, &shadow_pt, &shadow_N, &temp_material) && ((ft_p3d_norm(ft_p3d_substract(shadow_pt, shadow_orig)) < light_distance)))
+			continue ;
 		diffuse_light_intensity  += game.elum.lights[i].intensity * max(0, ft_p3d_dot_multiply(light_dir, N));
 		specular_light_intensity += powf(max(0.f, ft_p3d_dot_multiply(ft_p3d_scalar_multiply(reflect(ft_p3d_scalar_multiply(light_dir, -1), N), -1),*dir)),\
 		 	material.specular_exponent)*game.elum.lights[i].intensity;
