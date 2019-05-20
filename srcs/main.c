@@ -6,7 +6,7 @@
 /*   By: sdurgan <sdurgan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:53:03 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/05/20 14:39:25 by sdurgan          ###   ########.fr       */
+/*   Updated: 2019/05/20 15:39:35 by sdurgan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -322,7 +322,23 @@ int scene_intersect( t_p3d *orig, t_p3d *dir, t_sphere *spheres, t_p3d *hit, t_p
 		}
 		i++;
 	}
-	return spheres_dist < 1000;
+	float checkerboard_dist = FLT_MAX;
+    if (fabs(dir->y) > 1e-3)
+	{
+        float d = -(orig->y + 4) / dir->y; // the checkerboard plane has equation y = -4
+        t_p3d pt = ft_p3d_sum(*orig, ft_p3d_scalar_multiply(*dir, d));
+        if (d > 0 && fabs(pt.x) < 10 && pt.z < -10 && pt.z > -30 && d < spheres_dist)
+		{
+            checkerboard_dist = d;
+            *hit = pt;
+            *N = ft_p3d_create(0, 1, 0);
+            material->diffuse_color = ((int)(0.5*(hit->x+1000)) + (int)(0.5*hit->z)) & 1 ? ft_p3d_create(0.3, 0.3, 0.3) : ft_p3d_create(0.3, 0.2, 0.1);
+        }
+    }
+	if (spheres_dist < checkerboard_dist)
+		return spheres_dist < 1000;
+	else
+		return checkerboard_dist < 1000;
 }
 
 /*
@@ -336,6 +352,7 @@ t_p3d cast_ray(t_p3d *orig, t_p3d *dir, t_sphere *spheres)
 	t_p3d point;
 	t_p3d N;
 	t_material material;
+	int	i;
 
 	// ft_p3d_print(&spheres[0].center);
 	// ft_p3d_print(&spheres[1].center);
@@ -345,7 +362,8 @@ t_p3d cast_ray(t_p3d *orig, t_p3d *dir, t_sphere *spheres)
 		return ft_p3d_create(0.4, 0.4, 0.4); // background color
 	float diffuse_light_intensity = 0;
 	float specular_light_intensity = 0;
-	for (size_t i=0; i<game.elum.number; i++)
+	i = -1;
+	while (++i < game.elum.number)
 	{
 		t_p3d light_dir      = ft_p3d_normalize(ft_p3d_substract(game.elum.lights[i].position, point));
 		float light_distance = ft_p3d_norm(ft_p3d_substract(game.elum.lights[i].position, point));
