@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdurgan <sdurgan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:53:03 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/05/20 16:25:03 by sdurgan          ###   ########.fr       */
+/*   Updated: 2019/05/21 11:17:30 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -375,7 +375,7 @@ t_p3d cast_ray(t_p3d *orig, t_p3d *dir, t_sphere *spheres)
 		* Если раскомментить этот иф, то тени на доску правильные, а свет на сферах - нет 
 		* Если убрать - то на доску бросается свет, а не тень
 		*/
-		if (scene_intersect(&shadow_orig, &light_dir, spheres, &shadow_pt, &shadow_N, &temp_material) && ((ft_p3d_norm(ft_p3d_substract(shadow_pt, shadow_orig)) < light_distance)))
+		if (scene_intersect(&shadow_orig, &light_dir, spheres, &shadow_pt, &shadow_N, &temp_material) && !((ft_p3d_norm(ft_p3d_substract(shadow_pt, shadow_orig)) < light_distance)))
 			continue ;
 		diffuse_light_intensity  += game.elum.lights[i].intensity * max(0, ft_p3d_dot_multiply(light_dir, N));
 		specular_light_intensity += powf(max(0.f, ft_p3d_dot_multiply(ft_p3d_scalar_multiply(reflect(ft_p3d_scalar_multiply(light_dir, -1), N), -1),*dir)),\
