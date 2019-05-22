@@ -6,7 +6,7 @@
 /*   By: sdurgan <sdurgan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:53:03 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/05/20 16:25:03 by sdurgan          ###   ########.fr       */
+/*   Updated: 2019/05/22 14:49:23 by sdurgan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,14 +298,15 @@ int ray_intersect(t_sphere *sphere, t_p3d *orig, t_p3d *dir, float *t0)
 *	Return: true or false
 */
 
-int scene_intersect( t_p3d *orig, t_p3d *dir, t_sphere *spheres, t_p3d *hit, t_p3d *N, t_material *material)
+int scene_intersect(t_p3d *orig, t_p3d *dir, t_sphere *spheres, t_p3d *hit, t_p3d *N, t_material *material)
 {
 	float spheres_dist = FLT_MAX; // WHY
-	size_t i = 0;
+	size_t	i = -1;
 	// ft_p3d_print(&spheres[0].center);
 	// ft_p3d_print(&spheres[1].center);
 	//ft_exit(NULL);
-	while (i < game.n_spheres) {
+	while (++i < game.n_spheres)
+	{
 		float dist_i;
 
 		//printf("%d", ray_intersect(&spheres[i], orig, dir, dist_i));
@@ -316,11 +317,10 @@ int scene_intersect( t_p3d *orig, t_p3d *dir, t_sphere *spheres, t_p3d *hit, t_p
 			spheres_dist = dist_i;
 			t_p3d temp = ft_p3d_scalar_multiply(*dir, dist_i);
 			*hit = ft_p3d_sum(*orig, temp);
-			t_p3d tmp = ft_p3d_substract(*hit, spheres[i].center);
-			*N = ft_p3d_normalize(tmp);
+			temp = ft_p3d_substract(*hit, spheres[i].center);
+			*N = ft_p3d_normalize(temp);
 			*material = spheres[i].material;
 		}
-		i++;
 	}
 	float checkerboard_dist = FLT_MAX;
     if (fabs(dir->y) > 1e-3)
@@ -332,14 +332,11 @@ int scene_intersect( t_p3d *orig, t_p3d *dir, t_sphere *spheres, t_p3d *hit, t_p
             checkerboard_dist = d;
             *hit = board;
             *N = ft_p3d_create(0, 1, 0);
-			/* Here a color for a sector is chosen */
             material->diffuse_color = ((int)(0.5*(hit->x+1000)) + (int)(0.5*(hit->z)) & 1) ? ft_p3d_create(0.1, 0.1, 0.1) : ft_p3d_create(0.8, 0.7, 0.6);
         }
     }
-	if (spheres_dist < checkerboard_dist)
-		return spheres_dist < 1000;
-	else
-		return checkerboard_dist < 1000;
+	return spheres_dist < checkerboard_dist ? spheres_dist < 1000 : checkerboard_dist < 1000;
+	//return spheres_dist < 1000;
 }
 
 /*
@@ -375,7 +372,7 @@ t_p3d cast_ray(t_p3d *orig, t_p3d *dir, t_sphere *spheres)
 		* Если раскомментить этот иф, то тени на доску правильные, а свет на сферах - нет 
 		* Если убрать - то на доску бросается свет, а не тень
 		*/
-		if (scene_intersect(&shadow_orig, &light_dir, spheres, &shadow_pt, &shadow_N, &temp_material) && ((ft_p3d_norm(ft_p3d_substract(shadow_pt, shadow_orig)) < light_distance)))
+		if (scene_intersect(&shadow_orig, &light_dir, spheres, &shadow_pt, &shadow_N, &temp_material) && ft_p3d_norm(ft_p3d_substract(shadow_pt, shadow_orig)) < light_distance)
 			continue ;
 		diffuse_light_intensity  += game.elum.lights[i].intensity * max(0, ft_p3d_dot_multiply(light_dir, N));
 		specular_light_intensity += powf(max(0.f, ft_p3d_dot_multiply(ft_p3d_scalar_multiply(reflect(ft_p3d_scalar_multiply(light_dir, -1), N), -1),*dir)),\
