@@ -6,7 +6,7 @@
 /*   By: sdurgan <sdurgan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:53:03 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/05/22 14:49:23 by sdurgan          ###   ########.fr       */
+/*   Updated: 2019/05/22 15:29:54 by sdurgan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,13 +281,14 @@ int ray_intersect(t_sphere *sphere, t_p3d *orig, t_p3d *dir, float *t0)
 	//printf("tca %f\n", tca);
 	float d2 = ft_p3d_dot_multiply(L, L) - tca * tca;
 	//printf("d2 %f %f \n", d2, sphere->radius * sphere->radius);
-	if (d2 > sphere->radius * sphere->radius) return FALSE;
+	if (d2 > sphere->radius * sphere->radius)
+		return FALSE;
 	float thc = sqrtf(sphere->radius * sphere->radius - d2);
 	*t0	= tca - thc;
 	float t1 = tca + thc;
-	if (t0 < 0)
+	if (*t0 < 0)
 		*t0 = t1;
-	if (t0 < 0)
+	if (*t0 < 0)
 		return FALSE;
 	return TRUE;
 }
