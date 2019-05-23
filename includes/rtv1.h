@@ -48,11 +48,20 @@ typedef struct s_lights {
 	int number;
 } t_lights;
 
+// typedef s_object
+// {
+// 	t_p3d pos;
+// 	t_p3d v;
+// 	t_material material;
+// 	float radius;
+// } t_object;
+
 typedef struct s_sphere
 {
 	t_p3d center;
 	t_material material;
 	float radius;
+	t_p3d v;
 } t_sphere;
 
 
