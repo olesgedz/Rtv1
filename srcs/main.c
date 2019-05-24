@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/05/23 18:47:05 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/05/24 15:51:24 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,6 +282,43 @@ double		get_t(double a, double b, double d, float *t0)
 	return (-1);
 }
 
+
+// double		ray_intersect_sphere_impletation(t_sphere *sphere, t_p3d *orig, t_p3d *dir, float *t0)
+// {
+// 	t_p3d vpc = ft_p3d_substract(sphere->center, *orig);
+// 	t_p3d intersec;
+// 	if(ft_p3d_dot_multiply(vpc, *dir) < 0)
+// 	{
+// 		if(ft_p3d_norm(vpc) > sphere->radius)
+// 		{
+// 			// no intersection
+// 		}
+// 		else if (ft_p3d_norm(vpc) == sphere->radius)
+// 		{
+// 			intersec = *orig;
+// 		}
+// 		else //inside 
+// 		{
+			
+// 		}
+		
+// 	}
+// }
+
+
+// //doesn't work
+// double		ray_intersect_sphere_raypathing(t_sphere *sphere, t_p3d *orig, t_p3d *dir, float *t0)
+// {
+// 	  t_p3d pos = *orig;
+//     for (size_t i=0; i<128; i++) {
+//         float d = signed_distance(&pos, sphere);
+// 		*t0 = 10;
+//         if (d < 0) return TRUE;
+//         pos = ft_p3d_sum(pos, ft_p3d_scalar_multiply(*dir, max(d*0.1f, .01f)));
+//     }
+//     return FALSE;
+// }
+
 double		ray_intersect_sphere(t_sphere *sphere, t_p3d *orig, t_p3d *dir, float *t0)
 {
 	float	a;
@@ -383,7 +420,7 @@ int scene_intersect(t_p3d *orig, t_p3d *dir, t_sphere *spheres, t_p3d *hit, t_p3
 		//printf("%d", ray_intersect(&spheres[i], orig, dir, dist_i));
 		// printf("%f, %f\n", dist_i, spheres_dist);
 		// ft_exit(NULL);
-		if (ray_intersect_cone(&spheres[i], orig, dir, &dist_i) && dist_i < spheres_dist)
+		if (ray_intersect_sphere(&spheres[i], orig, dir, &dist_i) && dist_i < spheres_dist)
 		{
 			spheres_dist = dist_i;
 			t_p3d temp = ft_p3d_scalar_multiply(*dir, dist_i);
@@ -582,7 +619,7 @@ int	main(int argc, char **argv)
 	//vector_init(&game.elum.light);
 	//vector_add(&game.elum.light,  &(t_light){(t_p3d){7, 10, -16}, 1.5});
 	game.elum.number = 4; // number of light sources
-	game.n_spheres = 1;
+	game.n_spheres = 5;
 	game.spheres = ft_memalloc(sizeof(t_sphere) * 6);
 	game.spheres[0] = (t_sphere){(t_p3d){-3, 0, -16}, ivory, 5, (t_p3d){1, 1, 1}};
 	game.spheres[1] = (t_sphere){(t_p3d){-1.0, -1.5, -12}, red_rubber, 2, 5};
