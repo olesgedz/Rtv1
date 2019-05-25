@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/05/25 17:48:22 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/05/25 23:11:43 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,12 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 					case 'e': game.wsad[5] = ev->type==SDL_KEYDOWN; break;
 					case 'z': game.wsad[6] = ev->type==SDL_KEYDOWN; break;
 					case 'x': game.wsad[7] = ev->type==SDL_KEYDOWN; break;
-					case 'p': ya+=2; break;
-					case ';': ya-=2; break;
-					case 'l': xa+=2; break;
-					case '\'': xa-=2; break;
-					case '.': za+=2; break;
-					case '/': za-=2; break;
+					case 'p': ya+=0.2; break;
+					case ';': ya-=0.2; break;
+					case 'l': xa+=0.2; break;
+					case '\'': xa-=0.2; break;
+					case '.': za+=0.2; break;
+					case '/': za-=0.2; break;
 					default: break;
 				}
 				break;
@@ -612,7 +612,7 @@ t_p3d ft_p3d_rotate_test1(t_p3d p, t_p3d angle)
 	mat[0][2]=-cz*sx+cx*sy*sz, mat[1][2]=sx*sz+cx*cz*sy, mat[2][2]=cx*cy;
 	new.x=p.x*mat[0][0]+p.y*mat[1][0]+p.z*mat[2][0];
 	new.y=p.x*mat[0][1]+p.y*mat[1][1]+p.z*mat[2][1];
-	new.z=p.x*mat[0][2]+p.y*mat[1][2]+p.z*mat[2][2]+300;	
+	new.z=p.x*mat[0][2]+p.y*mat[1][2]+p.z*mat[2][2]+ 300;	
 	return (new);
 }
 
@@ -630,23 +630,22 @@ t_p3d ft_p3d_rotate_test2(t_p3d p, t_p3d angle)
 {
 
 	t_p3d	v;
+	double		x;
+	double		y;
+	double		z;
 	
-
-	
-	
-	v.x = p.x;
-	v.y =  p.y * cos(angle.x) + p.z * sin(angle.x);
-	v.z =  -p.y * sin(angle.x)+  p.z *cos(angle.x);
-	
-	// x = p.x;
-	// z = v.z;
-	// v.x = cos(angle.y) * x + sin(angle.y) * z;
-	// v.z = -sin(angle.y) * x + cos(angle.y) * z;
-
-	// x = v.x;
-	// y = v.y;
-	// v.x = cos(angle.z) * x - sin(angle.z) * y;
-	// v.y = sin(angle.z) * x + cos(angle.z) * y;
+	x = p.x;
+	z = p.z;
+	v.x = cos(angle.y) * x + sin(angle.y) * z;
+	v.z = -sin(angle.y) * x + cos(angle.y) * z;
+	y = p.y;
+	z = v.z;
+	v.y = cos(angle.x) * y - sin(angle.x) * z;
+	v.z = sin(angle.x) * y + cos(angle.x) * z + 300;
+	x = v.x;
+	y = v.y;
+	v.x = cos(angle.z) * x - sin(angle.z) * y;
+	v.y = sin(angle.z) * x + cos(angle.z) * y;
 	return (v);
 }
 
@@ -718,27 +717,28 @@ void ft_update(t_game *game)
 	t_p3d cube_r[8];
 	for(int i = 0; i < 8; i++)
 	{
-		//cube_r[i] = ft_p3d_project_test1(ft_p3d_rotate_test2(cube[i], (t_p3d){xa,ya,za})); 			//ft_p3d_project_test1(ft_p3d_rotate_test1(cube[i], (t_p3d){xa,ya,za}));
+		cube_r[i] = ft_p3d_project_test1(ft_p3d_rotate_test2(cube[i], (t_p3d){xa,ya,za})); 			//ft_p3d_project_test1(ft_p3d_rotate_test1(cube[i], (t_p3d){xa,ya,za}));
 		
-		printf("\n\n");
-		printf("input :");
-		ft_p3d_print(cube[i]);
-		printf("working :");
-		ft_p3d_print(ft_p3d_rotate_test1(cube[i], (t_p3d){xa,ya,za}));
-		printf("bugged :");
-		ft_p3d_print(ft_p3d_rotate_test2(cube[i], (t_p3d){xa,ya,za}));
-		printf("\n\n");
+		// printf("\n\n");
+		// printf("angles: %f %f %f\n", xa, ya, za);
+		// printf("input :");
+		// ft_p3d_print(cube[i]);
+		// printf("working :");
+		// ft_p3d_print(ft_p3d_rotate_test1(cube[i], (t_p3d){xa,ya,za}));
+		// printf("bugged :");
+		// ft_p3d_print(ft_p3d_rotate_test2(cube[i], (t_p3d){xa,ya,za}));
+		// printf("\n\n");
 	}
 
 
-	// for (int i = 0; i<4; i++)         // Actual drawing
-	// {
-	// 	ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i].x, cube_r[i].y}, &(t_fpoint){cube_r[i+4].x, cube_r[i+4].y}, 0xFF0000);
-	// 	ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i].x, cube_r[i].y}, &(t_fpoint){cube_r[(i+1)%4].x, cube_r[(i+1)%4].y}, 0xFF0000);
-	// 	ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i + 4].x, cube_r[i + 4].y}, &(t_fpoint){cube_r[(i+1)%4 + 4].x, cube_r[(i+1)%4 + 4].y}, 0xFF0000);
-	// 	//SDL_RenderDrawLine(game->sdl->renderer, p.x, p.y, cube[(i+1)%4].x, cube[(i+1)%4].y);
-	// 	//SDL_RenderDrawLine(rgame->sdl->renderer, scrx[i+4], scry[i+4], scrx[((i+1)%4)+4], scry[((i+1)%4)+4]);
-	// }
+	for (int i = 0; i<4; i++)         // Actual drawing
+	{
+		ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i].x, cube_r[i].y}, &(t_fpoint){cube_r[i+4].x, cube_r[i+4].y}, 0xFF0000);
+		ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i].x, cube_r[i].y}, &(t_fpoint){cube_r[(i+1)%4].x, cube_r[(i+1)%4].y}, 0xFF0000);
+		ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i + 4].x, cube_r[i + 4].y}, &(t_fpoint){cube_r[(i+1)%4 + 4].x, cube_r[(i+1)%4 + 4].y}, 0xFF0000);
+		//SDL_RenderDrawLine(game->sdl->renderer, p.x, p.y, cube[(i+1)%4].x, cube[(i+1)%4].y);
+		//SDL_RenderDrawLine(rgame->sdl->renderer, scrx[i+4], scry[i+4], scrx[((i+1)%4)+4], scry[((i+1)%4)+4]);
+	}
 		//ft_put_pixel(game->sdl->surface, &(t_point){500,500}, 0xFF0000);
 		//ft_surface_combine(game->sdl->surface, game->image, &r);
 		ft_surface_present(game->sdl, game->sdl->surface);
