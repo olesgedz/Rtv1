@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/05/24 15:51:24 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/05/25 17:48:22 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 */
 # define DROUND(d)	ABS(d) < 0.00001 ? 0 : (d)
 t_game game;
+float xa, ya, za;
 
 int ft_point_compare(t_list *list, void *target)
 {
@@ -103,6 +104,12 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 					case 'e': game.wsad[5] = ev->type==SDL_KEYDOWN; break;
 					case 'z': game.wsad[6] = ev->type==SDL_KEYDOWN; break;
 					case 'x': game.wsad[7] = ev->type==SDL_KEYDOWN; break;
+					case 'p': ya+=2; break;
+					case ';': ya-=2; break;
+					case 'l': xa+=2; break;
+					case '\'': xa-=2; break;
+					case '.': za+=2; break;
+					case '/': za-=2; break;
 					default: break;
 				}
 				break;
@@ -213,6 +220,7 @@ t_p3d ft_p3d_cross_multiply(t_p3d a, t_p3d b)
 }
 
 
+
 // /*
 // *	Fucntion: vector multiplication, cross product
 // *	Parameters: two vectors no parameters change 
@@ -253,6 +261,19 @@ t_p3d ft_p3d_normalize(t_p3d vect)
 	vect.z = vect.z / norm;
 	return (vect);
 }
+
+
+/*
+*	Fucntion: projection of vector a on vector b
+*	Parameters: two vectors no parameters change 
+*	Return: float,
+*/
+
+float ft_p3d_projection(t_p3d a, t_p3d b)
+{
+	return (ft_p3d_dot_multiply(b, a) /  ft_p3d_norm(b));
+}
+
 
 /*
 *	Fucntion:
@@ -508,6 +529,9 @@ t_p3d cast_ray(t_p3d *orig, t_p3d *dir, t_sphere *spheres)
 
 	const float fov      = M_PI/2.; // field of vision
 
+
+
+
 /*
 *	Fucntion: render all pixels on the surface
 *	Parameters: game, sdl
@@ -519,28 +543,42 @@ void 	ft_render(t_game* game, t_sphere *sphere)
 	int		j;
 	int width = game->sdl->surface->width;
 	int height = game->sdl->surface->height;
-	j = -1;
-	while (++j < height)
-	{
-		i = -1;
-		while (++i < width)
-		{
-			float x = (2 * (i + 0.5) / (float)width  - 1) * tan(fov / 2.) * width / (float)height;
-			float y = -(2 * (j + 0.5) / (float)height - 1) * tan(fov / 2.);
-			t_p3d dir = ft_p3d_normalize((t_p3d){x, y, -1});
-			t_p3d orign = ft_p3d_create(0, 0, 0);
-			t_p3d temp = cast_ray(&orign, &dir, game->spheres);
-			game->sdl->surface->data[i+j*width] = ft_rgb_to_hex(225 * max(0, min(1, temp.x)), 225 * max(0, min(1, temp.y)), 225 * max(0, min(1, temp.z)));
-			//255 * std::max(0.f, std::min(1.f, framebuffer[i][j]))
-			// if (sqrt(pow(i - sphere->center.x, 2) + pow(j - sphere->center.y, 2)) <= sphere->radius)
-			// {
-			// 	game->sdl->surface->data[i+j*width] = 0xFF0000;
- 		//  	game->sdl->surface->data[i+j*width] = ft_rgb_to_hex(temp.x, temp.y, temp.z);
+	// j = -1;
+	// while (++j < height)
+	// {
+	// 	i = -1;
+	// 	while (++i < width)
+	// 	{
+	// 		float x = (2 * (i + 0.5) / (float)width  - 1) * tan(fov / 2.) * width / (float)height;
+	// 		float y = -(2 * (j + 0.5) / (float)height - 1) * tan(fov / 2.);
+	// 		t_p3d dir = ft_p3d_normalize((t_p3d){x, y, -1});
+	// 		t_p3d orign = ft_p3d_create(0, 0, 0);
+	// 		t_p3d temp = cast_ray(&orign, &dir, game->spheres);
+	// 		game->sdl->surface->data[i+j*width] = ft_rgb_to_hex(225 * max(0, min(1, temp.x)), 225 * max(0, min(1, temp.y)), 225 * max(0, min(1, temp.z)));
+	// 		//255 * std::max(0.f, std::min(1.f, framebuffer[i][j]))
+	// 		// if (sqrt(pow(i - sphere->center.x, 2) + pow(j - sphere->center.y, 2)) <= sphere->radius)
+	// 		// {
+	// 		// 	game->sdl->surface->data[i+j*width] = 0xFF0000;
+ 	// 	//  	game->sdl->surface->data[i+j*width] = ft_rgb_to_hex(temp.x, temp.y, temp.z);
 				 
-			// }
-		}
-	}
+	// 		// }
+	// 	}
+	// }
+
+		j = -1;
+	// while (++j < height)
+	// {
+	// 	i = -1;
+	// 	while (++i < width)
+	// 	{
+	// 		game->sdl->surface->data[i+j*width] = 0xff0000;
+	// 	}
+	// }
 }
+
+
+t_p3d cube[8];
+
 
 /*
 *	Fucntion: Main loop
@@ -554,6 +592,107 @@ void 	ft_render(t_game* game, t_sphere *sphere)
 *	Return: none
 */
 
+
+t_p3d ft_p3d_project_test1(t_p3d p)
+{
+	t_p3d new;
+	new.x=(p.x*500)/p.z+320, new.y=(p.y*500)/p.z+240;
+	return (new);
+}
+
+t_p3d ft_p3d_rotate_test1(t_p3d p, t_p3d angle)
+{
+	float mat[3][3];            // Determine rotation matrix
+	t_p3d new;	
+	float xdeg=angle.x*3.1416f/180, ydeg=angle.y*3.1416f/180, zdeg=angle.z*3.1416f/180;
+	float sx=(float)sin(xdeg), sy=(float)sin(ydeg), sz=(float)sin(zdeg);
+	float cx=(float)cos(xdeg), cy=(float)cos(ydeg), cz=(float)cos(zdeg);
+	mat[0][0]=cx*cz+sx*sy*sz, mat[1][0]=-cx*sz+cz*sx*sy, mat[2][0]=cy*sx;
+	mat[0][1]=cy*sz, mat[1][1]=cy*cz, mat[2][1]=-sy;
+	mat[0][2]=-cz*sx+cx*sy*sz, mat[1][2]=sx*sz+cx*cz*sy, mat[2][2]=cx*cy;
+	new.x=p.x*mat[0][0]+p.y*mat[1][0]+p.z*mat[2][0];
+	new.y=p.x*mat[0][1]+p.y*mat[1][1]+p.z*mat[2][1];
+	new.z=p.x*mat[0][2]+p.y*mat[1][2]+p.z*mat[2][2]+300;	
+	return (new);
+}
+
+
+t_p3d ft_p3d_project_test2(t_p3d p)
+{
+	p.x *= 1;
+	p.y *= 1;
+	p.x += 300;
+	p.y += 300;
+	return (p);
+}
+
+t_p3d ft_p3d_rotate_test2(t_p3d p, t_p3d angle)
+{
+
+	t_p3d	v;
+	
+
+	
+	
+	v.x = p.x;
+	v.y =  p.y * cos(angle.x) + p.z * sin(angle.x);
+	v.z =  -p.y * sin(angle.x)+  p.z *cos(angle.x);
+	
+	// x = p.x;
+	// z = v.z;
+	// v.x = cos(angle.y) * x + sin(angle.y) * z;
+	// v.z = -sin(angle.y) * x + cos(angle.y) * z;
+
+	// x = v.x;
+	// y = v.y;
+	// v.x = cos(angle.z) * x - sin(angle.z) * y;
+	// v.y = sin(angle.z) * x + cos(angle.z) * y;
+	return (v);
+}
+
+// t_p3d ft_p3d_rotate_test2(t_p3d p, t_p3d angle)
+// {
+
+// }
+
+
+// static t_vector		ft_rotate(t_vector p, t_cam *r)
+// {
+// 	t_vector	v;
+// 	double		x;
+// 	double		y;
+// 	double		z;
+
+// 	x = p.x;
+// 	z = p.z;
+// 	v.x = cos(r->y) * x + sin(r->y) * z;
+// 	v.z = -sin(r->y) * x + cos(r->y) * z;
+// 	y = p.y;
+// 	z = v.z;
+// 	v.y = cos(r->x) * y - sin(r->x) * z;
+// 	v.z = sin(r->x) * y + cos(r->x) * z;
+// 	x = v.x;
+// 	y = v.y;
+// 	v.x = cos(r->z) * x - sin(r->z) * y;
+// 	v.y = sin(r->z) * x + cos(r->z) * y;
+// 	v.color = p.color;
+// 	return (v);
+// }
+
+// t_vector			ft_project_vector(t_vector v, t_mlx *mlx)
+// {
+// 	v.x -= (double)(mlx->map->width - 1) / 2.0f;
+// 	v.y -= (double)(mlx->map->height - 1) / 2.0f;
+// 	v.z -= (double)(mlx->map->depth_min + mlx->map->depth_max) / 2.0f;
+// 	v = ft_rotate(v, mlx->cam);
+// 	v.x *= mlx->cam->scale;
+// 	v.y *= mlx->cam->scale;
+// 	v.x += mlx->cam->offsetx;
+// 	v.y += mlx->cam->offsety;
+// 	return (v);
+// }
+
+
 void ft_update(t_game *game)
 {
 	t_rectangle r = (t_rectangle){(t_point){0,0},(t_size){WIN_W, WIN_H}};
@@ -566,7 +705,7 @@ void ft_update(t_game *game)
 		//game->spheres[2].center = game->elum.lights[0].position;
 		ft_surface_clear(game->sdl->surface);
 		ft_input(game->sdl, &ft_input_keys);
-		game->wsad[0] ? game->elum.lights[0].position.z -= 1 : 0;
+		game->wsad[0] ? game->elum.lights[0].position.z -= 1: 0;
 		game->wsad[1] ? game->elum.lights[0].position.z += 1 : 0;
 		game->wsad[2] ? game->elum.lights[0].position.x -= 1 : 0;
 		game->wsad[3] ? game->elum.lights[0].position.x += 1 : 0;
@@ -574,8 +713,32 @@ void ft_update(t_game *game)
 		game->wsad[5] ? game->elum.lights[0].position.y -= 1 : 0;
 		game->wsad[6] ? game->elum.lights[0].intensity += 0.1 : 0;
 		game->wsad[7] ? game->elum.lights[0].intensity -= 0.1 : 0;
-		
 		ft_render(game, &sphere);
+	
+	t_p3d cube_r[8];
+	for(int i = 0; i < 8; i++)
+	{
+		//cube_r[i] = ft_p3d_project_test1(ft_p3d_rotate_test2(cube[i], (t_p3d){xa,ya,za})); 			//ft_p3d_project_test1(ft_p3d_rotate_test1(cube[i], (t_p3d){xa,ya,za}));
+		
+		printf("\n\n");
+		printf("input :");
+		ft_p3d_print(cube[i]);
+		printf("working :");
+		ft_p3d_print(ft_p3d_rotate_test1(cube[i], (t_p3d){xa,ya,za}));
+		printf("bugged :");
+		ft_p3d_print(ft_p3d_rotate_test2(cube[i], (t_p3d){xa,ya,za}));
+		printf("\n\n");
+	}
+
+
+	// for (int i = 0; i<4; i++)         // Actual drawing
+	// {
+	// 	ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i].x, cube_r[i].y}, &(t_fpoint){cube_r[i+4].x, cube_r[i+4].y}, 0xFF0000);
+	// 	ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i].x, cube_r[i].y}, &(t_fpoint){cube_r[(i+1)%4].x, cube_r[(i+1)%4].y}, 0xFF0000);
+	// 	ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i + 4].x, cube_r[i + 4].y}, &(t_fpoint){cube_r[(i+1)%4 + 4].x, cube_r[(i+1)%4 + 4].y}, 0xFF0000);
+	// 	//SDL_RenderDrawLine(game->sdl->renderer, p.x, p.y, cube[(i+1)%4].x, cube[(i+1)%4].y);
+	// 	//SDL_RenderDrawLine(rgame->sdl->renderer, scrx[i+4], scry[i+4], scrx[((i+1)%4)+4], scry[((i+1)%4)+4]);
+	// }
 		//ft_put_pixel(game->sdl->surface, &(t_point){500,500}, 0xFF0000);
 		//ft_surface_combine(game->sdl->surface, game->image, &r);
 		ft_surface_present(game->sdl, game->sdl->surface);
@@ -600,6 +763,20 @@ void ft_update(t_game *game)
 // 	if (t0 < 0) t0 = t1;
 // 	if (t0 < 0) return false;
 // 	return true;
+// }
+
+// void rotate_vector_by_quaternion(const Vector3& v, const Quaternion& q, Vector3& vprime)
+// {
+//     // Extract the vector part of the quaternion
+//     Vector3 u(q.x, q.y, q.z);
+
+//     // Extract the scalar part of the quaternion
+//     float s = q.w;
+
+//     // Do the math
+//     vprime = 2.0f * dot(u, v) * u
+//           + (s*s - dot(u, u)) * v
+//           + 2.0f * s * cross(u, v);
 // }
 
 
@@ -632,6 +809,14 @@ int	main(int argc, char **argv)
 	// ft_p3d_print(&game.spheres[1].center);
 	t_sphere sphere;
 	
+	for (int i=0; i<8; i++)     // Define the cube
+	{
+		cube[i].x=(float)(50-100*(((i+1)/2)%2));
+		cube[i].y=(float)(50-100*((i/2)%2));
+		cube[i].z=(float)(50-100*((i/4)%2));
+	}
+
+
 	configure_sphere(argv[1], &sphere);
 	//printf("%d",ray_intersect(&sphere, ft_p3d_create(0,0,0), ft_p3d_normalize(&(t_p3d){650, 650, -1}, 1), FLT_MAX));
 	ft_init_window(game.sdl, WIN_W, WIN_H);
