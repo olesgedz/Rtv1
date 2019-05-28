@@ -6,7 +6,7 @@
 /*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/05/25 23:11:43 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/05/27 23:06:04 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -714,33 +714,34 @@ void ft_update(t_game *game)
 		game->wsad[7] ? game->elum.lights[0].intensity -= 0.1 : 0;
 		ft_render(game, &sphere);
 	
-	t_p3d cube_r[8];
-	for(int i = 0; i < 8; i++)
-	{
-		cube_r[i] = ft_p3d_project_test1(ft_p3d_rotate_test2(cube[i], (t_p3d){xa,ya,za})); 			//ft_p3d_project_test1(ft_p3d_rotate_test1(cube[i], (t_p3d){xa,ya,za}));
+	// t_p3d cube_r[8];
+	// for(int i = 0; i < 8; i++)
+	// {
+	// 	cube_r[i] = ft_p3d_project_test1(ft_p3d_rotate_test2(cube[i], (t_p3d){xa,ya,za})); 			//ft_p3d_project_test1(ft_p3d_rotate_test1(cube[i], (t_p3d){xa,ya,za}));
 		
-		// printf("\n\n");
-		// printf("angles: %f %f %f\n", xa, ya, za);
-		// printf("input :");
-		// ft_p3d_print(cube[i]);
-		// printf("working :");
-		// ft_p3d_print(ft_p3d_rotate_test1(cube[i], (t_p3d){xa,ya,za}));
-		// printf("bugged :");
-		// ft_p3d_print(ft_p3d_rotate_test2(cube[i], (t_p3d){xa,ya,za}));
-		// printf("\n\n");
-	}
+	// 	// printf("\n\n");
+	// 	// printf("angles: %f %f %f\n", xa, ya, za);
+	// 	// printf("input :");
+	// 	// ft_p3d_print(cube[i]);
+	// 	// printf("working :");
+	// 	// ft_p3d_print(ft_p3d_rotate_test1(cube[i], (t_p3d){xa,ya,za}));
+	// 	// printf("bugged :");
+	// 	// ft_p3d_print(ft_p3d_rotate_test2(cube[i], (t_p3d){xa,ya,za}));
+	// 	// printf("\n\n");
+	// }
 
 
-	for (int i = 0; i<4; i++)         // Actual drawing
-	{
-		ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i].x, cube_r[i].y}, &(t_fpoint){cube_r[i+4].x, cube_r[i+4].y}, 0xFF0000);
-		ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i].x, cube_r[i].y}, &(t_fpoint){cube_r[(i+1)%4].x, cube_r[(i+1)%4].y}, 0xFF0000);
-		ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i + 4].x, cube_r[i + 4].y}, &(t_fpoint){cube_r[(i+1)%4 + 4].x, cube_r[(i+1)%4 + 4].y}, 0xFF0000);
-		//SDL_RenderDrawLine(game->sdl->renderer, p.x, p.y, cube[(i+1)%4].x, cube[(i+1)%4].y);
-		//SDL_RenderDrawLine(rgame->sdl->renderer, scrx[i+4], scry[i+4], scrx[((i+1)%4)+4], scry[((i+1)%4)+4]);
-	}
-		//ft_put_pixel(game->sdl->surface, &(t_point){500,500}, 0xFF0000);
-		//ft_surface_combine(game->sdl->surface, game->image, &r);
+	// for (int i = 0; i<4; i++)         // Actual drawing
+	// {
+	// 	ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i].x, cube_r[i].y}, &(t_fpoint){cube_r[i+4].x, cube_r[i+4].y}, 0xFF0000);
+	// 	ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i].x, cube_r[i].y}, &(t_fpoint){cube_r[(i+1)%4].x, cube_r[(i+1)%4].y}, 0xFF0000);
+	// 	ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i + 4].x, cube_r[i + 4].y}, &(t_fpoint){cube_r[(i+1)%4 + 4].x, cube_r[(i+1)%4 + 4].y}, 0xFF0000);
+	// 	//SDL_RenderDrawLine(game->sdl->renderer, p.x, p.y, cube[(i+1)%4].x, cube[(i+1)%4].y);
+	// 	//SDL_RenderDrawLine(rgame->sdl->renderer, scrx[i+4], scry[i+4], scrx[((i+1)%4)+4], scry[((i+1)%4)+4]);
+	// }
+	// 	//ft_put_pixel(game->sdl->surface, &(t_point){500,500}, 0xFF0000);
+	// 	//ft_surface_combine(game->sdl->surface, game->image, &r);
+
 		ft_surface_present(game->sdl, game->sdl->surface);
 	 }
 }
