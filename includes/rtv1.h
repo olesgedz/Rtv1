@@ -87,6 +87,12 @@ typedef struct s_polygon
 	//Plane
 } t_polygon;
 
+typedef struct s_quaternion
+{
+	float s; //scalar
+	t_p3d v;
+} t_quaternion;
+
 struct s_object
 {
 	t_polygon *polygons;
