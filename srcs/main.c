@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/05/29 19:33:52 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/05/29 20:06:06 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -801,6 +801,17 @@ t_quaternion ft_quaternion_multiply(t_quaternion a, t_quaternion b)
 	return ((t_quaternion){scalar, imaginary});
 }
 
+t_quaternion ft_quaternion_multiply2(t_quaternion a, t_quaternion b)
+{
+	t_quaternion new;
+	new.s = (a.s * b.s - a.v.x * b.v.x  - a.v.y * b.v.y - a.v.z * b.v.z);
+	new.v.x = (a.s * b.v.x + a.v.x * b.s + a.v.y * b.v.z - a.v.z * b.v.y);
+	new.v.y = (a.s * b.v.y - a.v.x * b.v.z + a.v.y * b.s + a.v.z * b.v.x);
+	new.v.z  = (a.s * b.v.z + a.v.x * b.v.y - a.v.y * b.v.x + a.v.z * b.s);
+	return (new);
+}
+
+
 t_p3d	ft_p3d_rotate_quaterion(float angle, t_p3d vector, t_p3d axis)
 {
 	 //convert our vector to a pure quaternion
@@ -812,7 +823,7 @@ t_p3d	ft_p3d_rotate_quaterion(float angle, t_p3d vector, t_p3d axis)
 
 	t_quaternion q_invesrse = ft_quaternion_inverse(q);
 
-	t_quaternion rotated = ft_quaternion_multiply(ft_quaternion_multiply(q,p), q_invesrse);
+	t_quaternion rotated = ft_quaternion_multiply2(ft_quaternion_multiply(q,p), q_invesrse);
 	return (rotated.v);
 }
 int	main(int argc, char **argv)
