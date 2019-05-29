@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/05/29 20:06:06 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/05/29 21:00:49 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -800,7 +800,7 @@ t_quaternion ft_quaternion_multiply(t_quaternion a, t_quaternion b)
 	t_p3d imaginary = ft_p3d_sum(ft_p3d_sum(ft_p3d_scalar_multiply(b.v, a.s), ft_p3d_scalar_multiply(a.v, b.s)), ft_p3d_cross_multiply(a.v, b.v)); 
 	return ((t_quaternion){scalar, imaginary});
 }
-
+//https://www.cprogramming.com/tutorial/3d/quaternions.html
 t_quaternion ft_quaternion_multiply2(t_quaternion a, t_quaternion b)
 {
 	t_quaternion new;
