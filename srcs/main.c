@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/05/29 12:47:35 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/05/29 14:05:19 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -710,47 +710,153 @@ void ft_update(t_game *game)
 // }
 
 
+t_quaternion t_quaternion_sum(t_quaternion a, t_quaternion b)
+{
+	t_quaternion new;
+
+	new.s = a.s + b.s;
+	new.v = ft_p3d_sum(a.v, b.v);
+	return (new);
+}
+
+t_quaternion t_quaternion_substract(t_quaternion a, t_quaternion b)
+{
+	t_quaternion new;
+
+	new.s = a.s - b.s;
+	new.v = ft_p3d_substract(a.v, b.v);
+	return (new);
+}
+
+float ft_quaternion_norm(t_quaternion q)
+{
+
+	float scalar = q.s * q.s;
+	float imaginary = ft_p3d_dot_multiply(q.v, q.v);
+	return (sqrt(scalar + imaginary));
+}
+
+float ft_degree_to_rad(float degree)
+{
+	return (degree * M_PI/180);
+}
+
+t_quaternion ft_quaternion_normalize(t_quaternion q)
+{
+	t_quaternion new;
+	float norm;
+    float norm_value;
+
+	norm = ft_quaternion_norm(q);
+	if (norm != 0)
+	{
+		norm_value = 1 / norm;
+		new.s = q.s * norm_value;
+		new.v = ft_p3d_scalar_multiply(q.v, norm_value);
+	}
+	return (new);
+}
+
+//Unit-Norm Quaternion (Special Form)
+t_quaternion ft_quaternion_covert_to_unit_norm(t_quaternion q)
+{
+	t_quaternion new;
+	float angle  = ft_degree_to_rad(q.s);
+
+	new.v = ft_p3d_normalize(q.v);
+	new.s = cosf(angle * 0.5);
+	new.v = ft_p3d_scalar_multiply(q.v, sinf(angle * 0.5));
+	return (new);
+}
+
+t_quaternion ft_quaternion_conjugate(t_quaternion q)
+{
+	float scalar=q.s;
+	t_p3d imaginary = ft_p3d_scalar_multiply(q.v, -1);
+	return ((t_quaternion){scalar, imaginary});
+}
+
+t_quaternion ft_quaternion_inverse(t_quaternion q)
+{
+	float abs = ft_quaternion_norm(q); 
+	abs*=abs;
+	abs=1/abs;
+	t_quaternion conjugare_val = ft_quaternion_conjugate(q);
+
+	float scalar = conjugare_val.s * abs;
+	t_p3d imaginary = ft_p3d_scalar_multiply(conjugare_val.v, abs);
+
+	return((t_quaternion){scalar, imaginary});
+
+}
+
+t_quaternion ft_quaternion_multiply(t_quaternion a, t_quaternion b)
+{
+	float scalar = a.s * b.s - ft_p3d_dot_multiply(a.v, b.v);
+
+	t_p3d imaginary = ft_p3d_sum(ft_p3d_sum(ft_p3d_scalar_multiply(b.v, a.s), ft_p3d_scalar_multiply(a.v, b.s)), ft_p3d_cross_multiply(a.v, b.v)); 
+	return ((t_quaternion){scalar, imaginary});
+}
+
+t_p3d	ft_p3d_rotate_quaterion(float angle, t_p3d vector, t_p3d axis)
+{
+	 //convert our vector to a pure quaternion
+    t_quaternion p = (t_quaternion){0,vector};
+	//create the real quaternion
+	t_quaternion q = (t_quaternion){angle, ft_p3d_normalize(axis)};
+	 //convert quaternion to unit norm quaternion
+	q = ft_quaternion_covert_to_unit_norm(q);
+
+	t_quaternion q_invesrse = ft_quaternion_inverse(q);
+
+	t_quaternion rotated = ft_quaternion_multiply(ft_quaternion_multiply(q,p), q_invesrse);
+	return (rotated.v);
+}
 int	main(int argc, char **argv)
 {
-	printf("move light source with wasdqe \nchange intensity with zx\n");
-	game.sdl = malloc(sizeof(t_sdl));
-	game.image = ft_surface_create(WIN_W, WIN_H);
-	t_material ivory = (t_material){(t_p3d){0.4, 0.4, 0.3}, (t_p3d){0.6, 0.3, 0}, 70};
-	t_material red_rubber = (t_material){(t_p3d){0.3, 0.1, 0.1}, (t_p3d){0.3, 0.5, 0}, 10000};
-	//printf("%f %f %f\n", bb.albendo.x, bb.albendo.y, bb.specular_exponent);
-	game.elum.lights = ft_memalloc(sizeof(t_light) * 5);
-	game.elum.lights[0] = (t_light){(t_p3d){7, 10, -16}, 1.5};
-	game.elum.lights[1] = (t_light){(t_p3d){-20, 20, 20}, 1.5};
-	game.elum.lights[2] = (t_light){(t_p3d){30, 50, -25}, 1.8};
-	game.elum.lights[3] = (t_light){(t_p3d){30, 20, 30}, 1.7};
-	//vector_init(&game.elum.light);
-	//vector_add(&game.elum.light,  &(t_light){(t_p3d){7, 10, -16}, 1.5});
-	game.elum.number = 4; // number of light sources
-	game.n_spheres = 5;
-	game.spheres = ft_memalloc(sizeof(t_sphere) * 6);
-	game.spheres[0] = (t_sphere){(t_p3d){-3, 0, -16}, ivory, 5, (t_p3d){1, 1, 1}};
-	game.spheres[1] = (t_sphere){(t_p3d){-1.0, -1.5, -12}, red_rubber, 2, 5};
-	game.spheres[3] = (t_sphere){(t_p3d){1.5, -0.5, -18}, red_rubber, 3, 5};
-	game.spheres[4] = (t_sphere){(t_p3d){7, 5, -18}, ivory, 4, 5};
+	// printf("move light source with wasdqe \nchange intensity with zx\n");
+	// game.sdl = malloc(sizeof(t_sdl));
+	// game.image = ft_surface_create(WIN_W, WIN_H);
+	// t_material ivory = (t_material){(t_p3d){0.4, 0.4, 0.3}, (t_p3d){0.6, 0.3, 0}, 70};
+	// t_material red_rubber = (t_material){(t_p3d){0.3, 0.1, 0.1}, (t_p3d){0.3, 0.5, 0}, 10000};
+	// //printf("%f %f %f\n", bb.albendo.x, bb.albendo.y, bb.specular_exponent);
+	// game.elum.lights = ft_memalloc(sizeof(t_light) * 5);
+	// game.elum.lights[0] = (t_light){(t_p3d){7, 10, -16}, 1.5};
+	// game.elum.lights[1] = (t_light){(t_p3d){-20, 20, 20}, 1.5};
+	// game.elum.lights[2] = (t_light){(t_p3d){30, 50, -25}, 1.8};
+	// game.elum.lights[3] = (t_light){(t_p3d){30, 20, 30}, 1.7};
+	// //vector_init(&game.elum.light);
+	// //vector_add(&game.elum.light,  &(t_light){(t_p3d){7, 10, -16}, 1.5});
+	// game.elum.number = 4; // number of light sources
+	// game.n_spheres = 5;
+	// game.spheres = ft_memalloc(sizeof(t_sphere) * 6);
+	// game.spheres[0] = (t_sphere){(t_p3d){-3, 0, -16}, ivory, 5, (t_p3d){1, 1, 1}};
+	// game.spheres[1] = (t_sphere){(t_p3d){-1.0, -1.5, -12}, red_rubber, 2, 5};
+	// game.spheres[3] = (t_sphere){(t_p3d){1.5, -0.5, -18}, red_rubber, 3, 5};
+	// game.spheres[4] = (t_sphere){(t_p3d){7, 5, -18}, ivory, 4, 5};
 
-	game.spheres[2] = (t_sphere){(t_p3d){-3.0, 0, -12}, red_rubber, 1, 5}; // this is a light source, move with wasdqe
+	// game.spheres[2] = (t_sphere){(t_p3d){-3.0, 0, -12}, red_rubber, 1, 5}; // this is a light source, move with wasdqe
 
-	// ft_p3d_print(&game.spheres[0].center);
-	// ft_p3d_print(&game.spheres[1].center);
-	t_sphere sphere;
+	// // ft_p3d_print(&game.spheres[0].center);
+	// // ft_p3d_print(&game.spheres[1].center);
+	// t_sphere sphere;
 	
-	for (int i=0; i<8; i++)     // Define the cube
-	{
-		cube[i].x=(float)(50-100*(((i+1)/2)%2));
-		cube[i].y=(float)(50-100*((i/2)%2));
-		cube[i].z=(float)(50-100*((i/4)%2));
-	}
+	// for (int i=0; i<8; i++)     // Define the cube
+	// {
+	// 	cube[i].x=(float)(50-100*(((i+1)/2)%2));
+	// 	cube[i].y=(float)(50-100*((i/2)%2));
+	// 	cube[i].z=(float)(50-100*((i/4)%2));
+	// }
 
 
-	configure_sphere(argv[1], &sphere);
-	//printf("%d",ray_intersect(&sphere, ft_p3d_create(0,0,0), ft_p3d_normalize(&(t_p3d){650, 650, -1}, 1), FLT_MAX));
-	ft_init_window(game.sdl, WIN_W, WIN_H);
-	printf("%zu, %zu\n", game.sdl->surface->height, game.sdl->surface->width);
-	ft_update(&game);
-	ft_exit(NULL);
+	// configure_sphere(argv[1], &sphere);
+	// //printf("%d",ray_intersect(&sphere, ft_p3d_create(0,0,0), ft_p3d_normalize(&(t_p3d){650, 650, -1}, 1), FLT_MAX));
+	// ft_init_window(game.sdl, WIN_W, WIN_H);
+	// printf("%zu, %zu\n", game.sdl->surface->height, game.sdl->surface->width);
+	// ft_update(&game);
+	// ft_exit(NULL);
+	t_p3d v = (t_p3d){0,1,0};
+	t_p3d axis = (t_p3d){1,0,0};
+	t_p3d rotated = ft_p3d_rotate_quaterion(90, v ,axis);
+	ft_p3d_print(rotated);
 }
