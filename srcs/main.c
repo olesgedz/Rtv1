@@ -6,14 +6,17 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/05/29 14:05:19 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/05/29 19:33:52 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
+#include <wchar.h>
+wchar_t i;
 /*
 * ! We can't use global variables 
 */
+
 # define DROUND(d)	ABS(d) < 0.00001 ? 0 : (d)
 t_game game;
 float xa, ya, za;
