@@ -6,7 +6,7 @@
 /*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/05/29 23:56:22 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/05/30 00:01:25 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -915,3 +915,6 @@ int	main(int argc, char **argv)
 	ft_p3d_print(rotated2);
 	ft_p3d_print(rotated3);
 }
+
+https://stackoverflow.com/questions/7870533/c-triangle-rasterization
+https://www.scratchapixel.com/lessons/3d-basic-rendering/rasterization-practical-implementation/rasterization-stage
