@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/05/25 23:11:43 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/05/29 12:47:35 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -543,37 +543,20 @@ void 	ft_render(t_game* game, t_sphere *sphere)
 	int		j;
 	int width = game->sdl->surface->width;
 	int height = game->sdl->surface->height;
-	// j = -1;
-	// while (++j < height)
-	// {
-	// 	i = -1;
-	// 	while (++i < width)
-	// 	{
-	// 		float x = (2 * (i + 0.5) / (float)width  - 1) * tan(fov / 2.) * width / (float)height;
-	// 		float y = -(2 * (j + 0.5) / (float)height - 1) * tan(fov / 2.);
-	// 		t_p3d dir = ft_p3d_normalize((t_p3d){x, y, -1});
-	// 		t_p3d orign = ft_p3d_create(0, 0, 0);
-	// 		t_p3d temp = cast_ray(&orign, &dir, game->spheres);
-	// 		game->sdl->surface->data[i+j*width] = ft_rgb_to_hex(225 * max(0, min(1, temp.x)), 225 * max(0, min(1, temp.y)), 225 * max(0, min(1, temp.z)));
-	// 		//255 * std::max(0.f, std::min(1.f, framebuffer[i][j]))
-	// 		// if (sqrt(pow(i - sphere->center.x, 2) + pow(j - sphere->center.y, 2)) <= sphere->radius)
-	// 		// {
-	// 		// 	game->sdl->surface->data[i+j*width] = 0xFF0000;
- 	// 	//  	game->sdl->surface->data[i+j*width] = ft_rgb_to_hex(temp.x, temp.y, temp.z);
-				 
-	// 		// }
-	// 	}
-	// }
-
-		j = -1;
-	// while (++j < height)
-	// {
-	// 	i = -1;
-	// 	while (++i < width)
-	// 	{
-	// 		game->sdl->surface->data[i+j*width] = 0xff0000;
-	// 	}
-	// }
+	j = -1;
+	while (++j < height)
+	{
+		i = -1;
+		while (++i < width)
+		{
+			float x = (2 * (i + 0.5) / (float)width  - 1) * tan(fov / 2.) * width / (float)height;
+			float y = -(2 * (j + 0.5) / (float)height - 1) * tan(fov / 2.);
+			t_p3d dir = ft_p3d_normalize((t_p3d){x, y, -1});
+			t_p3d orign = ft_p3d_create(0, 0, 0);
+			t_p3d temp = cast_ray(&orign, &dir, game->spheres);
+			game->sdl->surface->data[i+j*width] = ft_rgb_to_hex(225 * max(0, min(1, temp.x)), 225 * max(0, min(1, temp.y)), 225 * max(0, min(1, temp.z)));
+		}
+	}
 }
 
 
@@ -649,47 +632,20 @@ t_p3d ft_p3d_rotate_test2(t_p3d p, t_p3d angle)
 	return (v);
 }
 
-// t_p3d ft_p3d_rotate_test2(t_p3d p, t_p3d angle)
-// {
-
-// }
-
-
-// static t_vector		ft_rotate(t_vector p, t_cam *r)
-// {
-// 	t_vector	v;
-// 	double		x;
-// 	double		y;
-// 	double		z;
-
-// 	x = p.x;
-// 	z = p.z;
-// 	v.x = cos(r->y) * x + sin(r->y) * z;
-// 	v.z = -sin(r->y) * x + cos(r->y) * z;
-// 	y = p.y;
-// 	z = v.z;
-// 	v.y = cos(r->x) * y - sin(r->x) * z;
-// 	v.z = sin(r->x) * y + cos(r->x) * z;
-// 	x = v.x;
-// 	y = v.y;
-// 	v.x = cos(r->z) * x - sin(r->z) * y;
-// 	v.y = sin(r->z) * x + cos(r->z) * y;
-// 	v.color = p.color;
-// 	return (v);
-// }
-
-// t_vector			ft_project_vector(t_vector v, t_mlx *mlx)
-// {
-// 	v.x -= (double)(mlx->map->width - 1) / 2.0f;
-// 	v.y -= (double)(mlx->map->height - 1) / 2.0f;
-// 	v.z -= (double)(mlx->map->depth_min + mlx->map->depth_max) / 2.0f;
-// 	v = ft_rotate(v, mlx->cam);
-// 	v.x *= mlx->cam->scale;
-// 	v.y *= mlx->cam->scale;
-// 	v.x += mlx->cam->offsetx;
-// 	v.y += mlx->cam->offsety;
-// 	return (v);
-// }
+void ft_cube(t_game *game)
+{
+	t_p3d cube_r[8];
+	for(int i = 0; i < 8; i++)
+	{
+		cube_r[i] = ft_p3d_project_test1(ft_p3d_rotate_test2(cube[i], (t_p3d){xa,ya,za})); 
+	}
+		for (int i = 0; i<4; i++)         // Actual drawing
+	{
+		ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i].x, cube_r[i].y}, &(t_fpoint){cube_r[i+4].x, cube_r[i+4].y}, 0xFF0000);
+		ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i].x, cube_r[i].y}, &(t_fpoint){cube_r[(i+1)%4].x, cube_r[(i+1)%4].y}, 0xFF0000);
+		ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i + 4].x, cube_r[i + 4].y}, &(t_fpoint){cube_r[(i+1)%4 + 4].x, cube_r[(i+1)%4 + 4].y}, 0xFF0000);
+	}
+}
 
 
 void ft_update(t_game *game)
@@ -713,33 +669,7 @@ void ft_update(t_game *game)
 		game->wsad[6] ? game->elum.lights[0].intensity += 0.1 : 0;
 		game->wsad[7] ? game->elum.lights[0].intensity -= 0.1 : 0;
 		ft_render(game, &sphere);
-	
-	t_p3d cube_r[8];
-	for(int i = 0; i < 8; i++)
-	{
-		cube_r[i] = ft_p3d_project_test1(ft_p3d_rotate_test2(cube[i], (t_p3d){xa,ya,za})); 			//ft_p3d_project_test1(ft_p3d_rotate_test1(cube[i], (t_p3d){xa,ya,za}));
-		
-		// printf("\n\n");
-		// printf("angles: %f %f %f\n", xa, ya, za);
-		// printf("input :");
-		// ft_p3d_print(cube[i]);
-		// printf("working :");
-		// ft_p3d_print(ft_p3d_rotate_test1(cube[i], (t_p3d){xa,ya,za}));
-		// printf("bugged :");
-		// ft_p3d_print(ft_p3d_rotate_test2(cube[i], (t_p3d){xa,ya,za}));
-		// printf("\n\n");
-	}
-
-
-	for (int i = 0; i<4; i++)         // Actual drawing
-	{
-		ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i].x, cube_r[i].y}, &(t_fpoint){cube_r[i+4].x, cube_r[i+4].y}, 0xFF0000);
-		ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i].x, cube_r[i].y}, &(t_fpoint){cube_r[(i+1)%4].x, cube_r[(i+1)%4].y}, 0xFF0000);
-		ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i + 4].x, cube_r[i + 4].y}, &(t_fpoint){cube_r[(i+1)%4 + 4].x, cube_r[(i+1)%4 + 4].y}, 0xFF0000);
-		//SDL_RenderDrawLine(game->sdl->renderer, p.x, p.y, cube[(i+1)%4].x, cube[(i+1)%4].y);
-		//SDL_RenderDrawLine(rgame->sdl->renderer, scrx[i+4], scry[i+4], scrx[((i+1)%4)+4], scry[((i+1)%4)+4]);
-	}
-		//ft_put_pixel(game->sdl->surface, &(t_point){500,500}, 0xFF0000);
+		ft_cube(game);
 		//ft_surface_combine(game->sdl->surface, game->image, &r);
 		ft_surface_present(game->sdl, game->sdl->surface);
 	 }
