@@ -6,13 +6,11 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/05/30 12:02:29 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/05/30 12:08:32 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
-#include <wchar.h>
-wchar_t i;
 /*
 * ! We can't use global variables 
 */
@@ -222,23 +220,6 @@ t_p3d ft_p3d_cross_multiply(t_p3d a, t_p3d b)
 	return (result);
 }
 
-
-
-// /*
-// *	Fucntion: vector multiplication, cross product
-// *	Parameters: two vectors no parameters change 
-// *	Return: t_p3d vector result of multiplication,
-// */
-// t_p3d ft_p3d_sum(t_p3d *a, t_p3d *b)
-// {
-// 	t_p3d new;
-
-// 	new.x = a->x + b->x;
-// 	new.y = a->y + b->y;
-// 	new.z = a->z + b->z;
-// 	return (new);
-// }
-
 /*
 *	Fucntion: scalar value of vector
 *	Parameters: vector, no parameters change 
@@ -305,43 +286,6 @@ double		get_t(double a, double b, double d, float *t0)
 		return (*t0 = t2);
 	return (-1);
 }
-
-
-// double		ray_intersect_sphere_impletation(t_sphere *sphere, t_p3d *orig, t_p3d *dir, float *t0)
-// {
-// 	t_p3d vpc = ft_p3d_substract(sphere->center, *orig);
-// 	t_p3d intersec;
-// 	if(ft_p3d_dot_multiply(vpc, *dir) < 0)
-// 	{
-// 		if(ft_p3d_norm(vpc) > sphere->radius)
-// 		{
-// 			// no intersection
-// 		}
-// 		else if (ft_p3d_norm(vpc) == sphere->radius)
-// 		{
-// 			intersec = *orig;
-// 		}
-// 		else //inside 
-// 		{
-			
-// 		}
-		
-// 	}
-// }
-
-
-// //doesn't work
-// double		ray_intersect_sphere_raypathing(t_sphere *sphere, t_p3d *orig, t_p3d *dir, float *t0)
-// {
-// 	  t_p3d pos = *orig;
-//     for (size_t i=0; i<128; i++) {
-//         float d = signed_distance(&pos, sphere);
-// 		*t0 = 10;
-//         if (d < 0) return TRUE;
-//         pos = ft_p3d_sum(pos, ft_p3d_scalar_multiply(*dir, max(d*0.1f, .01f)));
-//     }
-//     return FALSE;
-// }
 
 double		ray_intersect_sphere(t_sphere *sphere, t_p3d *orig, t_p3d *dir, float *t0)
 {
@@ -441,9 +385,6 @@ int scene_intersect(t_p3d *orig, t_p3d *dir, t_sphere *spheres, t_p3d *hit, t_p3
 	{
 		float dist_i;
 
-		//printf("%d", ray_intersect(&spheres[i], orig, dir, dist_i));
-		// printf("%f, %f\n", dist_i, spheres_dist);
-		// ft_exit(NULL);
 		if (ray_intersect_sphere(&spheres[i], orig, dir, &dist_i) && dist_i < spheres_dist)
 		{
 			spheres_dist = dist_i;
@@ -505,25 +446,7 @@ t_p3d cast_ray(t_p3d *orig, t_p3d *dir, t_sphere *spheres)
 		diffuse_light_intensity  += game.elum.lights[i].intensity * max(0, ft_p3d_dot_multiply(light_dir, N));
 		specular_light_intensity += powf(max(0.f, ft_p3d_dot_multiply(ft_p3d_scalar_multiply(reflect(ft_p3d_scalar_multiply(light_dir, -1), N), -1),*dir)),\
 		 	material.specular_exponent)*game.elum.lights[i].intensity;
-		
-			// write negative * -1
 	}
-		//printf("1:");
-		//ft_p3d_print(ft_p3d_scalar_multiply(&material.diffuse_color, diffuse_light_intensity));
-		//printf("x:%f y:%f light:%f \n", material.albendo.x, material.albendo.y, specular_light_intensity);
-	// t_p3d temp = ft_p3d_scalar_multiply(material.diffuse_color, diffuse_light_intensity * material.albendo.x);
-	// t_p3d temp2 = ft_p3d_scalar_multiply((t_p3d){1,1,1}, specular_light_intensity * material.albendo.y);
-	//material.diffuse_color * diffuse_light_intensity * material.albedo[0] + Vec3f(1., 1., 1.)*specular_light_intensity * material.albedo[1];
-	//printf("2:");
-	//ft_p3d_print(ft_p3d_sum(&temp, &temp2));
-	// if (ft_p3d_sum(&temp, &temp2).x != 0)
-	// {
-	// 	// printf("\n\n");
-	// 	// ft_p3d_print(ft_p3d_scalar_multiply(&material.diffuse_color, diffuse_light_intensity));
-	// 	// printf("\n");
-	// 	// ft_p3d_print(ft_p3d_sum(&temp, &temp2));
-	// 	// printf("\n\n");
-	// }
 	return ft_p3d_sum(ft_p3d_scalar_multiply(material.diffuse_color, diffuse_light_intensity * material.albendo.x), \
 	 	ft_p3d_scalar_multiply((t_p3d){1,1,1}, specular_light_intensity *  material.albendo.y));					//ft_p3d_scalar_multiply(&material.diffuse_color, diffuse_light_intensity);
 }
@@ -635,43 +558,6 @@ t_p3d ft_p3d_rotate_test2(t_p3d p, t_p3d angle)
 	v.y = sin(angle.z) * x + cos(angle.z) * y;
 	return (v);
 }
-
-
-
-
-// void Sphere(const t_p3d *c, const float r)
-// {
-
-// }
-
-// bool ray_intersect(const t_p3d *orig, const t_p3d dir, float *t0)
-// {
-// 	t_p3d L = center - orig;
-// 	float tca = L*dir;
-// 	float d2 = L*L - tca*tca;
-// 	if (d2 > radius*radius) return false;
-// 	float thc = sqrtf(radius*radius - d2);
-// 	t0       = tca - thc;
-// 	float t1 = tca + thc;
-// 	if (t0 < 0) t0 = t1;
-// 	if (t0 < 0) return false;
-// 	return true;
-// }
-
-// void rotate_vector_by_quaternion(const Vector3& v, const Quaternion& q, Vector3& vprime)
-// {
-//     // Extract the vector part of the quaternion
-//     Vector3 u(q.x, q.y, q.z);
-
-//     // Extract the scalar part of the quaternion
-//     float s = q.w;
-
-//     // Do the math
-//     vprime = 2.0f * dot(u, v) * u
-//           + (s*s - dot(u, u)) * v
-//           + 2.0f * s * cross(u, v);
-// }
-
 
 t_quaternion t_quaternion_sum(t_quaternion a, t_quaternion b)
 {
@@ -815,11 +701,7 @@ t_p3d	ft_p3d_rotate_quaterion2(float angle, t_p3d vector, t_p3d axis)
 	return (new);
 }
 
-
-
 // min X and max X for every horizontal line within the triangle
-	
-
 void ScanLine(long x1, long y1, long x2, long y2, long ContourX[][2])
 {
   long sx, sy, dx1, dy1, dx2, dy2, x, y, m, n, k, cnt;
@@ -885,13 +767,9 @@ void DrawTriangle(t_surface *surface, t_point p0, t_point p1, t_point p2)
     ContourX[y][0] = LONG_MAX; // min X
     ContourX[y][1] = LONG_MIN; // max X
   }
-
-//   ft_plot_line(surface, &(t_point){p0.x, p0.y}, &(t_point){p1.x, p1.y}, 0xFF0000);
-//   ft_plot_line(surface, &(t_point){p1.x, p1.y}, &(t_point){p2.x, p2.y}, 0xFF0000);
-//   ft_plot_line(surface, &(t_point){p2.x, p2.y}, &(t_point){p0.x, p0.y}, 0xFF0000);
-   ScanLine(p0.x, p0.y, p1.x, p1.y, ContourX);
-  ScanLine(p1.x, p1.y, p2.x, p2.y, ContourX);
-  ScanLine(p2.x, p2.y, p0.x, p0.y, ContourX);
+	ScanLine(p0.x, p0.y, p1.x, p1.y, ContourX);
+  	ScanLine(p1.x, p1.y, p2.x, p2.y, ContourX);
+  	ScanLine(p2.x, p2.y, p0.x, p0.y, ContourX);
   for (y = 0; y < surface->height; y++)
   {
 	  //printf("%ld >= %ld\n", ContourX[y][1], ContourX[y][0]);
@@ -916,15 +794,13 @@ void ft_cube(t_game *game)
 	{
 		cube_r[i] = ft_p3d_project_test1(ft_p3d_rotate_quaterion(ya * 30,cube[i],(t_p3d){1,0,0}));//ft_p3d_rotate_test2(cube[i], (t_p3d){xa,ya,za})); 
 	}
-		for (int i = 0; i<4; i++)         // Actual drawing
+	for (int i = 0; i<4; i++)         // Actual drawing
 	{
 		// ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i].x, cube_r[i].y}, &(t_fpoint){cube_r[i+4].x, cube_r[i+4].y}, 0xFF0000);
 		// ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i].x, cube_r[i].y}, &(t_fpoint){cube_r[(i+1)%4].x, cube_r[(i+1)%4].y}, 0xFF0000);
 		// ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i + 4].x, cube_r[i + 4].y}, &(t_fpoint){cube_r[(i+1)%4 + 4].x, cube_r[(i+1)%4 + 4].y}, 0xFF0000);
 		DrawTriangle(game->sdl->surface, (t_point){cube_r[i].x, cube_r[i].y}, (t_point){cube_r[i+4].x, cube_r[i+4].y}, (t_point){cube_r[(i+1)%4].x, cube_r[(i+1)%4].y});
 		DrawTriangle(game->sdl->surface, (t_point){cube_r[i].x, cube_r[i].y}, (t_point){cube_r[i+4].x, cube_r[(i+1)%4 + 4].y}, (t_point){cube_r[(i+1)%4].x, cube_r[(i+1)%4].y});
-		// DrawTriangle(game->sdl->surface, &(t_fpoint){cube_r[i].x, cube_r[i].y}, &(t_fpoint){cube_r[(i+1)%4].x, cube_r[(i+1)%4].y}, 0xFF0000);
-		// DrawTriangle(game->sdl->surface, &(t_fpoint){cube_r[i + 4].x, cube_r[i + 4].y}, &(t_fpoint){cube_r[(i+1)%4 + 4].x, cube_r[(i+1)%4 + 4].y}, 0xFF0000);
 	}
 }
 void ft_update(t_game *game)
@@ -994,7 +870,6 @@ int	main(int argc, char **argv)
 
 
 	configure_sphere(argv[1], &sphere);
-	//printf("%d",ray_intersect(&sphere, ft_p3d_create(0,0,0), ft_p3d_normalize(&(t_p3d){650, 650, -1}, 1), FLT_MAX));
 	ft_init_window(game.sdl, WIN_W, WIN_H);
 	printf("%zu, %zu\n", game.sdl->surface->height, game.sdl->surface->width);
 	ft_update(&game);
