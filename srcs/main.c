@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/05/30 12:08:32 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/05/30 12:10:07 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -871,22 +871,6 @@ int	main(int argc, char **argv)
 
 	configure_sphere(argv[1], &sphere);
 	ft_init_window(game.sdl, WIN_W, WIN_H);
-	printf("%zu, %zu\n", game.sdl->surface->height, game.sdl->surface->width);
 	ft_update(&game);
 	ft_exit(NULL);
-	t_p3d v = (t_p3d){5,0,0};
-	t_p3d axis = (t_p3d){0,0,1};
-	t_p3d rotated = v;
-
-	rotated = ft_p3d_rotate_quaterion2(90, v ,axis);
-
-	t_p3d rotated2 = ft_p3d_rotate_quaterion(90, v ,axis);
-
-	t_p3d rotated3 = ft_p3d_rotate_test1(v, (t_p3d){0,0,90});
-	ft_p3d_print(rotated);
-	ft_p3d_print(rotated2);
-	ft_p3d_print(rotated3);
 }
-
-//https://stackoverflow.com/questions/7870533/c-triangle-rasterization
-//https://www.scratchapixel.com/lessons/3d-basic-rendering/rasterization-practical-implementation/rasterization-stage
