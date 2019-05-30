@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/05/30 00:01:25 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/05/30 12:02:29 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -816,6 +816,99 @@ t_p3d	ft_p3d_rotate_quaterion2(float angle, t_p3d vector, t_p3d axis)
 }
 
 
+
+// min X and max X for every horizontal line within the triangle
+	
+
+void ScanLine(long x1, long y1, long x2, long y2, long ContourX[][2])
+{
+  long sx, sy, dx1, dy1, dx2, dy2, x, y, m, n, k, cnt;
+
+  sx = x2 - x1;
+  sy = y2 - y1;
+
+  if (sx > 0) dx1 = 1;
+  else if (sx < 0) dx1 = -1;
+  else dx1 = 0;
+
+  if (sy > 0) dy1 = 1;
+  else if (sy < 0) dy1 = -1;
+  else dy1 = 0;
+
+  m = ABS(sx);
+  n = ABS(sy);
+  dx2 = dx1;
+  dy2 = 0;
+
+  if (m < n)
+  {
+    m = ABS(sy);
+    n = ABS(sx);
+    dx2 = 0;
+    dy2 = dy1;
+  }
+
+  x = x1; y = y1;
+  cnt = m + 1;
+  k = n / 2;
+
+  while (cnt--)
+  {
+    if ((y >= 0) && (y < WIN_H))
+    {
+      if (x < ContourX[y][0]) ContourX[y][0] = x;
+      if (x > ContourX[y][1]) ContourX[y][1] = x;
+    }
+
+    k += n;
+    if (k < m)
+    {
+      x += dx2;
+      y += dy2;
+    }
+    else
+    {
+      k -= m;
+      x += dx1;
+      y += dy1;
+    }
+  }
+}
+
+
+void DrawTriangle(t_surface *surface, t_point p0, t_point p1, t_point p2)
+{
+  int y;
+  long ContourX[surface->height][2];
+  for (y = 0; y < surface->height; y++)
+  {
+    ContourX[y][0] = LONG_MAX; // min X
+    ContourX[y][1] = LONG_MIN; // max X
+  }
+
+//   ft_plot_line(surface, &(t_point){p0.x, p0.y}, &(t_point){p1.x, p1.y}, 0xFF0000);
+//   ft_plot_line(surface, &(t_point){p1.x, p1.y}, &(t_point){p2.x, p2.y}, 0xFF0000);
+//   ft_plot_line(surface, &(t_point){p2.x, p2.y}, &(t_point){p0.x, p0.y}, 0xFF0000);
+   ScanLine(p0.x, p0.y, p1.x, p1.y, ContourX);
+  ScanLine(p1.x, p1.y, p2.x, p2.y, ContourX);
+  ScanLine(p2.x, p2.y, p0.x, p0.y, ContourX);
+  for (y = 0; y < surface->height; y++)
+  {
+	  //printf("%ld >= %ld\n", ContourX[y][1], ContourX[y][0]);
+    if (ContourX[y][1] >= ContourX[y][0])
+    {
+      long x = ContourX[y][0];
+      long len = 1 + ContourX[y][1] - ContourX[y][0];
+
+      // Can draw a horizontal line instead of individual pixels here
+	 
+      while (len--)
+      {
+        ft_put_pixel(surface, &(t_point){x++, y}, 0xff0000);
+      }
+    }
+  }
+}
 void ft_cube(t_game *game)
 {
 	t_p3d cube_r[8];
@@ -825,13 +918,15 @@ void ft_cube(t_game *game)
 	}
 		for (int i = 0; i<4; i++)         // Actual drawing
 	{
-		ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i].x, cube_r[i].y}, &(t_fpoint){cube_r[i+4].x, cube_r[i+4].y}, 0xFF0000);
-		ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i].x, cube_r[i].y}, &(t_fpoint){cube_r[(i+1)%4].x, cube_r[(i+1)%4].y}, 0xFF0000);
-		ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i + 4].x, cube_r[i + 4].y}, &(t_fpoint){cube_r[(i+1)%4 + 4].x, cube_r[(i+1)%4 + 4].y}, 0xFF0000);
+		// ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i].x, cube_r[i].y}, &(t_fpoint){cube_r[i+4].x, cube_r[i+4].y}, 0xFF0000);
+		// ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i].x, cube_r[i].y}, &(t_fpoint){cube_r[(i+1)%4].x, cube_r[(i+1)%4].y}, 0xFF0000);
+		// ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i + 4].x, cube_r[i + 4].y}, &(t_fpoint){cube_r[(i+1)%4 + 4].x, cube_r[(i+1)%4 + 4].y}, 0xFF0000);
+		DrawTriangle(game->sdl->surface, (t_point){cube_r[i].x, cube_r[i].y}, (t_point){cube_r[i+4].x, cube_r[i+4].y}, (t_point){cube_r[(i+1)%4].x, cube_r[(i+1)%4].y});
+		DrawTriangle(game->sdl->surface, (t_point){cube_r[i].x, cube_r[i].y}, (t_point){cube_r[i+4].x, cube_r[(i+1)%4 + 4].y}, (t_point){cube_r[(i+1)%4].x, cube_r[(i+1)%4].y});
+		// DrawTriangle(game->sdl->surface, &(t_fpoint){cube_r[i].x, cube_r[i].y}, &(t_fpoint){cube_r[(i+1)%4].x, cube_r[(i+1)%4].y}, 0xFF0000);
+		// DrawTriangle(game->sdl->surface, &(t_fpoint){cube_r[i + 4].x, cube_r[i + 4].y}, &(t_fpoint){cube_r[(i+1)%4 + 4].x, cube_r[(i+1)%4 + 4].y}, 0xFF0000);
 	}
 }
-
-
 void ft_update(t_game *game)
 {
 	t_rectangle r = (t_rectangle){(t_point){0,0},(t_size){WIN_W, WIN_H}};
@@ -852,12 +947,14 @@ void ft_update(t_game *game)
 		game->wsad[5] ? game->elum.lights[0].position.y -= 1 : 0;
 		game->wsad[6] ? game->elum.lights[0].intensity += 0.1 : 0;
 		game->wsad[7] ? game->elum.lights[0].intensity -= 0.1 : 0;
-		//ft_render(game, &sphere);
-		ft_cube(game);
+		ft_render(game, &sphere);
+		//ft_cube(game);
+		DrawTriangle(game->sdl->surface, (t_point){10,2}, (t_point){10,50}, (t_point){5,37});
 		//ft_surface_combine(game->sdl->surface, game->image, &r);
 		ft_surface_present(game->sdl, game->sdl->surface);
 	 }
 }
+
 
 int	main(int argc, char **argv)
 {
@@ -916,5 +1013,5 @@ int	main(int argc, char **argv)
 	ft_p3d_print(rotated3);
 }
 
-https://stackoverflow.com/questions/7870533/c-triangle-rasterization
-https://www.scratchapixel.com/lessons/3d-basic-rendering/rasterization-practical-implementation/rasterization-stage
+//https://stackoverflow.com/questions/7870533/c-triangle-rasterization
+//https://www.scratchapixel.com/lessons/3d-basic-rendering/rasterization-practical-implementation/rasterization-stage
