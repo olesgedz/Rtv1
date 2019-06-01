@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/05/30 12:10:07 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/01 21:15:41 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,6 +287,32 @@ double		get_t(double a, double b, double d, float *t0)
 	return (-1);
 }
 
+
+/*
+*	Fucntion: checks if a ray hits the sphere
+*	Parameters: stuff, sphere, ray
+*	Return: true or false
+*/
+int ray_intersect(t_sphere *sphere, t_p3d *orig, t_p3d *dir, float *t0)
+{
+	t_p3d L = ft_p3d_substract(sphere->center, *orig);
+	// printf("%f %f %f, dir: %f %f %f\n", L.x, L.y, L.z, dir->x, dir->y, dir->z);
+	float tca = ft_p3d_dot_multiply(L, *dir);
+	//printf("tca %f\n", tca);
+	float d2 = ft_p3d_dot_multiply(L, L) - tca * tca;
+	//printf("d2 %f %f \n", d2, sphere->radius * sphere->radius);
+	if (d2 > sphere->radius * sphere->radius)
+		return FALSE;
+	float thc = sqrtf(sphere->radius * sphere->radius - d2);
+	*t0	= tca - thc;
+	float t1 = tca + thc;
+	if (*t0 < 0)
+		*t0 = t1;
+	if (*t0 < 0)
+		return FALSE;
+	return TRUE;
+}
+
 double		ray_intersect_sphere(t_sphere *sphere, t_p3d *orig, t_p3d *dir, float *t0)
 {
 	float	a;
@@ -385,7 +411,7 @@ int scene_intersect(t_p3d *orig, t_p3d *dir, t_sphere *spheres, t_p3d *hit, t_p3
 	{
 		float dist_i;
 
-		if (ray_intersect_sphere(&spheres[i], orig, dir, &dist_i) && dist_i < spheres_dist)
+		if (ray_intersect(&spheres[i], orig, dir, &dist_i) && dist_i < spheres_dist)
 		{
 			spheres_dist = dist_i;
 			t_p3d temp = ft_p3d_scalar_multiply(*dir, dist_i);
