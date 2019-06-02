@@ -15,15 +15,31 @@ typedef struct s_vertex t_vertex;
 typedef struct s_sector t_sector;
 typedef struct s_object t_object;
 typedef struct s_coord t_coord;
-typedef	struct 	s_p3d t_p3d;
+typedef	struct 	s_vec3 t_vec3;
 
+typedef	struct s_point3
+{
+	float x;
+	float y;
+	float z;
+} t_point3;
 
-struct 	s_p3d
+struct 	s_vec3
 {
 	float x;
 	float y;
 	float z;
 };
+
+typedef struct 	s_mat3
+{
+	double matrix[3][3];
+} t_mat3;
+
+typedef struct 	s_mat4
+{
+	double matrix[4][4];
+} t_mat4;
 
 typedef struct s_p2d
 {
@@ -32,13 +48,13 @@ typedef struct s_p2d
 } t_p2d;
 
 typedef struct Material {
-	t_p3d diffuse_color;
-	t_p3d albendo;
+	t_vec3 diffuse_color;
+	t_vec3 albendo;
 	float specular_exponent;
 } t_material;
 
 typedef struct s_light {
-	t_p3d position;
+	t_vec3 position;
 	float intensity;
 } t_light;
 
@@ -50,24 +66,24 @@ typedef struct s_lights {
 
 // typedef s_object
 // {
-// 	t_p3d pos;
-// 	t_p3d v;
+// 	t_vec3 pos;
+// 	t_vec3 v;
 // 	t_material material;
 // 	float radius;
 // } t_object;
 
 typedef struct s_sphere
 {
-	t_p3d center;
+	t_vec3 center;
 	t_material material;
 	float radius;
-	t_p3d v;
+	t_vec3 v;
 } t_sphere;
 
 
 struct s_vertex
 {
-	t_p3d position;
+	t_vec3 position;
 	float U, V;
 };
 
@@ -90,7 +106,7 @@ typedef struct s_polygon
 typedef struct s_quaternion
 {
 	float s; //scalar
-	t_p3d v;
+	t_vec3 v;
 } t_quaternion;
 
 struct s_object
