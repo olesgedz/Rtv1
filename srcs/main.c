@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/02 00:48:05 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/06/03 17:15:56 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -369,6 +369,41 @@ double		ray_intersect_cone(t_sphere *cone, t_vec3 *orig, t_vec3 *dir, float *t0)
 	//d = DROUND(d);
 	return (d = d < 0 ? -1 : get_t(a, b, d, t0));
 }
+
+double		ray_intersect_sphere_book(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0)
+{
+	double t;
+	t_vec3 temp = ft_vec3_substract(*orig, sphere->center);
+	double a = ft_vec3_dot_multiply(*dir, *dir);
+	double b = ft_vec3_dot_multiply(ft_vec3_scalar_multiply(temp, 2), *dir);
+	double c = ft_vec3_dot_multiply(temp, temp) - sphere->radius * sphere->radius;
+	double disc = b * b - 4.0 * a * c;
+	if(disc < 0)
+		return ( 0);
+	else
+	{
+			double e = sqrt(disc);
+			double denom = 2 * a;
+			t = (-b - e) / denom;
+			if (t > 0)
+			{
+				*t0 = t;
+				return (1);
+			}
+			t = (-b + e)/denom;
+
+			if (t > 0)
+			{
+				*t0 = t;
+				return (1);
+			}
+
+	}
+
+		return 0;
+	
+
+}
 /*
 *	Fucntion: checks if a ray hits the sphere
 *	Parameters: stuff, sphere, ray
@@ -411,7 +446,7 @@ int scene_intersect(t_vec3 *orig, t_vec3 *dir, t_sphere *spheres, t_vec3 *hit, t
 	{
 		float dist_i;
 
-		if (ray_intersect(&spheres[i], orig, dir, &dist_i) && dist_i < spheres_dist)
+		if (ray_intersect_sphere_book(&spheres[i], orig, dir, &dist_i) && dist_i < spheres_dist)
 		{
 			spheres_dist = dist_i;
 			t_vec3 temp = ft_vec3_scalar_multiply(*dir, dist_i);
@@ -873,43 +908,43 @@ int	main(int argc, char **argv)
 	t_vec3 v = (t_vec3){1,1,1};
 	v = ft_mat3_multiply_vec(a,v);
 	ft_vec3_print(v);
-// 	printf("move light source with wasdqe \nchange intensity with zx\n");
-// 	game.sdl = malloc(sizeof(t_sdl));
-// 	game.image = ft_surface_create(WIN_W, WIN_H);
-// 	t_material ivory = (t_material){(t_vec3){0.4, 0.4, 0.3}, (t_vec3){0.6, 0.3, 0}, 70};
-// 	t_material red_rubber = (t_material){(t_vec3){0.3, 0.1, 0.1}, (t_vec3){0.3, 0.5, 0}, 10000};
-// 	//printf("%f %f %f\n", bb.albendo.x, bb.albendo.y, bb.specular_exponent);
-// 	game.elum.lights = ft_memalloc(sizeof(t_light) * 5);
-// 	game.elum.lights[0] = (t_light){(t_vec3){7, 10, -16}, 1.5};
-// 	game.elum.lights[1] = (t_light){(t_vec3){-20, 20, 20}, 1.5};
-// 	game.elum.lights[2] = (t_light){(t_vec3){30, 50, -25}, 1.8};
-// 	game.elum.lights[3] = (t_light){(t_vec3){30, 20, 30}, 1.7};
-// 	//vector_init(&game.elum.light);
-// 	//vector_add(&game.elum.light,  &(t_light){(t_vec3){7, 10, -16}, 1.5});
-// 	game.elum.number = 4; // number of light sources
-// 	game.n_spheres = 5;
-// 	game.spheres = ft_memalloc(sizeof(t_sphere) * 6);
-// 	game.spheres[0] = (t_sphere){(t_vec3){-3, 0, -16}, ivory, 5, (t_vec3){1, 1, 1}};
-// 	game.spheres[1] = (t_sphere){(t_vec3){-1.0, -1.5, -12}, red_rubber, 2, 5};
-// 	game.spheres[3] = (t_sphere){(t_vec3){1.5, -0.5, -18}, red_rubber, 3, 5};
-// 	game.spheres[4] = (t_sphere){(t_vec3){7, 5, -18}, ivory, 4, 5};
+	printf("move light source with wasdqe \nchange intensity with zx\n");
+	game.sdl = malloc(sizeof(t_sdl));
+	game.image = ft_surface_create(WIN_W, WIN_H);
+	t_material ivory = (t_material){(t_vec3){0.4, 0.4, 0.3}, (t_vec3){0.6, 0.3, 0}, 70};
+	t_material red_rubber = (t_material){(t_vec3){0.3, 0.1, 0.1}, (t_vec3){0.3, 0.5, 0}, 10000};
+	//printf("%f %f %f\n", bb.albendo.x, bb.albendo.y, bb.specular_exponent);
+	game.elum.lights = ft_memalloc(sizeof(t_light) * 5);
+	game.elum.lights[0] = (t_light){(t_vec3){7, 10, -16}, 1.5};
+	game.elum.lights[1] = (t_light){(t_vec3){-20, 20, 20}, 1.5};
+	game.elum.lights[2] = (t_light){(t_vec3){30, 50, -25}, 1.8};
+	game.elum.lights[3] = (t_light){(t_vec3){30, 20, 30}, 1.7};
+	//vector_init(&game.elum.light);
+	//vector_add(&game.elum.light,  &(t_light){(t_vec3){7, 10, -16}, 1.5});
+	game.elum.number = 4; // number of light sources
+	game.n_spheres = 5;
+	game.spheres = ft_memalloc(sizeof(t_sphere) * 6);
+	game.spheres[0] = (t_sphere){(t_vec3){-3, 0, -16}, ivory, 5, (t_vec3){1, 1, 1}};
+	game.spheres[1] = (t_sphere){(t_vec3){-1.0, -1.5, -12}, red_rubber, 2, 5};
+	game.spheres[3] = (t_sphere){(t_vec3){1.5, -0.5, -18}, red_rubber, 3, 5};
+	game.spheres[4] = (t_sphere){(t_vec3){7, 5, -18}, ivory, 4, 5};
 
-// 	game.spheres[2] = (t_sphere){(t_vec3){-3.0, 0, -12}, red_rubber, 1, 5}; // this is a light source, move with wasdqe
+	game.spheres[2] = (t_sphere){(t_vec3){-3.0, 0, -12}, red_rubber, 1, 5}; // this is a light source, move with wasdqe
 
-// 	// ft_vec3_print(&game.spheres[0].center);
-// 	// ft_vec3_print(&game.spheres[1].center);
-// 	t_sphere sphere;
+	// ft_vec3_print(&game.spheres[0].center);
+	// ft_vec3_print(&game.spheres[1].center);
+	t_sphere sphere;
 	
-// 	for (int i=0; i<8; i++)     // Define the cube
-// 	{
-// 		cube[i].x=(float)(50-100*(((i+1)/2)%2));
-// 		cube[i].y=(float)(50-100*((i/2)%2));
-// 		cube[i].z=(float)(50-100*((i/4)%2));
-// 	}
+	for (int i=0; i<8; i++)     // Define the cube
+	{
+		cube[i].x=(float)(50-100*(((i+1)/2)%2));
+		cube[i].y=(float)(50-100*((i/2)%2));
+		cube[i].z=(float)(50-100*((i/4)%2));
+	}
 
 
-// 	configure_sphere(argv[1], &sphere);
-// 	ft_init_window(game.sdl, WIN_W, WIN_H);
-// 	ft_update(&game);
-// 	ft_exit(NULL);
+	configure_sphere(argv[1], &sphere);
+	ft_init_window(game.sdl, WIN_W, WIN_H);
+	ft_update(&game);
+	ft_exit(NULL);
 }

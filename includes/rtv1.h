@@ -47,6 +47,12 @@ typedef struct s_p2d
 	float y;
 } t_p2d;
 
+typedef struct s_ray
+{
+	t_vec3 orig;
+	t_vec3 dir;
+} t_ray;
+
 typedef struct Material {
 	t_vec3 diffuse_color;
 	t_vec3 albendo;
