@@ -87,6 +87,13 @@ typedef struct s_sphere
 	t_vec3 v;
 } t_sphere;
 
+typedef	struct		s_cone
+{
+	t_vec3		tip;
+	t_vec3		direction;
+	double			angle;
+	t_material material;
+}					t_cone;
 
 struct s_vertex
 {
@@ -109,12 +116,6 @@ typedef struct s_polygon
 	t_sector *sector;
 	//Plane
 } t_polygon;
-
-typedef struct s_quaternion
-{
-	float s; //scalar
-	t_vec3 v;
-} t_quaternion;
 
 struct s_object
 {

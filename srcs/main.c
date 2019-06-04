@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/04 18:39:34 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/04 20:39:47 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,66 +21,6 @@
 
 t_game game;
 float xa, ya, za;
-
-int ft_point_compare(t_list *list, void *target)
-{
-	if ((((t_point *)list->content)->x == ((t_point *)target)->x) &&
-		(((t_point *)list->content)->y == ((t_point *)target)->y))
-		{
-			printf("S:%d %d %d %d\n", ((t_point *)list->content)->x,((t_point *)target)->x,
-			((t_point *)list->content)->y , ((t_point *)target)->y);
-			return (1);
-		}
-	return (0);
-}
-void ft_lst_free(void *content, size_t size)
-{
-	ft_memdel((void **)content);
-}
-t_list		*ft_list_search(t_list *lst, void *target, int (*f)(t_list *, void *))
-{
-	while (lst != NULL)
-	{
-		if (f(lst, target))
-			return (lst);
-		lst = lst->next;
-	}
-	return (NULL);
-}
-
-void ft_put_vertex(t_game *game)
-{
-	
-	ft_put_pixel(game->image, &(t_point){game->sdl->mouse.x, game->sdl->mouse.y}, 0xFF0000);
-	if (ft_list_search(game->verties, &(t_point){game->sdl->mouse.x, game->sdl->mouse.y}, ft_point_compare))
-	{
-		printf("YIIIIS\n");
-		//ft_lstdel(&game->verties, ft_lst_free);
-	}
-	ft_lstadd(&game->verties, ft_lstnew(&(t_point){game->sdl->mouse.x, game->sdl->mouse.y}, sizeof(t_point)));
-	printf("%d %d\n", ((t_point *)game->verties->content)->x, ((t_point *)game->verties->content)->y);
-}
-
-/*
-* Drawing from doom/hadnling mouse
-*/
-
-void ft_mouse_pressed(t_game *game, SDL_Event *ev)
-{
-	game->sdl->mouse.pressed = 1;
-	game->sdl->mouse.last_x = game->sdl->mouse.x;
-	game->sdl->mouse.last_y = game->sdl->mouse.y;
-	game->sdl->mouse.x = ev->button.x;
-	game->sdl->mouse.y = ev->button.y;
-	ft_put_vertex(game);
-	if (game->sdl->mouse.last_x > 0)
-		ft_plot_line(game->image, &(t_point){game->sdl->mouse.last_x, game->sdl->mouse.last_y},\
-	 		&(t_point){game->sdl->mouse.x, game->sdl->mouse.y}, 0x00FF00);
-}
-
-/*
-*	End of Doom stuff
-*/
 
 /*
 *	Funtion: handles presses mouse/keyboard
@@ -117,156 +57,156 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 					default: break;
 				}
 				break;
-			case SDL_MOUSEBUTTONDOWN:  ft_mouse_pressed(&game, ev);
+			case SDL_MOUSEBUTTONDOWN:  
 				break;
 			case SDL_QUIT: ft_exit(NULL);
 		}
 	return (1);
 }
 
-/*
-*	Function: creates 3d point from coordinates
-*	Parameters: x y z coodinates of the 3d point as float 
-*	Return: malloced t_vec3, no parameters change
-*
-* ? probably suppose to be t_vector3d or smth
-*/
 
-t_vec3 ft_vec3_create(float x, float y, float z)
-{
-	t_vec3 new;
+// /*
+// *	Function: creates 3d point from coordinates
+// *	Parameters: x y z coodinates of the 3d point as float 
+// *	Return: malloced t_vec3, no parameters change
+// *
+// * ? probably suppose to be t_vector3d or smth
+// */
 
-	new.x = x;
-	new.y = y;
-	new.z = z;
-	return (new);
-}
-/*
-*	Fucntion: sum of two vectors
-*	Parameters: two vectors
-*	Return: sum of two vectors, no parammeters change
-*/
+// inline t_vec3 ft_vec3_create(float x, float y, float z)
+// {
+// 	t_vec3 new;
 
-
-t_vec3	ft_vec3_sum(t_vec3 a, t_vec3 b)
-{
-	t_vec3 new;
-
-	new.x = (a.x + b.x);
-	new.y = (a.y + b.y);
-	new.z = (a.z + b.z);
-	return (new);
-}
-
-/*
-*	Fucntion: substact two vectors
-*	Parameters: two vectors
-*	Return: difference of two vectors, no parammeters change
-*/
+// 	new.x = x;
+// 	new.y = y;
+// 	new.z = z;
+// 	return (new);
+// }
+// /*
+// *	Fucntion: sum of two vectors
+// *	Parameters: two vectors
+// *	Return: sum of two vectors, no parammeters change
+// */
 
 
-t_vec3	ft_vec3_substract(t_vec3 a, t_vec3 b)
-{
-	t_vec3 new;
+// inline t_vec3	ft_vec3_sum(t_vec3 a, t_vec3 b)
+// {
+// 	t_vec3 new;
 
-	new.x = (a.x - b.x);
-	new.y = (a.y - b.y);
-	new.z = (a.z - b.z);
-	return (new);
-}
+// 	new.x = (a.x + b.x);
+// 	new.y = (a.y + b.y);
+// 	new.z = (a.z + b.z);
+// 	return (new);
+// }
 
-/*
-*	Fucntion: prints a 3d point
-*	Parameters: 3d point, no parameters change
-*	Return: none
-* ! printf delete it
-*/
-
-void ft_vec3_print(t_vec3 a)
-{
-	printf("x:%f y:%f z:%f\n", a.x, a.y, a.z);
-}
-
-/*
-*	Fucntion: vector multiplication, dot product
-*	Parameters: two vectors no parameters change 
-*	Return: scalar float result of multiplication,
-*/
-float ft_vec3_dot_multiply(t_vec3 a, t_vec3 b)
-{
-	return (a.x * b.x + a.y * b.y + a.z * b.z);
-}
-
-/*
-*	Fucntion: vector multiplication by scalar
-*	Parameters: two vectors no parameters change 
-*	Return: t_vec3 vector result of multiplication,
-*/
-
-t_vec3 ft_vec3_scalar_multiply(t_vec3 a, float b)
-{
-	return ((t_vec3){a.x * b, a.y * b, a.z * b});
-}
-/*
-*	Fucntion: vector multiplication by vector
-*	Parameters: two vectors no parameters change 
-*	Return: t_vec3 vector result of multiplication,
-*/
-
-t_vec3 ft_vec3_cross_multiply(t_vec3 a, t_vec3 b)
-{
-	t_vec3 result;
-
-	result.x = a.y * b.z - a.z * b.y;
-	result.y = a.z * b.x - a.x * b.z;
-	result.z = a.x * b.y - a.y * b.x;
-	return (result);
-}
-
-/*
-*	Fucntion: scalar value of vector
-*	Parameters: vector, no parameters change 
-*	Return: (float) scalar value of a vector
-*/
-
-float ft_vec3_norm(t_vec3 vect)
-{
-	return (sqrt(vect.x * vect.x + vect.y * vect.y + vect.z * vect.z));
-}
-
-/*
-*	Fucntion: changes scalar value of a vector
-*	Parameters: vector (changes), needed length
-*	Return: normalized vector
-*/
-
-t_vec3 ft_vec3_normalize(t_vec3 vect)
-{
-	float norm = ft_vec3_norm(vect);
-	vect.x = vect.x / norm;
-	vect.y = vect.y / norm;
-	vect.z = vect.z / norm;
-	return (vect);
-}
+// /*
+// *	Fucntion: substact two vectors
+// *	Parameters: two vectors
+// *	Return: difference of two vectors, no parammeters change
+// */
 
 
-/*
-*	Fucntion: projection of vector a on vector b
-*	Parameters: two vectors no parameters change 
-*	Return: float,
-*/
+// inline t_vec3	ft_vec3_substract(t_vec3 a, t_vec3 b)
+// {
+// 	t_vec3 new;
 
-float ft_vec3_projection(t_vec3 a, t_vec3 b)
-{
-	return (ft_vec3_dot_multiply(b, a) /  ft_vec3_norm(b));
-}
+// 	new.x = (a.x - b.x);
+// 	new.y = (a.y - b.y);
+// 	new.z = (a.z - b.z);
+// 	return (new);
+// }
+
+// /*
+// *	Fucntion: prints a 3d point
+// *	Parameters: 3d point, no parameters change
+// *	Return: none
+// * ! printf delete it
+// */
+
+// inline void ft_vec3_print(t_vec3 a)
+// {
+// 	printf("x:%f y:%f z:%f\n", a.x, a.y, a.z);
+// }
+
+// /*
+// *	Fucntion: vector multiplication, dot product
+// *	Parameters: two vectors no parameters change 
+// *	Return: scalar float result of multiplication,
+// */
+// inline float ft_vec3_dot_multiply(t_vec3 a, t_vec3 b)
+// {
+// 	return (a.x * b.x + a.y * b.y + a.z * b.z);
+// }
+
+// /*
+// *	Fucntion: vector multiplication by scalar
+// *	Parameters: two vectors no parameters change 
+// *	Return: t_vec3 vector result of multiplication,
+// */
+
+// inline t_vec3 ft_vec3_scalar_multiply(t_vec3 a, float b)
+// {
+// 	return ((t_vec3){a.x * b, a.y * b, a.z * b});
+// }
+// /*
+// *	Fucntion: vector multiplication by vector
+// *	Parameters: two vectors no parameters change 
+// *	Return: t_vec3 vector result of multiplication,
+// */
+
+// inline t_vec3 ft_vec3_cross_multiply(t_vec3 a, t_vec3 b)
+// {
+// 	t_vec3 result;
+
+// 	result.x = a.y * b.z - a.z * b.y;
+// 	result.y = a.z * b.x - a.x * b.z;
+// 	result.z = a.x * b.y - a.y * b.x;
+// 	return (result);
+// }
+
+// /*
+// *	Fucntion: scalar value of vector
+// *	Parameters: vector, no parameters change 
+// *	Return: (float) scalar value of a vector
+// */
+
+// inline float ft_vec3_norm(t_vec3 vect)
+// {
+// 	return (sqrt(vect.x * vect.x + vect.y * vect.y + vect.z * vect.z));
+// }
+
+// /*
+// *	Fucntion: changes scalar value of a vector
+// *	Parameters: vector (changes), needed length
+// *	Return: normalized vector
+// */
+
+// inline t_vec3 ft_vec3_normalize(t_vec3 vect)
+// {
+// 	float norm = ft_vec3_norm(vect);
+// 	vect.x = vect.x / norm;
+// 	vect.y = vect.y / norm;
+// 	vect.z = vect.z / norm;
+// 	return (vect);
+// }
 
 
-/*
-*	Fucntion:
-*	Parameters:
-*	Return:
-*/
+// /*
+// *	Fucntion: projection of vector a on vector b
+// *	Parameters: two vectors no parameters change 
+// *	Return: float,
+// */
+
+// inline float ft_vec3_projection(t_vec3 a, t_vec3 b)
+// {
+// 	return (ft_vec3_dot_multiply(b, a) /  ft_vec3_norm(b));
+// }
+
+// /*
+// *	Fucntion:
+// *	Parameters:
+// *	Return:
+// */
 
 t_vec3	reflect(t_vec3 I, t_vec3 n)
 {
@@ -356,20 +296,20 @@ double		ray_intersect_cylinder(t_sphere *cylinder, t_vec3 *orig, t_vec3 *dir, fl
 double		ray_intersect_cone(t_sphere *cone, t_vec3 *orig, t_vec3 *dir, float *t0)
 {
 	t_vec3	x;
-	float	a;
-	float	b;
-	float	c;
-	float	d;
+	double	a;
+	double	b;
+	double	c;
+	double	d;
 
 	x = ft_vec3_substract(*orig, cone->center);
 	a = ft_vec3_dot_multiply(*dir, cone->v);
 	a = ft_vec3_dot_multiply(*dir, *dir) - (1 + cone->radius * cone->radius) * a * a;
-	b =  1* (ft_vec3_dot_multiply(*dir, x) - (1 + cone->radius * cone->radius)
+	b =  2 * (ft_vec3_dot_multiply(*dir, x) - (1 + cone->radius * cone->radius)
 		* ft_vec3_dot_multiply(*dir, cone->v) * ft_vec3_dot_multiply(x, cone->v));
 	c = ft_vec3_dot_multiply(x, cone->v);
 	c = ft_vec3_dot_multiply(x, x) - (1 + cone->radius * cone->radius) * c * c;
 	d = b * b - 4 * a * c;
-	//d = DROUND(d);
+	d = DROUND(d);
 	return (d = d < 0 ? -1 : get_t(a, b, d, t0));
 }
 
@@ -431,6 +371,30 @@ double		ray_intersect_sphere_book(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, f
 // 		return FALSE;
 // 	return TRUE;
 // }
+double				quandratic_solve(double k1, double k2, double k3)
+{
+	double			diskr;
+	double			t1;
+	double			t2;
+	double			tmp;
+
+	diskr = k2 * k2 - 4 * k1 * k3;
+	if (diskr < 0)
+		return (0);
+	t1 = (-k2 + sqrt(diskr)) / (2 * k1);
+	t2 = (-k2 - sqrt(diskr)) / (2 * k1);
+	if (t1 > t2)
+	{
+		tmp = t1;
+		t1 = t2;
+		t2 = tmp;
+	}
+	if (t1 < 0)
+		t1 = t2;
+	if (t1 < 0)
+		return (-1.);
+	return (t1);
+}
 
 /*
 *	Fucntion: checks all objects on the scene
@@ -445,6 +409,7 @@ int scene_intersect(t_vec3 *orig, t_vec3 *dir, t_sphere *spheres, t_vec3 *hit, t
 	// ft_vec3_print(&spheres[0].center);
 	// ft_vec3_print(&spheres[1].center);
 	//ft_exit(NULL);
+	
 	while (++i < game.n_spheres)
 	{
 		float dist_i;
@@ -623,147 +588,6 @@ t_vec3 ft_vec3_rotate_test2(t_vec3 p, t_vec3 angle)
 	return (v);
 }
 
-t_quaternion t_quaternion_sum(t_quaternion a, t_quaternion b)
-{
-	t_quaternion new;
-
-	new.s = a.s + b.s;
-	new.v = ft_vec3_sum(a.v, b.v);
-	return (new);
-}
-
-t_quaternion t_quaternion_substract(t_quaternion a, t_quaternion b)
-{
-	t_quaternion new;
-
-	new.s = a.s - b.s;
-	new.v = ft_vec3_substract(a.v, b.v);
-	return (new);
-}
-
-float ft_quaternion_norm(t_quaternion q)
-{
-
-	float scalar = q.s * q.s;
-	float imaginary = ft_vec3_dot_multiply(q.v, q.v);
-	return (sqrt(scalar + imaginary));
-}
-
-float ft_degree_to_rad(float degree)
-{
-	return (degree * M_PI/180);
-}
-
-t_quaternion ft_quaternion_normalize(t_quaternion q)
-{
-	t_quaternion new;
-	float norm;
-    float norm_value;
-
-	norm = ft_quaternion_norm(q);
-	if (norm != 0)
-	{
-		norm_value = 1 / norm;
-		new.s = q.s * norm_value;
-		new.v = ft_vec3_scalar_multiply(q.v, norm_value);
-	}
-	return (new);
-}
-
-//Unit-Norm Quaternion (Special Form)
-t_quaternion ft_quaternion_covert_to_unit_norm(t_quaternion q)
-{
-	t_quaternion new;
-	float angle  = ft_degree_to_rad(q.s);
-
-	new.v = ft_vec3_normalize(q.v);
-	new.s = cosf(angle * 0.5);
-	new.v = ft_vec3_scalar_multiply(q.v, sinf(angle * 0.5));
-	return (new);
-}
-
-t_quaternion ft_quaternion_conjugate(t_quaternion q)
-{
-	float scalar=q.s;
-	t_vec3 imaginary = ft_vec3_scalar_multiply(q.v, -1);
-	return ((t_quaternion){scalar, imaginary});
-}
-
-t_quaternion ft_quaternion_inverse(t_quaternion q)
-{
-	float abs = ft_quaternion_norm(q); 
-	abs*=abs;
-	abs=1/abs;
-	t_quaternion conjugare_val = ft_quaternion_conjugate(q);
-
-	float scalar = conjugare_val.s * abs;
-	t_vec3 imaginary = ft_vec3_scalar_multiply(conjugare_val.v, abs);
-
-	return((t_quaternion){scalar, imaginary});
-
-}
-
-t_quaternion ft_quaternion_multiply(t_quaternion a, t_quaternion b)
-{
-	float scalar = a.s * b.s - ft_vec3_dot_multiply(a.v, b.v);
-
-	t_vec3 imaginary = ft_vec3_sum(ft_vec3_sum(ft_vec3_scalar_multiply(b.v, a.s), ft_vec3_scalar_multiply(a.v, b.s)), ft_vec3_cross_multiply(a.v, b.v)); 
-	return ((t_quaternion){scalar, imaginary});
-}
-//https://www.cprogramming.com/tutorial/3d/quaternions.html
-t_quaternion ft_quaternion_multiply2(t_quaternion a, t_quaternion b)
-{
-	t_quaternion new;
-	new.s = (a.s * b.s - a.v.x * b.v.x  - a.v.y * b.v.y - a.v.z * b.v.z);
-	new.v.x = (a.s * b.v.x + a.v.x * b.s + a.v.y * b.v.z - a.v.z * b.v.y);
-	new.v.y = (a.s * b.v.y - a.v.x * b.v.z + a.v.y * b.s + a.v.z * b.v.x);
-	new.v.z  = (a.s * b.v.z + a.v.x * b.v.y - a.v.y * b.v.x + a.v.z * b.s);
-	return (new);
-}
-
-t_quaternion ft_quaternion_local_rotation(t_vec3 axis, float angle)
-{
-	t_quaternion local_rotation;
-	angle = angle * M_PI / 180.0;
-	local_rotation.s = cosf(angle/2);
-	local_rotation.v.x = axis.x * sinf(angle/2);
-	local_rotation.v.y = axis.y * sinf(angle/2);
-	local_rotation.v.z = axis.z * sinf(angle/2);
-	return (local_rotation);
-}
-
-t_vec3	ft_vec3_rotate_quaterion(float angle, t_vec3 vector, t_vec3 axis)
-{
-	 //convert our vector to a pure quaternion
-    t_quaternion p = (t_quaternion){0,vector};
-	//create the real quaternion
-	t_quaternion q = (t_quaternion){angle, ft_vec3_normalize(axis)};
-	 //convert quaternion to unit norm quaternion
-	q = ft_quaternion_covert_to_unit_norm(q);
-
-	t_quaternion q_invesrse = ft_quaternion_inverse(q);
-
-	t_quaternion rotated = ft_quaternion_multiply2(ft_quaternion_multiply(q,p), q_invesrse);
-	return (rotated.v);
-}
-
-t_vec3	ft_vec3_rotate_quaterion2(float angle, t_vec3 vector, t_vec3 axis)
-{
-	t_vec3 new;
-	t_quaternion local_rotation = ft_quaternion_local_rotation(axis, angle);
-	t_quaternion total = (t_quaternion){1, {0, 0, 0}};
-	total  = ft_quaternion_multiply2(local_rotation, total);
-	new.x = (1 - 2 * pow(total.v.y, 2) - 2.0 * pow(total.v.z, 2)) * vector.x
-	+ (2 * total.v.x * total.v.y - 2 * total.s * total.v.z) * vector.y
-	+ (2 * total.v.x * total.v.z + 2 * total.s * total.v.y) * vector.z;
-	new.y = (2 * total.v.x * total.v.y + 2 * total.s * total.v.z) * vector.x
-	+ (1 - 2 * pow(total.v.x, 2) - 2 * pow(total.v.z, 2)) * vector.y
-	+ (2 * total.v.y * total.v.z - 2 * total.s * total.v.x) * vector.z;
-	new.z = (2 * total.v.x * total.v.z - 2 * total.s * total.v.y) * vector.x
-	+ (2 * total.v.y * total.v.z + 2 * total.s * total.v.x) * vector.y
-	+ (1 - 2 * pow(total.v.x, 2) - 2 * pow(total.v.y, 2)) * vector.z;
-	return (new);
-}
 
 // min X and max X for every horizontal line within the triangle
 void ScanLine(long x1, long y1, long x2, long y2, long ContourX[][2])
@@ -935,7 +759,7 @@ int	main(int argc, char **argv)
 	game.elum.number = 4; // number of light sources
 	game.n_spheres = 1;
 	game.spheres = ft_memalloc(sizeof(t_sphere) * 6);
-	game.spheres[0] = (t_sphere){(t_vec3){-3, 0, -16}, ivory, 5, (t_vec3){1, 1, 1}};
+	game.spheres[0] = (t_sphere){(t_vec3){-3, 0, -16}, ivory, 5, (t_vec3){10, 0, 0}};
 	game.spheres[1] = (t_sphere){(t_vec3){-1.0, -1.5, -12}, red_rubber, 2, 5};
 	game.spheres[3] = (t_sphere){(t_vec3){1.5, -0.5, -18}, red_rubber, 3, 5};
 	game.spheres[4] = (t_sphere){(t_vec3){7, 5, -18}, ivory, 4, 5};
