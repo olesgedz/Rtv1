@@ -6,13 +6,16 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/04 21:08:15 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/04 21:12:25 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 #include "libmath.h"
 #include <time.h>
+
+//https://github.com/fastball20/RTv1/blob/master/vectorlib/vector.h
+//home
 /*
 * ! We can't use global variables 
 */
