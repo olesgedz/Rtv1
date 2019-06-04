@@ -10,42 +10,43 @@
 #include <fcntl.h>
 #include <limits.h>
 #include <float.h>
+#include "libmath.h"
 
 typedef struct s_vertex t_vertex;
 typedef struct s_sector t_sector;
 typedef struct s_object t_object;
 typedef struct s_coord t_coord;
-typedef	struct 	s_vec3 t_vec3;
+// typedef	struct 	s_vec3 t_vec3;
 
-typedef	struct s_point3
-{
-	float x;
-	float y;
-	float z;
-} t_point3;
+// typedef	struct s_point3
+// {
+// 	float x;
+// 	float y;
+// 	float z;
+// } t_point3;
 
-struct 	s_vec3
-{
-	float x;
-	float y;
-	float z;
-};
+// struct 	s_vec3
+// {
+// 	float x;
+// 	float y;
+// 	float z;
+// };
 
-typedef struct 	s_mat3
-{
-	double matrix[3][3];
-} t_mat3;
+// typedef struct 	s_mat3
+// {
+// 	double matrix[3][3];
+// } t_mat3;
 
-typedef struct 	s_mat4
-{
-	double matrix[4][4];
-} t_mat4;
+// typedef struct 	s_mat4
+// {
+// 	double matrix[4][4];
+// } t_mat4;
 
-typedef struct s_p2d
-{
-	float x;
-	float y;
-} t_p2d;
+// typedef struct s_p2d
+// {
+// 	float x;
+// 	float y;
+// } t_p2d;
 
 typedef struct s_ray
 {

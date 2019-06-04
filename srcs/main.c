@@ -6,16 +6,19 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/03 17:15:56 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/04 18:39:34 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
+#include "libmath.h"
+#include <time.h>
 /*
 * ! We can't use global variables 
 */
 
 # define DROUND(d)	ABS(d) < 0.00001 ? 0 : (d)
+
 t_game game;
 float xa, ya, za;
 
@@ -868,12 +871,16 @@ void ft_update(t_game *game)
 {
 	t_rectangle r = (t_rectangle){(t_point){0,0},(t_size){WIN_W, WIN_H}};
 	t_sphere sphere = {(t_vec3){-3, 0, -16}, 2};
+	clock_t current_ticks, delta_ticks;
+	clock_t fps = 0;
 	while(1)
 	{
+		
 		// ((t_light *)game->elum.light.get(&game->elum.light, 0))->position = game->elum.lights[0].position; //  Because VECTORS!
 		// game->spheres[2].center =  ((t_light *)game->elum.light.get(&game->elum.light, 0))->position;       //game->elum.lights[0].position;
 		//printf("%f %f\n", ((t_light *)game->elum.light.get(&game->elum.light, 0))->position.x);
 		//game->spheres[2].center = game->elum.lights[0].position;
+		current_ticks = clock();
 		ft_surface_clear(game->sdl->surface);
 		ft_input(game->sdl, &ft_input_keys);
 		game->wsad[0] ? game->elum.lights[0].position.z -= 1: 0;
@@ -886,9 +893,13 @@ void ft_update(t_game *game)
 		game->wsad[7] ? game->elum.lights[0].intensity -= 0.1 : 0;
 		ft_render(game, &sphere);
 		//ft_cube(game);
-		DrawTriangle(game->sdl->surface, (t_point){10,2}, (t_point){10,50}, (t_point){5,37});
+		//DrawTriangle(game->sdl->surface, (t_point){10,2}, (t_point){10,50}, (t_point){5,37});
 		//ft_surface_combine(game->sdl->surface, game->image, &r);
 		ft_surface_present(game->sdl, game->sdl->surface);
+				 delta_ticks = clock() - current_ticks; //the time, in ms, that took to render the scene
+    if(delta_ticks > 0)
+        fps = CLOCKS_PER_SEC / delta_ticks;
+			printf("fps :%lu\n", fps);
 	 }
 }
 
@@ -922,7 +933,7 @@ int	main(int argc, char **argv)
 	//vector_init(&game.elum.light);
 	//vector_add(&game.elum.light,  &(t_light){(t_vec3){7, 10, -16}, 1.5});
 	game.elum.number = 4; // number of light sources
-	game.n_spheres = 5;
+	game.n_spheres = 1;
 	game.spheres = ft_memalloc(sizeof(t_sphere) * 6);
 	game.spheres[0] = (t_sphere){(t_vec3){-3, 0, -16}, ivory, 5, (t_vec3){1, 1, 1}};
 	game.spheres[1] = (t_sphere){(t_vec3){-1.0, -1.5, -12}, red_rubber, 2, 5};

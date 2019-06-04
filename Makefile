@@ -6,7 +6,7 @@
 #    By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/16 12:58:07 by jblack-b          #+#    #+#              #
-#    Updated: 2019/06/03 16:07:06 by jblack-b         ###   ########.fr        #
+#    Updated: 2019/06/04 18:30:43 by jblack-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,12 +14,17 @@ NAME = rtv1
 
 FLAGS = -g -O3
 CC = gcc
-LIBRARIES = -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY)
-INCLUDES = -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS) -I$(SDL_HEADERS) -I$(LIBSDL_HEADERS)
+LIBRARIES = -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY) -lmath -L$(LIBMATH_DIRECTORY)
+INCLUDES = -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(LIBMATH_HEADERS) -I$(SDL_HEADERS) -I$(LIBSDL_HEADERS)
 
 LIBFT = $(LIBFT_DIRECTORY)libft.a
 LIBFT_DIRECTORY = ./libft/
 LIBFT_HEADERS = $(LIBFT_DIRECTORY)includes/
+
+LIBMATH = $(LIBMATH_DIRECTORY)libmath.a
+LIBMATH_DIRECTORY = ./libmath/
+LIBMATH_HEADERS = $(LIBMATH_DIRECTORY)includes/
+
 SDL_HEADERS = include/
 
 LIBSDL = $(LIBSDL_DIRECTORY)libsdl.a
@@ -78,13 +83,14 @@ CURRENT_FILES = $(shell find $(DIRECTORY)/objects/ -type f 2> /dev/null | wc -l 
 all: $(MAKES) $(NAME)
 
 
-$(NAME): $(LIBFT) $(LIBSDL) $(OBJS_DIRECTORY) $(OBJS)
+$(NAME): $(LIBFT) $(LIBMATH) $(LIBSDL) $(OBJS_DIRECTORY) $(OBJS)
 	@$(CC) $(FLAGS) $(LIBRARIES) $(INCLUDES) $(OBJS) $(SDL_CFLAGS) $(SDL_LDFLAGS) -o $(NAME)
 	@echo "$(CLEAR_LINE)[`expr $(CURRENT_FILES) '*' 100 / $(TOTAL_FILES)`%] $(COL_BLUE)[$(NAME)] $(COL_GREEN)Finished compilation. Output file : $(COL_VIOLET)$(PWD)/$(NAME)$(COL_END)"
 
 $(MAKES):
 	@$(MAKE) -sC $(LIBFT_DIRECTORY)
 	@$(MAKE) -sC $(LIBSDL_DIRECTORY)
+	@$(MAKE) -sC $(LIBMATH_DIRECTORY)
 
 $(OBJS_DIRECTORY):
 	@mkdir -p $(OBJS_DIRECTORY)
