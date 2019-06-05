@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/05 16:47:02 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/05 20:01:46 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,7 +273,7 @@ int	main(int argc, char **argv)
 
 	t_mat3 a = (t_mat3){{{1,2,3}, {4,5,6}, {7,8,9}}};
 	t_vec3 v = (t_vec3){1,1,1};
-	v = ft_mat3_multiply_vec(a,v);
+	v = ft_mat3_multiply_vec3(a,v);
 	ft_vec3_print(v);
 	printf("move light source with wasdqe \nchange intensity with zx\n");
 	game.sdl = malloc(sizeof(t_sdl));

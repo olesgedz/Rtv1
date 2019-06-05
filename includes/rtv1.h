@@ -32,7 +32,15 @@ struct 	s_vec3
 	float x;
 	float y;
 	float z;
+	float w;
 };
+
+typedef	struct s_normal3
+{
+	float x;
+	float y;
+	float z;
+} t_normal3;
 
 typedef struct 	s_mat3
 {
@@ -176,16 +184,26 @@ void	configure_sphere(char *map_name, t_sphere *sphere);
 //  extern inline float ft_vec3_projection(t_vec3 a, t_vec3 b);
 // extern inline void ft_vec3_print(t_vec3 a);
 
-  t_vec3 ft_vec3_create(float x, float y, float z);
-  t_vec3	ft_vec3_sum(t_vec3 a, t_vec3 b);
-   t_vec3	ft_vec3_substract(t_vec3 a, t_vec3 b);
-   float ft_vec3_dot_multiply(t_vec3 a, t_vec3 b);
-  t_vec3 ft_vec3_scalar_multiply(t_vec3 a, float b);
-  t_vec3 ft_vec3_cross_multiply(t_vec3 a, t_vec3 b);
-   float ft_vec3_norm(t_vec3 vect);
-   t_vec3 ft_vec3_normalize(t_vec3 vect);
-  float ft_vec3_projection(t_vec3 a, t_vec3 b);
-  void ft_vec3_print(t_vec3 a);
+
+//point
+t_point3 ft_point3_sum(t_point3 a, t_point3 b);
+t_point3 ft_point3_substract(t_point3 a, t_point3 b);
+t_point3 ft_point3_substract_vec3(t_point3 a, t_vec3 b);
+double ft_point3_substract_sum_2(t_point3 a, t_vec3 b);
+double ft_point3_dist(t_point3 a, t_vec3 b);
+t_point3 ft_point3_scalar_multiply(t_point3 a, double b);
+
+	t_vec3 ft_vec3_create(float x, float y, float z);
+	t_vec3	ft_vec3_sum(t_vec3 a, t_vec3 b);
+	t_vec3	ft_vec3_substract(t_vec3 a, t_vec3 b);
+	float ft_vec3_dot_multiply(t_vec3 a, t_vec3 b);
+	t_vec3 ft_vec3_scalar_multiply(t_vec3 a, float b);
+	t_vec3 ft_vec3_cross_multiply(t_vec3 a, t_vec3 b);
+	float ft_vec3_norm(t_vec3 vect);
+	t_vec3 ft_vec3_normalize(t_vec3 vect);
+	float ft_vec3_projection(t_vec3 a, t_vec3 b);
+	void ft_vec3_print(t_vec3 a);
+	t_vec3 ft_vec3_neg(t_vec3 v);
 
 t_quaternion t_quaternion_sum(t_quaternion a, t_quaternion b);
 t_quaternion t_quaternion_substract(t_quaternion a, t_quaternion b);
@@ -199,6 +217,18 @@ t_quaternion ft_quaternion_multiply(t_quaternion a, t_quaternion b);
 t_quaternion ft_quaternion_multiply2(t_quaternion a, t_quaternion b);
 t_quaternion ft_quaternion_local_rotation(t_vec3 axis, float angle);
 
+//mat
+t_mat4	ft_mat4_identity_matrix(void);
+t_vec3 ft_mat3_multiply_vec3(t_mat3 matrix, t_vec3 vector);
+t_mat4	ft_mat4_multiply_mat4(t_mat4 a, t_mat4 b);
+t_mat4	ft_mat4_scalar_multiply(t_mat4 m, double n);
+t_mat4	ft_mat4_sum_mat4(t_mat4 a, t_mat4 b);
+t_mat4	ft_mat4_translation_matrix(t_vec3 v);
+t_mat4	ft_mat4_scale_matrix(double a, double b, double c);
+t_point3 ft_mat3_multiply_point3(t_mat3 matrix, t_point3 point);
+t_vec3 ft_mat3_multiply_vec3(t_mat3 matrix, t_vec3 vector);
+
+//rot
 t_vec3	ft_vec3_rotate_quaterion(float angle, t_vec3 vector, t_vec3 axis);
 t_vec3	ft_vec3_rotate_quaterion2(float angle, t_vec3 vector, t_vec3 axis);
 t_vec3 ft_vec3_project_test1(t_vec3 p);
@@ -206,6 +236,12 @@ t_vec3 ft_vec3_rotate_test1(t_vec3 p, t_vec3 angle);
 t_vec3 ft_vec3_project_test2(t_vec3 p);
 t_vec3 ft_vec3_rotate_test2(t_vec3 p, t_vec3 angle);
 
+//normals
+extern inline t_normal3 ft_normal3_neg(t_normal3 v);
+extern inline t_normal3 ft_normal3_scalar_multiply(t_normal3 a, float b);
+extern inline t_normal3	ft_normal3_sum(t_normal3 a, t_normal3 b);
+extern inline float ft_normal3_dot_multiply_vec(t_normal3 a, t_vec3 b);
+extern inline t_normal3 ft_normal3_scalar_multiply(t_normal3 a, float b);
 
 //intersect
 int ray_intersect(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
@@ -214,5 +250,4 @@ double		ray_intersect_cylinder(t_sphere *cylinder, t_vec3 *orig, t_vec3 *dir, fl
 double		ray_intersect_cylinder(t_sphere *cylinder, t_vec3 *orig, t_vec3 *dir, float *t0);
 double		ray_intersect_cone(t_sphere *cone, t_vec3 *orig, t_vec3 *dir, float *t0);
 double		ray_intersect_sphere_book(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
-t_vec3 ft_mat3_multiply_vec(t_mat3 matrix, t_vec3 vector);
 #endif
