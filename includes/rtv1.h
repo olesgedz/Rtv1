@@ -10,6 +10,7 @@
 #include <fcntl.h>
 #include <limits.h>
 #include <float.h>
+#include <math.h>
 //#include "libmath.h"
 # define DROUND(d)	ABS(d) < 0.00001 ? 0 : (d)
 
@@ -101,6 +102,8 @@ typedef struct s_sphere
 	t_material material;
 	float radius;
 	t_vec3 v;
+	double			angle;
+	t_vec3		tip;
 } t_sphere;
 
 typedef	struct		s_cone
@@ -250,4 +253,7 @@ double		ray_intersect_cylinder(t_sphere *cylinder, t_vec3 *orig, t_vec3 *dir, fl
 double		ray_intersect_cylinder(t_sphere *cylinder, t_vec3 *orig, t_vec3 *dir, float *t0);
 double		ray_intersect_cone(t_sphere *cone, t_vec3 *orig, t_vec3 *dir, float *t0);
 double		ray_intersect_sphere_book(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
+double				sphere_intersection3(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
+double				cylinder_intersection(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
+double				cone_intersection(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
 #endif

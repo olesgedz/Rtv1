@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/05 20:01:46 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/05 21:39:24 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,7 +291,11 @@ int	main(int argc, char **argv)
 	game.elum.number = 4; // number of light sources
 	game.n_spheres = 1;
 	game.spheres = ft_memalloc(sizeof(t_sphere) * 6);
-	game.spheres[0] = (t_sphere){(t_vec3){-3, 0, -16}, ivory, 5, (t_vec3){10, 0, 0}};
+	// game.spheres[0].tip = (t_vec3){-3, -1.5, -10};
+	// game.spheres[0].v = (t_vec3){0, -0.5, 0};
+	// game.spheres[0].angle = 25;
+	// game.spheres[0].material = ivory;
+	game.spheres[0] = (t_sphere){(t_vec3){0, 2, -13}, ivory, 3, (t_vec3){0.4, -0.8, 0.6}};
 	game.spheres[1] = (t_sphere){(t_vec3){-1.0, -1.5, -12}, red_rubber, 2, 5};
 	game.spheres[3] = (t_sphere){(t_vec3){1.5, -0.5, -18}, red_rubber, 3, 5};
 	game.spheres[4] = (t_sphere){(t_vec3){7, 5, -18}, ivory, 4, 5};

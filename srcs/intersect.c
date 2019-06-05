@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 16:17:28 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/06/05 16:19:47 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/05 21:34:02 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,65 @@ double		ray_intersect_sphere(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float 
 	c = ft_vec3_dot_multiply(ft_vec3_substract(*orig, sphere->center),
 		ft_vec3_substract(*orig, sphere->center)) - sphere->radius * sphere->radius;
 	d = b * b - 4 * a * c;
-	return (d < 0 ? -1 : get_t(a, b, d, t0));
+	*t0 = d < 0 ? -1 : quandratic_solve(a, b, c);
+	return (d < 0 ? -1 : quandratic_solve(a, b, c));
+}
+
+
+double				sphere_intersection3(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0)
+{
+	t_vec3		oc;
+	double			k1;
+	double			k2;
+	double			k3;
+
+	oc = ft_vec3_substract(*orig, sphere->center);
+	k1 = ft_vec3_dot_multiply(*dir, *dir);
+	k2 = 2 * ft_vec3_dot_multiply(oc, *dir);
+	k3 = ft_vec3_dot_multiply(oc, oc) - sphere->radius * sphere->radius;
+	*t0 = quandratic_solve(k1, k2, k3);
+	return(*t0 < 0.003 ? 0 : 1);
+}
+
+double				cylinder_intersection(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0)
+{
+	double			k1;
+	double			k2;
+	double			k3;
+
+	k1 = ft_vec3_dot_multiply(ft_vec3_cross_multiply(*dir, sphere->v),
+			ft_vec3_cross_multiply(*dir, sphere->v));
+	k2 = 2 * ft_vec3_dot_multiply(ft_vec3_cross_multiply(*dir, sphere->v),
+			ft_vec3_cross_multiply(ft_vec3_substract(*orig, sphere->center),
+				sphere->v));
+	k3 = ft_vec3_dot_multiply(ft_vec3_cross_multiply(ft_vec3_substract(*orig, sphere->center),
+				sphere->v),
+			ft_vec3_cross_multiply(ft_vec3_substract(*orig, sphere->center),
+				sphere->v)) - sphere->radius * sphere->radius;
+	*t0 = quandratic_solve(k1, k2, k3);
+	return(*t0 < 0.003 ? 0 : 1);
+}
+
+double				cone_intersection(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0)
+{
+	t_vec3		co;
+	double			k1;
+	double			k2;
+	double			k3;
+
+	co = ft_vec3_substract(*orig, sphere->tip);
+	k1 = ft_vec3_dot_multiply(*dir, sphere->v) *
+		ft_vec3_dot_multiply(*dir, sphere->v) - cos(sphere->angle)
+		* cos(sphere->angle);
+	k2 = 2 * (ft_vec3_dot_multiply(*dir, sphere->v) *
+			ft_vec3_dot_multiply(co, sphere->v)
+			- ft_vec3_dot_multiply(*dir, co) * cos(sphere->angle)
+			* cos(sphere->angle));
+	k3 = ft_vec3_dot_multiply(co, sphere->v) * ft_vec3_dot_multiply(co, sphere->v)
+		- ft_vec3_dot_multiply(co, co)
+		* cos(sphere->angle) * cos(sphere->angle);
+	*t0 = quandratic_solve(k1, k2, k3);
+	return(*t0 < 0.003 ? 0 : 1);
 }
 
 
@@ -110,6 +168,7 @@ double		ray_intersect_cylinder(t_sphere *cylinder, t_vec3 *orig, t_vec3 *dir, fl
 	c = ft_vec3_dot_multiply(x, cylinder->v);
 	c = ft_vec3_dot_multiply(x, x) - c * c - cylinder->radius * cylinder->radius;
 	d = b * b - 4 * a * c;
+	d = DROUND(d);
 	return (d = d < 0 ? -1 : get_t(a, b, d, t0));
 }
 
