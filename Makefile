@@ -6,7 +6,7 @@
 #    By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/16 12:58:07 by jblack-b          #+#    #+#              #
-#    Updated: 2019/06/04 21:06:38 by jblack-b         ###   ########.fr        #
+#    Updated: 2019/06/05 16:44:20 by jblack-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@ NAME = rtv1
 
 FLAGS = -g -O3
 CC = gcc
-LIBRARIES = -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY) -lmath -L$(LIBMATH_DIRECTORY)
-INCLUDES = -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(LIBMATH_HEADERS) -I$(SDL_HEADERS) -I$(LIBSDL_HEADERS)
+LIBRARIES = -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY) #-lmath -L$(LIBMATH_DIRECTORY)
+INCLUDES = -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBSDL_HEADERS) # -I$(LIBMATH_HEADERS)
 
 LIBFT = $(LIBFT_DIRECTORY)libft.a
 LIBFT_DIRECTORY = ./libft/
@@ -32,7 +32,7 @@ LIBSDL_DIRECTORY = ./libsdl/
 LIBSDL_HEADERS = $(LIBSDL_DIRECTORY)includes/
 
 HEADERS_DIRECTORY = ./includes/
-HEADERS_LIST = 
+HEADERS_LIST = rtv1.h
 HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
 
 DIRECTORY =  $(shell pwd)
@@ -52,7 +52,7 @@ LIB_LIST =	libSDL2.a\
 
 SRCS_DIRECTORY = ./srcs/
 
-SRCS_LIST = main.c map_parser.c vectors.c quaternion.c
+SRCS_LIST = main.c map_parser.c vectors.c quaternion.c rotate.c intersect.c matrix.c
 
 
 OBJS_DIRECTORY = objects/
@@ -86,7 +86,7 @@ CURRENT_FILES = $(shell find $(DIRECTORY)/objects/ -type f 2> /dev/null | wc -l 
 all: $(MAKES) $(NAME)
 
 
-$(NAME): $(LIBFT) $(LIBMATH) $(LIBSDL) $(OBJS_DIRECTORY) $(OBJS)
+$(NAME): $(LIBFT)  $(LIBSDL) $(OBJS_DIRECTORY) $(OBJS) $(HEADERS) #$(LIBMATH) 
 	@$(CC) $(FLAGS) $(LIBRARIES) $(INCLUDES) $(OBJS) $(SDL_CFLAGS) $(SDL_LDFLAGS) -o $(NAME)
 	@echo "$(CLEAR_LINE)[`expr $(CURRENT_FILES) '*' 100 / $(TOTAL_FILES)`%] $(COL_BLUE)[$(NAME)] $(COL_GREEN)Finished compilation. Output file : $(COL_VIOLET)$(PWD)/$(NAME)$(COL_END)"
 
@@ -114,7 +114,8 @@ sdl:
 	@echo "sad"
 	cd SDL2; ./configure --prefix=$(DIRECTORY); make;
 	$(MAKE) -sC $(DIRECTORY)/SDL2 install
-
+this:
+	@rm -rf $(OBJS_DIRECTORY) && make;
 $(SDL_LIBS):
 	cd SDL2; ./configure --prefix=$(DIRECTORY); make;
 	$(MAKE) -sC $(SDL_MAKE) install

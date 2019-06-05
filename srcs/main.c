@@ -6,12 +6,11 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/04 21:12:25 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/05 16:47:02 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
-#include "libmath.h"
 #include <time.h>
 
 //https://github.com/fastball20/RTv1/blob/master/vectorlib/vector.h
@@ -20,7 +19,6 @@
 * ! We can't use global variables 
 */
 
-# define DROUND(d)	ABS(d) < 0.00001 ? 0 : (d)
 
 t_game game;
 float xa, ya, za;
@@ -67,144 +65,6 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 	return (1);
 }
 
-
-/*
-*	Function: creates 3d point from coordinates
-*	Parameters: x y z coodinates of the 3d point as float 
-*	Return: malloced t_vec3, no parameters change
-*
-* ? probably suppose to be t_vector3d or smth
-*/
-
-inline t_vec3 ft_vec3_create(float x, float y, float z)
-{
-	t_vec3 new;
-
-	new.x = x;
-	new.y = y;
-	new.z = z;
-	return (new);
-}
-/*
-*	Fucntion: sum of two vectors
-*	Parameters: two vectors
-*	Return: sum of two vectors, no parammeters change
-*/
-
-
-inline t_vec3	ft_vec3_sum(t_vec3 a, t_vec3 b)
-{
-	t_vec3 new;
-
-	new.x = (a.x + b.x);
-	new.y = (a.y + b.y);
-	new.z = (a.z + b.z);
-	return (new);
-}
-
-/*
-*	Fucntion: substact two vectors
-*	Parameters: two vectors
-*	Return: difference of two vectors, no parammeters change
-*/
-
-
-inline t_vec3	ft_vec3_substract(t_vec3 a, t_vec3 b)
-{
-	t_vec3 new;
-
-	new.x = (a.x - b.x);
-	new.y = (a.y - b.y);
-	new.z = (a.z - b.z);
-	return (new);
-}
-
-/*
-*	Fucntion: prints a 3d point
-*	Parameters: 3d point, no parameters change
-*	Return: none
-* ! printf delete it
-*/
-
-inline void ft_vec3_print(t_vec3 a)
-{
-	printf("x:%f y:%f z:%f\n", a.x, a.y, a.z);
-}
-
-/*
-*	Fucntion: vector multiplication, dot product
-*	Parameters: two vectors no parameters change 
-*	Return: scalar float result of multiplication,
-*/
-inline float ft_vec3_dot_multiply(t_vec3 a, t_vec3 b)
-{
-	return (a.x * b.x + a.y * b.y + a.z * b.z);
-}
-
-/*
-*	Fucntion: vector multiplication by scalar
-*	Parameters: two vectors no parameters change 
-*	Return: t_vec3 vector result of multiplication,
-*/
-
-inline t_vec3 ft_vec3_scalar_multiply(t_vec3 a, float b)
-{
-	return ((t_vec3){a.x * b, a.y * b, a.z * b});
-}
-/*
-*	Fucntion: vector multiplication by vector
-*	Parameters: two vectors no parameters change 
-*	Return: t_vec3 vector result of multiplication,
-*/
-
-inline t_vec3 ft_vec3_cross_multiply(t_vec3 a, t_vec3 b)
-{
-	t_vec3 result;
-
-	result.x = a.y * b.z - a.z * b.y;
-	result.y = a.z * b.x - a.x * b.z;
-	result.z = a.x * b.y - a.y * b.x;
-	return (result);
-}
-
-/*
-*	Fucntion: scalar value of vector
-*	Parameters: vector, no parameters change 
-*	Return: (float) scalar value of a vector
-*/
-
-inline float ft_vec3_norm(t_vec3 vect)
-{
-	return (sqrt(vect.x * vect.x + vect.y * vect.y + vect.z * vect.z));
-}
-
-/*
-*	Fucntion: changes scalar value of a vector
-*	Parameters: vector (changes), needed length
-*	Return: normalized vector
-*/
-
-inline t_vec3 ft_vec3_normalize(t_vec3 vect)
-{
-	float norm = ft_vec3_norm(vect);
-	vect.x = vect.x / norm;
-	vect.y = vect.y / norm;
-	vect.z = vect.z / norm;
-	return (vect);
-}
-
-
-/*
-*	Fucntion: projection of vector a on vector b
-*	Parameters: two vectors no parameters change 
-*	Return: float,
-*/
-
-inline float ft_vec3_projection(t_vec3 a, t_vec3 b)
-{
-	return (ft_vec3_dot_multiply(b, a) /  ft_vec3_norm(b));
-}
-
 /*
 *	Fucntion:
 *	Parameters:
@@ -219,185 +79,7 @@ t_vec3	reflect(t_vec3 I, t_vec3 n)
 	return ft_vec3_substract(I, temp);
 }
 
-double		get_t(double a, double b, double d, float *t0)
-{
-	double	t1;
-	double	t2;
 
-	t1 = (-b - sqrt(d)) / (2 * a);
-	t2 = (-b + sqrt(d)) / (2 * a);
-	if ((t1 <= t2 && t1 >= 0) || (t1 >= 0 && t2 < 0))
-		return (*t0 = t1);
-	if ((t2 <= t1 && t2 >= 0) || (t2 >= 0 && t1 < 0))
-		return (*t0 = t2);
-	return (-1);
-}
-
-
-/*
-*	Fucntion: checks if a ray hits the sphere
-*	Parameters: stuff, sphere, ray
-*	Return: true or false
-*/
-int ray_intersect(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0)
-{
-	t_vec3 L = ft_vec3_substract(sphere->center, *orig);
-	// printf("%f %f %f, dir: %f %f %f\n", L.x, L.y, L.z, dir->x, dir->y, dir->z);
-	float tca = ft_vec3_dot_multiply(L, *dir);
-	//printf("tca %f\n", tca);
-	float d2 = ft_vec3_dot_multiply(L, L) - tca * tca;
-	//printf("d2 %f %f \n", d2, sphere->radius * sphere->radius);
-	if (d2 > sphere->radius * sphere->radius)
-		return FALSE;
-	float thc = sqrtf(sphere->radius * sphere->radius - d2);
-	*t0	= tca - thc;
-	float t1 = tca + thc;
-	if (*t0 < 0)
-		*t0 = t1;
-	if (*t0 < 0)
-		return FALSE;
-	return TRUE;
-}
-
-double		ray_intersect_sphere(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0)
-{
-	float	a;
-	float	b;
-	float	c;
-	float	d;
-
-	a = ft_vec3_dot_multiply(*dir, *dir);
-	b = 2 * ft_vec3_dot_multiply(*dir, ft_vec3_substract(*orig, sphere->center));
-	c = ft_vec3_dot_multiply(ft_vec3_substract(*orig, sphere->center),
-		ft_vec3_substract(*orig, sphere->center)) - sphere->radius * sphere->radius;
-	d = b * b - 4 * a * c;
-	return (d < 0 ? -1 : get_t(a, b, d, t0));
-}
-
-
-double		ray_intersect_cylinder(t_sphere *cylinder, t_vec3 *orig, t_vec3 *dir, float *t0)
-{
-	t_vec3	x;
-	double	a;
-	double	b;
-	double	c;
-	double	d;
-	
-	x = ft_vec3_substract(*orig, cylinder->center);
-	a = ft_vec3_dot_multiply(*dir, cylinder->v);
-	a = ft_vec3_dot_multiply(*dir, *dir) - a * a;
-	b = 2 * (ft_vec3_dot_multiply(*dir, x) - ft_vec3_dot_multiply(*dir, cylinder->v)
-		* ft_vec3_dot_multiply(x, cylinder->v));
-	c = ft_vec3_dot_multiply(x, cylinder->v);
-	c = ft_vec3_dot_multiply(x, x) - c * c - cylinder->radius * cylinder->radius;
-	d = b * b - 4 * a * c;
-	return (d = d < 0 ? -1 : get_t(a, b, d, t0));
-}
-
-
-
-double		ray_intersect_cone(t_sphere *cone, t_vec3 *orig, t_vec3 *dir, float *t0)
-{
-	t_vec3	x;
-	double	a;
-	double	b;
-	double	c;
-	double	d;
-
-	x = ft_vec3_substract(*orig, cone->center);
-	a = ft_vec3_dot_multiply(*dir, cone->v);
-	a = ft_vec3_dot_multiply(*dir, *dir) - (1 + cone->radius * cone->radius) * a * a;
-	b =  2 * (ft_vec3_dot_multiply(*dir, x) - (1 + cone->radius * cone->radius)
-		* ft_vec3_dot_multiply(*dir, cone->v) * ft_vec3_dot_multiply(x, cone->v));
-	c = ft_vec3_dot_multiply(x, cone->v);
-	c = ft_vec3_dot_multiply(x, x) - (1 + cone->radius * cone->radius) * c * c;
-	d = b * b - 4 * a * c;
-	d = DROUND(d);
-	return (d = d < 0 ? -1 : get_t(a, b, d, t0));
-}
-
-double		ray_intersect_sphere_book(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0)
-{
-	double t;
-	t_vec3 temp = ft_vec3_substract(*orig, sphere->center);
-	double a = ft_vec3_dot_multiply(*dir, *dir);
-	double b = ft_vec3_dot_multiply(ft_vec3_scalar_multiply(temp, 2), *dir);
-	double c = ft_vec3_dot_multiply(temp, temp) - sphere->radius * sphere->radius;
-	double disc = b * b - 4.0 * a * c;
-	if(disc < 0)
-		return ( 0);
-	else
-	{
-			double e = sqrt(disc);
-			double denom = 2 * a;
-			t = (-b - e) / denom;
-			if (t > 0)
-			{
-				*t0 = t;
-				return (1);
-			}
-			t = (-b + e)/denom;
-
-			if (t > 0)
-			{
-				*t0 = t;
-				return (1);
-			}
-
-	}
-
-		return 0;
-	
-
-}
-/*
-*	Fucntion: checks if a ray hits the sphere
-*	Parameters: stuff, sphere, ray
-*	Return: true or false
-*/
-// int ray_intersect(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0)
-// {
-// 	t_vec3 L = ft_vec3_substract(sphere->center, *orig);
-// 	// printf("%f %f %f, dir: %f %f %f\n", L.x, L.y, L.z, dir->x, dir->y, dir->z);
-// 	float tca = ft_vec3_dot_multiply(L, *dir);
-// 	//printf("tca %f\n", tca);
-// 	float d2 = ft_vec3_dot_multiply(L, L) - tca * tca;
-// 	//printf("d2 %f %f \n", d2, sphere->radius * sphere->radius);
-// 	if (d2 > sphere->radius * sphere->radius)
-// 		return FALSE;
-// 	float thc = sqrtf(sphere->radius * sphere->radius - d2);
-// 	*t0	= tca - thc;
-// 	float t1 = tca + thc;
-// 	if (*t0 < 0)
-// 		*t0 = t1;
-// 	if (*t0 < 0)
-// 		return FALSE;
-// 	return TRUE;
-// }
-double				quandratic_solve(double k1, double k2, double k3)
-{
-	double			diskr;
-	double			t1;
-	double			t2;
-	double			tmp;
-
-	diskr = k2 * k2 - 4 * k1 * k3;
-	if (diskr < 0)
-		return (0);
-	t1 = (-k2 + sqrt(diskr)) / (2 * k1);
-	t2 = (-k2 - sqrt(diskr)) / (2 * k1);
-	if (t1 > t2)
-	{
-		tmp = t1;
-		t1 = t2;
-		t2 = tmp;
-	}
-	if (t1 < 0)
-		t1 = t2;
-	if (t1 < 0)
-		return (-1.);
-	return (t1);
-}
 
 /*
 *	Fucntion: checks all objects on the scene
@@ -533,151 +215,6 @@ t_vec3 cube[8];
 *	Return: none
 */
 
-
-t_vec3 ft_vec3_project_test1(t_vec3 p)
-{
-	t_vec3 new;
-	p.z+=300;
-	new.x=(p.x*500)/p.z+320, new.y=(p.y*500)/p.z+240;
-	return (new);
-}
-
-t_vec3 ft_vec3_rotate_test1(t_vec3 p, t_vec3 angle)
-{
-	float mat[3][3];            // Determine rotation matrix
-	t_vec3 new;	
-	float xdeg=angle.x*M_PI/180, ydeg=angle.y*M_PI/180, zdeg=angle.z*M_PI/180;
-	float sx=(float)sin(xdeg), sy=(float)sin(ydeg), sz=(float)sin(zdeg);
-	float cx=(float)cos(xdeg), cy=(float)cos(ydeg), cz=(float)cos(zdeg);
-	mat[0][0]=cx*cz+sx*sy*sz, mat[1][0]=-cx*sz+cz*sx*sy, mat[2][0]=cy*sx;
-	mat[0][1]=cy*sz, mat[1][1]=cy*cz, mat[2][1]=-sy;
-	mat[0][2]=-cz*sx+cx*sy*sz, mat[1][2]=sx*sz+cx*cz*sy, mat[2][2]=cx*cy;
-	new.x=p.x*mat[0][0]+p.y*mat[1][0]+p.z*mat[2][0];
-	new.y=p.x*mat[0][1]+p.y*mat[1][1]+p.z*mat[2][1];
-	new.z=p.x*mat[0][2]+p.y*mat[1][2]+p.z*mat[2][2];	
-	return (new);
-}
-
-
-t_vec3 ft_vec3_project_test2(t_vec3 p)
-{
-	p.x *= 1;
-	p.y *= 1;
-	p.x += 300;
-	p.y += 300;
-	return (p);
-}
-
-t_vec3 ft_vec3_rotate_test2(t_vec3 p, t_vec3 angle)
-{
-
-	t_vec3	v;
-	double		x;
-	double		y;
-	double		z;
-	
-	x = p.x;
-	z = p.z;
-	v.x = cos(angle.y) * x + sin(angle.y) * z;
-	v.z = -sin(angle.y) * x + cos(angle.y) * z;
-	y = p.y;
-	z = v.z;
-	v.y = cos(angle.x) * y - sin(angle.x) * z;
-	v.z = sin(angle.x) * y + cos(angle.x) * z + 300;
-	x = v.x;
-	y = v.y;
-	v.x = cos(angle.z) * x - sin(angle.z) * y;
-	v.y = sin(angle.z) * x + cos(angle.z) * y;
-	return (v);
-}
-
-
-// min X and max X for every horizontal line within the triangle
-void ScanLine(long x1, long y1, long x2, long y2, long ContourX[][2])
-{
-  long sx, sy, dx1, dy1, dx2, dy2, x, y, m, n, k, cnt;
-
-  sx = x2 - x1;
-  sy = y2 - y1;
-
-  if (sx > 0) dx1 = 1;
-  else if (sx < 0) dx1 = -1;
-  else dx1 = 0;
-
-  if (sy > 0) dy1 = 1;
-  else if (sy < 0) dy1 = -1;
-  else dy1 = 0;
-
-  m = ABS(sx);
-  n = ABS(sy);
-  dx2 = dx1;
-  dy2 = 0;
-
-  if (m < n)
-  {
-    m = ABS(sy);
-    n = ABS(sx);
-    dx2 = 0;
-    dy2 = dy1;
-  }
-
-  x = x1; y = y1;
-  cnt = m + 1;
-  k = n / 2;
-
-  while (cnt--)
-  {
-    if ((y >= 0) && (y < WIN_H))
-    {
-      if (x < ContourX[y][0]) ContourX[y][0] = x;
-      if (x > ContourX[y][1]) ContourX[y][1] = x;
-    }
-
-    k += n;
-    if (k < m)
-    {
-      x += dx2;
-      y += dy2;
-    }
-    else
-    {
-      k -= m;
-      x += dx1;
-      y += dy1;
-    }
-  }
-}
-
-
-void DrawTriangle(t_surface *surface, t_point p0, t_point p1, t_point p2)
-{
-  int y;
-  long ContourX[surface->height][2];
-  for (y = 0; y < surface->height; y++)
-  {
-    ContourX[y][0] = LONG_MAX; // min X
-    ContourX[y][1] = LONG_MIN; // max X
-  }
-	ScanLine(p0.x, p0.y, p1.x, p1.y, ContourX);
-  	ScanLine(p1.x, p1.y, p2.x, p2.y, ContourX);
-  	ScanLine(p2.x, p2.y, p0.x, p0.y, ContourX);
-  for (y = 0; y < surface->height; y++)
-  {
-	  //printf("%ld >= %ld\n", ContourX[y][1], ContourX[y][0]);
-    if (ContourX[y][1] >= ContourX[y][0])
-    {
-      long x = ContourX[y][0];
-      long len = 1 + ContourX[y][1] - ContourX[y][0];
-
-      // Can draw a horizontal line instead of individual pixels here
-	 
-      while (len--)
-      {
-        ft_put_pixel(surface, &(t_point){x++, y}, 0xff0000);
-      }
-    }
-  }
-}
 void ft_cube(t_game *game)
 {
 	t_vec3 cube_r[8];
@@ -690,8 +227,8 @@ void ft_cube(t_game *game)
 		// ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i].x, cube_r[i].y}, &(t_fpoint){cube_r[i+4].x, cube_r[i+4].y}, 0xFF0000);
 		// ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i].x, cube_r[i].y}, &(t_fpoint){cube_r[(i+1)%4].x, cube_r[(i+1)%4].y}, 0xFF0000);
 		// ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i + 4].x, cube_r[i + 4].y}, &(t_fpoint){cube_r[(i+1)%4 + 4].x, cube_r[(i+1)%4 + 4].y}, 0xFF0000);
-		DrawTriangle(game->sdl->surface, (t_point){cube_r[i].x, cube_r[i].y}, (t_point){cube_r[i+4].x, cube_r[i+4].y}, (t_point){cube_r[(i+1)%4].x, cube_r[(i+1)%4].y});
-		DrawTriangle(game->sdl->surface, (t_point){cube_r[i].x, cube_r[i].y}, (t_point){cube_r[i+4].x, cube_r[(i+1)%4 + 4].y}, (t_point){cube_r[(i+1)%4].x, cube_r[(i+1)%4].y});
+		ft_draw_poly(game->sdl->surface, (t_point){cube_r[i].x, cube_r[i].y}, (t_point){cube_r[i+4].x, cube_r[i+4].y}, (t_point){cube_r[(i+1)%4].x, cube_r[(i+1)%4].y});
+		ft_draw_poly(game->sdl->surface, (t_point){cube_r[i].x, cube_r[i].y}, (t_point){cube_r[i+4].x, cube_r[(i+1)%4 + 4].y}, (t_point){cube_r[(i+1)%4].x, cube_r[(i+1)%4].y});
 	}
 }
 void ft_update(t_game *game)
@@ -730,15 +267,7 @@ void ft_update(t_game *game)
 	 }
 }
 
-t_vec3 ft_mat3_multiply_vec(t_mat3 matrix, t_vec3 vector)
-{
-	t_vec3 new;
 
-	new.x = matrix.matrix[0][0] * vector.x + matrix.matrix[0][1] * vector.y + matrix.matrix[0][2] * vector.z;
-	new.y = matrix.matrix[1][0] * vector.x + matrix.matrix[1][1] * vector.y + matrix.matrix[1][2] * vector.z;
-	new.z = matrix.matrix[2][0] * vector.x + matrix.matrix[2][1] * vector.y + matrix.matrix[2][2] * vector.z;
-	return (new);
-}
 int	main(int argc, char **argv)
 {
 
