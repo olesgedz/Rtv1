@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/07 21:49:49 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/07 22:03:22 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,15 +194,17 @@ void 	ft_render(t_game* game, t_sphere *sphere)
 			float x = (2 * (i + 0.5) / (float)width  - 1) * tan(fov / 2.) * width / (float)height;
 			float y = -(2 * (j + 0.5) / (float)height - 1) * tan(fov / 2.);
 			t_vec3 dir = ft_vec3_normalize((t_vec3){x, y, -1});
-			game->origin = ft_vec3_multiply_matrix((t_vec3){0,0,0,1}, ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez}));//ft_vec3_multiply_matrix(ft_vec3_create(1, 1, 1),ft_look_at((t_vec3){0,50,5}, (t_vec3) {0,1,0}));
+			game->origin = ft_vec3_multiply_matrix((t_vec3){0,0,0,1}, ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez}));
+			//ft_vec3_multiply_matrix(ft_vec3_create(1, 1, 1),ft_look_at((t_vec3){0,50,5}, (t_vec3) {0,1,0}));
 			//ft_vec3_print(ft_vec3_multiply_matrix(ft_vec3_create(0, 0, 5),ft_look_at((t_vec3){1,1,1}, (t_vec3) {0,1,0})));
 			//ft_mat4_print(ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez}));
 			//game->origin =ft_vec3_create(eyex,eyey,eyez);
+			game->origin = ft_vec3_multiply_matrix(game->origin, ft_mat4_rotation_matrix((t_vec3) {0,0,1}, xa));
 			if (j == 0 && i == 0)
 			{
 				ft_mat4_print(ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez}));
 				printf("result:");
-				ft_vec3_print(ft_vec3_multiply_matrix((t_vec3){1,1,1,1}, ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez})));
+				ft_vec3_print(game->origin);
 				printf("\n");
 			}
 			t_vec3 temp = cast_ray(&game->origin, &dir, game->spheres);

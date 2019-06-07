@@ -241,6 +241,7 @@ t_mat4	ft_mat4_translation_matrix(t_vec3 v);
 t_mat4	ft_mat4_scale_matrix(double a, double b, double c);
 t_point3 ft_mat3_multiply_point3(t_mat3 matrix, t_point3 point);
 t_vec3 ft_mat3_multiply_vec3(t_mat3 matrix, t_vec3 vector);
+t_mat4	ft_mat4_rotation_matrix(t_vec3 axis, double alpha);
 void ft_mat4_print(t_mat4 mat);
 //rot
 t_vec3	ft_vec3_rotate_quaterion(float angle, t_vec3 vector, t_vec3 axis);
