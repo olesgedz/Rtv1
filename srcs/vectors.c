@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 20:23:19 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/06/05 19:52:51 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/07 19:34:21 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ extern inline float ft_vec3_projection(t_vec3 a, t_vec3 b)
 
 extern inline t_vec3 ft_vec3_neg(t_vec3 v)
 {
-	return (ft_vec3_scalar_multiply(v, 1));
+	return (ft_vec3_scalar_multiply(v, -1));
 }
 
 extern inline t_vec3 ft_vec3_sum_poin3(t_vec3 a, t_point3 b)

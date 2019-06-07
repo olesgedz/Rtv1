@@ -20,6 +20,7 @@ typedef struct s_sector t_sector;
 typedef struct s_object t_object;
 typedef struct s_coord t_coord;
 typedef	struct 	s_vec3 t_vec3;
+typedef	struct 	s_vec4 t_vec4;
 
 typedef	struct s_point3
 {
@@ -29,6 +30,14 @@ typedef	struct s_point3
 } t_point3;
 
 struct 	s_vec3
+{
+	float x;
+	float y;
+	float z;
+	float w;
+};
+
+struct 	s_vec4
 {
 	float x;
 	float y;
@@ -207,6 +216,7 @@ t_point3 ft_point3_scalar_multiply(t_point3 a, double b);
 	float ft_vec3_projection(t_vec3 a, t_vec3 b);
 	void ft_vec3_print(t_vec3 a);
 	t_vec3 ft_vec3_neg(t_vec3 v);
+	t_vec3	ft_vec3_multiply_matrix(t_vec3 v, t_mat4 m);
 
 t_quaternion t_quaternion_sum(t_quaternion a, t_quaternion b);
 t_quaternion t_quaternion_substract(t_quaternion a, t_quaternion b);
@@ -230,7 +240,7 @@ t_mat4	ft_mat4_translation_matrix(t_vec3 v);
 t_mat4	ft_mat4_scale_matrix(double a, double b, double c);
 t_point3 ft_mat3_multiply_point3(t_mat3 matrix, t_point3 point);
 t_vec3 ft_mat3_multiply_vec3(t_mat3 matrix, t_vec3 vector);
-
+void ft_mat4_print(t_mat4 mat);
 //rot
 t_vec3	ft_vec3_rotate_quaterion(float angle, t_vec3 vector, t_vec3 axis);
 t_vec3	ft_vec3_rotate_quaterion2(float angle, t_vec3 vector, t_vec3 axis);
@@ -238,7 +248,8 @@ t_vec3 ft_vec3_project_test1(t_vec3 p);
 t_vec3 ft_vec3_rotate_test1(t_vec3 p, t_vec3 angle);
 t_vec3 ft_vec3_project_test2(t_vec3 p);
 t_vec3 ft_vec3_rotate_test2(t_vec3 p, t_vec3 angle);
-
+t_mat4 ft_mat4_transpose(t_mat4 mat);
+t_mat4 ft_look_at(t_vec3 eye, t_vec3 up);
 //normals
 extern inline t_normal3 ft_normal3_neg(t_normal3 v);
 extern inline t_normal3 ft_normal3_scalar_multiply(t_normal3 a, float b);

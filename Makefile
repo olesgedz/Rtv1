@@ -6,7 +6,7 @@
 #    By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/16 12:58:07 by jblack-b          #+#    #+#              #
-#    Updated: 2019/06/05 19:59:59 by jblack-b         ###   ########.fr        #
+#    Updated: 2019/06/07 19:20:40 by jblack-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ LIB_LIST =	libSDL2.a\
 
 SRCS_DIRECTORY = ./srcs/
 
-SRCS_LIST = main.c map_parser.c vectors.c quaternion.c rotate.c intersect.c matrix.c normals.c
+SRCS_LIST = main.c map_parser.c vectors.c quaternion.c rotate.c intersect.c matrix.c normals.c math.c
 
 
 OBJS_DIRECTORY = objects/

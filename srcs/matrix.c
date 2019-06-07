@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 16:20:29 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/06/05 19:55:48 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/07 19:20:18 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,4 +119,41 @@ t_mat4	ft_mat4_scale_matrix(double a, double b, double c)
 	res.matrix[1][1] = b;
 	res.matrix[2][2] = c;
 	return (res);
+}
+
+t_mat4 ft_mat4_transpose(t_mat4 mat)
+{
+	t_mat4  new;
+
+	int j = 0;
+	int k = 0;
+	while (j < 4)
+	{
+		k = 0;
+		while (k < 4)
+		{
+			new.matrix[k][j] = mat.matrix[j][k];
+			k++;
+		}
+		j++;
+	}
+	return (new);
+}
+
+void ft_mat4_print(t_mat4 mat)
+{
+	int j = 0;
+	int k = 0;
+	while (j < 4)
+	{
+		k = 0;
+		printf("|");
+		while (k < 4)
+		{
+		 printf("%f ", mat.matrix[j][k]);
+			k++;
+		}
+		printf("|\n");
+		j++;
+	}
 }

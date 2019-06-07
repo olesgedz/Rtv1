@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/05 21:39:24 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/07 20:42:25 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ void 	ft_render(t_game* game, t_sphere *sphere)
 			float x = (2 * (i + 0.5) / (float)width  - 1) * tan(fov / 2.) * width / (float)height;
 			float y = -(2 * (j + 0.5) / (float)height - 1) * tan(fov / 2.);
 			t_vec3 dir = ft_vec3_normalize((t_vec3){x, y, -1});
-			t_vec3 orign = ft_vec3_create(0, 0, 0);
+			t_vec3 orign = ft_vec3_create(0, 0, 5);//ft_vec3_multiply_matrix(ft_vec3_create(0, 0, 5),ft_look_at((t_vec3){0,0,0}, (t_vec3) {0,1,0}));
 			t_vec3 temp = cast_ray(&orign, &dir, game->spheres);
 			game->sdl->surface->data[i+j*width] = ft_rgb_to_hex(225 * max(0, min(1, temp.x)), 225 * max(0, min(1, temp.y)), 225 * max(0, min(1, temp.z)));
 		}
@@ -271,10 +271,13 @@ void ft_update(t_game *game)
 int	main(int argc, char **argv)
 {
 
-	t_mat3 a = (t_mat3){{{1,2,3}, {4,5,6}, {7,8,9}}};
-	t_vec3 v = (t_vec3){1,1,1};
-	v = ft_mat3_multiply_vec3(a,v);
-	ft_vec3_print(v);
+	// t_mat3 a = (t_mat3){{{1,2,3}, {4,5,6}, {7,8,9}}};
+	// t_vec3 v = (t_vec3){1,1,1};
+	// t_mat4 m = (t_mat4){{{1,2,3, 4}, {5,6,7,8}, {9,10,11,12}, {13,14,15,16}}};
+	// m = ft_mat4_transpose(m);
+	// ft_mat4_print(m);
+	//v = ft_mat3_multiply_vec3(a,v);
+	//ft_vec3_print(v);
 	printf("move light source with wasdqe \nchange intensity with zx\n");
 	game.sdl = malloc(sizeof(t_sdl));
 	game.image = ft_surface_create(WIN_W, WIN_H);
