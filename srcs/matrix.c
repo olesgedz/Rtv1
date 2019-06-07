@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 16:20:29 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/06/07 19:20:18 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/07 21:27:39 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,9 @@ t_mat4	ft_mat4_translation_matrix(t_vec3 v)
 	t_mat4	res;
 
 	res = ft_mat4_identity_matrix();
-	res.matrix[3][0] = v.x;
-	res.matrix[3][1] = v.y;
-	res.matrix[3][2] = v.z;
+	res.matrix[0][3] = v.x;
+	res.matrix[1][3] = v.y;
+	res.matrix[2][3] = v.z;
 	return (res);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/07 20:42:25 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/07 21:49:49 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@
 * ! We can't use global variables 
 */
 
+//#define FPS
 
 t_game game;
 float xa, ya, za;
 
+float eyex, eyey, eyez;
 /*
 *	Funtion: handles presses mouse/keyboard
 * 	Return: value, doesnt change any parameters
@@ -192,8 +194,18 @@ void 	ft_render(t_game* game, t_sphere *sphere)
 			float x = (2 * (i + 0.5) / (float)width  - 1) * tan(fov / 2.) * width / (float)height;
 			float y = -(2 * (j + 0.5) / (float)height - 1) * tan(fov / 2.);
 			t_vec3 dir = ft_vec3_normalize((t_vec3){x, y, -1});
-			t_vec3 orign = ft_vec3_create(0, 0, 5);//ft_vec3_multiply_matrix(ft_vec3_create(0, 0, 5),ft_look_at((t_vec3){0,0,0}, (t_vec3) {0,1,0}));
-			t_vec3 temp = cast_ray(&orign, &dir, game->spheres);
+			game->origin = ft_vec3_multiply_matrix((t_vec3){0,0,0,1}, ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez}));//ft_vec3_multiply_matrix(ft_vec3_create(1, 1, 1),ft_look_at((t_vec3){0,50,5}, (t_vec3) {0,1,0}));
+			//ft_vec3_print(ft_vec3_multiply_matrix(ft_vec3_create(0, 0, 5),ft_look_at((t_vec3){1,1,1}, (t_vec3) {0,1,0})));
+			//ft_mat4_print(ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez}));
+			//game->origin =ft_vec3_create(eyex,eyey,eyez);
+			if (j == 0 && i == 0)
+			{
+				ft_mat4_print(ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez}));
+				printf("result:");
+				ft_vec3_print(ft_vec3_multiply_matrix((t_vec3){1,1,1,1}, ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez})));
+				printf("\n");
+			}
+			t_vec3 temp = cast_ray(&game->origin, &dir, game->spheres);
 			game->sdl->surface->data[i+j*width] = ft_rgb_to_hex(225 * max(0, min(1, temp.x)), 225 * max(0, min(1, temp.y)), 225 * max(0, min(1, temp.z)));
 		}
 	}
@@ -255,16 +267,27 @@ void ft_update(t_game *game)
 		game->wsad[5] ? game->elum.lights[0].position.y -= 1 : 0;
 		game->wsad[6] ? game->elum.lights[0].intensity += 0.1 : 0;
 		game->wsad[7] ? game->elum.lights[0].intensity -= 0.1 : 0;
+		//
+		game->wsad[0] ? eyez -= 1: 0;
+		game->wsad[1] ? eyez += 1 : 0;
+		game->wsad[2] ? eyex -= 1 : 0;
+		game->wsad[3] ? eyex += 1 : 0;
+		game->wsad[4] ? eyey += 1 : 0;
+		game->wsad[5] ? eyey -= 1 : 0;
 		ft_render(game, &sphere);
 		//ft_cube(game);
 		//DrawTriangle(game->sdl->surface, (t_point){10,2}, (t_point){10,50}, (t_point){5,37});
 		//ft_surface_combine(game->sdl->surface, game->image, &r);
 		ft_surface_present(game->sdl, game->sdl->surface);
+	#ifdef FPS
 				 delta_ticks = clock() - current_ticks; //the time, in ms, that took to render the scene
     if(delta_ticks > 0)
         fps = CLOCKS_PER_SEC / delta_ticks;
+		
 			printf("fps :%lu\n", fps);
+	#endif
 	 }
+
 }
 
 
@@ -278,6 +301,8 @@ int	main(int argc, char **argv)
 	// ft_mat4_print(m);
 	//v = ft_mat3_multiply_vec3(a,v);
 	//ft_vec3_print(v);
+			ft_vec3_print(ft_vec3_multiply_matrix(ft_vec3_create(0, 0, 0),ft_look_at((t_vec3){0,0,5}, (t_vec3) {0,1,0})));
+
 	printf("move light source with wasdqe \nchange intensity with zx\n");
 	game.sdl = malloc(sizeof(t_sdl));
 	game.image = ft_surface_create(WIN_W, WIN_H);
@@ -304,7 +329,7 @@ int	main(int argc, char **argv)
 	game.spheres[4] = (t_sphere){(t_vec3){7, 5, -18}, ivory, 4, 5};
 
 	game.spheres[2] = (t_sphere){(t_vec3){-3.0, 0, -12}, red_rubber, 1, 5}; // this is a light source, move with wasdqe
-
+	game.origin = (t_vec3){0,0,5,1};
 	// ft_vec3_print(&game.spheres[0].center);
 	// ft_vec3_print(&game.spheres[1].center);
 	t_sphere sphere;
