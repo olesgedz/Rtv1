@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/07 22:03:22 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/07 22:11:23 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,8 @@ void 	ft_render(t_game* game, t_sphere *sphere)
 			//ft_vec3_print(ft_vec3_multiply_matrix(ft_vec3_create(0, 0, 5),ft_look_at((t_vec3){1,1,1}, (t_vec3) {0,1,0})));
 			//ft_mat4_print(ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez}));
 			//game->origin =ft_vec3_create(eyex,eyey,eyez);
-			game->origin = ft_vec3_multiply_matrix(game->origin, ft_mat4_rotation_matrix((t_vec3) {0,0,1}, xa));
+			//dir = ft_vec3_multiply_matrix(dir, ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez}));
+			dir = ft_vec3_multiply_matrix(dir, ft_mat4_rotation_matrix((t_vec3) {0,1,0}, xa));
 			if (j == 0 && i == 0)
 			{
 				ft_mat4_print(ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez}));
