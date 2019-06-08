@@ -6,14 +6,13 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/07 22:11:23 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/08 21:03:47 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 #include <time.h>
-
-//https://github.com/fastball20/RTv1/blob/master/vectorlib/vector.h
+//aelinor-
 //home
 /*
 * ! We can't use global variables 
@@ -53,10 +52,8 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 					case 'x': game.wsad[7] = ev->type==SDL_KEYDOWN; break;
 					case 'p': ya+=0.2; break;
 					case ';': ya-=0.2; break;
-					case 'l': xa+=0.2; break;
-					case '\'': xa-=0.2; break;
-					case '.': za+=0.2; break;
-					case '/': za-=0.2; break;
+					case SDLK_LEFT: xa+=0.05; break;
+					case SDLK_RIGHT: xa-=0.05; break;
 					default: break;
 				}
 				break;
@@ -112,6 +109,23 @@ int scene_intersect(t_vec3 *orig, t_vec3 *dir, t_sphere *spheres, t_vec3 *hit, t
 		}
 	}
 	float checkerboard_dist = FLT_MAX;
+	// float dist_i;
+	// t_triangle tr = (t_triangle){.a = (t_vec3){0, 0, 0}, .b = (t_vec3){1, 1, 1}, (t_vec3){-1, -1, -1},\
+	// .material = spheres[0].material};
+	// if(plane_intersection2((t_ray){.orig = *orig, .dir = *dir}, tr, &dist_i))
+	// {
+	// 	checkerboard_dist = dist_i;
+		
+	// }
+
+	float dist_i;
+	// t_plane plane = (t_plane){(t_vec3){10, 10, 10}, (t_normal3){0, 1, 0},\
+	// .material = spheres[0].material};
+	// if(plane_intersection2((t_ray){.orig = *orig, .dir = *dir}, plane, &dist_i))
+	// {
+	// 	checkerboard_dist = dist_i;
+		
+	// }
     if (fabs(dir->y) > 1e-3)
 	{
         float d = -(orig->y + 4) / dir->y; // the checkerboard plane has equation y = -4
@@ -127,6 +141,10 @@ int scene_intersect(t_vec3 *orig, t_vec3 *dir, t_sphere *spheres, t_vec3 *hit, t
 	return spheres_dist < checkerboard_dist ? spheres_dist < 1000 : checkerboard_dist < 1000;
 	//return spheres_dist < 1000;
 }
+
+
+
+
 
 /*
 *	Fucntion: casts ray for that pixel
@@ -186,6 +204,7 @@ void 	ft_render(t_game* game, t_sphere *sphere)
 	int width = game->sdl->surface->width;
 	int height = game->sdl->surface->height;
 	j = -1;
+	t_mat4 m;
 	while (++j < height)
 	{
 		i = -1;
@@ -194,16 +213,16 @@ void 	ft_render(t_game* game, t_sphere *sphere)
 			float x = (2 * (i + 0.5) / (float)width  - 1) * tan(fov / 2.) * width / (float)height;
 			float y = -(2 * (j + 0.5) / (float)height - 1) * tan(fov / 2.);
 			t_vec3 dir = ft_vec3_normalize((t_vec3){x, y, -1});
-			game->origin = ft_vec3_multiply_matrix((t_vec3){0,0,0,1}, ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez}));
+			game->origin = ft_vec3_multiply_matrix((t_vec3){0,0,0,1}, m = ft_mat4_multiply_mat4(ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez}), ft_mat4_rotation_matrix((t_vec3) {0,-1,0}, xa)));
 			//ft_vec3_multiply_matrix(ft_vec3_create(1, 1, 1),ft_look_at((t_vec3){0,50,5}, (t_vec3) {0,1,0}));
 			//ft_vec3_print(ft_vec3_multiply_matrix(ft_vec3_create(0, 0, 5),ft_look_at((t_vec3){1,1,1}, (t_vec3) {0,1,0})));
 			//ft_mat4_print(ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez}));
 			//game->origin =ft_vec3_create(eyex,eyey,eyez);
-			//dir = ft_vec3_multiply_matrix(dir, ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez}));
-			dir = ft_vec3_multiply_matrix(dir, ft_mat4_rotation_matrix((t_vec3) {0,1,0}, xa));
+			dir = ft_vec3_multiply_matrix(dir, ft_mat4_rotation_matrix((t_vec3) {0,-1,0}, xa));
 			if (j == 0 && i == 0)
 			{
-				ft_mat4_print(ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez}));
+				//ft_mat4_print(ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez}));
+				ft_mat4_print(m);
 				printf("result:");
 				ft_vec3_print(game->origin);
 				printf("\n");
@@ -326,7 +345,7 @@ int	main(int argc, char **argv)
 	// game.spheres[0].v = (t_vec3){0, -0.5, 0};
 	// game.spheres[0].angle = 25;
 	// game.spheres[0].material = ivory;
-	game.spheres[0] = (t_sphere){(t_vec3){0, 2, -13}, ivory, 3, (t_vec3){0.4, -0.8, 0.6}};
+	game.spheres[0] = (t_sphere){(t_vec3){0, 2, -50}, ivory, 3, (t_vec3){0.4, -0.8, 0.6}};
 	game.spheres[1] = (t_sphere){(t_vec3){-1.0, -1.5, -12}, red_rubber, 2, 5};
 	game.spheres[3] = (t_sphere){(t_vec3){1.5, -0.5, -18}, red_rubber, 3, 5};
 	game.spheres[4] = (t_sphere){(t_vec3){7, 5, -18}, ivory, 4, 5};

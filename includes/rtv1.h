@@ -97,6 +97,13 @@ typedef struct s_lights {
 	int number;
 } t_lights;
 
+typedef struct		s_triangle
+{
+	t_vec3		a;
+	t_vec3		b;
+	t_vec3		c;
+	t_material material;
+} t_triangle;
 // typedef s_object
 // {
 // 	t_vec3 pos;
@@ -123,6 +130,7 @@ typedef	struct		s_cone
 	t_material material;
 }					t_cone;
 
+
 struct s_vertex
 {
 	t_vec3 position;
@@ -144,6 +152,13 @@ typedef struct s_polygon
 	t_sector *sector;
 	//Plane
 } t_polygon;
+
+typedef struct s_plane
+{
+	t_vec3 point;
+	t_normal3 normal;
+	t_material material;
+} t_plane;
 
 struct s_object
 {
@@ -256,8 +271,8 @@ t_mat4 ft_look_at(t_vec3 eye, t_vec3 up);
 extern inline t_normal3 ft_normal3_neg(t_normal3 v);
 extern inline t_normal3 ft_normal3_scalar_multiply(t_normal3 a, float b);
 extern inline t_normal3	ft_normal3_sum(t_normal3 a, t_normal3 b);
-extern inline float ft_normal3_dot_multiply_vec(t_normal3 a, t_vec3 b);
-extern inline t_normal3 ft_normal3_scalar_multiply(t_normal3 a, float b);
+ float ft_normal3_dot_multiply_vec3(t_normal3 a, t_vec3 b);
+inline t_normal3 ft_normal3_scalar_multiply(t_normal3 a, float b);
 
 //intersect
 int ray_intersect(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
@@ -269,4 +284,6 @@ double		ray_intersect_sphere_book(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, f
 double				sphere_intersection3(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
 double				cylinder_intersection(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
 double				cone_intersection(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
+double				plane_intersection(t_ray ray, t_triangle triangle, float *t0);
+double				plane_intersection2(t_ray ray, t_plane plane, float *t0);
 #endif

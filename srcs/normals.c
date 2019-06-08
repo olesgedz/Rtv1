@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 18:47:28 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/06/05 20:02:20 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/08 20:58:34 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ extern inline t_normal3	ft_normal3_sum(t_normal3 a, t_normal3 b)
 	new.z = (a.z + b.z);
 	return (new);
 }
-
-extern inline float ft_normal3_dot_multiply_vec(t_normal3 a, t_vec3 b)
+ float ft_normal3_dot_multiply_vec3(t_normal3 a, t_vec3 b)
 {
 	return (a.x * b.x + a.y * b.y + a.z * b.z);
 }

@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 16:17:28 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/06/05 21:34:02 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/08 21:00:49 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,25 @@ double		ray_intersect_cone(t_sphere *cone, t_vec3 *orig, t_vec3 *dir, float *t0)
 	d = DROUND(d);
 	return (d = d < 0 ? -1 : get_t(a, b, d, t0));
 }
+extern inline float ft_vec3_dot_multiply1(t_vec3 a, t_vec3 b)
+{
+	return (a.x * b.x + a.y * b.y + a.z * b.z);
+}
+
+double calc(double start, double center)
+{
+	return ((start - center) * (start - center));
+}
+
+int	have_solutions(double d)
+{
+	if (d > 0)
+		return (2);
+	else if (d == 0)
+		return (1);
+	else
+		return (0);
+}
 
 double		ray_intersect_sphere_book(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0)
 {
@@ -228,6 +247,53 @@ double		ray_intersect_sphere_book(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, f
 	
 
 }
+
+// double		intersect_plane(t_plane *plane, t_vec3 *orig, t_vec3 *dir, float *t0)
+// {
+// 	double	t;
+// 	double	ddotv;
+// 	double	xdotv;
+// 	t_vec3	x;
+
+// 	x = ft_vec3_substract(plane.org, s.c);
+// 	ddotv = v_dot(r.dir, s.d);
+// 	xdotv = v_dot(x, s.d);
+// 	if (ddotv != 0)
+// 	{
+// 		t = -xdotv / ddotv;
+// 		if (t > T_MIN && t < T_MAX)
+// 			return (t);
+// 	}
+// 	return (T_MAX);
+// }
+
+double				plane_intersection(t_ray ray, t_triangle triangle, float *t0)
+{
+	double				det;
+
+	det = ft_vec3_dot_multiply(ft_vec3_substract(triangle.a, triangle.b),
+			ft_vec3_cross_multiply(ray.dir, ft_vec3_substract(triangle.c, triangle.a)));
+	if (det < 1e-8 && det > -1e-8)
+		return (0);
+	det = ft_vec3_dot_multiply(ft_vec3_substract(triangle.c, triangle.a),
+			ft_vec3_cross_multiply(ft_vec3_substract(ray.orig, triangle.a),
+				ft_vec3_substract(triangle.a, triangle.b))) * (1 / det);
+	return (*t0 = det);
+}
+
+double				plane_intersection2(t_ray ray, t_plane plane, float *t0)
+{
+	double	t =  ft_normal3_dot_multiply_vec3(plane.normal, ft_vec3_substract(plane.point, ray.orig)) / ft_normal3_dot_multiply_vec3(plane.normal, ray.dir);
+	if (t < 0.3)
+	{
+		*t0 = t;
+		return (TRUE);
+	}
+	else
+		return(FALSE);
+}
+
+
 /*
 *	Fucntion: checks if a ray hits the sphere
 *	Parameters: stuff, sphere, ray

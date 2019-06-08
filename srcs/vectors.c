@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 20:23:19 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/06/07 21:48:41 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/08 18:36:31 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ extern inline t_vec3	ft_vec3_substract(t_vec3 a, t_vec3 b)
 
 extern inline void ft_vec3_print(t_vec3 a)
 {
-	printf("x:%f y:%f z:%f\n", a.x, a.y, a.z);
+	printf("x:%f y:%f z:%f total:%f\n", a.x, a.y, a.z, a.z * a.z + a.x * a.x + a.y * a.y);
 }
 
 /*
@@ -86,6 +86,8 @@ extern inline float ft_vec3_dot_multiply(t_vec3 a, t_vec3 b)
 {
 	return (a.x * b.x + a.y * b.y + a.z * b.z);
 }
+
+
 
 /*
 *	Fucntion: vector multiplication by scalar
