@@ -13,7 +13,7 @@
 #include <math.h>
 //#include "libmath.h"
 # define DROUND(d)	ABS(d) < 0.00001 ? 0 : (d)
-
+#define float double
 
 typedef struct s_vertex t_vertex;
 typedef struct s_sector t_sector;
@@ -124,10 +124,16 @@ typedef struct s_sphere
 
 typedef	struct		s_cone
 {
-	t_vec3		tip;
-	t_vec3		direction;
-	double			angle;
+	// t_vec3		tip;
+	// t_vec3		direction;
+	// double			angle;
+	// t_material material;
+		t_vec3 center;
 	t_material material;
+	float radius;
+	t_vec3 v;
+	double			angle;
+	t_vec3		tip;
 }					t_cone;
 
 
@@ -184,7 +190,9 @@ typedef struct s_game
 	t_list *verties;
 	t_lights elum;
 	t_sphere *spheres;
+	t_cone *cones;
 	int n_spheres;
+	int n_cones;
 	int wsad[8];
 	t_vec3 origin;
 } t_game;
@@ -286,4 +294,5 @@ double				cylinder_intersection(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, flo
 double				cone_intersection(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
 double				plane_intersection(t_ray ray, t_triangle triangle, float *t0);
 double				plane_intersection2(t_ray ray, t_plane plane, float *t0);
+double		ray_intersect_cone_book(t_cone *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
 #endif

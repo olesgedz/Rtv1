@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 16:17:28 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/06/08 21:00:49 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/09 19:51:05 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,10 +193,7 @@ double		ray_intersect_cone(t_sphere *cone, t_vec3 *orig, t_vec3 *dir, float *t0)
 	d = DROUND(d);
 	return (d = d < 0 ? -1 : get_t(a, b, d, t0));
 }
-extern inline float ft_vec3_dot_multiply1(t_vec3 a, t_vec3 b)
-{
-	return (a.x * b.x + a.y * b.y + a.z * b.z);
-}
+
 
 double calc(double start, double center)
 {
@@ -220,6 +217,44 @@ double		ray_intersect_sphere_book(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, f
 	double a = ft_vec3_dot_multiply(*dir, *dir);
 	double b = ft_vec3_dot_multiply(ft_vec3_scalar_multiply(temp, 2), *dir);
 	double c = ft_vec3_dot_multiply(temp, temp) - sphere->radius * sphere->radius;
+	double disc = b * b - 4.0 * a * c;
+	if(disc < 0)
+		return ( 0);
+	else
+	{
+			double e = sqrt(disc);
+			double denom = 2 * a;
+			t = (-b - e) / denom;
+			if (t > 0)
+			{
+				*t0 = t;
+				return (1);
+			}
+			t = (-b + e)/denom;
+
+			if (t > 0)
+			{
+				*t0 = t;
+				return (1);
+			}
+
+	}
+
+		return 0;
+	
+
+}
+extern inline float ft_vec3_dot_multiply1(t_vec3 a, t_vec3 b)
+{
+	return (a.x * b.x - a.y * b.y + a.z * b.z);
+}
+double		ray_intersect_cone_book(t_cone *sphere, t_vec3 *orig, t_vec3 *dir, float *t0)
+{
+	double t;
+	t_vec3 temp = ft_vec3_substract(*orig, sphere->center);
+	double a = ft_vec3_dot_multiply1(*dir, *dir);
+	double b = ft_vec3_dot_multiply1(ft_vec3_scalar_multiply(temp, 2), *dir);
+	double c = ft_vec3_dot_multiply1(temp, temp);
 	double disc = b * b - 4.0 * a * c;
 	if(disc < 0)
 		return ( 0);
