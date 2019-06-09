@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 16:17:28 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/06/09 19:51:05 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/09 20:46:57 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,14 +263,14 @@ double		ray_intersect_cone_book(t_cone *sphere, t_vec3 *orig, t_vec3 *dir, float
 			double e = sqrt(disc);
 			double denom = 2 * a;
 			t = (-b - e) / denom;
-			if (t > 0)
+			if (t > 0.005)
 			{
 				*t0 = t;
 				return (1);
 			}
 			t = (-b + e)/denom;
 
-			if (t > 0)
+			if (t > 0.005)
 			{
 				*t0 = t;
 				return (1);

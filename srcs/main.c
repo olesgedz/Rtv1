@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/09 20:29:07 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/09 20:46:54 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ t_vec3 cast_ray(t_game *game, t_vec3 *orig, t_vec3 *dir, t_sphere *spheres)
 	{
 		t_vec3 light_dir      = ft_vec3_normalize(ft_vec3_substract(game->elum.lights[i].position, point));
 		float light_distance = ft_vec3_norm(ft_vec3_substract(game->elum.lights[i].position, point));
-		t_vec3 shadow_orig =  {0,0,0};//((ft_vec3_dot_multiply(light_dir, N) < 0) ? ft_vec3_substract(point, ft_vec3_scalar_multiply(N, 1e-3)) :  ft_vec3_sum(point, ft_vec3_scalar_multiply(N, 1e-3)));
+		t_vec3 shadow_orig = (ft_vec3_dot_multiply(light_dir, N) < 0) ? ft_vec3_substract(point, ft_vec3_scalar_multiply(N, 1e-3)) :  ft_vec3_sum(point, ft_vec3_scalar_multiply(N, 1e-3));
 		t_vec3 shadow_pt, shadow_N;
 		t_material temp_material;
 		if (scene_intersect(game, &shadow_orig, &light_dir, &shadow_pt, &shadow_N, &temp_material) && (ft_vec3_norm(ft_vec3_substract(shadow_pt, shadow_orig)) < light_distance))
