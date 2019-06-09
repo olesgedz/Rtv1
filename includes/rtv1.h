@@ -195,6 +195,7 @@ typedef struct s_game
 	int n_cones;
 	int wsad[8];
 	t_vec3 origin;
+	double closest;
 } t_game;
 
 void	configure_sphere(char *map_name, t_sphere *sphere);

@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/09 20:46:54 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/09 21:01:11 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,15 @@ t_vec3	reflect(t_vec3 I, t_vec3 n)
 	return ft_vec3_substract(I, temp);
 }
 
-
+static	int	is_any_figure_closer(t_game *game, double cache)
+{
+	if (cache > 0 && cache < game->closest)
+	{
+		game->closest = cache;
+		return (1);
+	}
+	return (0);
+}
 
 /*
 *	Fucntion: checks all objects on the scene
@@ -88,18 +96,36 @@ t_vec3	reflect(t_vec3 I, t_vec3 n)
 
 int scene_intersect(t_game *game, t_vec3 *orig, t_vec3 *dir, t_vec3 *hit, t_vec3 *N, t_material *material)
 {
-	float spheres_dist = FLT_MAX; // WHY
-	size_t	i = -1;
-	// ft_vec3_print(&spheres[0].center);
+	game->closest = FLT_MAX; // WHY
 	// ft_vec3_print(&spheres[1].center);
 	//ft_exit(NULL);
-	
+		float cone_dist = FLT_MAX; // WHY
+			size_t i = -1;
+		while (++i < game->n_cones)
+	{
+		float dist_i = 0;
+
+		if (ray_intersect_cone_book(&game->cones[i], orig, dir, &dist_i) && dist_i < cone_dist)
+		{
+			is_any_figure_closer(game, dist_i); 
+			cone_dist = dist_i;
+			t_vec3 temp = ft_vec3_scalar_multiply(*dir, dist_i);
+			*hit = ft_vec3_sum(*orig, temp);
+			temp = ft_vec3_substract(*hit, game->cones[i].center);
+			*N = ft_vec3_normalize(temp);
+			*material = game->cones[i].material;
+		}
+	}
+	float spheres_dist = FLT_MAX; // WHY
+	i = -1;
+	// ft_vec3_print(&sphe
 	while (++i < game->n_spheres)
 	{
 		float dist_i;
 
 		if (ray_intersect_sphere_book(&game->spheres[i], orig, dir, &dist_i) && dist_i < spheres_dist)
 		{
+			is_any_figure_closer(game, dist_i); 
 			spheres_dist = dist_i;
 			t_vec3 temp = ft_vec3_scalar_multiply(*dir, dist_i);
 			*hit = ft_vec3_sum(*orig, temp);
@@ -109,26 +135,11 @@ int scene_intersect(t_game *game, t_vec3 *orig, t_vec3 *dir, t_vec3 *hit, t_vec3
 		}
 	}
 
-	float cone_dist = FLT_MAX; // WHY
-		i = -1;
+
 	// ft_vec3_print(&spheres[0].center);
 	// ft_vec3_print(&spheres[1].center);
 	//ft_exit(NULL);
 	
-	while (++i < game->n_cones)
-	{
-		float dist_i;
-
-		if (ray_intersect_cone_book(&game->cones[i], orig, dir, &dist_i) && dist_i < cone_dist)
-		{
-			cone_dist = dist_i;
-			t_vec3 temp = ft_vec3_scalar_multiply(*dir, dist_i);
-			*hit = ft_vec3_sum(*orig, temp);
-			temp = ft_vec3_substract(*hit, game->cones[i].center);
-			*N = ft_vec3_normalize(temp);
-			*material = game->cones[i].material;
-		}
-	}
 
 
 
@@ -156,13 +167,14 @@ int scene_intersect(t_game *game, t_vec3 *orig, t_vec3 *dir, t_vec3 *hit, t_vec3
         t_vec3 board = ft_vec3_sum(*orig, ft_vec3_scalar_multiply(*dir, d));
         if (d > 0 && fabs(board.x) < 10 && board.z < -10 && board.z > -30 && d < spheres_dist)
 		{
+			is_any_figure_closer(game, d); 
             checkerboard_dist = d;
             *hit = board;
             *N = ft_vec3_create(0, 1, 0);
             material->diffuse_color = ((int)(0.5*(hit->x+1000)) + (int)(0.5*(hit->z)) & 1) ? ft_vec3_create(0.1, 0.1, 0.1) : ft_vec3_create(0.8, 0.7, 0.6);
         }
     }
-	return min( min(spheres_dist, checkerboard_dist), cone_dist) < 1000;
+	return game->closest < 1000;
 	//return spheres_dist < 1000;
 }
 

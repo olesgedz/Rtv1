@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 16:17:28 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/06/09 20:46:57 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/09 20:49:34 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +248,7 @@ extern inline float ft_vec3_dot_multiply1(t_vec3 a, t_vec3 b)
 {
 	return (a.x * b.x - a.y * b.y + a.z * b.z);
 }
+
 double		ray_intersect_cone_book(t_cone *sphere, t_vec3 *orig, t_vec3 *dir, float *t0)
 {
 	double t;
