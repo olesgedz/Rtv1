@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/09 20:12:40 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/09 20:29:07 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ t_vec3 cast_ray(t_game *game, t_vec3 *orig, t_vec3 *dir, t_sphere *spheres)
 	{
 		t_vec3 light_dir      = ft_vec3_normalize(ft_vec3_substract(game->elum.lights[i].position, point));
 		float light_distance = ft_vec3_norm(ft_vec3_substract(game->elum.lights[i].position, point));
-		t_vec3 shadow_orig =  ((ft_vec3_dot_multiply(light_dir, N) < 0) ? ft_vec3_substract(point, ft_vec3_scalar_multiply(N, 1e-3)) :  ft_vec3_sum(point, ft_vec3_scalar_multiply(N, 1e-3)));
+		t_vec3 shadow_orig =  {0,0,0};//((ft_vec3_dot_multiply(light_dir, N) < 0) ? ft_vec3_substract(point, ft_vec3_scalar_multiply(N, 1e-3)) :  ft_vec3_sum(point, ft_vec3_scalar_multiply(N, 1e-3)));
 		t_vec3 shadow_pt, shadow_N;
 		t_material temp_material;
 		if (scene_intersect(game, &shadow_orig, &light_dir, &shadow_pt, &shadow_N, &temp_material) && (ft_vec3_norm(ft_vec3_substract(shadow_pt, shadow_orig)) < light_distance))
@@ -314,12 +314,12 @@ void ft_update(t_game *game)
 		game->wsad[6] ? game->elum.lights[0].intensity += 0.1 : 0;
 		game->wsad[7] ? game->elum.lights[0].intensity -= 0.1 : 0;
 		//
-		game->wsad[0] ? eyez -= 1: 0;
-		game->wsad[1] ? eyez += 1 : 0;
-		game->wsad[2] ? eyex -= 1 : 0;
-		game->wsad[3] ? eyex += 1 : 0;
-		game->wsad[4] ? eyey += 1 : 0;
-		game->wsad[5] ? eyey -= 1 : 0;
+		// game->wsad[0] ? eyez -= 1: 0;
+		// game->wsad[1] ? eyez += 1 : 0;
+		// game->wsad[2] ? eyex -= 1 : 0;
+		// game->wsad[3] ? eyex += 1 : 0;
+		// game->wsad[4] ? eyey += 1 : 0;
+		// game->wsad[5] ? eyey -= 1 : 0;
 		ft_render(game, &sphere);
 		//ft_cube(game);
 		//DrawTriangle(game->sdl->surface, (t_point){10,2}, (t_point){10,50}, (t_point){5,37});
@@ -356,14 +356,14 @@ int	main(int argc, char **argv)
 	t_material red_rubber = (t_material){(t_vec3){0.3, 0.1, 0.1}, (t_vec3){0.3, 0.5, 0}, 10000};
 	//printf("%f %f %f\n", bb.albendo.x, bb.albendo.y, bb.specular_exponent);
 	game.elum.lights = ft_memalloc(sizeof(t_light) * 5);
-	game.elum.lights[0] = (t_light){(t_vec3){7, 10, -16}, 1.5};
+	game.elum.lights[0] = (t_light){(t_vec3){4, 3, -12}, 1.5};
 	game.elum.lights[1] = (t_light){(t_vec3){-20, 20, 20}, 1.5};
 	game.elum.lights[2] = (t_light){(t_vec3){30, 50, -25}, 1.8};
 	game.elum.lights[3] = (t_light){(t_vec3){30, 20, 30}, 1.7};
 	//vector_init(&game.elum.light);
 	//vector_add(&game.elum.light,  &(t_light){(t_vec3){7, 10, -16}, 1.5});
 	game.elum.number = 4; // number of light sources
-	game.n_cones = 0;
+	game.n_cones = 1;
 	game.cones = ft_memalloc(sizeof(t_cone) * 6);
 	game.n_spheres = 5;
 	game.spheres = ft_memalloc(sizeof(t_sphere) * 6);
@@ -377,7 +377,7 @@ int	main(int argc, char **argv)
 	game.spheres[3] = (t_sphere){(t_vec3){1.5, -0.5, -18}, red_rubber, 3, 5};
 	game.spheres[4] = (t_sphere){(t_vec3){7, 5, -18}, ivory, 4, 5};
 
-	game.spheres[2] = (t_sphere){(t_vec3){-3.0, 0, -12}, red_rubber, .3, 5}; // this is a light source, move with wasdqe
+	game.spheres[2] = (t_sphere){(t_vec3){-3.0, 0, 0}, red_rubber, .3, 5}; // this is a light source, move with wasdqe
 	game.origin = (t_vec3){0,0,5,1};
 	// ft_vec3_print(&game.spheres[0].center);
 	// ft_vec3_print(&game.spheres[1].center);
