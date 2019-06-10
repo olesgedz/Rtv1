@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/10 21:52:00 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/10 22:40:15 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,15 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 		}
 	return (1);
 }
+
+t_vec3 refract(t_vec3 I, t_vec3 N, const float eta_t, const float eta_i) { // Snell's law
+	float cosi = -max(-1.f, min(1.f, ft_vec3_dot_multiply(I,N)));
+    if (cosi<0) return refract(I, ft_vec3_neg(N), eta_i, eta_t); // if the ray comes from the inside the object, swap the air and the media
+    float eta = eta_i / eta_t;
+    float k = 1 - eta*eta*(1 - cosi*cosi);
+    return k<0 ? (t_vec3){1,0,0,1} : ft_vec3_sum(ft_vec3_scalar_multiply(I,eta), ft_vec3_scalar_multiply(N,(eta*cosi - sqrtf(k)))); // k<0 = total reflection, no ray to refract. I refract it anyways, this has no physical meaning
+}
+
 
 /*
 *	Fucntion:
@@ -174,6 +183,7 @@ int scene_intersect(t_game *game, t_vec3 *orig, t_vec3 *dir, t_vec3 *hit, t_vec3
             checkerboard_dist = d;
             *hit = board;
             *N = ft_vec3_create(0, 1, 0);
+			*material = (t_material){(t_vec3){0.3, 0.1, 0.1}, .albendo= (t_vec3){0.9, 0.1, .1, 0}, .specular_exponent=10};
             material->diffuse_color = ((int)(0.5*(hit->x+1000)) + (int)(0.5*(hit->z)) & 1) ? ft_vec3_create(0.1, 0.1, 0.1) : ft_vec3_create(0.8, 0.7, 0.6);
         }
     }
@@ -195,7 +205,7 @@ t_vec3 cast_ray(t_game *game, t_vec3 *orig, t_vec3 *dir, t_sphere *spheres, size
 {
 	t_vec3 point;
 	t_vec3 N;
-	t_material material = (t_material){(t_vec3){0.3, 0.1, 0.1}, .albendo= (t_vec3){0.9, 0.1, .0, 0}, .specular_exponent=10};
+	t_material material; 
 	int	i;
 
 	// ft_vec3_print(&spheres[0].center);
@@ -210,6 +220,11 @@ t_vec3 cast_ray(t_game *game, t_vec3 *orig, t_vec3 *dir, t_sphere *spheres, size
 	t_vec3 reflect_dir = ft_vec3_normalize(reflect(*dir, N));
 	t_vec3 reflect_orig = ft_vec3_dot_multiply(reflect_dir, N) < 0 ? ft_vec3_substract(point, ft_vec3_scalar_multiply(N, 1e-3)) : ft_vec3_sum(point, ft_vec3_scalar_multiply(N, 1e-3));
 	t_vec3 reflect_color = cast_ray(game, &reflect_orig, &reflect_dir, spheres, depth + 1);
+
+	t_vec3 refract_dir = ft_vec3_normalize(refract(*dir, N, material.refractive_index, 1.0f));
+	t_vec3 refract_orig = ft_vec3_dot_multiply(refract_dir, N) < 0 ? ft_vec3_substract(point, ft_vec3_scalar_multiply(N, 1e-3)) : ft_vec3_sum(point, ft_vec3_scalar_multiply(N, 1e-3));
+	t_vec3 refract_color = cast_ray(game, &refract_orig, &refract_dir , spheres, depth + 1);
+	
 	float diffuse_light_intensity = 0;
 	float specular_light_intensity = 0;
 	i = -1;
@@ -230,8 +245,8 @@ t_vec3 cast_ray(t_game *game, t_vec3 *orig, t_vec3 *dir, t_sphere *spheres, size
 	//material.albendo = material.albendo ;
 
 		
-	return ft_vec3_sum(ft_vec3_sum(ft_vec3_scalar_multiply(material.diffuse_color, diffuse_light_intensity * material.albendo.x), \
-	 	ft_vec3_scalar_multiply((t_vec3){1,1,1}, specular_light_intensity *  material.albendo.y)), ft_vec3_scalar_multiply(reflect_color,  material.albendo.z));					//ft_vec3_scalar_multiply(&material.diffuse_color, diffuse_light_intensity);
+	return ft_vec3_sum(ft_vec3_sum(ft_vec3_sum(ft_vec3_scalar_multiply(material.diffuse_color, diffuse_light_intensity * material.albendo.x), \
+	 	ft_vec3_scalar_multiply((t_vec3){1,1,1}, specular_light_intensity *  material.albendo.y)), ft_vec3_scalar_multiply(reflect_color,  material.albendo.z)), ft_vec3_scalar_multiply(refract_color,  material.albendo.w));					//ft_vec3_scalar_multiply(&material.diffuse_color, diffuse_light_intensity);
 }
 
 
@@ -267,7 +282,7 @@ void 	ft_render(t_game* game, t_sphere *sphere)
 			//ft_vec3_print(ft_vec3_multiply_matrix(ft_vec3_create(0, 0, 5),ft_look_at((t_vec3){1,1,1}, (t_vec3) {0,1,0})));
 			//ft_mat4_print(ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez}));
 			game->origin =ft_vec3_create(eyex,eyey,eyez);
-			//dir = ft_vec3_multiply_matrix(dir, ft_mat4_rotation_matrix((t_vec3) {0,-1,0}, xa));
+			dir = ft_vec3_multiply_matrix(dir, ft_mat4_rotation_matrix((t_vec3) {0,-1,0}, xa));
 			// if (j == 0 && i == 0)
 			// {
 			// 	//ft_mat4_print(ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez}));
@@ -377,9 +392,10 @@ int	main(int argc, char **argv)
 	printf("move light source with wasdqe \nchange intensity with zx\n");
 	game.sdl = malloc(sizeof(t_sdl));
 	game.image = ft_surface_create(WIN_W, WIN_H);
-	t_material ivory = (t_material){(t_vec3){0.4, 0.4, 0.3},.albendo= (t_vec3){0.6, 0.3, 0.3, 0.5}, .specular_exponent=50};
+	t_material ivory = (t_material){(t_vec3){0.4, 0.4, 0.3},.albendo= (t_vec3){0.6, 0.3, 0.3, 0}, .specular_exponent=50};
+	t_material glass = (t_material){(t_vec3){.6, 0.7, 0.8}, .albendo =(t_vec3){0, 0.5, 0.1, 0.8}, .specular_exponent=125.};
 	t_material red_rubber = (t_material){(t_vec3){0.3, 0.1, 0.1}, .albendo= (t_vec3){0.9, 0.1, .0, 0}, .specular_exponent=10};
-	t_material mirror = (t_material){(t_vec3){1.0, 1.0, 1.0}, .albendo =(t_vec3){0, 10, 0.8, 0}, .specular_exponent=1425.};
+	t_material mirror = (t_material){(t_vec3){1.0, 1.0, 1.0}, .albendo =(t_vec3){0, 10, 0.8, 1}, .specular_exponent=1425.};
 	printf("%f %f %f\n", red_rubber.albendo.x, red_rubber.albendo.y, red_rubber.albendo.z);
 	ivory.albendo.z = ivory.albendo.y;
 	game.elum.lights = ft_memalloc(sizeof(t_light) * 5);
@@ -399,9 +415,9 @@ int	main(int argc, char **argv)
 	// game.spheres[0].angle = 25;
 	// game.spheres[0].material = ivory;
 	//game.cones[0] = (t_cone){(t_vec3){0, 2, -5}, ivory, 3, (t_vec3){0.4, -0.8, 0.6}, 30, (t_vec3){0.2, 1, -5}};
-	game.cones[0] = (t_cone){(t_vec3){0, 2, -50}, ivory, 2, (t_vec3){1, 0, 0}, 30, (t_vec3){0, 2, -5}};
-	game.spheres[0] = (t_sphere){(t_vec3){0, 2, -10}, mirror, 3, (t_vec3){0.4, -0.8, 0.6}};
-	game.spheres[1] = (t_sphere){(t_vec3){-1.0, -1.5, -12}, red_rubber, 2, 5};
+	game.cones[0] = (t_cone){(t_vec3){0, 2, -50}, mirror, 2, (t_vec3){1, 0, 0}, 30, (t_vec3){0, 2, -5}};
+	game.spheres[0] = (t_sphere){(t_vec3){0, 2, -10}, glass, 3, (t_vec3){0.4, -0.8, 0.6}};
+	game.spheres[1] = (t_sphere){(t_vec3){-1.0, -1.5, -12}, glass, 2, 5};
 	game.spheres[3] = (t_sphere){(t_vec3){1.5, -0.5, -18}, red_rubber, 3, 5};
 	game.spheres[4] = (t_sphere){(t_vec3){7, 5, -18}, ivory, 4, 5};
 

@@ -84,6 +84,7 @@ typedef struct Material {
 	t_vec3 diffuse_color;
 	t_vec3 albendo;
 	float specular_exponent;
+	float refractive_index;
 } t_material;
 
 typedef struct s_light {
