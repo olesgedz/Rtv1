@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 16:17:28 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/06/09 20:49:34 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/10 17:32:57 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ double				quandratic_solve(double k1, double k2, double k3)
 		t1 = t2;
 		t2 = tmp;
 	}
-	if (t1 < 0)
+	if (t1 < 0.003)
 		t1 = t2;
-	if (t1 < 0)
+	if (t1 < 0.003)
 		return (-1.);
 	return (t1);
 }
@@ -129,24 +129,24 @@ double				cylinder_intersection(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, flo
 	return(*t0 < 0.003 ? 0 : 1);
 }
 
-double				cone_intersection(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0)
+double				cone_intersection(t_cone *cone, t_vec3 *orig, t_vec3 *dir, float *t0)
 {
 	t_vec3		co;
 	double			k1;
 	double			k2;
 	double			k3;
 
-	co = ft_vec3_substract(*orig, sphere->tip);
-	k1 = ft_vec3_dot_multiply(*dir, sphere->v) *
-		ft_vec3_dot_multiply(*dir, sphere->v) - cos(sphere->angle)
-		* cos(sphere->angle);
-	k2 = 2 * (ft_vec3_dot_multiply(*dir, sphere->v) *
-			ft_vec3_dot_multiply(co, sphere->v)
-			- ft_vec3_dot_multiply(*dir, co) * cos(sphere->angle)
-			* cos(sphere->angle));
-	k3 = ft_vec3_dot_multiply(co, sphere->v) * ft_vec3_dot_multiply(co, sphere->v)
+	co = ft_vec3_substract(*orig, cone->tip);
+	k1 = ft_vec3_dot_multiply(*dir, cone->v) *
+		ft_vec3_dot_multiply(*dir, cone->v) - cos(cone->angle)
+		* cos(cone->angle);
+	k2 = 2 * (ft_vec3_dot_multiply(*dir, cone->v) *
+			ft_vec3_dot_multiply(co, cone->v)
+			- ft_vec3_dot_multiply(*dir, co) * cos(cone->angle)
+			* cos(cone->angle));
+	k3 = ft_vec3_dot_multiply(co, cone->v) * ft_vec3_dot_multiply(co, cone->v)
 		- ft_vec3_dot_multiply(co, co)
-		* cos(sphere->angle) * cos(sphere->angle);
+		* cos(cone->angle) * cos(cone->angle);
 	*t0 = quandratic_solve(k1, k2, k3);
 	return(*t0 < 0.003 ? 0 : 1);
 }
