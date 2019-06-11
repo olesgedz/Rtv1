@@ -52,7 +52,7 @@ LIB_LIST =	libSDL2.a\
 
 SRCS_DIRECTORY = ./srcs/
 
-SRCS_LIST = main.c map_parser.c vectors.c quaternion.c rotate.c intersect.c matrix.c normals.c math.c
+SRCS_LIST = main.c map_parser.c vectors.c quaternion.c rotate.c intersect.c matrix.c normals.c math.c quadratic.c
 
 
 OBJS_DIRECTORY = objects/

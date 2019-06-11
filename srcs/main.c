@@ -98,14 +98,12 @@ static	int	is_any_figure_closer(t_game *game, double cache)
 int scene_intersect(t_game *game, t_vec3 *orig, t_vec3 *dir, t_vec3 *hit, t_vec3 *N, t_material *material)
 {
 	game->closest = FLT_MAX; // WHY
-	// ft_vec3_print(&spheres[1].center);
-	//ft_exit(NULL);
-		float cone_dist = FLT_MAX; // WHY
-			size_t i = -1;
-		while (++i < game->n_cones)
+	float cone_dist = FLT_MAX; // WHY
+	size_t i = -1;
+
+	while (++i < game->n_cones)
 	{
 		float dist_i = 0;
-
 		if (cone_intersection(&game->cones[i], orig, dir, &dist_i) && dist_i < cone_dist)
 		{
 			is_any_figure_closer(game, dist_i); 
@@ -136,32 +134,9 @@ int scene_intersect(t_game *game, t_vec3 *orig, t_vec3 *dir, t_vec3 *hit, t_vec3
 		}
 	}
 
-
-	// ft_vec3_print(&spheres[0].center);
-	// ft_vec3_print(&spheres[1].center);
-	//ft_exit(NULL);
-	
-
-
-
 	float checkerboard_dist = FLT_MAX;
-	// float dist_i;
-	// t_triangle tr = (t_triangle){.a = (t_vec3){0, 0, 0}, .b = (t_vec3){1, 1, 1}, (t_vec3){-1, -1, -1},\
-	// .material = spheres[0].material};
-	// if(plane_intersection2((t_ray){.orig = *orig, .dir = *dir}, tr, &dist_i))
-	// {
-	// 	checkerboard_dist = dist_i;
-		
-	// }
-
 	float dist_i;
-	// t_plane plane = (t_plane){(t_vec3){10, 10, 10}, (t_normal3){0, 1, 0},\
-	// .material = spheres[0].material};
-	// if(plane_intersection2((t_ray){.orig = *orig, .dir = *dir}, plane, &dist_i))
-	// {
-	// 	checkerboard_dist = dist_i;
-		
-	// }
+
     if (fabs(dir->y) > 1e-3)
 	{
         float d = -(orig->y + 4) / dir->y; // the checkerboard plane has equation y = -4
@@ -178,10 +153,6 @@ int scene_intersect(t_game *game, t_vec3 *orig, t_vec3 *dir, t_vec3 *hit, t_vec3
 	return game->closest < 1000;
 	//return spheres_dist < 1000;
 }
-
-
-
-
 
 /*
 *	Fucntion: casts ray for that pixel
@@ -223,11 +194,7 @@ t_vec3 cast_ray(t_game *game, t_vec3 *orig, t_vec3 *dir, t_sphere *spheres)
 }
 
 
-
 	const float fov      = M_PI/2.; // field of vision
-
-
-
 
 /*
 *	Fucntion: render all pixels on the surface
@@ -251,14 +218,9 @@ void 	ft_render(t_game* game, t_sphere *sphere)
 			float y = -(2 * (j + 0.5) / (float)height - 1) * tan(fov / 2.);
 			t_vec3 dir = ft_vec3_normalize((t_vec3){x, y, -1});
 			game->origin = ft_vec3_multiply_matrix((t_vec3){0,0,0,1}, m = ft_mat4_multiply_mat4(ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez}), ft_mat4_rotation_matrix((t_vec3) {0,-1,0}, xa)));
-			//ft_vec3_multiply_matrix(ft_vec3_create(1, 1, 1),ft_look_at((t_vec3){0,50,5}, (t_vec3) {0,1,0}));
-			//ft_vec3_print(ft_vec3_multiply_matrix(ft_vec3_create(0, 0, 5),ft_look_at((t_vec3){1,1,1}, (t_vec3) {0,1,0})));
-			//ft_mat4_print(ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez}));
 			game->origin =ft_vec3_create(eyex,eyey,eyez);
-			//dir = ft_vec3_multiply_matrix(dir, ft_mat4_rotation_matrix((t_vec3) {0,-1,0}, xa));
 			if (j == 0 && i == 0)
 			{
-				//ft_mat4_print(ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez}));
 				ft_mat4_print(m);
 				printf("result:");
 				ft_vec3_print(game->origin);
@@ -272,7 +234,6 @@ void 	ft_render(t_game* game, t_sphere *sphere)
 
 
 t_vec3 cube[8];
-
 
 /*
 *	Fucntion: Main loop
@@ -290,9 +251,7 @@ void ft_cube(t_game *game)
 {
 	t_vec3 cube_r[8];
 	for(int i = 0; i < 8; i++)
-	{
 		cube_r[i] = ft_vec3_project_test1(ft_vec3_rotate_quaterion(ya * 30,cube[i],(t_vec3){1,0,0}));//ft_vec3_rotate_test2(cube[i], (t_vec3){xa,ya,za})); 
-	}
 }
 void ft_update(t_game *game)
 {
@@ -302,7 +261,6 @@ void ft_update(t_game *game)
 	clock_t fps = 0;
 	while(1)
 	{
-		
 		// ((t_light *)game->elum.light.get(&game->elum.light, 0))->position = game->elum.lights[0].position; //  Because VECTORS!
 		// game->spheres[2].center =  ((t_light *)game->elum.light.get(&game->elum.light, 0))->position;       //game->elum.lights[0].position;
 		//printf("%f %f\n", ((t_light *)game->elum.light.get(&game->elum.light, 0))->position.x);
@@ -338,9 +296,7 @@ void ft_update(t_game *game)
 			printf("fps :%lu\n", fps);
 	#endif
 	 }
-
 }
-
 
 int	main(int argc, char **argv)
 {
@@ -352,7 +308,7 @@ int	main(int argc, char **argv)
 	// ft_mat4_print(m);
 	//v = ft_mat3_multiply_vec3(a,v);
 	//ft_vec3_print(v);
-			ft_vec3_print(ft_vec3_multiply_matrix(ft_vec3_create(0, 0, 0),ft_look_at((t_vec3){0,0,5}, (t_vec3) {0,1,0})));
+	ft_vec3_print(ft_vec3_multiply_matrix(ft_vec3_create(0, 0, 0),ft_look_at((t_vec3){0,0,5}, (t_vec3) {0,1,0})));
 
 	printf("move light source with wasdqe \nchange intensity with zx\n");
 	game.sdl = malloc(sizeof(t_sdl));
@@ -394,7 +350,6 @@ int	main(int argc, char **argv)
 		cube[i].y=(float)(50-100*((i/2)%2));
 		cube[i].z=(float)(50-100*((i/4)%2));
 	}
-
 
 	configure_sphere(argv[1], &sphere);
 	ft_init_window(game.sdl, WIN_W, WIN_H);

@@ -136,6 +136,15 @@ typedef	struct		s_cone
 	t_vec3		tip;
 }					t_cone;
 
+typedef	struct s_cylinder
+{
+	t_vec3	center;
+	float	radius;
+	int		min;
+	int		max;
+	int		color;
+	int 	material;
+}				t_cylinder;
 
 struct s_vertex
 {
@@ -284,10 +293,10 @@ extern inline t_normal3	ft_normal3_sum(t_normal3 a, t_normal3 b);
 inline t_normal3 ft_normal3_scalar_multiply(t_normal3 a, float b);
 
 //intersect
-double		sphere_intersection(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
-double				plane_intersection(t_ray ray, t_triangle triangle, float *t0);
-double				plane_intersection2(t_ray ray, t_plane plane, float *t0);
-double		cone_intersection(t_cone *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
+int		sphere_intersection(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
+int		plane_intersection(void *plane, t_vec3 *orig, t_vec3 *dir, float *t0);
+int		cone_intersection(void *vcone, t_vec3 *orig, t_vec3 *dir, float *t0);
+int		cylinder_intersection(void *cylinder, t_vec3 *orig, t_vec3 *dir, float *t0);
 
 //discriminant
 double		get_solution(double a, double b, double c, float *t0);
