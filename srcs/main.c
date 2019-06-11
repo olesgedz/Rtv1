@@ -12,6 +12,7 @@
 
 #include "rtv1.h"
 #include <time.h>
+#include <math.h>
 //aelinor-
 //home
 /*
@@ -105,7 +106,7 @@ int scene_intersect(t_game *game, t_vec3 *orig, t_vec3 *dir, t_vec3 *hit, t_vec3
 	{
 		float dist_i = 0;
 
-		if (ray_intersect_cone_book(&game->cones[i], orig, dir, &dist_i) && dist_i < cone_dist)
+		if (cone_intersection(&game->cones[i], orig, dir, &dist_i) && dist_i < cone_dist)
 		{
 			is_any_figure_closer(game, dist_i); 
 			cone_dist = dist_i;
@@ -123,7 +124,7 @@ int scene_intersect(t_game *game, t_vec3 *orig, t_vec3 *dir, t_vec3 *hit, t_vec3
 	{
 		float dist_i;
 
-		if (ray_intersect_sphere_book(&game->spheres[i], orig, dir, &dist_i) && dist_i < spheres_dist)
+		if (sphere_intersection(&game->spheres[i], orig, dir, &dist_i) && dist_i < spheres_dist)
 		{
 			is_any_figure_closer(game, dist_i); 
 			spheres_dist = dist_i;
@@ -291,14 +292,6 @@ void ft_cube(t_game *game)
 	for(int i = 0; i < 8; i++)
 	{
 		cube_r[i] = ft_vec3_project_test1(ft_vec3_rotate_quaterion(ya * 30,cube[i],(t_vec3){1,0,0}));//ft_vec3_rotate_test2(cube[i], (t_vec3){xa,ya,za})); 
-	}
-	for (int i = 0; i<4; i++)         // Actual drawing
-	{
-		// ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i].x, cube_r[i].y}, &(t_fpoint){cube_r[i+4].x, cube_r[i+4].y}, 0xFF0000);
-		// ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i].x, cube_r[i].y}, &(t_fpoint){cube_r[(i+1)%4].x, cube_r[(i+1)%4].y}, 0xFF0000);
-		// ft_plot_wline(game->sdl->surface, &(t_fpoint){cube_r[i + 4].x, cube_r[i + 4].y}, &(t_fpoint){cube_r[(i+1)%4 + 4].x, cube_r[(i+1)%4 + 4].y}, 0xFF0000);
-		ft_draw_poly(game->sdl->surface, (t_point){cube_r[i].x, cube_r[i].y}, (t_point){cube_r[i+4].x, cube_r[i+4].y}, (t_point){cube_r[(i+1)%4].x, cube_r[(i+1)%4].y});
-		ft_draw_poly(game->sdl->surface, (t_point){cube_r[i].x, cube_r[i].y}, (t_point){cube_r[i+4].x, cube_r[(i+1)%4 + 4].y}, (t_point){cube_r[(i+1)%4].x, cube_r[(i+1)%4].y});
 	}
 }
 void ft_update(t_game *game)

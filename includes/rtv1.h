@@ -11,7 +11,7 @@
 #include <limits.h>
 #include <float.h>
 #include <math.h>
-//#include "libmath.h"
+
 # define DROUND(d)	ABS(d) < 0.00001 ? 0 : (d)
 #define float double
 
@@ -284,16 +284,12 @@ extern inline t_normal3	ft_normal3_sum(t_normal3 a, t_normal3 b);
 inline t_normal3 ft_normal3_scalar_multiply(t_normal3 a, float b);
 
 //intersect
-int ray_intersect(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
-double		ray_intersect_sphere(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
-double		ray_intersect_cylinder(t_sphere *cylinder, t_vec3 *orig, t_vec3 *dir, float *t0);
-double		ray_intersect_cylinder(t_sphere *cylinder, t_vec3 *orig, t_vec3 *dir, float *t0);
-double		ray_intersect_cone(t_sphere *cone, t_vec3 *orig, t_vec3 *dir, float *t0);
-double		ray_intersect_sphere_book(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
-double				sphere_intersection3(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
-double				cylinder_intersection(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
-double				cone_intersection(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
+double		sphere_intersection(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
 double				plane_intersection(t_ray ray, t_triangle triangle, float *t0);
 double				plane_intersection2(t_ray ray, t_plane plane, float *t0);
-double		ray_intersect_cone_book(t_cone *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
+double		cone_intersection(t_cone *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
+
+//discriminant
+double		get_solution(double a, double b, double c, float *t0);
+int			have_solutions(double d);
 #endif
