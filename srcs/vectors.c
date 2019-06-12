@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 20:23:19 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/06/09 18:33:38 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/12 19:15:35 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,23 +179,6 @@ extern inline t_vec3 ft_vec3_sum_poin3(t_vec3 a, t_point3 b)
 t_vec3	ft_vec3_multiply_matrix(t_vec3 v, t_mat4 m)
 {
 	t_vec3	res;
-
-	// res.x = v.x * m.matrix[0][0] +
-	// 		v.y * m.matrix[1][0] +
-	// 		v.z * m.matrix[2][0] +
-	// 		v.w * m.matrix[3][0];
-	// res.y = v.x * m.matrix[0][1] +
-	// 		v.y * m.matrix[1][1] +
-	// 		v.z * m.matrix[2][1] +
-	// 		v.w * m.matrix[3][1];
-	// res.z = v.x * m.matrix[0][2] +
-	// 		v.y * m.matrix[1][2] +
-	// 		v.z * m.matrix[2][2] +
-	// 		v.w * m.matrix[3][2];
-	// res.w = v.x * m.matrix[0][3] +
-	// 		v.y * m.matrix[1][3] +
-	// 		v.z * m.matrix[2][3] +
-	// 		v.w * m.matrix[3][3];
 
 	res.x = v.x * m.matrix[0][0] +
 			v.y * m.matrix[0][1] +

@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 16:17:28 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/06/10 17:32:57 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/12 18:45:39 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -354,3 +354,92 @@ double				plane_intersection2(t_ray ray, t_plane plane, float *t0)
 // 		return FALSE;
 // 	return TRUE;
 // }
+
+/*---------quadrantic-------------*/
+// int	have_solutions(double d)
+// {
+// 	if (d > 0)
+// 		return (2);
+// 	else if (d == 0)
+// 		return (1);
+// 	else
+// 		return (0);
+// }
+
+double		get_solution(double a, double b, double c, float *t0)
+{
+	double		d;
+	double		tmp1;
+	double		tmp2;
+
+	d = b * b - 4.0 * a * c;
+	if (have_solutions(d) == 0)
+		return (0);
+	else if (have_solutions(d) == 1)
+		*t0 = - b / (2 * a);
+	else
+	{
+		tmp1 = sqrt(d);
+		tmp2 = 1 / (2 * a);
+		if (((*t0 = (- b - tmp1) * tmp2)) < 0.003)
+			if ((*t0 = ((- b + tmp1) * tmp2)) < 0.003)
+				return (0);
+	}
+		return (1);
+}
+
+
+extern inline float ft_vec3_multiply_cone(t_vec3 a, t_vec3 b)
+{
+	return (a.x * b.x - a.y * b.y + a.z * b.z);
+}
+
+int		cone_intersection1(void *vcone, t_vec3 *orig, t_vec3 *dir, float *t0)
+{
+	double a;
+	double b;
+	double c;
+	t_cone *cone;
+
+	cone = (t_cone *)vcone;
+	t_vec3 temp = ft_vec3_substract(*orig, cone->center);
+	a = ft_vec3_multiply_cone(*dir, *dir);
+	b = ft_vec3_multiply_cone(ft_vec3_scalar_multiply(temp, 2), *dir);
+	c = ft_vec3_multiply_cone(temp, temp);
+	return (get_solution(a, b, c, t0));
+}
+
+
+int		plane_intersection1(void *plane, t_vec3 *orig, t_vec3 *dir, float *t0)
+{
+	double tmp;
+	t_plane *p;
+
+	p = (t_plane *)plane;
+	tmp = p->point.x * dir->x + p->point.y * dir->y + p->point.z * dir->z;
+	if (!tmp)
+		return (0);
+	*t0 = -(p->point.x * orig->x +  p->point.y * orig->y +  p->point.z * orig->z +  p->point.w) / tmp;
+	return ((*t0 >= 0) ? 1 : 0);
+}
+
+
+extern inline float ft_vec3_multiply_cylinder(t_vec3 a, t_vec3 b)
+{
+	return (a.x * b.x + a.z * b.z);
+}
+
+int		cylinder_intersection1(void *cylinder, t_vec3 *orig, t_vec3 *dir, float *t0)
+{
+	double a;
+	double b;
+	double c;
+	t_cylinder *cyl;
+
+	cyl = (t_cylinder *)cylinder;
+	t_vec3 temp = ft_vec3_substract(*orig, cyl->center);
+	a =  ft_vec3_multiply_cylinder(*dir, *dir);
+	b = ft_vec3_multiply_cylinder(ft_vec3_scalar_multiply(temp, 2), *dir);
+	c = ft_vec3_multiply_cylinder(temp, temp) - cyl->radius * cyl->radius;
+	return (get_solution(a, b, c, t0));
+}

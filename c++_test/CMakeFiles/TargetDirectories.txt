@@ -1,3 +1,0 @@
-/Users/jblack-b/Documents/Rtv1/c++_test/CMakeFiles/rebuild_cache.dir
-/Users/jblack-b/Documents/Rtv1/c++_test/CMakeFiles/edit_cache.dir
-/Users/jblack-b/Documents/Rtv1/c++_test/CMakeFiles/tinyraytracer.dir

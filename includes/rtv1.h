@@ -123,13 +123,23 @@ typedef struct s_sphere
 	t_vec3		tip;
 } t_sphere;
 
+
+typedef	struct s_cylinder
+{
+	t_vec3	center;
+	t_material material;
+	float	radius;
+	int		min;
+	int		max;
+}				t_cylinder;
+
 typedef	struct		s_cone
 {
 	// t_vec3		tip;
 	// t_vec3		direction;
 	// double			angle;
 	// t_material material;
-		t_vec3 center;
+	t_vec3 center;
 	t_material material;
 	float radius;
 	t_vec3 v;
@@ -192,8 +202,10 @@ typedef struct s_game
 	t_lights elum;
 	t_sphere *spheres;
 	t_cone *cones;
+	t_cylinder *cylinders;
 	int n_spheres;
 	int n_cones;
+	int n_cylinders;
 	int wsad[8];
 	t_vec3 origin;
 	double closest;
@@ -288,7 +300,6 @@ inline t_normal3 ft_normal3_scalar_multiply(t_normal3 a, float b);
 int ray_intersect(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
 double		ray_intersect_sphere(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
 double		ray_intersect_cylinder(t_sphere *cylinder, t_vec3 *orig, t_vec3 *dir, float *t0);
-double		ray_intersect_cylinder(t_sphere *cylinder, t_vec3 *orig, t_vec3 *dir, float *t0);
 double		ray_intersect_cone(t_sphere *cone, t_vec3 *orig, t_vec3 *dir, float *t0);
 double		ray_intersect_sphere_book(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
 double				sphere_intersection3(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
@@ -297,4 +308,6 @@ double				cone_intersection(t_cone *cone, t_vec3 *orig, t_vec3 *dir, float *t0);
 double				plane_intersection(t_ray ray, t_triangle triangle, float *t0);
 double				plane_intersection2(t_ray ray, t_plane plane, float *t0);
 double		ray_intersect_cone_book(t_cone *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
+int		cone_intersection1(void *vcone, t_vec3 *orig, t_vec3 *dir, float *t0);
+int		cylinder_intersection1(void *cylinder, t_vec3 *orig, t_vec3 *dir, float *t0);
 #endif
