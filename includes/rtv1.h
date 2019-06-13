@@ -255,6 +255,8 @@ t_point3 ft_point3_scalar_multiply(t_point3 a, double b);
 	void ft_vec3_print(t_vec3 a);
 	t_vec3 ft_vec3_neg(t_vec3 v);
 	t_vec3	ft_vec3_multiply_matrix(t_vec3 v, t_mat4 m);
+	double	ft_vec3_angle(t_vec3 a, t_vec3 b);
+	double			ft_vec3_length(t_vec3 v1);
 
 t_quaternion t_quaternion_sum(t_quaternion a, t_quaternion b);
 t_quaternion t_quaternion_substract(t_quaternion a, t_quaternion b);
@@ -299,7 +301,7 @@ inline t_normal3 ft_normal3_scalar_multiply(t_normal3 a, float b);
 //intersect
 int ray_intersect(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
 double		ray_intersect_sphere(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
-double		ray_intersect_cylinder(t_sphere *cylinder, t_vec3 *orig, t_vec3 *dir, float *t0);
+double		ray_intersect_cylinder(t_cone *cylinder, t_vec3 *orig, t_vec3 *dir, float *t0);
 double		ray_intersect_cone(t_sphere *cone, t_vec3 *orig, t_vec3 *dir, float *t0);
 double		ray_intersect_sphere_book(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
 double				sphere_intersection3(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);

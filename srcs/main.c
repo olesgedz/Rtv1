@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/12 19:14:30 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/13 18:06:34 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,14 +242,20 @@ t_vec3 cast_ray(t_game *game, t_vec3 *orig, t_vec3 *dir, t_sphere *spheres, size
 
 	while (++i < game->elum.number)
 	{
-		t_vec3 light_dir      = ft_vec3_normalize(ft_vec3_substract(game->elum.lights[i].position, point));
-		float light_distance = ft_vec3_norm(ft_vec3_substract(game->elum.lights[i].position, point));
-		t_vec3 shadow_orig = (ft_vec3_dot_multiply(light_dir, N) < 0) ? ft_vec3_substract(point, ft_vec3_scalar_multiply(N, 1e-3)) :  ft_vec3_sum(point, ft_vec3_scalar_multiply(N, 1e-3));
+		t_vec3 light_dir      =  ft_vec3_normalize(ft_vec3_substract( game->elum.lights[i].position, point));
+		double light_distance = ft_vec3_norm(ft_vec3_substract(game->elum.lights[i].position, point));
+		
+		t_vec3 shadow_orig = (ft_vec3_dot_multiply(light_dir, N) < 0) ? ft_vec3_substract(point, ft_vec3_scalar_multiply(N, 1e-3)) : ft_vec3_sum(point, ft_vec3_scalar_multiply(N, 1e-3));
 		t_vec3 shadow_pt, shadow_N;
 		t_material temp_material;
 		if (scene_intersect(game, &shadow_orig, &light_dir, &shadow_pt, &shadow_N, &temp_material) && (ft_vec3_norm(ft_vec3_substract(shadow_pt, shadow_orig)) < light_distance))
-			continue ;
-		diffuse_light_intensity  += game->elum.lights[i].intensity * max(0, ft_vec3_dot_multiply(light_dir, N));
+			continue;
+		// if (ft_vec3_dot_multiply(N, light_dir) > 0.9)
+		// {
+		// 	printf("%f\n",  ft_vec3_dot_multiply(N, light_dir));
+		//   diffuse_light_intensity +=  game->elum.lights[i].intensity * ft_vec3_dot_multiply(N, light_dir);// / (ft_vec3_length(N));
+		// }
+		diffuse_light_intensity  +=  game->elum.lights[i].intensity * max(0.0f, ft_vec3_dot_multiply(ft_vec3_normalize(light_dir), ft_vec3_normalize(N)));
 		specular_light_intensity += powf(max(0.f, ft_vec3_dot_multiply(ft_vec3_scalar_multiply(reflect(ft_vec3_scalar_multiply(light_dir, -1), N), -1),*dir)),\
 		 	material.specular_exponent)*game->elum.lights[i].intensity;
 	}
@@ -374,11 +380,11 @@ int	main(int argc, char **argv)
 	game.elum.lights[1] = (t_light){(t_vec3){-5, 0, -5}, 1.5};
 	game.elum.lights[2] = (t_light){(t_vec3){-2, 0, -5}, 1.8};
 	game.elum.lights[3] = (t_light){(t_vec3){5, 0, -5}, 1.7};
-	game.elum.number = 5; // number of light sources
-	game.n_cones = 0;
+	game.elum.number = 1; // number of light sources
+	game.n_cones = 1;
 	game.cones = ft_memalloc(sizeof(t_cone) * 6);
-	game.n_spheres = 3;
-	game.n_cylinders = 1;
+	game.n_spheres = 1;
+	game.n_cylinders = 0;
 	game.spheres = ft_memalloc(sizeof(t_sphere) * 6);
 	game.cylinders = ft_memalloc(sizeof(t_cylinder) * 6);
 

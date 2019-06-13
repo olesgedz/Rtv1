@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 16:17:28 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/06/12 18:45:39 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/13 18:05:51 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ double				cone_intersection(t_cone *cone, t_vec3 *orig, t_vec3 *dir, float *t0)
 }
 
 
-double		ray_intersect_cylinder(t_sphere *cylinder, t_vec3 *orig, t_vec3 *dir, float *t0)
+double		ray_intersect_cylinder(t_cone *cylinder, t_vec3 *orig, t_vec3 *dir, float *t0)
 {
 	t_vec3	x;
 	double	a;
