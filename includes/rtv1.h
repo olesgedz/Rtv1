@@ -78,6 +78,8 @@ typedef struct s_ray
 {
 	t_vec3 orig;
 	t_vec3 dir;
+	t_vec3 hit;
+
 } t_ray;
 
 typedef struct Material {
@@ -106,7 +108,7 @@ typedef struct		s_triangle
 	t_material material;
 } t_triangle;
 typedef  double		(* t_f_intersect)(void *figure, t_ray *ray, float *t0); // cheats
-typedef  t_vec3	(* t_f_get_normal)(t_vec3 *hit, t_object *figure);
+typedef  t_vec3	(* t_f_get_normal)(t_ray *ray, t_object *figure);
 struct s_object
 {
 	void *object;

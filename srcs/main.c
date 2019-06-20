@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/20 21:41:33 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/20 22:05:11 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,19 +98,22 @@ static	int	is_any_figure_closer(t_game *game, double cache)
 }
 
 
-t_vec3 sphere_get_normal(t_vec3 *hit, t_object *figure)
+t_vec3 sphere_get_normal(t_ray *ray, t_object *figure)
 {
-	return (ft_vec3_substract(*hit, ((t_sphere *)figure->object)->center));
+	return (ft_vec3_substract(ray->hit, ((t_sphere *)figure->object)->center));
 }
 
-t_vec3 cylinder_get_normal(t_vec3 *hit, t_object *figure) // Some how works. but that isn't right, I was just clicking buttons .---.
+t_vec3 cylinder_get_normal(t_ray *ray, t_object *figure) // Some how works. but that isn't right, I was just clicking buttons .---.
 {
-	return (ft_vec3_neg(ft_vec3_sum(*hit, ((t_sphere *)figure->object)->center)));
+	return (ft_vec3_neg(ft_vec3_sum(ray->hit, ((t_sphere *)figure->object)->center)));
+	// t_cylinder *cylinder = (t_cylinder *) figure->object;
+	// t_vec3 x = ft_vec3_substract(ray->orig, cylinder->center);
+	// double m = ft_vec3_scalar_multiply(ray->dir, ft_vec3_scalar_multiply(cylinder->))
 }
 
-t_vec3 cone_get_normal(t_vec3 *hit, t_object *figure)
+t_vec3 cone_get_normal(t_ray *ray, t_object *figure)
 {
-	return (ft_vec3_neg(ft_vec3_sum(*hit, ((t_sphere *)figure->object)->center)));
+	return (ft_vec3_neg(ft_vec3_sum(ray->hit, ((t_sphere *)figure->object)->center)));
 }
 /*
 *	Fucntion: checks all objects on the scene
@@ -132,7 +135,8 @@ int scene_intersect(t_game *game, t_ray *ray, t_vec3 *hit, t_vec3 *N, t_material
 			object_dist = dist_i;
 			t_vec3 temp = ft_vec3_scalar_multiply(ray->dir, dist_i);
 			*hit = ft_vec3_sum(ray->orig, temp);
-			temp = game->figures[i].get_normal(hit, &game->figures[i]); // problem also cause of shading not working
+			ray->hit = *hit;
+			temp = game->figures[i].get_normal(ray, &game->figures[i]); // problem also cause of shading not working
 			*N = ft_vec3_normalize(temp);
 			*material = ((t_sphere *)game->figures[i].object)->material; // mm not suppose to be  t_sphere, but works
 		}
