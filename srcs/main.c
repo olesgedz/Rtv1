@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/20 18:23:24 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/20 18:26:43 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -441,8 +441,8 @@ int	main(int argc, char **argv)
 	// game.spheres[1] = (t_sphere){(t_vec3){-1.0, -1.5, -12}, glass, 2, 5};
 	// game.spheres[3] = (t_sphere){(t_vec3){1.5, -0.5, -18}, red_rubber, 3, 5};
 	// game.spheres[4] = (t_sphere){(t_vec3){7, 5, -18}, ivory, 4, 5};
-	ft_object_push(&game, &(t_object){ft_sphere_create((t_sphere){(t_vec3){1.5, -0.5, -18}, red_rubber, 3, 5}),ray_intersect_sphere_book});
-	ft_object_push(&game, &(t_object){ft_sphere_create((t_sphere){(t_vec3){1.5, -0.5, -18}, red_rubber, 3, 5}),ray_intersect_sphere_book});
+	ft_object_push(&game, &(t_object){&(t_sphere){(t_vec3){1.5, -0.5, -18}, red_rubber, 3, 5},ray_intersect_sphere_book});
+	ft_object_push(&game, &(t_object){&(t_sphere){(t_vec3){1.5, -0.5, -18}, red_rubber, 3, 5},ray_intersect_sphere_book});
 	game.origin = (t_vec3){0,0,5,1};
 	ft_init_window(game.sdl, WIN_W, WIN_H);
 	ft_update(&game);
