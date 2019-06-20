@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/20 18:32:04 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/20 18:45:10 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,113 +105,18 @@ static	int	is_any_figure_closer(t_game *game, double cache)
 
 int scene_intersect(t_game *game, t_vec3 *orig, t_vec3 *dir, t_vec3 *hit, t_vec3 *N, t_material *material)
 {
- 	game->closest = FLT_MAX; // WHY
-// 	// ft_vec3_print(&spheres[1].center);
-// 	//ft_exit(NULL);
-// 		float cone_dist = FLT_MAX; // WHY
-// 			size_t i = -1;
-
-// 		while (++i < game->n_cones)
-// 	{
-// 		float dist_i = 0;
-
-// 		if (cone_intersection1(&game->cones[i], orig, dir, &dist_i) && dist_i < cone_dist)
-// 		{
-// 			cone_dist = dist_i;
-// 			t_vec3 temp = ft_vec3_scalar_multiply(*dir, dist_i);
-// 			if (temp.y > 0.5 || -0.5 > temp.y)
-// 				continue;
-// 			*hit = ft_vec3_sum(*orig, temp);
-// 			temp = ft_vec3_substract(*hit, game->cones[i].center);
-// 			*N = ft_vec3_normalize(temp);
-// 			*material = game->cones[i].material;
-// 			is_any_figure_closer(game, dist_i); 
-
-// 		}
-// 	}
-// 	float spheres_dist = FLT_MAX; // WHY
-// 	i = -1;
-// 	while (++i < game->n_spheres)
-// 	{
-// 		float dist_i;
-
-// 		if (ray_intersect_sphere_book(&game->spheres[i], orig, dir, &dist_i) && dist_i < spheres_dist)
-// 		{
-// 			is_any_figure_closer(game, dist_i); 
-// 			spheres_dist = dist_i;
-// 			t_vec3 temp = ft_vec3_scalar_multiply(*dir, dist_i);
-// 			*hit = ft_vec3_sum(*orig, temp);
-// 			temp = ft_vec3_substract(*hit, game->spheres[i].center);
-// 			*N = ft_vec3_normalize(temp);
-			
-// 			*material = game->spheres[i].material;
-// 		}
-// 	}
-
-
-// float cylinder_dist = FLT_MAX; // WHY
-// 	i = -1;
-// 	while (++i < game->n_cylinders)
-// 	{
-// 		float dist_i;
-
-// 		if (cylinder_intersection1(&game->cylinders[i], orig, dir, &dist_i) && dist_i < spheres_dist)
-// 		{
-// 			is_any_figure_closer(game, dist_i); 
-// 			spheres_dist = dist_i;
-// 			t_vec3 temp = ft_vec3_scalar_multiply(*dir, dist_i);
-// 			*hit = ft_vec3_sum(*orig, temp);
-// 			temp = ft_vec3_substract(*hit, game->cylinders[i].center);
-// 			*N = ft_vec3_normalize(temp);
-			
-// 			*material = game->cylinders[i].material;
-// 		}
-// 	}
-
-
-// 	// ft_vec3_print(&spheres[0].center);
-// 	// ft_vec3_print(&spheres[1].center);
-// 	//ft_exit(NULL);
-	
-
-
-
-// 	float checkerboard_dist = FLT_MAX;
-
-
-	// float dist_i;
-// 	// t_plane plane = (t_plane){(t_vec3){10, 10, 10}, (t_normal3){0, 1, 0},\
-// 	// .material = spheres[0].material};
-// 	// if(plane_intersection2((t_ray){.orig = *orig, .dir = *dir}, plane, &dist_i))
-// 	// {
-// 	// 	checkerboard_dist = dist_i;
-		
-// 	// }
-//     // if (fabs(dir->y) > 1e-3)
-// 	// {
-//     //     float d = -(orig->y + 4) / dir->y; // the checkerboard plane has equation y = -4
-//     //     t_vec3 board = ft_vec3_sum(*orig, ft_vec3_scalar_multiply(*dir, d));
-//     //     if (d > 0 && fabs(board.x) < 10 && board.z < -10 && board.z > -30 && d < spheres_dist)
-// 	// 	{
-// 	// 		is_any_figure_closer(game, d); 
-//     //         checkerboard_dist = d;
-//     //         *hit = board;
-//     //         *N = ft_vec3_create(0, 1, 0);
-// 	// 		*material = (t_material){(t_vec3){0.3, 0.1, 0.1}, .albendo= (t_vec3){0.9, 0.1, .1, 0}, .specular_exponent=10};
-//     //         material->diffuse_color = ((int)(0.5*(hit->x+1000)) + (int)(0.5*(hit->z)) & 1) ? ft_vec3_create(0.1, 0.1, 0.1) : ft_vec3_create(0.8, 0.7, 0.6);
-//     //     }
-//     // }
+ 	game->closest = FLT_MAX; 
 	float dist_i;
-	float spheres_dist = FLT_MAX; // WHY
+	float object_dist = FLT_MAX; 
 	int i = 0;
 	while (i < game->n_figures)
 	{
 		// float dist_i;
 
-		if (((t_object)game->figures[i]).intersect(&game->figures[i], orig, dir, &dist_i) && dist_i < spheres_dist)
+		if (((t_object)game->figures[i]).intersect(&game->figures[i], orig, dir, &dist_i) && dist_i < object_dist)
 		{
 			is_any_figure_closer(game, dist_i); 
-			spheres_dist = dist_i;
+			object_dist = dist_i;
 			t_vec3 temp = ft_vec3_scalar_multiply(*dir, dist_i);
 			*hit = ft_vec3_sum(*orig, temp);
 			temp = ft_vec3_substract(*hit, ((t_sphere *)((t_object)game->figures[i]).object)->center); // problem
@@ -221,9 +126,7 @@ int scene_intersect(t_game *game, t_vec3 *orig, t_vec3 *dir, t_vec3 *hit, t_vec3
 		}
 		i++;
 	}
-
 	return game->closest < 1000;
-	//return spheres_dist < 1000;
 }
 
 
@@ -442,8 +345,9 @@ int	main(int argc, char **argv)
 	// game.spheres[3] = (t_sphere){(t_vec3){1.5, -0.5, -18}, red_rubber, 3, 5};
 	// game.spheres[4] = (t_sphere){(t_vec3){7, 5, -18}, ivory, 4, 5};
 	ft_object_push(&game, &(t_object){&(t_sphere){(t_vec3){1.5, -0.5, -18}, red_rubber, 3, 5},ray_intersect_sphere_book});
-	ft_object_push(&game, &(t_object){&(t_sphere){(t_vec3){3, -0.5, -18}, red_rubber, 3, 5},ray_intersect_sphere_book});
-	ft_object_push(&game, &(t_object){&(t_cone){(t_vec3){1.5, -0.5, -18}, red_rubber, 3, 5},cone_intersection1});
+	ft_object_push(&game, &(t_object){&(t_sphere){(t_vec3){6, -0.5, -18}, mirror, 3, 5},ray_intersect_sphere_book});
+	ft_object_push(&game, &(t_object){&(t_cone){(t_vec3){0, 2, -50}, ivory, 2, (t_vec3){0, 1, 0}, 30, (t_vec3){0, 2, -5}},cone_intersection1});
+	ft_object_push(&game, &(t_object){&(t_cylinder){(t_vec3){-7, 2, -20}, ivory, 2, -2, 2},cylinder_intersection1});
 	game.origin = (t_vec3){0,0,5,1};
 	ft_init_window(game.sdl, WIN_W, WIN_H);
 	ft_update(&game);
