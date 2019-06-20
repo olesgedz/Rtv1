@@ -198,6 +198,7 @@ typedef  struct s_world
 
 typedef struct s_game
 {
+	t_object *figures;
 	int n_figures;
 	t_sdl *sdl;
 	t_surface *image;
@@ -212,7 +213,6 @@ typedef struct s_game
 	int wsad[8];
 	t_vec3 origin;
 	double closest;
-	t_object *figures;
 
 } t_game;
 
@@ -315,6 +315,6 @@ double				cone_intersection(t_cone *cone, t_vec3 *orig, t_vec3 *dir, float *t0);
 double				plane_intersection(t_ray ray, t_triangle triangle, float *t0);
 double				plane_intersection2(t_ray ray, t_plane plane, float *t0);
 double		ray_intersect_cone_book(t_cone *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
-int		cone_intersection1(void *vcone, t_vec3 *orig, t_vec3 *dir, float *t0);
-int		cylinder_intersection1(void *cylinder, t_vec3 *orig, t_vec3 *dir, float *t0);
+double		cone_intersection1(void *vcone, t_vec3 *orig, t_vec3 *dir, float *t0);
+double		cylinder_intersection1(void *cylinder, t_vec3 *orig, t_vec3 *dir, float *t0);
 #endif

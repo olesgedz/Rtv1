@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 16:17:28 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/06/20 17:12:19 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/20 18:31:42 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -395,14 +395,14 @@ extern inline float ft_vec3_multiply_cone(t_vec3 a, t_vec3 b)
 	return (a.x * b.x - a.y * b.y + a.z * b.z);
 }
 
-int		cone_intersection1(void *vcone, t_vec3 *orig, t_vec3 *dir, float *t0)
+double	cone_intersection1(void *object, t_vec3 *orig, t_vec3 *dir, float *t0)
 {
 	double a;
 	double b;
 	double c;
 	t_cone *cone;
 
-	cone = (t_cone *)vcone;
+	cone = (t_cone *)((t_object *)object)->object;
 	t_vec3 temp = ft_vec3_substract(*orig, cone->center);
 	a = ft_vec3_multiply_cone(*dir, *dir);
 	b = ft_vec3_multiply_cone(ft_vec3_scalar_multiply(temp, 2), *dir);
@@ -430,14 +430,14 @@ extern inline float ft_vec3_multiply_cylinder(t_vec3 a, t_vec3 b)
 	return (a.x * b.x + a.z * b.z);
 }
 
-int		cylinder_intersection1(void *cylinder, t_vec3 *orig, t_vec3 *dir, float *t0)
+double		cylinder_intersection1(void *object, t_vec3 *orig, t_vec3 *dir, float *t0)
 {
 	double a;
 	double b;
 	double c;
 	t_cylinder *cyl;
 
-	cyl = (t_cylinder *)cylinder;
+	cyl = (t_cylinder *)((t_object *)object)->object;
 	t_vec3 temp = ft_vec3_substract(*orig, cyl->center);
 	a =  ft_vec3_multiply_cylinder(*dir, *dir);
 	b = ft_vec3_multiply_cylinder(ft_vec3_scalar_multiply(temp, 2), *dir);

@@ -6,13 +6,13 @@
 #    By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/16 12:58:07 by jblack-b          #+#    #+#              #
-#    Updated: 2019/06/20 18:03:05 by jblack-b         ###   ########.fr        #
+#    Updated: 2019/06/20 18:27:21 by jblack-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = rtv1
 
-FLAGS = -g
+FLAGS = -g -O3
 CC = gcc
 LIBRARIES = -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY) #-lmath -L$(LIBMATH_DIRECTORY)
 INCLUDES = -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBSDL_HEADERS) # -I$(LIBMATH_HEADERS)

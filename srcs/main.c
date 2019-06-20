@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/20 18:26:43 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/20 18:32:04 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,7 @@ int scene_intersect(t_game *game, t_vec3 *orig, t_vec3 *dir, t_vec3 *hit, t_vec3
 	float dist_i;
 	float spheres_dist = FLT_MAX; // WHY
 	int i = 0;
-	while (i < 1)//game->n_figures)
+	while (i < game->n_figures)
 	{
 		// float dist_i;
 
@@ -442,7 +442,8 @@ int	main(int argc, char **argv)
 	// game.spheres[3] = (t_sphere){(t_vec3){1.5, -0.5, -18}, red_rubber, 3, 5};
 	// game.spheres[4] = (t_sphere){(t_vec3){7, 5, -18}, ivory, 4, 5};
 	ft_object_push(&game, &(t_object){&(t_sphere){(t_vec3){1.5, -0.5, -18}, red_rubber, 3, 5},ray_intersect_sphere_book});
-	ft_object_push(&game, &(t_object){&(t_sphere){(t_vec3){1.5, -0.5, -18}, red_rubber, 3, 5},ray_intersect_sphere_book});
+	ft_object_push(&game, &(t_object){&(t_sphere){(t_vec3){3, -0.5, -18}, red_rubber, 3, 5},ray_intersect_sphere_book});
+	ft_object_push(&game, &(t_object){&(t_cone){(t_vec3){1.5, -0.5, -18}, red_rubber, 3, 5},cone_intersection1});
 	game.origin = (t_vec3){0,0,5,1};
 	ft_init_window(game.sdl, WIN_W, WIN_H);
 	ft_update(&game);
