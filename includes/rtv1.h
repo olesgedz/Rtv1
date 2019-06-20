@@ -106,11 +106,12 @@ typedef struct		s_triangle
 	t_material material;
 } t_triangle;
 typedef  double		(* t_f_intersect)(void *figure, t_ray *ray, float *t0); // cheats
-
+typedef  t_vec3	(* t_f_get_normal)(t_vec3 *hit, t_object *figure);
 struct s_object
 {
 	void *object;
 	t_f_intersect intersect;
+	t_f_get_normal get_normal;
 }; 
 
 typedef struct s_sphere
@@ -177,13 +178,6 @@ typedef struct s_plane
 	t_normal3 normal;
 	t_material material;
 } t_plane;
-
-// struct s_object
-// {
-// 	t_polygon *polygons;
-// 	t_object *childs;
-// 	//matrix matrix
-// };
 
 struct s_sector
 {

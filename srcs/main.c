@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/20 19:46:07 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/20 21:41:33 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,21 @@ static	int	is_any_figure_closer(t_game *game, double cache)
 	return (0);
 }
 
+
+t_vec3 sphere_get_normal(t_vec3 *hit, t_object *figure)
+{
+	return (ft_vec3_substract(*hit, ((t_sphere *)figure->object)->center));
+}
+
+t_vec3 cylinder_get_normal(t_vec3 *hit, t_object *figure) // Some how works. but that isn't right, I was just clicking buttons .---.
+{
+	return (ft_vec3_neg(ft_vec3_sum(*hit, ((t_sphere *)figure->object)->center)));
+}
+
+t_vec3 cone_get_normal(t_vec3 *hit, t_object *figure)
+{
+	return (ft_vec3_neg(ft_vec3_sum(*hit, ((t_sphere *)figure->object)->center)));
+}
 /*
 *	Fucntion: checks all objects on the scene
 *	Parameters: stuff, sphere, ray
@@ -111,16 +126,15 @@ int scene_intersect(t_game *game, t_ray *ray, t_vec3 *hit, t_vec3 *N, t_material
 	int i = 0;
 	while (i < game->n_figures)
 	{
-		if (((t_object)game->figures[i]).intersect(&game->figures[i], ray, &dist_i) && dist_i < object_dist)
+		if (game->figures[i].intersect(&game->figures[i], ray, &dist_i) && dist_i < object_dist)
 		{
 			is_any_figure_closer(game, dist_i); 
 			object_dist = dist_i;
 			t_vec3 temp = ft_vec3_scalar_multiply(ray->dir, dist_i);
 			*hit = ft_vec3_sum(ray->orig, temp);
-			temp = ft_vec3_substract(*hit, ((t_sphere *)((t_object)game->figures[i]).object)->center); // problem
+			temp = game->figures[i].get_normal(hit, &game->figures[i]); // problem also cause of shading not working
 			*N = ft_vec3_normalize(temp);
-			
-			*material = ((t_sphere *)((t_object)game->figures[i]).object)->material;
+			*material = ((t_sphere *)game->figures[i].object)->material; // mm not suppose to be  t_sphere, but works
 		}
 		i++;
 	}
@@ -164,7 +178,7 @@ t_vec3 cast_ray(t_game *game, t_ray *ray, t_sphere *spheres, size_t depth)
 
 	while (++i < game->elum.number)
 	{
-		t_vec3 light_dir      =  ft_vec3_normalize(ft_vec3_substract( game->elum.lights[i].position, point));
+		t_vec3 light_dir      =  ft_vec3_normalize(ft_vec3_substract(game->elum.lights[i].position, point));
 		double light_distance = ft_vec3_norm(ft_vec3_substract(game->elum.lights[i].position, point));
 		t_ray shadow_ray;
 		shadow_ray.orig = (ft_vec3_dot_multiply(light_dir, N) < 0) ? ft_vec3_substract(point, ft_vec3_scalar_multiply(N, 1e-3)) : ft_vec3_sum(point, ft_vec3_scalar_multiply(N, 1e-3));
@@ -298,10 +312,10 @@ int	main(int argc, char **argv)
 	game.elum.lights[3] = (t_light){(t_vec3){5, 0, -5}, 1.7};
 	game.elum.number = 1; // number of light sources
 
-	ft_object_push(&game, &(t_object){&(t_sphere){(t_vec3){1.5, -0.5, -18}, red_rubber, 3, 5},sphere_intersection});
-	ft_object_push(&game, &(t_object){&(t_sphere){(t_vec3){6, -0.5, -18}, mirror, 3, 5},sphere_intersection});
-	ft_object_push(&game, &(t_object){&(t_cone){(t_vec3){0, 2, -50}, ivory, 2, (t_vec3){0, 1, 0}, 30, (t_vec3){0, 2, -5}},cone_intersection});
-	ft_object_push(&game, &(t_object){&(t_cylinder){(t_vec3){-7, 2, -20}, ivory, 2, -2, 2},cylinder_intersection});
+	ft_object_push(&game, &(t_object){&(t_sphere){(t_vec3){1.5, -0.5, -18}, red_rubber, 3, 5},sphere_intersection, sphere_get_normal});
+	ft_object_push(&game, &(t_object){&(t_sphere){(t_vec3){6, -0.5, -18}, mirror, 3, 5},sphere_intersection, sphere_get_normal});
+	ft_object_push(&game, &(t_object){&(t_cone){(t_vec3){0, 2, -50}, ivory, 2, (t_vec3){0, 1, 0}, 30, (t_vec3){0, 2, -5}},cone_intersection, cone_get_normal});
+	ft_object_push(&game, &(t_object){&(t_cylinder){(t_vec3){-7, 2, -20}, red_rubber, 2, -2, 2}, cylinder_intersection, cylinder_get_normal});
 	//plane doesn't work
 	// ft_object_push(&game, &(t_object){&(t_plane){(t_vec3){0,0,0}, (t_normal3){1,0,0}, ivory}, plane_intersection});
 	
