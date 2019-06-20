@@ -105,7 +105,7 @@ typedef struct		s_triangle
 	t_vec3		c;
 	t_material material;
 } t_triangle;
-typedef  double		(* t_f_intersect)(void *figure, t_vec3 *orig, t_vec3 *dir, float *t0); // cheats
+typedef  double		(* t_f_intersect)(void *figure, t_ray *ray, float *t0); // cheats
 
 struct s_object
 {
@@ -113,7 +113,6 @@ struct s_object
 	t_f_intersect intersect;
 }; 
 
-typedef  double		(* t_f_intersect)(void *figure, t_vec3 *orig, t_vec3 *dir, float *t0); // cheats
 typedef struct s_sphere
 {
 	t_vec3 center;
@@ -304,17 +303,7 @@ extern inline t_normal3	ft_normal3_sum(t_normal3 a, t_normal3 b);
 inline t_normal3 ft_normal3_scalar_multiply(t_normal3 a, float b);
 
 //intersect
-int ray_intersect(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
-double		ray_intersect_sphere(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
-double		ray_intersect_cylinder(t_cone *cylinder, t_vec3 *orig, t_vec3 *dir, float *t0);
-double		ray_intersect_cone(t_sphere *cone, t_vec3 *orig, t_vec3 *dir, float *t0);
-double		ray_intersect_sphere_book(void *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
-double				sphere_intersection3(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
-double				cylinder_intersection(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
-double				cone_intersection(t_cone *cone, t_vec3 *orig, t_vec3 *dir, float *t0);
-double				plane_intersection(t_ray ray, t_triangle triangle, float *t0);
-double				plane_intersection2(t_ray ray, t_plane plane, float *t0);
-double		ray_intersect_cone_book(t_cone *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
-double		cone_intersection1(void *vcone, t_vec3 *orig, t_vec3 *dir, float *t0);
-double		cylinder_intersection1(void *cylinder, t_vec3 *orig, t_vec3 *dir, float *t0);
+double		sphere_intersection(void *figure, t_ray *ray, float *t0);
+double	cone_intersection(void *object, t_ray *ray, float *t0);
+double		cylinder_intersection(void *object, t_ray *ray, float *t0);
 #endif
