@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 16:17:28 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/06/20 19:38:09 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/20 19:45:41 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,22 +68,6 @@ int	have_solutions(double d)
 }
 
 
-
-
-// double				plane_intersection(t_ray ray, t_triangle triangle, float *t0)
-// {
-// 	double				det;
-
-// 	det = ft_vec3_dot_multiply(ft_vec3_substract(triangle.a, triangle.b),
-// 			ft_vec3_cross_multiply(ray.dir, ft_vec3_substract(triangle.c, triangle.a)));
-// 	if (det < 1e-8 && det > -1e-8)
-// 		return (0);
-// 	det = ft_vec3_dot_multiply(ft_vec3_substract(triangle.c, triangle.a),
-// 			ft_vec3_cross_multiply(ft_vec3_substract(ray.orig, triangle.a),
-// 				ft_vec3_substract(triangle.a, triangle.b))) * (1 / det);
-// 	return (*t0 = det);
-// }
-
 double				plane_intersection2(t_ray ray, t_plane plane, float *t0)
 {
 	double	t =  ft_normal3_dot_multiply_vec3(plane.normal, ft_vec3_substract(plane.point, ray.orig)) / ft_normal3_dot_multiply_vec3(plane.normal, ray.dir);
@@ -95,43 +79,6 @@ double				plane_intersection2(t_ray ray, t_plane plane, float *t0)
 	else
 		return(FALSE);
 }
-
-
-/*
-*	Fucntion: checks if a ray hits the sphere
-*	Parameters: stuff, sphere, ray
-*	Return: true or false
-*/
-// int ray_intersect(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0)
-// {
-// 	t_vec3 L = ft_vec3_substract(sphere->center, *orig);
-// 	// printf("%f %f %f, dir: %f %f %f\n", L.x, L.y, L.z, dir->x, dir->y, dir->z);
-// 	float tca = ft_vec3_dot_multiply(L, *dir);
-// 	//printf("tca %f\n", tca);
-// 	float d2 = ft_vec3_dot_multiply(L, L) - tca * tca;
-// 	//printf("d2 %f %f \n", d2, sphere->radius * sphere->radius);
-// 	if (d2 > sphere->radius * sphere->radius)
-// 		return FALSE;
-// 	float thc = sqrtf(sphere->radius * sphere->radius - d2);
-// 	*t0	= tca - thc;
-// 	float t1 = tca + thc;
-// 	if (*t0 < 0)
-// 		*t0 = t1;
-// 	if (*t0 < 0)
-// 		return FALSE;
-// 	return TRUE;
-// }
-
-/*---------quadrantic-------------*/
-// int	have_solutions(double d)
-// {
-// 	if (d > 0)
-// 		return (2);
-// 	else if (d == 0)
-// 		return (1);
-// 	else
-// 		return (0);
-// }
 
 double		get_solution(double a, double b, double c, float *t0)
 {
@@ -208,16 +155,16 @@ double	cone_intersection(void *object, t_ray *ray, float *t0)
 }
 
 
-int		plane_intersection(void *plane, t_vec3 *orig, t_vec3 *dir, float *t0)
+double		plane_intersection(void *object, t_ray *ray, float *t0) // doesn't work
 {
 	double tmp;
 	t_plane *p;
 
-	p = (t_plane *)plane;
-	tmp = p->point.x * dir->x + p->point.y * dir->y + p->point.z * dir->z;
+	p = (t_plane *)((t_object *)object)->object;
+	tmp = p->point.x * ray->dir.x + p->point.y * ray->dir.y + p->point.z * ray->dir.z;
 	if (!tmp)
 		return (0);
-	*t0 = -(p->point.x * orig->x +  p->point.y * orig->y +  p->point.z * orig->z +  p->point.w) / tmp;
+	*t0 = -(p->point.x * ray->orig.x +  p->point.y * ray->orig.y +  p->point.z * ray->orig.z +  p->point.w) / tmp;
 	return ((*t0 >= 0) ? 1 : 0);
 }
 

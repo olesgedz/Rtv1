@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/20 19:37:45 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/20 19:46:07 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,6 +302,8 @@ int	main(int argc, char **argv)
 	ft_object_push(&game, &(t_object){&(t_sphere){(t_vec3){6, -0.5, -18}, mirror, 3, 5},sphere_intersection});
 	ft_object_push(&game, &(t_object){&(t_cone){(t_vec3){0, 2, -50}, ivory, 2, (t_vec3){0, 1, 0}, 30, (t_vec3){0, 2, -5}},cone_intersection});
 	ft_object_push(&game, &(t_object){&(t_cylinder){(t_vec3){-7, 2, -20}, ivory, 2, -2, 2},cylinder_intersection});
+	//plane doesn't work
+	// ft_object_push(&game, &(t_object){&(t_plane){(t_vec3){0,0,0}, (t_normal3){1,0,0}, ivory}, plane_intersection});
 	
 	game.origin = (t_vec3){0,0,5,1};
 	ft_init_window(game.sdl, WIN_W, WIN_H);

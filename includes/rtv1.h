@@ -306,4 +306,5 @@ inline t_normal3 ft_normal3_scalar_multiply(t_normal3 a, float b);
 double		sphere_intersection(void *figure, t_ray *ray, float *t0);
 double	cone_intersection(void *object, t_ray *ray, float *t0);
 double		cylinder_intersection(void *object, t_ray *ray, float *t0);
+double		plane_intersection(void *object, t_ray *ray, float *t0);
 #endif
