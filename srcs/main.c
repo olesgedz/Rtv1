@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/20 18:45:10 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/20 18:49:23 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,6 @@ int scene_intersect(t_game *game, t_vec3 *orig, t_vec3 *dir, t_vec3 *hit, t_vec3
 	int i = 0;
 	while (i < game->n_figures)
 	{
-		// float dist_i;
-
 		if (((t_object)game->figures[i]).intersect(&game->figures[i], orig, dir, &dist_i) && dist_i < object_dist)
 		{
 			is_any_figure_closer(game, dist_i); 
@@ -128,10 +126,6 @@ int scene_intersect(t_game *game, t_vec3 *orig, t_vec3 *dir, t_vec3 *hit, t_vec3
 	}
 	return game->closest < 1000;
 }
-
-
-
-
 
 /*
 *	Fucntion: casts ray for that pixel
@@ -254,9 +248,8 @@ void ft_update(t_game *game)
 	t_sphere sphere = {(t_vec3){-3, 0, -16}, 2};
 	clock_t current_ticks, delta_ticks;
 	clock_t fps = 0;
-	while(1)
+	while(TRUE)
 	{
-		//game->spheres[0].center = ft_vec3_sum(game->elum.lights[0].position, (t_vec3){1,1,1});
 		current_ticks = clock();
 		ft_surface_clear(game->sdl->surface);
 		ft_input(game->sdl, &ft_input_keys);
@@ -288,19 +281,8 @@ void ft_update(t_game *game)
 
 }
 
-
 void ft_object_push(t_game *game, t_object *object)
 {
-	// if (game->figures == NULL)
-	// {
-	// 	game->n_figures = 0;
-	// 	game->figures = malloc(sizeof(t_object));
-	// }
-	// else
-	// 	game->figures = ft_realloc(game->figures, sizeof(t_object) * (game->n_figures + 1));
-	// game->figures[game->n_figures] = *object;
-	// game->n_figures += 1;
-
 	if (game->figures == NULL)
 		game->n_figures = 0;
 	game->figures = ft_realloc(game->figures, sizeof(t_object) * (game->n_figures + 1));
@@ -308,46 +290,30 @@ void ft_object_push(t_game *game, t_object *object)
 	game->n_figures += 1;
 }
 
-t_sphere *ft_sphere_create(t_sphere sphere)
-{
-	t_sphere *new = ft_memalloc(sizeof(t_sphere));
-	*new = sphere;
-	return (new); 
-}
-
 int	main(int argc, char **argv)
 {
-
-
 
 	printf("move light source with wasdqe \nchange intensity with zx\n");
 	game.sdl = malloc(sizeof(t_sdl));
 	game.image = ft_surface_create(WIN_W, WIN_H);
+	
 	t_material ivory = (t_material){(t_vec3){0.4, 0.4, 0.3},.albendo= (t_vec3){0.6, 0.3, 0, 0}, .specular_exponent=50};
 	t_material glass = (t_material){(t_vec3){.6, 0.7, 0.8}, .albendo =(t_vec3){0, 0.5, 0.1, 0.8}, .specular_exponent=125.};
 	t_material red_rubber = (t_material){(t_vec3){0.3, 0.1, 0.1}, .albendo= (t_vec3){0.9, 0.1, .0, 0}, .specular_exponent=10};
 	t_material mirror = (t_material){(t_vec3){1.0, 1.0, 1.0}, .albendo =(t_vec3){0, 10, 0.8, 1}, .specular_exponent=1425.};
+
 	game.elum.lights = ft_memalloc(sizeof(t_light) * 5);
 	game.elum.lights[0] = (t_light){(t_vec3){0, 0, -5}, 1.5};
 	game.elum.lights[1] = (t_light){(t_vec3){-5, 0, -5}, 1.5};
 	game.elum.lights[2] = (t_light){(t_vec3){-2, 0, -5}, 1.8};
 	game.elum.lights[3] = (t_light){(t_vec3){5, 0, -5}, 1.7};
 	game.elum.number = 1; // number of light sources
-	// game.n_cones = 1;
-	// game.cones = ft_memalloc(sizeof(t_cone) * 6);
-	// game.n_spheres = 1;
-	// game.n_cylinders = 0;
-	// game.spheres = ft_memalloc(sizeof(t_sphere) * 6);
-	// game.cylinders = ft_memalloc(sizeof(t_cylinder) * 6);
-	//game.cones[0] = (t_cone){(t_vec3){0, 2, -50}, ivory, 2, (t_vec3){0, 1, 0}, 30, (t_vec3){0, 2, -5}};
-	// game.spheres[0] = (t_sphere){(t_vec3){0, 2, -10}, glass, .1, (t_vec3){0.4, -0.8, 0.6}};
-	// game.spheres[1] = (t_sphere){(t_vec3){-1.0, -1.5, -12}, glass, 2, 5};
-	// game.spheres[3] = (t_sphere){(t_vec3){1.5, -0.5, -18}, red_rubber, 3, 5};
-	// game.spheres[4] = (t_sphere){(t_vec3){7, 5, -18}, ivory, 4, 5};
+
 	ft_object_push(&game, &(t_object){&(t_sphere){(t_vec3){1.5, -0.5, -18}, red_rubber, 3, 5},ray_intersect_sphere_book});
 	ft_object_push(&game, &(t_object){&(t_sphere){(t_vec3){6, -0.5, -18}, mirror, 3, 5},ray_intersect_sphere_book});
 	ft_object_push(&game, &(t_object){&(t_cone){(t_vec3){0, 2, -50}, ivory, 2, (t_vec3){0, 1, 0}, 30, (t_vec3){0, 2, -5}},cone_intersection1});
 	ft_object_push(&game, &(t_object){&(t_cylinder){(t_vec3){-7, 2, -20}, ivory, 2, -2, 2},cylinder_intersection1});
+	
 	game.origin = (t_vec3){0,0,5,1};
 	ft_init_window(game.sdl, WIN_W, WIN_H);
 	ft_update(&game);
