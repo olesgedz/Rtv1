@@ -105,14 +105,15 @@ typedef struct		s_triangle
 	t_vec3		c;
 	t_material material;
 } t_triangle;
-// typedef s_object
-// {
-// 	t_vec3 pos;
-// 	t_vec3 v;
-// 	t_material material;
-// 	float radius;
-// } t_object;
+typedef  double		(* t_f_intersect)(void *figure, t_vec3 *orig, t_vec3 *dir, float *t0); // cheats
 
+struct s_object
+{
+	void *object;
+	t_f_intersect intersect;
+}; 
+
+typedef  double		(* t_f_intersect)(void *figure, t_vec3 *orig, t_vec3 *dir, float *t0); // cheats
 typedef struct s_sphere
 {
 	t_vec3 center;
@@ -121,6 +122,7 @@ typedef struct s_sphere
 	t_vec3 v;
 	double			angle;
 	t_vec3		tip;
+	t_f_intersect intersect;
 } t_sphere;
 
 
@@ -177,12 +179,12 @@ typedef struct s_plane
 	t_material material;
 } t_plane;
 
-struct s_object
-{
-	t_polygon *polygons;
-	t_object *childs;
-	//matrix matrix
-};
+// struct s_object
+// {
+// 	t_polygon *polygons;
+// 	t_object *childs;
+// 	//matrix matrix
+// };
 
 struct s_sector
 {
@@ -196,6 +198,7 @@ typedef  struct s_world
 
 typedef struct s_game
 {
+	int n_figures;
 	t_sdl *sdl;
 	t_surface *image;
 	t_list *verties;
@@ -209,6 +212,8 @@ typedef struct s_game
 	int wsad[8];
 	t_vec3 origin;
 	double closest;
+	t_object *figures;
+
 } t_game;
 
 void	configure_sphere(char *map_name, t_sphere *sphere);
@@ -303,7 +308,7 @@ int ray_intersect(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
 double		ray_intersect_sphere(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
 double		ray_intersect_cylinder(t_cone *cylinder, t_vec3 *orig, t_vec3 *dir, float *t0);
 double		ray_intersect_cone(t_sphere *cone, t_vec3 *orig, t_vec3 *dir, float *t0);
-double		ray_intersect_sphere_book(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
+double		ray_intersect_sphere_book(void *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
 double				sphere_intersection3(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
 double				cylinder_intersection(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
 double				cone_intersection(t_cone *cone, t_vec3 *orig, t_vec3 *dir, float *t0);

@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/13 18:06:34 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/20 18:23:24 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,102 +105,123 @@ static	int	is_any_figure_closer(t_game *game, double cache)
 
 int scene_intersect(t_game *game, t_vec3 *orig, t_vec3 *dir, t_vec3 *hit, t_vec3 *N, t_material *material)
 {
-	game->closest = FLT_MAX; // WHY
-	// ft_vec3_print(&spheres[1].center);
-	//ft_exit(NULL);
-		float cone_dist = FLT_MAX; // WHY
-			size_t i = -1;
+ 	game->closest = FLT_MAX; // WHY
+// 	// ft_vec3_print(&spheres[1].center);
+// 	//ft_exit(NULL);
+// 		float cone_dist = FLT_MAX; // WHY
+// 			size_t i = -1;
 
-		while (++i < game->n_cones)
-	{
-		float dist_i = 0;
+// 		while (++i < game->n_cones)
+// 	{
+// 		float dist_i = 0;
 
-		if (cone_intersection1(&game->cones[i], orig, dir, &dist_i) && dist_i < cone_dist)
-		{
-			cone_dist = dist_i;
-			t_vec3 temp = ft_vec3_scalar_multiply(*dir, dist_i);
-			if (temp.y > 0.5 || -0.5 > temp.y)
-				continue;
-			*hit = ft_vec3_sum(*orig, temp);
-			temp = ft_vec3_substract(*hit, game->cones[i].center);
-			*N = ft_vec3_normalize(temp);
-			*material = game->cones[i].material;
-			is_any_figure_closer(game, dist_i); 
+// 		if (cone_intersection1(&game->cones[i], orig, dir, &dist_i) && dist_i < cone_dist)
+// 		{
+// 			cone_dist = dist_i;
+// 			t_vec3 temp = ft_vec3_scalar_multiply(*dir, dist_i);
+// 			if (temp.y > 0.5 || -0.5 > temp.y)
+// 				continue;
+// 			*hit = ft_vec3_sum(*orig, temp);
+// 			temp = ft_vec3_substract(*hit, game->cones[i].center);
+// 			*N = ft_vec3_normalize(temp);
+// 			*material = game->cones[i].material;
+// 			is_any_figure_closer(game, dist_i); 
 
-		}
-	}
-	float spheres_dist = FLT_MAX; // WHY
-	i = -1;
-	while (++i < game->n_spheres)
-	{
-		float dist_i;
+// 		}
+// 	}
+// 	float spheres_dist = FLT_MAX; // WHY
+// 	i = -1;
+// 	while (++i < game->n_spheres)
+// 	{
+// 		float dist_i;
 
-		if (ray_intersect_sphere_book(&game->spheres[i], orig, dir, &dist_i) && dist_i < spheres_dist)
-		{
-			is_any_figure_closer(game, dist_i); 
-			spheres_dist = dist_i;
-			t_vec3 temp = ft_vec3_scalar_multiply(*dir, dist_i);
-			*hit = ft_vec3_sum(*orig, temp);
-			temp = ft_vec3_substract(*hit, game->spheres[i].center);
-			*N = ft_vec3_normalize(temp);
+// 		if (ray_intersect_sphere_book(&game->spheres[i], orig, dir, &dist_i) && dist_i < spheres_dist)
+// 		{
+// 			is_any_figure_closer(game, dist_i); 
+// 			spheres_dist = dist_i;
+// 			t_vec3 temp = ft_vec3_scalar_multiply(*dir, dist_i);
+// 			*hit = ft_vec3_sum(*orig, temp);
+// 			temp = ft_vec3_substract(*hit, game->spheres[i].center);
+// 			*N = ft_vec3_normalize(temp);
 			
-			*material = game->spheres[i].material;
-		}
-	}
+// 			*material = game->spheres[i].material;
+// 		}
+// 	}
 
 
-float cylinder_dist = FLT_MAX; // WHY
-	i = -1;
-	while (++i < game->n_cylinders)
-	{
-		float dist_i;
+// float cylinder_dist = FLT_MAX; // WHY
+// 	i = -1;
+// 	while (++i < game->n_cylinders)
+// 	{
+// 		float dist_i;
 
-		if (cylinder_intersection1(&game->cylinders[i], orig, dir, &dist_i) && dist_i < spheres_dist)
-		{
-			is_any_figure_closer(game, dist_i); 
-			spheres_dist = dist_i;
-			t_vec3 temp = ft_vec3_scalar_multiply(*dir, dist_i);
-			*hit = ft_vec3_sum(*orig, temp);
-			temp = ft_vec3_substract(*hit, game->cylinders[i].center);
-			*N = ft_vec3_normalize(temp);
+// 		if (cylinder_intersection1(&game->cylinders[i], orig, dir, &dist_i) && dist_i < spheres_dist)
+// 		{
+// 			is_any_figure_closer(game, dist_i); 
+// 			spheres_dist = dist_i;
+// 			t_vec3 temp = ft_vec3_scalar_multiply(*dir, dist_i);
+// 			*hit = ft_vec3_sum(*orig, temp);
+// 			temp = ft_vec3_substract(*hit, game->cylinders[i].center);
+// 			*N = ft_vec3_normalize(temp);
 			
-			*material = game->cylinders[i].material;
-		}
-	}
+// 			*material = game->cylinders[i].material;
+// 		}
+// 	}
 
 
-	// ft_vec3_print(&spheres[0].center);
-	// ft_vec3_print(&spheres[1].center);
-	//ft_exit(NULL);
+// 	// ft_vec3_print(&spheres[0].center);
+// 	// ft_vec3_print(&spheres[1].center);
+// 	//ft_exit(NULL);
 	
 
 
 
-	float checkerboard_dist = FLT_MAX;
+// 	float checkerboard_dist = FLT_MAX;
 
 
-	float dist_i;
-	// t_plane plane = (t_plane){(t_vec3){10, 10, 10}, (t_normal3){0, 1, 0},\
-	// .material = spheres[0].material};
-	// if(plane_intersection2((t_ray){.orig = *orig, .dir = *dir}, plane, &dist_i))
-	// {
-	// 	checkerboard_dist = dist_i;
+	// float dist_i;
+// 	// t_plane plane = (t_plane){(t_vec3){10, 10, 10}, (t_normal3){0, 1, 0},\
+// 	// .material = spheres[0].material};
+// 	// if(plane_intersection2((t_ray){.orig = *orig, .dir = *dir}, plane, &dist_i))
+// 	// {
+// 	// 	checkerboard_dist = dist_i;
 		
-	// }
-    // if (fabs(dir->y) > 1e-3)
-	// {
-    //     float d = -(orig->y + 4) / dir->y; // the checkerboard plane has equation y = -4
-    //     t_vec3 board = ft_vec3_sum(*orig, ft_vec3_scalar_multiply(*dir, d));
-    //     if (d > 0 && fabs(board.x) < 10 && board.z < -10 && board.z > -30 && d < spheres_dist)
-	// 	{
-	// 		is_any_figure_closer(game, d); 
-    //         checkerboard_dist = d;
-    //         *hit = board;
-    //         *N = ft_vec3_create(0, 1, 0);
-	// 		*material = (t_material){(t_vec3){0.3, 0.1, 0.1}, .albendo= (t_vec3){0.9, 0.1, .1, 0}, .specular_exponent=10};
-    //         material->diffuse_color = ((int)(0.5*(hit->x+1000)) + (int)(0.5*(hit->z)) & 1) ? ft_vec3_create(0.1, 0.1, 0.1) : ft_vec3_create(0.8, 0.7, 0.6);
-    //     }
-    // }
+// 	// }
+//     // if (fabs(dir->y) > 1e-3)
+// 	// {
+//     //     float d = -(orig->y + 4) / dir->y; // the checkerboard plane has equation y = -4
+//     //     t_vec3 board = ft_vec3_sum(*orig, ft_vec3_scalar_multiply(*dir, d));
+//     //     if (d > 0 && fabs(board.x) < 10 && board.z < -10 && board.z > -30 && d < spheres_dist)
+// 	// 	{
+// 	// 		is_any_figure_closer(game, d); 
+//     //         checkerboard_dist = d;
+//     //         *hit = board;
+//     //         *N = ft_vec3_create(0, 1, 0);
+// 	// 		*material = (t_material){(t_vec3){0.3, 0.1, 0.1}, .albendo= (t_vec3){0.9, 0.1, .1, 0}, .specular_exponent=10};
+//     //         material->diffuse_color = ((int)(0.5*(hit->x+1000)) + (int)(0.5*(hit->z)) & 1) ? ft_vec3_create(0.1, 0.1, 0.1) : ft_vec3_create(0.8, 0.7, 0.6);
+//     //     }
+//     // }
+	float dist_i;
+	float spheres_dist = FLT_MAX; // WHY
+	int i = 0;
+	while (i < 1)//game->n_figures)
+	{
+		// float dist_i;
+
+		if (((t_object)game->figures[i]).intersect(&game->figures[i], orig, dir, &dist_i) && dist_i < spheres_dist)
+		{
+			is_any_figure_closer(game, dist_i); 
+			spheres_dist = dist_i;
+			t_vec3 temp = ft_vec3_scalar_multiply(*dir, dist_i);
+			*hit = ft_vec3_sum(*orig, temp);
+			temp = ft_vec3_substract(*hit, ((t_sphere *)((t_object)game->figures[i]).object)->center); // problem
+			*N = ft_vec3_normalize(temp);
+			
+			*material = ((t_sphere *)((t_object)game->figures[i]).object)->material;
+		}
+		i++;
+	}
+
 	return game->closest < 1000;
 	//return spheres_dist < 1000;
 }
@@ -227,6 +248,10 @@ t_vec3 cast_ray(t_game *game, t_vec3 *orig, t_vec3 *dir, t_sphere *spheres, size
 	//if (!ray_intersect(&spheres[0], orig, dir, &sphere_dist))
 	if( depth > 4 || !scene_intersect(game, orig, dir, &point, &N, &material))
 		return ft_vec3_create(0.2, 0.7, 0.8); // background color
+	// else
+	// {
+	// 		return ft_vec3_create(1, 0, 0);
+	// }
 	
 	t_vec3 reflect_dir = ft_vec3_normalize(reflect(*dir, N));
 	t_vec3 reflect_orig = ft_vec3_dot_multiply(reflect_dir, N) < 0 ? ft_vec3_substract(point, ft_vec3_scalar_multiply(N, 1e-3)) : ft_vec3_sum(point, ft_vec3_scalar_multiply(N, 1e-3));
@@ -328,7 +353,7 @@ void ft_update(t_game *game)
 	clock_t fps = 0;
 	while(1)
 	{
-		game->spheres[0].center = ft_vec3_sum(game->elum.lights[0].position, (t_vec3){1,1,1});
+		//game->spheres[0].center = ft_vec3_sum(game->elum.lights[0].position, (t_vec3){1,1,1});
 		current_ticks = clock();
 		ft_surface_clear(game->sdl->surface);
 		ft_input(game->sdl, &ft_input_keys);
@@ -361,11 +386,36 @@ void ft_update(t_game *game)
 }
 
 
+void ft_object_push(t_game *game, t_object *object)
+{
+	// if (game->figures == NULL)
+	// {
+	// 	game->n_figures = 0;
+	// 	game->figures = malloc(sizeof(t_object));
+	// }
+	// else
+	// 	game->figures = ft_realloc(game->figures, sizeof(t_object) * (game->n_figures + 1));
+	// game->figures[game->n_figures] = *object;
+	// game->n_figures += 1;
+
+	if (game->figures == NULL)
+		game->n_figures = 0;
+	game->figures = ft_realloc(game->figures, sizeof(t_object) * (game->n_figures + 1));
+	game->figures[game->n_figures] = *object;
+	game->n_figures += 1;
+}
+
+t_sphere *ft_sphere_create(t_sphere sphere)
+{
+	t_sphere *new = ft_memalloc(sizeof(t_sphere));
+	*new = sphere;
+	return (new); 
+}
+
 int	main(int argc, char **argv)
 {
 
 
-	ft_vec3_print(ft_vec3_multiply_matrix(ft_vec3_create(0, 0, 0),ft_look_at((t_vec3){0,0,5}, (t_vec3) {0,1,0})));
 
 	printf("move light source with wasdqe \nchange intensity with zx\n");
 	game.sdl = malloc(sizeof(t_sdl));
@@ -374,42 +424,26 @@ int	main(int argc, char **argv)
 	t_material glass = (t_material){(t_vec3){.6, 0.7, 0.8}, .albendo =(t_vec3){0, 0.5, 0.1, 0.8}, .specular_exponent=125.};
 	t_material red_rubber = (t_material){(t_vec3){0.3, 0.1, 0.1}, .albendo= (t_vec3){0.9, 0.1, .0, 0}, .specular_exponent=10};
 	t_material mirror = (t_material){(t_vec3){1.0, 1.0, 1.0}, .albendo =(t_vec3){0, 10, 0.8, 1}, .specular_exponent=1425.};
-	printf("%f %f %f\n", red_rubber.albendo.x, red_rubber.albendo.y, red_rubber.albendo.z);
 	game.elum.lights = ft_memalloc(sizeof(t_light) * 5);
 	game.elum.lights[0] = (t_light){(t_vec3){0, 0, -5}, 1.5};
 	game.elum.lights[1] = (t_light){(t_vec3){-5, 0, -5}, 1.5};
 	game.elum.lights[2] = (t_light){(t_vec3){-2, 0, -5}, 1.8};
 	game.elum.lights[3] = (t_light){(t_vec3){5, 0, -5}, 1.7};
 	game.elum.number = 1; // number of light sources
-	game.n_cones = 1;
-	game.cones = ft_memalloc(sizeof(t_cone) * 6);
-	game.n_spheres = 1;
-	game.n_cylinders = 0;
-	game.spheres = ft_memalloc(sizeof(t_sphere) * 6);
-	game.cylinders = ft_memalloc(sizeof(t_cylinder) * 6);
-
-
-	game.cylinders[0] = (t_cylinder){(t_vec3){0,0,-5}, ivory, .5, 0, 0};
-	game.cones[0] = (t_cone){(t_vec3){0, 0, -1}, ivory, 3, (t_vec3){0.4, -0.8, 0.6}, 30, (t_vec3){0.2, 1, -5}};
+	// game.n_cones = 1;
+	// game.cones = ft_memalloc(sizeof(t_cone) * 6);
+	// game.n_spheres = 1;
+	// game.n_cylinders = 0;
+	// game.spheres = ft_memalloc(sizeof(t_sphere) * 6);
+	// game.cylinders = ft_memalloc(sizeof(t_cylinder) * 6);
 	//game.cones[0] = (t_cone){(t_vec3){0, 2, -50}, ivory, 2, (t_vec3){0, 1, 0}, 30, (t_vec3){0, 2, -5}};
-	game.spheres[0] = (t_sphere){(t_vec3){0, 2, -10}, glass, .1, (t_vec3){0.4, -0.8, 0.6}};
-	game.spheres[1] = (t_sphere){(t_vec3){-1.0, -1.5, -12}, glass, 2, 5};
-	game.spheres[3] = (t_sphere){(t_vec3){1.5, -0.5, -18}, red_rubber, 3, 5};
-	game.spheres[4] = (t_sphere){(t_vec3){7, 5, -18}, ivory, 4, 5};
-
-	game.spheres[2] = (t_sphere){(t_vec3){-3.0, 0, 0}, red_rubber, .3, 5}; // this is a light source, move with wasdqe
+	// game.spheres[0] = (t_sphere){(t_vec3){0, 2, -10}, glass, .1, (t_vec3){0.4, -0.8, 0.6}};
+	// game.spheres[1] = (t_sphere){(t_vec3){-1.0, -1.5, -12}, glass, 2, 5};
+	// game.spheres[3] = (t_sphere){(t_vec3){1.5, -0.5, -18}, red_rubber, 3, 5};
+	// game.spheres[4] = (t_sphere){(t_vec3){7, 5, -18}, ivory, 4, 5};
+	ft_object_push(&game, &(t_object){ft_sphere_create((t_sphere){(t_vec3){1.5, -0.5, -18}, red_rubber, 3, 5}),ray_intersect_sphere_book});
+	ft_object_push(&game, &(t_object){ft_sphere_create((t_sphere){(t_vec3){1.5, -0.5, -18}, red_rubber, 3, 5}),ray_intersect_sphere_book});
 	game.origin = (t_vec3){0,0,5,1};
-	t_sphere sphere;
-	
-	for (int i=0; i<8; i++)     // Define the cube
-	{
-		cube[i].x=(float)(50-100*(((i+1)/2)%2));
-		cube[i].y=(float)(50-100*((i/2)%2));
-		cube[i].z=(float)(50-100*((i/4)%2));
-	}
-
-
-	configure_sphere(argv[1], &sphere);
 	ft_init_window(game.sdl, WIN_W, WIN_H);
 	ft_update(&game);
 	ft_exit(NULL);

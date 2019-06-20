@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 16:17:28 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/06/13 18:05:51 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/20 17:12:19 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,9 +210,10 @@ int	have_solutions(double d)
 		return (0);
 }
 
-double		ray_intersect_sphere_book(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0)
+double		ray_intersect_sphere_book(void *figure, t_vec3 *orig, t_vec3 *dir, float *t0)
 {
 	double t;
+	t_sphere *sphere = (t_sphere *) ((t_object *)figure)->object;
 	t_vec3 temp = ft_vec3_substract(*orig, sphere->center);
 	double a = ft_vec3_dot_multiply(*dir, *dir);
 	double b = ft_vec3_dot_multiply(ft_vec3_scalar_multiply(temp, 2), *dir);

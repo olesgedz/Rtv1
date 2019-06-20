@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 20:23:19 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/06/13 16:29:13 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/20 17:01:34 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ extern inline t_vec3	ft_vec3_substract(t_vec3 a, t_vec3 b)
 
 extern inline void ft_vec3_print(t_vec3 a)
 {
-	printf("x:%f y:%f z:%f total:%f\n", a.x, a.y, a.z, a.z * a.z + a.x * a.x + a.y * a.y);
+	printf("x:%f y:%f z:%f\n", a.x, a.y, a.z);
 }
 
 /*
