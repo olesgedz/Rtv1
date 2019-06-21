@@ -6,12 +6,12 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 16:17:28 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/06/20 19:45:41 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/21 14:54:24 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
-
+# define DROUND(d)	ABS(d) < 0.00001 ? 0 : (d)
 
 double				quandratic_solve(double k1, double k2, double k3)
 {
@@ -115,45 +115,27 @@ double		sphere_intersection(void *figure, t_ray *ray, float *t0)
 	double a = ft_vec3_dot_multiply(ray->dir, ray->dir);
 	double b = ft_vec3_dot_multiply(ft_vec3_scalar_multiply(temp, 2), ray->dir);
 	double c = ft_vec3_dot_multiply(temp, temp) - sphere->radius * sphere->radius;
-	double disc = b * b - 4.0 * a * c;
-	if(disc < 0)
-		return ( 0);
-	else
-	{
-			double e = sqrt(disc);
-			double denom = 2 * a;
-			t = (-b - e) / denom;
-			if (t > 0)
-			{
-				*t0 = t;
-				return (1);
-			}
-			t = (-b + e)/denom;
-			if (t > 0)
-			{
-				*t0 = t;
-				return (1);
-			}
-	}
-		return 0;
-	
+	return (get_solution(a, b, c, t0));
 }
 
 double	cone_intersection(void *object, t_ray *ray, float *t0)
 {
-	double a;
-	double b;
-	double c;
+	t_vec3	x;
+	double	a;
+	double	b;
+	double	c;
+	double	d;
 	t_cone *cone;
-
 	cone = (t_cone *)((t_object *)object)->object;
-	t_vec3 temp = ft_vec3_substract(ray->orig, cone->center);
-	a = ft_vec3_multiply_cone(ray->dir, ray->dir);
-	b = ft_vec3_multiply_cone(ft_vec3_scalar_multiply(temp, 2), ray->dir);
-	c = ft_vec3_multiply_cone(temp, temp);
+	x = ft_vec3_substract(ray->orig, cone->center);
+	a = ft_vec3_dot_multiply(ray->dir, cone->v);
+	a = ft_vec3_dot_multiply(ray->dir, ray->dir) - (1 + cone->radius * cone->radius) * a * a;
+	b = 2.0 * (ft_vec3_dot_multiply(ray->dir, x) - (1 + cone->radius * cone->radius)
+		* ft_vec3_dot_multiply(ray->dir, cone->v) * ft_vec3_dot_multiply(x, cone->v));
+	c = ft_vec3_dot_multiply(x, cone->v);
+	c = ft_vec3_dot_multiply(x, x) - (1 + cone->radius * cone->radius) * c * c;
 	return (get_solution(a, b, c, t0));
 }
-
 
 double		plane_intersection(void *object, t_ray *ray, float *t0) // doesn't work
 {

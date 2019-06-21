@@ -79,6 +79,7 @@ typedef struct s_ray
 	t_vec3 orig;
 	t_vec3 dir;
 	t_vec3 hit;
+	double t;
 
 } t_ray;
 
@@ -133,6 +134,7 @@ typedef	struct s_cylinder
 	t_vec3	center;
 	t_material material;
 	float	radius;
+	t_vec3  v;
 	int		min;
 	int		max;
 }				t_cylinder;
@@ -300,7 +302,7 @@ inline t_normal3 ft_normal3_scalar_multiply(t_normal3 a, float b);
 
 //intersect
 double		sphere_intersection(void *figure, t_ray *ray, float *t0);
-double	cone_intersection(void *object, t_ray *ray, float *t0);
+double		cone_intersection(void *object, t_ray *ray, float *t0);
 double		cylinder_intersection(void *object, t_ray *ray, float *t0);
 double		plane_intersection(void *object, t_ray *ray, float *t0);
 #endif
