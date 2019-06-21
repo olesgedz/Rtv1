@@ -179,7 +179,7 @@ typedef struct s_polygon
 typedef struct s_plane
 {
 	t_vec3 point;
-	t_normal3 normal;
+	t_vec3 normal;
 	t_material material;
 } t_plane;
 
@@ -305,4 +305,5 @@ double		sphere_intersection(void *figure, t_ray *ray, float *t0);
 double		cone_intersection(void *object, t_ray *ray, float *t0);
 double		cylinder_intersection(void *object, t_ray *ray, float *t0);
 double		plane_intersection(void *object, t_ray *ray, float *t0);
+
 #endif
