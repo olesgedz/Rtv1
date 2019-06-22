@@ -320,14 +320,13 @@ void ft_object_push(t_game *game, t_object *object)
 {
 	if (game->figures == NULL)
 		game->n_figures = 0;
-	game->figures = ft_realloc(game->figures, sizeof(t_object) * (game->n_figures + 1));
+	game->figures = realloc(game->figures, sizeof(t_object) * (game->n_figures + 1));
 	game->figures[game->n_figures] = *object;
 	game->n_figures += 1;
 }
 
 int	main(int argc, char **argv)
 {
-
 	printf("move light source with wasdqe \nchange intensity with zx\n");
 	game.sdl = malloc(sizeof(t_sdl));
 	game.image = ft_surface_create(WIN_W, WIN_H);
@@ -348,9 +347,15 @@ int	main(int argc, char **argv)
 	ft_object_push(&game, &(t_object){&(t_sphere){(t_vec3){1.5, -0.5, -18}, glass, 3, 5},sphere_intersection, sphere_get_normal});
 	ft_object_push(&game, &(t_object){&(t_sphere){(t_vec3){6, -0.5, -18}, ivory, 3, 5},sphere_intersection, sphere_get_normal});
 	ft_object_push(&game, &(t_object){&(t_cylinder){(t_vec3){-7, 2, -20}, red_rubber, 2,(t_vec3){0,1,0}, -2, 2}, cylinder_intersection, cylinder_get_normal});
-	//ft_object_push(&game, &(t_object){&(t_plane){(t_vec3){0,0,-2}, (t_vec3){0,1,0}, ivory}, plane_intersection, plane_get_normal});
+	ft_object_push(&game, &(t_object){&(t_plane){(t_vec3){0, 1, 0, 4}, (t_vec3){0,1,0}, red_rubber}, plane_intersection, plane_get_normal});
 	
 	game.origin = (t_vec3){0,0,5,1};
+
+
+	t_gpu *gpu = (t_gpu *)malloc(sizeof(t_gpu));
+	opencl_init(gpu);
+
+
 	ft_init_window(game.sdl, WIN_W, WIN_H);
 	ft_update(&game);
 	ft_exit(NULL);

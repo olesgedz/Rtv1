@@ -4,6 +4,7 @@
 #define WIN_W 1280
 #define WIN_H 720
 
+#include <sys/types.h>
 #include "SDL2/SDL.h"
 #include "libsdl.h"
 #include "libft.h"
@@ -11,6 +12,16 @@
 #include <limits.h>
 #include <float.h>
 #include <math.h>
+
+#ifdef __APPLE__
+#include <OpenCL/opencl.h>
+#else
+#include <Cl/cl.h>
+#endif
+
+#ifndef DEVICE
+#define DEVICE CL_DEVICE_TYPE_DEFAULT
+#endif
 //#include "libmath.h"
 # define DROUND(d)	ABS(d) < 0.00001 ? 0 : (d)
 //#define float double
@@ -213,6 +224,18 @@ typedef struct s_game
 
 } t_game;
 
+typedef struct s_gpu
+{
+    cl_device_id		device_id;     // compute device id
+    cl_context			context;       // compute context
+    cl_command_queue	commands;      // compute command queue
+    cl_program			program;       // compute program
+    cl_kernel			ko_vadd;       // compute kernel
+	cl_uint				numPlatforms;
+	cl_int				err;
+	char*				kernel_source;
+}				t_gpu;
+
 void	configure_sphere(char *map_name, t_sphere *sphere);
 // inline t_vec3 ft_vec3_create(float x, float y, float z);
 // inline t_vec3	ft_vec3_sum(t_vec3 a, t_vec3 b);
@@ -305,5 +328,5 @@ double		sphere_intersection(void *figure, t_ray *ray, float *t0);
 double		cone_intersection(void *object, t_ray *ray, float *t0);
 double		cylinder_intersection(void *object, t_ray *ray, float *t0);
 double		plane_intersection(void *object, t_ray *ray, float *t0);
-
+int			opencl_init(t_gpu *gpu);
 #endif

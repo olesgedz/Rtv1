@@ -67,19 +67,6 @@ int	have_solutions(double d)
 		return (0);
 }
 
-
-// double				plane_intersection2(t_ray ray, t_plane plane, float *t0)
-// {
-// 	double	t =  ft_normal3_dot_multiply_vec3(plane.normal, ft_vec3_substract(plane.point, ray.orig)) / ft_normal3_dot_multiply_vec3(plane.normal, ray.dir);
-// 	if (t < 0.3)
-// 	{
-// 		*t0 = t;
-// 		return (TRUE);
-// 	}
-// 	else
-// 		return(FALSE);
-// }
-
 double		get_solution(double a, double b, double c, float *t0)
 {
 	double		d;
@@ -137,18 +124,18 @@ double	cone_intersection(void *object, t_ray *ray, float *t0)
 	return (get_solution(a, b, c, t0));
 }
 
-// double		plane_intersection(void *object, t_ray *ray, float *t0) // doesn't work
-// {
-// 	double tmp;
-// 	t_plane *p;
+double		plane_intersection(void *object, t_ray *ray, float *t0)
+{
+	double tmp;
+	t_plane *p;
 
-// 	p = (t_plane *)((t_object *)object)->object;
-// 	tmp = p->point.x * ray->dir.x + p->point.y * ray->dir.y + p->point.z * ray->dir.z;
-// 	if (!tmp)
-// 		return (0);
-// 	*t0 = -(p->point.x * ray->orig.x +  p->point.y * ray->orig.y +  p->point.z * ray->orig.z +  p->point.w) / tmp;
-// 	return ((*t0 >= 0) ? 1 : 0);
-// }
+	p = (t_plane *)((t_object *)object)->object;
+	tmp = p->point.x * ray->dir.x + p->point.y * ray->dir.y + p->point.z * ray->dir.z;
+	if (!tmp)
+		return (0);
+	*t0 = -(p->point.x * ray->orig.x +  p->point.y * ray->orig.y +  p->point.z * ray->orig.z +  p->point.w) / tmp;
+	return ((*t0 >= 0.0003) ? 1 : 0);
+}
 
 
 extern inline float ft_vec3_multiply_cylinder(t_vec3 a, t_vec3 b)
@@ -207,20 +194,18 @@ double		cylinder_intersection(void *object, t_ray *ray, float *t0)
 // 	return (*t0 > 0 ? *t0 : -1);
 // }
 
-double		plane_intersection(void *object, t_ray *ray, float *t0)
-{
-	double	t;
-	double	a;
-	double	b;
-	t_plane *plane;
-	plane = (t_plane *)((t_object *)object)->object;
-	a = ft_vec3_dot_multiply(ft_vec3_substract(ray->orig, plane->point), plane->normal);
-	b = ft_vec3_dot_multiply(ray->dir, plane->normal);
-	if (b == 0 || (a < 0 && b < 0) || (a > 0 && b > 0))
-		return (0);
-	*t0 = -a / b;
-	//*t0 = ;
-	return (1);
-}
-
-// 
+// double		plane_intersection(void *object, t_ray *ray, float *t0)
+// {
+// 	double	t;
+// 	double	a;
+// 	double	b;
+// 	t_plane *plane;
+// 	plane = (t_plane *)((t_object *)object)->object;
+// 	a = ft_vec3_dot_multiply(ft_vec3_substract(ray->orig, plane->point), plane->normal);
+// 	b = ft_vec3_dot_multiply(ray->dir, plane->normal);
+// 	if (b == 0 || (a < 0 && b < 0) || (a > 0 && b > 0))
+// 		return (0);
+// 	*t0 = -a / b;
+// 	//*t0 = ;
+// 	return (1);
+// }
