@@ -94,12 +94,12 @@ typedef struct s_ray
 
 } t_ray;
 
-typedef struct Material {
+typedef struct	Material {
 	t_vec3 diffuse_color;
 	t_vec3 albendo;
 	float specular_exponent;
 	float refractive_index;
-} t_material;
+}				t_material;
 
 typedef struct s_light {
 	t_vec3 position;
@@ -119,13 +119,12 @@ typedef struct		s_triangle
 	t_vec3		c;
 	t_material material;
 } t_triangle;
-typedef  double		(* t_f_intersect)(void *figure, t_ray *ray, float *t0); // cheats
-typedef  t_vec3	(* t_f_get_normal)(t_ray *ray, t_object *figure);
+
 struct s_object
 {
 	void *object;
-	t_f_intersect intersect;
-	t_f_get_normal get_normal;
+	double (*intersect)();
+	t_vec3 (*get_normal)();
 }; 
 
 typedef struct s_sphere
@@ -136,7 +135,6 @@ typedef struct s_sphere
 	t_vec3 v;
 	double			angle;
 	t_vec3		tip;
-	t_f_intersect intersect;
 } t_sphere;
 
 
@@ -230,7 +228,7 @@ typedef struct s_gpu
     cl_context			context;       // compute context
     cl_command_queue	commands;      // compute command queue
     cl_program			program;       // compute program
-    cl_kernel			ko_vadd;       // compute kernel
+    cl_kernel			kernel;       // compute kernel
 	cl_uint				numPlatforms;
 	cl_int				err;
 	char*				kernel_source;
@@ -328,5 +326,7 @@ double		sphere_intersection(void *figure, t_ray *ray, float *t0);
 double		cone_intersection(void *object, t_ray *ray, float *t0);
 double		cylinder_intersection(void *object, t_ray *ray, float *t0);
 double		plane_intersection(void *object, t_ray *ray, float *t0);
+
+
 int			opencl_init(t_gpu *gpu);
 #endif
