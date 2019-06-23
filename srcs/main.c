@@ -87,11 +87,11 @@ t_vec3	reflect(t_vec3 I, t_vec3 n)
 	return ft_vec3_substract(I, temp);
 }
 
-static	int	is_any_figure_closer(t_game *game, double cache)
+static	int	is_any_figure_closer(t_main_obj *main, double cache)
 {
-	if (cache > 0 && cache < game->closest)
+	if (cache > 0 && cache < main->closest)
 	{
-		game->closest = cache;
+		main->closest = cache;
 		return (1);
 	}
 	return (0);
@@ -147,29 +147,29 @@ t_vec3 cone_get_normal(t_ray *ray, t_object *figure)
 *	Return: true or false
 */
 
-int scene_intersect(t_game *game, t_ray *ray, t_vec3 *hit, t_vec3 *N, t_material *material)
+int scene_intersect(t_main_obj *main, t_ray *ray, t_vec3 *hit, t_vec3 *N, t_material *material)
 {
- 	game->closest = FLT_MAX; 
+ 	main->closest = FLT_MAX; 
 	float dist_i;
 	float object_dist = FLT_MAX; 
 	int i = 0;
-	while (i < game->n_figures)
+	while (i < main->figures_num)
 	{
-		if (game->figures[i].intersect(&game->figures[i], ray, &dist_i) && dist_i < object_dist)
+		if (main->figures[i].intersect(&main->figures[i], ray, &dist_i) && dist_i < object_dist)
 		{
-			is_any_figure_closer(game, dist_i); 
+			is_any_figure_closer(main, dist_i); 
 			object_dist = dist_i;
 			ray->t = dist_i;
 			t_vec3 temp = ft_vec3_scalar_multiply(ray->dir, dist_i);
 			*hit = ft_vec3_sum(ray->orig, temp);
 			ray->hit = *hit;
-			temp = game->figures[i].get_normal(ray, &game->figures[i]); // problem also cause of shading not working
+			temp = main->figures[i].get_normal(ray, &main->figures[i]); // problem also cause of shading not working
 			*N = ft_vec3_normalize(temp);
-			*material = ((t_sphere *)game->figures[i].object)->material; // mm not suppose to be  t_sphere, but works
+			*material = ((t_sphere *)main->figures[i].object)->material; // mm not suppose to be  t_sphere, but works
 		}
 		i++;
 	}
-	return game->closest < 1000;
+	return main->closest < 1000;
 }
 
 /*
@@ -178,7 +178,7 @@ int scene_intersect(t_game *game, t_ray *ray, t_vec3 *hit, t_vec3 *N, t_material
 *	Return: returns matiral(color) for that pixel
 */
 
-t_vec3 cast_ray(t_game *game, t_ray *ray, size_t depth)
+t_vec3 cast_ray(t_main_obj *main, t_ray *ray, size_t depth)
 {
 	t_vec3 point;
 	t_vec3 N;
@@ -187,7 +187,7 @@ t_vec3 cast_ray(t_game *game, t_ray *ray, size_t depth)
 
 	float sphere_dist = FLT_MAX;
 	//if (!ray_intersect(&spheres[0], orig, dir, &sphere_dist))
-	if( depth > 4 || !scene_intersect(game, ray, &point, &N, &material))
+	if( depth > 4 || !scene_intersect(main, ray, &point, &N, &material))
 		return ft_vec3_create(0.2, 0.7, 0.8); // background color
 	// else
 	// {
@@ -195,35 +195,44 @@ t_vec3 cast_ray(t_game *game, t_ray *ray, size_t depth)
 	// }
 	t_ray reflect_ray;
 	reflect_ray.dir = ft_vec3_normalize(reflect(ray->dir, N));
-	reflect_ray.orig  = ft_vec3_dot_multiply(reflect_ray.dir, N) < 0 ? ft_vec3_substract(point, ft_vec3_scalar_multiply(N, 1e-3)) : ft_vec3_sum(point, ft_vec3_scalar_multiply(N, 1e-3));
-	t_vec3 reflect_color = cast_ray(game, &reflect_ray, depth + 1);
+	reflect_ray.orig  = ft_vec3_dot_multiply(reflect_ray.dir, N) < 0
+		? ft_vec3_substract(point, ft_vec3_scalar_multiply(N, 1e-3))
+		: ft_vec3_sum(point, ft_vec3_scalar_multiply(N, 1e-3));
+	t_vec3 reflect_color = cast_ray(main, &reflect_ray, depth + 1);
 	t_ray refract_ray;
 	refract_ray.dir = ft_vec3_normalize(refract(ray->dir, N, material.refractive_index, 1.0f));
-	refract_ray.orig = ft_vec3_dot_multiply(refract_ray.dir, N) < 0 ? ft_vec3_substract(point, ft_vec3_scalar_multiply(N, 1e-3)) : ft_vec3_sum(point, ft_vec3_scalar_multiply(N, 1e-3));
-	t_vec3 refract_color = cast_ray(game, &refract_ray, depth + 1);
+	refract_ray.orig = ft_vec3_dot_multiply(refract_ray.dir, N) < 0
+		? ft_vec3_substract(point, ft_vec3_scalar_multiply(N, 1e-3))
+		: ft_vec3_sum(point, ft_vec3_scalar_multiply(N, 1e-3));
+	t_vec3 refract_color = cast_ray(main, &refract_ray, depth + 1);
 	
 	float diffuse_light_intensity = 0;
 	float specular_light_intensity = 0;
 	i = -1;
 
-	while (++i < game->elum.number)
+	while (++i < main->elum_num)
 	{
-		t_vec3 light_dir      =  ft_vec3_normalize(ft_vec3_substract(game->elum.lights[i].position, point));
-		double light_distance = ft_vec3_norm(ft_vec3_substract(game->elum.lights[i].position, point));
+		t_vec3 light_dir      =  ft_vec3_normalize(ft_vec3_substract(main->lights[i].position, point));
+		double light_distance = ft_vec3_norm(ft_vec3_substract(main->lights[i].position, point));
 		t_ray shadow_ray;
-		shadow_ray.orig = (ft_vec3_dot_multiply(light_dir, N) < 0) ? ft_vec3_substract(point, ft_vec3_scalar_multiply(N, 1e-3)) : ft_vec3_sum(point, ft_vec3_scalar_multiply(N, 1e-3));
+		shadow_ray.orig = (ft_vec3_dot_multiply(light_dir, N) < 0)
+			? ft_vec3_substract(point, ft_vec3_scalar_multiply(N, 1e-3))
+			: ft_vec3_sum(point, ft_vec3_scalar_multiply(N, 1e-3));
 		shadow_ray.dir = light_dir;
 		t_vec3 shadow_pt, shadow_N;
 		t_material temp_material;
-		if (scene_intersect(game, &shadow_ray, &shadow_pt, &shadow_N, &temp_material) && (ft_vec3_norm(ft_vec3_substract(shadow_pt, shadow_ray.orig)) < light_distance))
+		if (scene_intersect(main, &shadow_ray, &shadow_pt, &shadow_N, &temp_material)
+			&& (ft_vec3_norm(ft_vec3_substract(shadow_pt, shadow_ray.orig)) < light_distance))
 			continue;
-		diffuse_light_intensity  +=  game->elum.lights[i].intensity * max(0.0f, ft_vec3_dot_multiply(ft_vec3_normalize(light_dir), ft_vec3_normalize(N)));
-		specular_light_intensity += powf(max(0.f, ft_vec3_dot_multiply(ft_vec3_scalar_multiply(reflect(ft_vec3_scalar_multiply(light_dir, -1), N), -1), ray->dir)),\
-		 	material.specular_exponent)*game->elum.lights[i].intensity;
+		diffuse_light_intensity  +=  main->lights[i].intensity * max(0.0f, 
+			ft_vec3_dot_multiply(ft_vec3_normalize(light_dir), ft_vec3_normalize(N)));
+		specular_light_intensity += powf(max(0.f, ft_vec3_dot_multiply(ft_vec3_scalar_multiply(
+			reflect(ft_vec3_scalar_multiply(light_dir, -1), N), -1), ray->dir)),
+		 	material.specular_exponent)*main->lights[i].intensity;
 	}
 		
 	return ft_vec3_sum(ft_vec3_sum(ft_vec3_sum(ft_vec3_scalar_multiply(material.diffuse_color,\
-	 diffuse_light_intensity * material.albendo.x), \
+		diffuse_light_intensity * material.albendo.x), \
 	 	ft_vec3_scalar_multiply((t_vec3){1,1,1}, specular_light_intensity *  material.albendo.y)),\
 		ft_vec3_scalar_multiply(reflect_color,  material.albendo.z)), ft_vec3_scalar_multiply(refract_color,  material.albendo.w));					//ft_vec3_scalar_multiply(&material.diffuse_color, diffuse_light_intensity);
 	// return ft_vec3_sum(ft_vec3_scalar_multiply(material.diffuse_color, diffuse_light_intensity * material.albendo.x), \
@@ -257,7 +266,7 @@ void 	ft_render(t_game* game)
 			// 											ft_mat4_rotation_matrix((t_vec3) {0,-1,0}, xa))); //USELESS ITERATION
 			game->origin =ft_vec3_create(eyex,eyey,eyez);
 			dir = ft_vec3_multiply_matrix(dir, ft_mat4_rotation_matrix((t_vec3) {0,-1,0}, xa));
-			t_vec3 temp = cast_ray(game, &(t_ray){game->origin, dir}, 0);
+			t_vec3 temp = cast_ray(&game->main_objs, &(t_ray){game->origin, dir}, 0);
 			game->sdl->surface->data[i+j*width] = ft_rgb_to_hex(225 * max(0, min(1, temp.x)), 225 * max(0, min(1, temp.y)), 225 * max(0, min(1, temp.z)));
 		}
 	}
@@ -287,14 +296,14 @@ void ft_update(t_game *game)
 		current_ticks = clock();
 		ft_surface_clear(game->sdl->surface);
 		ft_input(game->sdl, &ft_input_keys);
-		game->wsad[0] ? game->elum.lights[0].position.z -= 1: 0;
-		game->wsad[1] ? game->elum.lights[0].position.z += 1 : 0;
-		game->wsad[2] ? game->elum.lights[0].position.x -= 1 : 0;
-		game->wsad[3] ? game->elum.lights[0].position.x += 1 : 0;
-		game->wsad[4] ? game->elum.lights[0].position.y += 1 : 0;
-		game->wsad[5] ? game->elum.lights[0].position.y -= 1 : 0;
-		game->wsad[6] ? game->elum.lights[0].intensity += 0.1 : 0;
-		game->wsad[7] ? game->elum.lights[0].intensity -= 0.1 : 0;
+		game->wsad[0] ? game->main_objs.lights[0].position.z -= 1: 0;
+		game->wsad[1] ? game->main_objs.lights[0].position.z += 1 : 0;
+		game->wsad[2] ? game->main_objs.lights[0].position.x -= 1 : 0;
+		game->wsad[3] ? game->main_objs.lights[0].position.x += 1 : 0;
+		game->wsad[4] ? game->main_objs.lights[0].position.y += 1 : 0;
+		game->wsad[5] ? game->main_objs.lights[0].position.y -= 1 : 0;
+		game->wsad[6] ? game->main_objs.lights[0].intensity += 0.1 : 0;
+		game->wsad[7] ? game->main_objs.lights[0].intensity -= 0.1 : 0;
 		//
 		// game->wsad[0] ? eyez -= 1: 0;
 		// game->wsad[1] ? eyez += 1 : 0;
@@ -317,11 +326,11 @@ void ft_update(t_game *game)
 
 void ft_object_push(t_game *game, t_object *object)
 {
-	if (game->figures == NULL)
-		game->n_figures = 0;
-	game->figures = realloc(game->figures, sizeof(t_object) * (game->n_figures + 1));
-	game->figures[game->n_figures] = *object;
-	game->n_figures += 1;
+	if (game->main_objs.figures == NULL)
+		game->main_objs.figures_num = 0;
+	game->main_objs.figures = realloc(game->main_objs.figures, sizeof(t_object) * (game->main_objs.figures_num + 1));
+	game->main_objs.figures[game->main_objs.figures_num] = *object;
+game->main_objs.figures_num += 1;
 }
 
 int	main(int argc, char **argv)
@@ -335,24 +344,24 @@ int	main(int argc, char **argv)
 	t_material red_rubber = (t_material){(t_vec3){0.3, 0.1, 0.1}, .albendo= (t_vec3){0.9, 0.1, .0, .0}, .specular_exponent=10};
 	t_material mirror = (t_material){(t_vec3){1.0, 1.0, 1.0}, .albendo =(t_vec3){0, 10, 0.8, .1}, .specular_exponent=1425.};
 	//ft_vec3_print(glass.albendo);
-	game.elum.lights = ft_memalloc(sizeof(t_light) * 5);
-	game.elum.lights[0] = (t_light){(t_vec3){0, 0, -5}, 2};
-	game.elum.lights[1] = (t_light){(t_vec3){-5, 0, -5}, 2};
-	game.elum.lights[2] = (t_light){(t_vec3){-2, 0, -5}, 2};
-	game.elum.lights[3] = (t_light){(t_vec3){5, 0, -5}, 2};
-	game.elum.number = 1; // number of light sources
+	game.main_objs.lights = ft_memalloc(sizeof(t_light) * 5);
+	game.main_objs.lights[0] = (t_light){(t_vec3){0, 0, -5}, 2};
+	game.main_objs.lights[1] = (t_light){(t_vec3){-5, 0, -5}, 2};
+	game.main_objs.lights[2] = (t_light){(t_vec3){-2, 0, -5}, 2};
+	game.main_objs.lights[3] = (t_light){(t_vec3){5, 0, -5}, 2};
+	game.main_objs.elum_num = 5; // number of light sources
 
 	ft_object_push(&game, &(t_object){&(t_cone){(t_vec3){0, 2, -50}, ivory, 1.5, (t_vec3){0.5, 0.5, 0}, 30, (t_vec3){0, 2, -5}}, cone_intersection, cone_get_normal});
-	ft_object_push(&game, &(t_object){&(t_sphere){(t_vec3){1.5, -0.5, -18}, glass, 3, 5}, sphere_intersection, sphere_get_normal});
-	// ft_object_push(&game, &(t_object){&(t_sphere){(t_vec3){6, -0.5, -18}, ivory, 3, 5},sphere_intersection, sphere_get_normal});
+	// ft_object_push(&game, &(t_object){&(t_sphere){(t_vec3){1.5, -0.5, -18}, glass, 3, 5}, sphere_intersection, sphere_get_normal});
+	ft_object_push(&game, &(t_object){&(t_sphere){(t_vec3){6, -0.5, -18}, ivory, 3, 5},sphere_intersection, sphere_get_normal});
 	ft_object_push(&game, &(t_object){&(t_cylinder){(t_vec3){-7, 2, -20}, red_rubber, 2,(t_vec3){0,1,0}, -2, 2}, cylinder_intersection, cylinder_get_normal});
-	ft_object_push(&game, &(t_object){&(t_plane){(t_vec3){0, 1, 0, 4}, (t_vec3){0,1,0}, red_rubber}, plane_intersection, plane_get_normal});
+	// ft_object_push(&game, &(t_object){&(t_plane){(t_vec3){0, 1, 0, 4}, (t_vec3){0,1,0}, red_rubber}, plane_intersection, plane_get_normal});
 	
 	game.origin = (t_vec3){0,0,5,1};
 
 
 	t_gpu *gpu = (t_gpu *)malloc(sizeof(t_gpu));
-	opencl_init(gpu);
+	opencl_init(gpu, &game);
 
 
 	ft_init_window(game.sdl, WIN_W, WIN_H);

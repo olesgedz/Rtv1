@@ -39,45 +39,61 @@ struct s_object
 
 typedef struct s_sphere
 {
-	t_vec3 center;
-	t_material material;
-	float radius;
-	t_vec3 v;
-	double			angle;
+	t_vec3		center;
+	t_material	material;
+	float		radius;
+	t_vec3		v;
+	double		angle;
 	t_vec3		tip;
+	int			type;
+
 } t_sphere;
 
 
 typedef	struct s_cylinder
 {
-	t_vec3	center;
-	t_material material;
-	float	radius;
-	t_vec3  v;
-	int		min;
-	int		max;
+	t_vec3		center;
+	t_material	material;
+	float		radius;
+	t_vec3		v;
+	int			min;
+	int			max;
+	int			type;
 }				t_cylinder;
 
 typedef	struct		s_cone
 {
-	// t_vec3		tip;
-	// t_vec3		direction;
-	// double			angle;
-	// t_material material;
-	t_vec3 center;
-	t_material material;
-	float radius;
-	t_vec3 v;
-	double			angle;
+	t_vec3		center;
+	t_material	material;
+	float		radius;
+	t_vec3		v;
+	double		angle;
 	t_vec3		tip;
+	int			type;
 }					t_cone;
 
 typedef struct s_plane
 {
-	t_vec3 point;
-	t_vec3 normal;
-	t_material material;
+	t_vec3		point;
+	t_vec3		normal;
+	t_material	material;
+	int			type;
 }				t_plane;
+
+typedef struct s_light {
+	t_vec3 position;
+	float intensity;
+} t_light;
+
+typedef struct	s_main_obj
+{
+	t_object	*figures;
+	int			figures_num;
+	t_light		*lights;
+	int			elum_num;
+	double		closest;
+
+}				t_main_obj;
 
 enum e_figure {PLANE, SPHERE, CYLINDER, CONE};
 
@@ -107,9 +123,10 @@ float 		ft_vec3_norm(t_vec3 vect);
 
 __kernel void init_calculations(
 	__global t_vec3 *vecs, 
-	//__constant t_object *obj,
-	//__constant t_lights light
-	//int obj_count,
+	__global void *objects,
+	__constant t_light *lights,
+	int objs_count,
+	int lights_count,
 	__global t_vec3 *out_vecs,
 	const unsigned int count)
 {
@@ -119,6 +136,13 @@ __kernel void init_calculations(
 	int id = get_global_id(0);
 	if (id < count)
 	{
+		if (id == 0)
+			for (int i = 0; i < lights_count; ++i)
+			{
+				printf("inside: %i - %f, %f, %f\n", i, lights[i].position.x,
+														lights[i].position.y,
+														lights[i].position.z);
+			}
 		// out_vecs[id] = (t_vec3){0, vecs[id].y, vecs[id].z};
 		//printf("%f. %f, %f\n", out_vecs[id].x, out_vecs[id].y, out_vecs[id].z);
 		origin = ft_vec3_create(eyex, eyey, eyez);
@@ -234,26 +258,25 @@ t_mat4	ft_mat4_translation_matrix(t_vec3 v)
 
 t_mat4	ft_mat4_rotation_matrix(t_vec3 axis, double alpha)
 {
-	t_mat4	res;
-	t_vec3		axi;
+	t_mat4			res;
 	double			sinus;
 	double			cosin;
 	double			inv_cosin;
 
 	res = ft_mat4_identity_matrix();
-	axi = ft_vec3_normalize(axis);
+	axis = ft_vec3_normalize(axis);
 	sinus = sin(alpha);
 	cosin = cos(alpha);
 	inv_cosin = 1 - cosin;
-	res.matrix[0][0] = cosin + inv_cosin * axi.x * axi.x;
-	res.matrix[1][0] = inv_cosin * axi.x * axi.y - sinus * axi.z;
-	res.matrix[2][0] = inv_cosin * axi.x * axi.z + sinus * axi.y;
-	res.matrix[0][1] = inv_cosin * axi.y * axi.x + sinus * axi.z;
-	res.matrix[1][1] = cosin + inv_cosin * axi.y * axi.y;
-	res.matrix[2][1] = inv_cosin * axi.y * axi.z - sinus * axi.x;
-	res.matrix[0][2] = inv_cosin * axi.z * axi.x - sinus * axi.y;
-	res.matrix[1][2] = inv_cosin * axi.z * axi.y + sinus * axi.x;
-	res.matrix[2][2] = cosin + inv_cosin * axi.z * axi.z;
+	res.matrix[0][0] = cosin + inv_cosin * axis.x * axis.x;
+	res.matrix[1][0] = inv_cosin * axis.x * axis.y - sinus * axis.z;
+	res.matrix[2][0] = inv_cosin * axis.x * axis.z + sinus * axis.y;
+	res.matrix[0][1] = inv_cosin * axis.y * axis.x + sinus * axis.z;
+	res.matrix[1][1] = cosin + inv_cosin * axis.y * axis.y;
+	res.matrix[2][1] = inv_cosin * axis.y * axis.z - sinus * axis.x;
+	res.matrix[0][2] = inv_cosin * axis.z * axis.x - sinus * axis.y;
+	res.matrix[1][2] = inv_cosin * axis.z * axis.y + sinus * axis.x;
+	res.matrix[2][2] = cosin + inv_cosin * axis.z * axis.z;
 	return (res);
 }
 
@@ -375,15 +398,15 @@ double		cylinder_intersection(void *object, t_ray *ray, float *t0)
 /* ********************************** */
 
 
-// int scene_intersect(t_game *game, t_ray *ray, t_vec3 *hit, t_vec3 *N, t_material *material)
+// int scene_intersect(__global t_object *objs, __global t_light *lights, int obj_num, int elum_num, t_ray *ray, t_vec3 *hit, t_vec3 *N, t_material *material)
 // {
 //  	game->closest = FLT_MAX; 
 // 	float dist_i;
 // 	float object_dist = FLT_MAX; 
 // 	int i = 0;
-// 	while (i < game->n_figures)
+// 	while (i < obj_num)
 // 	{
-// 		if (game->figures[i].intersect(&game->figures[i], ray, &dist_i) && dist_i < object_dist)
+// 		if (figures[i].intersect(&figures[i], ray, &dist_i) && dist_i < object_dist)
 // 		{
 // 			is_any_figure_closer(game, dist_i); 
 // 			object_dist = dist_i;
@@ -391,17 +414,17 @@ double		cylinder_intersection(void *object, t_ray *ray, float *t0)
 // 			t_vec3 temp = ft_vec3_scalar_multiply(ray->dir, dist_i);
 // 			*hit = ft_vec3_sum(ray->orig, temp);
 // 			ray->hit = *hit;
-// 			temp = game->figures[i].get_normal(ray, &game->figures[i]); // problem also cause of shading not working
+// 			temp = figures[i].get_normal(ray, &figures[i]); // problem also cause of shading not working
 // 			*N = ft_vec3_normalize(temp);
-// 			*material = ((t_sphere *)game->figures[i].object)->material; // mm not suppose to be  t_sphere, but works
+// 			*material = ((t_sphere *)figures[i].object)->material; // mm not suppose to be  t_sphere, but works
 // 		}
 // 		i++;
 // 	}
 // 	return game->closest < 1000;
 // }
 
-// t_vec3 cast_ray(t_game *game, t_ray *ray, size_t depth)
-// {
+// t_vec3 cast_ray(__global t_object *objs, __global t_light *lights, int obj_num, int elum_num, t_ray *ray, size_t depth)
+// {//TODO rewrite without recursion, think about 'for' loop
 // 	t_vec3 point;
 // 	t_vec3 N;
 // 	t_material material; 
@@ -428,20 +451,25 @@ double		cylinder_intersection(void *object, t_ray *ray, float *t0)
 // 	float specular_light_intensity = 0;
 // 	i = -1;
 
-// 	while (++i < game->elum.number)
+// 	while (++i < elum_num)
 // 	{
-// 		t_vec3 light_dir      =  ft_vec3_normalize(ft_vec3_substract(game->elum.lights[i].position, point));
-// 		double light_distance = ft_vec3_norm(ft_vec3_substract(game->elum.lights[i].position, point));
+// 		t_vec3 light_dir      =  ft_vec3_normalize(ft_vec3_substract(lights[i].position, point));
+// 		double light_distance = ft_vec3_norm(ft_vec3_substract(lights[i].position, point));
 // 		t_ray shadow_ray;
-// 		shadow_ray.orig = (ft_vec3_dot_multiply(light_dir, N) < 0) ? ft_vec3_substract(point, ft_vec3_scalar_multiply(N, 1e-3)) : ft_vec3_sum(point, ft_vec3_scalar_multiply(N, 1e-3));
+// 		shadow_ray.orig = (ft_vec3_dot_multiply(light_dir, N) < 0)
+// 			? ft_vec3_substract(point, ft_vec3_scalar_multiply(N, 1e-3))
+// 			: ft_vec3_sum(point, ft_vec3_scalar_multiply(N, 1e-3));
 // 		shadow_ray.dir = light_dir;
 // 		t_vec3 shadow_pt, shadow_N;
 // 		t_material temp_material;
-// 		if (scene_intersect(game, &shadow_ray, &shadow_pt, &shadow_N, &temp_material) && (ft_vec3_norm(ft_vec3_substract(shadow_pt, shadow_ray.orig)) < light_distance))
+// 		if (scene_intersect(game, &shadow_ray, &shadow_pt, &shadow_N, &temp_material) 
+// 			&& (ft_vec3_norm(ft_vec3_substract(shadow_pt, shadow_ray.orig)) < light_distance))
 // 			continue;
-// 		diffuse_light_intensity  +=  game->elum.lights[i].intensity * max(0.0f, ft_vec3_dot_multiply(ft_vec3_normalize(light_dir), ft_vec3_normalize(N)));
-// 		specular_light_intensity += powf(max(0.f, ft_vec3_dot_multiply(ft_vec3_scalar_multiply(reflect(ft_vec3_scalar_multiply(light_dir, -1), N), -1), ray->dir)),\
-// 		 	material.specular_exponent)*game->elum.lights[i].intensity;
+// 		diffuse_light_intensity += lights[i].intensity 
+// 			* max(0.0f, ft_vec3_dot_multiply(ft_vec3_normalize(light_dir), ft_vec3_normalize(N)));
+// 		specular_light_intensity += powf(max(0.f, ft_vec3_dot_multiply(ft_vec3_scalar_multiply(
+// 			reflect(ft_vec3_scalar_multiply(light_dir, -1), N), -1), ray->dir)),
+// 		 	material.specular_exponent)*lights[i].intensity;
 // 	}
 		
 // 	// return ft_vec3_sum(ft_vec3_sum(ft_vec3_sum(ft_vec3_scalar_multiply(material.diffuse_color,\

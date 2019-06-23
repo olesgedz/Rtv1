@@ -26,6 +26,8 @@
 # define DROUND(d)	ABS(d) < 0.00001 ? 0 : (d)
 //#define float double
 
+enum e_figure {PLANE, SPHERE, CYLINDER, CONE};
+
 typedef struct s_vertex t_vertex;
 typedef struct s_sector t_sector;
 typedef struct s_object t_object;
@@ -129,23 +131,25 @@ struct s_object
 
 typedef struct s_sphere
 {
-	t_vec3 center;
-	t_material material;
-	float radius;
-	t_vec3 v;
-	double			angle;
+	t_vec3 		center;
+	t_material	material;
+	float		radius;
+	t_vec3 		v;
+	double		angle;
 	t_vec3		tip;
+	int			type;
 } t_sphere;
 
 
 typedef	struct s_cylinder
 {
-	t_vec3	center;
-	t_material material;
-	float	radius;
-	t_vec3  v;
-	int		min;
-	int		max;
+	t_vec3		center;
+	t_material	material;
+	float		radius;
+	t_vec3		v;
+	int			min;
+	int			max;
+	int			type;
 }				t_cylinder;
 
 typedef	struct		s_cone
@@ -154,12 +158,13 @@ typedef	struct		s_cone
 	// t_vec3		direction;
 	// double			angle;
 	// t_material material;
-	t_vec3 center;
-	t_material material;
-	float radius;
-	t_vec3 v;
-	double			angle;
+	t_vec3		center;
+	t_material	material;
+	float		radius;
+	t_vec3		v;
+	double		angle;
 	t_vec3		tip;
+	int			type;
 }					t_cone;
 
 
@@ -187,9 +192,10 @@ typedef struct s_polygon
 
 typedef struct s_plane
 {
-	t_vec3 point;
-	t_vec3 normal;
-	t_material material;
+	t_vec3		point;
+	t_vec3		normal;
+	t_material	material;
+	int			type;
 } t_plane;
 
 struct s_sector
@@ -202,14 +208,22 @@ typedef  struct s_world
 	t_sector *sectors;
 } t_world;
 
+typedef struct	s_main_obj
+{
+	t_object	*figures;
+	int			figures_num;
+	t_light		*lights;
+	int			elum_num;
+	double		closest;
+
+}				t_main_obj;
+
+
 typedef struct s_game
 {
-	t_object *figures;
-	int n_figures;
 	t_sdl *sdl;
 	t_surface *image;
 	t_list *verties;
-	t_lights elum;
 	t_sphere *spheres;
 	t_cone *cones;
 	t_cylinder *cylinders;
@@ -218,7 +232,7 @@ typedef struct s_game
 	int n_cylinders;
 	int wsad[8];
 	t_vec3 origin;
-	double closest;
+	t_main_obj	main_objs;
 
 } t_game;
 
@@ -328,5 +342,5 @@ double		cylinder_intersection(void *object, t_ray *ray, float *t0);
 double		plane_intersection(void *object, t_ray *ray, float *t0);
 
 
-int			opencl_init(t_gpu *gpu);
+int			opencl_init(t_gpu *gpu, t_game *game);
 #endif
