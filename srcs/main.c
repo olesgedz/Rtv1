@@ -222,12 +222,12 @@ t_vec3 cast_ray(t_game *game, t_ray *ray, size_t depth)
 		 	material.specular_exponent)*game->elum.lights[i].intensity;
 	}
 		
-	// return ft_vec3_sum(ft_vec3_sum(ft_vec3_sum(ft_vec3_scalar_multiply(material.diffuse_color,\
-	//  diffuse_light_intensity * material.albendo.x), \
-	//  	ft_vec3_scalar_multiply((t_vec3){1,1,1}, specular_light_intensity *  material.albendo.y)),\
-	// 	ft_vec3_scalar_multiply(reflect_color,  material.albendo.z)), ft_vec3_scalar_multiply(refract_color,  material.albendo.w));					//ft_vec3_scalar_multiply(&material.diffuse_color, diffuse_light_intensity);
-	return ft_vec3_sum(ft_vec3_scalar_multiply(material.diffuse_color, diffuse_light_intensity * material.albendo.x), \
-		ft_vec3_scalar_multiply((t_vec3){1,1,1}, specular_light_intensity *  material.albendo.y));
+	return ft_vec3_sum(ft_vec3_sum(ft_vec3_sum(ft_vec3_scalar_multiply(material.diffuse_color,\
+	 diffuse_light_intensity * material.albendo.x), \
+	 	ft_vec3_scalar_multiply((t_vec3){1,1,1}, specular_light_intensity *  material.albendo.y)),\
+		ft_vec3_scalar_multiply(reflect_color,  material.albendo.z)), ft_vec3_scalar_multiply(refract_color,  material.albendo.w));					//ft_vec3_scalar_multiply(&material.diffuse_color, diffuse_light_intensity);
+	// return ft_vec3_sum(ft_vec3_scalar_multiply(material.diffuse_color, diffuse_light_intensity * material.albendo.x), \
+	// 	ft_vec3_scalar_multiply((t_vec3){1,1,1}, specular_light_intensity *  material.albendo.y));
 }
 
 	const float fov      = M_PI/2.; // field of vision
@@ -244,7 +244,6 @@ void 	ft_render(t_game* game)
 	int width = game->sdl->surface->width;
 	int height = game->sdl->surface->height;
 	j = -1;
-	t_mat4 m;
 	while (++j < height)
 	{
 		i = -1;
@@ -253,7 +252,9 @@ void 	ft_render(t_game* game)
 			float x = (2 * (i + 0.5) / (float)width  - 1) * tan(fov / 2.) * width / (float)height;
 			float y = -(2 * (j + 0.5) / (float)height - 1) * tan(fov / 2.);
 			t_vec3 dir = ft_vec3_normalize((t_vec3){x, y, -1});
-			game->origin = ft_vec3_multiply_matrix((t_vec3){0,0,0,1}, m = ft_mat4_multiply_mat4(ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez}), ft_mat4_rotation_matrix((t_vec3) {0,-1,0}, xa)));
+			// game->origin = ft_vec3_multiply_matrix((t_vec3){0,0,0,1}, 
+			// 					ft_mat4_multiply_mat4(ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez}), 
+			// 											ft_mat4_rotation_matrix((t_vec3) {0,-1,0}, xa))); //USELESS ITERATION
 			game->origin =ft_vec3_create(eyex,eyey,eyez);
 			dir = ft_vec3_multiply_matrix(dir, ft_mat4_rotation_matrix((t_vec3) {0,-1,0}, xa));
 			t_vec3 temp = cast_ray(game, &(t_ray){game->origin, dir}, 0);

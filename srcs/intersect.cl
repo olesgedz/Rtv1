@@ -9,6 +9,11 @@ struct 	s_vec3
 	float w;
 };
 
+typedef struct 	s_mat4
+{
+	double matrix[4][4];
+} t_mat4;
+
 typedef struct s_ray
 {
 	t_vec3 orig;
@@ -81,34 +86,175 @@ double		cone_intersection(void *object, t_ray *ray, float *t0);
 double		cylinder_intersection(void *object, t_ray *ray, float *t0);
 double		plane_intersection(void *object, t_ray *ray, float *t0);
 int			have_solutions(double d);
+double		get_solution(double a, double b, double c, float *t0);
+
 t_vec3		ft_vec3_scalar_multiply(t_vec3 a, float b);
 float		ft_vec3_dot_multiply(t_vec3 a, t_vec3 b);
 t_vec3		ft_vec3_substract(t_vec3 a, t_vec3 b);
 float		ft_vec3_multiply_cone(t_vec3 a, t_vec3 b);
-double		get_solution(double a, double b, double c, float *t0);
+t_vec3		ft_vec3_create(float x, float y, float z);
+t_vec3		ft_vec3_multiply_matrix(t_vec3 v, t_mat4 m);
+t_mat4		ft_mat4_multiply_mat4(t_mat4 a, t_mat4 b);
+t_mat4		ft_mat4_translation_matrix(t_vec3 v);
+t_mat4		ft_mat4_rotation_matrix(t_vec3 axis, double alpha);
+t_mat4		ft_mat4_identity_matrix(void);
+t_vec3		ft_vec3_normalize(t_vec3 vect);
+float 		ft_vec3_norm(t_vec3 vect);
 // int			scene_intersect(t_game *game, t_ray *ray, t_vec3 *hit, t_vec3 *N, t_material *material);
 // t_vec3		cast_ray(t_game *game, t_ray *ray, size_t depth);
+
 //====================================//
 
 __kernel void init_calculations(
 	__global t_vec3 *vecs, 
-	//__global t_object *obj,
-	// int width,
-	// int height,
+	//__constant t_object *obj,
+	//__constant t_lights light
 	//int obj_count,
-	__global t_vec3 *out_vecs)
+	__global t_vec3 *out_vecs,
+	const unsigned int count)
 {
+	t_vec3 origin, dir;
+	float xa = 0, ya = 0, za = 0;
+	float eyex = 0, eyey = 0, eyez = 0;
 	int id = get_global_id(0);
-	out_vecs[id] = (t_vec3){0, vecs[id].y, vecs[id].z};
-	// game->origin = ft_vec3_multiply_matrix((t_vec3){0,0,0,1}, m = ft_mat4_multiply_mat4(ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez}), ft_mat4_rotation_matrix((t_vec3) {0,-1,0}, xa)));
-	// game->origin =ft_vec3_create(eyex,eyey,eyez);
-	// dir = ft_vec3_multiply_matrix(dir, ft_mat4_rotation_matrix((t_vec3) {0,-1,0}, xa));
-	// t_vec3 temp = cast_ray(game, &(t_ray){game->origin, dir}, 0);
+	if (id < count)
+	{
+		// out_vecs[id] = (t_vec3){0, vecs[id].y, vecs[id].z};
+		//printf("%f. %f, %f\n", out_vecs[id].x, out_vecs[id].y, out_vecs[id].z);
+		origin = ft_vec3_create(eyex, eyey, eyez);
+		dir = ft_vec3_multiply_matrix(vecs[id], ft_mat4_rotation_matrix((t_vec3) {0,-1,0}, xa));
+		out_vecs[id] = dir;//cast_ray(game, &(t_ray){origin, dir}, 0);
+	}
+}
+
+float ft_vec3_norm(t_vec3 vect)
+{
+	return (sqrt(vect.x * vect.x + vect.y * vect.y + vect.z * vect.z));
 }
 
 float ft_vec3_dot_multiply(t_vec3 a, t_vec3 b)
 {
 	return (a.x * b.x + a.y * b.y + a.z * b.z);
+}
+
+t_vec3 ft_vec3_create(float x, float y, float z)
+{
+	t_vec3 new;
+
+	new.x = x;
+	new.y = y;
+	new.z = z;
+	return (new);
+}
+
+t_vec3 ft_vec3_normalize(t_vec3 vect)
+{
+	t_vec3 res = vect;
+	float norm = ft_vec3_norm(res);
+	res.x = vect.x / norm;
+	res.y = vect.y / norm;
+	res.z = vect.z / norm;
+	return (res);
+}
+
+t_mat4	ft_mat4_identity_matrix(void)
+{
+	t_mat4	res;
+	int				i;
+	int				j;
+
+	i = -1;
+	while (++i < 4)
+	{
+		j = -1;
+		while (++j < 4)
+			res.matrix[i][j] = 0;
+	}
+	res.matrix[0][0] = 1;
+	res.matrix[1][1] = 1;
+	res.matrix[2][2] = 1;
+	res.matrix[3][3] = 1;
+	return (res);
+}
+
+t_vec3	ft_vec3_multiply_matrix(t_vec3 v, t_mat4 m)
+{
+	t_vec3	res;
+
+	res.x = v.x * m.matrix[0][0] +
+			v.y * m.matrix[0][1] +
+			v.z * m.matrix[0][2] +
+			v.w * m.matrix[0][3];
+	res.y = v.x * m.matrix[1][0] +
+			v.y * m.matrix[1][1] +
+			v.z * m.matrix[1][2] +
+			v.w * m.matrix[1][3];
+	res.z = v.x * m.matrix[2][0] +
+			v.y * m.matrix[2][1] +
+			v.z * m.matrix[2][2] +
+			v.w * m.matrix[2][3];
+	res.w = v.x * m.matrix[3][0] +
+			v.y * m.matrix[3][1] +
+			v.z * m.matrix[3][2] +
+			v.w * m.matrix[3][3];
+	return (res);
+}
+
+t_mat4	ft_mat4_multiply_mat4(t_mat4 a, t_mat4 b)
+{
+	t_mat4	res;
+	int				i;
+	int				j;
+
+	i = -1;
+	while (++i < 4)
+	{
+		j = -1;
+		while (++j < 4)
+		{
+			res.matrix[i][j] = a.matrix[i][0] * b.matrix[0][j] +
+				a.matrix[i][1] * b.matrix[1][j] +
+				a.matrix[i][2] * b.matrix[2][j] +
+				a.matrix[i][3] * b.matrix[3][j];
+		}
+	}
+	return (res);
+}
+
+t_mat4	ft_mat4_translation_matrix(t_vec3 v)
+{
+	t_mat4	res;
+
+	res = ft_mat4_identity_matrix();
+	res.matrix[0][3] = v.x;
+	res.matrix[1][3] = v.y;
+	res.matrix[2][3] = v.z;
+	return (res);
+}
+
+t_mat4	ft_mat4_rotation_matrix(t_vec3 axis, double alpha)
+{
+	t_mat4	res;
+	t_vec3		axi;
+	double			sinus;
+	double			cosin;
+	double			inv_cosin;
+
+	res = ft_mat4_identity_matrix();
+	axi = ft_vec3_normalize(axis);
+	sinus = sin(alpha);
+	cosin = cos(alpha);
+	inv_cosin = 1 - cosin;
+	res.matrix[0][0] = cosin + inv_cosin * axi.x * axi.x;
+	res.matrix[1][0] = inv_cosin * axi.x * axi.y - sinus * axi.z;
+	res.matrix[2][0] = inv_cosin * axi.x * axi.z + sinus * axi.y;
+	res.matrix[0][1] = inv_cosin * axi.y * axi.x + sinus * axi.z;
+	res.matrix[1][1] = cosin + inv_cosin * axi.y * axi.y;
+	res.matrix[2][1] = inv_cosin * axi.y * axi.z - sinus * axi.x;
+	res.matrix[0][2] = inv_cosin * axi.z * axi.x - sinus * axi.y;
+	res.matrix[1][2] = inv_cosin * axi.z * axi.y + sinus * axi.x;
+	res.matrix[2][2] = cosin + inv_cosin * axi.z * axi.z;
+	return (res);
 }
 
 int	have_solutions(double d)
@@ -162,6 +308,7 @@ t_vec3 ft_vec3_scalar_multiply(t_vec3 a, float b)
 {
 	return ((t_vec3){a.x * b, a.y * b, a.z * b});
 }
+/*--------------------intersection------------------------- */
 
 double		sphere_intersection(void *figure, t_ray *ray, float *t0)
 {
@@ -224,15 +371,19 @@ double		cylinder_intersection(void *object, t_ray *ray, float *t0)
 	return (get_solution(a, b, c, t0));
 }
 
-// int scene_intersect(__global t_object *obj, t_ray *ray, t_vec3 *hit, t_vec3 *N, t_material *material, int obj_count)
+
+/* ********************************** */
+
+
+// int scene_intersect(t_game *game, t_ray *ray, t_vec3 *hit, t_vec3 *N, t_material *material)
 // {
 //  	game->closest = FLT_MAX; 
 // 	float dist_i;
 // 	float object_dist = FLT_MAX; 
 // 	int i = 0;
-// 	while (i < obj_count)
+// 	while (i < game->n_figures)
 // 	{
-// 		if (obj[i].intersect(&game->figures[i], ray, &dist_i) && dist_i < object_dist)
+// 		if (game->figures[i].intersect(&game->figures[i], ray, &dist_i) && dist_i < object_dist)
 // 		{
 // 			is_any_figure_closer(game, dist_i); 
 // 			object_dist = dist_i;
@@ -255,23 +406,22 @@ double		cylinder_intersection(void *object, t_ray *ray, float *t0)
 // 	t_vec3 N;
 // 	t_material material; 
 // 	int	i;
-
-
 // 	float sphere_dist = FLT_MAX;
-// 	//if (!ray_intersect(&spheres[0], orig, dir, &sphere_dist))
+
 // 	if( depth > 4 || !scene_intersect(game, ray, &point, &N, &material))
 // 		return ft_vec3_create(0.2, 0.7, 0.8); // background color
-// 	// else
-// 	// {
-// 	// 		return ft_vec3_create(1, 0, 0);
-// 	// }
+
 // 	t_ray reflect_ray;
 // 	reflect_ray.dir = ft_vec3_normalize(reflect(ray->dir, N));
-// 	reflect_ray.orig  = ft_vec3_dot_multiply(reflect_ray.dir, N) < 0 ? ft_vec3_substract(point, ft_vec3_scalar_multiply(N, 1e-3)) : ft_vec3_sum(point, ft_vec3_scalar_multiply(N, 1e-3));
+// 	reflect_ray.orig  = ft_vec3_dot_multiply(reflect_ray.dir, N) < 0 
+// 						? ft_vec3_substract(point, ft_vec3_scalar_multiply(N, 1e-3)) 
+// 						: ft_vec3_sum(point, ft_vec3_scalar_multiply(N, 1e-3));
 // 	// t_vec3 reflect_color = cast_ray(game, &reflect_ray, depth + 1);
 // 	t_ray refract_ray;
 // 	refract_ray.dir = ft_vec3_normalize(refract(ray->dir, N, material.refractive_index, 1.0f));
-// 	refract_ray.orig = ft_vec3_dot_multiply(refract_ray.dir, N) < 0 ? ft_vec3_substract(point, ft_vec3_scalar_multiply(N, 1e-3)) : ft_vec3_sum(point, ft_vec3_scalar_multiply(N, 1e-3));
+// 	refract_ray.orig = ft_vec3_dot_multiply(refract_ray.dir, N) < 0 
+// 						? ft_vec3_substract(point, ft_vec3_scalar_multiply(N, 1e-3)) 
+// 						: ft_vec3_sum(point, ft_vec3_scalar_multiply(N, 1e-3));
 // 	// t_vec3 refract_color = cast_ray(game, &refract_ray, depth + 1);
 	
 // 	float diffuse_light_intensity = 0;
