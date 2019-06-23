@@ -90,7 +90,7 @@ int bind_data(t_gpu *gpu, t_main_obj *main)
     d_obj = clCreateBuffer(gpu->context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
         sizeof(t_object) * main->figures_num, main->figures, &gpu->err);
     d_light = clCreateBuffer(gpu->context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
-        sizeof(t_object) * main->elum_num, main->lights, &gpu->err);
+        sizeof(t_light) * main->elum_num, main->lights, &gpu->err);
     d_out = clCreateBuffer(gpu->context, CL_MEM_WRITE_ONLY, data_size, NULL, &gpu->err);
 
     gpu->err = clSetKernelArg(gpu->kernel, 0, sizeof(cl_mem), &d_a);
