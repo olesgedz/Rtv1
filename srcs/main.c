@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/23 17:04:13 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/25 17:46:08 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -365,7 +365,7 @@ int	main(int argc, char **argv)
 	opencl_init(gpu, &game);
 
 
-	ft_init_window(game.sdl, WIN_W, WIN_H);
-	ft_update(&game);
+	// ft_init_window(game.sdl, WIN_W, WIN_H);
+	// ft_update(&game);
 	ft_exit(NULL);
 }

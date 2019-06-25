@@ -121,35 +121,52 @@ float 		ft_vec3_norm(t_vec3 vect);
 
 //====================================//
 
-__kernel void init_calculations(
-	__global t_vec3 *vecs, 
-	__global void *objects,
-	__constant t_light *lights,
-	int objs_count,
-	int lights_count,
-	__global t_vec3 *out_vecs,
-	const unsigned int count)
-{
-	t_vec3 origin, dir;
-	float xa = 0, ya = 0, za = 0;
-	float eyex = 0, eyey = 0, eyez = 0;
-	int id = get_global_id(0);
-	if (id < count)
-	{
-		if (id == 0)
-			for (int i = 0; i < lights_count; ++i)
-			{
-				printf("inside: %i - %f, %f, %f\n", i, lights[i].position.x,
-														lights[i].position.y,
-														lights[i].position.z);
-			}
-		// out_vecs[id] = (t_vec3){0, vecs[id].y, vecs[id].z};
-		//printf("%f. %f, %f\n", out_vecs[id].x, out_vecs[id].y, out_vecs[id].z);
-		origin = ft_vec3_create(eyex, eyey, eyez);
-		dir = ft_vec3_multiply_matrix(vecs[id], ft_mat4_rotation_matrix((t_vec3) {0,-1,0}, xa));
-		out_vecs[id] = dir;//cast_ray(game, &(t_ray){origin, dir}, 0);
-	}
+// __kernel void init_calculations(
+// 	__global t_vec3 *vecs, 
+// 	__global void *objects,
+// 	__constant t_light *lights,
+// 	int objs_count,
+// 	int lights_count,
+// 	__global t_vec3 *out_vecs,
+// 	const unsigned int count)
+// {
+// 	t_vec3 origin, dir;
+// 	float xa = 0, ya = 0, za = 0;
+// 	float eyex = 0, eyey = 0, eyez = 0;
+// 	int id = get_global_id(0);
+// 	if (id < count)
+// 	{
+// 		// if (id == 0)
+// 		// 	for (int i = 0; i < lights_count; ++i)
+// 		// 	{
+// 		// 		printf("inside: %i - %f, %f, %f\n", i, lights[i].position.x,
+// 		// 												lights[i].position.y,
+// 		// 												lights[i].position.z);
+// 		// 	}
+// 		// out_vecs[id] = (t_vec3){0, vecs[id].y, vecs[id].z};
+// 		//printf("%f. %f, %f\n", out_vecs[id].x, out_vecs[id].y, out_vecs[id].z);
+// 		origin = ft_vec3_create(eyex, eyey, eyez);
+// 		dir = ft_vec3_multiply_matrix(vecs[id], ft_mat4_rotation_matrix((t_vec3) {0,-1,0}, xa));
+// 		out_vecs[id] = dir;//cast_ray(game, &(t_ray){origin, dir}, 0);
+// 	}
+// }
+
+
+__kernel void init_calculations(__global float* x, __global float* y, __global float* z)
+{	
+	const int i = get_global_id(0);	
+	z[i] = y[i] + x[i];
 }
+__kernel void render_kernel(__global float3* output, int width, int height)
+{
+ const int work_item_id = get_global_id(0); /* the unique global id of the work item for the current pixel */
+ int x = work_item_id % width; /* x-coordinate of the pixel */
+ int y = work_item_id / width; /* y-coordinate of the pixel */
+ float fx = (float)x / (float)width; /* convert int to float in range [0-1] */
+ float fy = (float)y / (float)height; /* convert int to float in range [0-1] */
+ output[work_item_id] = (float3)(fx, fy, 0); /* simple interpolated colour gradient based on pixel coordinates */
+}
+
 
 float ft_vec3_norm(t_vec3 vect)
 {
