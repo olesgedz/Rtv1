@@ -219,6 +219,21 @@ typedef struct	s_main_obj
 }				t_main_obj;
 
 
+
+
+typedef struct s_gpu
+{
+    cl_device_id		device_id;     // compute device id
+    cl_context			context;       // compute context
+    cl_command_queue	commands;      // compute command queue
+    cl_program			program;       // compute program
+    cl_kernel			kernel;       // compute kernel
+	cl_uint				numPlatforms;
+	cl_int				err;
+	char*				kernel_source;
+	float * cpuOutput;
+}				t_gpu;
+
 typedef struct s_game
 {
 	t_sdl *sdl;
@@ -233,21 +248,10 @@ typedef struct s_game
 	int wsad[8];
 	t_vec3 origin;
 	t_main_obj	main_objs;
-
+	t_gpu *gpu;
 } t_game;
 
-typedef struct s_gpu
-{
-    cl_device_id		device_id;     // compute device id
-    cl_context			context;       // compute context
-    cl_command_queue	commands;      // compute command queue
-    cl_program			program;       // compute program
-    cl_kernel			kernel;       // compute kernel
-	cl_uint				numPlatforms;
-	cl_int				err;
-	char*				kernel_source;
-}				t_gpu;
-
+int bind_data(t_gpu *gpu, t_main_obj *main);
 void	configure_sphere(char *map_name, t_sphere *sphere);
 // inline t_vec3 ft_vec3_create(float x, float y, float z);
 // inline t_vec3	ft_vec3_sum(t_vec3 a, t_vec3 b);

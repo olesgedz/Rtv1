@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/25 17:46:08 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/25 19:39:39 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,6 +254,7 @@ void 	ft_render(t_game* game)
 	int width = game->sdl->surface->width;
 	int height = game->sdl->surface->height;
 	j = -1;
+	//bind_data(game->gpu, &game->main_objs);
 	while (++j < height)
 	{
 		i = -1;
@@ -267,8 +268,12 @@ void 	ft_render(t_game* game)
 			// 											ft_mat4_rotation_matrix((t_vec3) {0,-1,0}, xa))); //USELESS ITERATION
 			game->origin =ft_vec3_create(eyex,eyey,eyez);
 			dir = ft_vec3_multiply_matrix(dir, ft_mat4_rotation_matrix((t_vec3) {0,-1,0}, xa));
-			t_vec3 temp = cast_ray(&game->main_objs, &(t_ray){game->origin, dir}, 0);
-			game->sdl->surface->data[i+j*width] = ft_rgb_to_hex(225 * max(0, min(1, temp.x)), 225 * max(0, min(1, temp.y)), 225 * max(0, min(1, temp.z)));
+			//t_vec3 temp = (t_vec3){c}//cast_ray(&game->main_objs, &(t_ray){game->origin, dir}, 0);
+			//game->sdl->surface->data[i+j*width] = ft_rgb_to_hex(225 * max(0, min(1, temp.x)), 225 * max(0, min(1, temp.y)), 225 * max(0, min(1, temp.z)));
+			game->sdl->surface->data[i+j*width] =  game->gpu->cpuOutput[i+j*width];
+			if(game->gpu->cpuOutput[i+j*width] != 0)
+				printf("%f\n",game->gpu->cpuOutput[i+j*width] ); //ft_rgb_to_hex(225 * max(0, min(1, temp.x)), 225 * max(0, min(1, temp.y)), 225 * max(0, min(1, temp.z)));
+		
 		}
 	}
 }
@@ -361,11 +366,11 @@ int	main(int argc, char **argv)
 	game.origin = (t_vec3){0,0,5,1};
 
 
-	t_gpu *gpu = (t_gpu *)malloc(sizeof(t_gpu));
-	opencl_init(gpu, &game);
-
-
-	// ft_init_window(game.sdl, WIN_W, WIN_H);
-	// ft_update(&game);
+	game.gpu = (t_gpu *)malloc(sizeof(t_gpu));
+	opencl_init(game.gpu, &game);
+	bind_data(game.gpu, &game.main_objs);
+	ft_init_window(game.sdl, WIN_W, WIN_H);
+	bind_data(game->gpu, &game->main_objs);
+	//ft_update(&game);
 	ft_exit(NULL);
 }

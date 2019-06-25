@@ -61,26 +61,20 @@ int bind_data(t_gpu *gpu, t_main_obj *main)
 	int i;
 	int j;
 	static t_vec3 *h_a;//TODO push it inside t_gpu
-	gpu->kernel = clCreateKernel(gpu->program, "init_calculations", &gpu->err);
 	
-	const int numElements = 10;
-	float cpuArrayA[numElements] = { 0.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f };
-	float cpuArrayB[numElements] = { 0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f };
-	float cpuOutput[numElements] = {}; 
-	cl_mem cl_bufferA = clCreateBuffer(gpu->context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, numElements * sizeof(cl_int), cpuArrayA, &gpu->err);
-	cl_mem cl_bufferB = clCreateBuffer(gpu->context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, numElements * sizeof(cl_int), cpuArrayB, &gpu->err);
-	cl_mem cl_bufferOut = clCreateBuffer(gpu->context, CL_MEM_WRITE_ONLY, numElements * sizeof(cl_float), NULL, &gpu->err);
-	gpu->err |= clSetKernelArg(gpu->kernel, 0, sizeof(cl_mem), &cl_bufferA);
-	gpu->err |= clSetKernelArg(gpu->kernel, 1, sizeof(cl_mem), &cl_bufferB);
-	gpu->err |= clSetKernelArg(gpu->kernel, 2, sizeof(cl_mem), &cl_bufferOut);
+	gpu->cpuOutput = malloc(sizeof(int) * (w * h)); 
+	
+	cl_mem cl_bufferOut = clCreateBuffer(gpu->context, CL_MEM_WRITE_ONLY, global * sizeof(cl_int), NULL, &gpu->err);
+	gpu->err |= clSetKernelArg(gpu->kernel, 0, sizeof(cl_mem), &cl_bufferOut);
+	gpu->err |= clSetKernelArg(gpu->kernel, 1, sizeof(int), &w);
+	gpu->err |= clSetKernelArg(gpu->kernel, 2, sizeof(int), &h);
 	gpu->err = clEnqueueNDRangeKernel(gpu->commands, gpu->kernel, 1, NULL, &global, NULL, 0, NULL, NULL);
-    gpu->err = clEnqueueReadBuffer(gpu->commands, cl_bufferOut, CL_TRUE, 0,numElements * sizeof(cl_float), cpuOutput, 0, NULL, NULL);
-	for (int i = 0; i < numElements; i++)
-	{
-		printf("%f + %f = %f\n", cpuArrayA[i], cpuArrayB[i], cpuOutput[i]);
-	}
-    clReleaseMemObject(cl_bufferA);
-    clReleaseMemObject(cl_bufferB);
+    gpu->err = clEnqueueReadBuffer(gpu->commands, cl_bufferOut, CL_TRUE, 0, global * sizeof(cl_int), gpu->cpuOutput, 0, NULL, NULL);
+	// for (int i = 0; i < numElements; i++)
+	// {
+	// 	printf("%f + %f = %f\n", cpuArrayA[i], cpuArrayB[i], cpuOutput[i]);
+	// }
+	
     clReleaseMemObject(cl_bufferOut);
     release_gpu(gpu);
 	return (0);
@@ -159,7 +153,8 @@ int opencl_init(t_gpu *gpu, t_game *game)
     gpu->context = clCreateContext(0, 1, &gpu->device_id, NULL, NULL, &gpu->err);
     gpu->commands = clCreateCommandQueue(gpu->context, gpu->device_id, 0, &gpu->err);
     gpu_read_kernel(gpu);
-    bind_data(gpu, &game->main_objs);
+	gpu->kernel = clCreateKernel(gpu->program, "init_calculations", &gpu->err);
+   // bind_data(gpu, &game->main_objs);
     return (gpu->err);
 }
 
