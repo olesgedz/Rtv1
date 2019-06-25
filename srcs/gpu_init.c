@@ -61,22 +61,16 @@ int bind_data(t_gpu *gpu, t_main_obj *main)
 	int i;
 	int j;
 	static t_vec3 *h_a;//TODO push it inside t_gpu
-	
-	gpu->cpuOutput = malloc(sizeof(int) * (w * h)); 
-	
-	cl_mem cl_bufferOut = clCreateBuffer(gpu->context, CL_MEM_WRITE_ONLY, global * sizeof(cl_int), NULL, &gpu->err);
+
+	cl_mem cl_bufferOut = clCreateBuffer(gpu->context, CL_MEM_WRITE_ONLY, count * sizeof(cl_int), NULL, &gpu->err);
 	gpu->err |= clSetKernelArg(gpu->kernel, 0, sizeof(cl_mem), &cl_bufferOut);
-	gpu->err |= clSetKernelArg(gpu->kernel, 1, sizeof(int), &w);
-	gpu->err |= clSetKernelArg(gpu->kernel, 2, sizeof(int), &h);
+	gpu->err |= clSetKernelArg(gpu->kernel, 1, sizeof(cl_int), &w);
+	gpu->err |= clSetKernelArg(gpu->kernel, 2, sizeof(cl_int), &h);
 	gpu->err = clEnqueueNDRangeKernel(gpu->commands, gpu->kernel, 1, NULL, &global, NULL, 0, NULL, NULL);
-    gpu->err = clEnqueueReadBuffer(gpu->commands, cl_bufferOut, CL_TRUE, 0, global * sizeof(cl_int), gpu->cpuOutput, 0, NULL, NULL);
-	// for (int i = 0; i < numElements; i++)
-	// {
-	// 	printf("%f + %f = %f\n", cpuArrayA[i], cpuArrayB[i], cpuOutput[i]);
-	// }
-	
+    gpu->err = clEnqueueReadBuffer(gpu->commands, cl_bufferOut, CL_TRUE, 0, count * sizeof(cl_int), gpu->cpuOutput, 0, NULL, NULL);
+
     clReleaseMemObject(cl_bufferOut);
-    release_gpu(gpu);
+    //release_gpu(gpu);
 	return (0);
 	}
 //     if (h_a == NULL) 
@@ -152,9 +146,10 @@ int opencl_init(t_gpu *gpu, t_game *game)
         return (1);
     gpu->context = clCreateContext(0, 1, &gpu->device_id, NULL, NULL, &gpu->err);
     gpu->commands = clCreateCommandQueue(gpu->context, gpu->device_id, 0, &gpu->err);
+	
     gpu_read_kernel(gpu);
-	gpu->kernel = clCreateKernel(gpu->program, "init_calculations", &gpu->err);
-   // bind_data(gpu, &game->main_objs);
+	gpu->kernel = clCreateKernel(gpu->program, "render_kernel", &gpu->err);
+	gpu->cpuOutput = malloc(sizeof(int) * (WIN_H * WIN_H));
     return (gpu->err);
 }
 

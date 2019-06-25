@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/25 19:39:39 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/25 21:16:39 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,7 +254,7 @@ void 	ft_render(t_game* game)
 	int width = game->sdl->surface->width;
 	int height = game->sdl->surface->height;
 	j = -1;
-	//bind_data(game->gpu, &game->main_objs);
+	bind_data(game->gpu, &game->main_objs);
 	while (++j < height)
 	{
 		i = -1;
@@ -270,9 +270,8 @@ void 	ft_render(t_game* game)
 			dir = ft_vec3_multiply_matrix(dir, ft_mat4_rotation_matrix((t_vec3) {0,-1,0}, xa));
 			//t_vec3 temp = (t_vec3){c}//cast_ray(&game->main_objs, &(t_ray){game->origin, dir}, 0);
 			//game->sdl->surface->data[i+j*width] = ft_rgb_to_hex(225 * max(0, min(1, temp.x)), 225 * max(0, min(1, temp.y)), 225 * max(0, min(1, temp.z)));
-			game->sdl->surface->data[i+j*width] =  game->gpu->cpuOutput[i+j*width];
-			if(game->gpu->cpuOutput[i+j*width] != 0)
-				printf("%f\n",game->gpu->cpuOutput[i+j*width] ); //ft_rgb_to_hex(225 * max(0, min(1, temp.x)), 225 * max(0, min(1, temp.y)), 225 * max(0, min(1, temp.z)));
+			game->sdl->surface->data[i+j*width] =  game->gpu->cpuOutput[i+ j *width];
+			//ft_rgb_to_hex(225 * max(0, min(1, temp.x)), 225 * max(0, min(1, temp.y)), 225 * max(0, min(1, temp.z)));
 		
 		}
 	}
@@ -370,7 +369,22 @@ int	main(int argc, char **argv)
 	opencl_init(game.gpu, &game);
 	bind_data(game.gpu, &game.main_objs);
 	ft_init_window(game.sdl, WIN_W, WIN_H);
-	bind_data(game->gpu, &game->main_objs);
-	//ft_update(&game);
+
+	//bind_data(game->gpu, &game->main_objs);
+	// while (++j < WIN_H)
+	// {
+	// 	i = -1;
+	// 	while (++i < WIN_W)	
+	// 	{
+		
+	// 		if(game.gpu->cpuOutput[i+j*WIN_W] != 0)
+	// 			printf("%f\n",game.gpu->cpuOutput[i+j*WIN_W] ); //ft_rgb_to_hex(225 * max(0, min(1, temp.x)), 225 * max(0, min(1, temp.y)), 225 * max(0, min(1, temp.z)));
+		
+	// 	}
+	// }
+	//bind_data(game.gpu, &game.main_objs);
+	ft_update(&game);
+	release_gpu(game.gpu);
+
 	ft_exit(NULL);
 }
