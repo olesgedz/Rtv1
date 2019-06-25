@@ -1,7 +1,7 @@
 #ifndef RTV1_H
 #define RTV1_H
 
-#define WIN_W 780
+#define WIN_W 1280
 #define WIN_H 780
 
 #include <sys/types.h>

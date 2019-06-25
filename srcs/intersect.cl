@@ -1,5 +1,4 @@
 
-
 struct Ray{
 	float3 origin;
 	float3 dir;
@@ -16,14 +15,9 @@ static bool intersect_sphere(const struct Sphere* sphere, const struct Ray* ray,
 {
 	float3 rayToCenter = sphere->pos - ray->origin;
 
-	/* calculate coefficients a, b, c from quadratic equation */
-
-	/* float a = dot(ray->dir, ray->dir); // ray direction is normalised, dotproduct simplifies to 1 */ 
 	float b = dot(rayToCenter, ray->dir);
 	float c = dot(rayToCenter, rayToCenter) - sphere->radius*sphere->radius;
 	float disc = b * b - c; /* discriminant of quadratic formula */
-
-	/* solve for t (distance to hitpoint along ray) */
 
 	if (disc < 0.0f) return false;
 		else *t = b - sqrt(disc);
@@ -36,16 +30,12 @@ static bool intersect_sphere(const struct Sphere* sphere, const struct Ray* ray,
 		return false;
 }
 
-static struct Ray createCamRay(const int x_coord, const int y_coord, const int width, const int height){
+static struct Ray createCamRay(const int x_coord, const int y_coord, const int width, const int height)
+{
 
-	float fx = (float)x_coord / (float)width;  /* convert int in range [0 - width] to float in range [0-1] */
-	float fy = (float)y_coord / (float)height; /* convert int in range [0 - height] to float in range [0-1] */
-
-	/* calculate aspect ratio */
-	float aspect_ratio = (float)(width) / (float)(height);
-	float fx2 = (fx - 0.5f) * aspect_ratio;
-	float fy2 = fy - 0.5f;
-
+	float fov =  M_PI/2.;
+	float fx2 = (2 * (x_coord + 0.5) / (float)width  - 1) * tan(fov / 2.) * width / (float)height;
+	float fy2 = -(2 * (y_coord + 0.5) / (float)height - 1) * tan(fov / 2.);
 	/* determine position of pixel on screen */
 	float3 pixel_pos = (float3)(fx2, -fy2, 0.0f);
 
@@ -67,15 +57,10 @@ static int				ft_rgb_to_hex(int r, int g, int b)
 static int toInt(float x){ return int(clamp1(x) * 255); }
 __kernel void render_kernel(__global int* output, int width, int height)
 {
-	// const int work_item_id = get_global_id(0);
-	// int x  = work_item_id % width;					/* x-coordinate of the pixel */
-	// int y = work_item_id / width;
-	// output[work_item_id ] = 0xFF0000;	
-	//output[work_item_id] = 0xFF0000;
-	//printf("%d, %d", width, height);
-const int work_item_id = get_global_id(0); /* the unique global id of the work item for the current pixel */
- int x_coord= work_item_id % width; /* x-coordinate of the pixel */
- int y_coord = work_item_id / width; /* y-coordinate of the pixel */
+
+const int work_item_id = get_global_id(0);
+ int x_coord= work_item_id % width;
+ int y_coord = work_item_id / width; 
 	output[x_coord + y_coord * width] = 0;
 
  /* create a camera ray */
@@ -93,26 +78,16 @@ const int work_item_id = get_global_id(0); /* the unique global id of the work i
 
  /* if ray misses sphere, return background colour 
  background colour is a blue-ish gradient dependent on image height */
- if (t > 1e19){ 
-  output[x_coord + y_coord * width] = ft_rgb_to_hex(toInt(100), toInt(100), toInt(0));
-  return;
- }
-       float3 hitpoint = camray.origin + camray.dir * t;
- float3 normal = normalize(hitpoint - sphere1.pos);
- float cosine_factor = dot(normal, camray.dir) * -1.0f;
- 
-	/* six different rendermodes */
+	if (t > 1e19)
+	{ 
+		output[x_coord + y_coord * width] = ft_rgb_to_hex(toInt(100), toInt(100), toInt(0));
+		return;
+	}
+	float3 hitpoint = camray.origin + camray.dir * t;
+	float3 normal = normalize(hitpoint - sphere1.pos);
+	float cosine_factor = dot(normal, camray.dir) * -1.0f;
 	sphere1.color = sphere1.color * cosine_factor;
 	output[x_coord + y_coord * width] = ft_rgb_to_hex(toInt(sphere1.color.x), toInt(sphere1.color.y), toInt(sphere1.color.z)); /* simple interpolated colour gradient based on pixel coordinates */
-	//float3 temp = sphere1.color * cosine_factor * sin(80 * fy);
-	//output[work_item_id] = ft_rgb_to_hex(toInt(temp.color.x), toInt(temp.color.y), toInt(temp.color.z));
-	
-	
-	// else if (rendermode == 2) output[work_item_id] = sphere1.color;  /* raytraced sphere with plain colour */
-	// else if (rendermode == 3) output[work_item_id] = sphere1.color * cosine_factor; /* with cosine weighted colour */
-	// else if (rendermode == 4) output[work_item_id] = sphere1.color * cosine_factor * sin(80 * fy); /* with sinusoidal stripey pattern */
-	// else if (rendermode == 5) output[work_item_id] = sphere1.color * cosine_factor * sin(400 * fy) * sin(400 * fx); /* with grid pattern */
-	// else output[work_item_id] = 0xFF0000;//normal * 0.5f + (float3)(0.5f, 0.5f, 0.5f); /* with normal colours */
 }
 
 // typedef	struct 	s_vec3 t_vec3;
