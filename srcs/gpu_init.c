@@ -62,21 +62,30 @@ int bind_data(t_gpu *gpu, t_main_obj *main)
 	int j;
 	static t_vec3 *h_a;//TODO push it inside t_gpu
 
-	cl_mem cl_bufferOut = clCreateBuffer(gpu->context, CL_MEM_WRITE_ONLY, count * sizeof(cl_int), NULL, &gpu->err);
-	cl_mem cl_cpuSpheres= clCreateBuffer(gpu->context, CL_MEM_READ_ONLY, n_spheres * sizeof(t_spher), NULL, &gpu->err);
-	gpu->err = clEnqueueWriteBuffer(gpu->commands, cl_cpuSpheres, CL_TRUE, 0,
+	gpu->cl_bufferOut = clCreateBuffer(gpu->context, CL_MEM_WRITE_ONLY, count * sizeof(cl_int), NULL, &gpu->err);
+	gpu->cl_cpuSpheres= clCreateBuffer(gpu->context, CL_MEM_READ_ONLY, n_spheres * sizeof(t_spher), NULL, &gpu->err);
+	gpu->err = clEnqueueWriteBuffer(gpu->commands, gpu->cl_cpuSpheres, CL_TRUE, 0,
 			n_spheres * sizeof(t_spher), gpu->spheres, 0, NULL, NULL);
-	gpu->err |= clSetKernelArg(gpu->kernel, 0, sizeof(cl_mem), &cl_bufferOut);
+	gpu->err |= clSetKernelArg(gpu->kernel, 0, sizeof(cl_mem), &gpu->cl_bufferOut);
 	gpu->err |= clSetKernelArg(gpu->kernel, 1, sizeof(cl_int), &w);
 	gpu->err |= clSetKernelArg(gpu->kernel, 2, sizeof(cl_int), &h);
 	gpu->err |= clSetKernelArg(gpu->kernel, 3, sizeof(cl_int), &n_spheres);
-	gpu->err |= clSetKernelArg(gpu->kernel, 4, sizeof(cl_mem), &cl_cpuSpheres);
-	gpu->err = clEnqueueNDRangeKernel(gpu->commands, gpu->kernel, 1, NULL, &global, NULL, 0, NULL, NULL);
-    gpu->err = clEnqueueReadBuffer(gpu->commands, cl_bufferOut, CL_TRUE, 0, count * sizeof(cl_int), gpu->cpuOutput, 0, NULL, NULL);
+	gpu->err |= clSetKernelArg(gpu->kernel, 4, sizeof(cl_mem), &gpu->cl_cpuSpheres);
 
-    clReleaseMemObject(cl_bufferOut);
+
+	
+
+    //clReleaseMemObject(cl_bufferOut);
     //release_gpu(gpu);
 	return (0);
+	}
+
+	void ft_run_gpu(t_gpu *gpu)
+	{
+		size_t global = WIN_W * WIN_H;
+	const int count = global;
+		gpu->err = clEnqueueNDRangeKernel(gpu->commands, gpu->kernel, 1, NULL, &global, NULL, 0, NULL, NULL);
+    	gpu->err = clEnqueueReadBuffer(gpu->commands, gpu->cl_bufferOut, CL_TRUE, 0, count * sizeof(cl_int), gpu->cpuOutput, 0, NULL, NULL);
 	}
 //     if (h_a == NULL) 
 //     {
@@ -226,6 +235,7 @@ int opencl_init(t_gpu *gpu, t_game *game)
 	gpu->cpuOutput = malloc(sizeof(int) * (WIN_H * WIN_H));
 	gpu->spheres = malloc(sizeof(t_spher) * 9);
 	initScene(gpu->spheres);
+	bind_data(gpu, &game->main_objs);
     return (gpu->err);
 }
 

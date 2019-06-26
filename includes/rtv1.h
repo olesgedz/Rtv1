@@ -1,8 +1,8 @@
 #ifndef RTV1_H
 #define RTV1_H
 
-#define WIN_W 1280
-#define WIN_H 1280
+#define WIN_W 780
+#define WIN_H 780
 
 #include <sys/types.h>
 #include "SDL2/SDL.h"
@@ -245,6 +245,8 @@ typedef struct s_gpu
 	char*				kernel_source;
 	int * cpuOutput;
 	t_spher *spheres;
+	cl_mem cl_bufferOut;
+	cl_mem cl_cpuSpheres;
 }				t_gpu;
 
 typedef struct s_game
@@ -266,7 +268,7 @@ typedef struct s_game
 
 int bind_data(t_gpu *gpu, t_main_obj *main);
 void release_gpu(t_gpu *gpu);
-
+void ft_run_gpu(t_gpu *gpu);
 void	configure_sphere(char *map_name, t_sphere *sphere);
 // inline t_vec3 ft_vec3_create(float x, float y, float z);
 // inline t_vec3	ft_vec3_sum(t_vec3 a, t_vec3 b);
