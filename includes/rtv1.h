@@ -35,6 +35,18 @@ typedef struct s_coord t_coord;
 typedef	struct 	s_vec3 t_vec3;
 typedef	struct 	s_vec4 t_vec4;
 
+
+typedef struct Sphere1
+{
+ cl_float radius;
+ cl_float dummy1;   
+ cl_float dummy2;
+ cl_float dummy3;
+ cl_float3 position;
+ cl_float3 color;
+ cl_float3 emission;
+} t_spher;
+
 typedef	struct s_point3
 {
 	float x;
@@ -232,6 +244,7 @@ typedef struct s_gpu
 	cl_int				err;
 	char*				kernel_source;
 	int * cpuOutput;
+	t_spher *spheres;
 }				t_gpu;
 
 typedef struct s_game

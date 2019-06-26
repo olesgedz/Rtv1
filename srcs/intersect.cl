@@ -1,4 +1,15 @@
 
+typedef struct Sphere1
+{
+ float radius;
+ float dummy1;   
+ float dummy2;
+ float dummy3;
+ float3 position;
+ float3 color;
+ float3 emission;
+} t_spher;
+
 struct Ray{
 	float3 origin;
 	float3 dir;
@@ -55,7 +66,7 @@ static int				ft_rgb_to_hex(int r, int g, int b)
 
  static float clamp1(float x){ return x < 0.0f ? 0.0f : x > 1.0f ? 1.0f : x; }
 static int toInt(float x){ return int(clamp1(x) * 255); }
-__kernel void render_kernel(__global int* output, int width, int height)
+__kernel void render_kernel(__global int* output, int width, int height, int n_spheres, __global t_spher* spheres)
 {
 
 const int work_item_id = get_global_id(0);
