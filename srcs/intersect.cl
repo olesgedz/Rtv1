@@ -79,10 +79,15 @@ const int work_item_id = get_global_id(0);
 
  /* create and initialise a sphere */
  struct Sphere sphere1;
- sphere1.radius = 0.2f;
- sphere1.pos = (float3)(0.0f, 0.0f, 3.0f);
- sphere1.color = (float3)(0.9f, 0.3f, 0.0f);
-
+//  sphere1.radius = .2f;//spheres[0].radius;
+//  sphere1.pos = float3(0, 0.0f, 3.f);//spheres[0].position;
+//  sphere1.color = float3(0.75f, 0.25f, 0.25f);//spheres[0].color;
+	sphere1.radius = spheres[7].radius;
+	sphere1.pos = spheres[7].position;
+	sphere1.color = spheres[7].color;
+// 	 sphere1.radius = 0.2f;
+//  sphere1.pos = (float3)(0.0f, 0.0f, 3.0f);
+//  sphere1.color = (float3)(0.9f, 0.3f, 0.0f);
  /* intersect ray with sphere */
  float t = 1e20;
  intersect_sphere(&sphere1, &camray, &t);
