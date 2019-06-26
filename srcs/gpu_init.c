@@ -183,7 +183,7 @@ void initScene(t_spher* cpu_spheres){
 	// left sphere
 	cpu_spheres[6].radius   = 0.16f;
 	cpu_spheres[6].position = create_cfloat3 (-0.25f, -0.24f, -0.1f);
-	cpu_spheres[6].color    = create_cfloat3 (0.9f, 0.8f, 0.7f);
+	cpu_spheres[6].color    = create_cfloat3 (0.9f, 0.0f, 0.0f);
 	cpu_spheres[6].emission = create_cfloat3 (0.0f, 0.0f, 0.0f);
 
 	// right sphere

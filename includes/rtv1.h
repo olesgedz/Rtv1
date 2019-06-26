@@ -2,7 +2,7 @@
 #define RTV1_H
 
 #define WIN_W 1280
-#define WIN_H 780
+#define WIN_H 1280
 
 #include <sys/types.h>
 #include "SDL2/SDL.h"
