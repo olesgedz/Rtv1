@@ -1,78 +1,4 @@
 
-// typedef struct Sphere1
-// {
-//  float radius;
-//  float dummy1;   
-//  float dummy2;
-//  float dummy3;
-//  float3 position;
-//  float3 color;
-//  float3 emission;
-// } t_spher;
-
-// struct Ray{
-// 	float3 origin;
-// 	float3 dir;
-// };
-
-// struct Sphere{
-// 	float radius;
-// 	float3 pos;
-// 	float3 emi;
-// 	float3 color;
-// };
-
-// static bool intersect_sphere(const struct Sphere* sphere, const struct Ray* ray, float* t)
-// {
-// 	float3 rayToCenter = sphere->pos - ray->origin;
-
-// 	float b = dot(rayToCenter, ray->dir);
-// 	float c = dot(rayToCenter, rayToCenter) - sphere->radius*sphere->radius;
-// 	float disc = b * b - c; /* discriminant of quadratic formula */
-
-// 	if (disc < 0.0f) return false;
-// 		else *t = b - sqrt(disc);
-
-// 	if (*t < 0.0f){
-// 		*t = b + sqrt(disc);
-// 		if (*t < 0.0f) return false; 
-// 	}
-// 	else
-// 		return false;
-// }
-
-// static struct Ray createCamRay(const int x_coord, const int y_coord, const int width, const int height)
-// {
-
-// 	// float fov =  M_PI/2.;
-// 	// float fx2 = (2 * (x_coord + 0.5) / (float)width  - 1) * tan(fov / 2.) * width / (float)height;
-// 	// float fy2 = -(2 * (y_coord + 0.5) / (float)height - 1) * tan(fov / 2.);
-// 	// /* determine position of pixel on screen */
-// 	// float3 pixel_pos = (float3)(fx2, -fy2, 0.0f);
-
-// 	// /* create camera ray*/
-// 	// struct Ray ray;
-// 	// ray.origin = (float3)(0.0f, 0.0f, 40.0f); /* fixed camera position */
-// 	// ray.dir = normalize(pixel_pos - ray.origin); /* ray direction is vector from camera to pixel */
-// 	float fx = (float)x_coord / (float)width;  /* convert int in range [0 - width] to float in range [0-1] */
-// 	float fy = (float)y_coord / (float)height; /* convert int in range [0 - height] to float in range [0-1] */
-
-// 	/* calculate aspect ratio */
-// 	float aspect_ratio = (float)(width) / (float)(height);
-// 	float fx2 = (fx - 0.5f) * aspect_ratio;
-// 	float fy2 = fy - 0.5f;
-
-// 	/* determine position of pixel on screen */
-// 	float3 pixel_pos = (float3)(fx2, -fy2, 0.0f);
-
-// 	/* create camera ray*/
-// 	struct Ray ray;
-// 	ray.origin = (float3)(0.0f, 0.1f, 2.0f); /* fixed camera position */
-// 	ray.dir = normalize(pixel_pos - ray.origin); /* vector from camera to pixel on screen */
-// 	return ray;
-// }
-
-
 __constant float EPSILON = 0.00003f; /* required to compensate for limited float precision */
 __constant float PI = 3.14159265359f;
 __constant int SAMPLES = 100;
@@ -240,44 +166,16 @@ static int				ft_rgb_to_hex(int r, int g, int b)
 	return (r << 16 | g << 8 | b);
 }
 
- static float clamp1(float x){ return x < 0.0f ? 0.0f : x > 1.0f ? 1.0f : x; }
+static float clamp1(float x)
+{
+	return x < 0.0f ? 0.0f : x > 1.0f ? 1.0f : x;
+}
+
 static int toInt(float x){ return int(clamp1(x) * 255); }
 __kernel void render_kernel(__global int* output, int width, int height, int n_spheres, __constant Sphere* spheres)
 {
 
-// const int work_item_id = get_global_id(0);
-//  int x_coord= work_item_id % width;
-//  int y_coord = work_item_id / width; 
-// 	output[x_coord + y_coord * width] = 0;
-//  /* create a camera ray */
-//  struct Ray camray = createCamRay(x_coord, y_coord, width, height);
 
-//  /* create and initialise a sphere */
-//  struct Sphere sphere1;
-// //  sphere1.radius = .2f;//spheres[0].radius;
-// //  sphere1.pos = float3(0, 0.0f, 3.f);//spheres[0].position;
-// //  sphere1.color = float3(0.75f, 0.25f, 0.25f);//spheres[0].color;
-// 	sphere1.radius = spheres[6].radius;
-// 	sphere1.pos = spheres[6].position;
-// 	sphere1.color = spheres[6].color;
-// // 	 sphere1.radius = 0.2f;
-// //  sphere1.pos = (float3)(0.0f, 0.0f, 3.0f);
-// //  sphere1.color = (float3)(0.9f, 0.3f, 0.0f);
-//  /* intersect ray with sphere */
-//  float t = 1e20;
-//  intersect_sphere(&sphere1, &camray, &t);
-
-//  /* if ray misses sphere, return background colour 
-//  background colour is a blue-ish gradient dependent on image height */
-// 	if (t > 1e19)
-// 	{ 
-// 		output[x_coord + y_coord * width] = ft_rgb_to_hex(toInt(100), toInt(100), toInt(0));
-// 		return;
-// 	}
-// 	float3 hitpoint = camray.origin + camray.dir * t;
-// 	float3 normal = normalize(hitpoint - sphere1.pos);
-// 	float cosine_factor = dot(normal, camray.dir) * -1.0f;
-// 	sphere1.color = sphere1.color * cosine_factor;
 unsigned int work_item_id = get_global_id(0);	/* the unique global id of the work item for the current pixel */
 	unsigned int x_coord = work_item_id % width;			/* x-coordinate of the pixel */
 	unsigned int y_coord = work_item_id / width;			/* y-coordinate of the pixel */
@@ -294,10 +192,6 @@ unsigned int work_item_id = get_global_id(0);	/* the unique global id of the wor
 
 	for (int i = 0; i < SAMPLES; i++)
 		finalcolor += trace(spheres, &camray, n_spheres, &seed0, &seed1) * invSamples;
-
-	/* store the pixelcolour in the output buffer */
-	//output[work_item_id] = finalcolor;
-
 	output[x_coord + y_coord * width] = ft_rgb_to_hex(toInt(finalcolor.x), toInt(finalcolor.y), toInt(finalcolor.z)); /* simple interpolated colour gradient based on pixel coordinates */
 }
 

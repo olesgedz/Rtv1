@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/27 17:29:16 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/27 21:32:47 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -322,7 +322,7 @@ void ft_update(t_game *game)
 		
 			printf("fps :%lu\n", fps);
 	#endif
-	//SDL_Delay(20);
+	SDL_Delay(200);
 	 }
 
 }
@@ -341,7 +341,6 @@ int	main(int argc, char **argv)
 	printf("move light source with wasdqe \nchange intensity with zx\n");
 	game.sdl = malloc(sizeof(t_sdl));
 	game.image = ft_surface_create(WIN_W, WIN_H);
-	
 	t_material ivory = (t_material){(t_vec3){0.4, 0.4, 0.3},.albendo= (t_vec3){0.6, 0.3, .0, .0}, .specular_exponent=50};
 	t_material glass = (t_material){(t_vec3){.6, 0.7, 0.8}, .albendo =(t_vec3){0, 0.5, 0.1, 0.8}, .specular_exponent=125.};
 	t_material red_rubber = (t_material){(t_vec3){0.3, 0.1, 0.1}, .albendo= (t_vec3){0.9, 0.1, .0, .0}, .specular_exponent=10};
@@ -382,6 +381,7 @@ int	main(int argc, char **argv)
 	// }
 	//bind_data(game.gpu, &game.main_objs);
 	ft_update(&game);
+	clReleaseMemObject(game.gpu->cl_bufferOut);
 	release_gpu(game.gpu);
 
 	ft_exit(NULL);
