@@ -75,7 +75,7 @@
 
 __constant float EPSILON = 0.00003f; /* required to compensate for limited float precision */
 __constant float PI = 3.14159265359f;
-__constant int SAMPLES = 500;
+__constant int SAMPLES = 100;
 
 typedef struct Ray{
 	float3 origin;
@@ -249,7 +249,6 @@ __kernel void render_kernel(__global int* output, int width, int height, int n_s
 //  int x_coord= work_item_id % width;
 //  int y_coord = work_item_id / width; 
 // 	output[x_coord + y_coord * width] = 0;
-
 //  /* create a camera ray */
 //  struct Ray camray = createCamRay(x_coord, y_coord, width, height);
 

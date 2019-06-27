@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/06/26 23:19:31 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/27 17:29:16 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,14 +262,9 @@ void 	ft_render(t_game* game)
 		i = -1;
 		while (++i < width)	
 		{
-			float x = (2 * (i + 0.5) / (float)width  - 1) * tan(fov / 2.) * width / (float)height;
-			float y = -(2 * (j + 0.5) / (float)height - 1) * tan(fov / 2.);
-			t_vec3 dir = ft_vec3_normalize((t_vec3){x, y, -1});
 			// game->origin = ft_vec3_multiply_matrix((t_vec3){0,0,0,1}, 
 			// 					ft_mat4_multiply_mat4(ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez}), 
 			// 											ft_mat4_rotation_matrix((t_vec3) {0,-1,0}, xa))); //USELESS ITERATION
-			game->origin =ft_vec3_create(eyex,eyey,eyez);
-			dir = ft_vec3_multiply_matrix(dir, ft_mat4_rotation_matrix((t_vec3) {0,-1,0}, xa));
 			//t_vec3 temp = (t_vec3){c}//cast_ray(&game->main_objs, &(t_ray){game->origin, dir}, 0);
 			//game->sdl->surface->data[i+j*width] = ft_rgb_to_hex(225 * max(0, min(1, temp.x)), 225 * max(0, min(1, temp.y)), 225 * max(0, min(1, temp.z)));
 			game->sdl->surface->data[i+j*width] =  game->gpu->cpuOutput[i+ j *width];
@@ -327,6 +322,7 @@ void ft_update(t_game *game)
 		
 			printf("fps :%lu\n", fps);
 	#endif
+	//SDL_Delay(20);
 	 }
 
 }
