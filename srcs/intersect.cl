@@ -3,9 +3,10 @@ __constant float EPSILON = 0.00003f; /* required to compensate for limited float
 __constant float PI = 3.14159265359f;
 __constant int SAMPLES = 500;
 
-typedef struct Ray{
+typedef struct Ray
+{
 	float3 origin;
-float3 dir;
+	float3 dir;
 } Ray;
 
 typedef struct Sphere{
@@ -14,6 +15,18 @@ typedef struct Sphere{
 	float3 color;
 	float3 emission;
 } Sphere;
+
+typedef struct Object
+{
+	int type;
+	float radius;
+	float3 pos;
+	float3 color;
+	float3 emission;
+	float3 vec;
+	float angle;
+	float plane_d;
+} Object;
 
 static float get_random( int *seed0, int *seed1) {
 

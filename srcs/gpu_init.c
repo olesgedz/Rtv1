@@ -164,6 +164,18 @@ t_spher	create_sphere(float r, cl_float3 pos, cl_float3 color, cl_float3 em)
 	return (s);
 }
 
+t_object	create_base_obj(cl_int type, cl_float r, cl_float3 pos, cl_float3 color, cl_float3 em)
+{
+	t_object o;
+
+	o.type = type;
+	o.radius = r;
+	o.pos = pos;
+	o.color = color;
+	o.emission = em;
+	return (o);
+}
+
 void init_scene(t_spher* cpu_spheres)
 {
 	// left wall
