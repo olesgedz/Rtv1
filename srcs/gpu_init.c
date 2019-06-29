@@ -48,6 +48,8 @@ void release_gpu(t_gpu *gpu)
 	clReleaseKernel(gpu->kernel);
 	clReleaseCommandQueue(gpu->commands);
 	clReleaseContext(gpu->context);
+	clReleaseMemObject(gpu->cl_bufferOut);
+	clReleaseMemObject(gpu->cl_cpuSpheres);
 }
 
 int bind_data(t_gpu *gpu, t_main_obj *main)
@@ -71,22 +73,22 @@ int bind_data(t_gpu *gpu, t_main_obj *main)
 	gpu->err |= clSetKernelArg(gpu->kernel, 2, sizeof(cl_int), &h);
 	gpu->err |= clSetKernelArg(gpu->kernel, 3, sizeof(cl_int), &n_spheres);
 	gpu->err |= clSetKernelArg(gpu->kernel, 4, sizeof(cl_mem), &gpu->cl_cpuSpheres);
-
-
-	
-
-    //clReleaseMemObject(cl_bufferOut);
-    //release_gpu(gpu);
+	printf("bind_data\n");
+	// clFinish(gpu->)
+    // clReleaseMemObject(gpu->cl_bufferOut);
+	// clReleaseMemObject(gpu->cl_cpuSpheres);
+    // release_gpu(gpu);
 	return (0);
-	}
+}
 
-	void ft_run_gpu(t_gpu *gpu)
-	{
-		size_t global = WIN_W * WIN_H;
+void ft_run_gpu(t_gpu *gpu)
+{
+size_t global = WIN_W * WIN_H;
 	const int count = global;
-		gpu->err = clEnqueueNDRangeKernel(gpu->commands, gpu->kernel, 1, NULL, &global, NULL, 0, NULL, NULL);
-    	gpu->err = clEnqueueReadBuffer(gpu->commands, gpu->cl_bufferOut, CL_TRUE, 0, count * sizeof(cl_int), gpu->cpuOutput, 0, NULL, NULL);
-	}
+	gpu->err = clEnqueueNDRangeKernel(gpu->commands, gpu->kernel, 1, NULL, &global, NULL, 0, NULL, NULL);
+	clFinish(gpu->commands);
+	gpu->err = clEnqueueReadBuffer(gpu->commands, gpu->cl_bufferOut, CL_TRUE, 0, count * sizeof(cl_int), gpu->cpuOutput, 0, NULL, NULL);
+}
 //     if (h_a == NULL) 
 //     {
 //         t_vec3 *h_a = (t_vec3 *)malloc(data_size);
@@ -151,62 +153,56 @@ cl_float3 create_cfloat3 (float x, float y, float z)
 	return re;
 }
 
-void initScene(t_spher* cpu_spheres){
+t_spher	create_sphere(float r, cl_float3 pos, cl_float3 color, cl_float3 em)
+{
+	t_spher s;
 
+	s.radius	= r;
+	s.position = pos;
+	s.color    = color;
+	s.emission = em;
+	return (s);
+}
+
+void init_scene(t_spher* cpu_spheres)
+{
 	// left wall
-	cpu_spheres[0].radius	= 200.0f;
-	cpu_spheres[0].position = create_cfloat3 (-200.6f, 0.0f, 0.0f);
-	cpu_spheres[0].color    = create_cfloat3 (0.75f, 0.25f, 0.25f);
-	cpu_spheres[0].emission = create_cfloat3 (0.0f, 0.0f, 0.0f);
-
+	//check leaks
+	cpu_spheres[0] = create_sphere(200.f, create_cfloat3 (-200.6f, 0.0f, 0.0f),
+										create_cfloat3 (0.75f, 0.25f, 0.25f),
+										create_cfloat3 (0.0f, 0.0f, 0.0f));
 	// right wall
-	cpu_spheres[1].radius	= 200.0f;
-	cpu_spheres[1].position = create_cfloat3 (200.6f, 0.0f, 0.0f);
-	cpu_spheres[1].color    = create_cfloat3 (0.25f, 0.25f, 0.75f);
-	cpu_spheres[1].emission = create_cfloat3 (0.0f, 0.0f, 0.0f);
-
+	cpu_spheres[1] = create_sphere(200.f, create_cfloat3 (200.6f, 0.0f, 0.0f),
+										create_cfloat3 (0.25f, 0.25f, 0.75f),
+										create_cfloat3 (0.0f, 0.0f, 0.0f));
 	// floor
-	cpu_spheres[2].radius	= 200.0f;
-	cpu_spheres[2].position = create_cfloat3 (0.0f, -200.4f, 0.0f);
-	cpu_spheres[2].color	= create_cfloat3 (0.9f, 0.8f, 0.7f);
-	cpu_spheres[2].emission = create_cfloat3 (0.0f, 0.0f, 0.0f);
-
+	cpu_spheres[2] = create_sphere(200.f, create_cfloat3 (0.0f, -200.4f, 0.0f),
+										create_cfloat3 (0.9f, 0.8f, 0.7f),
+										create_cfloat3 (0.0f, 0.0f, 0.0f));
 	// ceiling
-	cpu_spheres[3].radius	= 200.0f;
-	cpu_spheres[3].position = create_cfloat3 (0.0f, 200.4f, 0.0f);
-	cpu_spheres[3].color	= create_cfloat3 (0.9f, 0.8f, 0.7f);
-	cpu_spheres[3].emission = create_cfloat3 (0.0f, 0.0f, 0.0f);
-
-	// back wall
-	cpu_spheres[4].radius   = 200.0f;
-	cpu_spheres[4].position = create_cfloat3 (0.0f, 0.0f, -200.4f);
-	cpu_spheres[4].color    = create_cfloat3 (0.9f, 0.8f, 0.7f);
-	cpu_spheres[4].emission = create_cfloat3 (0.0f, 0.0f, 0.0f);
-
+	cpu_spheres[3] = create_sphere(200.f, create_cfloat3 (0.0f, 200.4f, 0.0f),
+										create_cfloat3 (0.9f, 0.8f, 0.7f),
+										create_cfloat3 (0.0f, 0.0f, 0.0f));
+	// back wall				
+	cpu_spheres[4] = create_sphere(200.f, create_cfloat3(0.0f, 0.0f, -200.4f),
+										create_cfloat3(0.9f, 0.8f, 0.7f),
+										create_cfloat3 (0.0f, 0.0f, 0.0f));
 	// front wall 
-	cpu_spheres[5].radius   = 200.0f;
-	cpu_spheres[5].position = create_cfloat3 (0.0f, 0.0f, 202.0f);
-	cpu_spheres[5].color    = create_cfloat3 (0.9f, 0.8f, 0.7f);
-	cpu_spheres[5].emission = create_cfloat3 (0.0f, 0.0f, 0.0f);
-
+	cpu_spheres[5] = create_sphere(200.f, create_cfloat3(0.0f, 0.0f, 202.0f),
+										create_cfloat3(0.9f, 0.8f, 0.7f),
+										create_cfloat3 (0.0f, 0.0f, 0.0f));
 	// left sphere
-	cpu_spheres[6].radius   = 0.16f;
-	cpu_spheres[6].position = create_cfloat3 (-0.25f, -0.24f, -0.1f);
-	cpu_spheres[6].color    = create_cfloat3 (0.9f, 0.0f, 0.0f);
-	cpu_spheres[6].emission = create_cfloat3 (0.0f, 0.0f, 0.0f);
-
+	cpu_spheres[6] = create_sphere(0.16f, create_cfloat3(-0.25f, -0.24f, -0.1f),
+										create_cfloat3(0.9f, 0.0f, 0.0f),
+										create_cfloat3 (0.0f, 0.0f, 0.0f));
 	// right sphere
-	cpu_spheres[7].radius   = 0.16f;
-	cpu_spheres[7].position = create_cfloat3 (0.25f, -0.24f, 0.1f);
-	cpu_spheres[7].color    = create_cfloat3 (0.9f, 0.8f, 0.7f);
-	cpu_spheres[7].emission = create_cfloat3 (0.0f, 0.0f, 0.0f);
-
-	// lightsource
-	cpu_spheres[8].radius   = 1.0f;
-	cpu_spheres[8].position = create_cfloat3 (0.0f, 1.36f, 0.0f);
-	cpu_spheres[8].color    = create_cfloat3 (0.0f, 0.0f, 0.0f);
-	cpu_spheres[8].emission = create_cfloat3 (9.0f, 8.0f, 6.0f);
-	
+	cpu_spheres[7] = create_sphere(0.18f,create_cfloat3 (0.25f, -0.24f, 0.1f),
+										create_cfloat3 (0.9f, 0.8f, 0.7f),
+										create_cfloat3 (0.0f, 0.0f, 0.0f));
+	// lightsource						
+	cpu_spheres[8] = create_sphere(1.f, create_cfloat3 (0.0f, 1.36f, 0.0f),
+										create_cfloat3(0.0f, 0.0f, 0.0f),
+										create_cfloat3 (9.0f, 8.0f, 6.0f));
 }
 
 int opencl_init(t_gpu *gpu, t_game *game)
@@ -234,7 +230,7 @@ int opencl_init(t_gpu *gpu, t_game *game)
 	gpu->kernel = clCreateKernel(gpu->program, "render_kernel", &gpu->err);
 	gpu->cpuOutput = malloc(sizeof(int) * (WIN_H * WIN_H));
 	gpu->spheres = malloc(sizeof(t_spher) * 9);
-	initScene(gpu->spheres);
+	init_scene(gpu->spheres);
 	bind_data(gpu, &game->main_objs);
     return (gpu->err);
 }

@@ -254,14 +254,13 @@ void 	ft_render(t_game* game)
 	int width = game->sdl->surface->width;
 	int height = game->sdl->surface->height;
 	j = -1;
-	//bind_data(game->gpu, &game->main_objs);
 	ft_run_gpu(game->gpu);
 	
 	while (++j < height)
 	{
 		i = -1;
 		while (++i < width)	
-		{
+	{
 			// game->origin = ft_vec3_multiply_matrix((t_vec3){0,0,0,1}, 
 			// 					ft_mat4_multiply_mat4(ft_mat4_translation_matrix((t_vec3){eyex,eyey,eyez}), 
 			// 											ft_mat4_rotation_matrix((t_vec3) {0,-1,0}, xa))); //USELESS ITERATION
@@ -361,10 +360,8 @@ int	main(int argc, char **argv)
 	
 	game.origin = (t_vec3){0,0,5,1};
 
-
 	game.gpu = (t_gpu *)malloc(sizeof(t_gpu));
 	opencl_init(game.gpu, &game);
-	bind_data(game.gpu, &game.main_objs);
 	ft_init_window(game.sdl, WIN_W, WIN_H);
 
 	//bind_data(game->gpu, &game->main_objs);
