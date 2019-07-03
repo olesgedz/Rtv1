@@ -59,7 +59,7 @@ int bind_data(t_gpu *gpu, t_main_obj *main)
 	int h = WIN_H;
 	size_t global = WIN_W * WIN_H;
 	const int count = global;
-	const int n_spheres = 9;
+	const int n_spheres = 8;
 	int i;
 	int j;
 	static t_vec3 *h_a;//TODO push it inside t_gpu
@@ -83,10 +83,10 @@ int bind_data(t_gpu *gpu, t_main_obj *main)
 
 void ft_run_gpu(t_gpu *gpu)
 {
-size_t global = WIN_W * WIN_H;
+	size_t global = WIN_W * WIN_H;
 	const int count = global;
 	gpu->err = clEnqueueNDRangeKernel(gpu->commands, gpu->kernel, 1, NULL, &global, NULL, 0, NULL, NULL);
-	clFinish(gpu->commands);
+	// clFinish(gpu->commands);
 	gpu->err = clEnqueueReadBuffer(gpu->commands, gpu->cl_bufferOut, CL_TRUE, 0, count * sizeof(cl_int), gpu->cpuOutput, 0, NULL, NULL);
 }
 //     if (h_a == NULL) 
@@ -176,45 +176,57 @@ t_object	create_base_obj(cl_int type, cl_float r, cl_float3 pos, cl_float3 color
 	return (o);
 }
 
+t_object	create_specific_obj(t_object *o,cl_int type, cl_float3 dir, cl_float angle, cl_float plane_d)
+{
+
+
+	o->type = type;
+	o->dir = dir;
+	o->angle = angle;
+	o->plane_d = plane_d;
+	return (*o);
+}
+
 void init_scene(t_object* cpu_spheres)
 {
 	// left wall
 	//check leaks
-	cpu_spheres[0] = create_base_obj(SPHERE, 200.f, create_cfloat3 (-200.6f, 0.0f, 0.0f),
+	cpu_spheres[0] = create_base_obj(SPHERE, 190.f, create_cfloat3 (200.6f, 0.0f, 0.0f),
 										create_cfloat3 (0.75f, 0.25f, 0.25f),
 										create_cfloat3 (0.0f, 0.0f, 0.0f));
 	// right wall
-	cpu_spheres[1] = create_base_obj(SPHERE, 200.f, create_cfloat3 (200.6f, 0.0f, 0.0f),
+	cpu_spheres[1] = create_base_obj(SPHERE, 190.f, create_cfloat3 (-200.6f, 0.0f, 0.0f),
 										create_cfloat3 (0.25f, 0.25f, 0.75f),
 										create_cfloat3 (0.0f, 0.0f, 0.0f));
 	// floor
-	cpu_spheres[2] = create_base_obj(SPHERE, 200.f, create_cfloat3 (0.0f, -200.4f, 0.0f),
+	cpu_spheres[2] = create_base_obj(SPHERE, 195.f, create_cfloat3 (0.0f, 200.4f, 0.0f),
 										create_cfloat3 (0.9f, 0.8f, 0.7f),
 										create_cfloat3 (0.0f, 0.0f, 0.0f));
 	// ceiling
-	cpu_spheres[3] = create_base_obj(SPHERE, 200.f, create_cfloat3 (0.0f, 200.4f, 0.0f),
+	cpu_spheres[3] = create_base_obj(SPHERE, 200.f, create_cfloat3 (0.0f, -2000.4f, 0.0f),
 										create_cfloat3 (0.9f, 0.8f, 0.7f),
 										create_cfloat3 (0.0f, 0.0f, 0.0f));
 	// back wall				
-	cpu_spheres[4] = create_base_obj(SPHERE, 200.f, create_cfloat3(0.0f, 0.0f, -200.4f),
+	cpu_spheres[4] = create_base_obj(SPHERE, 200.f, create_cfloat3(0.0f, 0.0f, 200.4f),
 										create_cfloat3(0.9f, 0.8f, 0.7f),
 										create_cfloat3 (0.0f, 0.0f, 0.0f));
-	// front wall 
-	cpu_spheres[5] = create_base_obj(SPHERE, 200.f, create_cfloat3(0.0f, 0.0f, 202.0f),
-										create_cfloat3(0.9f, 0.8f, 0.7f),
-										create_cfloat3 (0.0f, 0.0f, 0.0f));
+	// // front wall 
+	// cpu_spheres[5] = create_base_obj(SPHERE, 200.f, create_cfloat3(0.0f, 0.0f, 202.0f),
+	// 									create_cfloat3(0.9f, 0.8f, 0.7f),
+	// 									create_cfloat3 (0.0f, 0.0f, 0.0f));
 	// left sphere
-	cpu_spheres[6] = create_base_obj(SPHERE, 0.16f, create_cfloat3(-0.25f, -0.24f, -0.1f),
+	t_object obj = create_base_obj(SPHERE, 300.f, create_cfloat3(0.f, 300.0f, 1700.0f),
 										create_cfloat3(0.9f, 0.0f, 0.0f),
-										create_cfloat3 (0.0f, 0.0f, 0.0f));
+										create_cfloat3 (9.0f, 8.0f, 6.0f));
+	cpu_spheres[5] = create_specific_obj(&obj, CYLINDER, create_cfloat3(1.f, 0.0f, 0.0f), 0, 0);
 	// right sphere
-	cpu_spheres[7] = create_base_obj(SPHERE, 0.18f,create_cfloat3 (0.25f, -0.24f, 0.1f),
+	cpu_spheres[6] = create_base_obj(SPHERE, 0.5f,create_cfloat3 (0.f, 1.f, 7.f),
 										create_cfloat3 (0.9f, 0.8f, 0.7f),
 										create_cfloat3 (0.0f, 0.0f, 0.0f));
 	// lightsource						
-	cpu_spheres[8] = create_base_obj(SPHERE, 1.f, create_cfloat3 (0.0f, 1.36f, 0.0f),
-										create_cfloat3(0.0f, 0.0f, 0.0f),
-										create_cfloat3 (9.0f, 8.0f, 6.0f));
+	cpu_spheres[7] = create_base_obj(SPHERE, 2.5f, create_cfloat3 (0.f, -3.f, 7.f),
+										create_cfloat3 (0.0f, 0.0f, 0.0f),
+										create_cfloat3 (0.9f, 0.8f, 0.7f));
 }
 
 int opencl_init(t_gpu *gpu, t_game *game)

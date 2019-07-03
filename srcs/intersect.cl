@@ -25,7 +25,7 @@ typedef struct Object
 	float3 pos;
 	float3 color;
 	float3 emission;
-	float3 vec;
+	float3 dir;
 	float angle;
 	float plane_d;
 } Object;
@@ -50,21 +50,21 @@ static float get_random( int *seed0, int *seed1) {
 
 static Ray createCamRay(const int x_coord, const int y_coord, const int width, const int height){
 
-	float fx = (float)x_coord / (float)width;  /* convert int in range [0 - width] to float in range [0-1] */
-	float fy = (float)y_coord / (float)height; /* convert int in range [0 - height] to float in range [0-1] */
+	// float fx = (float)x_coord / (float)width;  /* convert int in range [0 - width] to float in range [0-1] */
+	// float fy = (float)y_coord / (float)height; /* convert int in range [0 - height] to float in range [0-1] */
 
-	/* calculate aspect ratio */
-	float aspect_ratio = (float)(width) / (float)(height);
-	float fx2 = (fx - 0.5f) * aspect_ratio;
-	float fy2 = fy - 0.5f;
+	// /* calculate aspect ratio */
+	// float aspect_ratio = (float)(width) / (float)(height);
+	// float fx2 = (fx - 0.5f) * aspect_ratio;
+	// float fy2 = fy - 0.5f;
 
-	/* determine position of pixel on screen */
-	float3 pixel_pos = (float3)(fx2, -fy2, 0.0f);
+	// /* determine position of pixel on screen */
+	// float3 pixel_pos = (float3)(fx2, -fy2, 0.0f);
 
 	/* create camera ray*/
 	Ray ray;
-	ray.origin = (float3)(0.0f, 0.1f, 2.0f); /* fixed camera position */
-	ray.dir = normalize(pixel_pos - ray.origin); /* vector from camera to pixel on screen */
+	ray.origin = (float3)(x_coord, y_coord, 0.f); /* fixed camera position */
+	ray.dir = ((float3)(0., 0., 1.));//normalize(pixel_pos - ray.origin); /* vector from camera to pixel on screen //*/
 
 	return ray;
 }
@@ -72,16 +72,62 @@ static Ray createCamRay(const int x_coord, const int y_coord, const int width, c
 				/* (__global Sphere* sphere, const Ray* ray) */
 static float intersect_sphere(const Object* sphere, const Ray* ray) /* version using local copy of sphere */
 {
-	float3 rayToCenter = sphere->pos - ray->origin;
-	float b = dot(rayToCenter, ray->dir);
+
+	float3 rayToCenter = ray->origin - sphere->pos;
+	float a = dot(ray->dir, ray->dir);
+	float b = 2*dot(rayToCenter, ray->dir);
 	float c = dot(rayToCenter, rayToCenter) - sphere->radius*sphere->radius;
-	float disc = b * b - c;
+	float disc = b * b - 4*a*c;
 
 	if (disc < 0.0f) return 0.0f;
 	else disc = sqrt(disc);
+	float temp = 1/(2*a);
+	// if ((-b - disc)*temp > EPSILON)
+	// printf("solution = %f\ndisc = %f\na = %f, b = %f, c = %f\n", (-b - disc)*temp, disc, a, b, c);
+	if ((-b - disc)*temp > EPSILON) return (-b - disc)*temp;
+	if ((-b + disc)*temp > EPSILON) return (-b + disc)*temp;
 
-	if ((b - disc) > EPSILON) return b - disc;
-	if ((b + disc) > EPSILON) return b + disc;
+	return 0.0f;
+}
+
+static float intersect_cylinder(const Object* sphere, const Ray* ray) /* version using local copy of sphere */
+{
+
+	float3 rayToCenter = ray->origin - sphere->pos;
+	float a = dot(ray->dir, ray->dir*(float3)(1,0,1));
+	float b = 2*dot(rayToCenter, ray->dir*(float3)(1,0,1));
+	float c = dot(rayToCenter, rayToCenter*(float3)(1,0,1)) - sphere->radius*sphere->radius;
+	float disc = b * b - 4*a*c;
+
+	if (disc < 0.0f) return 0.0f;
+	else disc = sqrt(disc);
+	float temp = 1/(2*a);
+	// if ((-b - disc)*temp > EPSILON)
+	//printf("solution = %f\ndisc = %f\na = %f, b = %f, c = %f\n", (-b - disc)*temp, disc, a, b, c);
+	if ((-b - disc)*temp > EPSILON) return (-b - disc)*temp;
+	if ((-b + disc)*temp > EPSILON) return (-b + disc)*temp;
+
+	return 0.0f;
+}
+
+static float cylinder_intersection(const Object* cylinder, const Ray* ray) /* version using local copy of sphere */
+{
+
+	float3 rayToCenter = ray->origin - cylinder->pos;
+	float a = dot(ray->dir, cylinder->dir);
+	float b = 2*(dot(rayToCenter, ray->dir) - a*dot(rayToCenter, cylinder->dir));
+	a = dot(ray->dir, ray->dir) -a * a;
+	float c = dot(rayToCenter, cylinder->dir);
+	c = dot(rayToCenter, rayToCenter) - c*c - cylinder->radius * cylinder->radius;
+	float disc = b * b - 4*a*c;
+
+	if (disc < 0.0f) return 0.0f;
+	else disc = sqrt(disc);
+	float temp = 1/(2*a);
+	// if ((-b - disc)*temp > EPSILON)
+	//printf("solution = %f\ndisc = %f\na = %f, b = %f, c = %f\n", (-b - disc)*temp, disc, a, b, c);
+	if ((-b - disc)*temp > EPSILON) return (-b - disc)*temp;
+	if ((-b + disc)*temp > EPSILON) return (-b + disc)*temp;
 
 	return 0.0f;
 }
@@ -206,7 +252,12 @@ __kernel void render_kernel(__global int* output, int width, int height, int n_s
 	float3 finalcolor = (float3)(0.0f, 0.0f, 0.0f);
 	float invSamples = 1.0f / SAMPLES;
 
-	for (int i = 0; i < SAMPLES; i++)
-		finalcolor += trace(spheres, &camray, n_spheres, &seed0, &seed1) * invSamples;
-	output[x_coord + y_coord * width] = ft_rgb_to_hex(toInt(finalcolor.x), toInt(finalcolor.y), toInt(finalcolor.z)); /* simple interpolated colour gradient based on pixel coordinates */
+	Object sphere = spheres[5];
+	// for (int i = 0; i < SAMPLES; i++)
+	// 	finalcolor += trace(spheres, &camray, n_spheres, &seed0, &seed1) * invSamples;
+	if (cylinder_intersection(&sphere, &camray) != 0) {
+		//printf("intersect\n");
+		output[x_coord + y_coord * width] = ft_rgb_to_hex(toInt(1.), toInt(1.), toInt(1.)); /* simple interpolated colour gradient based on pixel coordinates */
+	} else
+		output[x_coord + y_coord * width] = ft_rgb_to_hex(toInt(finalcolor.x), toInt(finalcolor.y), toInt(finalcolor.z)); /* simple interpolated colour gradient based on pixel coordinates */
 }

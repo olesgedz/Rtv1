@@ -148,7 +148,7 @@ struct s_object
 	cl_float3	pos;
 	cl_float3	color;
 	cl_float3	emission;
-	cl_float3	vec;
+	cl_float3	dir;
 	cl_float	angle;
 	cl_float	plane_d;
 }; 
