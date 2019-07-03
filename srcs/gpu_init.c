@@ -1,5 +1,6 @@
 #include "rtv1.h"
 
+#define CL_SILENCE_DEPRECATION 100
 int print_error(t_gpu *gpu)
 {
 	size_t  len;
@@ -63,9 +64,9 @@ int bind_data(t_gpu *gpu, t_main_obj *main)
 	static t_vec3 *h_a;//TODO push it inside t_gpu
 
 	gpu->cl_bufferOut = clCreateBuffer(gpu->context, CL_MEM_WRITE_ONLY, count * sizeof(cl_int), NULL, &gpu->err);
-	gpu->cl_cpuSpheres= clCreateBuffer(gpu->context, CL_MEM_READ_ONLY, n_spheres * sizeof(t_spher), NULL, &gpu->err);
+	gpu->cl_cpuSpheres= clCreateBuffer(gpu->context, CL_MEM_READ_ONLY, n_spheres * sizeof(t_obj), NULL, &gpu->err);
 	gpu->err = clEnqueueWriteBuffer(gpu->commands, gpu->cl_cpuSpheres, CL_TRUE, 0,
-			n_spheres * sizeof(t_spher), gpu->spheres, 0, NULL, NULL);
+			n_spheres * sizeof(t_obj), gpu->spheres, 0, NULL, NULL);
 	gpu->err |= clSetKernelArg(gpu->kernel, 0, sizeof(cl_mem), &gpu->cl_bufferOut);
 	gpu->err |= clSetKernelArg(gpu->kernel, 1, sizeof(cl_int), &w);
 	gpu->err |= clSetKernelArg(gpu->kernel, 2, sizeof(cl_int), &h);
@@ -151,62 +152,63 @@ cl_float3 create_cfloat3 (float x, float y, float z)
 	return re;
 }
 
-void initScene(t_spher* cpu_spheres){
+void initScene(t_obj* cpu_spheres){
 
 	// left wall
 	cpu_spheres[0].radius	= 200.0f;
 	cpu_spheres[0].position = create_cfloat3 (-200.6f, 0.0f, 0.0f);
 	cpu_spheres[0].color    = create_cfloat3 (0.75f, 0.25f, 0.25f);
 	cpu_spheres[0].emission = create_cfloat3 (0.0f, 0.0f, 0.0f);
-
+	cpu_spheres[0].type = SPHERE;
 	// right wall
 	cpu_spheres[1].radius	= 200.0f;
 	cpu_spheres[1].position = create_cfloat3 (200.6f, 0.0f, 0.0f);
 	cpu_spheres[1].color    = create_cfloat3 (0.25f, 0.25f, 0.75f);
 	cpu_spheres[1].emission = create_cfloat3 (0.0f, 0.0f, 0.0f);
-
+	cpu_spheres[1].type = SPHERE;
 	// floor
 	cpu_spheres[2].radius	= 200.0f;
 	cpu_spheres[2].position = create_cfloat3 (0.0f, -200.4f, 0.0f);
 	cpu_spheres[2].color	= create_cfloat3 (0.9f, 0.8f, 0.7f);
 	cpu_spheres[2].emission = create_cfloat3 (0.0f, 0.0f, 0.0f);
-
+	cpu_spheres[2].type = SPHERE;
 	// ceiling
 	cpu_spheres[3].radius	= 200.0f;
 	cpu_spheres[3].position = create_cfloat3 (0.0f, 200.4f, 0.0f);
 	cpu_spheres[3].color	= create_cfloat3 (0.9f, 0.8f, 0.7f);
 	cpu_spheres[3].emission = create_cfloat3 (0.0f, 0.0f, 0.0f);
-
+	cpu_spheres[3].type = SPHERE;
 	// back wall
 	cpu_spheres[4].radius   = 200.0f;
 	cpu_spheres[4].position = create_cfloat3 (0.0f, 0.0f, -200.4f);
 	cpu_spheres[4].color    = create_cfloat3 (0.9f, 0.8f, 0.7f);
 	cpu_spheres[4].emission = create_cfloat3 (0.0f, 0.0f, 0.0f);
-
+	cpu_spheres[4].type = SPHERE;
 	// front wall 
 	cpu_spheres[5].radius   = 200.0f;
 	cpu_spheres[5].position = create_cfloat3 (0.0f, 0.0f, 202.0f);
 	cpu_spheres[5].color    = create_cfloat3 (0.9f, 0.8f, 0.7f);
 	cpu_spheres[5].emission = create_cfloat3 (0.0f, 0.0f, 0.0f);
-
+	cpu_spheres[5].type = SPHERE;
 	// left sphere
 	cpu_spheres[6].radius   = 0.16f;
 	cpu_spheres[6].position = create_cfloat3 (-0.25f, -0.24f, -0.1f);
 	cpu_spheres[6].color    = create_cfloat3 (0.9f, 0.0f, 0.0f);
 	cpu_spheres[6].emission = create_cfloat3 (0.0f, 0.0f, 0.0f);
-
+	cpu_spheres[6].type = SPHERE;
 	// right sphere
 	cpu_spheres[7].radius   = 0.16f;
 	cpu_spheres[7].position = create_cfloat3 (0.25f, -0.24f, 0.1f);
 	cpu_spheres[7].color    = create_cfloat3 (0.9f, 0.8f, 0.7f);
 	cpu_spheres[7].emission = create_cfloat3 (0.0f, 0.0f, 0.0f);
+	cpu_spheres[7].type = SPHERE;
 
 	// lightsource
 	cpu_spheres[8].radius   = 1.0f;
 	cpu_spheres[8].position = create_cfloat3 (0.0f, 1.36f, 0.0f);
 	cpu_spheres[8].color    = create_cfloat3 (0.0f, 0.0f, 0.0f);
 	cpu_spheres[8].emission = create_cfloat3 (9.0f, 8.0f, 6.0f);
-	
+	cpu_spheres[8].type = SPHERE;
 }
 
 int opencl_init(t_gpu *gpu, t_game *game)
@@ -233,7 +235,7 @@ int opencl_init(t_gpu *gpu, t_game *game)
     gpu_read_kernel(gpu);
 	gpu->kernel = clCreateKernel(gpu->program, "render_kernel", &gpu->err);
 	gpu->cpuOutput = malloc(sizeof(int) * (WIN_H * WIN_H));
-	gpu->spheres = malloc(sizeof(t_spher) * 9);
+	gpu->spheres = malloc(sizeof(t_obj) * 9);
 	initScene(gpu->spheres);
 	bind_data(gpu, &game->main_objs);
     return (gpu->err);

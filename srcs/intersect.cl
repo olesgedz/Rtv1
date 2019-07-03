@@ -1,19 +1,24 @@
 
 __constant float EPSILON = 0.00003f; /* required to compensate for limited float precision */
 __constant float PI = 3.14159265359f;
-__constant int SAMPLES = 50;
+__constant int SAMPLES = 20;
 
 typedef struct Ray{
 	float3 origin;
 	float3 dir;
 } Ray;
 
-typedef struct Sphere{
+typedef enum e_figure {
+	 SPHERE, CYLINDER, CONE, PLANE
+	} t_type;
+
+typedef struct Object{
 	float radius;
-	float3 pos;
+	float3 position;
 	float3 color;
 	float3 emission;
-} Sphere;
+	t_type type;
+} t_obj;
 
 static float get_random( int *seed0, int *seed1) {
 
@@ -55,9 +60,9 @@ static Ray createCamRay(const int x_coord, const int y_coord, const int width, c
 }
 
 				/* (__global Sphere* sphere, const Ray* ray) */
-static float intersect_sphere(const Sphere* sphere, const Ray* ray) /* version using local copy of sphere */
+static float intersect_sphere(const t_obj* sphere, const Ray* ray) /* version using local copy of sphere */
 {
-	float3 rayToCenter = sphere->pos - ray->origin;
+	float3 rayToCenter = sphere->position - ray->origin;
 	float b = dot(rayToCenter, ray->dir);
 	float c = dot(rayToCenter, rayToCenter) - sphere->radius*sphere->radius;
 	float disc = b * b - c;
@@ -71,7 +76,7 @@ static float intersect_sphere(const Sphere* sphere, const Ray* ray) /* version u
 	return 0.0f;
 }
 
-static bool intersect_scene(__constant Sphere* spheres, const Ray* ray, float* t, int* sphere_id, const int sphere_count)
+static bool intersect_scene(__constant t_obj* spheres, const Ray* ray, float* t, int* sphere_id, const int sphere_count)
 {
 	/* initialise t to a very large number, 
 	so t will be guaranteed to be smaller
@@ -83,9 +88,10 @@ static bool intersect_scene(__constant Sphere* spheres, const Ray* ray, float* t
 	/* check if the ray intersects each sphere in the scene */
 	for (int i = 0; i < sphere_count; i++)  {
 		
-		Sphere sphere = spheres[i]; /* create local copy of sphere */
+		t_obj sphere = spheres[i]; /* create local copy of sphere */
 		
 		/* float hitdistance = intersect_sphere(&spheres[i], ray); */
+		//if(sphere.type == SPHERE)
 		float hitdistance = intersect_sphere(&sphere, ray);
 		/* keep track of the closest intersection and hitobject found so far */
 		if (hitdistance != 0.0f && hitdistance < *t) {
@@ -102,7 +108,7 @@ static bool intersect_scene(__constant Sphere* spheres, const Ray* ray, float* t
 /* each ray hitting a surface will be reflected in a random direction (by randomly sampling the hemisphere above the hitpoint) */
 /* small optimisation: diffuse ray directions are calculated using cosine weighted importance sampling */
 
-static float3 trace(__constant Sphere* spheres, const Ray* camray, const int sphere_count, const int* seed0, const int* seed1){
+static float3 trace(__constant t_obj* spheres, const Ray* camray, const int sphere_count, const int* seed0, const int* seed1){
 
 	Ray ray = *camray;
 
@@ -119,13 +125,13 @@ static float3 trace(__constant Sphere* spheres, const Ray* camray, const int sph
 			return accum_color += mask * (float3)(0.15f, 0.15f, 0.25f);
 
 		/* else, we've got a hit! Fetch the closest hit sphere */
-		Sphere hitsphere = spheres[hitsphere_id]; /* version with local copy of sphere */
+		t_obj hitsphere = spheres[hitsphere_id]; /* version with local copy of sphere */
 
 		/* compute the hitpoint using the ray equation */
 		float3 hitpoint = ray.origin + ray.dir * t;
 		
 		/* compute the surface normal and flip it if necessary to face the incoming ray */
-		float3 normal = normalize(hitpoint - hitsphere.pos); 
+		float3 normal = normalize(hitpoint - hitsphere.position); 
 		float3 normal_facing = dot(normal, ray.dir) < 0.0f ? normal : normal * (-1.0f);
 
 		/* compute two random numbers to pick a random point on the hemisphere above the hitpoint*/
@@ -172,11 +178,10 @@ static float clamp1(float x)
 }
 
 static int toInt(float x){ return int(clamp1(x) * 255); }
-__kernel void render_kernel(__global int* output, int width, int height, int n_spheres, __constant Sphere* spheres)
+__kernel void render_kernel(__global int* output, int width, int height, int n_spheres, __constant t_obj* spheres)
 {
-
-
-unsigned int work_item_id = get_global_id(0);	/* the unique global id of the work item for the current pixel */
+	
+	unsigned int work_item_id = get_global_id(0);	/* the unique global id of the work item for the current pixel */
 	unsigned int x_coord = work_item_id % width;			/* x-coordinate of the pixel */
 	unsigned int y_coord = work_item_id / width;			/* y-coordinate of the pixel */
 	
