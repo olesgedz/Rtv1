@@ -17,6 +17,7 @@ typedef struct Object{
 	float3 position;
 	float3 color;
 	float3 emission;
+	float3 v;
 	t_type type;
 } t_obj;
 
@@ -53,31 +54,68 @@ static Ray createCamRay(const int x_coord, const int y_coord, const int width, c
 
 	/* create camera ray*/
 	Ray ray;
-	ray.origin = (float3)(0.0f, 0.1f, 2.0f); /* fixed camera position */
+	ray.origin = (float3)(0.0f, 0.1f, 2.f); /* fixed camera position */
 	ray.dir = normalize(pixel_pos - ray.origin); /* vector from camera to pixel on screen */
-
-	return ray;
+	//  Ray ray;
+    // ray.origin = (float3)(x_coord, y_coord, 0.f); /* fixed camera position */
+    // ray.dir = normalize(pixel_pos - ray.origin); /* vector from camera to pixel on screen //*/
+    return ray;
 }
 
+ 
 static float ft_solve(float a, float b, float c)
 {
-	float disc = b * b - c;
+	float  disc = b * b - 4*a*c;
 
-	if (disc < 0.0f) return 0.0f;
-	else disc = sqrt(disc);
-
-	if ((b - disc) > EPSILON) return b - disc;
-	if ((b + disc) > EPSILON) return b + disc;
+ 	if (disc < 0.0f) return 0.0f;
+    else disc = sqrt(disc);
+    	float temp = 1/(2*a);
+	if ((-b - disc)*temp > EPSILON) return (-b - disc)*temp;
+    if ((-b + disc)*temp > EPSILON) return (-b + disc)*temp;
+	return(0.f);
 }
 
 				/* (__global Sphere* sphere, const Ray* ray) */
+static float intersect_cone(const t_obj* cone, const Ray* ray) /* version using local copy of sphere */
+{
+	float3	x;
+	float	a;
+	float	b;
+	float	c;
+	x = ray->origin - cone->position;
+	a = dot(ray->dir, cone->v);
+	a = dot(ray->dir, ray->dir) - (1 + cone->radius * cone->radius) * a * a;
+	b = 2.0 * (dot(ray->dir, x) - (1 + cone->radius * cone->radius)
+		* dot(ray->dir, cone->v) * dot(x, cone->v));
+	c = dot(x, cone->v);
+	c = dot(x, x) - (1 + cone->radius * cone->radius) * c * c;	
+	return (ft_solve(a, b, c));
+}
+
 static float intersect_sphere(const t_obj* sphere, const Ray* ray) /* version using local copy of sphere */
 {
-	float3 temp =  sphere->position  - ray->origin  ;
-	float a = dot(ray->dir, ray->dir);
-	float b = dot(temp, ray->dir);
-	float c = dot(temp, temp) - sphere->radius*sphere->radius;
-	
+	float3 rayToCenter = ray->origin - sphere->position;
+    float a = dot(ray->dir, ray->dir);
+    float b = 2*dot(rayToCenter, ray->dir);
+    float c = dot(rayToCenter, rayToCenter) - sphere->radius*sphere->radius;	
+	return (ft_solve(a, b, c));
+}
+
+static double		intersect_cylinder(const t_obj* cylinder, const Ray* ray)
+{
+	float3	x;
+	double	a;
+	double	b;
+	double	c;
+	double	d;
+
+	x = ray->origin - cylinder->position;
+	a = dot(ray->dir, cylinder->v);
+	a = dot(ray->dir, ray->dir) - a * a;
+	b = 2 * (dot(ray->dir, x) - dot(ray->dir, cylinder->v)
+		* dot(x, cylinder->v));
+	c = dot(x, cylinder->v);
+	c = dot(x, x) - c * c - cylinder->radius * cylinder->radius;
 	return (ft_solve(a, b, c));
 }
 
@@ -96,8 +134,13 @@ static bool intersect_scene(__constant t_obj* spheres, const Ray* ray, float* t,
 		t_obj sphere = spheres[i]; /* create local copy of sphere */
 		
 		/* float hitdistance = intersect_sphere(&spheres[i], ray); */
-		//if(sphere.type == SPHERE)
-		float hitdistance = intersect_sphere(&sphere, ray);
+		float hitdistance =0;
+		if (sphere.type == SPHERE)
+			hitdistance = intersect_sphere(&sphere, ray);
+		if (sphere.type == CYLINDER)
+			hitdistance = intersect_cylinder(&sphere, ray);
+		if (sphere.type == CONE)
+			hitdistance = intersect_cone(&sphere, ray);
 		/* keep track of the closest intersection and hitobject found so far */
 		if (hitdistance != 0.0f && hitdistance < *t) {
 			*t = hitdistance;

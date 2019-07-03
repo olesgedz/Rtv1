@@ -43,6 +43,7 @@ typedef struct Object{
 	cl_float3 position;
 	cl_float3 color;
 	cl_float3 emission;
+	cl_float3 v;
 	t_type type;
 } t_obj;
 

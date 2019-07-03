@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersect.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 16:17:28 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/06/21 16:39:45 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/07/03 20:51:35 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,21 +142,6 @@ extern inline float ft_vec3_multiply_cylinder(t_vec3 a, t_vec3 b)
 {
 	return (a.x * b.x + a.z * b.z);
 }
-
-// double		cylinder_intersection(void *object, t_ray *ray, float *t0)
-// {
-// 	double a;
-// 	double b;
-// 	double c;
-// 	t_cylinder *cyl;
-
-// 	cyl = (t_cylinder *)((t_object *)object)->object;
-// 	t_vec3 temp = ft_vec3_substract(ray->orig, cyl->center);
-// 	a =  ft_vec3_multiply_cylinder(ray->dir, ray->dir);
-// 	b = ft_vec3_multiply_cylinder(ft_vec3_scalar_multiply(temp, 2), ray->dir);
-// 	c = ft_vec3_multiply_cylinder(temp, temp) - cyl->radius * cyl->radius;
-// 	return (get_solution(a, b, c, t0));
-// }
 
 double		cylinder_intersection(void *object, t_ray *ray, float *t0)
 {

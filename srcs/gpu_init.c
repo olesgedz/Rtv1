@@ -194,14 +194,16 @@ void initScene(t_obj* cpu_spheres){
 	cpu_spheres[6].radius   = 0.16f;
 	cpu_spheres[6].position = create_cfloat3 (-0.25f, -0.24f, -0.1f);
 	cpu_spheres[6].color    = create_cfloat3 (0.9f, 0.0f, 0.0f);
+	cpu_spheres[6].v = create_cfloat3 (0.0f, 1.0f, 0.0f);
 	cpu_spheres[6].emission = create_cfloat3 (0.0f, 0.0f, 0.0f);
-	cpu_spheres[6].type = SPHERE;
+	cpu_spheres[6].type = CONE;
 	// right sphere
 	cpu_spheres[7].radius   = 0.16f;
 	cpu_spheres[7].position = create_cfloat3 (0.25f, -0.24f, 0.1f);
 	cpu_spheres[7].color    = create_cfloat3 (0.9f, 0.8f, 0.7f);
 	cpu_spheres[7].emission = create_cfloat3 (0.0f, 0.0f, 0.0f);
-	cpu_spheres[7].type = SPHERE;
+	cpu_spheres[7].v = create_cfloat3 (0.0f, 1.0f, 0.0f);
+	cpu_spheres[7].type = CYLINDER;
 
 	// lightsource
 	cpu_spheres[8].radius   = 1.0f;
