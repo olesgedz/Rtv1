@@ -6,16 +6,17 @@
 #    By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/16 12:58:07 by jblack-b          #+#    #+#              #
-#    Updated: 2019/06/07 19:20:40 by jblack-b         ###   ########.fr        #
+#    Updated: 2019/06/23 17:07:23 by jblack-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = rtv1
 
-FLAGS = -g -O3
+FLAGS = -g
 CC = gcc
-LIBRARIES = -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY) #-lmath -L$(LIBMATH_DIRECTORY)
+LIBRARIES = -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY) -lm -framework OpenCL #-lmath -L$(LIBMATH_DIRECTORY)
 INCLUDES = -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBSDL_HEADERS) # -I$(LIBMATH_HEADERS)
+FRAMEWORKS = -framework OpenCL
 
 LIBFT = $(LIBFT_DIRECTORY)libft.a
 LIBFT_DIRECTORY = ./libft/
@@ -52,7 +53,7 @@ LIB_LIST =	libSDL2.a\
 
 SRCS_DIRECTORY = ./srcs/
 
-SRCS_LIST = main.c map_parser.c vectors.c quaternion.c rotate.c intersect.c matrix.c normals.c math.c
+SRCS_LIST = main.c map_parser.c vectors.c quaternion.c rotate.c intersect.c matrix.c normals.c math.c gpu_init.c
 
 
 OBJS_DIRECTORY = objects/
@@ -87,7 +88,7 @@ all: $(MAKES) $(NAME)
 
 
 $(NAME): $(LIBFT)  $(LIBSDL) $(OBJS_DIRECTORY) $(OBJS) $(HEADERS) #$(LIBMATH) 
-	@$(CC) $(FLAGS) $(LIBRARIES) $(INCLUDES) $(OBJS) $(SDL_CFLAGS) $(SDL_LDFLAGS) -o $(NAME)
+	@$(CC) $(FLAGS) $(LIBSDL) $(INCLUDES) $(OBJS) $(SDL_CFLAGS) $(SDL_LDFLAGS) -o $(NAME) $(LIBRARIES)
 	@echo "$(CLEAR_LINE)[`expr $(CURRENT_FILES) '*' 100 / $(TOTAL_FILES)`%] $(COL_BLUE)[$(NAME)] $(COL_GREEN)Finished compilation. Output file : $(COL_VIOLET)$(PWD)/$(NAME)$(COL_END)"
 
 $(MAKES):

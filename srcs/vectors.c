@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 20:23:19 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/06/12 19:15:35 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/06/21 15:25:47 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ extern inline t_vec3	ft_vec3_substract(t_vec3 a, t_vec3 b)
 
 extern inline void ft_vec3_print(t_vec3 a)
 {
-	printf("x:%f y:%f z:%f total:%f\n", a.x, a.y, a.z, a.z * a.z + a.x * a.x + a.y * a.y);
+	printf("x:%f y:%f z:%f w:%f\n", a.x, a.y, a.z, a.w);
 }
 
 /*
@@ -165,6 +165,22 @@ extern inline t_vec3 ft_vec3_neg(t_vec3 v)
 {
 	return (ft_vec3_scalar_multiply(v, -1));
 }
+
+double	ft_vec3_angle(t_vec3 a, t_vec3 b)
+{
+	t_vec3	v1;
+	t_vec3	v2;
+
+	v1 = ft_vec3_normalize(a);
+	v2 = ft_vec3_normalize(b);
+	return (acos(ft_vec3_dot_multiply(v1, v2)));
+}
+
+double			ft_vec3_length(t_vec3 v1)
+{
+	return (sqrt(v1.x * v1.x + v1.y * v1.y + v1.z * v1.z));
+}
+
 
 extern inline t_vec3 ft_vec3_sum_poin3(t_vec3 a, t_point3 b)
 {

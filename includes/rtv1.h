@@ -1,9 +1,10 @@
 #ifndef RTV1_H
 #define RTV1_H
 
-#define WIN_W 1280
-#define WIN_H 720
+#define WIN_W 1200
+#define WIN_H 600
 
+#include <sys/types.h>
 #include "SDL2/SDL.h"
 #include "libsdl.h"
 #include "libft.h"
@@ -11,9 +12,22 @@
 #include <limits.h>
 #include <float.h>
 #include <math.h>
+
+#ifdef __APPLE__
+#include <OpenCL/opencl.h>
+#else
+#include <Cl/cl.h>
+#endif
+
+#ifndef DEVICE
+#define DEVICE CL_DEVICE_TYPE_DEFAULT
+#endif
 //#include "libmath.h"
 # define DROUND(d)	ABS(d) < 0.00001 ? 0 : (d)
 //#define float double
+typedef enum e_figure {
+	 SPHERE, CYLINDER, CONE, PLANE
+	} t_type;
 
 typedef struct s_vertex t_vertex;
 typedef struct s_sector t_sector;
@@ -21,6 +35,30 @@ typedef struct s_object t_object;
 typedef struct s_coord t_coord;
 typedef	struct 	s_vec3 t_vec3;
 typedef	struct 	s_vec4 t_vec4;
+
+
+
+typedef struct Object{
+	float radius;
+	cl_float3 position;
+	cl_float3 color;
+	cl_float3 emission;
+	cl_float3 v;
+	t_type type;
+} t_obj;
+
+
+
+// typedef struct Sphere1
+// {
+//  cl_float radius;
+//  cl_float dummy1;   
+//  cl_float dummy2;
+//  cl_float dummy3;
+//  cl_float3 position;
+//  cl_float3 color;
+//  cl_float3 emission;
+// } t_spher;
 
 typedef	struct s_point3
 {
@@ -78,14 +116,17 @@ typedef struct s_ray
 {
 	t_vec3 orig;
 	t_vec3 dir;
+	t_vec3 hit;
+	double t;
+
 } t_ray;
 
-typedef struct Material {
+typedef struct	Material {
 	t_vec3 diffuse_color;
 	t_vec3 albendo;
 	float specular_exponent;
 	float refractive_index;
-} t_material;
+}				t_material;
 
 typedef struct s_light {
 	t_vec3 position;
@@ -105,32 +146,47 @@ typedef struct		s_triangle
 	t_vec3		c;
 	t_material material;
 } t_triangle;
-// typedef s_object
+
+// struct s_object
 // {
-// 	t_vec3 pos;
-// 	t_vec3 v;
-// 	t_material material;
-// 	float radius;
-// } t_object;
+// 	void *object;
+// 	double (*intersect)();
+// 	t_vec3 (*get_normal)();
+// }; 
+
+struct s_object
+{
+	cl_int		type;
+	cl_float	radius;
+	cl_float3	pos;
+	cl_float3	color;
+	cl_float3	emission;
+	cl_float3	dir;
+	cl_float	angle;
+	cl_float	plane_d;
+}; 
 
 typedef struct s_sphere
 {
-	t_vec3 center;
-	t_material material;
-	float radius;
-	t_vec3 v;
-	double			angle;
+	t_vec3 		center;
+	t_material	material;
+	float		radius;
+	t_vec3 		v;
+	double		angle;
 	t_vec3		tip;
+	int			type;
 } t_sphere;
 
 
 typedef	struct s_cylinder
 {
-	t_vec3	center;
-	t_material material;
-	float	radius;
-	int		min;
-	int		max;
+	t_vec3		center;
+	t_material	material;
+	float		radius;
+	t_vec3		v;
+	int			min;
+	int			max;
+	int			type;
 }				t_cylinder;
 
 typedef	struct		s_cone
@@ -139,12 +195,13 @@ typedef	struct		s_cone
 	// t_vec3		direction;
 	// double			angle;
 	// t_material material;
-	t_vec3 center;
-	t_material material;
-	float radius;
-	t_vec3 v;
-	double			angle;
+	t_vec3		center;
+	t_material	material;
+	float		radius;
+	t_vec3		v;
+	double		angle;
 	t_vec3		tip;
+	int			type;
 }					t_cone;
 
 
@@ -163,7 +220,7 @@ typedef struct s_coord
 
 typedef struct s_polygon
 {
-	t_vertex **vertices;
+t_vertex **vertices;
 	int nvertices;
 	//Texture
 	t_sector *sector;
@@ -172,17 +229,11 @@ typedef struct s_polygon
 
 typedef struct s_plane
 {
-	t_vec3 point;
-	t_normal3 normal;
-	t_material material;
+	t_vec3		point;
+	t_vec3		normal;
+	t_material	material;
+	int			type;
 } t_plane;
-
-struct s_object
-{
-	t_polygon *polygons;
-	t_object *childs;
-	//matrix matrix
-};
 
 struct s_sector
 {
@@ -194,12 +245,37 @@ typedef  struct s_world
 	t_sector *sectors;
 } t_world;
 
+typedef struct	s_main_obj
+{
+	t_object	*figures;
+	int			figures_num;
+	t_light		*lights;
+	int			elum_num;
+	double		closest;
+
+}				t_main_obj;
+
+typedef struct s_gpu
+{
+    cl_device_id		device_id;     // compute device id
+    cl_context			context;       // compute context
+    cl_command_queue	commands;      // compute command queue
+    cl_program			program;       // compute program
+    cl_kernel			kernel;       // compute kernel
+	cl_uint				numPlatforms;
+	cl_int				err;
+	char*				kernel_source;
+	int * cpuOutput;
+	t_obj *spheres;
+	cl_mem cl_bufferOut;
+	cl_mem cl_cpuSpheres;
+}				t_gpu;
+
 typedef struct s_game
 {
 	t_sdl *sdl;
 	t_surface *image;
 	t_list *verties;
-	t_lights elum;
 	t_sphere *spheres;
 	t_cone *cones;
 	t_cylinder *cylinders;
@@ -208,9 +284,13 @@ typedef struct s_game
 	int n_cylinders;
 	int wsad[8];
 	t_vec3 origin;
-	double closest;
+	t_main_obj	main_objs;
+	t_gpu *gpu;
 } t_game;
 
+int bind_data(t_gpu *gpu, t_main_obj *main);
+void release_gpu(t_gpu *gpu);
+void ft_run_gpu(t_gpu *gpu);
 void	configure_sphere(char *map_name, t_sphere *sphere);
 // inline t_vec3 ft_vec3_create(float x, float y, float z);
 // inline t_vec3	ft_vec3_sum(t_vec3 a, t_vec3 b);
@@ -255,6 +335,8 @@ t_point3 ft_point3_scalar_multiply(t_point3 a, double b);
 	void ft_vec3_print(t_vec3 a);
 	t_vec3 ft_vec3_neg(t_vec3 v);
 	t_vec3	ft_vec3_multiply_matrix(t_vec3 v, t_mat4 m);
+	double	ft_vec3_angle(t_vec3 a, t_vec3 b);
+	double			ft_vec3_length(t_vec3 v1);
 
 t_quaternion t_quaternion_sum(t_quaternion a, t_quaternion b);
 t_quaternion t_quaternion_substract(t_quaternion a, t_quaternion b);
@@ -297,17 +379,11 @@ extern inline t_normal3	ft_normal3_sum(t_normal3 a, t_normal3 b);
 inline t_normal3 ft_normal3_scalar_multiply(t_normal3 a, float b);
 
 //intersect
-int ray_intersect(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
-double		ray_intersect_sphere(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
-double		ray_intersect_cylinder(t_sphere *cylinder, t_vec3 *orig, t_vec3 *dir, float *t0);
-double		ray_intersect_cone(t_sphere *cone, t_vec3 *orig, t_vec3 *dir, float *t0);
-double		ray_intersect_sphere_book(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
-double				sphere_intersection3(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
-double				cylinder_intersection(t_sphere *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
-double				cone_intersection(t_cone *cone, t_vec3 *orig, t_vec3 *dir, float *t0);
-double				plane_intersection(t_ray ray, t_triangle triangle, float *t0);
-double				plane_intersection2(t_ray ray, t_plane plane, float *t0);
-double		ray_intersect_cone_book(t_cone *sphere, t_vec3 *orig, t_vec3 *dir, float *t0);
-int		cone_intersection1(void *vcone, t_vec3 *orig, t_vec3 *dir, float *t0);
-int		cylinder_intersection1(void *cylinder, t_vec3 *orig, t_vec3 *dir, float *t0);
+double		sphere_intersection(void *figure, t_ray *ray, float *t0);
+double		cone_intersection(void *object, t_ray *ray, float *t0);
+double		cylinder_intersection(void *object, t_ray *ray, float *t0);
+double		plane_intersection(void *object, t_ray *ray, float *t0);
+
+
+int			opencl_init(t_gpu *gpu, t_game *game);
 #endif
