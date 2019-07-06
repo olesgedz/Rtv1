@@ -25,8 +25,9 @@
 //#include "libmath.h"
 # define DROUND(d)	ABS(d) < 0.00001 ? 0 : (d)
 //#define float double
-
-enum e_figure {PLANE, SPHERE, CYLINDER, CONE};
+typedef enum e_figure {
+	 SPHERE, CYLINDER, CONE, PLANE
+	} t_type;
 
 typedef struct s_vertex t_vertex;
 typedef struct s_sector t_sector;
@@ -36,16 +37,28 @@ typedef	struct 	s_vec3 t_vec3;
 typedef	struct 	s_vec4 t_vec4;
 
 
-typedef struct Sphere1
-{
- cl_float radius;
- cl_float dummy1;   
- cl_float dummy2;
- cl_float dummy3;
- cl_float3 position;
- cl_float3 color;
- cl_float3 emission;
-} t_spher;
+
+typedef struct Object{
+	float radius;
+	cl_float3 position;
+	cl_float3 color;
+	cl_float3 emission;
+	cl_float3 v;
+	t_type type;
+} t_obj;
+
+
+
+// typedef struct Sphere1
+// {
+//  cl_float radius;
+//  cl_float dummy1;   
+//  cl_float dummy2;
+//  cl_float dummy3;
+//  cl_float3 position;
+//  cl_float3 color;
+//  cl_float3 emission;
+// } t_spher;
 
 typedef	struct s_point3
 {
@@ -253,7 +266,7 @@ typedef struct s_gpu
 	cl_int				err;
 	char*				kernel_source;
 	int * cpuOutput;
-	t_spher *spheres;
+	t_obj *spheres;
 	cl_mem cl_bufferOut;
 	cl_mem cl_cpuSpheres;
 }				t_gpu;
