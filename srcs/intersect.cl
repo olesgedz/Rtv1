@@ -213,13 +213,15 @@ static float3 trace(__constant t_obj* spheres, const Ray* camray, const int sphe
 		float3 newdir = normalize(u * cos(rand1)*rand2s + v*sin(rand1)*rand2s + w*sqrt(1.0f - rand2));
 
 		/* add a very small offset to the hitpoint to prevent self intersection */
-		ray.origin = hitpoint + normal_facing * EPSILON;
 		if (hitsphere.reflection > 0) {
-			ray.dir = reflect(ray.dir, normal);
+			ray.dir = reflect(ray.dir, normal_facing);
+			ray.origin = hitpoint + ray.dir * EPSILON;
+
 			accum_color += mask * hitsphere.emission; 	/* add the colour and light contributions to the accumulated colour */ 
 			mask *= hitsphere.color * hitsphere.reflection;	/* the mask colour picks up surface colours at each bounce */
 		} else {
 			ray.dir = newdir;
+			ray.origin = hitpoint + ray.dir * EPSILON;
 			accum_color += mask * hitsphere.emission; 
 			mask *= hitsphere.color;
 		}
