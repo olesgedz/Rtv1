@@ -45,6 +45,8 @@ typedef struct Object{
 	cl_float3 emission;
 	cl_float3 v;
 	t_type type;
+	cl_float refraction;
+	cl_float reflection;
 } t_obj;
 
 

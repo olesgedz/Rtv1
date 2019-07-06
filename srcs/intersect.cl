@@ -1,7 +1,7 @@
 
 __constant float EPSILON = 0.00003f; /* required to compensate for limited float precision */
 __constant float PI = 3.14159265359f;
-__constant int SAMPLES = 500;
+__constant int SAMPLES = 512;
 
 typedef struct Ray
 {
@@ -21,6 +21,9 @@ typedef struct Object{
 	float3 emission;
 	float3 v;
 	t_type type;
+	float refraction;
+	float reflection;
+
 } t_obj;
 
 static float get_random( int *seed0, int *seed1) {
@@ -40,6 +43,18 @@ static float get_random( int *seed0, int *seed1) {
 
 	res.ui = (ires & 0x007fffff) | 0x40000000;  /* bitwise AND, bitwise OR */
 	return (res.f - 2.0f) / 2.0f;
+}
+
+float3 reflect(float3 vector, float3 n) 
+{ 
+    return vector - 2 * dot(vector, n) * n; 
+} 
+
+float3 refract(float3 vector, float3 n, float refrIndex)
+{
+	float cosI = -dot(n, vector);
+	float cosT2 = 1.0f - refrIndex * refrIndex * (1.0f - cosI * cosI);
+	return (refrIndex * vector) + (refrIndex * cosI - sqrt( cosT2 )) * n;
 }
 
 static Ray createCamRay(const int x_coord, const int y_coord, const int width, const int height){
@@ -100,7 +115,7 @@ static float intersect_cone(const t_obj* cone, const Ray* ray) /* version using 
 static float intersect_sphere(const t_obj* sphere, const Ray* ray) /* version using local copy of sphere */
 {
 	float3 rayToCenter = ray->origin - sphere->position;
-    float a = dot(ray->dir, ray->dir);
+    float a = 1;
     float b = 2*dot(rayToCenter, ray->dir);
     float c = dot(rayToCenter, rayToCenter) - sphere->radius*sphere->radius;	
 	return (ft_solve(a, b, c));
@@ -156,21 +171,22 @@ static bool intersect_scene(__constant t_obj* spheres, const Ray* ray, float* t,
 /* each ray hitting a surface will be reflected in a random direction (by randomly sampling the hemisphere above the hitpoint) */
 /* small optimisation: diffuse ray directions are calculated using cosine weighted importance sampling */
 
-static float3 trace(__constant t_obj* spheres, const Ray* camray, const int sphere_count, const int* seed0, const int* seed1){
-
+static float3 trace(__constant t_obj* spheres, const Ray* camray, const int sphere_count, const int* seed0, const int* seed1)
+{
 	Ray ray = *camray;
 
 	float3 accum_color = (float3)(0.0f, 0.0f, 0.0f);
 	float3 mask = (float3)(1.0f, 1.0f, 1.0f);
+	unsigned int max_trace_depth = 8;
 
-	for (int bounces = 0; bounces < 8; bounces++){
-
+	for (int bounces = 0; bounces < max_trace_depth; bounces++)
+	{
 		float t;   /* distance to intersection */
 		int hitsphere_id = 0; /* index of intersected sphere */
 
 		/* if ray misses scene, return background colour */
 		if (!intersect_scene(spheres, &ray, &t, &hitsphere_id, sphere_count))
-			return accum_color += mask * (float3)(0.15f, 0.15f, 0.25f);
+			return mask * (float3)(0.15f, 0.15f, 0.25f);
 
 		/* else, we've got a hit! Fetch the closest hit sphere */
 		t_obj hitsphere = spheres[hitsphere_id]; /* version with local copy of sphere */
@@ -198,16 +214,16 @@ static float3 trace(__constant t_obj* spheres, const Ray* camray, const int sphe
 
 		/* add a very small offset to the hitpoint to prevent self intersection */
 		ray.origin = hitpoint + normal_facing * EPSILON;
-		ray.dir = newdir;
-
-		/* add the colour and light contributions to the accumulated colour */
-		accum_color += mask * hitsphere.emission; 
-
-		/* the mask colour picks up surface colours at each bounce */
-		mask *= hitsphere.color; 
-		
-		/* perform cosine-weighted importance sampling for diffuse surfaces*/
-		mask *= dot(newdir, normal_facing); 
+		if (hitsphere.reflection > 0) {
+			ray.dir = reflect(ray.dir, normal);
+			accum_color += mask * hitsphere.emission; 	/* add the colour and light contributions to the accumulated colour */ 
+			mask *= hitsphere.color * hitsphere.reflection;	/* the mask colour picks up surface colours at each bounce */
+		} else {
+			ray.dir = newdir;
+			accum_color += mask * hitsphere.emission; 
+			mask *= hitsphere.color;
+		}
+		mask *= dot(newdir, normal_facing);
 	}
 
 	return accum_color;
