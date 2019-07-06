@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersect.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 16:17:28 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/07/03 20:51:35 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/06/21 16:39:45 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,90 +94,18 @@ extern inline float ft_vec3_multiply_cone(t_vec3 a, t_vec3 b)
 	return (a.x * b.x - a.y * b.y + a.z * b.z);
 }
 
-double		sphere_intersection(void *figure, t_ray *ray, float *t0)
-{
-	double t;
-	t_sphere *sphere = (t_sphere *) ((t_object *)figure)->object;
-	t_vec3 temp = ft_vec3_substract(ray->orig, sphere->center);
-	double a = ft_vec3_dot_multiply(ray->dir, ray->dir);
-	double b = ft_vec3_dot_multiply(ft_vec3_scalar_multiply(temp, 2), ray->dir);
-	double c = ft_vec3_dot_multiply(temp, temp) - sphere->radius * sphere->radius;
-	return (get_solution(a, b, c, t0));
-}
-
-double	cone_intersection(void *object, t_ray *ray, float *t0)
-{
-	t_vec3	x;
-	double	a;
-	double	b;
-	double	c;
-	double	d;
-	t_cone *cone;
-	cone = (t_cone *)((t_object *)object)->object;
-	x = ft_vec3_substract(ray->orig, cone->center);
-	a = ft_vec3_dot_multiply(ray->dir, cone->v);
-	a = ft_vec3_dot_multiply(ray->dir, ray->dir) - (1 + cone->radius * cone->radius) * a * a;
-	b = 2.0 * (ft_vec3_dot_multiply(ray->dir, x) - (1 + cone->radius * cone->radius)
-		* ft_vec3_dot_multiply(ray->dir, cone->v) * ft_vec3_dot_multiply(x, cone->v));
-	c = ft_vec3_dot_multiply(x, cone->v);
-	c = ft_vec3_dot_multiply(x, x) - (1 + cone->radius * cone->radius) * c * c;
-	return (get_solution(a, b, c, t0));
-}
-
 double		plane_intersection(void *object, t_ray *ray, float *t0)
 {
-	double tmp;
-	t_plane *p;
+	// double tmp;
+	// t_plane *p;
 
-	p = (t_plane *)((t_object *)object)->object;
-	tmp = p->point.x * ray->dir.x + p->point.y * ray->dir.y + p->point.z * ray->dir.z;
-	if (!tmp)
-		return (0);
-	*t0 = -(p->point.x * ray->orig.x +  p->point.y * ray->orig.y +  p->point.z * ray->orig.z +  p->point.w) / tmp;
-	return ((*t0 >= 0.0003) ? 1 : 0);
+	// p = (t_plane *)((t_object *)object)->object;
+	// tmp = p->point.x * ray->dir.x + p->point.y * ray->dir.y + p->point.z * ray->dir.z;
+	// if (!tmp)
+	// 	return (0);
+	// *t0 = -(p->point.x * ray->orig.x +  p->point.y * ray->orig.y +  p->point.z * ray->orig.z +  p->point.w) / tmp;
+	// return ((*t0 >= 0.0003) ? 1 : 0);
 }
-
-
-extern inline float ft_vec3_multiply_cylinder(t_vec3 a, t_vec3 b)
-{
-	return (a.x * b.x + a.z * b.z);
-}
-
-double		cylinder_intersection(void *object, t_ray *ray, float *t0)
-{
-	t_vec3	x;
-	double	a;
-	double	b;
-	double	c;
-	double	d;
-	t_cylinder *cylinder;
-	cylinder = (t_cylinder *)((t_object *)object)->object;
-
-	x = ft_vec3_substract(ray->orig, cylinder->center);
-	a = ft_vec3_dot_multiply(ray->dir, cylinder->v);
-	a = ft_vec3_dot_multiply(ray->dir, ray->dir) - a * a;
-	b = 2 * (ft_vec3_dot_multiply(ray->dir, x) - ft_vec3_dot_multiply(ray->dir, cylinder->v)
-		* ft_vec3_dot_multiply(x, cylinder->v));
-	c = ft_vec3_dot_multiply(x, cylinder->v);
-	c = ft_vec3_dot_multiply(x, x) - c * c - cylinder->radius * cylinder->radius;
-	return (get_solution(a, b, c, t0));
-}
-
-// double		plane_intersection(void *object, t_ray *ray, float *t0)
-// {
-// 	double	t;
-// 	double	a;
-// 	double	b;
-// 	t_plane *plane;
-// 	plane = (t_plane *)((t_object *)object)->object;
-// 	a = ft_vec3_dot_multiply(ft_vec3_substract(ray->orig, plane->point), plane->normal);
-// 	b = ft_vec3_dot_multiply(ray->dir, plane->normal);
-// 	if (b == 0 || (a < 0 && b < 0) || (a > 0 && b > 0))
-// 		return (0);
-// 	*t0 = -a / b;
-// 	//*t0 = ;
-// 	return (*t0 > 0 ? *t0 : -1);
-// }
 
 // double		plane_intersection(void *object, t_ray *ray, float *t0)
 // {

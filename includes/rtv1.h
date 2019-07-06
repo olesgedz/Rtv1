@@ -147,11 +147,23 @@ typedef struct		s_triangle
 	t_material material;
 } t_triangle;
 
+// struct s_object
+// {
+// 	void *object;
+// 	double (*intersect)();
+// 	t_vec3 (*get_normal)();
+// }; 
+
 struct s_object
 {
-	void *object;
-	double (*intersect)();
-	t_vec3 (*get_normal)();
+	cl_int		type;
+	cl_float	radius;
+	cl_float3	pos;
+	cl_float3	color;
+	cl_float3	emission;
+	cl_float3	dir;
+	cl_float	angle;
+	cl_float	plane_d;
 }; 
 
 typedef struct s_sphere
@@ -208,7 +220,7 @@ typedef struct s_coord
 
 typedef struct s_polygon
 {
-	t_vertex **vertices;
+t_vertex **vertices;
 	int nvertices;
 	//Texture
 	t_sector *sector;
@@ -242,9 +254,6 @@ typedef struct	s_main_obj
 	double		closest;
 
 }				t_main_obj;
-
-
-
 
 typedef struct s_gpu
 {
