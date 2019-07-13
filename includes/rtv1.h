@@ -47,6 +47,7 @@ typedef struct Object{
 	t_type type;
 	cl_float refraction;
 	cl_float reflection;
+	cl_float plane_d;
 } t_obj;
 
 

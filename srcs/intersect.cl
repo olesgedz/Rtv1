@@ -23,7 +23,7 @@ typedef struct Object{
 	t_type type;
 	float refraction;
 	float reflection;
-
+	float plane_d;
 } t_obj;
 
 static float get_random( int *seed0, int *seed1) {
@@ -117,6 +117,18 @@ static float intersect_sphere(const t_obj* sphere, const Ray* ray) /* version us
 	return (ft_solve(a, b, c));
 }
 
+double		intersect_plane(const t_obj* plane, const Ray* ray)
+{
+	double	a;
+	double	b;
+	a = dot(plane->position, ray->dir);//ft_vec3_dot_multiply(ft_vec3_substract(ray->orig, plane->point), plane->normal);
+	//b = ft_vec3_dot_multiply(ray->dir, plane->normal);
+	if (a == 0)
+		return (0);
+	b = -(dot(plane->position, ray->origin) + plane->plane_d) / a;
+	return (b < EPSILON) ? 0 : b;
+}
+
 static double		intersect_cylinder(const t_obj* cylinder, const Ray* ray)
 {
 	float3	x = ray->origin - cylinder->position;
@@ -152,6 +164,8 @@ static bool intersect_scene(__constant t_obj* spheres, const Ray* ray, float* t,
 			hitdistance = intersect_cylinder(&sphere, ray);
 		else if (sphere.type == CONE)
 			hitdistance = intersect_cone(&sphere, ray);
+		else if (sphere.type == PLANE)
+			hitdistance = intersect_plane(&sphere, ray);
 		/* keep track of the closest intersection and hitobject found so far */
 		if (hitdistance != 0.0f && hitdistance < *t) {
 			*t = hitdistance;
@@ -173,7 +187,7 @@ static float3 trace(__constant t_obj* spheres, const Ray* camray, const int sphe
 
 	float3 accum_color = (float3)(0.0f, 0.0f, 0.0f);
 	float3 mask = (float3)(1.0f, 1.0f, 1.0f);
-	unsigned int max_trace_depth = 8;
+	unsigned int max_trace_depth = 16;
 
 	for (int bounces = 0; bounces < max_trace_depth; bounces++)
 	{
@@ -182,7 +196,7 @@ static float3 trace(__constant t_obj* spheres, const Ray* camray, const int sphe
 
 		/* if ray misses scene, return background colour */
 		if (!intersect_scene(spheres, &ray, &t, &hitsphere_id, sphere_count))
-			return mask * (float3)(0.15f, 0.15f, 0.25f);
+			return mask * (float3)(0.7f, 0.7f, 0.7f);
 
 		/* else, we've got a hit! Fetch the closest hit sphere */
 		t_obj hitsphere = spheres[hitsphere_id]; /* version with local copy of sphere */
@@ -227,9 +241,7 @@ static float3 trace(__constant t_obj* spheres, const Ray* camray, const int sphe
 	return accum_color;
 }
 
-
-
-static int				ft_rgb_to_hex(int r, int g, int b)
+static int	ft_rgb_to_hex(int r, int g, int b)
 {
 	return (r << 16 | g << 8 | b);
 }
@@ -239,7 +251,11 @@ static float clamp1(float x)
 	return x < 0.0f ? 0.0f : x > 1.0f ? 1.0f : x;
 }
 
-static int toInt(float x){ return int(clamp1(x) * 255); }
+static int toInt(float x)
+{ 
+	return int(clamp1(x) * 255);
+}
+
 __kernel void render_kernel(__global int* output, int width, int height, int n_spheres, __constant t_obj* spheres)
 {
 	
