@@ -74,12 +74,8 @@ static Ray createCamRay(const int x_coord, const int y_coord, const int width, c
 	Ray ray;
 	ray.origin = (float3)(0.0f, 0.1f, 2.f); /* fixed camera position */
 	ray.dir = normalize(pixel_pos - ray.origin); /* vector from camera to pixel on screen */
-	//  Ray ray;
-    // ray.origin = (float3)(x_coord, y_coord, 0.f); /* fixed camera position */
-    // ray.dir = normalize(pixel_pos - ray.origin); /* vector from camera to pixel on screen //*/
     return ray;
 }
-
  
 static float ft_solve(float a, float b, float c)
 {
@@ -149,7 +145,7 @@ static bool intersect_scene(__constant t_obj* spheres, const Ray* ray, float* t,
 		t_obj sphere = spheres[i]; /* create local copy of sphere */
 		
 		/* float hitdistance = intersect_sphere(&spheres[i], ray); */
-		float hitdistance = 0;
+		float hitdistance = 0; 
 		if (sphere.type == SPHERE)
 			hitdistance = intersect_sphere(&sphere, ray);
 		else if (sphere.type == CYLINDER)

@@ -312,8 +312,14 @@ void ft_update(t_game *game)
 		// game->wsad[3] ? eyex += 1 : 0;
 		// game->wsad[4] ? eyey += 1 : 0;
 		// game->wsad[5] ? eyey -= 1 : 0;
-		ft_render(game);
-		ft_surface_present(game->sdl, game->sdl->surface);
+		if (game->init_render || game->wsad[0] || game->wsad[1] ||
+			game->wsad[2] || game->wsad[3] || game->wsad[4] || game->wsad[5] ||
+			game->wsad[6] || game->wsad[7])
+			{
+				game->init_render = 0;
+				ft_render(game);
+				ft_surface_present(game->sdl, game->sdl->surface);
+			}
 	#ifdef FPS
 				 delta_ticks = clock() - current_ticks; //the time, in ms, that took to render the scene
     if(delta_ticks > 0)
@@ -351,6 +357,7 @@ int	main(int argc, char **argv)
 	game.main_objs.lights[2] = (t_light){(t_vec3){-2, 0, -5}, 2};
 	game.main_objs.lights[3] = (t_light){(t_vec3){5, 0, -5}, 2};
 	game.main_objs.elum_num = 5; // number of light sources
+	game.init_render = 1;
 
 	// ft_object_push(&game, &(t_object){&(t_cone){(t_vec3){0, 2, -50}, ivory, 1.5, (t_vec3){0.5, 0.5, 0}, 30, (t_vec3){0, 2, -5}}, cone_intersection, cone_get_normal});
 	// // ft_object_push(&game, &(t_object){&(t_sphere){(t_vec3){1.5, -0.5, -18}, glass, 3, 5}, sphere_intersection, sphere_get_normal});

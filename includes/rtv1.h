@@ -288,6 +288,7 @@ typedef struct s_game
 	t_vec3 origin;
 	t_main_obj	main_objs;
 	t_gpu *gpu;
+	int init_render;
 } t_game;
 
 int bind_data(t_gpu *gpu, t_main_obj *main);
