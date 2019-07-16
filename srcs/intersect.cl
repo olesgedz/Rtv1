@@ -1,7 +1,7 @@
 
 __constant float EPSILON = 0.00003f; /* required to compensate for limited float precision */
 __constant float PI = 3.14159265359f;
-__constant int SAMPLES = 500;
+__constant int SAMPLES = 512;
 
 typedef struct Ray
 {
@@ -21,6 +21,9 @@ typedef struct Object{
 	float3 emission;
 	float3 v;
 	t_type type;
+	float refraction;
+	float reflection;
+	float plane_d;
 } t_obj;
 
 static float get_random( int *seed0, int *seed1) {
@@ -42,6 +45,18 @@ static float get_random( int *seed0, int *seed1) {
 	return (res.f - 2.0f) / 2.0f;
 }
 
+float3 reflect(float3 vector, float3 n) 
+{ 
+    return vector - 2 * dot(vector, n) * n; 
+} 
+
+float3 refract(float3 vector, float3 n, float refrIndex)
+{
+	float cosI = -dot(n, vector);
+	float cosT2 = 1.0f - refrIndex * refrIndex * (1.0f - cosI * cosI);
+	return (refrIndex * vector) + (refrIndex * cosI - sqrt( cosT2 )) * n;
+}
+
 static Ray createCamRay(const int x_coord, const int y_coord, const int width, const int height){
 
 	float fx = (float)x_coord / (float)width;  /* convert int in range [0 - width] to float in range [0-1] */
@@ -59,12 +74,8 @@ static Ray createCamRay(const int x_coord, const int y_coord, const int width, c
 	Ray ray;
 	ray.origin = (float3)(0.0f, 0.1f, 2.f); /* fixed camera position */
 	ray.dir = normalize(pixel_pos - ray.origin); /* vector from camera to pixel on screen */
-	//  Ray ray;
-    // ray.origin = (float3)(x_coord, y_coord, 0.f); /* fixed camera position */
-    // ray.dir = normalize(pixel_pos - ray.origin); /* vector from camera to pixel on screen //*/
     return ray;
 }
-
  
 static float ft_solve(float a, float b, float c)
 {
@@ -100,10 +111,22 @@ static float intersect_cone(const t_obj* cone, const Ray* ray) /* version using 
 static float intersect_sphere(const t_obj* sphere, const Ray* ray) /* version using local copy of sphere */
 {
 	float3 rayToCenter = ray->origin - sphere->position;
-    float a = dot(ray->dir, ray->dir);
+    float a = 1;
     float b = 2*dot(rayToCenter, ray->dir);
     float c = dot(rayToCenter, rayToCenter) - sphere->radius*sphere->radius;	
 	return (ft_solve(a, b, c));
+}
+
+double		intersect_plane(const t_obj* plane, const Ray* ray)
+{
+	double	a;
+	double	b;
+	a = dot(plane->position, ray->dir);//ft_vec3_dot_multiply(ft_vec3_substract(ray->orig, plane->point), plane->normal);
+	//b = ft_vec3_dot_multiply(ray->dir, plane->normal);
+	if (a == 0)
+		return (0);
+	b = -(dot(plane->position, ray->origin) + plane->plane_d) / a;
+	return (b < EPSILON) ? 0 : b;
 }
 
 static double		intersect_cylinder(const t_obj* cylinder, const Ray* ray)
@@ -134,13 +157,15 @@ static bool intersect_scene(__constant t_obj* spheres, const Ray* ray, float* t,
 		t_obj sphere = spheres[i]; /* create local copy of sphere */
 		
 		/* float hitdistance = intersect_sphere(&spheres[i], ray); */
-		float hitdistance = 0;
+		float hitdistance = 0; 
 		if (sphere.type == SPHERE)
 			hitdistance = intersect_sphere(&sphere, ray);
 		else if (sphere.type == CYLINDER)
 			hitdistance = intersect_cylinder(&sphere, ray);
 		else if (sphere.type == CONE)
 			hitdistance = intersect_cone(&sphere, ray);
+		else if (sphere.type == PLANE)
+			hitdistance = intersect_plane(&sphere, ray);
 		/* keep track of the closest intersection and hitobject found so far */
 		if (hitdistance != 0.0f && hitdistance < *t) {
 			*t = hitdistance;
@@ -156,21 +181,22 @@ static bool intersect_scene(__constant t_obj* spheres, const Ray* ray, float* t,
 /* each ray hitting a surface will be reflected in a random direction (by randomly sampling the hemisphere above the hitpoint) */
 /* small optimisation: diffuse ray directions are calculated using cosine weighted importance sampling */
 
-static float3 trace(__constant t_obj* spheres, const Ray* camray, const int sphere_count, const int* seed0, const int* seed1){
-
+static float3 trace(__constant t_obj* spheres, const Ray* camray, const int sphere_count, const int* seed0, const int* seed1)
+{
 	Ray ray = *camray;
 
 	float3 accum_color = (float3)(0.0f, 0.0f, 0.0f);
 	float3 mask = (float3)(1.0f, 1.0f, 1.0f);
+	unsigned int max_trace_depth = 16;
 
-	for (int bounces = 0; bounces < 8; bounces++){
-
+	for (int bounces = 0; bounces < max_trace_depth; bounces++)
+	{
 		float t;   /* distance to intersection */
 		int hitsphere_id = 0; /* index of intersected sphere */
 
 		/* if ray misses scene, return background colour */
 		if (!intersect_scene(spheres, &ray, &t, &hitsphere_id, sphere_count))
-			return accum_color += mask * (float3)(0.15f, 0.15f, 0.25f);
+			return mask * (float3)(0.7f, 0.7f, 0.7f);
 
 		/* else, we've got a hit! Fetch the closest hit sphere */
 		t_obj hitsphere = spheres[hitsphere_id]; /* version with local copy of sphere */
@@ -197,25 +223,25 @@ static float3 trace(__constant t_obj* spheres, const Ray* camray, const int sphe
 		float3 newdir = normalize(u * cos(rand1)*rand2s + v*sin(rand1)*rand2s + w*sqrt(1.0f - rand2));
 
 		/* add a very small offset to the hitpoint to prevent self intersection */
-		ray.origin = hitpoint + normal_facing * EPSILON;
-		ray.dir = newdir;
+		if (hitsphere.reflection > 0) {
+			ray.dir = reflect(ray.dir, normal_facing);
+			ray.origin = hitpoint + ray.dir * EPSILON;
 
-		/* add the colour and light contributions to the accumulated colour */
-		accum_color += mask * hitsphere.emission; 
-
-		/* the mask colour picks up surface colours at each bounce */
-		mask *= hitsphere.color; 
-		
-		/* perform cosine-weighted importance sampling for diffuse surfaces*/
-		mask *= dot(newdir, normal_facing); 
+			accum_color += mask * hitsphere.emission; 	/* add the colour and light contributions to the accumulated colour */ 
+			mask *= hitsphere.color * hitsphere.reflection;	/* the mask colour picks up surface colours at each bounce */
+		} else {
+			ray.dir = newdir;
+			ray.origin = hitpoint + ray.dir * EPSILON;
+			accum_color += mask * hitsphere.emission; 
+			mask *= hitsphere.color;
+		}
+		mask *= dot(newdir, normal_facing);
 	}
 
 	return accum_color;
 }
 
-
-
-static int				ft_rgb_to_hex(int r, int g, int b)
+static int	ft_rgb_to_hex(int r, int g, int b)
 {
 	return (r << 16 | g << 8 | b);
 }
@@ -225,7 +251,11 @@ static float clamp1(float x)
 	return x < 0.0f ? 0.0f : x > 1.0f ? 1.0f : x;
 }
 
-static int toInt(float x){ return int(clamp1(x) * 255); }
+static int toInt(float x)
+{ 
+	return int(clamp1(x) * 255);
+}
+
 __kernel void render_kernel(__global int* output, int width, int height, int n_spheres, __constant t_obj* spheres)
 {
 	

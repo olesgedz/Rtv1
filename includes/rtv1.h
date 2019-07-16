@@ -45,6 +45,9 @@ typedef struct Object{
 	cl_float3 emission;
 	cl_float3 v;
 	t_type type;
+	cl_float refraction;
+	cl_float reflection;
+	cl_float plane_d;
 } t_obj;
 
 
@@ -286,6 +289,7 @@ typedef struct s_game
 	t_vec3 origin;
 	t_main_obj	main_objs;
 	t_gpu *gpu;
+	int init_render;
 } t_game;
 
 int bind_data(t_gpu *gpu, t_main_obj *main);
