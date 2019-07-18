@@ -85,7 +85,7 @@ static float ft_solve(float a, float b, float c)
 
  	if (disc < 0.0f) 
 		return 0.0f;
-	
+		//
 	disc = sqrt(disc);
 	if ((res = (-b - disc) * temp) > EPSILON)
 		return res;
