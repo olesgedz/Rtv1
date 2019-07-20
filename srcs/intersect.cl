@@ -26,6 +26,48 @@ typedef struct Object{
 	float plane_d;
 } t_obj;
 
+typedef struct		s_cam
+{
+	__float3		pos;
+	__float3		dir;
+	__float3		rot;
+	__float3		updir;
+	__float3		ldir;
+	__float3		filter;
+	double			fov;
+	float			f_length;
+	float			aperture;
+	float			ratio;
+	float			pr_pl_w;
+	float			pr_pl_h;
+	float			dust;
+	float			brightness;
+	float			refr_coef;
+	int				effect;
+}					t_cam;
+
+Ray get_camera_ray(int x, int y, t_cam *cam, int *seed0, int *seed1);
+Ray get_precise_ray(int x, int y, t_cam *cam);
+static float get_random( int *seed0, int *seed1);
+float3 reflect(float3 vector, float3 n);
+float3 refract(float3 vector, float3 n, float refrIndex);
+
+
+Ray get_precise_ray(int x, int y, t_cam *cam)
+{
+	Ray ray;
+
+	ray.origin = (float3)(0,0,0);
+
+	ray.dir = (float3)(x - cam->pr_pl_w / 2, -y + cam->pr_pl_h / 2,
+		-cam->f_length);
+	ray.dir.x *= cam->ratio;
+	ray.dir.y *= cam->ratio;
+	ray.dir = normalize(ray.dir);
+	return(ray);
+}
+
+
 static float get_random( int *seed0, int *seed1) {
 
 	/* hash the seeds using bitwise AND operations and bitshifts */
@@ -44,6 +86,45 @@ static float get_random( int *seed0, int *seed1) {
 	res.ui = (ires & 0x007fffff) | 0x40000000;  /* bitwise AND, bitwise OR */
 	return (res.f - 2.0f) / 2.0f;
 }
+
+Ray get_camera_ray(int x, int y, t_cam *cam, int *seed0, int *seed1)
+{
+	Ray ray;
+
+	float a = get_random(seed0, seed1) * 2 * PI; //random angle
+	float r = sqrt(get_random(seed0, seed1) * cam->aperture); //random radius
+	float ax = r * cos(a); //random x
+	float ay = r * sin(a); // random y
+
+	ray.origin = (float3)(ax,ay,0);
+
+	ray.dir = (float3)(x - cam->pr_pl_w / 2, -y + cam->pr_pl_h / 2,
+		-cam->f_length);
+	ray.dir.x = (ray.dir.x + get_random(seed0, seed1) - 0.5f) * cam->ratio;
+	ray.dir.y = (ray.dir.y + get_random(seed0, seed1) - 0.5f) * cam->ratio;
+	ray.dir -= ray.origin;
+	ray.dir = normalize(ray.dir);
+	return(ray);
+}
+
+
+
+// float3	sample_hemisphere(float3 w, float max_r, uint2 *seeds)
+// {
+// 	float rand1 = 2.0f * PI * get_random(seeds);
+// 	float rand2 = get_random(seeds) * max_r;
+// 	float rand2s = sqrt(rand2);
+
+// 	float3 axis = fabs(w.x) > 0.1f ? (float3)(0.0f, 1.0f, 0.0f) :
+// 		(float3)(1.0f, 0.0f, 0.0f);
+// 	float3 u = normalize(cross(axis, w));
+// 	float3 v = cross(w, u);
+
+// 	float3 newdir = normalize(u * cos(rand1)*rand2s +
+// 		v*sin(rand1)*rand2s +w*sqrt(1.0f - rand2));
+
+// 	return (newdir);
+// }
 
 float3 reflect(float3 vector, float3 n) 
 { 
@@ -256,6 +337,15 @@ static int toInt(float x)
 	return int(clamp1(x) * 255);
 }
 
+int rand(int* seed) // 1 <= *seed < m
+{
+    int const a = 16807; //ie 7**5
+    int const m = 2147483647; //ie 2**31-1
+
+    *seed = ((long)(*seed * a)) % m;
+    return(*seed);
+}
+
 __kernel void render_kernel(__global int* output, int width, int height, int n_spheres, __constant t_obj* spheres)
 {
 	
@@ -266,14 +356,21 @@ __kernel void render_kernel(__global int* output, int width, int height, int n_s
 	/* seeds for random number generator */
 	unsigned int seed0 = x_coord;
 	unsigned int seed1 = y_coord;
+	int seed = 1;
 
-	Ray camray = createCamRay(x_coord, y_coord, width, height);
 
+	Ray ray =  createCamRay(x_coord, y_coord, width,  height);
+	t_cam cam = (t_cam){(float3)(0.0f, 0.1f, 2.f), ray.dir};
 	/* add the light contribution of each sample and average over all samples*/
 	float3 finalcolor = (float3)(0.0f, 0.0f, 0.0f);
 	float invSamples = 1.0f / SAMPLES;
-
-	for (int i = 0; i < SAMPLES; i++)
-		finalcolor += trace(spheres, &camray, n_spheres, &seed0, &seed1) * invSamples;
-	output[x_coord + y_coord * width] = ft_rgb_to_hex(toInt(finalcolor.x), toInt(finalcolor.y), toInt(finalcolor.z)); /* simple interpolated colour gradient based on pixel coordinates */
+	float3 ffinalcolor = (float3)(0.0f, 0.0f, 0.0f);
+	for (int j = 0; j < 10; j++)
+	{
+		Ray camray = createCamRay(x_coord + get_random(&seed0, &j), y_coord + get_random(&seed1, &j), width, height);
+		for (int i = 0; i < SAMPLES; i++)
+			finalcolor += trace(spheres, &camray, n_spheres, &seed0, &seed1) * invSamples;
+		ffinalcolor += finalcolor / 10;
+	}
+	output[x_coord + y_coord * width] = ft_rgb_to_hex(toInt(ffinalcolor.x), toInt(ffinalcolor.y), toInt(ffinalcolor.z)); /* simple interpolated colour gradient based on pixel coordinates */
 }
