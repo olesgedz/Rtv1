@@ -3,7 +3,7 @@
 
 #define WIN_W 1200
 #define WIN_H 600
-
+#define CL_SILENCE_DEPRECATION
 #include <sys/types.h>
 #include "SDL2/SDL.h"
 #include "libsdl.h"

@@ -120,10 +120,9 @@ cl_float3 create_cfloat3 (float x, float y, float z)
 {
 	cl_float3 re;
 
-	re.x = x;
-	re.y = y;
-	re.z = z;
-
+	re.v4[0] = x;
+	re.v4[1] = y;
+	re.v4[2] = z;
 	return re;
 }
 
