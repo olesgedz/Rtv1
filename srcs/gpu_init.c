@@ -1,6 +1,29 @@
 #include "rtv1.h"
 
-#define CL_SILENCE_DEPRECATION 100
+
+char		*read_file(int fd, size_t *size)
+{
+	char	*tmp;
+	char	*res;
+	ssize_t	num;
+	char	buf[256];
+
+	res = (char *)malloc(sizeof(char));
+	res[0] = '\0';
+	if (res < 0)
+		return (NULL);
+	while ((num = read(fd, buf, 255)) > 0)
+	{
+		buf[num] = '\0';
+		tmp = res;
+		res = ft_strjoin(res, buf);
+		free(tmp);
+	}
+	if (size)
+		*size = ft_strlen(res);
+	return (res);
+}
+
 int print_error(t_gpu *gpu)
 {
 	size_t  len;
@@ -25,17 +48,18 @@ int    gpu_read_kernel(t_gpu *gpu)
 	size_t  len;
 	char    *buffer;
 
-	fd = open("srcs/intersect.cl", O_RDONLY); // read mode
-	if (fd < 0)
-		exit(EXIT_FAILURE);
-	gpu->kernel_source = ft_strnew(0);
-	while (get_next_line(fd, &line) > 0)
-	{
-		line = ft_strjoin(line, "\n");
-		gpu->kernel_source = ft_strjoin(gpu->kernel_source, line);
-		ft_strdel(&line);
-	}
-	close(fd);
+	// fd = open("srcs/intersect.cl", O_RDONLY); // read mode
+	// if (fd < 0)
+	// 	exit(EXIT_FAILURE);
+	// gpu->kernel_source = ft_strnew(0);
+	// while (get_next_line(fd, &line) > 0)
+	// {
+	// 	line = ft_strjoin(line, "\n");
+	// 	gpu->kernel_source = ft_strjoin(gpu->kernel_source, line);
+	// 	ft_strdel(&line);
+	// }
+	// close(fd);
+	gpu->kernel_source = read_file(open("srcs/intersect.cl", O_RDONLY), 0);
 	gpu->program = clCreateProgramWithSource(gpu->context, 1, (const char **)&gpu->kernel_source, NULL, &gpu->err);
 	gpu->err = clBuildProgram(gpu->program, 0, NULL, NULL, NULL, NULL);
 	//TODO delete after debug
