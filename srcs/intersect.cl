@@ -1,50 +1,9 @@
 
+#include "kernel.h"
+
 __constant float EPSILON = 0.00003f; /* required to compensate for limited float precision */
 __constant float PI = 3.14159265359f;
 __constant int SAMPLES = 100;
-
-typedef struct Ray
-{
-	float3 origin;
-	float3 dir;
-} Ray;
-
-typedef enum e_figure
-{
-	 SPHERE, CYLINDER, CONE, PLANE
-} t_type;
-
-typedef struct Object{
-	float radius;
-	float3 position;
-	float3 color;
-	float3 emission;
-	float3 v;
-	t_type type;
-	float refraction;
-	float reflection;
-	float plane_d;
-} t_obj;
-
-typedef struct		s_cam
-{
-	__float3		pos;
-	__float3		dir;
-	__float3		rot;
-	__float3		updir;
-	__float3		ldir;
-	__float3		filter;
-	double			fov;
-	float			f_length;
-	float			aperture;
-	float			ratio;
-	float			pr_pl_w;
-	float			pr_pl_h;
-	float			dust;
-	float			brightness;
-	float			refr_coef;
-	int				effect;
-}					t_cam;
 
 Ray get_camera_ray(int x, int y, t_cam *cam, int *seed0, int *seed1);
 Ray get_precise_ray(int x, int y, t_cam *cam);
