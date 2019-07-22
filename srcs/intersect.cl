@@ -258,10 +258,11 @@ static float3 trace(__constant t_obj* spheres, const Ray* camray, const int sphe
 		float3 axis = fabs(w.x) > 0.1f ? (float3)(0.0f, 1.0f, 0.0f) : (float3)(1.0f, 0.0f, 0.0f);
 		float3 u = normalize(cross(axis, w));
 		float3 v = cross(w, u);
-
+		float3 newdir;
 		/* use the coordinte frame and random numbers to compute the next ray direction */
-		float3 newdir = normalize(u * cos(rand1)*rand2s + v*sin(rand1)*rand2s + w*sqrt(1.0f - rand2));
-
+		newdir = normalize(u * cos(rand1)*rand2s + v*sin(rand1)*rand2s + w*sqrt(1.0f - rand2));
+		//  else
+		// 	newdir = normalize((float3)(0.7f, 0.7f, 0.0f) - hitpoint);
 		/* add a very small offset to the hitpoint to prevent self intersection */
 		if (hitsphere.reflection > 0) {
 			ray.dir = reflect(ray.dir, normal_facing);
@@ -326,7 +327,9 @@ __kernel void render_kernel(__global int* output, int width, int height, int n_s
 	
 	Ray camray = createCamRay(x_coord, y_coord, width, height);
 	for (int i = 0; i < SAMPLES; i++)
+	{
 		finalcolor += trace(spheres, &camray, n_spheres, &seed0, &seed1) * invSamples;
+	}
 
 	output[x_coord + y_coord * width] = ft_rgb_to_hex(toInt(finalcolor.x), toInt(finalcolor.y), toInt(finalcolor.z)); /* simple interpolated colour gradient based on pixel coordinates */
 }
