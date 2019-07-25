@@ -3,14 +3,14 @@
 
 __constant float EPSILON = 0.00003f; /* required to compensate for limited float precision */
 __constant float PI = 3.14159265359f;
-__constant int SAMPLES = 100;
+__constant int SAMPLES = 500;
 
 Ray get_camera_ray(int x, int y, t_cam *cam, int *seed0, int *seed1);
 Ray get_precise_ray(int x, int y, t_cam *cam);
 static float get_random( int *seed0, int *seed1);
 float3 reflect(float3 vector, float3 n);
 float3 refract(float3 vector, float3 n, float refrIndex);
-
+double          intersect_plane(const t_obj* plane, const Ray* ray);
 
 Ray get_precise_ray(int x, int y, t_cam *cam)
 {
@@ -175,11 +175,19 @@ static double		intersect_cylinder(const t_obj* cylinder, const Ray* ray)
 	double	a = dot(ray->dir, cylinder->v);
 	double	c = dot(x, cylinder->v);
 	double	b = 2 * (dot(ray->dir, x) - a * dot(x, cylinder->v));
-	double	d;
 
 	a = dot(ray->dir, ray->dir) - a * a;
 	c = dot(x, x) - c * c - cylinder->radius * cylinder->radius;
 	return (ft_solve(a, b, c));
+}
+
+int rand(int* seed) // 1 <= *seed < m
+{
+    int const a = 16807; //ie 7**5
+    int const m = 2; //ie 2**31-1
+
+    *seed = ((long)(*seed * a)) % m - 1;
+    return(*seed);
 }
 
 static bool intersect_scene(__constant t_obj* spheres, const Ray* ray, float* t, int* sphere_id, const int sphere_count)
@@ -213,6 +221,35 @@ static bool intersect_scene(__constant t_obj* spheres, const Ray* ray, float* t,
 		}
 	}
 	return *t < inf; /* true when ray interesects the scene */
+}
+
+
+static float3 random_in_unit_sphere(int seed0, int seed1)
+{
+	 get_random(&seed0, &seed1))
+	float3 p;
+
+	do {
+		p = 2.0f * vec3(get_random(), get)
+	} while (dot(p,p) >= 1.0f)
+	return normalize(p);
+}
+
+float3	sample_hemisphere(float3 w, float max_r, int *seed0, int *seed1)
+{
+	float rand1 = 2.0f * PI * get_random(seed0, seed1);
+	float rand2 = get_random(seed0, seed1) * max_r;
+	float rand2s = sqrt(rand2);
+
+	float3 axis = fabs(w.x) > 0.1f ? (float3)(0.0f, 1.0f, 0.0f) :
+		(float3)(1.0f, 0.0f, 0.0f);
+	float3 u = normalize(cross(axis, w));
+	float3 v = cross(w, u);
+
+	float3 newdir = normalize(u * cos(rand1)*rand2s +
+		v*sin(rand1)*rand2s +w*sqrt(1.0f - rand2));
+
+	return (newdir);
 }
 
 
@@ -261,6 +298,8 @@ static float3 trace(__constant t_obj* spheres, const Ray* camray, const int sphe
 		float3 newdir;
 		/* use the coordinte frame and random numbers to compute the next ray direction */
 		newdir = normalize(u * cos(rand1)*rand2s + v*sin(rand1)*rand2s + w*sqrt(1.0f - rand2));
+		
+		newdir = sample_hemisphere(w, 1, seed0, seed1);
 		//  else
 		// 	newdir = normalize((float3)(0.7f, 0.7f, 0.0f) - hitpoint);
 		/* add a very small offset to the hitpoint to prevent self intersection */
@@ -297,14 +336,9 @@ static int toInt(float x)
 	return int(clamp1(x) * 255);
 }
 
-int rand(int* seed) // 1 <= *seed < m
-{
-    int const a = 16807; //ie 7**5
-    int const m = 2147483647; //ie 2**31-1
 
-    *seed = ((long)(*seed * a)) % m;
-    return(*seed);
-}
+
+
 
 __kernel void render_kernel(__global int* output, int width, int height, int n_spheres, __constant t_obj* spheres)
 {
@@ -331,5 +365,6 @@ __kernel void render_kernel(__global int* output, int width, int height, int n_s
 		finalcolor += trace(spheres, &camray, n_spheres, &seed0, &seed1) * invSamples;
 	}
 
+	//random_in_unit_sphere(seed0, seed1);
 	output[x_coord + y_coord * width] = ft_rgb_to_hex(toInt(finalcolor.x), toInt(finalcolor.y), toInt(finalcolor.z)); /* simple interpolated colour gradient based on pixel coordinates */
 }
