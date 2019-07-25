@@ -3,7 +3,7 @@
 
 __constant float EPSILON = 0.00003f; /* required to compensate for limited float precision */
 __constant float PI = 3.14159265359f;
-__constant int SAMPLES = 500;
+__constant int SAMPLES = 50;
 
 Ray get_camera_ray(int x, int y, t_cam *cam, int *seed0, int *seed1);
 Ray get_precise_ray(int x, int y, t_cam *cam);
@@ -223,18 +223,6 @@ static bool intersect_scene(__constant t_obj* spheres, const Ray* ray, float* t,
 	return *t < inf; /* true when ray interesects the scene */
 }
 
-
-static float3 random_in_unit_sphere(int seed0, int seed1)
-{
-	 get_random(&seed0, &seed1))
-	float3 p;
-
-	do {
-		p = 2.0f * vec3(get_random(), get)
-	} while (dot(p,p) >= 1.0f)
-	return normalize(p);
-}
-
 float3	sample_hemisphere(float3 w, float max_r, int *seed0, int *seed1)
 {
 	float rand1 = 2.0f * PI * get_random(seed0, seed1);
@@ -317,7 +305,8 @@ static float3 trace(__constant t_obj* spheres, const Ray* camray, const int sphe
 		}
 		mask *= dot(newdir, normal_facing);
 	}
-
+	//color = INTEGRAL A * s(direction) * color(direction)
+	//Color = (A * s(direction) * color(direction)) / p(direction)
 	return accum_color;
 }
 
@@ -365,6 +354,5 @@ __kernel void render_kernel(__global int* output, int width, int height, int n_s
 		finalcolor += trace(spheres, &camray, n_spheres, &seed0, &seed1) * invSamples;
 	}
 
-	//random_in_unit_sphere(seed0, seed1);
 	output[x_coord + y_coord * width] = ft_rgb_to_hex(toInt(finalcolor.x), toInt(finalcolor.y), toInt(finalcolor.z)); /* simple interpolated colour gradient based on pixel coordinates */
 }
