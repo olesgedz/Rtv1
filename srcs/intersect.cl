@@ -3,7 +3,7 @@
 
 __constant float EPSILON = 0.00003f; /* required to compensate for limited float precision */
 __constant float PI = 3.14159265359f;
-__constant int SAMPLES = 50;
+__constant int SAMPLES = 15;
 
 Ray get_camera_ray(int x, int y, t_cam *cam, int *seed0, int *seed1);
 Ray get_precise_ray(int x, int y, t_cam *cam);
@@ -335,12 +335,10 @@ __kernel void render_kernel(__global int* output, int width, int height, int n_s
 	unsigned int work_item_id = get_global_id(0);	/* the unique global id of the work item for the current pixel */
 	unsigned int x_coord = work_item_id % width;			/* x-coordinate of the pixel */
 	unsigned int y_coord = work_item_id / width;			/* y-coordinate of the pixel */
-	
+
 	/* seeds for random number generator */
 	unsigned int seed0 = x_coord;
 	unsigned int seed1 = y_coord;
-	int seed = 1;
-
 
 	Ray ray =  createCamRay(x_coord, y_coord, width,  height);
 	t_cam cam = (t_cam){(float3)(0.0f, 0.1f, 2.f), ray.dir};
@@ -353,6 +351,14 @@ __kernel void render_kernel(__global int* output, int width, int height, int n_s
 	{
 		finalcolor += trace(spheres, &camray, n_spheres, &seed0, &seed1) * invSamples;
 	}
-
+	if(work_item_id == 0)
+	{
+		for (int i = 0; i < 20; i++)
+			printf("i: %d\n", get_random(seed0, seed1));
+	}
+	// for (int i = 0; i < 20; i++)
+	// 	printf("i :%d %d\n", work_item_id, get_random);
 	output[x_coord + y_coord * width] = ft_rgb_to_hex(toInt(finalcolor.x), toInt(finalcolor.y), toInt(finalcolor.z)); /* simple interpolated colour gradient based on pixel coordinates */
+	//output[x_coord + y_coord * width] = ft_rgb_to_hex(toInt(0), toInt(0), toInt(255)); /* simple interpolated colour gradient based on pixel coordinates */
+
 }
