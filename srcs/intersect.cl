@@ -325,7 +325,57 @@ static int toInt(float x)
 	return int(clamp1(x) * 255);
 }
 
+//#include "noise.h"
 
+/* function that returns a pseudo random number between 0 and 1 */
+
+// double rand_noise(int t)
+// {
+//     t = (t<<13) ^ t;
+//     t = (t * (t * t * 15731 + 789221) + 1376312589);
+//     return ((t & 0x7fffffff) / 1073741824.0);
+// }
+double rand_noise(int t)
+{
+    t = (t<<13) ^ t;
+    t = (t * (t * t * 15731 + 789221) + 1376312589);
+    return ((t & 0x7fffffff) / 2147483648.0);
+}
+
+/* takes 3 int to return a double between 0 and 1 */
+
+double noise_3d(int x, int y, int z)
+{
+	int		tmp1;
+	int		tmp2;
+    tmp1 = rand_noise(x) * 850000;
+    tmp2 = rand_noise (tmp1 + y) * 850000 ;
+    return(rand_noise(tmp2 + z));
+}
+
+unsigned int ParallelRNG( unsigned int x )
+{
+	unsigned int value = x;
+
+	value = (value ^ 61) ^ (value>>16);
+	value *= 9;
+	value ^= value << 4;
+	value *= 0x27d4eb2d;
+	value ^= value >> 15;
+
+	return value;
+}
+
+unsigned int ParallelRNG3( unsigned int x,  unsigned int y,  unsigned int z )
+{
+	unsigned int value = ParallelRNG(x);
+
+	value = ParallelRNG( y ^ value );
+
+	value = ParallelRNG( z ^ value );
+
+	return value;
+}
 
 
 
@@ -353,8 +403,16 @@ __kernel void render_kernel(__global int* output, int width, int height, int n_s
 	}
 	if(work_item_id == 0)
 	{
-		for (int i = 0; i < 20; i++)
-			printf("i: %d\n", get_random(seed0, seed1));
+		int inside_circle = 0;
+		int N = 1000000;
+		for (int i = 0; i < N; i++)
+		{
+			float x = 2 * noise_3d(seed0, seed1, i) - 1;
+			float y = 2 * noise_3d(seed0, seed1, i + 100) -1;
+			if (x* x + y * y < 1)
+				inside_circle++;
+		}
+		printf("\n\n Pi = %f\n\n", 4*float(inside_circle)/N);	
 	}
 	// for (int i = 0; i < 20; i++)
 	// 	printf("i :%d %d\n", work_item_id, get_random);
