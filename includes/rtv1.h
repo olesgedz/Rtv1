@@ -1,9 +1,9 @@
 #ifndef RTV1_H
 #define RTV1_H
 
-#define WIN_W 1200
-#define WIN_H 600
-
+#define WIN_W 700
+#define WIN_H 700
+#define CL_SILENCE_DEPRECATION
 #include <sys/types.h>
 #include "SDL2/SDL.h"
 #include "libsdl.h"
@@ -269,9 +269,13 @@ typedef struct s_gpu
 	cl_int				err;
 	char*				kernel_source;
 	int * cpuOutput;
+	cl_float3 *vec_temp;
 	t_obj *spheres;
 	cl_mem cl_bufferOut;
 	cl_mem cl_cpuSpheres;
+	cl_mem  cl_cpu_vectemp;
+
+	int samples;
 }				t_gpu;
 
 typedef struct s_game

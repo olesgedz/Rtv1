@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 16:17:28 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/06/21 16:39:45 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/07/25 17:06:53 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,18 +94,18 @@ extern inline float ft_vec3_multiply_cone(t_vec3 a, t_vec3 b)
 	return (a.x * b.x - a.y * b.y + a.z * b.z);
 }
 
-double		plane_intersection(void *object, t_ray *ray, float *t0)
-{
-	// double tmp;
-	// t_plane *p;
+// double		plane_intersection(void *object, t_ray *ray, float *t0)
+// {
+// 	// double tmp;
+// 	// t_plane *p;
 
-	// p = (t_plane *)((t_object *)object)->object;
-	// tmp = p->point.x * ray->dir.x + p->point.y * ray->dir.y + p->point.z * ray->dir.z;
-	// if (!tmp)
-	// 	return (0);
-	// *t0 = -(p->point.x * ray->orig.x +  p->point.y * ray->orig.y +  p->point.z * ray->orig.z +  p->point.w) / tmp;
-	// return ((*t0 >= 0.0003) ? 1 : 0);
-}
+// 	// p = (t_plane *)((t_object *)object)->object;
+// 	// tmp = p->point.x * ray->dir.x + p->point.y * ray->dir.y + p->point.z * ray->dir.z;
+// 	// if (!tmp)
+// 	// 	return (0);
+// 	// *t0 = -(p->point.x * ray->orig.x +  p->point.y * ray->orig.y +  p->point.z * ray->orig.z +  p->point.w) / tmp;
+// 	// return ((*t0 >= 0.0003) ? 1 : 0);
+// }
 
 // double		plane_intersection(void *object, t_ray *ray, float *t0)
 // {

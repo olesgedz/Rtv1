@@ -1,30 +1,31 @@
 
+#include "kernel.h"
+
 __constant float EPSILON = 0.00003f; /* required to compensate for limited float precision */
 __constant float PI = 3.14159265359f;
-__constant int SAMPLES = 512;
+__constant int SAMPLES = 15;
 
-typedef struct Ray
+Ray get_camera_ray(int x, int y, t_cam *cam, int *seed0, int *seed1);
+Ray get_precise_ray(int x, int y, t_cam *cam);
+static float get_random( int *seed0, int *seed1);
+float3 reflect(float3 vector, float3 n);
+float3 refract(float3 vector, float3 n, float refrIndex);
+double          intersect_plane(const t_obj* plane, const Ray* ray);
+
+Ray get_precise_ray(int x, int y, t_cam *cam)
 {
-	float3 origin;
-	float3 dir;
-} Ray;
+	Ray ray;
 
-typedef enum e_figure
-{
-	 SPHERE, CYLINDER, CONE, PLANE
-} t_type;
+	ray.origin = (float3)(0,0,0);
 
-typedef struct Object{
-	float radius;
-	float3 position;
-	float3 color;
-	float3 emission;
-	float3 v;
-	t_type type;
-	float refraction;
-	float reflection;
-	float plane_d;
-} t_obj;
+	ray.dir = (float3)(x - cam->pr_pl_w / 2, -y + cam->pr_pl_h / 2,
+		-cam->f_length);
+	ray.dir.x *= cam->ratio;
+	ray.dir.y *= cam->ratio;
+	ray.dir = normalize(ray.dir);
+	return(ray);
+}
+
 
 static float get_random( int *seed0, int *seed1) {
 
@@ -44,6 +45,45 @@ static float get_random( int *seed0, int *seed1) {
 	res.ui = (ires & 0x007fffff) | 0x40000000;  /* bitwise AND, bitwise OR */
 	return (res.f - 2.0f) / 2.0f;
 }
+
+Ray get_camera_ray(int x, int y, t_cam *cam, int *seed0, int *seed1)
+{
+	Ray ray;
+
+	float a = get_random(seed0, seed1) * 2 * PI; //random angle
+	float r = sqrt(get_random(seed0, seed1) * cam->aperture); //random radius
+	float ax = r * cos(a); //random x
+	float ay = r * sin(a); // random y
+
+	ray.origin = (float3)(ax,ay,0);
+
+	ray.dir = (float3)(x - cam->pr_pl_w / 2, -y + cam->pr_pl_h / 2,
+		-cam->f_length);
+	ray.dir.x = (ray.dir.x + get_random(seed0, seed1) - 0.5f) * cam->ratio;
+	ray.dir.y = (ray.dir.y + get_random(seed0, seed1) - 0.5f) * cam->ratio;
+	ray.dir -= ray.origin;
+	ray.dir = normalize(ray.dir);
+	return(ray);
+}
+
+
+
+// float3	sample_hemisphere(float3 w, float max_r, uint2 *seeds)
+// {
+// 	float rand1 = 2.0f * PI * get_random(seeds);
+// 	float rand2 = get_random(seeds) * max_r;
+// 	float rand2s = sqrt(rand2);
+
+// 	float3 axis = fabs(w.x) > 0.1f ? (float3)(0.0f, 1.0f, 0.0f) :
+// 		(float3)(1.0f, 0.0f, 0.0f);
+// 	float3 u = normalize(cross(axis, w));
+// 	float3 v = cross(w, u);
+
+// 	float3 newdir = normalize(u * cos(rand1)*rand2s +
+// 		v*sin(rand1)*rand2s +w*sqrt(1.0f - rand2));
+
+// 	return (newdir);
+// }
 
 float3 reflect(float3 vector, float3 n) 
 { 
@@ -135,11 +175,19 @@ static double		intersect_cylinder(const t_obj* cylinder, const Ray* ray)
 	double	a = dot(ray->dir, cylinder->v);
 	double	c = dot(x, cylinder->v);
 	double	b = 2 * (dot(ray->dir, x) - a * dot(x, cylinder->v));
-	double	d;
 
 	a = dot(ray->dir, ray->dir) - a * a;
 	c = dot(x, x) - c * c - cylinder->radius * cylinder->radius;
 	return (ft_solve(a, b, c));
+}
+
+int rand(int* seed) // 1 <= *seed < m
+{
+    int const a = 16807; //ie 7**5
+    int const m = 2; //ie 2**31-1
+
+    *seed = ((long)(*seed * a)) % m - 1;
+    return(*seed);
 }
 
 static bool intersect_scene(__constant t_obj* spheres, const Ray* ray, float* t, int* sphere_id, const int sphere_count)
@@ -173,6 +221,23 @@ static bool intersect_scene(__constant t_obj* spheres, const Ray* ray, float* t,
 		}
 	}
 	return *t < inf; /* true when ray interesects the scene */
+}
+
+float3	sample_hemisphere(float3 w, float max_r, int *seed0, int *seed1)
+{
+	float rand1 = 2.0f * PI * get_random(seed0, seed1);
+	float rand2 = get_random(seed0, seed1) * max_r;
+	float rand2s = sqrt(rand2);
+
+	float3 axis = fabs(w.x) > 0.1f ? (float3)(0.0f, 1.0f, 0.0f) :
+		(float3)(1.0f, 0.0f, 0.0f);
+	float3 u = normalize(cross(axis, w));
+	float3 v = cross(w, u);
+
+	float3 newdir = normalize(u * cos(rand1)*rand2s +
+		v*sin(rand1)*rand2s +w*sqrt(1.0f - rand2));
+
+	return (newdir);
 }
 
 
@@ -218,10 +283,13 @@ static float3 trace(__constant t_obj* spheres, const Ray* camray, const int sphe
 		float3 axis = fabs(w.x) > 0.1f ? (float3)(0.0f, 1.0f, 0.0f) : (float3)(1.0f, 0.0f, 0.0f);
 		float3 u = normalize(cross(axis, w));
 		float3 v = cross(w, u);
-
+		float3 newdir;
 		/* use the coordinte frame and random numbers to compute the next ray direction */
-		float3 newdir = normalize(u * cos(rand1)*rand2s + v*sin(rand1)*rand2s + w*sqrt(1.0f - rand2));
-
+		newdir = normalize(u * cos(rand1)*rand2s + v*sin(rand1)*rand2s + w*sqrt(1.0f - rand2));
+		
+		newdir = sample_hemisphere(w, 1, seed0, seed1);
+		//  else
+		// 	newdir = normalize((float3)(0.7f, 0.7f, 0.0f) - hitpoint);
 		/* add a very small offset to the hitpoint to prevent self intersection */
 		if (hitsphere.reflection > 0) {
 			ray.dir = reflect(ray.dir, normal_facing);
@@ -237,7 +305,8 @@ static float3 trace(__constant t_obj* spheres, const Ray* camray, const int sphe
 		}
 		mask *= dot(newdir, normal_facing);
 	}
-
+	//color = INTEGRAL A * s(direction) * color(direction)
+	//Color = (A * s(direction) * color(direction)) / p(direction)
 	return accum_color;
 }
 
@@ -256,24 +325,106 @@ static int toInt(float x)
 	return int(clamp1(x) * 255);
 }
 
-__kernel void render_kernel(__global int* output, int width, int height, int n_spheres, __constant t_obj* spheres)
+//#include "noise.h"
+
+/* function that returns a pseudo random number between 0 and 1 */
+
+// double rand_noise(int t)
+// {
+//     t = (t<<13) ^ t;
+//     t = (t * (t * t * 15731 + 789221) + 1376312589);
+//     return ((t & 0x7fffffff) / 1073741824.0);
+// }
+double rand_noise(int t)
+{
+    t = (t<<13) ^ t;
+    t = (t * (t * t * 15731 + 789221) + 1376312589);
+    return ((t & 0x7fffffff) / 2147483648.0);
+}
+
+/* takes 3 int to return a double between 0 and 1 */
+
+double noise_3d(int x, int y, int z)
+{
+	int		tmp1;
+	int		tmp2;
+    tmp1 = rand_noise(x) * 850000;
+    tmp2 = rand_noise (tmp1 + y) * 850000 ;
+    return(rand_noise(tmp2 + z));
+}
+
+unsigned int ParallelRNG( unsigned int x )
+{
+	unsigned int value = x;
+
+	value = (value ^ 61) ^ (value>>16);
+	value *= 9;
+	value ^= value << 4;
+	value *= 0x27d4eb2d;
+	value ^= value >> 15;
+
+	return value;
+}
+
+unsigned int ParallelRNG3( unsigned int x,  unsigned int y,  unsigned int z )
+{
+	unsigned int value = ParallelRNG(x);
+
+	value = ParallelRNG( y ^ value );
+
+	value = ParallelRNG( z ^ value );
+
+	return value;
+}
+
+
+
+__kernel void render_kernel(__global int* output, int width, int height, int n_spheres, __constant t_obj* spheres,
+__global float3 * vect_temp, int samples
+	)
 {
 	
 	unsigned int work_item_id = get_global_id(0);	/* the unique global id of the work item for the current pixel */
 	unsigned int x_coord = work_item_id % width;			/* x-coordinate of the pixel */
 	unsigned int y_coord = work_item_id / width;			/* y-coordinate of the pixel */
-	
+
 	/* seeds for random number generator */
-	unsigned int seed0 = x_coord;
-	unsigned int seed1 = y_coord;
+	unsigned int seed0 = x_coord + rand(samples);
+	unsigned int seed1 = y_coord + rand(samples + 3);
 
-	Ray camray = createCamRay(x_coord, y_coord, width, height);
-
+	Ray ray =  createCamRay(x_coord, y_coord, width,  height);
+	t_cam cam = (t_cam){(float3)(0.0f, 0.1f, 2.f), ray.dir};
 	/* add the light contribution of each sample and average over all samples*/
-	float3 finalcolor = (float3)(0.0f, 0.0f, 0.0f);
+	float3 finalcolor =  vect_temp[x_coord + y_coord * width];// (float3)(0.0f, 0.0f, 0.0f);
 	float invSamples = 1.0f / SAMPLES;
+	
+	Ray camray = createCamRay(x_coord, y_coord, width, height);
+	if (x_coord == 0 && y_coord == 0)
+	{
+		printf("samples %d\n", samples);
+	}
+	for (int i = 0; i < 15; i++)
+	{
+		finalcolor += trace(spheres, &camray, n_spheres, &seed0, &seed1);
+	}
+	vect_temp[x_coord + y_coord * width] = finalcolor;
+	// if(work_item_id == 0)
+	// {
+	// 	int inside_circle = 0;
+	// 	int N = 1000000;
+	// 	for (int i = 0; i < N; i++)
+	// 	{
+	// 		float x = 2 * noise_3d(seed0, seed1, i) - 1;
+	// 		float y = 2 * noise_3d(seed0, seed1, i + 100) -1;
+	// 		if (x* x + y * y < 1)
+	// 			inside_circle++;
+	// 	}
+	// 	printf("\n\n Pi = %f\n\n", 4*float(inside_circle)/N);	
+	// }
+	// for (int i = 0; i < 20; i++)
+	// 	printf("i :%d %d\n", work_item_id, get_random);
+	output[x_coord + y_coord * width] = ft_rgb_to_hex(toInt(finalcolor.x  / samples),
+	 toInt(finalcolor.y  / samples), toInt(finalcolor.z  / samples)); /* simple interpolated colour gradient based on pixel coordinates */
+	//output[x_coord + y_coord * width] = ft_rgb_to_hex(toInt(0), toInt(0), toInt(255)); /* simple interpolated colour gradient based on pixel coordinates */
 
-	for (int i = 0; i < SAMPLES; i++)
-		finalcolor += trace(spheres, &camray, n_spheres, &seed0, &seed1) * invSamples;
-	output[x_coord + y_coord * width] = ft_rgb_to_hex(toInt(finalcolor.x), toInt(finalcolor.y), toInt(finalcolor.z)); /* simple interpolated colour gradient based on pixel coordinates */
 }
