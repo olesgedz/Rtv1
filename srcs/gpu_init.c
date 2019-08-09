@@ -88,7 +88,8 @@ int bind_data(t_gpu *gpu, t_main_obj *main)
 	int i;
 	int j;
 	static t_vec3 *h_a;//TODO push it inside t_gpu
-
+	gpu->vec_temp = ft_memalloc(sizeof(cl_float3) * global);
+	gpu->cl_cpu_vectemp = clCreateBuffer(gpu->context, CL_MEM_READ_WRITE, count * sizeof(cl_float3), NULL, &gpu->err);
 	gpu->cl_bufferOut = clCreateBuffer(gpu->context, CL_MEM_WRITE_ONLY, count * sizeof(cl_int), NULL, &gpu->err);
 	gpu->cl_cpuSpheres= clCreateBuffer(gpu->context, CL_MEM_READ_ONLY, n_spheres * sizeof(t_obj), NULL, &gpu->err);
 	gpu->err = clEnqueueWriteBuffer(gpu->commands, gpu->cl_cpuSpheres, CL_TRUE, 0,
@@ -98,6 +99,10 @@ int bind_data(t_gpu *gpu, t_main_obj *main)
 	gpu->err |= clSetKernelArg(gpu->kernel, 2, sizeof(cl_int), &h);
 	gpu->err |= clSetKernelArg(gpu->kernel, 3, sizeof(cl_int), &n_spheres);
 	gpu->err |= clSetKernelArg(gpu->kernel, 4, sizeof(cl_mem), &gpu->cl_cpuSpheres);
+	gpu->err |= clSetKernelArg(gpu->kernel, 5, sizeof(cl_mem), &gpu->cl_cpu_vectemp);
+	gpu->err |= clSetKernelArg(gpu->kernel, 6, sizeof(cl_int), &gpu->samples);
+
+
 
 
 	
@@ -111,6 +116,8 @@ void ft_run_gpu(t_gpu *gpu)
 {
 	size_t global = WIN_W * WIN_H;
 	const int count = global;
+	gpu->samples +=15;
+	gpu->err |= clSetKernelArg(gpu->kernel, 6, sizeof(cl_int), &gpu->samples);
 	gpu->err = clEnqueueNDRangeKernel(gpu->commands, gpu->kernel, 1, NULL, &global, NULL, 0, NULL, NULL);
 	// clFinish(gpu->commands);
 	gpu->err = clEnqueueReadBuffer(gpu->commands, gpu->cl_bufferOut, CL_TRUE, 0, count * sizeof(cl_int), gpu->cpuOutput, 0, NULL, NULL);
@@ -233,6 +240,7 @@ int opencl_init(t_gpu *gpu, t_game *game)
 	gpu->kernel = clCreateKernel(gpu->program, "render_kernel", &gpu->err);
 	gpu->cpuOutput = malloc(sizeof(int) * (WIN_H * WIN_H));
 	gpu->spheres = malloc(sizeof(t_obj) * 9);
+	gpu->samples = 0;
 	initScene(gpu->spheres);
 	bind_data(gpu, &game->main_objs);
     return (gpu->err);

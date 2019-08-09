@@ -379,7 +379,9 @@ unsigned int ParallelRNG3( unsigned int x,  unsigned int y,  unsigned int z )
 
 
 
-__kernel void render_kernel(__global int* output, int width, int height, int n_spheres, __constant t_obj* spheres)
+__kernel void render_kernel(__global int* output, int width, int height, int n_spheres, __constant t_obj* spheres,
+__global float3 * vect_temp, int samples
+	)
 {
 	
 	unsigned int work_item_id = get_global_id(0);	/* the unique global id of the work item for the current pixel */
@@ -387,20 +389,25 @@ __kernel void render_kernel(__global int* output, int width, int height, int n_s
 	unsigned int y_coord = work_item_id / width;			/* y-coordinate of the pixel */
 
 	/* seeds for random number generator */
-	unsigned int seed0 = x_coord;
-	unsigned int seed1 = y_coord;
+	unsigned int seed0 = x_coord + rand(samples);
+	unsigned int seed1 = y_coord + rand(samples + 3);
 
 	Ray ray =  createCamRay(x_coord, y_coord, width,  height);
 	t_cam cam = (t_cam){(float3)(0.0f, 0.1f, 2.f), ray.dir};
 	/* add the light contribution of each sample and average over all samples*/
-	float3 finalcolor = output[x_coord + y_coord * width] ;// (float3)(0.0f, 0.0f, 0.0f);
+	float3 finalcolor =  vect_temp[x_coord + y_coord * width];// (float3)(0.0f, 0.0f, 0.0f);
 	float invSamples = 1.0f / SAMPLES;
 	
 	Ray camray = createCamRay(x_coord, y_coord, width, height);
-	for (int i = 0; i < SAMPLES; i++)
+	if (x_coord == 0 && y_coord == 0)
+	{
+		printf("samples %d\n", samples);
+	}
+	for (int i = 0; i < 15; i++)
 	{
 		finalcolor += trace(spheres, &camray, n_spheres, &seed0, &seed1);
 	}
+	vect_temp[x_coord + y_coord * width] = finalcolor;
 	// if(work_item_id == 0)
 	// {
 	// 	int inside_circle = 0;
@@ -416,7 +423,8 @@ __kernel void render_kernel(__global int* output, int width, int height, int n_s
 	// }
 	// for (int i = 0; i < 20; i++)
 	// 	printf("i :%d %d\n", work_item_id, get_random);
-	output[x_coord + y_coord * width] = ft_rgb_to_hex(toInt(finalcolor.x  * invSamples), toInt(finalcolor.y  * invSamples), toInt(finalcolor.z  * invSamples)); /* simple interpolated colour gradient based on pixel coordinates */
+	output[x_coord + y_coord * width] = ft_rgb_to_hex(toInt(finalcolor.x  / samples),
+	 toInt(finalcolor.y  / samples), toInt(finalcolor.z  / samples)); /* simple interpolated colour gradient based on pixel coordinates */
 	//output[x_coord + y_coord * width] = ft_rgb_to_hex(toInt(0), toInt(0), toInt(255)); /* simple interpolated colour gradient based on pixel coordinates */
 
 }

@@ -269,9 +269,13 @@ typedef struct s_gpu
 	cl_int				err;
 	char*				kernel_source;
 	int * cpuOutput;
+	cl_float3 *vec_temp;
 	t_obj *spheres;
 	cl_mem cl_bufferOut;
 	cl_mem cl_cpuSpheres;
+	cl_mem  cl_cpu_vectemp;
+
+	int samples;
 }				t_gpu;
 
 typedef struct s_game
