@@ -393,30 +393,30 @@ __kernel void render_kernel(__global int* output, int width, int height, int n_s
 	Ray ray =  createCamRay(x_coord, y_coord, width,  height);
 	t_cam cam = (t_cam){(float3)(0.0f, 0.1f, 2.f), ray.dir};
 	/* add the light contribution of each sample and average over all samples*/
-	float3 finalcolor = (float3)(0.0f, 0.0f, 0.0f);
+	float3 finalcolor = output[x_coord + y_coord * width] ;// (float3)(0.0f, 0.0f, 0.0f);
 	float invSamples = 1.0f / SAMPLES;
 	
 	Ray camray = createCamRay(x_coord, y_coord, width, height);
 	for (int i = 0; i < SAMPLES; i++)
 	{
-		finalcolor += trace(spheres, &camray, n_spheres, &seed0, &seed1) * invSamples;
+		finalcolor += trace(spheres, &camray, n_spheres, &seed0, &seed1);
 	}
-	if(work_item_id == 0)
-	{
-		int inside_circle = 0;
-		int N = 1000000;
-		for (int i = 0; i < N; i++)
-		{
-			float x = 2 * noise_3d(seed0, seed1, i) - 1;
-			float y = 2 * noise_3d(seed0, seed1, i + 100) -1;
-			if (x* x + y * y < 1)
-				inside_circle++;
-		}
-		printf("\n\n Pi = %f\n\n", 4*float(inside_circle)/N);	
-	}
+	// if(work_item_id == 0)
+	// {
+	// 	int inside_circle = 0;
+	// 	int N = 1000000;
+	// 	for (int i = 0; i < N; i++)
+	// 	{
+	// 		float x = 2 * noise_3d(seed0, seed1, i) - 1;
+	// 		float y = 2 * noise_3d(seed0, seed1, i + 100) -1;
+	// 		if (x* x + y * y < 1)
+	// 			inside_circle++;
+	// 	}
+	// 	printf("\n\n Pi = %f\n\n", 4*float(inside_circle)/N);	
+	// }
 	// for (int i = 0; i < 20; i++)
 	// 	printf("i :%d %d\n", work_item_id, get_random);
-	output[x_coord + y_coord * width] = ft_rgb_to_hex(toInt(finalcolor.x), toInt(finalcolor.y), toInt(finalcolor.z)); /* simple interpolated colour gradient based on pixel coordinates */
+	output[x_coord + y_coord * width] = ft_rgb_to_hex(toInt(finalcolor.x  * invSamples), toInt(finalcolor.y  * invSamples), toInt(finalcolor.z  * invSamples)); /* simple interpolated colour gradient based on pixel coordinates */
 	//output[x_coord + y_coord * width] = ft_rgb_to_hex(toInt(0), toInt(0), toInt(255)); /* simple interpolated colour gradient based on pixel coordinates */
 
 }

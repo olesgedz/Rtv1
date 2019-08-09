@@ -6,7 +6,7 @@
 /*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/08/05 18:56:48 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/08/10 01:44:37 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,44 @@ t_vec3 refract(t_vec3 I, t_vec3 N, const float eta_t, const float eta_i) { // Sn
     return k<0 ? (t_vec3){1,0,0,1} : ft_vec3_sum(ft_vec3_scalar_multiply(I,eta), ft_vec3_scalar_multiply(N,(eta*cosi - sqrtf(k)))); // k<0 = total reflection, no ray to refract. I refract it anyways, this has no physical meaning
 }
 
+ int getSurroundingAverage(t_game * game, int x, int y, int pattern) {
+    unsigned int index = ( game->sdl->surface->height - y - 1) *  game->sdl->surface->width + x;
+   int avg;
+    int total;
+    for (int dy = -1; dy < 2; ++dy) {
+      for (int dx = -1; dx < 2; ++dx) {
+        if (pattern == 0 && (dx != 0 && dy != 0)) continue;
+        if (pattern == 1 && (dx == 0 || dy == 0)) continue;
+        if (dx == 0 && dy == 0) {
+          continue;
+        }
+        if (x + dx < 0 || x + dx > game->sdl->surface->width - 1) continue;
+        if (y + dy < 0 || y + dy > game->sdl->surface->height - 1) continue;
+        index = (game->sdl->surface->height - (y + dy) - 1) * game->sdl->surface->width + (x + dx);
+        avg += game->sdl->surface->data[index];
+        total += 1;
+      }
+    }
+    return avg / total;
+  }
+
+void ft_filter(t_game* game)
+{
+	int		i;
+	int		j;
+	int width = game->sdl->surface->width;
+	int height = game->sdl->surface->height;
+	j = -1;
+	while (++j < height)
+	{
+		i = -1;
+		while (++i < width)	
+		{
+			game->sdl->surface->data[i+j*width] = getSurroundingAverage(game, i, j, 1); //game->gpu->cpuOutput[i+ j *width];
+
+		}
+	}
+}
 /*
 *	Fucntion: render all pixels on the surface
 *	Parameters: game, sdl
@@ -88,7 +126,6 @@ void 	ft_render(t_game* game)
 	int height = game->sdl->surface->height;
 	j = -1;
 	ft_run_gpu(game->gpu);
-	
 	while (++j < height)
 	{
 		i = -1;
