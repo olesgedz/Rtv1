@@ -6,7 +6,7 @@
 #    By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/16 12:58:07 by jblack-b          #+#    #+#              #
-#    Updated: 2019/08/05 03:14:46 by olesgedz         ###   ########.fr        #
+#    Updated: 2019/08/10 02:07:25 by olesgedz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = rtv1
 
 FLAGS = -g
 CC = gcc
-LIBRARIES = -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY) -lm -framework OpenCL  -lvect -L$(LIBVECT) -lgnl -L$(LIBGNL) -lcl -L$(LIBCL)#-lmath -L$(LIBMATH_DIRECTORY)
+LIBRARIES = -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY) -lm -framework OpenCL  #-lvect -L$(LIBVECT) -lgnl -L$(LIBGNL) -lcl -L$(LIBCL)#-lmath -L$(LIBMATH_DIRECTORY)
 INCLUDES = -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)include/ -I$(LIBGNL)include/ -I$(LIBCL)include/ # -I$(LIBMATH_HEADERS)
 FRAMEWORKS = -framework OpenCL
 
@@ -100,9 +100,9 @@ $(MAKES):
 	@$(MAKE) -sC $(LIBFT_DIRECTORY)
 	@$(MAKE) -sC $(LIBSDL_DIRECTORY)
 	@$(MAKE) -sC $(LIBMATH_DIRECTORY)
-	@$(MAKE) -sC $(LIBVECT)
-	@$(MAKE) -sC $(LIBGNL)
-	@$(MAKE) -sC $(LIBCL)
+	# @$(MAKE) -sC $(LIBVECT)
+	# @$(MAKE) -sC $(LIBGNL)
+	# @$(MAKE) -sC $(LIBCL)
 
 
 $(OBJS_DIRECTORY):
