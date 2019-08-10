@@ -394,8 +394,8 @@ __global float3 * vect_temp, int samples
 	unsigned int y_coord = work_item_id / width;			/* y-coordinate of the pixel */
 
 	/* seeds for random number generator */
-	 unsigned int seed0 = x_coord;//+ rand(samples);
-	 unsigned int seed1 = y_coord;//+ rand(samples + 3);
+	 unsigned int seed0 = x_coord + rand_noise(samples) * 12312 ;
+	 unsigned int seed1 = y_coord + rand_noise(samples + 3) * 12312;
 	// int2			screen;
 	// // screen.x = global_id % camera->width;
 	// screen.y = global_id / camera->width;
@@ -403,7 +403,11 @@ __global float3 * vect_temp, int samples
 // 	t_cam cam = (t_cam){(	float3)(0.0f, 0.1f, 2.f), ray.dir};
 	//t_camera racy_cam = camera_build_ray(cam, &screen);
 	/* add the light contribution of each sample and average over all samples*/
-	float3 finalcolor =  vect_temp[x_coord + y_coord * width];// (float3)(0.0f, 0.0f, 0.0f);
+		float3 finalcolor;
+	if (samples == 15)
+		finalcolor  = 0;
+	else
+		finalcolor = vect_temp[x_coord + y_coord * width];// (float3)(0.0f, 0.0f, 0.0f);
 	
 	 Ray camray = createCamRay(x_coord, y_coord, width, height);
 	// // Ray camray.origin = camraysad.origin;
@@ -416,7 +420,7 @@ __global float3 * vect_temp, int samples
 	{
 		finalcolor += trace(spheres, &camray, n_spheres, &seed0, &seed1);
 	}
-	// vect_temp[x_coord + y_coord * width] = finalcolor;
+	vect_temp[x_coord + y_coord * width] = finalcolor;
 	// if(work_item_id == 0)
 	// {
 	// 	int inside_circle = 0;

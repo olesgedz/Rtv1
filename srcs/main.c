@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/08/10 01:44:37 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/08/10 17:58:50 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ void 	ft_render(t_game* game)
 		while (++i < width)	
 			game->sdl->surface->data[i+j*width] =  game->gpu->cpuOutput[i+ j *width];
 	}
+	//ft_filter(game);
 }
 
 t_vec3 cube[8];
