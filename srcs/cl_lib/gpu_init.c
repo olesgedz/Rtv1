@@ -37,7 +37,7 @@ int    gpu_read_kernel(t_gpu *gpu)
 	close(fd);
 	//gpu->kernel_source = read_file(open("srcs/cl_files/main.cl", O_RDONLY), 0);
 	gpu->program = clCreateProgramWithSource(gpu->context, 1, (const char **)&gpu->kernel_source, NULL, &gpu->err);
-	gpu->err = clBuildProgram(gpu->program, 0, NULL, " -I includes/cl_headers/ -I srcs/cl_files", NULL, NULL);
+	gpu->err = clBuildProgram(gpu->program, 0, NULL, " -w -I includes/cl_headers/ -I srcs/cl_files/", NULL, NULL);
 	//TODO delete after debug
 	print_error(gpu);
 	return 0;

@@ -58,22 +58,22 @@ Ray get_camera_ray(int x, int y, t_cam *cam, int *seed0, int *seed1)
 
 
 
-float3	sample_hemisphere(float3 w, float max_r, uint2 *seeds)
-{
-	float rand1 = 2.0f * PI * get_random(seeds);
-	float rand2 = get_random(seeds) * max_r;
-	float rand2s = sqrt(rand2);
+// float3	sample_hemisphere(float3 w, float max_r, uint2 *seeds)
+// {
+// 	float rand1 = 2.0f * PI * get_random(seeds);
+// 	float rand2 = get_random(seeds) * max_r;
+// 	float rand2s = sqrt(rand2);
 
-	float3 axis = fabs(w.x) > 0.1f ? (float3)(0.0f, 1.0f, 0.0f) :
-		(float3)(1.0f, 0.0f, 0.0f);
-	float3 u = normalize(cross(axis, w));
-	float3 v = cross(w, u);
+// 	float3 axis = fabs(w.x) > 0.1f ? (float3)(0.0f, 1.0f, 0.0f) :
+// 		(float3)(1.0f, 0.0f, 0.0f);
+// 	float3 u = normalize(cross(axis, w));
+// 	float3 v = cross(w, u);
 
-	float3 newdir = normalize(u * cos(rand1)*rand2s +
-		v*sin(rand1)*rand2s +w*sqrt(1.0f - rand2));
+// 	float3 newdir = normalize(u * cos(rand1)*rand2s +
+// 		v*sin(rand1)*rand2s +w*sqrt(1.0f - rand2));
 
-	return (newdir);
-}
+// 	return (newdir);
+// }
 
 float3 reflect(float3 vector, float3 n) 
 { 
@@ -145,68 +145,68 @@ static bool intersect_scene(__constant t_obj* spheres, const Ray* ray, float* t,
 }
 float cl_float3_max(float3 v)
 {
-	return (fmax(fmax(v.x, v.y), v.z);
+	return (fmax(fmax(v.x, v.y), v.z));
 } 
 float cl_float3_min(float3 v)
 {
-	return (fmin(fmin(v.x, v.y), v.z);
+	return (fmin(fmin(v.x, v.y), v.z));
 } 
 
-float3 sample_lightRND(__constant t_obj* spheres, const Ray* camray, const int sphere_count, const int* seed0, const int* seed1)
-{
-	float3 radiance  = (float3)(0.f,0.f,0.f);
-	float3 mask = (float3)(1.0f, 1.0f, 1.0f);
-	unsigned int max_trace_depth = 16;
+// float3 sample_lightRND(__constant t_obj* spheres, const Ray* camray, const int sphere_count, const int* seed0, const int* seed1)
+// {
+// 	float3 radiance  = (float3)(0.f,0.f,0.f);
+// 	float3 mask = (float3)(1.0f, 1.0f, 1.0f);
+// 	unsigned int max_trace_depth = 16;
 
-	for (int bounces = 0; bounces < max_trace_depth; bounces++)
-	{
-		float t;   /* distance to intersection */
-		int hitsphere_id = 0; /* index of intersected sphere */
-		if (!intersect_scene(spheres, &ray, &t, &hitsphere_id, sphere_count))
-			return mask * (float3)(0.7f, 0.7f, 0.7f);
-		if (bounces < max_trace_depth && cl_float3_max(spheres[sphere_id].color) < rand_noise(*seed0) * 12312)
-			break;
-		emission += mask * spheres[sphere_id].emission;
-		t_obj hitsphere = spheres[hitsphere_id]; /* version with local copy of sphere */
+// 	for (int bounces = 0; bounces < max_trace_depth; bounces++)
+// 	{
+// 		float t;   /* distance to intersection */
+// 		int hitsphere_id = 0; /* index of intersected sphere */
+// 		if (!intersect_scene(spheres, &ray, &t, &hitsphere_id, sphere_count))
+// 			return mask * (float3)(0.7f, 0.7f, 0.7f);
+// 		if (bounces < max_trace_depth && cl_float3_max(spheres[sphere_id].color) < rand_noise(*seed0) * 12312)
+// 			break;
+// 		emission += mask * spheres[sphere_id].emission;
+// 		t_obj hitsphere = spheres[hitsphere_id]; /* version with local copy of sphere */
 
-		/* compute the hitpoint using the ray equation */
-		float3 hitpoint = ray.origin + ray.dir * t;
+// 		/* compute the hitpoint using the ray equation */
+// 		float3 hitpoint = ray.origin + ray.dir * t;
 		
-		/* compute the surface normal and flip it if necessary to face the incoming ray */
-		float3 normal = normalize(hitpoint - hitsphere.position); 
-		float3 normal_facing = dot(normal, ray.dir) < 0.0f ? normal : normal * (-1.0f);
+// 		/* compute the surface normal and flip it if necessary to face the incoming ray */
+// 		float3 normal = normalize(hitpoint - hitsphere.position); 
+// 		float3 normal_facing = dot(normal, ray.dir) < 0.0f ? normal : normal * (-1.0f);
 
-		/* compute two random numbers to pick a random point on the hemisphere above the hitpoint*/
-		float rand1 = 2.0f * PI * get_random(seed0, seed1);
-		float rand2 = get_random(seed0, seed1);
-		float rand2s = sqrt(rand2);
+// 		/* compute two random numbers to pick a random point on the hemisphere above the hitpoint*/
+// 		float rand1 = 2.0f * PI * get_random(seed0, seed1);
+// 		float rand2 = get_random(seed0, seed1);
+// 		float rand2s = sqrt(rand2);
 
-		/* create a local orthogonal coordinate frame centered at the hitpoint */
-		float3 w = normal_facing;
-		float3 axis = fabs(w.x) > 0.1f ? (float3)(0.0f, 1.0f, 0.0f) : (float3)(1.0f, 0.0f, 0.0f);
-		float3 u = normalize(cross(axis, w));
-		float3 v = cross(w, u);
-		float3 newdir;
-		/* use the coordinte frame and random numbers to compute the next ray direction */
-		newdir = normalize(u * cos(rand1)*rand2s + v*sin(rand1)*rand2s + w*sqrt(1.0f - rand2));
+// 		/* create a local orthogonal coordinate frame centered at the hitpoint */
+// 		float3 w = normal_facing;
+// 		float3 axis = fabs(w.x) > 0.1f ? (float3)(0.0f, 1.0f, 0.0f) : (float3)(1.0f, 0.0f, 0.0f);
+// 		float3 u = normalize(cross(axis, w));
+// 		float3 v = cross(w, u);
+// 		float3 newdir;
+// 		/* use the coordinte frame and random numbers to compute the next ray direction */
+// 		newdir = normalize(u * cos(rand1)*rand2s + v*sin(rand1)*rand2s + w*sqrt(1.0f - rand2));
 		
-		newdir = sample_hemisphere(w, 1, seed0, seed1);
-			if (hitsphere.reflection > 0) {
-			ray.dir = reflect(ray.dir, normal_facing);
-			ray.origin = hitpoint + ray.dir * EPSILON;
+// 		newdir = sample_hemisphere(w, 1, seed0, seed1);
+// 			if (hitsphere.reflection > 0) {
+// 			ray.dir = reflect(ray.dir, normal_facing);
+// 			ray.origin = hitpoint + ray.dir * EPSILON;
 
-			accum_color += mask * hitsphere.emission; 	/* add the colour and light contributions to the accumulated colour */ 
-			mask *= hitsphere.color * hitsphere.reflection;	/* the mask colour picks up surface colours at each bounce */
-		} else {
-			ray.dir = newdir;
-			ray.origin = hitpoint + ray.dir * EPSILON;
-			accum_color += mask * hitsphere.emission; 
-			mask *= hitsphere.color;
-		}
-		mask *= dot(newdir, normal_facing);
+// 			accum_color += mask * hitsphere.emission; 	/* add the colour and light contributions to the accumulated colour */ 
+// 			mask *= hitsphere.color * hitsphere.reflection;	/* the mask colour picks up surface colours at each bounce */
+// 		} else {
+// 			ray.dir = newdir;
+// 			ray.origin = hitpoint + ray.dir * EPSILON;
+// 			accum_color += mask * hitsphere.emission; 
+// 			mask *= hitsphere.color;
+// 		}
+// 		mask *= dot(newdir, normal_facing);
 
-	}
-}
+// 	}
+// }
 
 
 static float3 trace(__constant t_obj* spheres, const Ray* camray, const int sphere_count, const int* seed0, const int* seed1)
