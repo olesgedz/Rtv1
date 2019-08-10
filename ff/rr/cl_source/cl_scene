@@ -1,0 +1,21 @@
+typedef struct		s_scene
+{
+	t_object		objects[SCENE_OBJECTS_CAPACITY];
+	int				objects_length;
+}					t_scene;
+
+static int			scene_intersect(constant t_scene *scene, t_intersection *intersection)
+{
+	int				result;
+
+	result = 0;
+	for (int i = 0; i < scene->objects_length; i++)
+		result += object_intersect(scene->objects + i, intersection);
+	if (result != 0)
+	{
+		intersection->material = scene->objects[intersection->object_id].material;
+		intersection->hit = ray_intersect(&intersection->ray);
+		intersection->normal = object_normal(scene->objects + intersection->object_id, intersection);
+	}
+	return (result != 0);
+}

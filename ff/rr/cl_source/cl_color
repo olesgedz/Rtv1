@@ -1,0 +1,17 @@
+typedef struct		s_color
+{
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
+	unsigned char	a;
+}					t_color;
+
+static t_color		color_unpack(RT_F4 source, int srgb)
+{
+    if (srgb)
+		source = pow(source, .4f);
+	source.x = fmin(source.x, 1.f);
+	source.y = fmin(source.y, 1.f);
+	source.z = fmin(source.z, 1.f);
+	return ((t_color){255 * source.x, 255 * source.y, 255 * source.z, 255});
+}

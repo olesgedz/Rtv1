@@ -1,0 +1,54 @@
+static void			create_coordinate_system(RT_F4 *normal, RT_F4 *nt, RT_F4 *nb)
+{
+	if (fabs(normal->x) > fabs(normal->y))
+		*nt = (RT_F4){normal->z, 0., -1.f * normal->x, 0.};
+	else
+		*nt = (RT_F4){0., -1.f * normal->z, normal->y, 0.};
+	*nt = normalize(*nt);
+	*nb = cross(*normal, *nt);
+}
+
+static RT_F4		convert_sample(RT_F4 *normal, RT_F4 *sample, RT_F4 *nt, RT_F4 *nb)
+{
+	return ((RT_F4)
+		{
+			sample->x * nb->x + sample->y * normal->x + sample->z * nt->x,
+			sample->x * nb->y + sample->y * normal->y + sample->z * nt->y,
+			sample->x * nb->z + sample->y * normal->z + sample->z * nt->z,
+			0.
+		});
+}
+
+static RT_F4		sampler_transform(RT_F4 *normal, RT_F4 *sample)
+{
+	RT_F4		nt;
+	RT_F4		nb;
+
+	create_coordinate_system(normal, &nt, &nb);
+	return (convert_sample(normal, sample, &nt, &nb));
+}
+
+static RT_F4		sample_uniform
+					(RT_F4 *normal,
+					RT_F *cosine,
+					global ulong *rng_state)
+{
+	RT_F 			r[2];
+	RT_F4			sample;
+	RT_F			sin_theta;
+	RT_F			phi;
+
+	r[0] = rng(rng_state);
+	r[1] = rng(rng_state);
+	sin_theta = RT_SQRT(RT_MAX(0.0f , 1.0f - r[0] * r[0]));
+	phi = 2.0f * RT_PI * r[1];
+	*cosine = r[0];
+	sample = (RT_F4)
+		{
+			sin_theta * RT_COS(phi),
+			r[0],
+			sin_theta * RT_SIN(phi),
+			0.
+		};
+	return (sampler_transform(normal, &sample));
+}

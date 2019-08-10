@@ -1,0 +1,3 @@
+/Users/Vladimir/workspace/21_ray_tracer/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/Vladimir/workspace/21_ray_tracer/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/Vladimir/workspace/21_ray_tracer/cmake-build-debug/CMakeFiles/rt.dir

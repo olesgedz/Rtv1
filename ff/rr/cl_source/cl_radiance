@@ -1,0 +1,47 @@
+ #include "rt_parameters.h"
+
+static void			radiance_add(
+					constant t_scene *scene,
+					t_intersection *intersection,
+					global RT_F4 *sample,
+					constant t_cl_settings *settings,
+					global uint *rng_state)
+{
+	RT_F4			radiance;
+	RT_F4			explicit;
+	RT_F4			mask;
+	RT_F			cosine;
+
+	radiance = (RT_F4){0.f, 0.f, 0.f, 1.f};
+	mask = 1;
+	for (int depth = 0; depth < settings->sample_depth; ++depth)
+	{
+		if (!scene_intersect(scene, intersection))
+			break ;
+		if (depth < settings->russian_depth && f4_max_component(intersection->material.color) < rng(rng_state))
+			break ;
+
+		radiance += mask * intersection->material.emission;
+
+		if (settings->light_explicit)
+		{
+			explicit = radiance_explicit(scene, intersection, rng_state);
+			radiance += explicit * mask * intersection->material.color;
+		}
+
+		intersection->ray.origin = intersection->hit;
+		intersection->ray.direction = sample_uniform(&intersection->normal, &cosine, rng_state);
+		mask *= intersection->material.color * cosine;
+	}
+	if (settings->sample_count == 1)
+		*sample = radiance;
+	else
+		*sample += radiance;
+}
+
+static RT_F4		radiance_get(
+					global RT_F4 *sample,
+					constant t_cl_settings *settings)
+{
+	return (*sample / settings->sample_count);
+}

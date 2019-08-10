@@ -2,6 +2,17 @@
 #include "random.cl"
 #include "intersect.cl"
 
+typedef struct s_camera
+{
+	cl_float3 position;
+	cl_float3		axis_x;
+	cl_float3		axis_y;
+	cl_float3		axis_z;
+	cl_float3		forward;
+	int				width;
+	int				height;
+} t_camera;
+
 Ray get_camera_ray(int x, int y, t_cam *cam, int *seed0, int *seed1);
 Ray get_precise_ray(int x, int y, t_cam *cam);
 static float get_random( int *seed0, int *seed1);
@@ -132,6 +143,19 @@ static bool intersect_scene(__constant t_obj* spheres, const Ray* ray, float* t,
 	}
 	return *t < inf; /* true when ray interesects the scene */
 }
+
+
+float3 sample_lightRND(__constant t_obj* spheres, const Ray* camray, const int sphere_count, const int* seed0, const int* seed1)
+{
+	cl_float3 emission  = cl_float3(0.f,0.f,0.f);
+	float3 mask = (float3)(1.0f, 1.0f, 1.0f);
+	unsigned int max_trace_depth = 16;
+}
+
+float cl_float3_max(float3 v)
+{
+	return (fmax(fmax(v.x, v.y), v.z);
+} 
 static float3 trace(__constant t_obj* spheres, const Ray* camray, const int sphere_count, const int* seed0, const int* seed1)
 {
 	Ray ray = *camray;
@@ -327,10 +351,27 @@ static int toInt(float x)
 
 
 
+static t_ray		camera_build_ray(constant t_camera *camera, int2 *screen)
+{
+	t_ray			result;
+	float3			up;
+	float3			right;
+	float 			xf;
+	float 			yf;
+
+	xf = (float)screen->x;
+	yf = (float)screen->y;
+	result.origin = camera->position;
+	up = (float3)camera->axis_y * (float)(-1.f * yf + (camera->height - 1.f) / 2.f);
+	right = (float3)camera->axis_x * (float)(xf - (camera->width - 1.f) / 2.f);
+	result.direction = up + right + camera->forward;
+	result.direction = normalize(result.direction);
+	return (result);
+}
 
 
 __kernel void render_kernel(__global int* output, int width, int height, int n_spheres, __constant t_obj* spheres,
-__global float3 * vect_temp, int samples
+__global float3 * vect_temp, int samples, __global t_camera cam
 	)
 {
 	
@@ -341,14 +382,19 @@ __global float3 * vect_temp, int samples
 	/* seeds for random number generator */
 	unsigned int seed0 = x_coord + rand(samples);
 	unsigned int seed1 = y_coord + rand(samples + 3);
-
-	Ray ray =  createCamRay(x_coord, y_coord, width,  height);
-	t_cam cam = (t_cam){(float3)(0.0f, 0.1f, 2.f), ray.dir};
+	int2			screen;
+	screen.x = global_id % camera->width;
+	screen.y = global_id / camera->width;
+// Ray ray =  createCamRay(x_coord, y_coord, width,  height);
+// 	t_cam cam = (t_cam){(	float3)(0.0f, 0.1f, 2.f), ray.dir};
+	t_camera racy_cam = camera_build_ray(cam, &screen);
 	/* add the light contribution of each sample and average over all samples*/
 	float3 finalcolor =  vect_temp[x_coord + y_coord * width];// (float3)(0.0f, 0.0f, 0.0f);
 	float invSamples = 1.0f / SAMPLES;
 	
-	Ray camray = createCamRay(x_coord, y_coord, width, height);
+	Ray camraysad = createCamRay(x_coord, y_coord, width, height);
+	Ray camray.origin = camraysad.origin;
+
 	if (x_coord == 0 && y_coord == 0)
 	{
 		printf("samples %d\n", samples);

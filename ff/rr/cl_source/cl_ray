@@ -1,0 +1,13 @@
+#include "rt_float.h"
+
+typedef	struct		s_ray
+{
+	RT_F4			origin;
+	RT_F4			direction;
+	RT_F 			t;
+}					t_ray;
+
+static RT_F4		ray_intersect(t_ray *ray)
+{
+	return (ray->origin + ray->direction * ray->t);
+}

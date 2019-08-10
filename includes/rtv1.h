@@ -258,6 +258,28 @@ typedef struct	s_main_obj
 
 }				t_main_obj;
 
+typedef struct s_camera
+{
+	cl_float3 position;
+	cl_float3		axis_x;
+	cl_float3		axis_y;
+	cl_float3		axis_z;
+	cl_float3		forward;
+	int				width;
+	int				height;
+} t_camera;
+
+typedef enum		e_camera_direction
+{
+	left,
+	right,
+	up,
+	down,
+	forward,
+	backward
+}					t_camera_direction;
+
+
 typedef struct s_gpu
 {
     cl_device_id		device_id;     // compute device id
@@ -274,9 +296,14 @@ typedef struct s_gpu
 	cl_mem cl_bufferOut;
 	cl_mem cl_cpuSpheres;
 	cl_mem  cl_cpu_vectemp;
+	cl_mem  cl_cpu_camera;
+	t_camera *camera;
 
 	int samples;
 }				t_gpu;
+
+
+
 
 typedef struct s_game
 {
@@ -394,4 +421,14 @@ double		plane_intersection(void *object, t_ray *ray, float *t0);
 
 
 int			opencl_init(t_gpu *gpu, t_game *game);
+cl_float3 create_cfloat3 (float x, float y, float z);
+
+cl_float3 cl_scalar_mul(cl_float3 vector, double scalar);
+
+cl_float3 cl_add(cl_float3 v1, cl_float3 v2);
+t_camera			*camera_new(int width, int height);
+void 				camera_move
+					(t_camera *camera,
+					t_camera_direction direction,
+					float length);
 #endif
