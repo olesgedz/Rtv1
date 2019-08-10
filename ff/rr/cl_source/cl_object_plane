@@ -1,0 +1,30 @@
+#include "rt_parameters.h"
+
+typedef struct		s_object_plane
+{
+	RT_F4			position;
+	RT_F4			normal;
+}					t_object_plane;
+
+static int			plane_intersect(constant t_object *object, t_intersection *intersection)
+{
+	t_object_plane	data;
+	RT_F4			temp[2];
+	RT_F			value[3];
+
+	data = *(t_object_plane *)object->data;
+	if (!(value[0] = dot(intersection->ray.direction, data.normal)))
+		return (0);
+	temp[0] = data.position - intersection->ray.origin;
+	value[1] = dot(temp[0], data.normal) / value[0];
+	if (value[1] <= INTERSECTION_MIN || value[1] >= intersection->ray.t)
+		return (0);
+	intersection->ray.t = value[1];
+	intersection->object_id = object->id;
+	return (1);
+}
+
+static RT_F4		plane_normal(constant t_object *object, t_intersection *intersection)
+{
+	return (((t_object_plane *)object->data)->normal);
+}

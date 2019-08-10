@@ -1,0 +1,23 @@
+kernel void			cl_main(
+					constant t_camera *camera,
+					constant t_scene *scene,
+					global t_color *image,
+					global RT_F4 *sample_store,
+					constant t_cl_settings *settings,
+					global ulong *rng_state)
+{
+	int				global_id;
+	int2			screen;
+	t_intersection	intersection;
+
+    global_id = get_global_id(0);
+
+	screen.x = global_id % camera->width;
+	screen.y = global_id / camera->width;
+
+	intersection.ray = camera_build_ray(camera, &screen);
+	intersection_reset(&intersection);
+
+    radiance_add(scene, &intersection, sample_store + global_id, settings, rng_state);
+    image[global_id] = color_unpack(radiance_get(sample_store + global_id, settings), settings->srgb);
+}

@@ -1,29 +1,5 @@
 #include "rtv1.h"
 
-
-char		*read_file(int fd, size_t *size)
-{
-	char	*tmp;
-	char	*res;
-	ssize_t	num;
-	char	buf[256];
-
-	res = (char *)malloc(sizeof(char));
-	res[0] = '\0';
-	if (res < 0)
-		return (NULL);
-	while ((num = read(fd, buf, 255)) > 0)
-	{
-		buf[num] = '\0';
-		tmp = res;
-		res = ft_strjoin(res, buf);
-		free(tmp);
-	}
-	if (size)
-		*size = ft_strlen(res);
-	return (res);
-}
-
 int print_error(t_gpu *gpu)
 {
 	size_t  len;
@@ -48,20 +24,20 @@ int    gpu_read_kernel(t_gpu *gpu)
 	size_t  len;
 	char    *buffer;
 
-	// fd = open("srcs/intersect.cl", O_RDONLY); // read mode
-	// if (fd < 0)
-	// 	exit(EXIT_FAILURE);
-	// gpu->kernel_source = ft_strnew(0);
-	// while (get_next_line(fd, &line) > 0)
-	// {
-	// 	line = ft_strjoin(line, "\n");
-	// 	gpu->kernel_source = ft_strjoin(gpu->kernel_source, line);
-	// 	ft_strdel(&line);
-	// }
-	// close(fd);
-	gpu->kernel_source = read_file(open("srcs/cl_files/main.cl", O_RDONLY), 0);
+	fd = open("srcs/cl_files/main.cl", O_RDONLY); // read mode
+	if (fd < 0)
+		exit(EXIT_FAILURE);
+	gpu->kernel_source = ft_strnew(0);
+	while (get_next_line(fd, &line) > 0)
+	{
+		line = ft_strjoin(line, "\n");
+		gpu->kernel_source = ft_strjoin(gpu->kernel_source, line);
+		ft_strdel(&line);
+	}
+	close(fd);
+	//gpu->kernel_source = read_file(open("srcs/cl_files/main.cl", O_RDONLY), 0);
 	gpu->program = clCreateProgramWithSource(gpu->context, 1, (const char **)&gpu->kernel_source, NULL, &gpu->err);
-	gpu->err = clBuildProgram(gpu->program, 0, NULL, "-I includes/cl_headers/ -I srcs/cl_files/", NULL, NULL);
+	gpu->err = clBuildProgram(gpu->program, 0, NULL, " -I includes/cl_headers/ -I srcs/cl_files", NULL, NULL);
 	//TODO delete after debug
 	print_error(gpu);
 	return 0;
@@ -89,9 +65,13 @@ int bind_data(t_gpu *gpu, t_main_obj *main)
 	int j;
 	static t_vec3 *h_a;//TODO push it inside t_gpu
 	gpu->vec_temp = ft_memalloc(sizeof(cl_float3) * global);
+	gpu->camera = camera_new(WIN_W, WIN_H);
 	gpu->cl_cpu_vectemp = clCreateBuffer(gpu->context, CL_MEM_READ_WRITE, count * sizeof(cl_float3), NULL, &gpu->err);
 	gpu->cl_bufferOut = clCreateBuffer(gpu->context, CL_MEM_WRITE_ONLY, count * sizeof(cl_int), NULL, &gpu->err);
 	gpu->cl_cpuSpheres= clCreateBuffer(gpu->context, CL_MEM_READ_ONLY, n_spheres * sizeof(t_obj), NULL, &gpu->err);
+	//gpu->cl_cpu_camera= clCreateBuffer(gpu->context, CL_MEM_READ_ONLY, sizeof(t_camera), NULL, &gpu->err);
+	// gpu->err = clEnqueueWriteBuffer(gpu->commands, gpu->cl_cpu_camera, CL_TRUE, 0,
+	// 		sizeof(t_camera), &gpu->camera, 0, NULL, NULL);
 	gpu->err = clEnqueueWriteBuffer(gpu->commands, gpu->cl_cpuSpheres, CL_TRUE, 0,
 			n_spheres * sizeof(t_obj), gpu->spheres, 0, NULL, NULL);
 	gpu->err |= clSetKernelArg(gpu->kernel, 0, sizeof(cl_mem), &gpu->cl_bufferOut);
@@ -101,12 +81,9 @@ int bind_data(t_gpu *gpu, t_main_obj *main)
 	gpu->err |= clSetKernelArg(gpu->kernel, 4, sizeof(cl_mem), &gpu->cl_cpuSpheres);
 	gpu->err |= clSetKernelArg(gpu->kernel, 5, sizeof(cl_mem), &gpu->cl_cpu_vectemp);
 	gpu->err |= clSetKernelArg(gpu->kernel, 6, sizeof(cl_int), &gpu->samples);
+	//gpu->err |= clSetKernelArg(gpu->kernel, 7, sizeof(cl_mem), &gpu->cl_cpu_camera);
 
-
-
-
-	
-
+	BLURT;
     //clReleaseMemObject(cl_bufferOut);
     //release_gpu(gpu);
 	return (0);
