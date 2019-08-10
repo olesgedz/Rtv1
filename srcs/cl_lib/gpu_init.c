@@ -1,29 +1,5 @@
 #include "rtv1.h"
 
-
-char		*read_file(int fd, size_t *size)
-{
-	char	*tmp;
-	char	*res;
-	ssize_t	num;
-	char	buf[256];
-
-	res = (char *)malloc(sizeof(char));
-	res[0] = '\0';
-	if (res < 0)
-		return (NULL);
-	while ((num = read(fd, buf, 255)) > 0)
-	{
-		buf[num] = '\0';
-		tmp = res;
-		res = ft_strjoin(res, buf);
-		free(tmp);
-	}
-	if (size)
-		*size = ft_strlen(res);
-	return (res);
-}
-
 int print_error(t_gpu *gpu)
 {
 	size_t  len;
@@ -101,12 +77,7 @@ int bind_data(t_gpu *gpu, t_main_obj *main)
 	gpu->err |= clSetKernelArg(gpu->kernel, 4, sizeof(cl_mem), &gpu->cl_cpuSpheres);
 	gpu->err |= clSetKernelArg(gpu->kernel, 5, sizeof(cl_mem), &gpu->cl_cpu_vectemp);
 	gpu->err |= clSetKernelArg(gpu->kernel, 6, sizeof(cl_int), &gpu->samples);
-
-
-
-
-	
-
+	BLURT;
     //clReleaseMemObject(cl_bufferOut);
     //release_gpu(gpu);
 	return (0);

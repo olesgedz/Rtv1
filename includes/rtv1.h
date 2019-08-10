@@ -12,7 +12,7 @@
 #include <limits.h>
 #include <float.h>
 #include <math.h>
-
+#include "cl_error.h"
 #ifdef __APPLE__
 #include <OpenCL/opencl.h>
 #else
