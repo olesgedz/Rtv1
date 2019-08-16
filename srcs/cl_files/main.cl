@@ -106,14 +106,13 @@ static t_ray createCamRay(const int x_coord, const int y_coord, const int width,
 // 	return intersection->ray.t < INFINITY; /* true when t_ray interesects the scene */
 // }
 
-static bool intersect_scene(__global t_obj* spheres, const t_ray * ray, float* t, int* sphere_id, const int sphere_count)
+static bool intersect_scene(__global t_obj* spheres,  t_ray * ray, int* sphere_id, const int sphere_count)
 {
 	/* initialise t to a very large number, 
 	so t will be guaranteed to be smaller
 	when a hit with the scene occurs */
 
-	float inf = 1e20f;
-	*t = inf;
+	ray->t = INFINITY;
 
 	/* check if the ray intersects each sphere in the scene */
 	for (int i = 0; i < sphere_count; i++)  {
@@ -131,12 +130,12 @@ static bool intersect_scene(__global t_obj* spheres, const t_ray * ray, float* t
 		else if (sphere.type == PLANE)
 			hitdistance = intersect_plane(&sphere, ray);
 		/* keep track of the closest intersection and hitobject found so far */
-		if (hitdistance != 0.0f && hitdistance < *t) {
-			*t = hitdistance;
+		if (hitdistance != 0.0f && hitdistance < ray->t) {
+			ray->t = hitdistance;
 			*sphere_id = i;
 		}
 	}
-	return *t < inf; /* true when ray interesects the scene */
+	return ray->t < INFINITY; /* true when ray interesects the scene */
 }
 
 float cl_float3_max(float3 v)
@@ -209,6 +208,14 @@ float cl_float3_min(float3 v)
 // 	return accum_color;
 // }
 
+void print_ray(t_scene *scene, t_ray* ray)
+{
+	if (scene->x_coord == 50 && scene->y_coord == 50)
+	{
+		printf("d %f\n", ray->t);
+		//printf("ray %vfff %vfff %f\n", ray->origin, ray->dir, ray->t);
+	}
+}
 static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, int * seed1)
 {
 	t_ray ray = intersection->ray;
@@ -219,18 +226,21 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 
 	for (int bounces = 0; bounces < max_trace_depth; bounces++)
 	{
-		float t;   /* distance to intersection */
 		int hitsphere_id = 0; /* index of intersected sphere */
 
 		/* if ray misses scene, return background colour */
-		if (!intersect_scene(scene->objects, &ray, &t, &hitsphere_id, scene->n_objects))
+		if (!intersect_scene(scene->objects, &ray, &hitsphere_id, scene->n_objects))
 			return mask * (float3)(0.7f, 0.7f, 0.7f);
-
+		//intersect_scene(scene->objects, &intersection->ray, &t, &hitsphere_id, scene->n_objects);
+		// print_ray(scene, &ray);
+		// print_ray(scene, &intersection->ray);
+		//ray = intersection->ray;
+		//ray = intersection->ray;
 		/* else, we've got a hit! Fetch the closest hit sphere */
 		t_obj hitsphere = scene->objects[hitsphere_id]; /* version with local copy of sphere */
 
 		/* compute the hitpoint using the ray equation */
-		float3 hitpoint = ray.origin + ray.dir * t;
+		float3 hitpoint = ray.origin + ray.dir * ray.t;
 		
 		/* compute the surface normal and flip it if necessary to face the incoming ray */
 		float3 normal = normalize(hitpoint - hitsphere.position); 
@@ -351,8 +361,8 @@ __global float3 * vect_temp, int samples
 	finalcolor = vect_temp[scene.x_coord + scene.y_coord * width];
 	scene = scene_new(objects, n_objects, width, height, samples);
 	intersection.ray = createCamRay(scene.x_coord, scene.y_coord, width, height);
-	
-	print_debug(scene.samples, scene.width);
+	intersection_reset(&intersection.ray);
+	//print_debug(scene.samples, scene.width);
 
 	for (int i = 0; i < 15; i++)
 	{	//__constant t_obj* spheres, const Ray* camray, const int sphere_count, const int* seed0, const int* seed1

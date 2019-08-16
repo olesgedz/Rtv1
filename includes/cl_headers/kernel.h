@@ -18,7 +18,9 @@ typedef struct 		s_material
 
 typedef struct		s_intersection
 {
+	float3 aa;
 	t_ray			ray;
+	float3 bb;
 	float3			hitpoint;
 	float3			normal;
 	t_material		material;
