@@ -209,9 +209,9 @@ float cl_float3_min(float3 v)
 // 	return accum_color;
 // }
 
-static float3 trace(__global t_obj* spheres, const t_ray * camray, const int sphere_count, const int* seed0, const int* seed1)
+static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, int * seed1)
 {
-	t_ray ray = *camray;
+	t_ray ray = intersection->ray;
 
 	float3 accum_color = (float3)(0.0f, 0.0f, 0.0f);
 	float3 mask = (float3)(1.0f, 1.0f, 1.0f);
@@ -223,11 +223,11 @@ static float3 trace(__global t_obj* spheres, const t_ray * camray, const int sph
 		int hitsphere_id = 0; /* index of intersected sphere */
 
 		/* if ray misses scene, return background colour */
-		if (!intersect_scene(spheres, &ray, &t, &hitsphere_id, sphere_count))
+		if (!intersect_scene(scene->objects, &ray, &t, &hitsphere_id, scene->n_objects))
 			return mask * (float3)(0.7f, 0.7f, 0.7f);
 
 		/* else, we've got a hit! Fetch the closest hit sphere */
-		t_obj hitsphere = spheres[hitsphere_id]; /* version with local copy of sphere */
+		t_obj hitsphere = scene->objects[hitsphere_id]; /* version with local copy of sphere */
 
 		/* compute the hitpoint using the ray equation */
 		float3 hitpoint = ray.origin + ray.dir * t;
@@ -243,14 +243,7 @@ static float3 trace(__global t_obj* spheres, const t_ray * camray, const int sph
 
 		/* create a local orthogonal coordinate frame centered at the hitpoint */
 		float3 w = normal_facing;
-		float3 axis = fabs(w.x) > 0.1f ? (float3)(0.0f, 1.0f, 0.0f) : (float3)(1.0f, 0.0f, 0.0f);
-		float3 u = normalize(cross(axis, w));
-		float3 v = cross(w, u);
-		float3 newdir;
-		/* use the coordinte frame and random numbers to compute the next ray direction */
-		newdir = normalize(u * cos(rand1)*rand2s + v*sin(rand1)*rand2s + w*sqrt(1.0f - rand2));
-		
-		newdir = sample_hemisphere(w, 1, seed0, seed1);
+		float3 newdir = sample_hemisphere(w, 1, seed0, seed1);
 		//  else
 		// 	newdir = normalize((float3)(0.7f, 0.7f, 0.0f) - hitpoint);
 		/* add a very small offset to the hitpoint to prevent self intersection */
@@ -363,7 +356,7 @@ __global float3 * vect_temp, int samples
 
 	for (int i = 0; i < 15; i++)
 	{	//__constant t_obj* spheres, const Ray* camray, const int sphere_count, const int* seed0, const int* seed1
-		finalcolor += trace(scene.objects,  &intersection.ray, n_objects, &seed0, &seed1);
+		finalcolor += trace(&scene,  &intersection, &seed0, &seed1);
 	}
 	vect_temp[scene.x_coord + scene.y_coord * width] = finalcolor;
 	
