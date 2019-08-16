@@ -1,31 +1,25 @@
 
 #ifndef KERNEL_H
 #define KERNEL_H
-// #ifdef __APPLE__
-// #include <OpenCL/opencl.h>
-// #else
-// #include <Cl/cl.h>
-// #endif
-// #include <float.h>
 
 typedef struct s_ray
 {
 	float3 origin;
 	float3 dir;
+	float	t;
 } t_ray;
 
 typedef struct 		s_material
 {
 	float3			color;
 	float3			emission;
-	float			t;
 }					t_material;
 
 
 typedef struct		s_intersection
 {
 	t_ray			ray;
-	float3			hit;
+	float3			hitpoint;
 	float3			normal;
 	t_material		material;
 	int 			object_id;
@@ -48,25 +42,18 @@ typedef struct Object{
 	float reflection;
 	float plane_d;
 } t_obj;
+// typedef struct s_scene{
 
-typedef struct		s_cam
-{
-	__float3		pos;
-	__float3		dir;
-	__float3		rot;
-	__float3		updir;
-	__float3		ldir;
-	__float3		filter;
-	double			fov;
-	float			f_length;
-	float			aperture;
-	float			ratio;
-	float			pr_pl_w;
-	float			pr_pl_h;
-	float			dust;
-	float			brightness;
-	float			refr_coef;
-	int				effect;
-}					t_cam;
+// 	__global t_obj * objects;
+// 	int n_objects;
+// 	unsigned int global_id;
+// 	unsigned int x_coord;
+// 	unsigned int y_coord;
+// 	int width;
+// 	int height;
+// 	int samples;
+// 	unsigned int seed0;
+// 	unsigned int seed1;
+// } t_scene;
 
 #endif

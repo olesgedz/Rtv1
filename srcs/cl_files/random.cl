@@ -2,7 +2,7 @@
 
 static float get_random( int *seed0, int *seed1) {
 
-	/* hash the seeds using bitwise AND operations and bitshifts */
+	/* hash the *seeds using bitwise AND operations and bitshifts */
 	*seed0 = 36969 * ((*seed0) & 65535) + ((*seed0) >> 16);  
 	*seed1 = 18000 * ((*seed1) & 65535) + ((*seed1) >> 16);
 
