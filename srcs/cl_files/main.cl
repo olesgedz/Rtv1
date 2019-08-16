@@ -13,14 +13,14 @@
 // // 	int				height;
 // // } t_camera;
 
-Ray get_camera_ray(int x, int y, t_cam *cam, int *seed0, int *seed1);
-Ray get_precise_ray(int x, int y, t_cam *cam);
+t_ray get_camera_ray(int x, int y, t_cam *cam, int *seed0, int *seed1);
+t_ray  get_precise_ray(int x, int y, t_cam *cam);
 static float get_random( int *seed0, int *seed1);
 float3 reflect(float3 vector, float3 n);
 float3 refract(float3 vector, float3 n, float refrIndex);
-double          intersect_plane(const t_obj* plane, const Ray* ray);
+double          intersect_plane(const t_obj* plane, const t_ray * ray);
 
-// Ray get_precise_ray(int x, int y, t_cam *cam)
+// t_ray get_precise_ray(int x, int y, t_cam *cam)
 // {
 // 	Ray ray;
 
@@ -36,9 +36,9 @@ double          intersect_plane(const t_obj* plane, const Ray* ray);
 
 
 
-Ray get_camera_ray(int x, int y, t_cam *cam, int *seed0, int *seed1)
+t_ray get_camera_ray(int x, int y, t_cam *cam, int *seed0, int *seed1)
 {
-	Ray ray;
+	t_ray ray;
 
 	float a = get_random(seed0, seed1) * 2 * PI; //random angle
 	float r = sqrt(get_random(seed0, seed1) * cam->aperture); //random radius
@@ -87,7 +87,7 @@ float3 refract(float3 vector, float3 n, float refrIndex)
 	return (refrIndex * vector) + (refrIndex * cosI - sqrt( cosT2 )) * n;
 }
 
-static Ray createCamRay(const int x_coord, const int y_coord, const int width, const int height){
+static t_ray createCamRay(const int x_coord, const int y_coord, const int width, const int height){
 
 	float fx = (float)x_coord / (float)width;  /* convert int in range [0 - width] to float in range [0-1] */
 	float fy = (float)y_coord / (float)height; /* convert int in range [0 - height] to float in range [0-1] */
@@ -101,7 +101,7 @@ static Ray createCamRay(const int x_coord, const int y_coord, const int width, c
 	float3 pixel_pos = (float3)(fx2, -fy2, 0.0f);
 
 	/* create camera ray*/
-	Ray ray;
+	t_ray ray;
 	ray.origin = (float3)(0.0f, 0.1f, 2.f); /* fixed camera position */
 	ray.dir = normalize(pixel_pos - ray.origin); /* vector from camera to pixel on screen */
     return ray;
@@ -111,7 +111,7 @@ static Ray createCamRay(const int x_coord, const int y_coord, const int width, c
 
 
 
-static bool intersect_scene(__constant t_obj* spheres, const Ray* ray, float* t, int* sphere_id, const int sphere_count)
+static bool intersect_scene(__constant t_obj* spheres, const t_ray * ray, float* t, int* sphere_id, const int sphere_count)
 {
 	/* initialise t to a very large number, 
 	so t will be guaranteed to be smaller
@@ -120,7 +120,7 @@ static bool intersect_scene(__constant t_obj* spheres, const Ray* ray, float* t,
 	float inf = 1e20f;
 	*t = inf;
 
-	/* check if the ray intersects each sphere in the scene */
+	/* check if the t_ray intersects each sphere in the scene */
 	for (int i = 0; i < sphere_count; i++)  {
 		
 		t_obj sphere = spheres[i]; /* create local copy of sphere */
@@ -141,7 +141,7 @@ static bool intersect_scene(__constant t_obj* spheres, const Ray* ray, float* t,
 			*sphere_id = i;
 		}
 	}
-	return *t < inf; /* true when ray interesects the scene */
+	return *t < inf; /* true when t_ray interesects the scene */
 }
 float cl_float3_max(float3 v)
 {
@@ -169,10 +169,10 @@ float cl_float3_min(float3 v)
 // 		emission += mask * spheres[sphere_id].emission;
 // 		t_obj hitsphere = spheres[hitsphere_id]; /* version with local copy of sphere */
 
-// 		/* compute the hitpoint using the ray equation */
+// 		/* compute the hitpoint using the t_ray equation */
 // 		float3 hitpoint = ray.origin + ray.dir * t;
 		
-// 		/* compute the surface normal and flip it if necessary to face the incoming ray */
+// 		/* compute the surface normal and flip it if necessary to face the incoming t_ray */
 // 		float3 normal = normalize(hitpoint - hitsphere.position); 
 // 		float3 normal_facing = dot(normal, ray.dir) < 0.0f ? normal : normal * (-1.0f);
 
@@ -187,7 +187,7 @@ float cl_float3_min(float3 v)
 // 		float3 u = normalize(cross(axis, w));
 // 		float3 v = cross(w, u);
 // 		float3 newdir;
-// 		/* use the coordinte frame and random numbers to compute the next ray direction */
+// 		/* use the coordinte frame and random numbers to compute the next t_ray direction */
 // 		newdir = normalize(u * cos(rand1)*rand2s + v*sin(rand1)*rand2s + w*sqrt(1.0f - rand2));
 		
 // 		newdir = sample_hemisphere(w, 1, seed0, seed1);
@@ -209,9 +209,9 @@ float cl_float3_min(float3 v)
 // }
 
 
-static float3 trace(__constant t_obj* spheres, const Ray* camray, const int sphere_count, const int* seed0, const int* seed1)
+static float3 trace(__constant t_obj* spheres, const t_ray * camray, const int sphere_count, const int* seed0, const int* seed1)
 {
-	Ray ray = *camray;
+	 t_ray ray = *camray;
 
 	float3 accum_color = (float3)(0.0f, 0.0f, 0.0f);
 	float3 mask = (float3)(1.0f, 1.0f, 1.0f);
@@ -222,17 +222,17 @@ static float3 trace(__constant t_obj* spheres, const Ray* camray, const int sphe
 		float t;   /* distance to intersection */
 		int hitsphere_id = 0; /* index of intersected sphere */
 
-		/* if ray misses scene, return background colour */
+		/* if t_ray misses scene, return background colour */
 		if (!intersect_scene(spheres, &ray, &t, &hitsphere_id, sphere_count))
 			return mask * (float3)(0.7f, 0.7f, 0.7f);
 
 		/* else, we've got a hit! Fetch the closest hit sphere */
 		t_obj hitsphere = spheres[hitsphere_id]; /* version with local copy of sphere */
 
-		/* compute the hitpoint using the ray equation */
+		/* compute the hitpoint using the t_ray equation */
 		float3 hitpoint = ray.origin + ray.dir * t;
 		
-		/* compute the surface normal and flip it if necessary to face the incoming ray */
+		/* compute the surface normal and flip it if necessary to face the incoming t_ray */
 		float3 normal = normalize(hitpoint - hitsphere.position); 
 		float3 normal_facing = dot(normal, ray.dir) < 0.0f ? normal : normal * (-1.0f);
 
@@ -247,7 +247,7 @@ static float3 trace(__constant t_obj* spheres, const Ray* camray, const int sphe
 		float3 u = normalize(cross(axis, w));
 		float3 v = cross(w, u);
 		float3 newdir;
-		/* use the coordinte frame and random numbers to compute the next ray direction */
+		/* use the coordinte frame and random numbers to compute the next t_ray direction */
 		newdir = normalize(u * cos(rand1)*rand2s + v*sin(rand1)*rand2s + w*sqrt(1.0f - rand2));
 		
 		newdir = sample_hemisphere(w, 1, seed0, seed1);
@@ -308,12 +308,12 @@ static float3 trace(__constant t_obj* spheres, const Ray* camray, const int sphe
 
 /* the path tracing function */
 /* computes a path (starting from the camera) with a defined number of bounces, accumulates light/color at each bounce */
-/* each ray hitting a surface will be reflected in a random direction (by randomly sampling the hemisphere above the hitpoint) */
-/* small optimisation: diffuse ray directions are calculated using cosine weighted importance sampling */
+/* each t_ray hitting a surface will be reflected in a random direction (by randomly sampling the hemisphere above the hitpoint) */
+/* small optimisation: diffuse t_ray directions are calculated using cosine weighted importance sampling */
 
 // // static float3 trace1(__constant t_obj* spheres, const Ray* camray, const int sphere_count, const int* seed0, const int* seed1)
 // // {
-// // 	Ray ray = *camray;
+// // 	Ray t_ray = *camray;
 
 // // 	float3 accum_color = (float3)(0.0f, 0.0f, 0.0f);
 // // 	float3 mask = (float3)(1.0f, 1.0f, 1.0f);
@@ -324,17 +324,17 @@ static float3 trace(__constant t_obj* spheres, const Ray* camray, const int sphe
 // // 		float t;   /* distance to intersection */
 // // 		int hitsphere_id = 0; /* index of intersected sphere */
 
-// // 		/* if ray misses scene, return background colour */
+// // 		/* if t_ray misses scene, return background colour */
 // // 		if (!intersect_scene(spheres, &ray, &t, &hitsphere_id, sphere_count))
 // // 			return mask * (float3)(0.7f, 0.7f, 0.7f);
 
 // // 		/* else, we've got a hit! Fetch the closest hit sphere */
 // // 		t_obj hitsphere = spheres[hitsphere_id]; /* version with local copy of sphere */
 
-// // 		/* compute the hitpoint using the ray equation */
+// // 		/* compute the hitpoint using the t_ray equation */
 // // 		float3 hitpoint = ray.origin + ray.dir * t;
 		
-// // 		/* compute the surface normal and flip it if necessary to face the incoming ray */
+// // 		/* compute the surface normal and flip it if necessary to face the incoming t_ray */
 // // 		float3 normal = normalize(hitpoint - hitsphere.position); 
 // // 		float3 normal_facing = dot(normal, ray.dir) < 0.0f ? normal : normal * (-1.0f);
 // // 		//
@@ -350,7 +350,7 @@ static float3 trace(__constant t_obj* spheres, const Ray* camray, const int sphe
 // // 		float3 u = normalize(cross(axis, w));
 // // 		float3 v = cross(w, u);
 // // 		float3 newdir;
-// // 		/* use the coordinte frame and random numbers to compute the next ray direction */
+// // 		/* use the coordinte frame and random numbers to compute the next t_ray direction */
 // // 		newdir = normalize(u * cos(rand1)*rand2s + v*sin(rand1)*rand2s + w*sqrt(1.0f - rand2));
 		
 // // 		newdir = sample_hemisphere(w, 1, seed0, seed1);
@@ -437,6 +437,7 @@ static int toInt(float x)
 // 	float plane_d;
 // } t_obj;
 
+
 __kernel void render_kernel(__global int* output, int width, int height, int n_spheres, __constant t_obj* spheres,
 __global float3 * vect_temp, int samples
 	)
@@ -452,7 +453,7 @@ __global float3 * vect_temp, int samples
 	// int2			screen;
 	// // screen.x = global_id % camera->width;
 	// screen.y = global_id / camera->width;
-// Ray ray =  createCamRay(x_coord, y_coord, width,  height);
+// t_ray ray =  createCamRay(x_coord, y_coord, width,  height);
 // 	t_cam cam = (t_cam){(	float3)(0.0f, 0.1f, 2.f), ray.dir};
 	//t_camera racy_cam = camera_build_ray(cam, &screen);
 	/* add the light contribution of each sample and average over all samples*/
@@ -462,8 +463,8 @@ __global float3 * vect_temp, int samples
 	else
 		finalcolor = vect_temp[x_coord + y_coord * width];// (float3)(0.0f, 0.0f, 0.0f);
 	
-	 Ray camray = createCamRay(x_coord, y_coord, width, height);
-	// // Ray camray.origin = camraysad.origin;
+	 t_ray camray = createCamRay(x_coord, y_coord, width, height);
+	// // t_ray camray.origin = camraysad.origin;
 
 	if (x_coord == 0 && y_coord == 0)
 	{

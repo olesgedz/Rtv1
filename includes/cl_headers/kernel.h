@@ -8,11 +8,29 @@
 // #endif
 // #include <float.h>
 
-typedef struct Ray
+typedef struct s_ray
 {
 	float3 origin;
 	float3 dir;
-} Ray;
+} t_ray;
+
+typedef struct 		s_material
+{
+	float3			color;
+	float3			emission;
+	float			t;
+}					t_material;
+
+
+typedef struct		s_intersection
+{
+	t_ray			ray;
+	float3			hit;
+	float3			normal;
+	t_material		material;
+	int 			object_id;
+}					t_intersection;
+
 
 typedef enum e_figure
 {

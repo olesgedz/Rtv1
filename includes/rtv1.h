@@ -280,6 +280,9 @@ typedef enum		e_camera_direction
 }					t_camera_direction;
 
 
+
+
+
 typedef struct s_gpu
 {
     cl_device_id		device_id;     // compute device id
