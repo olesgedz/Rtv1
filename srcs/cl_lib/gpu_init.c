@@ -35,7 +35,6 @@ int    gpu_read_kernel(t_gpu *gpu)
 		ft_strdel(&line);
 	}
 	close(fd);
-	//gpu->kernel_source = read_file(open("srcs/cl_files/main.cl", O_RDONLY), 0);
 	gpu->program = clCreateProgramWithSource(gpu->context, 1, (const char **)&gpu->kernel_source, NULL, &gpu->err);
 	gpu->err = clBuildProgram(gpu->program, 0, NULL, " -w -I includes/cl_headers/ -I srcs/cl_files/", NULL, NULL);
 	//TODO delete after debug
@@ -84,9 +83,6 @@ int bind_data(t_gpu *gpu, t_main_obj *main)
 	gpu->cl_bufferOut = clCreateBuffer(gpu->context, CL_MEM_WRITE_ONLY, count * sizeof(cl_int), NULL, &gpu->err);
 	gpu->cl_cpuSpheres= clCreateBuffer(gpu->context, CL_MEM_READ_ONLY, n_spheres * sizeof(t_obj), NULL, &gpu->err);
 	gpu->cl_cpu_random = clCreateBuffer(gpu->context, CL_MEM_READ_ONLY, WIN_H * WIN_W * sizeof(cl_ulong), NULL, &gpu->err);
-	//gpu->cl_cpu_camera= clCreateBuffer(gpu->context, CL_MEM_READ_ONLY, sizeof(t_camera), NULL, &gpu->err);
-	// gpu->err = clEnqueueWriteBuffer(gpu->commands, gpu->cl_cpu_camera, CL_TRUE, 0,
-	// 		sizeof(t_camera), &gpu->camera, 0, NULL, NULL);
 	gpu->err = clEnqueueWriteBuffer(gpu->commands, gpu->cl_cpuSpheres, CL_TRUE, 0,
 			n_spheres * sizeof(t_obj), gpu->spheres, 0, NULL, NULL);
 	ERROR(gpu->err == 0);
@@ -107,7 +103,6 @@ int bind_data(t_gpu *gpu, t_main_obj *main)
 	ERROR(gpu->err == 0);
 	gpu->err |= clSetKernelArg(gpu->kernel, 7, sizeof(cl_mem), &gpu->cl_cpu_random);
 	ERROR(gpu->err == 0);
-	BLURT;
     //clReleaseMemObject(cl_bufferOut);
     //release_gpu(gpu);
 	return (0);
