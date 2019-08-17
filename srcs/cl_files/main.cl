@@ -110,6 +110,7 @@ static float3		radiance_explicit(t_scene *scene,
 
 		intersection_light.ray.origin = intersection_object->hitpoint;
 		intersection_light.ray.dir = light_direction;
+		//intersection_light.object_id = -1; // intersection check
 		intersection_reset(&intersection_light);
 
 		if (!intersect_scene(scene, &intersection_light, &lightray))
@@ -119,8 +120,8 @@ static float3		radiance_explicit(t_scene *scene,
 			continue ;
 		
 		intersection_light.material.color = scene->objects[i].emission;
-		intersection_light.ray.t = lightray.t; 
-		emission_intensity = dot(intersection_object->normal, intersection_light.ray.dir);
+		//intersection_light.ray.t = lightray.t; 
+		emission_intensity = dot(intersection_object->normal, lightray.dir);
 		if (emission_intensity < 0.00001f)
 			continue ;
 
