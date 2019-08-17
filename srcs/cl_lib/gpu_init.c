@@ -153,7 +153,7 @@ void initScene(t_obj* cpu_spheres)
 	cpu_spheres[2].radius   = 0.3f; 
 	cpu_spheres[2].position = create_cfloat3 (0.0f, 0.3f, 0.0f);
 	cpu_spheres[2].color    = create_cfloat3 (0.0f, 0.0f, 0.0f);
-	cpu_spheres[2].emission = create_cfloat3 (3.0f, 3.0f, 3.0f);
+	cpu_spheres[2].emission = create_cfloat3 (8.0f, 8.0f, 8.0f);
 	cpu_spheres[2].type = SPHERE;
 	cpu_spheres[2].reflection = 0;
 

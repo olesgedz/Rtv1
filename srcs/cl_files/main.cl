@@ -146,8 +146,8 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 		/* if ray misses scene, return background colour */
 		if (!intersect_scene(scene, intersection, &ray))
 			return mask * (float3)(0.7f, 0.7f, 0.7f);
-		// if (bounces > 3 && cl_float3_max(scene->objects[intersection->object_id].color) < rng(scene->random))
-		// 	break;
+		if (bounces > 4 && cl_float3_max(scene->objects[intersection->object_id].color) < rng(scene->random))
+			break;
 		// print_ray(scene, &ray);
 		// print_ray(scene, &intersection->ray);
 		t_obj objecthit = scene->objects[intersection->object_id]; /* version with local copy of sphere */
@@ -170,7 +170,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 				accum_color += explicit * mask * intersection->material.color;
 			}				
 			/* add the colour and light contributions to the accumulated colour */ 
-			mask *= objecthit.color  * objecthit.reflection;	/* the mask colour picks up surface colours at each bounce */
+			mask *= objecthit.color  * objecthit.reflection * cosine;	/* the mask colour picks up surface colours at each bounce */
 		
 			ray.dir = reflect(ray.dir, intersection->normal);
 			ray.origin = intersection->hitpoint + ray.dir * EPSILON;
@@ -183,7 +183,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 				explicit = radiance_explicit(scene, intersection);
 				accum_color += explicit * mask * intersection->material.color;
 			}
-			mask *= objecthit.color;
+			mask *= objecthit.color * cosine;
 
 			ray.dir = newdir;
 			ray.origin = intersection->hitpoint + ray.dir * EPSILON;
