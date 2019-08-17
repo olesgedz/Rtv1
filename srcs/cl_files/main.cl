@@ -19,6 +19,7 @@ typedef struct s_scene{
 	int samples;
 	unsigned int seed0;
 	unsigned int seed1;
+	__global ulong * random;
 } t_scene;
 // t_ray get_camera_ray(int x, int y, t_cam *cam, int *seed0, int *seed1)
 // {
@@ -245,7 +246,7 @@ void check_random(int work_item_id, int seed0, int seed1)
 	
 }
 
-void print_debug(int samples, int width)
+void print_debug(int samples, int width, t_scene * scene)
 {
 	unsigned int work_item_id = get_global_id(0);	
 	unsigned int x = work_item_id % width;
@@ -254,10 +255,16 @@ void print_debug(int samples, int width)
 	{
 		printf("samples %d\n", samples);
 		printf("%f\n", rand(samples + 5));
+
+		for (int i = 0; i < 20; i++)
+		{
+			printf("r:%f\n", rng(scene->random));
+		}
 	}
 }
 
-static t_scene scene_new(__global t_obj* objects, int n_objects, int width, int height, int samples)
+static t_scene scene_new(__global t_obj* objects, int n_objects, int width, int height,\
+ int samples, __global ulong * random)
 {
 	t_scene new_scene;
 
@@ -271,11 +278,12 @@ static t_scene scene_new(__global t_obj* objects, int n_objects, int width, int 
 	new_scene.samples = samples;
 	new_scene.seed0 = new_scene.x_coord + rand_noise(new_scene.samples) * 12312;
 	new_scene.seed1 = new_scene.y_coord + rand_noise(new_scene.samples + 3) * 12312;
+	new_scene.random = random;
 	return (new_scene);
 }
 
 __kernel void render_kernel(__global int* output, int width, int height, int n_objects, __global t_obj* objects,
-__global float3 * vect_temp, int samples
+__global float3 * vect_temp, int samples, __global ulong * random
 	)
 {
 	
@@ -287,8 +295,8 @@ __global float3 * vect_temp, int samples
 	unsigned int y_coord = work_item_id / width;			/* y-coordinate of the pixel */
 
 	/* seeds for random number generator */
-	 unsigned int seed0 = x_coord + rand_noise(samples) * 12312;
-	 unsigned int seed1 = y_coord + rand_noise(samples + 3) * 12312;
+	 unsigned int seed0 = x_coord + rng(random);
+	 unsigned int seed1 = y_coord + rng(random);
 	// check_random(work_item_id, seed0, seed1);
 	//  output[scene.x_coord + scene.y_coord * width] = 0;
 	if (samples == 15)
@@ -296,10 +304,10 @@ __global float3 * vect_temp, int samples
 	else
 		finalcolor = vect_temp[x_coord + y_coord * width];
 	
-	scene = scene_new(objects, n_objects, width, height, samples);
+	scene = scene_new(objects, n_objects, width, height, samples, random);
 	intersection.ray = createCamRay(scene.x_coord, scene.y_coord, width, height);
 	intersection_reset(&intersection.ray);
-	print_debug(scene.samples, scene.width);
+	print_debug(scene.samples, scene.width, &scene);
 
 	for (int i = 0; i < 15; i++)
 	{	//__constant t_obj* spheres, const Ray* camray, const int sphere_count, const int* seed0, const int* seed1
