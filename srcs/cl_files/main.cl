@@ -88,10 +88,10 @@ float3 get_normal(t_obj * object, t_intersection * intersection)
 {
 	float3 normal;
 
-	//if (object->type == SPHERE)
+	if (object->type == SPHERE)
 		normal = sphere_get_normal(object, intersection);
-	//else if (object->type == PLANE)
-	//	normal = plane_get_normal(object, intersection);
+	else if (object->type == PLANE)
+		normal = plane_get_normal(object, intersection);
 	return (normalize(normal));
 }
 
@@ -165,9 +165,9 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 		//ray = intersection->ray;
 		//ray = intersection->ray;
 		/* else, we've got a hit! Fetch the closest hit sphere */
-		intersection->ray = ray; // ray delets everything
+		//ray = (t_ray){intersection->ray.origin, intersection->ray.dir, intersection->ray.t }; // ray delets everything
+		
 		t_obj objecthit = scene->objects[intersection->object_id]; /* version with local copy of sphere */
-
 		/* compute the hitpoint using the ray equation */
 		float3 hitpoint = ray.origin + ray.dir * ray.t;
 		intersection->hitpoint =  ray.origin + ray.dir * ray.t;

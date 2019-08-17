@@ -31,7 +31,7 @@ static float intersect_cone(const t_obj* cone, const t_ray *  ray) /* version us
 	return (ft_solve(a, b, c));
 }
 
-static float intersect_sphere(const t_obj* sphere, const t_ray *  ray) /* version using local copy of sphere */
+static float intersect_sphere(const t_obj* sphere,  t_ray *  ray) /* version using local copy of sphere */
 {
 	float3 rayToCenter = ray->origin - sphere->position;
     float a = 1;
