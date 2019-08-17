@@ -105,7 +105,6 @@ static float3		radiance_explicit(t_scene *scene,
 			continue ;
 		if (cl_float3_max(scene->objects[i].emission) == 0.f)
 			continue ;
-
 		light_position = sphere_random(scene->objects + i, scene->random);
 		light_direction = normalize(light_position - intersection_object->hitpoint);
 
@@ -115,8 +114,10 @@ static float3		radiance_explicit(t_scene *scene,
 
 		if (!intersect_scene(scene, &intersection_light, &lightray))
 			continue ;
+
 		if (intersection_light.object_id != i)
 			continue ;
+		
 		intersection_light.material.color = scene->objects[i].emission;
 		intersection_light.ray.t = lightray.t; 
 		emission_intensity = dot(intersection_object->normal, intersection_light.ray.dir);
@@ -167,6 +168,8 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 			if (1)
 			{
 				explicit = radiance_explicit(scene, intersection);
+				if(scene->x_coord == 500 && scene->y_coord == 500 )
+					printf("ex: %f %f %f\n", explicit.x, explicit.y, explicit.z);
 				accum_color += explicit * mask * intersection->material.color;
 			}				
 			/* add the colour and light contributions to the accumulated colour */ 
