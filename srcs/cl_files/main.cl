@@ -75,6 +75,57 @@ static bool intersect_scene(t_scene * scene, t_intersection * intersection, t_ra
 	return ray->t < INFINITY; /* true when ray interesects the scene */
 }
 
+
+// static float3		radiance_explicit(
+// 					constant t_scene *scene,
+// 					t_intersection *intersection_object,
+// 					)
+// {
+// 	t_intersection	intersection_light;
+// 	float3			radiance;
+// 	float3			light_position;
+// 	float3			light_direction;
+// 	float			emission_intensity;
+// 	float			cos_a_max;
+// 	float			omega;
+// 	float			sphere_radius;
+
+// 	radiance = 0;
+// 	for (int i = 0; i < scene->n_objects; i++)
+// 	{
+// 		if (i == intersection_object->object_id)
+// 			continue ;
+// 		if (scene->objects[i].type != SPHERE)
+// 			continue ;
+// 		if (cl_float3_max(scene->objects[i].emission) == 0.f)
+// 			continue ;
+
+// 		light_position = sphere_random(scene->objects + i, rng_state);
+// 		light_direction = normalize(light_position - intersection_object->hit);
+
+// 		intersection_light.ray.origin = intersection_object->hit;
+// 		intersection_light.ray.direction = light_direction;
+// 		intersection_reset(&intersection_light);
+
+// 		if (!scene_intersect(scene, &intersection_light))
+// 			continue ;
+// 		if (intersection_light.object_id != i)
+// 			continue ;
+
+// 		emission_intensity = dot(intersection_object->normal, intersection_light.ray.direction);
+// 		if (emission_intensity < 0.00001f)
+// 			continue ;
+
+// 		sphere_radius = ((t_object_sphere *)scene->objects[intersection_light.object_id].data)->radius;
+// 		cos_a_max = RT_SQRT(1.f - (sphere_radius * sphere_radius) / length(intersection_object->hit - light_position));
+// 		omega = 2 * RT_PI * (1.f - cos_a_max);
+// 		radiance += scene->objects[i].material.emission * emission_intensity * omega * RT_1_PI;
+// 	}
+// 	return (radiance);
+// }
+
+
+
 static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, int * seed1)
 {
 	t_ray ray = intersection->ray;
@@ -85,8 +136,6 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 
 	for (int bounces = 0; bounces < max_trace_depth; bounces++)
 	{
-		int hitsphere_id = 0; /* index of intersected sphere */
-
 		/* if ray misses scene, return background colour */
 		if (!intersect_scene(scene, intersection, &ray))
 			return mask * (float3)(0.7f, 0.7f, 0.7f);
@@ -100,15 +149,8 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 		/* compute the surface normal and flip it if necessary to face the incoming ray */
 		intersection->normal = get_normal(&objecthit, intersection);
 		intersection->normal = dot(intersection->normal, ray.dir) < 0.0f ? intersection->normal : intersection->normal * (-1.0f);
-
-		/* compute two random numbers to pick a random point on the hemisphere above the hitpoint*/
-		float rand1 = 2.0f * PI * get_random(seed0, seed1);
-		float rand2 = get_random(seed0, seed1);
-		float rand2s = sqrt(rand2);
-
 		/* create a local orthogonal coordinate frame centered at the hitpoint */
-		float3 w = intersection->normal;
-		float3 newdir = sample_hemisphere(w, 1, seed0, seed1);
+		float3 newdir = sample_hemisphere(intersection->normal, 1, seed0, seed1);
 		/* add a very small offset to the hitpoint to prevent self intersection */
 		if (objecthit.reflection > 0) {
 			ray.dir = reflect(ray.dir, intersection->normal);
