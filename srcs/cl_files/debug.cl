@@ -35,11 +35,9 @@ void print_debug(int samples, int width, t_scene * scene)
 	if (x == 0 && y == 0)
 	{
 		printf("samples %d\n", samples);
-		printf("%f\n", rand(samples + 5));
-
-		for (int i = 0; i < 20; i++)
-		{
-			printf("r:%f\n", rng(scene->random));
-		}
+		// for (int i = 0; i < 20; i++)
+		// {
+		// 	printf("r:%f\n", rng(scene->random));
+		// }
 	}
 }

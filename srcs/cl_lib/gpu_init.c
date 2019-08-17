@@ -134,10 +134,10 @@ void initScene(t_obj* cpu_spheres)
 	// left sphere
 	cpu_spheres[0].radius   = 0.1f;
 	cpu_spheres[0].position = create_cfloat3 (-0.4f, -0.f, -0.1f);
-	cpu_spheres[0].color    = create_cfloat3 (0.8f, 0.f, 0.f);
+	cpu_spheres[0].color    = create_cfloat3 (0.9f, 0.8f, 0.7f);
 	cpu_spheres[0].v = create_cfloat3 (0.f, 1.0f, 0.0f);
-	cpu_spheres[0].emission = create_cfloat3 (15.0f, 0.0f, 0.0f);
-	cpu_spheres[0].type = SPHERE;
+	cpu_spheres[0].emission = create_cfloat3 (0.0f, 0.0f, 0.0f);
+	cpu_spheres[0].type = CYLINDER;
 	cpu_spheres[0].reflection = 0.f;
 
 	// right sphere
@@ -150,10 +150,10 @@ void initScene(t_obj* cpu_spheres)
 	cpu_spheres[1].reflection = 3.f;
 
 	// lightsource
-	cpu_spheres[2].radius   = 0.2f; 
-	cpu_spheres[2].position = create_cfloat3 (0.0f, 0.4f, 0.0f);
+	cpu_spheres[2].radius   = 0.3f; 
+	cpu_spheres[2].position = create_cfloat3 (0.0f, 0.3f, 0.0f);
 	cpu_spheres[2].color    = create_cfloat3 (0.0f, 0.0f, 0.0f);
-	cpu_spheres[2].emission = create_cfloat3 (9.0f, 9.0f, 9.0f);
+	cpu_spheres[2].emission = create_cfloat3 (3.0f, 3.0f, 3.0f);
 	cpu_spheres[2].type = SPHERE;
 	cpu_spheres[2].reflection = 0;
 
@@ -185,7 +185,7 @@ void initScene(t_obj* cpu_spheres)
 	// ceiling
 	cpu_spheres[3].radius	= 200.0f;
 	cpu_spheres[3].position = create_cfloat3 (0.0f, 1.0f, 0.0f);
-	cpu_spheres[3].color	= create_cfloat3 (0.9f, 0.0f, 0.0f);
+	cpu_spheres[3].color	= create_cfloat3 (0.9f, 0.8f, 0.7f);
 	cpu_spheres[3].emission = create_cfloat3 (0.0f, 0.0f, 0.0f);
 	cpu_spheres[3].type = PLANE;
 	cpu_spheres[3].reflection = 0;
@@ -195,7 +195,7 @@ void initScene(t_obj* cpu_spheres)
 	// back wall
 	cpu_spheres[4].radius   = 200.0f;
 	cpu_spheres[4].position = create_cfloat3 (0.0f, 0.0f, -200.4f);
-	cpu_spheres[4].color    = create_cfloat3 (0.f, 0.8f, 0.f);
+	cpu_spheres[4].color    = create_cfloat3 (0.9f, 0.8f, 0.7f);
 	cpu_spheres[4].emission = create_cfloat3 (0.0f, 0.0f, 0.0f);
 	cpu_spheres[4].type = SPHERE;
  	cpu_spheres[4].reflection = 0;
