@@ -1,6 +1,7 @@
  #include "kernel.h"
  #include "random.cl"
  #include "intersect.cl"
+ #include "math.cl"
 
 static float get_random( int * seed0, int * seed1);
 float3 reflect(float3 vector, float3 n);
@@ -70,43 +71,31 @@ static t_ray createCamRay(const int x_coord, const int y_coord, const int width,
 	ray.dir = normalize(pixel_pos - ray.origin); /* vector from camera to pixel on screen */
     return ray;
 }
- 
 
+static float3 sphere_get_normal(t_obj * object, t_intersection * intersection)
+{
+	return (intersection->hitpoint - object->position);
+}
 
+static float3 plane_get_normal(t_obj * object, t_intersection * intersection)
+{
+	if (dot(intersection->ray.dir,object->v) < 0)
+		return (object->v);
+	return (object->v * -1);
+}
 
+float3 get_normal(t_obj * object, t_intersection * intersection)
+{
+	float3 normal;
 
-// static bool intersect_scene(__constant t_obj* objects, t_scene * scene, t_intersection * intersection)
-// {
-// 	/* initialise t to a very large number, 
-// 	so t will be guaranteed to be smaller
-// 	when a hit with the scene occurs */
-// 	intersection->ray.t = INFINITY;
+	//if (object->type == SPHERE)
+		normal = sphere_get_normal(object, intersection);
+	//else if (object->type == PLANE)
+	//	normal = plane_get_normal(object, intersection);
+	return (normalize(normal));
+}
 
-// 	/* check if the t_ray intersects each sphere in the scene */
-// 	for (int i = 0; i < scene->n_objects; i++)  {
-		
-// 		t_obj object = objects[i]; /* create local copy of sphere */
-		
-// 		/* float hitdistance = intersect_sphere(&spheres[i], ray); */
-// 		float hitdistance = 0; 
-// 		if (object.type == SPHERE)
-// 			hitdistance = intersect_sphere(&object, &intersection->ray);
-// 		else if (object.type == CYLINDER)
-// 			hitdistance = intersect_cylinder(&object, &intersection->ray);
-// 		else if (object.type == CONE)
-// 			hitdistance = intersect_cone(&object, &intersection->ray);
-// 		else if (object.type == PLANE)
-// 			hitdistance = intersect_plane(&object, &intersection->ray);
-// 		/* keep track of the closest intersection and hitobject found so far */
-// 		if (hitdistance != 0.0f && hitdistance < intersection->ray.t) {
-// 			intersection->ray.t = hitdistance;
-// 			intersection->object_id = i;
-// 		}
-// 	}
-// 	return intersection->ray.t < INFINITY; /* true when t_ray interesects the scene */
-// }
-
-static bool intersect_scene(__global t_obj* spheres,  t_ray * ray, int* sphere_id, const int sphere_count)
+static bool intersect_scene(t_scene * scene, t_intersection * intersection, t_ray * ray)
 {
 	/* initialise t to a very large number, 
 	so t will be guaranteed to be smaller
@@ -115,24 +104,24 @@ static bool intersect_scene(__global t_obj* spheres,  t_ray * ray, int* sphere_i
 	ray->t = INFINITY;
 
 	/* check if the ray intersects each sphere in the scene */
-	for (int i = 0; i < sphere_count; i++)  {
+	for (int i = 0; i < scene->n_objects; i++)  {
 		
-		t_obj sphere = spheres[i]; /* create local copy of sphere */
+		t_obj object = scene->objects[i]; /* create local copy of sphere */
 		
 		/* float hitdistance = intersect_sphere(&spheres[i], ray); */
 		float hitdistance = 0; 
-		if (sphere.type == SPHERE)
-			hitdistance = intersect_sphere(&sphere, ray);
-		else if (sphere.type == CYLINDER)
-			hitdistance = intersect_cylinder(&sphere, ray);
-		else if (sphere.type == CONE)
-			hitdistance = intersect_cone(&sphere, ray);
-		else if (sphere.type == PLANE)
-			hitdistance = intersect_plane(&sphere, ray);
+		if (object.type == SPHERE)
+			hitdistance = intersect_sphere(&object, ray);
+		else if (object.type == CYLINDER)
+			hitdistance = intersect_cylinder(&object, ray);
+		else if (object.type == CONE)
+			hitdistance = intersect_cone(&object, ray);
+		else if (object.type == PLANE)
+			hitdistance = intersect_plane(&object, ray);
 		/* keep track of the closest intersection and hitobject found so far */
 		if (hitdistance != 0.0f && hitdistance < ray->t) {
 			ray->t = hitdistance;
-			*sphere_id = i;
+			intersection->object_id = i;
 		}
 	}
 	return ray->t < INFINITY; /* true when ray interesects the scene */
@@ -146,67 +135,6 @@ float cl_float3_min(float3 v)
 {
 	return (fmin(fmin(v.x, v.y), v.z));
 } 
-
-// static float3 trace(__constant t_obj* objects,t_scene * scene, t_intersection * intersection)
-// {
-// 	float3 accum_color = (float3)(0.0f, 0.0f, 0.0f);
-// 	float3 mask = (float3)(1.0f, 1.0f, 1.0f);
-// 	unsigned int max_trace_depth = 16;
-
-// 	for (int bounces = 0; bounces < max_trace_depth; bounces++)
-// 	{
-// 		intersection->object_id = 0;
-
-// 		/* if t_ray misses scene, return background colour */
-// 		if (!intersect_scene(objects, scene, intersection))
-// 			return mask * (float3)(0.7f, 0.7f, 0.7f);
-
-// 		/* else, we've got a hit! Fetch the closest hit sphere */
-// 		t_obj obj_hit = objects[intersection->object_id]; /* version with local copy of sphere */
-
-// 		/* compute the hitpoint using the t_ray equation */
-// 		float3 hitpoint = intersection->ray.origin + intersection->ray.dir * intersection->ray.t;
-		
-// 		/* compute the surface normal and flip it if necessary to face the incoming t_ray */
-// 		intersection->normal = normalize(intersection->hitpoint - obj_hit.position);  //get normal
-// 		float3 normal_facing = dot(intersection->normal, intersection->ray.dir) < 0.0f ? intersection->normal : intersection->normal * (-1.0f);
-
-// 		/* compute two random numbers to pick a random point on the hemisphere above the hitpoint*/
-// 		float rand1 = 2.0f * PI * get_random(scene->seed0, scene->seed1);
-// 		float rand2 = get_random(scene->seed0, scene->seed1);
-// 		float rand2s = sqrt(rand2);
-
-// 		/* create a local orthogonal coordinate frame centered at the hitpoint */
-// 		float3 w = normal_facing;
-// 		float3 axis = fabs(w.x) > 0.1f ? (float3)(0.0f, 1.0f, 0.0f) : (float3)(1.0f, 0.0f, 0.0f);
-// 		float3 u = normalize(cross(axis, w));
-// 		float3 v = cross(w, u);
-// 		float3 newdir;
-// 		/* use the coordinte frame and random numbers to compute the next t_ray direction */
-// 		newdir = normalize(u * cos(rand1)*rand2s + v*sin(rand1)*rand2s + w*sqrt(1.0f - rand2));
-		
-// 		newdir = sample_hemisphere(w, 1, scene->seed0, scene->seed1);
-// 		//  else
-// 		// 	newdir = normalize((float3)(0.7f, 0.7f, 0.0f) - hitpoint);
-// 		/* add a very small offset to the hitpoint to prevent self intersection */
-// 		if (obj_hit.reflection > 0) {
-// 			intersection->ray.dir = reflect(intersection->ray.dir, normal_facing);
-// 			intersection->ray.origin = hitpoint + intersection->ray.dir * EPSILON;
-
-// 			accum_color += mask * obj_hit.emission; 	/* add the colour and light contributions to the accumulated colour */ 
-// 			mask *= obj_hit.color * obj_hit.reflection;	/* the mask colour picks up surface colours at each bounce */
-// 		} else {
-// 			intersection->ray.dir = newdir;
-// 			intersection->ray.origin = hitpoint + intersection->ray.dir * EPSILON;
-// 			accum_color += mask * obj_hit.emission; 
-// 			mask *= obj_hit.color;
-// 		}
-// 		mask *= dot(newdir, normal_facing);
-// 	}
-// 	//color = INTEGRAL A * s(direction) * color(direction)
-// 	//Color = (A * s(direction) * color(direction)) / p(direction)
-// 	return accum_color;
-// }
 
 void print_ray(t_scene *scene, t_ray* ray)
 {
@@ -229,7 +157,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 		int hitsphere_id = 0; /* index of intersected sphere */
 
 		/* if ray misses scene, return background colour */
-		if (!intersect_scene(scene->objects, &ray, &hitsphere_id, scene->n_objects))
+		if (!intersect_scene(scene, intersection, &ray))
 			return mask * (float3)(0.7f, 0.7f, 0.7f);
 		//intersect_scene(scene->objects, &intersection->ray, &t, &hitsphere_id, scene->n_objects);
 		// print_ray(scene, &ray);
@@ -237,13 +165,19 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 		//ray = intersection->ray;
 		//ray = intersection->ray;
 		/* else, we've got a hit! Fetch the closest hit sphere */
-		t_obj hitsphere = scene->objects[hitsphere_id]; /* version with local copy of sphere */
+		intersection->ray = ray; // ray delets everything
+		t_obj objecthit = scene->objects[intersection->object_id]; /* version with local copy of sphere */
 
 		/* compute the hitpoint using the ray equation */
 		float3 hitpoint = ray.origin + ray.dir * ray.t;
-		
+		intersection->hitpoint =  ray.origin + ray.dir * ray.t;
 		/* compute the surface normal and flip it if necessary to face the incoming ray */
-		float3 normal = normalize(hitpoint - hitsphere.position); 
+		//float3 normal1 = get_normal(&objecthit, intersection);
+		float3 normal =  normalize(hitpoint - objecthit.position);
+		// if(scene->x_coord == 50 && scene->y_coord == 50)
+		// {
+		// 	printf("n1 %f %f %f, n %f %f %f\n", normal1.x, normal1.y, normal1.z, normal.x, normal.y, normal.z);
+		// }
 		float3 normal_facing = dot(normal, ray.dir) < 0.0f ? normal : normal * (-1.0f);
 
 		/* compute two random numbers to pick a random point on the hemisphere above the hitpoint*/
@@ -257,17 +191,17 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 		//  else
 		// 	newdir = normalize((float3)(0.7f, 0.7f, 0.0f) - hitpoint);
 		/* add a very small offset to the hitpoint to prevent self intersection */
-		if (hitsphere.reflection > 0) {
+		if (objecthit.reflection > 0) {
 			ray.dir = reflect(ray.dir, normal_facing);
 			ray.origin = hitpoint + ray.dir * EPSILON;
 
-			accum_color += mask * hitsphere.emission; 	/* add the colour and light contributions to the accumulated colour */ 
-			mask *= hitsphere.color * hitsphere.reflection;	/* the mask colour picks up surface colours at each bounce */
+			accum_color += mask * objecthit.emission; 	/* add the colour and light contributions to the accumulated colour */ 
+			mask *= objecthit.color * objecthit.reflection;	/* the mask colour picks up surface colours at each bounce */
 		} else {
 			ray.dir = newdir;
 			ray.origin = hitpoint + ray.dir * EPSILON;
-			accum_color += mask * hitsphere.emission; 
-			mask *= hitsphere.color;
+			accum_color += mask * objecthit.emission; 
+			mask *= objecthit.color;
 		}
 		mask *= dot(newdir, normal_facing);
 	}
