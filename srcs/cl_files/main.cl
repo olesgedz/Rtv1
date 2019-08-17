@@ -88,10 +88,10 @@ float3 get_normal(t_obj * object, t_intersection * intersection)
 {
 	float3 normal;
 
-	if (object->type == SPHERE)
+	// if (object->type == SPHERE)
 		normal = sphere_get_normal(object, intersection);
-	else if (object->type == PLANE)
-		normal = plane_get_normal(object, intersection);
+	// else if (object->type == PLANE)
+	// 	normal = plane_get_normal(object, intersection);
 	return (normalize(normal));
 }
 
@@ -172,13 +172,8 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 		float3 hitpoint = ray.origin + ray.dir * ray.t;
 		intersection->hitpoint =  ray.origin + ray.dir * ray.t;
 		/* compute the surface normal and flip it if necessary to face the incoming ray */
-		//float3 normal1 = get_normal(&objecthit, intersection);
-		float3 normal =  normalize(hitpoint - objecthit.position);
-		// if(scene->x_coord == 50 && scene->y_coord == 50)
-		// {
-		// 	printf("n1 %f %f %f, n %f %f %f\n", normal1.x, normal1.y, normal1.z, normal.x, normal.y, normal.z);
-		// }
-		float3 normal_facing = dot(normal, ray.dir) < 0.0f ? normal : normal * (-1.0f);
+		float3 normal = get_normal(&objecthit, intersection);
+		normal = dot(normal, ray.dir) < 0.0f ? normal : normal * (-1.0f);
 
 		/* compute two random numbers to pick a random point on the hemisphere above the hitpoint*/
 		float rand1 = 2.0f * PI * get_random(seed0, seed1);
@@ -186,24 +181,24 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 		float rand2s = sqrt(rand2);
 
 		/* create a local orthogonal coordinate frame centered at the hitpoint */
-		float3 w = normal_facing;
+		float3 w = normal;
 		float3 newdir = sample_hemisphere(w, 1, seed0, seed1);
 		//  else
 		// 	newdir = normalize((float3)(0.7f, 0.7f, 0.0f) - hitpoint);
 		/* add a very small offset to the hitpoint to prevent self intersection */
 		if (objecthit.reflection > 0) {
-			ray.dir = reflect(ray.dir, normal_facing);
-			ray.origin = hitpoint + ray.dir * EPSILON;
+			ray.dir = reflect(ray.dir, normal);
+			ray.origin = intersection->hitpoint + ray.dir * EPSILON;
 
 			accum_color += mask * objecthit.emission; 	/* add the colour and light contributions to the accumulated colour */ 
 			mask *= objecthit.color * objecthit.reflection;	/* the mask colour picks up surface colours at each bounce */
 		} else {
 			ray.dir = newdir;
-			ray.origin = hitpoint + ray.dir * EPSILON;
+			ray.origin = intersection->hitpoint + ray.dir * EPSILON;
 			accum_color += mask * objecthit.emission; 
 			mask *= objecthit.color;
 		}
-		mask *= dot(newdir, normal_facing);
+		mask *= dot(newdir, normal);
 	}
 	//color = INTEGRAL A * s(direction) * color(direction)
 	//Color = (A * s(direction) * color(direction)) / p(direction)
