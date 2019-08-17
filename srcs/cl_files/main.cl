@@ -161,9 +161,8 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 		float3 newdir = sample_uniform(&intersection->normal, &cosine, scene);
 		//float3 newdir = sample_hemisphere(intersection->normal, 1, seed0, seed1);
 		/* add a very small offset to the hitpoint to prevent self intersection */
+		
 		if (objecthit.reflection > 0) {
-			
-
 			accum_color += mask * objecthit.emission; 
 			if (0)
 			{
@@ -189,9 +188,6 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 			ray.dir = newdir;
 			ray.origin = intersection->hitpoint + ray.dir * EPSILON;
 		}
-		// mask *= dot(newdir, intersection->normal);
-	
-	
 	
 		// if (objecthit.reflection > 0) {
 		// 	ray.dir = reflect(ray.dir, intersection->normal);
@@ -205,7 +201,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 		// 	accum_color += mask * objecthit.emission; 
 		// 	mask *= objecthit.color;
 		// }
-		//mask *= dot(newdir, intersection->normal);
+		// mask *= dot(newdir, intersection->normal);
 	}
 	return accum_color;
 }
