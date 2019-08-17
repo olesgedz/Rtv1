@@ -292,7 +292,12 @@ __global float3 * vect_temp, int samples
 	/* seeds for random number generator */
 	 unsigned int seed0 = x_coord + rand_noise(samples) * 12312 ;
 	 unsigned int seed1 = y_coord + rand_noise(samples + 3) * 12312;
-	finalcolor = vect_temp[scene.x_coord + scene.y_coord * width];
+	//inalcolor = vect_temp[scene.x_coord + scene.y_coord * width];
+	if (samples == 15)
+		finalcolor  = 0;
+	else
+		finalcolor = vect_temp[x_coord + y_coord * width];
+	
 	scene = scene_new(objects, n_objects, width, height, samples);
 	intersection.ray = createCamRay(scene.x_coord, scene.y_coord, width, height);
 	intersection_reset(&intersection.ray);
