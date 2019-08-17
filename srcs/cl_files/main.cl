@@ -160,6 +160,8 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 		/* if ray misses scene, return background colour */
 		if (!intersect_scene(scene, intersection, &ray))
 			return mask * (float3)(0.7f, 0.7f, 0.7f);
+		if (bounces > 3 && cl_float3_max(scene->objects[intersection->object_id].color) < rng(scene->random))
+			break;
 		//intersect_scene(scene->objects, &intersection->ray, &t, &hitsphere_id, scene->n_objects);
 		// print_ray(scene, &ray);
 		// print_ray(scene, &intersection->ray);
