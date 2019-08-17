@@ -71,4 +71,6 @@ typedef struct s_scene{
 // 	unsigned int seed1;
 // } t_scene;
 
+float cl_float3_max(float3 v);
+
 #endif

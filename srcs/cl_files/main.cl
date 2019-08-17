@@ -11,6 +11,12 @@ float3 refract(float3 vector, float3 n, float refrIndex);
 double	intersect_plane(const t_obj* plane, const t_ray * ray);
 
 
+
+static void intersection_reset(t_intersection * intersection)
+{
+	intersection->ray.t = INFINITY;	
+}
+
 float3 reflect(float3 vector, float3 n) 
 { 
     return vector - 2 * dot(vector, n) * n; 
@@ -76,53 +82,54 @@ static bool intersect_scene(t_scene * scene, t_intersection * intersection, t_ra
 }
 
 
-// static float3		radiance_explicit(
-// 					constant t_scene *scene,
-// 					t_intersection *intersection_object,
-// 					)
-// {
-// 	t_intersection	intersection_light;
-// 	float3			radiance;
-// 	float3			light_position;
-// 	float3			light_direction;
-// 	float			emission_intensity;
-// 	float			cos_a_max;
-// 	float			omega;
-// 	float			sphere_radius;
+static float3		radiance_explicit(t_scene *scene,
+					t_intersection *intersection_object
+					)
+{
+	t_intersection	intersection_light;
+	float3			radiance;
+	float3			light_position;
+	float3			light_direction;
+	float			emission_intensity;
+	float			cos_a_max;
+	float			omega;
+	float			sphere_radius;
 
-// 	radiance = 0;
-// 	for (int i = 0; i < scene->n_objects; i++)
-// 	{
-// 		if (i == intersection_object->object_id)
-// 			continue ;
-// 		if (scene->objects[i].type != SPHERE)
-// 			continue ;
-// 		if (cl_float3_max(scene->objects[i].emission) == 0.f)
-// 			continue ;
+	radiance = 0;
+	t_ray lightray;
+	for (int i = 0; i < scene->n_objects; i++)
+	{
+		if (i == intersection_object->object_id)
+			continue ;
+		if (scene->objects[i].type != SPHERE)
+			continue ;
+		if (cl_float3_max(scene->objects[i].emission) == 0.f)
+			continue ;
 
-// 		light_position = sphere_random(scene->objects + i, rng_state);
-// 		light_direction = normalize(light_position - intersection_object->hit);
+		light_position = sphere_random(scene->objects + i, scene->random);
+		light_direction = normalize(light_position - intersection_object->hitpoint);
 
-// 		intersection_light.ray.origin = intersection_object->hit;
-// 		intersection_light.ray.direction = light_direction;
-// 		intersection_reset(&intersection_light);
+		intersection_light.ray.origin = intersection_object->hitpoint;
+		intersection_light.ray.dir = light_direction;
+		intersection_reset(&intersection_light);
 
-// 		if (!scene_intersect(scene, &intersection_light))
-// 			continue ;
-// 		if (intersection_light.object_id != i)
-// 			continue ;
+		if (!intersect_scene(scene, &intersection_light, &lightray))
+			continue ;
+		if (intersection_light.object_id != i)
+			continue ;
+		intersection_light.material.color = scene->objects[i].emission;
+		intersection_light.ray.t = lightray.t; 
+		emission_intensity = dot(intersection_object->normal, intersection_light.ray.dir);
+		if (emission_intensity < 0.00001f)
+			continue ;
 
-// 		emission_intensity = dot(intersection_object->normal, intersection_light.ray.direction);
-// 		if (emission_intensity < 0.00001f)
-// 			continue ;
-
-// 		sphere_radius = ((t_object_sphere *)scene->objects[intersection_light.object_id].data)->radius;
-// 		cos_a_max = RT_SQRT(1.f - (sphere_radius * sphere_radius) / length(intersection_object->hit - light_position));
-// 		omega = 2 * RT_PI * (1.f - cos_a_max);
-// 		radiance += scene->objects[i].material.emission * emission_intensity * omega * RT_1_PI;
-// 	}
-// 	return (radiance);
-// }
+		sphere_radius = scene->objects[intersection_light.object_id].radius;
+		cos_a_max = sqrt(1.f - (sphere_radius * sphere_radius) / length(intersection_object->hitpoint - light_position));
+		omega = 2 * PI * (1.f - cos_a_max);
+		radiance += scene->objects[i].emission * emission_intensity * omega * _1_PI;
+	}
+	return (radiance);
+}
 
 
 
@@ -133,7 +140,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 	float3 accum_color = (float3)(0.0f, 0.0f, 0.0f);
 	float3 mask = (float3)(1.0f, 1.0f, 1.0f);
 	unsigned int max_trace_depth = 16;
-
+	float3 explicit;
 	for (int bounces = 0; bounces < max_trace_depth; bounces++)
 	{
 		/* if ray misses scene, return background colour */
@@ -148,31 +155,45 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 		intersection->hitpoint =  ray.origin + ray.dir * ray.t;
 		/* compute the surface normal and flip it if necessary to face the incoming ray */
 		intersection->normal = get_normal(&objecthit, intersection);
-		intersection->normal = dot(intersection->normal, ray.dir) < 0.0f ? intersection->normal : intersection->normal * (-1.0f);
+		//intersection->normal = dot(intersection->normal, ray.dir) < 0.0f ? intersection->normal : intersection->normal * (-1.0f);
 		/* create a local orthogonal coordinate frame centered at the hitpoint */
-		float3 newdir = sample_hemisphere(intersection->normal, 1, seed0, seed1);
+		float cosine;
+		float3 newdir = sample_uniform(&intersection->normal, &cosine, scene);
+		//float3 newdir = sample_hemisphere(intersection->normal, 1, seed0, seed1);
 		/* add a very small offset to the hitpoint to prevent self intersection */
 		if (objecthit.reflection > 0) {
+			
+
+			accum_color += mask * objecthit.emission; 
+			if (1)
+			{
+				explicit = radiance_explicit(scene, intersection);
+				accum_color += explicit * mask * intersection->material.color;
+			}				
+			/* add the colour and light contributions to the accumulated colour */ 
+			mask *= objecthit.color  * objecthit.reflection * cosine;	/* the mask colour picks up surface colours at each bounce */
+		
 			ray.dir = reflect(ray.dir, intersection->normal);
 			ray.origin = intersection->hitpoint + ray.dir * EPSILON;
-
-			accum_color += mask * objecthit.emission; 	/* add the colour and light contributions to the accumulated colour */ 
-			mask *= objecthit.color * objecthit.reflection;	/* the mask colour picks up surface colours at each bounce */
+		
 		} else {
+			
+			accum_color += mask * objecthit.emission; 
+			if (1)
+			{
+				explicit = radiance_explicit(scene, intersection);
+				accum_color += explicit * mask * intersection->material.color;
+			}
+			mask *= objecthit.color * cosine;
+
 			ray.dir = newdir;
 			ray.origin = intersection->hitpoint + ray.dir * EPSILON;
-			accum_color += mask * objecthit.emission; 
-			mask *= objecthit.color;
 		}
-		mask *= dot(newdir, intersection->normal);
+		//mask *= dot(newdir, intersection->normal);
 	}
 	return accum_color;
 }
 
-static void intersection_reset(t_intersection * intersection)
-{
-	intersection->ray.t = INFINITY;	
-}
 
 static t_scene scene_new(__global t_obj* objects, int n_objects, int width, int height,\
  int samples, __global ulong * random)
