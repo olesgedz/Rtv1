@@ -225,23 +225,24 @@ static void intersection_reset(t_intersection * intersection)
 	intersection->ray.t = INFINITY;	
 }
 
-void check_random(int work_item_id, int seed0, seed1)
+void check_random(int work_item_id, int seed0, int seed1)
 {
 	if(work_item_id == 0)
 	{
 		int inside_circle = 0;
-		int N = 1000000;
+		int N = 1000;
 		for (int i = 0; i < N; i++)
 		{
-			float x = 2 * noise_3d(seed0, seed1, i) - 1;
-			float y = 2 * noise_3d(seed0, seed1, i + 100) -1;
+			// float x = 2 * noise_3d(seed0, seed1, i) - 1;
+			// float y = 2 * noise_3d(seed0, seed1, i + 100) -1;
+			float x = 2 * rand(seed0) - 1;
+			float y = 2 * rand(seed1) -1;
 			if (x* x + y * y < 1)
 				inside_circle++;
 		}
-		printf("\n\n Pi = %f\n\n", 4*float(inside_circle)/N);	
+		printf("\n\n Pi = %f\n\n", 4*float(inside_circle)/N);
 	}
-	for (int i = 0; i < 20; i++)
-		printf("i :%d %d\n", work_item_id, get_random);
+	
 }
 
 void print_debug(int samples, int width)
@@ -249,9 +250,10 @@ void print_debug(int samples, int width)
 	unsigned int work_item_id = get_global_id(0);	
 	unsigned int x = work_item_id % width;
 	unsigned int y = work_item_id / width;
-		if (x == 0 && y == 0)
+	if (x == 0 && y == 0)
 	{
 		printf("samples %d\n", samples);
+		printf("%f\n", rand(samples + 5));
 	}
 }
 
@@ -285,9 +287,10 @@ __global float3 * vect_temp, int samples
 	unsigned int y_coord = work_item_id / width;			/* y-coordinate of the pixel */
 
 	/* seeds for random number generator */
-	 unsigned int seed0 = x_coord + rand_noise(samples) * 12312 ;
+	 unsigned int seed0 = x_coord + rand_noise(samples) * 12312;
 	 unsigned int seed1 = y_coord + rand_noise(samples + 3) * 12312;
-	//inalcolor = vect_temp[scene.x_coord + scene.y_coord * width];
+	// check_random(work_item_id, seed0, seed1);
+	//  output[scene.x_coord + scene.y_coord * width] = 0;
 	if (samples == 15)
 		finalcolor  = 0;
 	else
@@ -296,7 +299,7 @@ __global float3 * vect_temp, int samples
 	scene = scene_new(objects, n_objects, width, height, samples);
 	intersection.ray = createCamRay(scene.x_coord, scene.y_coord, width, height);
 	intersection_reset(&intersection.ray);
-	//print_debug(scene.samples, scene.width);
+	print_debug(scene.samples, scene.width);
 
 	for (int i = 0; i < 15; i++)
 	{	//__constant t_obj* spheres, const Ray* camray, const int sphere_count, const int* seed0, const int* seed1
