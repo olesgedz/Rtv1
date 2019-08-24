@@ -19,7 +19,7 @@ Ray get_precise_ray(int x, int y, t_cam *cam);
 static float get_random( int *seed0, int *seed1);
 float3 reflect(float3 vector, float3 n);
 float3 refract(float3 vector, float3 n, float refrIndex);
-double          intersect_plane(const t_obj* plane, const Ray* ray);
+float          intersect_plane(const t_obj* plane, const Ray* ray);
 
 // Ray get_precise_ray(int x, int y, t_cam *cam)
 // {

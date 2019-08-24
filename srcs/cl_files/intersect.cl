@@ -40,10 +40,10 @@ static float intersect_sphere(const t_obj* sphere, const Ray* ray) /* version us
 	return (ft_solve(a, b, c));
 }
 
-double		intersect_plane(const t_obj* plane, const Ray* ray)
+float		intersect_plane(const t_obj* plane, const Ray* ray)
 {
-	double	a;
-	double	b;
+	float	a;
+	float	b;
 	a = dot(plane->v, ray->dir);//ft_vec3_dot_multiply(ft_vec3_substract(ray->orig, plane->point), plane->normal);
 	//b = ft_vec3_dot_multiply(ray->dir, plane->normal);
 	if (fabs(a) < EPSILON)
