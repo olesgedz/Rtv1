@@ -280,6 +280,9 @@ typedef enum		e_camera_direction
 }					t_camera_direction;
 
 
+
+
+
 typedef struct s_gpu
 {
     cl_device_id		device_id;     // compute device id
@@ -289,6 +292,7 @@ typedef struct s_gpu
     cl_kernel			kernel;       // compute kernel
 	cl_uint				numPlatforms;
 	cl_int				err;
+	cl_ulong			*random;
 	char*				kernel_source;
 	int * cpuOutput;
 	cl_float3 *vec_temp;
@@ -297,6 +301,7 @@ typedef struct s_gpu
 	cl_mem cl_cpuSpheres;
 	cl_mem  cl_cpu_vectemp;
 	cl_mem  cl_cpu_camera;
+	cl_mem  cl_cpu_random;
 	t_camera *camera;
 
 	int samples;
