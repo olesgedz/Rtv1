@@ -1,6 +1,7 @@
  #include "kernel.h"
  #include "random.cl"
  #include "intersect.cl"
+ #include "normals.cl"
 
 // // typedef struct s_camera
 // // {
@@ -180,7 +181,7 @@ static float3 trace(__constant t_obj* spheres, const Ray* camray, const int sphe
 		float3 hitpoint = ray.origin + ray.dir * t;
 		
 		/* compute the surface normal and flip it if necessary to face the incoming ray */
-		float3 normal = normalize(hitpoint - hitsphere.position); 
+		float3 normal = get_surface_normal(hitpoint, &spheres[hitsphere_id]); 
 		float3 normal_facing = dot(normal, ray.dir) < 0.0f ? normal : normal * (-1.0f);
 
 		/* compute two random numbers to pick a random point on the hemisphere above the hitpoint*/

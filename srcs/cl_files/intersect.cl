@@ -44,11 +44,11 @@ double		intersect_plane(const t_obj* plane, const Ray* ray)
 {
 	double	a;
 	double	b;
-	a = dot(plane->position, ray->dir);//ft_vec3_dot_multiply(ft_vec3_substract(ray->orig, plane->point), plane->normal);
+	a = dot(plane->v, ray->dir);//ft_vec3_dot_multiply(ft_vec3_substract(ray->orig, plane->point), plane->normal);
 	//b = ft_vec3_dot_multiply(ray->dir, plane->normal);
-	if (a == 0)
+	if (fabs(a) < EPSILON)
 		return (0);
-	b = -(dot(plane->position, ray->origin) + plane->plane_d) / a;
+	b = -(dot(ray->origin - plane->position, plane->v)) / a;
 	return (b < EPSILON) ? 0 : b;
 }
 

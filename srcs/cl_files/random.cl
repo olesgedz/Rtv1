@@ -16,7 +16,8 @@ static float get_random( int *seed0, int *seed1) {
 	} res;
 
 	res.ui = (ires & 0x007fffff) | 0x40000000;  /* bitwise AND, bitwise OR */
-	return (res.f - 2.0f) / 2.0f;
+	// printf("%f\n", (res.f - 2.0f) / 2.0f);
+	return ((res.f - 2.0f) / 2.0f);
 }
 
 int rand(int* seed) // 1 <= *seed < m
