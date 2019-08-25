@@ -16,7 +16,12 @@
 # include "libvect.h"
 #define CL_SILENCE_DEPRECATION
 
-# include <OpenCL/opencl.h>
+#ifdef __APPLE__
+#include <OpenCL/opencl.h>
+#include <unistd.h>
+#else
+#include <CL/cl.h>
+#endif
 
 # define CL_KRL_ARG(k, i, a) clSetKernelArg(k, i, sizeof(a), (void*)&a)
 

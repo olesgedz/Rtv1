@@ -10,7 +10,7 @@ static float u_clamp(float x)
 
 static int toInt(float x)
 { 
-	return int(u_clamp(x) * 255);
+	return ((int)(u_clamp(x) * 255));
 }
 
 float cl_float3_max(float3 v)

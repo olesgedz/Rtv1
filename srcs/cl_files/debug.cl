@@ -22,7 +22,7 @@ void check_random(int work_item_id, int seed0, int seed1)
 			if (x* x + y * y < 1)
 				inside_circle++;
 		}
-		printf("\n\n Pi = %f\n\n", 4*float(inside_circle)/N);
+		//printf("\n\n Pi = %f\n\n", 4*float(inside_circle)/N);
 	}
 	
 }

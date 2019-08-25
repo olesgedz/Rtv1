@@ -15,9 +15,11 @@
 #include "cl_error.h"
 #ifdef __APPLE__
 #include <OpenCL/opencl.h>
+#include <unistd.h>
 #else
-#include <Cl/cl.h>
+#include <CL/cl.h>
 #endif
+
 
 #ifndef DEVICE
 #define DEVICE CL_DEVICE_TYPE_DEFAULT

@@ -13,8 +13,8 @@
 NAME = rtv1
 
 FLAGS = -g
-CC = gcc
-LIBRARIES = -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY) -lm -framework OpenCL  #-lvect -L$(LIBVECT) -lgnl -L$(LIBGNL) -lcl -L$(LIBCL)#-lmath -L$(LIBMATH_DIRECTORY)
+CC = clang
+LIBRARIES = -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY) -lm -lOpenCL#-framework OpenCL  #-lvect -L$(LIBVECT) -lgnl -L$(LIBGNL) -lcl -L$(LIBCL)#-lmath -L$(LIBMATH_DIRECTORY)
 INCLUDES = -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)include/ -Isrcs/cl_error/ -I$(LIBGNL)include/ -I$(LIBCL)include/ # -I$(LIBMATH_HEADERS)
 FRAMEWORKS = -framework OpenCL
 
