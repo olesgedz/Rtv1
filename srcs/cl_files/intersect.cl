@@ -43,11 +43,7 @@ static float intersect_sphere(const t_obj* sphere,  t_ray *  ray) /* version usi
 double		intersect_plane(const t_obj* plane, const t_ray *  ray)
 {
 	float	a;
-<<<<<<< HEAD
-	double	b;
-=======
 	float	b;
->>>>>>> jblack-b
 	a = dot(plane->v, ray->dir);//ft_vec3_dot_multiply(ft_vec3_substract(ray->orig, plane->point), plane->normal);
 	//b = ft_vec3_dot_multiply(ray->dir, plane->normal);
 	if (fabs(a) < EPSILON)
