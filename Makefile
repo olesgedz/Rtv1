@@ -59,7 +59,7 @@ LIB_LIST =	libSDL2.a\
 SRCS_DIRECTORY = ./srcs/
 
 SRCS_LIST = main.c map_parser.c vectors.c quaternion.c rotate.c intersect.c matrix.c normals.c math.c \
-			cl_lib/gpu_init.c
+			cl_lib/gpu_init.c mouse_click.c
 
 SRCS_LIST += camera/camera_new.c camera/camera_move.c
 OBJS_DIRECTORY = objects/

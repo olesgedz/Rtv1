@@ -63,7 +63,9 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 			case SDL_MOUSEBUTTONDOWN:
 				switch (ev->button.button)
 				{
-					case 1:	printf("clicked left\n"); break;  
+					case 1:	
+						game.wsad[8] = ev->type == SDL_MOUSEBUTTONDOWN;
+						process_left_click(ev->button.x, ev->button.y, game.gpu); break;  
 					case 3:	printf("clicked right\n"); break;  
 					default: break;
 
@@ -137,12 +139,10 @@ void 	ft_render(t_game* game)
 	{
 		i = -1;
 		while (++i < width)	
-			game->sdl->surface->data[i+j*width] =  game->gpu->cpuOutput[i+ j *width];
+			game->sdl->surface->data[i + j * width] =  game->gpu->cpuOutput[i + j * width];
 	}
 	//ft_filter(game);
 }
-
-t_vec3 cube[8];
 
 /*
 *	Fucntion: Main loop
@@ -166,18 +166,12 @@ void ft_update(t_game *game)
 		current_ticks = clock();
 		ft_surface_clear(game->sdl->surface);
 		ft_input(game->sdl, &ft_input_keys);
-		game->wsad[0] ? game->main_objs.lights[0].position.z -= 1: 0;
-		game->wsad[1] ? game->main_objs.lights[0].position.z += 1 : 0;
-		game->wsad[2] ? game->main_objs.lights[0].position.x -= 1 : 0;
-		game->wsad[3] ? game->main_objs.lights[0].position.x += 1 : 0;
-		game->wsad[4] ? game->main_objs.lights[0].position.y += 1 : 0;
-		game->wsad[5] ? game->main_objs.lights[0].position.y -= 1 : 0;
-		game->wsad[6] ? game->main_objs.lights[0].intensity += 0.1 : 0;
-		game->wsad[7] ? game->main_objs.lights[0].intensity -= 0.1 : 0;
+
 		if (game->init_render || game->wsad[0] || game->wsad[1] ||
 			game->wsad[2] || game->wsad[3] || game->wsad[4] || game->wsad[5] ||
-			game->wsad[6] || game->wsad[7])
+			game->wsad[6] || game->wsad[7] || game->wsad[8]) // 8 - is mouse TODO need other array
 			{
+				game->wsad[8] = 0;
 				game->init_render = 0;
 				ft_render(game);
 				ft_surface_present(game->sdl, game->sdl->surface);

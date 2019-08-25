@@ -305,7 +305,7 @@ typedef struct s_gpu
 	cl_mem  cl_cpu_camera;
 	cl_mem  cl_cpu_random;
 	t_camera *camera;
-
+	int	active_mouse_move;
 	int samples;
 }				t_gpu;
 
@@ -323,7 +323,7 @@ typedef struct s_game
 	int n_spheres;
 	int n_cones;
 	int n_cylinders;
-	int wsad[8];
+	int wsad[9];
 	t_vec3 origin;
 	t_main_obj	main_objs;
 	t_gpu *gpu;
@@ -438,4 +438,7 @@ void 				camera_move
 					(t_camera *camera,
 					t_camera_direction direction,
 					float length);
+
+
+void process_left_click(int x, int y, t_gpu *gpu);
 #endif

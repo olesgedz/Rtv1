@@ -112,8 +112,11 @@ void ft_run_gpu(t_gpu *gpu)
 {
 	size_t global = WIN_W * WIN_H;
 	const int count = global;
-	gpu->samples +=15;
-	gpu->err |= clSetKernelArg(gpu->kernel, 6, sizeof(cl_int), &gpu->samples);
+	int active_samples;
+
+	active_samples = 15;
+	gpu->samples +=15;  //TODO what a strory, Mark
+	gpu->err |= clSetKernelArg(gpu->kernel, 6, sizeof(cl_int), (gpu->active_mouse_move ? &active_samples : &gpu->samples));
 	gpu->err = clEnqueueNDRangeKernel(gpu->commands, gpu->kernel, 1, NULL, &global, NULL, 0, NULL, NULL);
 	// clFinish(gpu->commands);
 	gpu->err = clEnqueueReadBuffer(gpu->commands, gpu->cl_bufferOut, CL_TRUE, 0, count * sizeof(cl_int), gpu->cpuOutput, 0, NULL, NULL);
@@ -240,6 +243,7 @@ int opencl_init(t_gpu *gpu, t_game *game)
 	gpu->cpuOutput = malloc(sizeof(int) * (WIN_H * WIN_H));
 	gpu->spheres = malloc(sizeof(t_obj) * 9);
 	gpu->samples = 0;
+	gpu->active_mouse_move = 0;
 	initScene(gpu->spheres);
 	bind_data(gpu, &game->main_objs);
     return (gpu->err);
