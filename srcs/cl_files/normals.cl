@@ -26,11 +26,21 @@ static float3	get_cone_normal(t_obj * object, t_intersection * intersection)
 // 	return(norm);
 // }
 
-static float3	get_cylinder_normal(float3 hitpoint, t_obj *sphere)
+// static float3	get_cylinder_normal(float3 hitpoint, t_obj *sphere)
+// 	{
+// 		float3		norm;
+// 		float3		cp = sphere->position - hitpoint;
+// 		float3		g = dot(sphere->v, cp) * sphere->v;
+	
+// 		norm = normalize(g - cp);
+// 		return(norm);
+// 	}
+
+static float3	get_cylinder_normal(t_obj * object, t_intersection * intersection)
 	{
 		float3		norm;
-		float3		cp = sphere->position - hitpoint;
-		float3		g = dot(sphere->v, cp) * sphere->v;
+		float3		cp = object->position - intersection->hitpoint;
+		float3		g = dot(object->v, cp) * object->v;
 	
 		norm = normalize(g - cp);
 		return(norm);
@@ -55,7 +65,7 @@ float3 get_normal(t_obj * object, t_intersection * intersection)
 	if (object->type == PLANE)
 	 	normal = plane_get_normal(object, intersection);
 	else if (object->type == CYLINDER)
-	 	normal = get_cylinder_normal(intersection->hitpoint, object);
+	 	normal = get_cylinder_normal(object, intersection);
 	else if (object->type == CONE)
 	 	normal = plane_get_normal(object, intersection);
 	else 

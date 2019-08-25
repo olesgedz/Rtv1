@@ -105,7 +105,7 @@ static float3		radiance_explicit(t_scene *scene,
 			continue ;
 		if (cl_float3_max(scene->objects[i].emission) == 0.f)
 			continue ;
-		light_position = sphere_random(scene->objects + i, scene->random);
+		light_position = scene->objects[i].position;//sphere_random(scene->objects + i, scene->random);
 		light_direction = normalize(light_position - intersection_object->hitpoint);
 
 		intersection_light.ray.origin = intersection_object->hitpoint;
@@ -122,8 +122,8 @@ static float3		radiance_explicit(t_scene *scene,
 		intersection_light.material.color = scene->objects[i].emission;
 		//intersection_light.ray.t = lightray.t; 
 		emission_intensity = dot(intersection_object->normal, lightray.dir);
-		if (emission_intensity < 0.00001f)
-			continue ;
+		// if (emission_intensity < 0.00001f)
+		// 	continue ;
 
 		sphere_radius = scene->objects[intersection_light.object_id].radius;
 		cos_a_max = sqrt(1.f - (sphere_radius * sphere_radius) / length(intersection_object->hitpoint - light_position));
@@ -171,7 +171,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 				explicit = radiance_explicit(scene, intersection);
 				if(scene->x_coord == 500 && scene->y_coord == 500 )
 					printf("ex: %f %f %f\n", explicit.x, explicit.y, explicit.z);
-				accum_color += explicit * mask * intersection->material.color;
+				accum_color += explicit * mask  * objecthit.color;//* intersection->material.color;
 			}				
 			/* add the colour and light contributions to the accumulated colour */ 
 			mask *= objecthit.color  * objecthit.reflection * cosine;	/* the mask colour picks up surface colours at each bounce */
@@ -185,7 +185,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 			if (1)
 			{
 				explicit = radiance_explicit(scene, intersection);
-				accum_color += explicit * mask * intersection->material.color;
+				accum_color += explicit * mask *  objecthit.color;//intersection->material.color;
 			}
 			mask *= objecthit.color * cosine;
 
