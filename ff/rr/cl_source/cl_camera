@@ -1,0 +1,28 @@
+typedef struct 		s_camera
+{
+	RT_F4			position;
+	RT_F4			axis_x;
+	RT_F4			axis_y;
+	RT_F4			axis_z;
+	RT_F4			forward;
+	int				width;
+	int				height;
+}					t_camera;
+
+static t_ray		camera_build_ray(constant t_camera *camera, int2 *screen)
+{
+	t_ray			result;
+	RT_F4			up;
+	RT_F4			right;
+	RT_F 			xf;
+	RT_F 			yf;
+
+	xf = (RT_F)screen->x;
+	yf = (RT_F)screen->y;
+	result.origin = camera->position;
+	up = (RT_F4)camera->axis_y * (RT_F)(-1.f * yf + (camera->height - 1.f) / 2.f);
+	right = (RT_F4)camera->axis_x * (RT_F)(xf - (camera->width - 1.f) / 2.f);
+	result.direction = up + right + camera->forward;
+	result.direction = normalize(result.direction);
+	return (result);
+}

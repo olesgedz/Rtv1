@@ -1,0 +1,11 @@
+#include "rt_float.h"
+
+static RT_F			f4_min_component(RT_F4 vector)
+{
+	return (fmin(vector.x, fmin(vector.y, vector.z)));
+}
+
+static RT_F			f4_max_component(RT_F4 vector)
+{
+	return (fmax(vector.x, fmax(vector.y, vector.z)));
+}

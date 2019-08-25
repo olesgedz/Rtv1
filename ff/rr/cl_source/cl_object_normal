@@ -1,0 +1,8 @@
+static RT_F4		object_normal(constant t_object *object, t_intersection *intersection)
+{
+	if (object->type == object_sphere)
+		return (sphere_normal(object, intersection));
+	else if (object->type == object_plane)
+        return (plane_normal(object, intersection));
+	return (0);
+}

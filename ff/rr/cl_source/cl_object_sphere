@@ -1,0 +1,53 @@
+#include "rt_parameters.h"
+
+typedef struct					s_object_sphere
+{
+	RT_F4						position;
+	RT_F						radius;
+}								t_object_sphere;
+
+static int     					sphere_intersect(constant t_object *object, t_intersection *intersection)
+{
+	t_object_sphere				data;
+	RT_F						k[3];
+	RT_F						t;
+	RT_F						discriminant;
+	RT_F4						temp;
+
+    data = *(constant t_object_sphere *)object->data;
+	k[0] = dot(intersection->ray.direction, intersection->ray.direction);
+	temp = intersection->ray.origin - data.position;
+	k[1] = 2 * dot(temp, intersection->ray.direction);
+	k[2] = dot(temp, temp) - data.radius * data.radius;
+	discriminant = k[1] * k[1] - 4 * k[0] * k[2];
+	if (discriminant < 0.f)
+		return (0);
+	t = (-k[1] - RT_SQRT(discriminant)) / (2 * k[0]);
+	if (t <= INTERSECTION_MIN || t >= intersection->ray.t)
+		return (0);
+	intersection->ray.t = t;
+	intersection->object_id = object->id;
+	return (1);
+}
+
+static RT_F4					sphere_normal(constant t_object *object, t_intersection *intersection)
+{
+	return (normalize(intersection->hit - ((t_object_sphere *)object->data)->position));
+}
+
+static RT_F4					sphere_random(constant t_object *object, global ulong *rng_state)
+{
+	t_object_sphere				*data;
+	RT_F 						theta;
+	RT_F 						phi;
+	RT_F4						random;
+
+	data = (t_object_sphere *)object->data;
+	theta = rng(rng_state) * RT_PI;
+	phi = rng(rng_state) * 2 * RT_PI;
+	random.x = 0.99 * data->radius * RT_SIN(theta) * RT_COS(phi);
+	random.y = 0.99 * data->radius * RT_SIN(theta) * RT_SIN(phi);
+	random.z = 0.99 * data->radius * RT_COS(theta);
+	random += data->position;
+	return (random);
+}

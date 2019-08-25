@@ -6,7 +6,7 @@
 #    By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/16 12:58:07 by jblack-b          #+#    #+#              #
-#    Updated: 2019/06/23 17:07:23 by jblack-b         ###   ########.fr        #
+#    Updated: 2019/08/10 17:59:58 by jblack-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@ NAME = rtv1
 
 FLAGS = -g
 CC = gcc
-LIBRARIES = -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY) -lm -framework OpenCL #-lmath -L$(LIBMATH_DIRECTORY)
-INCLUDES = -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBSDL_HEADERS) # -I$(LIBMATH_HEADERS)
+LIBRARIES = -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY) -lm -framework OpenCL  #-lvect -L$(LIBVECT) -lgnl -L$(LIBGNL) -lcl -L$(LIBCL)#-lmath -L$(LIBMATH_DIRECTORY)
+INCLUDES = -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)include/ -Isrcs/cl_error/ -I$(LIBGNL)include/ -I$(LIBCL)include/ # -I$(LIBMATH_HEADERS)
 FRAMEWORKS = -framework OpenCL
 
 LIBFT = $(LIBFT_DIRECTORY)libft.a
@@ -25,6 +25,11 @@ LIBFT_HEADERS = $(LIBFT_DIRECTORY)includes/
 LIBMATH = $(LIBMATH_DIRECTORY)libmath.a
 LIBMATH_DIRECTORY = ./libmath/
 LIBMATH_HEADERS = $(LIBMATH_DIRECTORY)includes/
+
+LIBVECT = libvect/
+LIBCL	= libcl/
+LIBGNL	= libgnl/
+
 
 SDL_HEADERS = include/
 
@@ -53,9 +58,10 @@ LIB_LIST =	libSDL2.a\
 
 SRCS_DIRECTORY = ./srcs/
 
-SRCS_LIST = main.c map_parser.c vectors.c quaternion.c rotate.c intersect.c matrix.c normals.c math.c gpu_init.c
+SRCS_LIST = main.c map_parser.c vectors.c quaternion.c rotate.c intersect.c matrix.c normals.c math.c \
+			cl_lib/gpu_init.c
 
-
+SRCS_LIST += camera/camera_new.c camera/camera_move.c
 OBJS_DIRECTORY = objects/
 OBJS_LIST = $(patsubst %.c, %.o, $(SRCS_LIST))
 OBJS = $(addprefix $(OBJS_DIRECTORY), $(OBJS_LIST))
@@ -95,12 +101,17 @@ $(MAKES):
 	@$(MAKE) -sC $(LIBFT_DIRECTORY)
 	@$(MAKE) -sC $(LIBSDL_DIRECTORY)
 	@$(MAKE) -sC $(LIBMATH_DIRECTORY)
+	# @$(MAKE) -sC $(LIBVECT)
+	# @$(MAKE) -sC $(LIBGNL)
+	# @$(MAKE) -sC $(LIBCL)
+
 
 $(OBJS_DIRECTORY):
 	@mkdir -p $(OBJS_DIRECTORY)
 
 
 $(OBJS_DIRECTORY)%.o : $(SRCS_DIRECTORY)%.c $(HEADERS)
+	@mkdir -p $(@D)
 	@$(CC) $(FLAGS) -c $(INCLUDES) $< -o $@
 	@echo "$(CLEAR_LINE)[`expr $(CURRENT_FILES) '*' 100 / $(TOTAL_FILES)`%] $(COL_BLUE)[$(NAME)] $(COL_GREEN)Compiling file [$(COL_VIOLET)$<$(COL_GREEN)].($(CURRENT_FILES) / $(TOTAL_FILES))$(COL_END)$(BEGIN_LINE)"
 
@@ -112,11 +123,12 @@ depend:
 						makedepend --$(SRCS_DIRECTORY)/$(SRCS_LIST); 
 		
 sdl:
-	@echo "sad"
 	cd SDL2; ./configure --prefix=$(DIRECTORY); make;
 	$(MAKE) -sC $(DIRECTORY)/SDL2 install
+
 this:
 	@rm -rf $(OBJS_DIRECTORY) && make;
+
 $(SDL_LIBS):
 	cd SDL2; ./configure --prefix=$(DIRECTORY); make;
 	$(MAKE) -sC $(SDL_MAKE) install

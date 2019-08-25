@@ -1,0 +1,10 @@
+typedef struct 			s_cl_settings
+{
+	int					sample_count;
+	int					sample_limit;
+	int 				sample_depth;
+	int					russian_depth;
+	int					srgb;
+	int					light_pb;
+	int 				light_explicit;
+}						t_cl_settings;
