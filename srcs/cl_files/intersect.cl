@@ -52,6 +52,7 @@ double		intersect_plane(const t_obj* plane, const t_ray *  ray)
 	return (b < EPSILON) ? 0 : b;
 }
 
+
 static double		intersect_cylinder(const t_obj* cylinder, const t_ray *  ray)
 {
 	float3	x = ray->origin - cylinder->position;
