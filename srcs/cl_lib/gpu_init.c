@@ -115,7 +115,6 @@ void ft_run_gpu(t_gpu *gpu)
 	int active_samples;
 
 	active_samples = 15;
-	gpu->samples +=15;  //TODO what a strory, Mark
 	gpu->err |= clSetKernelArg(gpu->kernel, 6, sizeof(cl_int), (gpu->active_mouse_move ? &active_samples : &gpu->samples));
 	gpu->err = clEnqueueNDRangeKernel(gpu->commands, gpu->kernel, 1, NULL, &global, NULL, 0, NULL, NULL);
 	// clFinish(gpu->commands);

@@ -166,6 +166,9 @@ void ft_update(t_game *game)
 		current_ticks = clock();
 		ft_surface_clear(game->sdl->surface);
 		ft_input(game->sdl, &ft_input_keys);
+		
+		(game->wsad[2] && game->gpu->samples > 15) ? game->gpu->samples -= 15 : 0;
+		(game->wsad[3] && game->gpu->samples < 1000) ? game->gpu->samples += 15 : 0;
 
 		if (game->init_render || game->wsad[0] || game->wsad[1] ||
 			game->wsad[2] || game->wsad[3] || game->wsad[4] || game->wsad[5] ||
