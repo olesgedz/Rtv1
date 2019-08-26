@@ -138,6 +138,23 @@ static float3					sphere_random(global t_obj *object, global int *rnd)
 }
 
 
+
+static float3					sphere_random_on_sphere(global t_obj *object, global int *rnd)
+{
+	float 						theta;
+	float 						phi;
+	float3						random;
+
+	theta = rng(rnd) * PI;
+	phi = rng(rnd) * 2 * PI;
+	random.x =  object->radius * sin(theta) * cos(phi);
+	random.y = object->radius * sin(theta) * sin(phi);
+	random.z =  object->radius * cos(theta);
+	random += object->position;
+	return (random);
+}
+
+
 static void			create_coordinate_system(float3 *normal, float3 *nt, float3 *nb)
 {
 	if (fabs(normal->x) > fabs(normal->y))
