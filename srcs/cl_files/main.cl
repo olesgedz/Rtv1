@@ -105,7 +105,7 @@ static float3		radiance_explicit(t_scene *scene,
 			continue ;
 		if (cl_float3_max(scene->objects[i].emission) == 0.f)
 			continue ;
-		light_position = scene->objects[i].position; //+  (float3)(0.5 * sin(rng(scene->random)),0.5 * sin(rng(scene->random)), 0.5 * cos(rng(scene->random)));//sphere_random(scene->objects + i, scene->random);
+		light_position = sphere_random(scene->objects + i, scene->random);
 		//light_position = sphere_random_on_sphere(scene->objects + i, scene->random);
 		
 		
@@ -113,7 +113,7 @@ static float3		radiance_explicit(t_scene *scene,
 
 		intersection_light.ray.origin = intersection_object->hitpoint;
 		intersection_light.ray.dir = light_direction;
-		lightray.origin = intersection_object->hitpoint;
+		lightray.origin = intersection_object->hitpoint; //- light_direction * EPSILON;
 		lightray.dir = light_direction;
 		//intersection_light.object_id = -1; // intersection check
 		intersection_reset(&intersection_light);
@@ -156,8 +156,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 			return mask * (float3)(0.7f, 0.7f, 0.7f);
 		if (bounces > 4 && cl_float3_max(scene->objects[intersection->object_id].color) < rng(scene->random))
 			break;
-		// print_ray(scene, &ray);
-		// print_ray(scene, &intersection->ray);
+		
 		t_obj objecthit = scene->objects[intersection->object_id]; /* version with local copy of sphere */
 		/* compute the hitpoint using the ray equation */
 		intersection->hitpoint =  ray.origin + ray.dir * ray.t;

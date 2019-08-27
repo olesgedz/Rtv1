@@ -6,7 +6,7 @@
 /*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/08/18 00:31:58 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/08/27 02:53:23 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,25 +75,37 @@ t_vec3 refract(t_vec3 I, t_vec3 N, const float eta_t, const float eta_i) { // Sn
     return k<0 ? (t_vec3){1,0,0,1} : ft_vec3_sum(ft_vec3_scalar_multiply(I,eta), ft_vec3_scalar_multiply(N,(eta*cosi - sqrtf(k)))); // k<0 = total reflection, no ray to refract. I refract it anyways, this has no physical meaning
 }
 
- int getSurroundingAverage(t_game * game, int x, int y, int pattern) {
+
+
+static float u_clamp(float x)
+{
+	return x < 0.0f ? 0.0f : x > 1.0f ? 1.0f : x;
+}
+
+static int toInt(float x)
+{ 
+	return (int)(u_clamp(x) * 255);
+}
+
+ int getSurroundingAverage(t_game * game, int x, int y) {
     unsigned int index = ( game->sdl->surface->height - y - 1) *  game->sdl->surface->width + x;
-   int avg;
-    int total;
-    for (int dy = -1; dy < 2; ++dy) {
-      for (int dx = -1; dx < 2; ++dx) {
-        if (pattern == 0 && (dx != 0 && dy != 0)) continue;
-        if (pattern == 1 && (dx == 0 || dy == 0)) continue;
-        if (dx == 0 && dy == 0) {
-          continue;
-        }
-        if (x + dx < 0 || x + dx > game->sdl->surface->width - 1) continue;
-        if (y + dy < 0 || y + dy > game->sdl->surface->height - 1) continue;
-        index = (game->sdl->surface->height - (y + dy) - 1) * game->sdl->surface->width + (x + dx);
-        avg += game->sdl->surface->data[index];
-        total += 1;
-      }
-    }
-    return avg / total;
+   cl_float3 avg;
+   cl_float3 temp;
+    int total = 1;
+	int color = 0;
+	// if(x == 0 || y == 0)
+	// 	return 0;
+	for(int j = y - 1; j < y + 1; j++)
+	{
+		for(int k = x - 1; k < x + 1; k++)
+		{
+			temp =  game->gpu->vec_temp[k + j * game->sdl->surface->width];
+			avg = (cl_float3){(avg.v4[0] + temp.v4[0]), (avg.v4[1] + temp.v4[1]), (avg.v4[2] + temp.v4[2])};
+			total++;
+		}
+	}
+	//avg = game->sdl->surface->data[x + y * game->sdl->surface->width];
+    return ft_rgb_to_hex(toInt(avg.v4[0] / total), toInt(avg.v4[1]/ total), toInt(avg.v4[2]/ total));
   }
 
 void ft_filter(t_game* game)
@@ -102,13 +114,13 @@ void ft_filter(t_game* game)
 	int		j;
 	int width = game->sdl->surface->width;
 	int height = game->sdl->surface->height;
-	j = -1;
+	j = 0;
 	while (++j < height)
 	{
-		i = -1;
+		i = 0;
 		while (++i < width)	
 		{
-			game->sdl->surface->data[i+j*width] = getSurroundingAverage(game, i, j, 1); //game->gpu->cpuOutput[i+ j *width];
+			game->sdl->surface->data[i+j*width] = getSurroundingAverage(game, i, j); //game->gpu->cpuOutput[i+ j *width];
 
 		}
 	}
