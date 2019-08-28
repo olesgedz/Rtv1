@@ -105,8 +105,8 @@ static float3		radiance_explicit(t_scene *scene,
 			continue ;
 		if (cl_float3_max(scene->objects[i].emission) == 0.f)
 			continue ;
-		light_position = sphere_random(scene->objects + i, scene->random);
-		//light_position = sphere_random_on_sphere(scene->objects + i, scene->random);
+		//light_position = sphere_random(scene->objects + i, scene->random);
+		light_position = sphere_random_on_sphere(scene->objects + i, scene->random);
 		
 		
 		light_direction = normalize(light_position - intersection_object->hitpoint);
