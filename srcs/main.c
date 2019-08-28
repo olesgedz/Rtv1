@@ -6,7 +6,7 @@
 /*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/08/29 01:00:51 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/08/29 01:21:47 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ int	main(int argc, char **argv)
 	game.sdl = malloc(sizeof(t_sdl));
 	game.image = ft_surface_create(WIN_W, WIN_H);
 	game.init_render = 1;
-	game.origin = (t_vec3){0,0,5,1};
+	game.origin = (t_vec3){0,0,5};
 	game.gpu = (t_gpu *)malloc(sizeof(t_gpu));
 	opencl_init(game.gpu, &game);
 	ft_init_window(game.sdl, WIN_W, WIN_H);
