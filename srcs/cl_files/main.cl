@@ -94,7 +94,7 @@ static float3		radiance_explicit(t_scene *scene,
 	float			cos_a_max;
 	float			omega;
 	float			sphere_radius;
-
+	float pdf;
 	radiance = 0;
 	t_ray lightray;
 	for (int i = 0; i < scene->n_objects; i++)
@@ -110,9 +110,6 @@ static float3		radiance_explicit(t_scene *scene,
 		
 		
 		light_direction = normalize(light_position - intersection_object->hitpoint);
-
-		intersection_light.ray.origin = intersection_object->hitpoint;
-		intersection_light.ray.dir = light_direction;
 		lightray.origin = intersection_object->hitpoint; //- light_direction * EPSILON;
 		lightray.dir = light_direction;
 		//intersection_light.object_id = -1; // intersection check
@@ -123,19 +120,22 @@ static float3		radiance_explicit(t_scene *scene,
 
 		if (intersection_light.object_id != i)
 			continue ;
-		
 		intersection_light.material.color = scene->objects[i].emission;
 		//intersection_light.ray.t = lightray.t; 
 		emission_intensity = dot(intersection_object->normal, lightray.dir);
 		if (emission_intensity < 0.00001f)
 			continue ;
-		float pdf = 1 / (2 * PI);
+		pdf = 1 / (2 * PI);
 
 		sphere_radius = scene->objects[intersection_light.object_id].radius;
 		cos_a_max = sqrt(1.f - (sphere_radius * sphere_radius) / length(intersection_object->hitpoint - light_position));
 		omega = 2 * PI * (1.f - cos_a_max);
 		radiance += scene->objects[i].emission * emission_intensity * omega * _1_PI;
 	}
+	// if (cl_float3_max(radiance) < 0.5)
+	// {
+	// 	radiance *= pdf;
+	// }
 	return (radiance);
 }
 
