@@ -65,7 +65,7 @@ cl_ulong * get_random(cl_ulong * random)
 	return (random);
 }
 
-int bind_data(t_gpu *gpu, t_main_obj *main)
+int bind_data(t_gpu *gpu)
 {
 	int data_size = sizeof(t_vec3) * WIN_W * WIN_H;
 	int w = WIN_W; //TODO use as parameter of struct, not macros
@@ -241,7 +241,7 @@ int opencl_init(t_gpu *gpu, t_game *game)
 	gpu->spheres = malloc(sizeof(t_obj) * 9);
 	gpu->samples = 0;
 	initScene(gpu->spheres);
-	bind_data(gpu, &game->main_objs);
+	bind_data(gpu);
     return (gpu->err);
 }
 

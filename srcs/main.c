@@ -6,7 +6,7 @@
 /*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/08/28 22:01:22 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/08/29 01:00:51 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,6 @@ void 	ft_render(t_game* game)
 	//ft_filter(game);
 }
 
-t_vec3 cube[8];
-
 /*
 *	Fucntion: Main loop
 *		1. Clear the screen
@@ -165,14 +163,6 @@ void ft_update(t_game *game)
 		current_ticks = clock();
 		ft_surface_clear(game->sdl->surface);
 		ft_input(game->sdl, &ft_input_keys);
-		game->wsad[0] ? game->main_objs.lights[0].position.z -= 1: 0;
-		game->wsad[1] ? game->main_objs.lights[0].position.z += 1 : 0;
-		game->wsad[2] ? game->main_objs.lights[0].position.x -= 1 : 0;
-		game->wsad[3] ? game->main_objs.lights[0].position.x += 1 : 0;
-		game->wsad[4] ? game->main_objs.lights[0].position.y += 1 : 0;
-		game->wsad[5] ? game->main_objs.lights[0].position.y -= 1 : 0;
-		game->wsad[6] ? game->main_objs.lights[0].intensity += 0.1 : 0;
-		game->wsad[7] ? game->main_objs.lights[0].intensity -= 0.1 : 0;
 		if (game->init_render || game->wsad[0] || game->wsad[1] ||
 			game->wsad[2] || game->wsad[3] || game->wsad[4] || game->wsad[5] ||
 			game->wsad[6] || game->wsad[7])
@@ -192,14 +182,6 @@ void ft_update(t_game *game)
 	}
 }
 
-void ft_object_push(t_game *game, t_object *object)
-{
-	if (game->main_objs.figures == NULL)
-		game->main_objs.figures_num = 0;
-	game->main_objs.figures = realloc(game->main_objs.figures, sizeof(t_object) * (game->main_objs.figures_num + 1));
-	game->main_objs.figures[game->main_objs.figures_num] = *object;
-	game->main_objs.figures_num += 1;
-}
 
 int	main(int argc, char **argv)
 {
@@ -209,16 +191,6 @@ int	main(int argc, char **argv)
 	//printf("%s", (char *)v->data);
 	game.sdl = malloc(sizeof(t_sdl));
 	game.image = ft_surface_create(WIN_W, WIN_H);
-	t_material ivory = (t_material){(t_vec3){0.4, 0.4, 0.3},.albendo= (t_vec3){0.6, 0.3, .0, .0}, .specular_exponent=50};
-	t_material glass = (t_material){(t_vec3){.6, 0.7, 0.8}, .albendo =(t_vec3){0, 0.5, 0.1, 0.8}, .specular_exponent=125.};
-	t_material red_rubber = (t_material){(t_vec3){0.3, 0.1, 0.1}, .albendo= (t_vec3){0.9, 0.1, .0, .0}, .specular_exponent=10};
-	t_material mirror = (t_material){(t_vec3){1.0, 1.0, 1.0}, .albendo =(t_vec3){0, 10, 0.8, .1}, .specular_exponent=1425.};
-	game.main_objs.lights = ft_memalloc(sizeof(t_light) * 5);
-	game.main_objs.lights[0] = (t_light){(t_vec3){0, 0, -5}, 2};
-	game.main_objs.lights[1] = (t_light){(t_vec3){-5, 0, -5}, 2};
-	game.main_objs.lights[2] = (t_light){(t_vec3){-2, 0, -5}, 2};
-	game.main_objs.lights[3] = (t_light){(t_vec3){5, 0, -5}, 2};
-	game.main_objs.elum_num = 5; // number of light sources
 	game.init_render = 1;
 	game.origin = (t_vec3){0,0,5,1};
 	game.gpu = (t_gpu *)malloc(sizeof(t_gpu));
