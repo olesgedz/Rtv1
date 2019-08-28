@@ -6,7 +6,7 @@
 /*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/08/27 02:53:23 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/08/28 22:01:22 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,7 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 	return (1);
 }
 
-t_vec3 refract(t_vec3 I, t_vec3 N, const float eta_t, const float eta_i) { // Snell's law
-	float cosi = -max(-1.f, min(1.f, ft_vec3_dot_multiply(I,N)));
-    if (cosi<0) return refract(I, ft_vec3_neg(N), eta_i, eta_t); // if the ray comes from the inside the object, swap the air and the media
-    float eta = eta_i / eta_t;
-    float k = 1 - eta*eta*(1 - cosi*cosi);
-    return k<0 ? (t_vec3){1,0,0,1} : ft_vec3_sum(ft_vec3_scalar_multiply(I,eta), ft_vec3_scalar_multiply(N,(eta*cosi - sqrtf(k)))); // k<0 = total reflection, no ray to refract. I refract it anyways, this has no physical meaning
-}
+
 
 
 
