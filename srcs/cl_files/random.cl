@@ -130,9 +130,9 @@ static float3					sphere_random(global t_obj *object, global int *rnd)
 
 	theta = rng(rnd) * PI;
 	phi = rng(rnd) * 2 * PI;
-	random.x = 0.99 * object->radius * sin(theta) * cos(phi) / 2;
-	random.y = 0.99 * object->radius * sin(theta) * sin(phi) /2;
-	random.z = 0.99 * object->radius * cos(theta) / 2;
+	random.x = 0.99 * object->radius * sin(theta) * cos(phi);
+	random.y = 0.99 * object->radius * sin(theta) * sin(phi);
+	random.z = 0.99 * object->radius * cos(theta);
 	random += object->position;
 	return (random);
 }
