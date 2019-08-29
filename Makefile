@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+         #
+#    By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/16 12:58:07 by jblack-b          #+#    #+#              #
-#    Updated: 2019/08/28 22:04:39 by olesgedz         ###   ########.fr        #
+#    Updated: 2019/08/29 20:51:02 by sbrella          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ LIB_LIST =	libSDL2.a\
 SRCS_DIRECTORY = ./srcs/
 
 SRCS_LIST = main.c\
-			cl_lib/gpu_init.c
+			cl_lib/gpu_init.c\
 
 SRCS_LIST += camera/camera_new.c camera/camera_move.c
 OBJS_DIRECTORY = objects/

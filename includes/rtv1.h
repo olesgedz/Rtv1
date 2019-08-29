@@ -34,6 +34,13 @@ typedef enum e_figure
 	PLANE
 } 						t_type;
 
+typedef struct s_txture
+{
+	cl_int		width;
+	cl_int		height;
+	cl_int		texture[1920][1080];
+}				t_txture;
+
 typedef struct Object{
 	float radius;
 	cl_float3 position;
@@ -44,6 +51,7 @@ typedef struct Object{
 	cl_float refraction;
 	cl_float reflection;
 	cl_float plane_d;
+	cl_int		texture;
 } t_obj;
 
 typedef struct s_ray
@@ -100,13 +108,6 @@ typedef struct s_gpu
 	int 				samples;
 }						t_gpu;
 
-typedef struct			s_textures
-{
-	int					width;
-	int					height;
-	int					*texture;
-}						t_textures;
-
 typedef struct			s_game
 {
 	t_sdl *sdl;
@@ -119,9 +120,11 @@ typedef struct			s_game
 	t_vec3 origin;
 	t_gpu *gpu;
 	int init_render;
+	t_txture		*textures;
+	int				textures_num;
 } t_game;
 
-int bind_data(t_gpu *gpu);
+int bind_data(t_gpu *gpu, t_game *game);
 void release_gpu(t_gpu *gpu);
 void ft_run_gpu(t_gpu *gpu);
 
@@ -136,4 +139,5 @@ void 					camera_move
 						(t_camera *camera,
 						t_camera_direction direction,
 						float length);
+t_txture				*get_texture(char *name);
 #endif

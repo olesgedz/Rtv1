@@ -139,7 +139,32 @@ static float3		radiance_explicit(t_scene *scene,
 	return (radiance);
 }
 
+float3			get_color_sphere(t_obj object, float3 hitpoint, t_scene *scene)
+{
+	float3		vect;
+	__global t_txture	*texture;
+	float		u;
+	float		v;
 
+	vect = normalize(hitpoint - object.position);
+	u = 0.5 + (atan2(vect[2], vect[0])) / (2 * PI);
+	v = 0.5 - (asin(vect[1])) / PI;
+	texture = &(scene->textures[0]);
+	return(cl_int_to_float3(texture->texture[(int)(v * texture->width)][(int)(u * texture->height)]));
+	// return(cl_int_to_float3(texture->texture[0][0]));
+}
+
+float3			get_color(t_obj object, float3 hitpoint, t_scene *scene)
+{
+	if (object.texture > 0)
+	{
+		if (object.type == SPHERE)
+			return(get_color_sphere(object, hitpoint, scene));
+		return (object.color);
+	}
+	else
+		return (object.color);
+}
 
 static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, int * seed1)
 {
@@ -160,6 +185,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 		t_obj objecthit = scene->objects[intersection->object_id]; /* version with local copy of sphere */
 		/* compute the hitpoint using the ray equation */
 		intersection->hitpoint =  ray.origin + ray.dir * ray.t;
+		objecthit.color = get_color(objecthit, intersection->hitpoint, scene);
 		/* compute the surface normal and flip it if necessary to face the incoming ray */
 		intersection->normal = get_normal(&objecthit, intersection);
 		intersection->normal = dot(intersection->normal, ray.dir) < 0.0f ? intersection->normal : intersection->normal * (-1.0f);
@@ -171,7 +197,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 		
 		if (objecthit.reflection > 0) {
 			accum_color += mask * objecthit.emission; 
-			if (0)
+			if (1)
 			{
 				explicit = radiance_explicit(scene, intersection);
 				if(scene->x_coord == 500 && scene->y_coord == 500 )
@@ -187,7 +213,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 		} else {
 			
 			accum_color += mask * objecthit.emission; 
-			if (0)
+			if (1)
 			{
 				explicit = radiance_explicit(scene, intersection);
 				accum_color += explicit * mask *  objecthit.color;//intersection->material.color;
@@ -217,7 +243,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 
 
 static t_scene scene_new(__global t_obj* objects, int n_objects, int width, int height,\
- int samples, __global ulong * random)
+ int samples, __global ulong * random, __global t_txture *textures)
 {
 	t_scene new_scene;
 
@@ -232,12 +258,12 @@ static t_scene scene_new(__global t_obj* objects, int n_objects, int width, int 
 	new_scene.seed0 = new_scene.x_coord + rand_noise(new_scene.samples) * 12312;
 	new_scene.seed1 = new_scene.y_coord + rand_noise(new_scene.samples + 3) * 12312;
 	new_scene.random = random;
+	new_scene.textures = textures;
 	return (new_scene);
 }
 
 __kernel void render_kernel(__global int* output, int width, int height, int n_objects, __global t_obj* objects,
-__global float3 * vect_temp, int samples, __global ulong * random
-	)
+__global float3 * vect_temp, int samples, __global ulong * random, __global t_txture *textures)
 {
 	
 	t_scene scene;
@@ -246,7 +272,6 @@ __global float3 * vect_temp, int samples, __global ulong * random
 	unsigned int work_item_id = get_global_id(0);	/* the unique global id of the work item for the current pixel */
 	unsigned int x_coord = work_item_id % width;			/* x-coordinate of the pixel */
 	unsigned int y_coord = work_item_id / width;			/* y-coordinate of the pixel */
-
 	/* seeds for random number generator */
 	 unsigned int seed0 = x_coord + rng(random);
 	 unsigned int seed1 = y_coord + rng(random);
@@ -256,7 +281,7 @@ __global float3 * vect_temp, int samples, __global ulong * random
 	else
 		finalcolor = vect_temp[x_coord + y_coord * width];
 	
-	scene = scene_new(objects, n_objects, width, height, samples, random);
+	scene = scene_new(objects, n_objects, width, height, samples, random, textures);
 	intersection.ray = createCamRay(scene.x_coord, scene.y_coord, width, height);
 	intersection_reset(&intersection.ray);
 	print_debug(scene.samples, scene.width, &scene);

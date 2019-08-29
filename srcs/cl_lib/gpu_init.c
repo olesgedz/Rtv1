@@ -65,7 +65,7 @@ cl_ulong * get_random(cl_ulong * random)
 	return (random);
 }
 
-int bind_data(t_gpu *gpu)
+int bind_data(t_gpu *gpu, t_game *game)
 {
 	int data_size = sizeof(t_vec3) * WIN_W * WIN_H;
 	int w = WIN_W; //TODO use as parameter of struct, not macros
@@ -75,6 +75,7 @@ int bind_data(t_gpu *gpu)
 	const int n_spheres = 9;
 	int i;
 	int j;
+	cl_mem			textures;
 	static t_vec3 *h_a;//TODO push it inside t_gpu
 	gpu->vec_temp = ft_memalloc(sizeof(cl_float3) * global);
 	gpu->camera = camera_new(WIN_W, WIN_H);
@@ -83,11 +84,14 @@ int bind_data(t_gpu *gpu)
 	gpu->cl_bufferOut = clCreateBuffer(gpu->context, CL_MEM_WRITE_ONLY, count * sizeof(cl_int), NULL, &gpu->err);
 	gpu->cl_cpuSpheres= clCreateBuffer(gpu->context, CL_MEM_READ_ONLY, n_spheres * sizeof(t_obj), NULL, &gpu->err);
 	gpu->cl_cpu_random = clCreateBuffer(gpu->context, CL_MEM_READ_ONLY, WIN_H * WIN_W * sizeof(cl_ulong), NULL, &gpu->err);
+	textures = clCreateBuffer(gpu->context, CL_MEM_READ_ONLY, sizeof(t_txture), NULL, &gpu->err);
 	gpu->err = clEnqueueWriteBuffer(gpu->commands, gpu->cl_cpuSpheres, CL_TRUE, 0,
 			n_spheres * sizeof(t_obj), gpu->spheres, 0, NULL, NULL);
 	ERROR(gpu->err == 0);
 	gpu->err = clEnqueueWriteBuffer(gpu->commands, gpu->cl_cpu_random, CL_TRUE, 0,
 			WIN_H * WIN_W * sizeof(cl_ulong), gpu->random, 0, NULL, NULL);
+	gpu->err = clEnqueueWriteBuffer(gpu->commands, textures, CL_TRUE, 0,
+			sizeof(t_txture), game->textures, 0, NULL, NULL);
 	ERROR(gpu->err == 0);
 	gpu->err |= clSetKernelArg(gpu->kernel, 0, sizeof(cl_mem), &gpu->cl_bufferOut);
 	gpu->err |= clSetKernelArg(gpu->kernel, 1, sizeof(cl_int), &w);
@@ -102,6 +106,8 @@ int bind_data(t_gpu *gpu)
 	gpu->err |= clSetKernelArg(gpu->kernel, 6, sizeof(cl_int), &gpu->samples);
 	ERROR(gpu->err == 0);
 	gpu->err |= clSetKernelArg(gpu->kernel, 7, sizeof(cl_mem), &gpu->cl_cpu_random);
+	ERROR(gpu->err == 0);
+	gpu->err |= clSetKernelArg(gpu->kernel, 8, sizeof(cl_mem), &textures);
 	ERROR(gpu->err == 0);
     //clReleaseMemObject(cl_bufferOut);
     //release_gpu(gpu);
@@ -129,8 +135,10 @@ cl_float3 create_cfloat3 (float x, float y, float z)
 	return re;
 }
 
-void initScene(t_obj* cpu_spheres)
+void initScene(t_obj* cpu_spheres, t_game *game)
 {
+	char						*name = "sviborg.bmp";
+
 	// left sphere
 	cpu_spheres[0].radius   	= 0.1f;
 	cpu_spheres[0].position 	= create_cfloat3 (-0.4f, 0.f, -0.1f);
@@ -147,15 +155,20 @@ void initScene(t_obj* cpu_spheres)
 	cpu_spheres[1].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
 	cpu_spheres[1].v 			= create_cfloat3 (0.0f, 1.0f, 0.0f);
 	cpu_spheres[1].type 		= SPHERE;
-	cpu_spheres[1].reflection 	= 3.f;
+	cpu_spheres[1].texture 		= 1;
+	game->textures_num 			= 1;
+	// game->textures 				= (t_txture*)malloc(sizeof(t_txture));
+	game->textures 				= get_texture(name);
+	cpu_spheres[1].reflection 	= 0.f;
 
 	// lightsource
-	cpu_spheres[2].radius   	= 0.13f; 
-	cpu_spheres[2].position 	= create_cfloat3 (0.0f, 0.3f, 0.0f);
+	cpu_spheres[2].radius   	= 0.2f; 
+	cpu_spheres[2].position 	= create_cfloat3 (0.0f, 0.3f, 1.0f);
 	cpu_spheres[2].color    	= create_cfloat3 (0.0f, 0.0f, 0.0f);
 	cpu_spheres[2].emission 	= create_cfloat3 (9.0f, 8.0f, 6.0f);
 	cpu_spheres[2].type 		= SPHERE;
 	cpu_spheres[2].reflection 	= 0;
+	// cpu_spheres[2].texture 		= 0;
 
 		// left wall
 	cpu_spheres[6].radius		= 200.0f;
@@ -240,8 +253,8 @@ int opencl_init(t_gpu *gpu, t_game *game)
 	gpu->cpuOutput = malloc(sizeof(int) * (WIN_H * WIN_H));
 	gpu->spheres = malloc(sizeof(t_obj) * 9);
 	gpu->samples = 0;
-	initScene(gpu->spheres);
-	bind_data(gpu);
+	initScene(gpu->spheres, game);
+	bind_data(gpu, game);
     return (gpu->err);
 }
 

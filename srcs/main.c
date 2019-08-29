@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/08/29 01:21:47 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/08/29 21:36:04 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,25 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 }
 
 
+t_txture				*get_texture(char *name)
+{
+	t_txture			*texture;
+	SDL_Surface			*surf;
+	char				*m;
 
+	texture = (t_txture*)malloc(sizeof(t_txture));
+	m = ft_strjoin("./textures/", name);
+	printf("%s\n", m);
+	surf = SDL_LoadBMP(m);
+	texture->width = surf->w;
+	texture->height = surf->h;
+	if (texture->height * texture->width <= 1920 * 1080)
+		ft_memcpy(texture->texture, surf->pixels, surf->h * surf->w);
+	else
+		exit(0);
+	SDL_FreeSurface(surf);
+	return (texture);
+}
 
 
 static float u_clamp(float x)
