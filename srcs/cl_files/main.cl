@@ -172,7 +172,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 		
 		if (objecthit.reflection > 0) {
 			accum_color += mask * objecthit.emission; 
-			if (1)
+			if (0)
 			{
 				explicit = radiance_explicit(scene, intersection);
 				if(scene->x_coord == 500 && scene->y_coord == 500 )
@@ -188,7 +188,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 		} else {
 			
 			accum_color += mask * objecthit.emission; 
-			if (1)
+			if (0)
 			{
 				explicit = radiance_explicit(scene, intersection);
 				accum_color += explicit * mask *  objecthit.color;//intersection->material.color;
