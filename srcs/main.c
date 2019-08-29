@@ -6,7 +6,7 @@
 /*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/08/18 00:31:58 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/08/29 01:21:47 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,33 +67,39 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 	return (1);
 }
 
-t_vec3 refract(t_vec3 I, t_vec3 N, const float eta_t, const float eta_i) { // Snell's law
-	float cosi = -max(-1.f, min(1.f, ft_vec3_dot_multiply(I,N)));
-    if (cosi<0) return refract(I, ft_vec3_neg(N), eta_i, eta_t); // if the ray comes from the inside the object, swap the air and the media
-    float eta = eta_i / eta_t;
-    float k = 1 - eta*eta*(1 - cosi*cosi);
-    return k<0 ? (t_vec3){1,0,0,1} : ft_vec3_sum(ft_vec3_scalar_multiply(I,eta), ft_vec3_scalar_multiply(N,(eta*cosi - sqrtf(k)))); // k<0 = total reflection, no ray to refract. I refract it anyways, this has no physical meaning
+
+
+
+
+static float u_clamp(float x)
+{
+	return x < 0.0f ? 0.0f : x > 1.0f ? 1.0f : x;
 }
 
- int getSurroundingAverage(t_game * game, int x, int y, int pattern) {
+static int toInt(float x)
+{ 
+	return (int)(u_clamp(x) * 255);
+}
+
+ int getSurroundingAverage(t_game * game, int x, int y) {
     unsigned int index = ( game->sdl->surface->height - y - 1) *  game->sdl->surface->width + x;
-   int avg;
-    int total;
-    for (int dy = -1; dy < 2; ++dy) {
-      for (int dx = -1; dx < 2; ++dx) {
-        if (pattern == 0 && (dx != 0 && dy != 0)) continue;
-        if (pattern == 1 && (dx == 0 || dy == 0)) continue;
-        if (dx == 0 && dy == 0) {
-          continue;
-        }
-        if (x + dx < 0 || x + dx > game->sdl->surface->width - 1) continue;
-        if (y + dy < 0 || y + dy > game->sdl->surface->height - 1) continue;
-        index = (game->sdl->surface->height - (y + dy) - 1) * game->sdl->surface->width + (x + dx);
-        avg += game->sdl->surface->data[index];
-        total += 1;
-      }
-    }
-    return avg / total;
+   cl_float3 avg;
+   cl_float3 temp;
+    int total = 1;
+	int color = 0;
+	// if(x == 0 || y == 0)
+	// 	return 0;
+	for(int j = y - 1; j < y + 1; j++)
+	{
+		for(int k = x - 1; k < x + 1; k++)
+		{
+			temp =  game->gpu->vec_temp[k + j * game->sdl->surface->width];
+			avg = (cl_float3){(avg.v4[0] + temp.v4[0]), (avg.v4[1] + temp.v4[1]), (avg.v4[2] + temp.v4[2])};
+			total++;
+		}
+	}
+	//avg = game->sdl->surface->data[x + y * game->sdl->surface->width];
+    return ft_rgb_to_hex(toInt(avg.v4[0] / total), toInt(avg.v4[1]/ total), toInt(avg.v4[2]/ total));
   }
 
 void ft_filter(t_game* game)
@@ -102,13 +108,13 @@ void ft_filter(t_game* game)
 	int		j;
 	int width = game->sdl->surface->width;
 	int height = game->sdl->surface->height;
-	j = -1;
+	j = 0;
 	while (++j < height)
 	{
-		i = -1;
+		i = 0;
 		while (++i < width)	
 		{
-			game->sdl->surface->data[i+j*width] = getSurroundingAverage(game, i, j, 1); //game->gpu->cpuOutput[i+ j *width];
+			game->sdl->surface->data[i+j*width] = getSurroundingAverage(game, i, j); //game->gpu->cpuOutput[i+ j *width];
 
 		}
 	}
@@ -135,8 +141,6 @@ void 	ft_render(t_game* game)
 	//ft_filter(game);
 }
 
-t_vec3 cube[8];
-
 /*
 *	Fucntion: Main loop
 *		1. Clear the screen
@@ -159,14 +163,6 @@ void ft_update(t_game *game)
 		current_ticks = clock();
 		ft_surface_clear(game->sdl->surface);
 		ft_input(game->sdl, &ft_input_keys);
-		game->wsad[0] ? game->main_objs.lights[0].position.z -= 1: 0;
-		game->wsad[1] ? game->main_objs.lights[0].position.z += 1 : 0;
-		game->wsad[2] ? game->main_objs.lights[0].position.x -= 1 : 0;
-		game->wsad[3] ? game->main_objs.lights[0].position.x += 1 : 0;
-		game->wsad[4] ? game->main_objs.lights[0].position.y += 1 : 0;
-		game->wsad[5] ? game->main_objs.lights[0].position.y -= 1 : 0;
-		game->wsad[6] ? game->main_objs.lights[0].intensity += 0.1 : 0;
-		game->wsad[7] ? game->main_objs.lights[0].intensity -= 0.1 : 0;
 		if (game->init_render || game->wsad[0] || game->wsad[1] ||
 			game->wsad[2] || game->wsad[3] || game->wsad[4] || game->wsad[5] ||
 			game->wsad[6] || game->wsad[7])
@@ -186,14 +182,6 @@ void ft_update(t_game *game)
 	}
 }
 
-void ft_object_push(t_game *game, t_object *object)
-{
-	if (game->main_objs.figures == NULL)
-		game->main_objs.figures_num = 0;
-	game->main_objs.figures = realloc(game->main_objs.figures, sizeof(t_object) * (game->main_objs.figures_num + 1));
-	game->main_objs.figures[game->main_objs.figures_num] = *object;
-	game->main_objs.figures_num += 1;
-}
 
 int	main(int argc, char **argv)
 {
@@ -203,18 +191,8 @@ int	main(int argc, char **argv)
 	//printf("%s", (char *)v->data);
 	game.sdl = malloc(sizeof(t_sdl));
 	game.image = ft_surface_create(WIN_W, WIN_H);
-	t_material ivory = (t_material){(t_vec3){0.4, 0.4, 0.3},.albendo= (t_vec3){0.6, 0.3, .0, .0}, .specular_exponent=50};
-	t_material glass = (t_material){(t_vec3){.6, 0.7, 0.8}, .albendo =(t_vec3){0, 0.5, 0.1, 0.8}, .specular_exponent=125.};
-	t_material red_rubber = (t_material){(t_vec3){0.3, 0.1, 0.1}, .albendo= (t_vec3){0.9, 0.1, .0, .0}, .specular_exponent=10};
-	t_material mirror = (t_material){(t_vec3){1.0, 1.0, 1.0}, .albendo =(t_vec3){0, 10, 0.8, .1}, .specular_exponent=1425.};
-	game.main_objs.lights = ft_memalloc(sizeof(t_light) * 5);
-	game.main_objs.lights[0] = (t_light){(t_vec3){0, 0, -5}, 2};
-	game.main_objs.lights[1] = (t_light){(t_vec3){-5, 0, -5}, 2};
-	game.main_objs.lights[2] = (t_light){(t_vec3){-2, 0, -5}, 2};
-	game.main_objs.lights[3] = (t_light){(t_vec3){5, 0, -5}, 2};
-	game.main_objs.elum_num = 5; // number of light sources
 	game.init_render = 1;
-	game.origin = (t_vec3){0,0,5,1};
+	game.origin = (t_vec3){0,0,5};
 	game.gpu = (t_gpu *)malloc(sizeof(t_gpu));
 	opencl_init(game.gpu, &game);
 	ft_init_window(game.sdl, WIN_W, WIN_H);

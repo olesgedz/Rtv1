@@ -94,7 +94,7 @@ static float3		radiance_explicit(t_scene *scene,
 	float			cos_a_max;
 	float			omega;
 	float			sphere_radius;
-
+	float pdf;
 	radiance = 0;
 	t_ray lightray;
 	for (int i = 0; i < scene->n_objects; i++)
@@ -105,15 +105,12 @@ static float3		radiance_explicit(t_scene *scene,
 			continue ;
 		if (cl_float3_max(scene->objects[i].emission) == 0.f)
 			continue ;
-		light_position = scene->objects[i].position; //+  (float3)(0.5 * sin(rng(scene->random)),0.5 * sin(rng(scene->random)), 0.5 * cos(rng(scene->random)));//sphere_random(scene->objects + i, scene->random);
-		//light_position = sphere_random_on_sphere(scene->objects + i, scene->random);
+		//light_position = sphere_random(scene->objects + i, scene->random);
+		light_position = sphere_random_on_sphere(scene->objects + i, scene->random);
 		
 		
 		light_direction = normalize(light_position - intersection_object->hitpoint);
-
-		intersection_light.ray.origin = intersection_object->hitpoint;
-		intersection_light.ray.dir = light_direction;
-		lightray.origin = intersection_object->hitpoint;
+		lightray.origin = intersection_object->hitpoint; //- light_direction * EPSILON;
 		lightray.dir = light_direction;
 		//intersection_light.object_id = -1; // intersection check
 		intersection_reset(&intersection_light);
@@ -123,19 +120,22 @@ static float3		radiance_explicit(t_scene *scene,
 
 		if (intersection_light.object_id != i)
 			continue ;
-		
 		intersection_light.material.color = scene->objects[i].emission;
 		//intersection_light.ray.t = lightray.t; 
 		emission_intensity = dot(intersection_object->normal, lightray.dir);
 		if (emission_intensity < 0.00001f)
 			continue ;
-		float pdf = 1 / (2 * PI);
+		pdf = 1 / (2 * PI);
 
 		sphere_radius = scene->objects[intersection_light.object_id].radius;
 		cos_a_max = sqrt(1.f - (sphere_radius * sphere_radius) / length(intersection_object->hitpoint - light_position));
 		omega = 2 * PI * (1.f - cos_a_max);
 		radiance += scene->objects[i].emission * emission_intensity * omega * _1_PI;
 	}
+	// if (cl_float3_max(radiance) < 0.5)
+	// {
+	// 	radiance *= pdf;
+	// }
 	return (radiance);
 }
 
@@ -156,8 +156,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 			return mask * (float3)(0.7f, 0.7f, 0.7f);
 		if (bounces > 4 && cl_float3_max(scene->objects[intersection->object_id].color) < rng(scene->random))
 			break;
-		// print_ray(scene, &ray);
-		// print_ray(scene, &intersection->ray);
+		
 		t_obj objecthit = scene->objects[intersection->object_id]; /* version with local copy of sphere */
 		/* compute the hitpoint using the ray equation */
 		intersection->hitpoint =  ray.origin + ray.dir * ray.t;
