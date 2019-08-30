@@ -7,3 +7,6 @@
 [submodule "libmath"]
 	path = libmath
 	url = https://github.com/olesgedz/libmath.git
+[submodule "libcl"]
+	path = libcl
+	url = https://github.com/olesgedz/libcl.git
