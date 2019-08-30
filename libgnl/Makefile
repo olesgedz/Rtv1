@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bsouchet <bsouchet@student.42.fr>          +#+  +:+       +#+         #
+#    By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/02 15:48:09 by bsouchet          #+#    #+#              #
-#*   Updated: 2017/02/10 14:59:08 by qle-guen         ###   ########.fr       *#
+#    Updated: 2019/08/30 19:31:59 by olesgedz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ DIR_S		= sources
 
 DIR_O		= temporary
 
-HEADER		= include ../libft/include ../libvect/include
+HEADER		= include ../libft/includes ../libvect/include
 
 SOURCES		= gnl_vect.c \
 	gnl_lines.c \

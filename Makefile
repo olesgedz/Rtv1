@@ -6,7 +6,7 @@
 #    By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/16 12:58:07 by jblack-b          #+#    #+#              #
-#    Updated: 2019/08/28 22:04:39 by olesgedz         ###   ########.fr        #
+#    Updated: 2019/08/30 20:49:41 by olesgedz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@ NAME = rtv1
 
 FLAGS = -g
 CC = gcc
-LIBRARIES = -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY) -lmath -L$(LIBMATH_DIRECTORY) -lm -framework OpenCL  #-lvect -L$(LIBVECT) -lgnl -L$(LIBGNL) -lcl -L$(LIBCL)
-INCLUDES = -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)include/ -Isrcs/cl_error/ -I$(LIBGNL)include/ -I$(LIBCL)include/ # -I$(LIBMATH_HEADERS)
+LIBRARIES = -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY) -lmath -L$(LIBMATH_DIRECTORY) -lm -framework OpenCL  -lvect -L$(LIBVECT) -lgnl -L$(LIBGNL) -lcl -L$(LIBCL)
+INCLUDES = -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)include/ -Isrcs/cl_error/ -I$(LIBGNL)include/ -I$(LIBCL)include/# -I$(LIBMATH_HEADERS)
 FRAMEWORKS = -framework OpenCL
 
 LIBFT = $(LIBFT_DIRECTORY)libft.a
@@ -93,7 +93,7 @@ CURRENT_FILES = $(shell find $(DIRECTORY)/objects/ -type f 2> /dev/null | wc -l 
 all: $(MAKES) $(NAME)
 
 
-$(NAME): $(LIBFT)  $(LIBSDL) $(OBJS_DIRECTORY) $(OBJS) $(HEADERS) $(LIBMATH) 
+$(NAME): $(LIBFT)  $(LIBSDL) $(LIBCL) $(LIBGNL)  $(LIBVECT) $(OBJS_DIRECTORY) $(OBJS) $(HEADERS) $(LIBMATH) 
 	@$(CC) $(FLAGS) $(LIBSDL) $(INCLUDES) $(OBJS) $(SDL_CFLAGS) $(SDL_LDFLAGS) -o $(NAME) $(LIBRARIES)
 	@echo "$(CLEAR_LINE)[`expr $(CURRENT_FILES) '*' 100 / $(TOTAL_FILES)`%] $(COL_BLUE)[$(NAME)] $(COL_GREEN)Finished compilation. Output file : $(COL_VIOLET)$(PWD)/$(NAME)$(COL_END)"
 
@@ -101,9 +101,9 @@ $(MAKES):
 	@$(MAKE) -sC $(LIBFT_DIRECTORY)
 	@$(MAKE) -sC $(LIBSDL_DIRECTORY)
 	@$(MAKE) -sC $(LIBMATH_DIRECTORY)
-	# @$(MAKE) -sC $(LIBVECT)
-	# @$(MAKE) -sC $(LIBGNL)
-	# @$(MAKE) -sC $(LIBCL)
+	@$(MAKE) -sC $(LIBVECT)
+	@$(MAKE) -sC $(LIBGNL)
+	@$(MAKE) -sC $(LIBCL)
 
 
 $(OBJS_DIRECTORY):

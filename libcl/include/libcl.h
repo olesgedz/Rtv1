@@ -6,7 +6,7 @@
 /*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/11 18:24:58 by qle-guen          #+#    #+#             */
-/*   Updated: 2019/08/05 01:56:14 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/08/30 17:59:45 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 
 # include "libvect.h"
 #define CL_SILENCE_DEPRECATION
-
-# include <OpenCL/opencl.h>
+#ifdef __APPLE__
+#include <OpenCL/opencl.h>
+#else
+#include <Cl/cl.h>
+#endif
 
 # define CL_KRL_ARG(k, i, a) clSetKernelArg(k, i, sizeof(a), (void*)&a)
 
@@ -28,6 +31,7 @@ typedef struct			s_cl_info
 	cl_command_queue	cmd_queue;
 	cl_program			prog;
 	cl_uint				dev_num;
+	cl_int				ret;
 }						t_cl_info;
 
 typedef struct			s_cl_krl

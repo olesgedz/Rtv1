@@ -5,7 +5,7 @@
 #define BLURT printf ("This is line %d of file \"%s\" (function <%s>)\n",\
                       __LINE__, __FILE__, __func__)
 # define ERROR(data)						\
-	if (!(data))							\
+	if ((data))							\
 	{											\
 		printf("{red!}Error\n");	\
 		printf("file : %s\n", __FILE__);		\

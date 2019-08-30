@@ -6,7 +6,7 @@
 /*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/08/29 01:21:47 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/08/30 21:36:19 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,7 @@
 //#define FPS
 
 t_game game;
-float xa, ya, za;
 
-float eyex, eyey, eyez;
 /*
 *	Funtion: handles presses mouse/keyboard
 * 	Return: value, doesnt change any parameters
@@ -53,10 +51,6 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 					case 'e': game.wsad[5] = ev->type==SDL_KEYDOWN; break;
 					case 'z': game.wsad[6] = ev->type==SDL_KEYDOWN; break;
 					case 'x': game.wsad[7] = ev->type==SDL_KEYDOWN; break;
-					case 'p': ya+=0.2; break;
-					case ';': ya-=0.2; break;
-					case SDLK_LEFT: xa+=0.05; break;
-					case SDLK_RIGHT: xa-=0.05; break;
 					default: break;
 				}
 				break;
@@ -131,12 +125,12 @@ void 	ft_render(t_game* game)
 	int width = game->sdl->surface->width;
 	int height = game->sdl->surface->height;
 	j = -1;
-	ft_run_gpu(game->gpu);
+	//ft_run_gpu(game->gpu);
 	while (++j < height)
 	{
 		i = -1;
 		while (++i < width)	
-			game->sdl->surface->data[i+j*width] =  game->gpu->cpuOutput[i+ j *width];
+			game->sdl->surface->data[i+j*width] =  game->gpuOutput[i+ j *width];
 	}
 	//ft_filter(game);
 }
@@ -183,6 +177,45 @@ void ft_update(t_game *game)
 }
 
 
+void opencl()
+{
+	game.kernels = ft_memalloc(sizeof(t_cl_krl) * 2);
+	game.cl_info = ft_memalloc(sizeof(t_cl_info));
+	game.gpuOutput = ft_memalloc(sizeof(int) * WIN_H * WIN_W);
+
+	cl_init(game.cl_info);
+	ERROR(game.cl_info->ret);
+	int fd = open("srcs/mix.cl", O_RDONLY);
+	size_t global = WIN_W * WIN_H;
+
+	t_vect vect;
+	vect_init(&vect);
+	VECT_STRADD(&vect, "render_kernel" ":");
+	VECT_STRADD(&vect, "-I srcs/cl_files/");
+	//cl_krl_init(game.kernels, 1);	
+//	cl_mem cl_bufferOut = clCreateBuffer(game.cl_info->ctxt, CL_MEM_WRITE_ONLY, WIN_H * WIN_W * sizeof(cl_int), NULL, &game.cl_info->ret);
+//	game.kernels->sizes[0] = sizeof(cl_int) * WIN_H * WIN_W;
+	// game.kernels->sizes[1] = sizeof(cl_int);
+	// game.kernels->sizes[2] = sizeof(cl_int);
+//	game.kernels->args[0] = cl_bufferOut;
+	game.cl_info->ret = cl_krl_build(game.cl_info, game.kernels, fd, &vect);
+	// size_t size = 0;
+	// char *ker = ft_strnew(0);
+	// ker = read_file(fd, &size);
+	// game.cl_info->ctxt = clCreateContext(0, 1, &game.cl_info->dev_id, NULL, NULL, &game.cl_info->ret);
+	// //game.cl_info->prog = clCreateProgramWithSource(game.cl_info->ctxt, 1, (const char **)&ker, NULL, &game.cl_info->ret);
+	// //clGetProgramBuildInfo(game.cl_info->prog, game.cl_info->dev_id, CL_PROGRAM_BUILD_LOG, 10000, buffer, &len);
+	// ERROR(game.cl_info->ret);
+	// //cl_write(game.cl_info, cl_bufferOut, sizeof(cl_mem)
+	// game.cl_info->ret |= clSetKernelArg(game.kernels->krl, 0, sizeof(cl_mem), &cl_bufferOut);
+	// ERROR(game.cl_info->ret);
+	// game.cl_info->ret = cl_krl_exec(game.cl_info, game.kernels->krl, 1, &global);
+	// ERROR(game.cl_info->ret);
+	// game.cl_info->ret = cl_read(game.cl_info, cl_bufferOut, sizeof(cl_int) * WIN_H * WIN_W, game.gpuOutput);
+	// printf("%d\n",game.cl_info->ret);
+	// ERROR(game.cl_info->ret);
+}
+
 int	main(int argc, char **argv)
 {
 	// t_cl_info cl_info;
@@ -194,12 +227,13 @@ int	main(int argc, char **argv)
 	game.init_render = 1;
 	game.origin = (t_vec3){0,0,5};
 	game.gpu = (t_gpu *)malloc(sizeof(t_gpu));
-	opencl_init(game.gpu, &game);
+	opencl();
+	// opencl_init(game.gpu, &game);
 	ft_init_window(game.sdl, WIN_W, WIN_H);
 
 	ft_update(&game);
-	clReleaseMemObject(game.gpu->cl_bufferOut);
-	release_gpu(game.gpu);
+	// clReleaseMemObject(game.gpu->cl_bufferOut);
+	// release_gpu(game.gpu);
 
 	ft_exit(NULL);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cl_krl_build.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsouchet <bsouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/02 22:17:19 by qle-guen          #+#    #+#             */
-/*   Updated: 2017/03/01 21:51:37 by bsouchet         ###   ########.fr       */
+/*   Updated: 2019/08/30 21:16:09 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "malloc.h"
 #include "libgnl.h"
 #include "libcl.h"
-
+#include <stdio.h>
 #define LOG_BUFSIZ 20480
 
 static cl_int
@@ -62,7 +62,6 @@ static void
 	, char *opts)
 {
 	size_t	i;
-
 	free(krlname);
 	free(opts);
 	i = 0;
@@ -90,8 +89,11 @@ cl_int
 	krl_get_opts(build_line, &krlname, &opts);
 	vect_init(&lines);
 	gnl_lines(fd, &lines, GNL_APPEND_CHAR);
+	printf("hello\n");
+
 	cl->prog = clCreateProgramWithSource(cl->ctxt, lines.used / sizeof(void *),
 		(const char **)lines.data, NULL, &ret);
+	printf("%d\n", ret);
 	if (ret != CL_SUCCESS)
 		return (ret);
 	if ((ret = clBuildProgram(cl->prog,
