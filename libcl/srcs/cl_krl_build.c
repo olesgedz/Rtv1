@@ -6,7 +6,7 @@
 /*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/02 22:17:19 by qle-guen          #+#    #+#             */
-/*   Updated: 2019/08/30 21:16:09 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/08/30 23:13:02 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,22 +78,20 @@ cl_int
 	(t_cl_info *cl
 	, t_cl_krl *krl
 	, int fd
-	, t_vect *build_line)
+	, t_vect *build_line, t_vect *kernel_names)
 {
 	char		*krlname;
 	char		*opts;
 	char		buffer[LOG_BUFSIZ];
 	cl_int		ret;
 	t_vect		lines;
-
+	unsigned char **names;
+	names = VSPLIT(*kernel_names,":");
 	krl_get_opts(build_line, &krlname, &opts);
 	vect_init(&lines);
 	gnl_lines(fd, &lines, GNL_APPEND_CHAR);
-	printf("hello\n");
-
 	cl->prog = clCreateProgramWithSource(cl->ctxt, lines.used / sizeof(void *),
 		(const char **)lines.data, NULL, &ret);
-	printf("%d\n", ret);
 	if (ret != CL_SUCCESS)
 		return (ret);
 	if ((ret = clBuildProgram(cl->prog,
@@ -104,8 +102,10 @@ cl_int
 		write(1, buffer, ft_strlen(buffer));
 		return (ret);
 	}
-	if (!(krl->krl = clCreateKernel(cl->prog, krlname, &ret)))
+	if (!(krl[0].krl = clCreateKernel(cl->prog, (char *)names[0], &ret)))
+		return (ret);
+	if (!(krl[1].krl = clCreateKernel(cl->prog, (char *)names[1], &ret)))
 		return (ret);
 	krl_source_free(lines, krlname, opts);
-	return (krl_set_args(cl->ctxt, krl));
+	return (krl_set_args(cl->ctxt, &krl[0]) ||krl_set_args(cl->ctxt, &krl[1]));
 }

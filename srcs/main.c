@@ -6,7 +6,7 @@
 /*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/08/30 21:56:43 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/08/30 23:26:10 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,28 @@ void ft_filter(t_game* game)
 		}
 	}
 }
+
+
+ void ft_run_kernel(cl_kernel kernel)
+ {
+	 int w = WIN_W;
+	int h = WIN_H;
+	size_t global = WIN_W * WIN_H;
+
+	const int count = global;
+	game.cl_info->ret |= clSetKernelArg(kernel, 0, sizeof(cl_mem), &game.kernels->args[0]);
+	ERROR(game.cl_info->ret);
+	game.cl_info->ret |= clSetKernelArg(kernel, 1, sizeof(cl_int), &w);
+	ERROR(game.cl_info->ret);
+	game.cl_info->ret |= clSetKernelArg(kernel, 2, sizeof(cl_int), &h);
+	ERROR(game.cl_info->ret);
+	game.cl_info->ret = cl_krl_exec(game.cl_info, kernel, 1, &global);
+	ERROR(game.cl_info->ret);
+	clFinish(game.cl_info->cmd_queue);
+	game.cl_info->ret = cl_read(game.cl_info, game.kernels->args[0], sizeof(cl_int) * count, game.gpuOutput);
+	ERROR(game.cl_info->ret);
+ }
+
 /*
 *	Fucntion: render all pixels on the surface
 *	Parameters: game, sdl
@@ -126,6 +148,9 @@ void 	ft_render(t_game* game)
 	int height = game->sdl->surface->height;
 	j = -1;
 	//ft_run_gpu(game->gpu);
+	int r = rand() % 2;
+	printf("%d\n", r);
+	ft_run_kernel(game->kernels[r].krl);
 	while (++j < height)
 	{
 		i = -1;
@@ -198,25 +223,24 @@ void opencl()
 	game.kernels->sizes[1] = sizeof(cl_int);
 	game.kernels->sizes[2] = sizeof(cl_int);
 	game.kernels->args[0] = cl_bufferOut;
-	game.cl_info->ret = cl_krl_build(game.cl_info, game.kernels, fd, &vect);
+	t_vect names;
+	vect_init(&names);
+	VECT_STRADD(&names, "render_kernel" ":");
+	VECT_STRADD(&names, "render_blue" ":");
+	game.cl_info->ret = cl_krl_build(game.cl_info, game.kernels, fd, &vect, &names);
+	//game.cl_info->ret = cl_krl_build(game.cl_info, &game.kernels[1], fd, &vect);
+
 
 	int w = WIN_W;
 	int h = WIN_H;
 	const int count = global;
 	//cl_write(game.cl_info, cl_bufferOut, sizeof(cl_mem)
-	game.cl_info->ret |= clSetKernelArg(game.kernels->krl, 0, sizeof(cl_mem), &cl_bufferOut);
-	ERROR(game.cl_info->ret);
-	game.cl_info->ret |= clSetKernelArg(game.kernels->krl, 1, sizeof(cl_int), &w);
-	ERROR(game.cl_info->ret);
-	game.cl_info->ret |= clSetKernelArg(game.kernels->krl, 2, sizeof(cl_int), &h);
-	ERROR(game.cl_info->ret);
-	game.cl_info->ret = cl_krl_exec(game.cl_info, game.kernels->krl, 1, &global);
-	ERROR(game.cl_info->ret);
-	clFinish(game.cl_info->cmd_queue);
-	game.cl_info->ret = clEnqueueNDRangeKernel(game.cl_info->cmd_queue, game.kernels->krl, 1, NULL, &global, NULL, 0, NULL, NULL);
-	game.cl_info->ret = cl_read(game.cl_info, cl_bufferOut, sizeof(cl_int) * count, game.gpuOutput);
-	ERROR(game.cl_info->ret);
+	
+	//game.cl_info->ret = clEnqueueNDRangeKernel(game.cl_info->cmd_queue, game.kernels[0].krl, 1, NULL, &global, NULL, 0, NULL, NULL);
+	
 }
+
+
 
 int	main(int argc, char **argv)
 {
