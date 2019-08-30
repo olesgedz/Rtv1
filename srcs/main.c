@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/08/29 21:36:04 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/08/30 16:43:15 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,24 @@ t_txture				*get_texture(char *name)
 {
 	t_txture			*texture;
 	SDL_Surface			*surf;
+	SDL_Surface			*an_surf;
+	SDL_PixelFormat		*fmt;
 	char				*m;
 
 	texture = (t_txture*)malloc(sizeof(t_txture));
 	m = ft_strjoin("./textures/", name);
-	printf("%s\n", m);
-	surf = SDL_LoadBMP(m);
+	an_surf = SDL_LoadBMP(m);
+	fmt = malloc(sizeof(SDL_PixelFormat));
+	ft_memcpy(fmt, an_surf->format, sizeof(SDL_PixelFormat));
+	fmt->BytesPerPixel = 4;
+	fmt->BitsPerPixel = 32;
+	surf = SDL_ConvertSurface(an_surf, fmt, an_surf->flags);
+	SDL_FreeSurface(an_surf);
+	free(fmt);
 	texture->width = surf->w;
 	texture->height = surf->h;
 	if (texture->height * texture->width <= 1920 * 1080)
-		ft_memcpy(texture->texture, surf->pixels, surf->h * surf->w);
+		ft_memcpy(texture->texture, surf->pixels, (surf->h) * surf->pitch);
 	else
 		exit(0);
 	SDL_FreeSurface(surf);

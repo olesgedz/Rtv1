@@ -137,7 +137,7 @@ cl_float3 create_cfloat3 (float x, float y, float z)
 
 void initScene(t_obj* cpu_spheres, t_game *game)
 {
-	char						*name = "sviborg.bmp";
+	char						*name = "earth.bmp";
 
 	// left sphere
 	cpu_spheres[0].radius   	= 0.1f;
