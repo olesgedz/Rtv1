@@ -6,7 +6,7 @@
 /*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/08/30 21:36:19 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/08/30 21:56:43 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,28 +192,30 @@ void opencl()
 	vect_init(&vect);
 	VECT_STRADD(&vect, "render_kernel" ":");
 	VECT_STRADD(&vect, "-I srcs/cl_files/");
-	//cl_krl_init(game.kernels, 1);	
-//	cl_mem cl_bufferOut = clCreateBuffer(game.cl_info->ctxt, CL_MEM_WRITE_ONLY, WIN_H * WIN_W * sizeof(cl_int), NULL, &game.cl_info->ret);
-//	game.kernels->sizes[0] = sizeof(cl_int) * WIN_H * WIN_W;
-	// game.kernels->sizes[1] = sizeof(cl_int);
-	// game.kernels->sizes[2] = sizeof(cl_int);
-//	game.kernels->args[0] = cl_bufferOut;
+	cl_krl_init(game.kernels, 1);	
+	cl_mem cl_bufferOut = clCreateBuffer(game.cl_info->ctxt, CL_MEM_WRITE_ONLY, WIN_H * WIN_W * sizeof(cl_int), NULL, &game.cl_info->ret);
+	game.kernels->sizes[0] = sizeof(cl_int) * WIN_H * WIN_W;
+	game.kernels->sizes[1] = sizeof(cl_int);
+	game.kernels->sizes[2] = sizeof(cl_int);
+	game.kernels->args[0] = cl_bufferOut;
 	game.cl_info->ret = cl_krl_build(game.cl_info, game.kernels, fd, &vect);
-	// size_t size = 0;
-	// char *ker = ft_strnew(0);
-	// ker = read_file(fd, &size);
-	// game.cl_info->ctxt = clCreateContext(0, 1, &game.cl_info->dev_id, NULL, NULL, &game.cl_info->ret);
-	// //game.cl_info->prog = clCreateProgramWithSource(game.cl_info->ctxt, 1, (const char **)&ker, NULL, &game.cl_info->ret);
-	// //clGetProgramBuildInfo(game.cl_info->prog, game.cl_info->dev_id, CL_PROGRAM_BUILD_LOG, 10000, buffer, &len);
-	// ERROR(game.cl_info->ret);
-	// //cl_write(game.cl_info, cl_bufferOut, sizeof(cl_mem)
-	// game.cl_info->ret |= clSetKernelArg(game.kernels->krl, 0, sizeof(cl_mem), &cl_bufferOut);
-	// ERROR(game.cl_info->ret);
-	// game.cl_info->ret = cl_krl_exec(game.cl_info, game.kernels->krl, 1, &global);
-	// ERROR(game.cl_info->ret);
-	// game.cl_info->ret = cl_read(game.cl_info, cl_bufferOut, sizeof(cl_int) * WIN_H * WIN_W, game.gpuOutput);
-	// printf("%d\n",game.cl_info->ret);
-	// ERROR(game.cl_info->ret);
+
+	int w = WIN_W;
+	int h = WIN_H;
+	const int count = global;
+	//cl_write(game.cl_info, cl_bufferOut, sizeof(cl_mem)
+	game.cl_info->ret |= clSetKernelArg(game.kernels->krl, 0, sizeof(cl_mem), &cl_bufferOut);
+	ERROR(game.cl_info->ret);
+	game.cl_info->ret |= clSetKernelArg(game.kernels->krl, 1, sizeof(cl_int), &w);
+	ERROR(game.cl_info->ret);
+	game.cl_info->ret |= clSetKernelArg(game.kernels->krl, 2, sizeof(cl_int), &h);
+	ERROR(game.cl_info->ret);
+	game.cl_info->ret = cl_krl_exec(game.cl_info, game.kernels->krl, 1, &global);
+	ERROR(game.cl_info->ret);
+	clFinish(game.cl_info->cmd_queue);
+	game.cl_info->ret = clEnqueueNDRangeKernel(game.cl_info->cmd_queue, game.kernels->krl, 1, NULL, &global, NULL, 0, NULL, NULL);
+	game.cl_info->ret = cl_read(game.cl_info, cl_bufferOut, sizeof(cl_int) * count, game.gpuOutput);
+	ERROR(game.cl_info->ret);
 }
 
 int	main(int argc, char **argv)
