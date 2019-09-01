@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/08/30 16:43:15 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/09/01 16:02:17 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,13 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 }
 
 
-t_txture				*get_texture(char *name)
+void					get_texture(char *name, t_txture *texture)
 {
-	t_txture			*texture;
 	SDL_Surface			*surf;
 	SDL_Surface			*an_surf;
 	SDL_PixelFormat		*fmt;
 	char				*m;
 
-	texture = (t_txture*)malloc(sizeof(t_txture));
 	m = ft_strjoin("./textures/", name);
 	an_surf = SDL_LoadBMP(m);
 	fmt = malloc(sizeof(SDL_PixelFormat));
@@ -92,8 +90,7 @@ t_txture				*get_texture(char *name)
 		ft_memcpy(texture->texture, surf->pixels, (surf->h) * surf->pitch);
 	else
 		exit(0);
-	SDL_FreeSurface(surf);
-	return (texture);
+	// SDL_FreeSurface(surf);
 }
 
 

@@ -139,5 +139,5 @@ void 					camera_move
 						(t_camera *camera,
 						t_camera_direction direction,
 						float length);
-t_txture				*get_texture(char *name);
+void					get_texture(char *name, t_txture *texture);
 #endif
