@@ -137,14 +137,20 @@ cl_float3 create_cfloat3 (float x, float y, float z)
 
 void initScene(t_obj* cpu_spheres, t_game *game)
 {
-	char						*name = "earth.bmp";
+	char						*name = "sviborg.bmp";
 	char						*secname = "sun.bmp";
+	char						*thirdname = "seamless_pawnment.bmp";
+	char						*fourthname = "concrete.bmp";
+	char						*fivename = "dead_soil.bmp";
 
 
-	game->textures_num 			= 2;
+	game->textures_num 			= 5;
 	game->textures 				= (t_txture*)malloc(sizeof(t_txture) * game->textures_num);
 	get_texture(name, &(game->textures[0]));
 	get_texture(secname, &(game->textures[1]));
+	get_texture(thirdname, &(game->textures[2]));
+	get_texture(fourthname, &(game->textures[3]));
+	get_texture(fivename, &(game->textures[4]));
 	// left sphere
 	cpu_spheres[0].radius   	= 0.1f;
 	cpu_spheres[0].position 	= create_cfloat3 (-0.4f, 0.f, -0.1f);
@@ -153,7 +159,7 @@ void initScene(t_obj* cpu_spheres, t_game *game)
 	cpu_spheres[0].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
 	cpu_spheres[0].type 		= CYLINDER;
 	cpu_spheres[0].reflection 	= 0.f;
-	cpu_spheres[0].texture 		= 0;
+	cpu_spheres[0].texture 		= 3;
 
 	// right sphere
 	cpu_spheres[1].radius   	= 0.16f;
@@ -202,7 +208,7 @@ void initScene(t_obj* cpu_spheres, t_game *game)
 	cpu_spheres[8].v 			= create_cfloat3 (0.0f, -1.0f, 0.0f);
 	cpu_spheres[8].type 		= PLANE;
 	cpu_spheres[8].reflection	= 0;
-	cpu_spheres[8].texture 		= 0;
+	cpu_spheres[8].texture 		= 4;
 	// ceiling
 	cpu_spheres[3].radius		= 200.0f;
 	cpu_spheres[3].position 	= create_cfloat3 (0.0f, -0.5f, 0.0f);
@@ -211,7 +217,7 @@ void initScene(t_obj* cpu_spheres, t_game *game)
 	cpu_spheres[3].v 			= create_cfloat3 (0.0f, 1.0f, 0.0f);
 	cpu_spheres[3].type 		= PLANE;
 	cpu_spheres[3].reflection 	= 0;
-	cpu_spheres[3].texture 		= 0;
+	cpu_spheres[3].texture 		= 5;
 
 
 	// back wall
@@ -223,7 +229,7 @@ void initScene(t_obj* cpu_spheres, t_game *game)
 	cpu_spheres[4].type 		= PLANE;
  	cpu_spheres[4].reflection 	= 0;
 	cpu_spheres[4].reflection 	= 0;
-	cpu_spheres[4].texture 		= 0;
+	cpu_spheres[4].texture 		= 4;
 
 
 	// front wall 

@@ -4,6 +4,7 @@
 #include "math.cl"
 #include "normals.cl"
 #include "debug.cl"
+#include "textures.cl"
 
 static float get_random( int * seed0, int * seed1);
 float3 reflect(float3 vector, float3 n);
@@ -137,41 +138,6 @@ static float3		radiance_explicit(t_scene *scene,
 	// 	radiance *= pdf;
 	// }
 	return (radiance);
-}
-
-float3			get_color_sphere(t_obj object, float3 hitpoint, t_scene *scene)
-{
-	float3		vect;
-	__global t_txture	*texture;
-	float		u;
-	float		v;
-	int			i;
-
-	vect = normalize(hitpoint - object.position);
-	u = 0.5 + (atan2(vect[2], vect[0])) / (2 * PI);
-	v = 0.5 - (asin(vect[1])) / PI;
-	texture = &((scene->textures)[object.texture - 1]);
-	// if (u <= 0 || v <= 0)
-	// 	printf("111\n");
-	i = ((int)(v * (float)(texture->height - 1))) * (texture->width) + (int)(u * (float)(texture->width - 1));
-	// printf("%d\n", texture->texture[i]);
-	// i = 0;
-	// if (i > texture->height * texture->width)
-	// 	printf("%d\n", i);
-	return(cl_int_to_float3(texture->texture[i]));
-	// return(cl_int_to_float3(texture->texture[0][0]));
-}
-
-float3			get_color(t_obj object, float3 hitpoint, t_scene *scene)
-{
-	if (object.texture > 0)
-	{
-		if (object.type == SPHERE)
-			return(get_color_sphere(object, hitpoint, scene));
-		return (object.color);
-	}
-	else
-		return (object.color);
 }
 
 static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, int * seed1)
