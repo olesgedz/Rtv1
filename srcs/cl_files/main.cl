@@ -194,6 +194,8 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 		/* compute the hitpoint using the ray equation */
 		intersection->hitpoint =  ray.origin + ray.dir * ray.t;
 		objecthit.color = get_color(objecthit, intersection->hitpoint, scene);
+		if (length(objecthit.emission) != 0.0f && bounces == 0)
+			return (objecthit.color);
 		/* compute the surface normal and flip it if necessary to face the incoming ray */
 		intersection->normal = get_normal(&objecthit, intersection);
 		intersection->normal = dot(intersection->normal, ray.dir) < 0.0f ? intersection->normal : intersection->normal * (-1.0f);
