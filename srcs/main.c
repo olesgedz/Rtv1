@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/08/30 23:26:10 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/09/02 19:35:42 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,21 +213,20 @@ void opencl()
 	int fd = open("srcs/mix.cl", O_RDONLY);
 	size_t global = WIN_W * WIN_H;
 
-	t_vect vect;
-	vect_init(&vect);
-	VECT_STRADD(&vect, "render_kernel" ":");
-	VECT_STRADD(&vect, "-I srcs/cl_files/");
+	t_vect options;
+	vect_init(&options);
+	VECT_STRADD(&options, "-I srcs/cl_files/");
 	cl_krl_init(game.kernels, 1);	
 	cl_mem cl_bufferOut = clCreateBuffer(game.cl_info->ctxt, CL_MEM_WRITE_ONLY, WIN_H * WIN_W * sizeof(cl_int), NULL, &game.cl_info->ret);
-	game.kernels->sizes[0] = sizeof(cl_int) * WIN_H * WIN_W;
-	game.kernels->sizes[1] = sizeof(cl_int);
-	game.kernels->sizes[2] = sizeof(cl_int);
-	game.kernels->args[0] = cl_bufferOut;
+	game.kernels[0].sizes[0] = sizeof(cl_int) * WIN_H * WIN_W;
+	game.kernels[0].sizes[1] = sizeof(cl_int);
+	game.kernels[0].sizes[2] = sizeof(cl_int);
+	game.kernels[0].args[0] = cl_bufferOut;
 	t_vect names;
 	vect_init(&names);
 	VECT_STRADD(&names, "render_kernel" ":");
 	VECT_STRADD(&names, "render_blue" ":");
-	game.cl_info->ret = cl_krl_build(game.cl_info, game.kernels, fd, &vect, &names);
+	game.cl_info->ret = cl_krl_build(game.cl_info, game.kernels, fd, &options, &names);
 	//game.cl_info->ret = cl_krl_build(game.cl_info, &game.kernels[1], fd, &vect);
 
 
@@ -248,16 +247,31 @@ int	main(int argc, char **argv)
 	// cl_init(&cl_info);
 	//VECT_ADD(v, "hello");
 	//printf("%s", (char *)v->data);
-	game.sdl = malloc(sizeof(t_sdl));
-	game.image = ft_surface_create(WIN_W, WIN_H);
-	game.init_render = 1;
-	game.origin = (t_vec3){0,0,5};
-	game.gpu = (t_gpu *)malloc(sizeof(t_gpu));
-	opencl();
-	// opencl_init(game.gpu, &game);
-	ft_init_window(game.sdl, WIN_W, WIN_H);
+	
+	t_vect vec;
 
-	ft_update(&game);
+	vect_init(&vec);
+
+	VECT_ADD(&vec, "lol1 ");
+	VECT_ADD(&vec, "lol2");
+	// vect_print(0, &vec);
+	unsigned char ** tab = VSPLIT(vec, " ");
+	while(*tab)
+	{
+		printf("%s\n", *tab);
+		tab+=1;
+	}
+	
+	// game.sdl = malloc(sizeof(t_sdl));
+	// game.image = ft_surface_create(WIN_W, WIN_H);
+	// game.init_render = 1;
+	// game.origin = (t_vec3){0,0,5};
+	// game.gpu = (t_gpu *)malloc(sizeof(t_gpu));
+	// opencl();
+	// // opencl_init(game.gpu, &game);
+	// ft_init_window(game.sdl, WIN_W, WIN_H);
+
+	// ft_update(&game);
 	// clReleaseMemObject(game.gpu->cl_bufferOut);
 	// release_gpu(game.gpu);
 
