@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/02 19:35:42 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/09/02 19:43:48 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,7 +253,7 @@ int	main(int argc, char **argv)
 	vect_init(&vec);
 
 	VECT_ADD(&vec, "lol1 ");
-	VECT_ADD(&vec, "lol2");
+	VECT_ADD(&vec, "lol2 ");
 	// vect_print(0, &vec);
 	unsigned char ** tab = VSPLIT(vec, " ");
 	while(*tab)
