@@ -3,12 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+         #
+#    By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2016/02/02 15:48:09 by bsouchet          #+#    #+#              #
-#    Updated: 2019/08/05 01:55:21 by olesgedz         ###   ########.fr        #
+#    Created: 2019/09/02 20:15:16 by jblack-b          #+#    #+#              #
+#    Updated: 2019/09/02 20:15:17 by jblack-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+
 
 CC			= clang
 

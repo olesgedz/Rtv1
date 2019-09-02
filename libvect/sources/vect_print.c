@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   vect_print.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qle-guen <qle-guen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/26 15:54:43 by qle-guen          #+#    #+#             */
-/*   Updated: 2016/12/26 15:55:29 by qle-guen         ###   ########.fr       */
+/*   Created: 2019/09/02 20:06:16 by jblack-b          #+#    #+#             */
+/*   Updated: 2019/09/02 20:06:16 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "libvect.h"
 #include <unistd.h>

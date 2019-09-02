@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   libgnl.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qle-guen <qle-guen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/07/07 08:40:07 by qle-guen          #+#    #+#             */
-/*   Updated: 2017/02/09 14:14:03 by qle-guen         ###   ########.fr       */
+/*   Created: 2019/09/02 20:15:34 by jblack-b          #+#    #+#             */
+/*   Updated: 2019/09/02 20:15:34 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #ifndef LIBGNL_H
 # define LIBGNL_H

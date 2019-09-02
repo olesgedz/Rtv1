@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   gnl_vect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qle-guen <qle-guen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/07/06 15:06:08 by qle-guen          #+#    #+#             */
-/*   Updated: 2017/02/09 14:14:18 by qle-guen         ###   ########.fr       */
+/*   Created: 2019/09/02 20:16:07 by jblack-b          #+#    #+#             */
+/*   Updated: 2019/09/02 20:16:13 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "libft.h"
 #include "libgnl.h"

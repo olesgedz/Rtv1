@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   vect_new.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qle-guen <qle-guen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/27 14:52:14 by qle-guen          #+#    #+#             */
-/*   Updated: 2017/02/09 13:47:43 by qle-guen         ###   ########.fr       */
+/*   Created: 2019/09/02 20:06:11 by jblack-b          #+#    #+#             */
+/*   Updated: 2019/09/02 20:06:11 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "libvect.h"
 #include "malloc.h"

@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   vect_str_push.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/06/17 10:58:12 by qle-guen          #+#    #+#             */
-/*   Updated: 2019/08/05 01:42:17 by olesgedz         ###   ########.fr       */
+/*   Created: 2019/09/02 20:06:39 by jblack-b          #+#    #+#             */
+/*   Updated: 2019/09/02 20:06:40 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "libvect.h"
 #include "libft.h"

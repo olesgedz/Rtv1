@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   gnl_lines.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qle-guen <qle-guen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/20 13:44:24 by qle-guen          #+#    #+#             */
-/*   Updated: 2017/02/09 14:15:15 by qle-guen         ###   ########.fr       */
+/*   Created: 2019/09/02 20:15:59 by jblack-b          #+#    #+#             */
+/*   Updated: 2019/09/02 20:16:00 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "libft.h"
 #include "malloc.h"
