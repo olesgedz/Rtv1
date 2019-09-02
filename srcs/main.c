@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/02 19:43:48 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/09/02 19:58:02 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,53 +227,25 @@ void opencl()
 	VECT_STRADD(&names, "render_kernel" ":");
 	VECT_STRADD(&names, "render_blue" ":");
 	game.cl_info->ret = cl_krl_build(game.cl_info, game.kernels, fd, &options, &names);
-	//game.cl_info->ret = cl_krl_build(game.cl_info, &game.kernels[1], fd, &vect);
-
-
-	int w = WIN_W;
-	int h = WIN_H;
-	const int count = global;
-	//cl_write(game.cl_info, cl_bufferOut, sizeof(cl_mem)
-	
-	//game.cl_info->ret = clEnqueueNDRangeKernel(game.cl_info->cmd_queue, game.kernels[0].krl, 1, NULL, &global, NULL, 0, NULL, NULL);
-	
 }
 
 
 
 int	main(int argc, char **argv)
 {
-	// t_cl_info cl_info;
-	// cl_init(&cl_info);
-	//VECT_ADD(v, "hello");
-	//printf("%s", (char *)v->data);
-	
-	t_vect vec;
 
-	vect_init(&vec);
+	game.sdl = malloc(sizeof(t_sdl));
+	game.image = ft_surface_create(WIN_W, WIN_H);
+	game.init_render = 1;
+	game.origin = (t_vec3){0,0,5};
+	game.gpu = (t_gpu *)malloc(sizeof(t_gpu));
+	opencl();
+	// opencl_init(game.gpu, &game);
+	ft_init_window(game.sdl, WIN_W, WIN_H);
 
-	VECT_ADD(&vec, "lol1 ");
-	VECT_ADD(&vec, "lol2 ");
-	// vect_print(0, &vec);
-	unsigned char ** tab = VSPLIT(vec, " ");
-	while(*tab)
-	{
-		printf("%s\n", *tab);
-		tab+=1;
-	}
-	
-	// game.sdl = malloc(sizeof(t_sdl));
-	// game.image = ft_surface_create(WIN_W, WIN_H);
-	// game.init_render = 1;
-	// game.origin = (t_vec3){0,0,5};
-	// game.gpu = (t_gpu *)malloc(sizeof(t_gpu));
-	// opencl();
-	// // opencl_init(game.gpu, &game);
-	// ft_init_window(game.sdl, WIN_W, WIN_H);
-
-	// ft_update(&game);
-	// clReleaseMemObject(game.gpu->cl_bufferOut);
-	// release_gpu(game.gpu);
+	ft_update(&game);
+	clReleaseMemObject(game.gpu->cl_bufferOut);
+	release_gpu(game.gpu);
 
 	ft_exit(NULL);
 }
