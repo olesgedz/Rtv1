@@ -15,18 +15,12 @@
 #include "libsdl.h"
 #include "libvect.h"
 #include "libcl.h"
-//aelinor-
-//home
-/*
-* ! We can't use global variables 
-*/
 
 //#define FPS
 
 t_game game;
 float xa, ya, za;
 
-float eyex, eyey, eyez;
 /*
 *	Funtion: handles presses mouse/keyboard
 * 	Return: value, doesnt change any parameters
@@ -166,7 +160,7 @@ void ft_update(t_game *game)
 		current_ticks = clock();
 		ft_surface_clear(game->sdl->surface);
 		ft_input(game->sdl, &ft_input_keys);
-		
+
 		(game->wsad[2] && game->gpu->samples > 15) ? game->gpu->samples -= 15 : 0;
 		(game->wsad[3] && game->gpu->samples < 1000) ? game->gpu->samples += 15 : 0;
 
