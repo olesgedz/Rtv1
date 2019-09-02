@@ -9,7 +9,7 @@ int print_error(t_gpu *gpu)
 	{
 		buffer = ft_strnew(99999);
 		clGetProgramBuildInfo(gpu->program, gpu->device_id, CL_PROGRAM_BUILD_LOG, 100000, buffer, &len);
-		printf("%s\n", buffer);
+		printf("error: %s\n", buffer);
 		ft_strdel(&buffer);
 		return EXIT_FAILURE;
 	}
@@ -65,14 +65,14 @@ cl_ulong * get_random(cl_ulong * random)
 	return (random);
 }
 
-int bind_data(t_gpu *gpu, t_main_obj *main)
+int bind_data(t_gpu *gpu)
 {
 	int data_size = sizeof(t_vec3) * WIN_W * WIN_H;
 	int w = WIN_W; //TODO use as parameter of struct, not macros
 	int h = WIN_H;
 	size_t global = WIN_W * WIN_H;
 	const int count = global;
-	const int n_spheres = 9;
+	const int n_spheres = 9;//TODO push into gpu
 	int i;
 	int j;
 	static t_vec3 *h_a;//TODO push it inside t_gpu
@@ -103,6 +103,13 @@ int bind_data(t_gpu *gpu, t_main_obj *main)
 	ERROR(gpu->err == 0);
 	gpu->err |= clSetKernelArg(gpu->kernel, 7, sizeof(cl_mem), &gpu->cl_cpu_random);
 	ERROR(gpu->err == 0);
+	gpu->err |= clSetKernelArg(gpu->mouse_kernel, 2, sizeof(cl_mem), &gpu->cl_cpuSpheres);
+	gpu->err |= clSetKernelArg(gpu->mouse_kernel, 3, sizeof(cl_int), &n_spheres);
+	gpu->err |= clSetKernelArg(gpu->mouse_kernel, 4, sizeof(cl_int), &w);
+	gpu->err |= clSetKernelArg(gpu->mouse_kernel, 5, sizeof(cl_int), &h);
+	gpu->err |= clSetKernelArg(gpu->mouse_kernel, 6, sizeof(cl_int), &gpu->samples);
+	gpu->err |= clSetKernelArg(gpu->mouse_kernel, 7, sizeof(cl_mem), &gpu->cl_cpu_random);
+	print_error(gpu);
     //clReleaseMemObject(cl_bufferOut);
     //release_gpu(gpu);
 	return (0);
@@ -118,7 +125,8 @@ void ft_run_gpu(t_gpu *gpu)
 	gpu->err |= clSetKernelArg(gpu->kernel, 6, sizeof(cl_int), (gpu->active_mouse_move ? &active_samples : &gpu->samples));
 	gpu->err = clEnqueueNDRangeKernel(gpu->commands, gpu->kernel, 1, NULL, &global, NULL, 0, NULL, NULL);
 	// clFinish(gpu->commands);
-	gpu->err = clEnqueueReadBuffer(gpu->commands, gpu->cl_bufferOut, CL_TRUE, 0, count * sizeof(cl_int), gpu->cpuOutput, 0, NULL, NULL);
+	gpu->err = clEnqueueReadBuffer(gpu->commands, gpu->cl_bufferOut, CL_TRUE, 
+			0, count * sizeof(cl_int), gpu->cpuOutput, 0, NULL, NULL);
 }
 
 cl_float3 create_cfloat3 (float x, float y, float z)
@@ -152,7 +160,7 @@ void initScene(t_obj* cpu_spheres)
 	cpu_spheres[1].reflection 	= 3.f;
 
 	// lightsource
-	cpu_spheres[2].radius   	= 0.2f; 
+	cpu_spheres[2].radius   	= 0.13f; 
 	cpu_spheres[2].position 	= create_cfloat3 (0.0f, 0.3f, 0.0f);
 	cpu_spheres[2].color    	= create_cfloat3 (0.0f, 0.0f, 0.0f);
 	cpu_spheres[2].emission 	= create_cfloat3 (9.0f, 8.0f, 6.0f);
@@ -167,14 +175,14 @@ void initScene(t_obj* cpu_spheres)
 	cpu_spheres[6].v 			= create_cfloat3 (1.0f, 0.0f, 0.0f);
 	cpu_spheres[6].type 		= PLANE;
 	cpu_spheres[6].reflection 	= 0;
-	cpu_spheres[6].plane_d 		= -0.6f;
 
 	// right wall
 	cpu_spheres[7].radius		= 200.0f;
-	cpu_spheres[7].position 	= create_cfloat3 (200.6f, 0.0f, 0.0f);
+	cpu_spheres[7].position 	= create_cfloat3 (1.f, 0.0f, 0.0f);
 	cpu_spheres[7].color    	= create_cfloat3 (0.25f, 0.25f, 0.75f);
 	cpu_spheres[7].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-	cpu_spheres[7].type 		= SPHERE;
+	cpu_spheres[7].v 			= create_cfloat3 (1.0f, 0.0f, 0.0f);
+	cpu_spheres[7].type 		= PLANE;
 	cpu_spheres[7].reflection 	= 0;
 
 	// floor
@@ -185,7 +193,6 @@ void initScene(t_obj* cpu_spheres)
 	cpu_spheres[8].v 			= create_cfloat3 (0.0f, -1.0f, 0.0f);
 	cpu_spheres[8].type 		= PLANE;
 	cpu_spheres[8].reflection	= 0;
-	cpu_spheres[8].plane_d		= 0.0f;
 	// ceiling
 	cpu_spheres[3].radius		= 200.0f;
 	cpu_spheres[3].position 	= create_cfloat3 (0.0f, -0.5f, 0.0f);
@@ -194,25 +201,26 @@ void initScene(t_obj* cpu_spheres)
 	cpu_spheres[3].v 			= create_cfloat3 (0.0f, 1.0f, 0.0f);
 	cpu_spheres[3].type 		= PLANE;
 	cpu_spheres[3].reflection 	= 0;
-	cpu_spheres[3].plane_d 		= -0.35f;
 
 
 	// back wall
 	cpu_spheres[4].radius   	= 200.0f;
-	cpu_spheres[4].position 	= create_cfloat3 (0.0f, 0.0f, -200.4f);
+	cpu_spheres[4].position 	= create_cfloat3 (0.0f, 0.0f, -0.3f);
 	cpu_spheres[4].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
 	cpu_spheres[4].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-	cpu_spheres[4].type 		= SPHERE;
+	cpu_spheres[4].v 			= create_cfloat3 (0.0f, 0.0f, 1.0f);
+	cpu_spheres[4].type 		= PLANE;
  	cpu_spheres[4].reflection 	= 0;
 	cpu_spheres[4].reflection 	= 0;
 
 
 	// front wall 
 	cpu_spheres[5].radius   	= 200.0f;
-	cpu_spheres[5].position 	= create_cfloat3 (0.0f, 0.0f, 202.0f);
+	cpu_spheres[5].position 	= create_cfloat3 (0.0f, 0.0f, 2.0f);
 	cpu_spheres[5].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
 	cpu_spheres[5].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-	cpu_spheres[5].type 		= SPHERE;
+	cpu_spheres[5].v 			= create_cfloat3 (0.0f, 0.0f, 1.0f);
+	cpu_spheres[5].type 		= PLANE;
 	cpu_spheres[5].reflection 	= 0;
 }
 
@@ -239,12 +247,35 @@ int opencl_init(t_gpu *gpu, t_game *game)
 	
     gpu_read_kernel(gpu);
 	gpu->kernel = clCreateKernel(gpu->program, "render_kernel", &gpu->err);
+	gpu->mouse_kernel = clCreateKernel(gpu->program, "intersect_mouse", &gpu->err);
 	gpu->cpuOutput = malloc(sizeof(int) * (WIN_H * WIN_H));
 	gpu->spheres = malloc(sizeof(t_obj) * 9);
 	gpu->samples = 0;
 	gpu->active_mouse_move = 0;
 	initScene(gpu->spheres);
-	bind_data(gpu, &game->main_objs);
+	bind_data(gpu);
     return (gpu->err);
 }
 
+int		get_mouse_intersection(t_gpu *gpu, int x, int y)
+{
+	size_t		global_size;
+	const int n_spheres = 9;//TODO push into gpu
+	int w;
+	int h;
+	int result;
+	cl_mem	buffer_res;
+
+	result = -1;
+	w = WIN_W; //TODO use as parameter of struct, not macros
+	h = WIN_H;
+	global_size = 1;
+	buffer_res = clCreateBuffer(gpu->context, CL_MEM_WRITE_ONLY, sizeof(cl_int), NULL, &gpu->err);
+	gpu->err |= clSetKernelArg(gpu->mouse_kernel, 0, sizeof(int), &x);
+	gpu->err |= clSetKernelArg(gpu->mouse_kernel, 1, sizeof(int), &y);
+	gpu->err |= clSetKernelArg(gpu->mouse_kernel, 8, sizeof(cl_mem), &buffer_res);
+	clEnqueueNDRangeKernel(gpu->commands, gpu->mouse_kernel, 1, 0, &global_size, 0, 0, 0, 0);
+	clEnqueueReadBuffer(gpu->commands, buffer_res, CL_FALSE, 0, sizeof(int), &result, 0, NULL, NULL);
+	clFinish(gpu->commands);
+	return (result);
+}

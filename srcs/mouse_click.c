@@ -14,6 +14,7 @@
 void process_left_click(int x, int y, t_gpu *gpu)
 {
     gpu->active_mouse_move = !gpu->active_mouse_move;
+    printf("\nmouse intersect with %i\n\n", get_mouse_intersection(gpu, x, y));
     if (gpu->active_mouse_move)
     {
         printf("clicked left pos = (%i, %i)\n", x, y);
