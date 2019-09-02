@@ -6,7 +6,7 @@
 #    By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/16 12:58:07 by jblack-b          #+#    #+#              #
-#    Updated: 2019/08/29 20:51:02 by sbrella          ###   ########.fr        #
+#    Updated: 2019/09/02 16:02:16 by sbrella          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,6 +60,7 @@ SRCS_DIRECTORY = ./srcs/
 
 SRCS_LIST = main.c\
 			cl_lib/gpu_init.c\
+			textures.c
 
 SRCS_LIST += camera/camera_new.c camera/camera_move.c
 OBJS_DIRECTORY = objects/
