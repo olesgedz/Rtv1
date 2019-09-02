@@ -165,17 +165,17 @@ void initScene(t_obj* cpu_spheres, t_game *game)
 	cpu_spheres[1].radius   	= 0.16f;
 	cpu_spheres[1].position 	= create_cfloat3 (0.0f, -0.f, 0.1f);
 	cpu_spheres[1].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
-	cpu_spheres[1].emission 	= create_cfloat3 (0.1f, 0.1f, 0.1f);
+	cpu_spheres[1].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
 	cpu_spheres[1].v 			= create_cfloat3 (0.0f, 0.0f, 0.0f);
 	cpu_spheres[1].type 		= SPHERE;
 	cpu_spheres[1].texture 		= 1;
 	cpu_spheres[1].reflection 	= 0.f;
 
 	// lightsource
-	cpu_spheres[2].radius   	= 0.2f; 
-	cpu_spheres[2].position 	= create_cfloat3 (0.0f, 0.3f, 1.0f);
+	cpu_spheres[2].radius   	= 0.1f; 
+	cpu_spheres[2].position 	= create_cfloat3 (0.0f, 0.2f, 1.0f);
 	cpu_spheres[2].color    	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-	cpu_spheres[2].emission 	= create_cfloat3 (9.0f, 8.0f, 6.0f);
+	cpu_spheres[2].emission 	= create_cfloat3 (40.0f, 40.0f, 40.0f);
 	cpu_spheres[2].type 		= SPHERE;
 	cpu_spheres[2].reflection 	= 0;
 	cpu_spheres[2].texture 		= 2;
