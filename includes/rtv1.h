@@ -28,9 +28,20 @@
 //#include "libmath.h"
 # define DROUND(d)	ABS(d) < 0.00001 ? 0 : (d)
 //#define float double
-typedef enum e_figure {
-	 SPHERE, CYLINDER, CONE, PLANE
-	} t_type;
+typedef enum e_figure
+{
+	SPHERE,
+	CYLINDER,
+	CONE,
+	PLANE
+} 						t_type;
+
+typedef struct s_txture
+{
+	cl_int		width;
+	cl_int		height;
+	cl_int		texture[1920][1080];
+}				t_txture;
 
 typedef struct Object{
 	float radius;
@@ -42,6 +53,7 @@ typedef struct Object{
 	cl_float refraction;
 	cl_float reflection;
 	cl_float plane_d;
+	cl_int		texture;
 } t_obj;
 
 typedef struct s_ray
@@ -56,16 +68,16 @@ typedef struct s_ray
 
 typedef struct s_camera
 {
-	cl_float3 position;
-	cl_float3		axis_x;
-	cl_float3		axis_y;
-	cl_float3		axis_z;
-	cl_float3		forward;
-	int				width;
-	int				height;
-} t_camera;
+	cl_float3			position;
+	cl_float3			axis_x;
+	cl_float3			axis_y;
+	cl_float3			axis_z;
+	cl_float3			forward;
+	int					width;
+	int					height;
+}						t_camera;
 
-typedef enum		e_camera_direction
+typedef enum			e_camera_direction
 {
 	left,
 	right,
@@ -73,19 +85,15 @@ typedef enum		e_camera_direction
 	down,
 	forward,
 	backward
-}					t_camera_direction;
-
-
-
-
+}						t_camera_direction;
 
 typedef struct s_gpu
 {
-    cl_device_id		device_id;     // compute device id
-    cl_context			context;       // compute context
-    cl_command_queue	commands;      // compute command queue
-    cl_program			program;       // compute program
-    cl_kernel			kernel;       // compute kernel
+  cl_device_id		device_id;     // compute device id
+  cl_context			context;       // compute context
+  cl_command_queue	commands;      // compute command queue
+  cl_program			program;       // compute program
+  cl_kernel			kernel;       // compute kernel
 	cl_kernel			mouse_kernel;
 	cl_uint				numPlatforms;
 	cl_int				err;
@@ -98,16 +106,13 @@ typedef struct s_gpu
 	cl_mem				cl_cpuSpheres;
 	cl_mem				cl_cpu_vectemp;
 	cl_mem				cl_cpu_camera;
-	cl_mem				cl_cpu_random;
-	t_camera			*camera;
+	cl_mem 				cl_cpu_random;
+	t_camera 			*camera;
+	int 				samples;
 	int					active_mouse_move;
-	int					samples;
-}				t_gpu;
+}						t_gpu;
 
-
-
-
-typedef struct s_game
+typedef struct			s_game
 {
 	t_sdl *sdl;
 	t_surface *image;
@@ -119,26 +124,27 @@ typedef struct s_game
 	t_vec3 origin;
 	t_gpu *gpu;
 	int init_render;
+	t_txture		*textures;
+	int				textures_num;
 } t_game;
 
-int bind_data(t_gpu *gpu);
+int bind_data(t_gpu *gpu, t_game *game);
 void release_gpu(t_gpu *gpu);
 void ft_run_gpu(t_gpu *gpu);
 
-int			opencl_init(t_gpu *gpu, t_game *game);
-cl_float3 create_cfloat3 (float x, float y, float z);
+int						opencl_init(t_gpu *gpu, t_game *game);
+cl_float3				create_cfloat3 (float x, float y, float z);
 
-cl_float3 cl_scalar_mul(cl_float3 vector, double scalar);
+cl_float3				cl_scalar_mul(cl_float3 vector, double scalar);
 
-cl_float3 cl_add(cl_float3 v1, cl_float3 v2);
-t_camera			*camera_new(int width, int height);
-void 				camera_move
-					(t_camera *camera,
-					t_camera_direction direction,
-					float length);
-
+cl_float3				cl_add(cl_float3 v1, cl_float3 v2);
+t_camera				*camera_new(int width, int height);
+void 					camera_move
+						(t_camera *camera,
+						t_camera_direction direction,
+						float length);
+void					get_texture(char *name, t_txture *texture);
 
 void process_left_click(int x, int y, t_gpu *gpu);
 int		get_mouse_intersection(t_gpu *gpu, int x, int y);
-
 #endif

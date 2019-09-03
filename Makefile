@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+         #
+#    By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/16 12:58:07 by jblack-b          #+#    #+#              #
-#    Updated: 2019/08/28 22:04:39 by olesgedz         ###   ########.fr        #
+#    Updated: 2019/09/02 16:02:16 by sbrella          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = rtv1
 
 FLAGS = -g
 CC = clang
-LIBRARIES = -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY) -lm -lOpenCL#-framework OpenCL  #-lvect -L$(LIBVECT) -lgnl -L$(LIBGNL) -lcl -L$(LIBCL)#-lmath -L$(LIBMATH_DIRECTORY)
+LIBRARIES = -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY) -lm -framework OpenCL   #-lOpenCL -lvect -L$(LIBVECT) -lgnl -L$(LIBGNL) -lcl -L$(LIBCL)#-lmath -L$(LIBMATH_DIRECTORY)
 INCLUDES = -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)include/ -Isrcs/cl_error/ -I$(LIBGNL)include/ -I$(LIBCL)include/ # -I$(LIBMATH_HEADERS)
 FRAMEWORKS = -framework OpenCL
 
@@ -59,7 +59,9 @@ LIB_LIST =	libSDL2.a\
 SRCS_DIRECTORY = ./srcs/
 
 SRCS_LIST = main.c\
-			cl_lib/gpu_init.c mouse_click.c
+			cl_lib/gpu_init.c\
+			textures.c \
+      mouse_click.c
 
 SRCS_LIST += camera/camera_new.c camera/camera_move.c
 OBJS_DIRECTORY = objects/

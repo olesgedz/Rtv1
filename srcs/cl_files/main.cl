@@ -4,6 +4,7 @@
 #include "math.cl"
 #include "normals.cl"
 #include "debug.cl"
+#include "textures.cl"
 
 static float get_random( int * seed0, int * seed1);
 float3 reflect(float3 vector, float3 n);
@@ -137,8 +138,6 @@ static float3		radiance_explicit(t_scene *scene,
 	return (radiance);
 }
 
-
-
 static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, int * seed1)
 {
 	t_ray ray = intersection->ray;
@@ -158,6 +157,9 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 		t_obj objecthit = scene->objects[intersection->object_id]; /* version with local copy of sphere */
 		/* compute the hitpoint using the ray equation */
 		intersection->hitpoint =  ray.origin + ray.dir * ray.t;
+		objecthit.color = get_color(objecthit, intersection->hitpoint, scene);
+		if (length(objecthit.emission) != 0.0f && bounces == 0)
+			return (objecthit.color);
 		/* compute the surface normal and flip it if necessary to face the incoming ray */
 		intersection->normal = get_normal(&objecthit, intersection);
 		intersection->normal = dot(intersection->normal, ray.dir) < 0.0f ? intersection->normal : intersection->normal * (-1.0f);
@@ -215,7 +217,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 
 
 static t_scene scene_new(__global t_obj* objects, int n_objects, int width, int height,\
- int samples, __global ulong * random)
+ int samples, __global ulong * random, __global t_txture *textures)
 {
 	t_scene new_scene;
 
@@ -230,11 +232,12 @@ static t_scene scene_new(__global t_obj* objects, int n_objects, int width, int 
 	new_scene.seed0 = new_scene.x_coord + rand_noise(new_scene.samples) * 12312;
 	new_scene.seed1 = new_scene.y_coord + rand_noise(new_scene.samples + 3) * 12312;
 	new_scene.random = random;
+	new_scene.textures = textures;
 	return (new_scene);
 }
 
 __kernel void render_kernel(__global int* output, int width, int height, int n_objects, __global t_obj* objects,
-__global float3 * vect_temp, int samples, __global ulong * random)
+__global float3 * vect_temp, int samples, __global ulong * random, __global t_txture *textures)
 {
 	t_scene scene;
 	t_intersection  intersection;
@@ -242,7 +245,6 @@ __global float3 * vect_temp, int samples, __global ulong * random)
 	unsigned int work_item_id = get_global_id(0);	/* the unique global id of the work item for the current pixel */
 	unsigned int x_coord = work_item_id % width;			/* x-coordinate of the pixel */
 	unsigned int y_coord = work_item_id / width;			/* y-coordinate of the pixel */
-
 	/* seeds for random number generator */
 	unsigned int seed0 = x_coord + rng(random);
 	unsigned int seed1 = y_coord + rng(random);
@@ -252,7 +254,7 @@ __global float3 * vect_temp, int samples, __global ulong * random)
 	else
 		finalcolor = vect_temp[x_coord + y_coord * width];
 	
-	scene = scene_new(objects, n_objects, width, height, samples, random);
+	scene = scene_new(objects, n_objects, width, height, samples, random, textures);
 	intersection.ray = createCamRay(scene.x_coord, scene.y_coord, width, height);
 	intersection_reset(&intersection.ray);
 	print_debug(scene.samples, scene.width, &scene);
