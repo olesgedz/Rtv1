@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/02 23:17:55 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/09/03 19:06:44 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ void 	ft_render(t_game* game)
 	//ft_run_gpu(game->gpu);
 	int r = rand() % 2;
 	printf("%d\n", r);
-	ft_run_kernel(game->kernels[r].krl);
+	ft_run_kernel(game->kernels[0].krl);
 	while (++j < height)
 	{
 		i = -1;
@@ -212,7 +212,9 @@ void opencl()
 	ERROR(game.cl_info->ret);
 	int fd = open("srcs/mix.cl", O_RDONLY);
 	size_t global = WIN_W * WIN_H;
-	cl_krl_init(&game.kernels[0], 1);	
+	cl_krl_init(&game.kernels[0], 1);
+	cl_krl_init(&game.kernels[1], 1);	
+
 	t_vect options;
 	vect_init(&options);
 	VECT_STRADD(&options, "-I srcs/cl_files/");
@@ -221,10 +223,13 @@ void opencl()
 	game.kernels[0].sizes[1] = sizeof(cl_int);
 	game.kernels[0].sizes[2] = sizeof(cl_int);
 	game.kernels[0].args[0] = cl_bufferOut;
+	game.kernels[1].sizes[1] = sizeof(cl_int);
+	game.kernels[1].sizes[2] = sizeof(cl_int);
+	game.kernels[1].args[0] = cl_bufferOut;
 	t_vect names;
 	vect_init(&names);
 	VECT_STRADD(&names, "render_kernel" ":");
-	VECT_STRADD(&names, "render_blue" ":");
+	VECT_STRADD(&names, "render_blue");
 	game.cl_info->ret = cl_krl_build(game.cl_info, game.kernels, fd, &options, &names);
 }
 
