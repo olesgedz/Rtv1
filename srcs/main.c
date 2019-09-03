@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/02 19:58:02 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/09/02 23:17:55 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,11 +212,10 @@ void opencl()
 	ERROR(game.cl_info->ret);
 	int fd = open("srcs/mix.cl", O_RDONLY);
 	size_t global = WIN_W * WIN_H;
-
+	cl_krl_init(&game.kernels[0], 1);	
 	t_vect options;
 	vect_init(&options);
 	VECT_STRADD(&options, "-I srcs/cl_files/");
-	cl_krl_init(game.kernels, 1);	
 	cl_mem cl_bufferOut = clCreateBuffer(game.cl_info->ctxt, CL_MEM_WRITE_ONLY, WIN_H * WIN_W * sizeof(cl_int), NULL, &game.cl_info->ret);
 	game.kernels[0].sizes[0] = sizeof(cl_int) * WIN_H * WIN_W;
 	game.kernels[0].sizes[1] = sizeof(cl_int);
