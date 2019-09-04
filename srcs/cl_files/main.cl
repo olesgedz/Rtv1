@@ -235,48 +235,47 @@ static t_scene scene_new(__global t_obj* objects, int n_objects, int width, int 
 	return (new_scene);
 }
 
-// __kernel void render_kernel(__global int* output, int width, int height, int n_objects, __global t_obj* objects,
-// __global float3 * vect_temp, int samples, __global ulong * random
-// 	)
-// {
-	
-// 	t_scene scene;
-// 	t_intersection  intersection;
-// 	float3 finalcolor;
-// 	unsigned int work_item_id = get_global_id(0);	/* the unique global id of the work item for the current pixel */
-// 	unsigned int x_coord = work_item_id % width;			/* x-coordinate of the pixel */
-// 	unsigned int y_coord = work_item_id / width;			/* y-coordinate of the pixel */
-
-// 	/* seeds for random number generator */
-// 	 unsigned int seed0 = x_coord + rng(random);
-// 	 unsigned int seed1 = y_coord + rng(random);
-// 	// check_random(work_item_id, seed0, seed1);
-// 	if (samples == 15)
-// 		finalcolor  = 0;
-// 	else
-// 		finalcolor = vect_temp[x_coord + y_coord * width];
-	
-// 	scene = scene_new(objects, n_objects, width, height, samples, random);
-// 	intersection.ray = createCamRay(scene.x_coord, scene.y_coord, width, height);
-// 	intersection_reset(&intersection.ray);
-// 	print_debug(scene.samples, scene.width, &scene);
-
-// 	for (int i = 0; i < 15; i++)
-// 	{	//__constant t_obj* spheres, const Ray* camray, const int sphere_count, const int* seed0, const int* seed1
-// 		finalcolor += trace(&scene,  &intersection, &seed0, &seed1);
-// 	}
-// 	vect_temp[scene.x_coord + scene.y_coord * width] = finalcolor;
-	
-// 	output[scene.x_coord + scene.y_coord * width] = ft_rgb_to_hex(toInt(finalcolor.x  / samples),
-// 	 toInt(finalcolor.y  / samples), toInt(finalcolor.z  / samples)); /* simple interpolated colour gradient based on pixel coordinates */
-
-// }
-
-
-
-__kernel void render_kernel(__global int* output, int width, int height)
+__kernel void render_kernel(__global int* output, __global t_obj* objects,
+__global float3 * vect_temp,  __global ulong * random, int width, int height,  int n_objects, int samples)
 {
 	
-	output[get_global_id(0)] = 0xff0000;/* simple interpolated colour gradient based on pixel coordinates */
+	t_scene scene;
+	t_intersection  intersection;
+	float3 finalcolor;
+	unsigned int work_item_id = get_global_id(0);	/* the unique global id of the work item for the current pixel */
+	unsigned int x_coord = work_item_id % width;			/* x-coordinate of the pixel */
+	unsigned int y_coord = work_item_id / width;			/* y-coordinate of the pixel */
+
+	/* seeds for random number generator */
+	 unsigned int seed0 = x_coord + rng(random);
+	 unsigned int seed1 = y_coord + rng(random);
+	// check_random(work_item_id, seed0, seed1);
+	if (samples == 15)
+		finalcolor  = 0;
+	else
+		finalcolor = vect_temp[x_coord + y_coord * width];
+	
+	scene = scene_new(objects, n_objects, width, height, samples, random);
+	intersection.ray = createCamRay(scene.x_coord, scene.y_coord, width, height);
+	intersection_reset(&intersection.ray);
+	print_debug(scene.samples, scene.width, &scene);
+
+	for (int i = 0; i < 15; i++)
+	{	//__constant t_obj* spheres, const Ray* camray, const int sphere_count, const int* seed0, const int* seed1
+		finalcolor += trace(&scene,  &intersection, &seed0, &seed1);
+	}
+	vect_temp[scene.x_coord + scene.y_coord * width] = finalcolor;
+	
+	output[scene.x_coord + scene.y_coord * width] = ft_rgb_to_hex(toInt(finalcolor.x  / samples),
+	 toInt(finalcolor.y  / samples), toInt(finalcolor.z  / samples)); /* simple interpolated colour gradient based on pixel coordinates */
 
 }
+
+
+
+// __kernel void render_kernel(__global int* output, int width, int height)
+// {
+	
+// 	output[get_global_id(0)] = 0xff0000;/* simple interpolated colour gradient based on pixel coordinates */
+
+// }
