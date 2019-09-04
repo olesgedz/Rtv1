@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/03 19:06:44 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/09/04 03:16:18 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,8 @@ void ft_filter(t_game* game)
 	size_t global = WIN_W * WIN_H;
 
 	const int count = global;
-	game.cl_info->ret |= clSetKernelArg(kernel, 0, sizeof(cl_mem), &game.kernels->args[0]);
-	ERROR(game.cl_info->ret);
+	// game.cl_info->ret |= clSetKernelArg(kernel, 0, sizeof(cl_mem), &game.kernels->args[0]);
+	// ERROR(game.cl_info->ret);
 	game.cl_info->ret |= clSetKernelArg(kernel, 1, sizeof(cl_int), &w);
 	ERROR(game.cl_info->ret);
 	game.cl_info->ret |= clSetKernelArg(kernel, 2, sizeof(cl_int), &h);
@@ -201,6 +201,98 @@ void ft_update(t_game *game)
 	}
 }
 
+// #include "libft.h"
+// #include "malloc.h"
+// #include "libgnl.h"
+// #include "libcl.h"
+// #include <stdio.h>
+// #define LOG_BUFSIZ 20480
+
+// static cl_int
+// 	krl_set_args
+// 	(cl_context ctxt
+// 	, t_cl_krl *krl)
+// {
+// 	cl_int		ret;
+// 	size_t		i;
+
+// 	i = 0;
+// 	while (i < krl->nargs)
+// 	{
+// 		krl->args[i] = clCreateBuffer(ctxt, 0, krl->sizes[i], NULL, &ret);
+// 		if (ret != CL_SUCCESS)
+// 			return (ret);
+// 		if ((ret = CL_KRL_ARG(krl->krl, i, krl->args[i])) != CL_SUCCESS)
+// 			return (ret);
+// 		i++;
+// 	}
+// 	return (CL_SUCCESS);
+// }
+
+// static void
+// 	krl_get_opts
+// 	(t_vect *build_line
+// 	, char **opts)
+// {
+
+// 	*opts = build_line->data;
+// }
+// static void
+// 	krl_source_free
+// 	(t_vect lines
+// 	)
+// {
+// 	size_t	i;
+// 	i = 0;
+// 	while (i < lines.used / 8)
+// 	{
+// 		free(((char **)lines.data)[i]);
+// 		i++;
+// 	}
+// 	free(lines.data);
+// }
+
+// cl_int
+// 	cl_krl_build
+// 	(t_cl_info *cl
+// 	, t_cl_krl *krl
+// 	, int fd
+// 	, t_vect *build_line, t_vect *kernel_names)
+// {
+// 	char		*krlname;
+// 	char		buffer[LOG_BUFSIZ];
+// 	cl_int		ret;
+// 	t_vect		lines;
+// 	int i;
+// 	i = -1;
+// 	unsigned char **names;
+// 	names = VSPLIT(*kernel_names,":");
+	
+// 	vect_init(&lines);
+// 	gnl_lines(fd, &lines, GNL_APPEND_CHAR);
+// 	cl->prog = clCreateProgramWithSource(cl->ctxt, lines.used / sizeof(void *),
+// 		(const char **)lines.data, NULL, &ret);
+// 	if (ret != CL_SUCCESS)
+// 		return (ret);
+// 	if ((ret = clBuildProgram(cl->prog,
+// 		cl->dev_num, &cl->dev_id, "-w", NULL, NULL)) != CL_SUCCESS)
+// 	{
+// 		clGetProgramBuildInfo(cl->prog, cl->dev_id, CL_PROGRAM_BUILD_LOG
+// 			, LOG_BUFSIZ, buffer, NULL);
+// 		write(1, buffer, ft_strlen(buffer));
+// 		return (ret);
+// 	}
+// 	while((char *)names[++i])
+// 	{
+// 		if (!(krl[i].krl = clCreateKernel(cl->prog, (char *)names[i], &ret)))
+// 			return (ret);
+// 		ret = krl_set_args(cl->ctxt, &krl[i]);
+// 	}
+// 	krl_source_free(lines);
+// 	return (ret);
+// }
+
+
 
 void opencl()
 {
@@ -210,27 +302,23 @@ void opencl()
 
 	cl_init(game.cl_info);
 	ERROR(game.cl_info->ret);
-	int fd = open("srcs/mix.cl", O_RDONLY);
+	int fd = open("srcs/cl_files/main.cl", O_RDONLY);
 	size_t global = WIN_W * WIN_H;
 	cl_krl_init(&game.kernels[0], 1);
-	cl_krl_init(&game.kernels[1], 1);	
-
 	t_vect options;
 	vect_init(&options);
-	VECT_STRADD(&options, "-I srcs/cl_files/");
-	cl_mem cl_bufferOut = clCreateBuffer(game.cl_info->ctxt, CL_MEM_WRITE_ONLY, WIN_H * WIN_W * sizeof(cl_int), NULL, &game.cl_info->ret);
+	VECT_STRADD(&options, "-I srcs/cl_files/ -I includes/cl_headers/");
 	game.kernels[0].sizes[0] = sizeof(cl_int) * WIN_H * WIN_W;
-	game.kernels[0].sizes[1] = sizeof(cl_int);
-	game.kernels[0].sizes[2] = sizeof(cl_int);
-	game.kernels[0].args[0] = cl_bufferOut;
-	game.kernels[1].sizes[1] = sizeof(cl_int);
-	game.kernels[1].sizes[2] = sizeof(cl_int);
-	game.kernels[1].args[0] = cl_bufferOut;
+	// game.kernels[0].sizes[1] = sizeof(cl_int);
+	// game.kernels[0].sizes[2] = sizeof(cl_int);
+	
 	t_vect names;
 	vect_init(&names);
-	VECT_STRADD(&names, "render_kernel" ":");
-	VECT_STRADD(&names, "render_blue");
+	VECT_STRADD(&names, "render_kernel");
 	game.cl_info->ret = cl_krl_build(game.cl_info, game.kernels, fd, &options, &names);
+	ERROR(game.cl_info->ret);
+	game.cl_info->ret = cl_write(game.cl_info, game.kernels[0].args[0], sizeof(cl_int) * WIN_H * WIN_W, game.gpuOutput);
+	ERROR(game.cl_info->ret);
 }
 
 
