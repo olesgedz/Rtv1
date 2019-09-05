@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/05 16:23:44 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/09/05 17:12:27 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,13 +333,13 @@ void initScene(t_obj* cpu_spheres, t_game *game)
 	int n_objects = 9;
 	game.gpu->samples += 15;
 	const int count = global;
-	game.cl_info->ret |= clSetKernelArg(kernel, 4, sizeof(cl_int), &w);
+	game.cl_info->ret |= clSetKernelArg(kernel, 5, sizeof(cl_int), &w);
 	ERROR(game.cl_info->ret);
-	game.cl_info->ret |= clSetKernelArg(kernel, 5, sizeof(cl_int), &h);
+	game.cl_info->ret |= clSetKernelArg(kernel, 6, sizeof(cl_int), &h);
 	ERROR(game.cl_info->ret);
-	game.cl_info->ret |= clSetKernelArg(kernel, 6, sizeof(cl_int), &n_objects);
+	game.cl_info->ret |= clSetKernelArg(kernel, 7, sizeof(cl_int), &n_objects);
 	ERROR(game.cl_info->ret);
-	game.cl_info->ret |= clSetKernelArg(kernel, 7, sizeof(cl_int), &game.gpu->samples);
+	game.cl_info->ret |= clSetKernelArg(kernel, 8, sizeof(cl_int), &game.gpu->samples);
 	ERROR(game.cl_info->ret);
 	game.cl_info->ret = cl_krl_exec(game.cl_info, kernel, 1, &global);
 	ERROR(game.cl_info->ret);
@@ -439,7 +439,7 @@ void opencl()
 	game.kernels[0].sizes[1] =  sizeof(t_obj) * 9;
 	game.kernels[0].sizes[2] = sizeof(cl_float3) * WIN_H * WIN_W;
 	game.kernels[0].sizes[3] = WIN_H * WIN_W * sizeof(cl_ulong);
-	game.kernels[0].sizes[4] = sizeof(t_txture) * game->textures_num;
+	game.kernels[0].sizes[4] = sizeof(t_txture) * game.textures_num;
 
 	t_vect names;
 	vect_init(&names);
@@ -453,6 +453,8 @@ void opencl()
 	game.cl_info->ret = cl_write(game.cl_info, game.kernels[0].args[2], sizeof(cl_float3) * WIN_H * WIN_W, game.gpu->vec_temp);
 	ERROR(game.cl_info->ret);
 	game.cl_info->ret = cl_write(game.cl_info, game.kernels[0].args[3], WIN_H * WIN_W * sizeof(cl_ulong), game.gpu->random);
+	ERROR(game.cl_info->ret);
+	game.cl_info->ret = cl_write(game.cl_info, game.kernels[0].args[4], sizeof(t_txture) * game.textures_num, game.textures);
 	ERROR(game.cl_info->ret);
 }
 
@@ -468,9 +470,9 @@ int	main(int argc, char **argv)
 	game.gpu = (t_gpu *)malloc(sizeof(t_gpu));
 	opencl();
 	// opencl_init(game.gpu, &game);
-	// ft_init_window(game.sdl, WIN_W, WIN_H);
+	ft_init_window(game.sdl, WIN_W, WIN_H);
 
-	// ft_update(&game);
+	ft_update(&game);
 	// clReleaseMemObject(game.gpu->cl_bufferOut);
 	// release_gpu(game.gpu);
 

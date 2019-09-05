@@ -52,67 +52,55 @@ void release_gpu(t_gpu *gpu)
 	clReleaseMemObject(gpu->cl_cpuSpheres);
 }
 
-cl_ulong * get_random(cl_ulong * random)
-{
-	int i;
-	i = -1;
-	random = ft_memalloc(sizeof(cl_ulong) * WIN_H * WIN_W);
-	srand(21);
-	while (++i < WIN_H * WIN_W)
-	{
-		random[i] = rand(); 
-	}
-	return (random);
-}
 
-int bind_data(t_gpu *gpu, t_game *game)
-{
-	int data_size = sizeof(t_vec3) * WIN_W * WIN_H;
-	int w = WIN_W; //TODO use as parameter of struct, not macros
-	int h = WIN_H;
-	size_t global = WIN_W * WIN_H;
-	const int count = global;
-	const int n_spheres = 9;
-	int i;
-	int j;
-	cl_mem			textures;
-	static t_vec3 *h_a;//TODO push it inside t_gpu
-	gpu->vec_temp = ft_memalloc(sizeof(cl_float3) * global);
-	gpu->camera = camera_new(WIN_W, WIN_H);
-	gpu->random = get_random(gpu->random);
-	gpu->cl_cpu_vectemp = clCreateBuffer(gpu->context, CL_MEM_READ_WRITE, count * sizeof(cl_float3), NULL, &gpu->err);
-	gpu->cl_bufferOut = clCreateBuffer(gpu->context, CL_MEM_WRITE_ONLY, count * sizeof(cl_int), NULL, &gpu->err);
-	gpu->cl_cpuSpheres= clCreateBuffer(gpu->context, CL_MEM_READ_ONLY, n_spheres * sizeof(t_obj), NULL, &gpu->err);
-	gpu->cl_cpu_random = clCreateBuffer(gpu->context, CL_MEM_READ_ONLY, WIN_H * WIN_W * sizeof(cl_ulong), NULL, &gpu->err);
-	textures = clCreateBuffer(gpu->context, CL_MEM_READ_ONLY, sizeof(t_txture) * game->textures_num, NULL, &gpu->err);
-	gpu->err = clEnqueueWriteBuffer(gpu->commands, gpu->cl_cpuSpheres, CL_TRUE, 0,
-			n_spheres * sizeof(t_obj), gpu->spheres, 0, NULL, NULL);
-	ERROR(gpu->err == 0);
-	gpu->err = clEnqueueWriteBuffer(gpu->commands, gpu->cl_cpu_random, CL_TRUE, 0,
-			WIN_H * WIN_W * sizeof(cl_ulong), gpu->random, 0, NULL, NULL);
-	gpu->err = clEnqueueWriteBuffer(gpu->commands, textures, CL_TRUE, 0,
-			sizeof(t_txture) * game->textures_num, game->textures, 0, NULL, NULL);
-	ERROR(gpu->err == 0);
-	gpu->err |= clSetKernelArg(gpu->kernel, 0, sizeof(cl_mem), &gpu->cl_bufferOut);
-	gpu->err |= clSetKernelArg(gpu->kernel, 1, sizeof(cl_int), &w);
-	gpu->err |= clSetKernelArg(gpu->kernel, 2, sizeof(cl_int), &h);
-	ERROR(gpu->err == 0);
-	gpu->err |= clSetKernelArg(gpu->kernel, 3, sizeof(cl_int), &n_spheres);
-	ERROR(gpu->err == 0);
-	gpu->err |= clSetKernelArg(gpu->kernel, 4, sizeof(cl_mem), &gpu->cl_cpuSpheres);
-	ERROR(gpu->err == 0);
-	gpu->err |= clSetKernelArg(gpu->kernel, 5, sizeof(cl_mem), &gpu->cl_cpu_vectemp);
-	ERROR(gpu->err == 0);
-	gpu->err |= clSetKernelArg(gpu->kernel, 6, sizeof(cl_int), &gpu->samples);
-	ERROR(gpu->err == 0);
-	gpu->err |= clSetKernelArg(gpu->kernel, 7, sizeof(cl_mem), &gpu->cl_cpu_random);
-	ERROR(gpu->err == 0);
-	gpu->err |= clSetKernelArg(gpu->kernel, 8, sizeof(cl_mem), &textures);
-	ERROR(gpu->err == 0);
-    //clReleaseMemObject(cl_bufferOut);
-    //release_gpu(gpu);
-	return (0);
-}
+// int bind_data(t_gpu *gpu, t_game *game)
+// {
+// 	int data_size = sizeof(t_vec3) * WIN_W * WIN_H;
+// 	int w = WIN_W; //TODO use as parameter of struct, not macros
+// 	int h = WIN_H;
+// 	size_t global = WIN_W * WIN_H;
+// 	const int count = global;
+// 	const int n_spheres = 9;
+// 	int i;
+// 	int j;
+// 	cl_mem			textures;
+// 	static t_vec3 *h_a;//TODO push it inside t_gpu
+// 	gpu->vec_temp = ft_memalloc(sizeof(cl_float3) * global);
+// 	gpu->camera = camera_new(WIN_W, WIN_H);
+// 	gpu->random = get_random(gpu->random);
+// 	gpu->cl_cpu_vectemp = clCreateBuffer(gpu->context, CL_MEM_READ_WRITE, count * sizeof(cl_float3), NULL, &gpu->err);
+// 	gpu->cl_bufferOut = clCreateBuffer(gpu->context, CL_MEM_WRITE_ONLY, count * sizeof(cl_int), NULL, &gpu->err);
+// 	gpu->cl_cpuSpheres= clCreateBuffer(gpu->context, CL_MEM_READ_ONLY, n_spheres * sizeof(t_obj), NULL, &gpu->err);
+// 	gpu->cl_cpu_random = clCreateBuffer(gpu->context, CL_MEM_READ_ONLY, WIN_H * WIN_W * sizeof(cl_ulong), NULL, &gpu->err);
+// 	textures = clCreateBuffer(gpu->context, CL_MEM_READ_ONLY, sizeof(t_txture) * game->textures_num, NULL, &gpu->err);
+// 	gpu->err = clEnqueueWriteBuffer(gpu->commands, gpu->cl_cpuSpheres, CL_TRUE, 0,
+// 			n_spheres * sizeof(t_obj), gpu->spheres, 0, NULL, NULL);
+// 	ERROR(gpu->err == 0);
+// 	gpu->err = clEnqueueWriteBuffer(gpu->commands, gpu->cl_cpu_random, CL_TRUE, 0,
+// 			WIN_H * WIN_W * sizeof(cl_ulong), gpu->random, 0, NULL, NULL);
+// 	gpu->err = clEnqueueWriteBuffer(gpu->commands, textures, CL_TRUE, 0,
+// 			sizeof(t_txture) * game->textures_num, game->textures, 0, NULL, NULL);
+// 	ERROR(gpu->err == 0);
+// 	gpu->err |= clSetKernelArg(gpu->kernel, 0, sizeof(cl_mem), &gpu->cl_bufferOut);
+// 	gpu->err |= clSetKernelArg(gpu->kernel, 1, sizeof(cl_int), &w);
+// 	gpu->err |= clSetKernelArg(gpu->kernel, 2, sizeof(cl_int), &h);
+// 	ERROR(gpu->err == 0);
+// 	gpu->err |= clSetKernelArg(gpu->kernel, 3, sizeof(cl_int), &n_spheres);
+// 	ERROR(gpu->err == 0);
+// 	gpu->err |= clSetKernelArg(gpu->kernel, 4, sizeof(cl_mem), &gpu->cl_cpuSpheres);
+// 	ERROR(gpu->err == 0);
+// 	gpu->err |= clSetKernelArg(gpu->kernel, 5, sizeof(cl_mem), &gpu->cl_cpu_vectemp);
+// 	ERROR(gpu->err == 0);
+// 	gpu->err |= clSetKernelArg(gpu->kernel, 6, sizeof(cl_int), &gpu->samples);
+// 	ERROR(gpu->err == 0);
+// 	gpu->err |= clSetKernelArg(gpu->kernel, 7, sizeof(cl_mem), &gpu->cl_cpu_random);
+// 	ERROR(gpu->err == 0);
+// 	gpu->err |= clSetKernelArg(gpu->kernel, 8, sizeof(cl_mem), &textures);
+// 	ERROR(gpu->err == 0);
+//     //clReleaseMemObject(cl_bufferOut);
+//     //release_gpu(gpu);
+// 	return (0);
+// }
 
 
 
