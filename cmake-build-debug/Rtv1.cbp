@@ -1,0 +1,1134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Rtv1"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Rtv1">
+				<Option output="/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug/Rtv1" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/olesgedz/Documents/GitHub/Rtv1/include"/>
+					<Add directory="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2"/>
+					<Add directory="/Users/olesgedz/Documents/GitHub/Rtv1/includes"/>
+					<Add directory="/Users/olesgedz/Documents/GitHub/Rtv1/libcl/include"/>
+					<Add directory="/Users/olesgedz/Documents/GitHub/Rtv1/libft/includes"/>
+					<Add directory="/Users/olesgedz/Documents/GitHub/Rtv1/libgnl/include"/>
+					<Add directory="/Users/olesgedz/Documents/GitHub/Rtv1/libmath/includes"/>
+					<Add directory="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include"/>
+					<Add directory="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2"/>
+					<Add directory="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/includes"/>
+					<Add directory="/Users/olesgedz/Documents/GitHub/Rtv1/libvect/include"/>
+					<Add directory="/Users/olesgedz/Documents/GitHub/Rtv1/srcs/cl_error"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/10.0.1/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug/Makefile&quot;  VERBOSE=1 Rtv1"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Rtv1/fast">
+				<Option output="/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug/Rtv1" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/olesgedz/Documents/GitHub/Rtv1/include"/>
+					<Add directory="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2"/>
+					<Add directory="/Users/olesgedz/Documents/GitHub/Rtv1/includes"/>
+					<Add directory="/Users/olesgedz/Documents/GitHub/Rtv1/libcl/include"/>
+					<Add directory="/Users/olesgedz/Documents/GitHub/Rtv1/libft/includes"/>
+					<Add directory="/Users/olesgedz/Documents/GitHub/Rtv1/libgnl/include"/>
+					<Add directory="/Users/olesgedz/Documents/GitHub/Rtv1/libmath/includes"/>
+					<Add directory="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include"/>
+					<Add directory="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2"/>
+					<Add directory="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/includes"/>
+					<Add directory="/Users/olesgedz/Documents/GitHub/Rtv1/libvect/include"/>
+					<Add directory="/Users/olesgedz/Documents/GitHub/Rtv1/srcs/cl_error"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/10.0.1/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug/Makefile&quot;  VERBOSE=1 Rtv1/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_assert.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_atomic.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_audio.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_bits.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_blendmode.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_clipboard.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_config.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_cpuinfo.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_egl.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_endian.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_error.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_events.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_filesystem.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_gamecontroller.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_gesture.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_haptic.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_hints.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_joystick.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_keyboard.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_keycode.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_loadso.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_log.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_main.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_messagebox.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_mouse.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_mutex.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_name.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_opengl.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_opengl_glext.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_opengles.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_opengles2.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_opengles2_gl2.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_opengles2_gl2ext.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_opengles2_gl2platform.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_opengles2_khrplatform.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_pixels.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_platform.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_power.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_quit.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_rect.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_render.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_revision.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_rwops.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_scancode.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_sensor.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_shape.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_stdinc.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_surface.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_system.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_syswm.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_test.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_test_assert.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_test_common.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_test_compare.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_test_crc32.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_test_font.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_test_fuzzer.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_test_harness.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_test_images.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_test_log.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_test_md5.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_test_memory.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_test_random.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_thread.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_timer.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_touch.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_types.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_version.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_video.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/SDL_vulkan.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/begin_code.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/include/SDL2/close_code.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/includes/libmath.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/includes/rtv1.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libcl/include/libcl.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libcl/srcs/cl_init.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libcl/srcs/cl_krl_build.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libcl/srcs/cl_krl_exec.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libcl/srcs/cl_krl_init.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libcl/srcs/cl_read.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libcl/srcs/cl_write.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/includes/get_next_line.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/includes/libft.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/includes/malloc.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/array/ft_2darrayclean.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/array/ft_2darraynew.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/array/ft_arraymax.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/array/ft_arraymin.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/array/ft_arrayprint.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/array/ft_arraysort.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/btree/ft_btree_apply_by_level.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/btree/ft_btree_apply_infix.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/btree/ft_btree_apply_prefix.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/btree/ft_btree_apply_suffix.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/btree/ft_btree_create_node.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/btree/ft_btree_insert_data.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/btree/ft_btree_level_count.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/btree/ft_btree_print.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/btree/ft_btree_search_item.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/get_next_line/get_next_line.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/get_next_line/read_file.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/lst/ft_lst2w_new.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/lst/ft_lst2w_pushback.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/lst/ft_lstadd.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/lst/ft_lstclean.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/lst/ft_lstcount.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/lst/ft_lstdel.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/lst/ft_lstdel_u.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/lst/ft_lstdelmid.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/lst/ft_lstdelone.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/lst/ft_lstiter.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/lst/ft_lstmap.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/lst/ft_lstnew.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/lst/ft_lstprint.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/lst/ft_lstrev.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/mem/ft_bzero.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/mem/ft_malloc_err.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/mem/ft_memalloc.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/mem/ft_memccpy.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/mem/ft_memchr.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/mem/ft_memcmp.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/mem/ft_memcpy.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/mem/ft_memdel.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/mem/ft_memmove.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/mem/ft_mempcpy.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/mem/ft_memprint.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/mem/ft_memset.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/queue/ft_queue_pop.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/queue/ft_queue_push.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/rb_tree/ft_rb_insert.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/rb_tree/ft_rb_node_create.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/rb_tree/ft_rb_node_print.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/stack/ft_stack_create.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/stack/ft_stack_peek.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/stack/ft_stack_pop.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/stack/ft_stack_print.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/stack/ft_stack_push.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_atoi.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_countwords.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_is_space.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_isalnum.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_isalpha.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_isascii.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_isdigit.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_isprint.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_itoa.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_malloc_err.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_nsplit.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_point_new.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_print_node.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_printmap.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_ptr_free.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_putchar.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_putchar_fd.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_putendl.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_putendl_fd.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_putnbr.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_putnbr_fd.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_putstr.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_putstr_fd.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_realloc.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_sign.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_swap_int.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_tolower.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/standart/ft_toupper.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_nsplit.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_strcat.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_strchr.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_strclr.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_strcmp.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_strcpy.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_strdel.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_strdup.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_strequ.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_striter.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_striteri.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_strjoin.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_strlcat.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_strlen.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_strmap.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_strmapi.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_strncat.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_strncmp.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_strncpy.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_strnequ.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_strnew.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_strnewch.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_strnstr.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_strrchr.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_strsplit.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_strstr.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_strsub.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_strtrim.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/str/ft_word.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/vector/ft_word.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/vector/vector_add.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/vector/vector_delete.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/vector/vector_free.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/vector/vector_get.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/vector/vector_init.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/vector/vector_resize.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/vector/vector_set.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/sources/vector/vector_total.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libft/test/main.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libgnl/include/libgnl.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libgnl/sources/gnl_lines.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libgnl/sources/gnl_vect.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libmath/includes/libmath.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libmath/srcs/ft_vec3_create.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libmath/srcs/ft_vec3_cross_multiply.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libmath/srcs/ft_vec3_dot_multiply.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libmath/srcs/ft_vec3_neg.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libmath/srcs/ft_vec3_norm.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libmath/srcs/ft_vec3_normalize.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libmath/srcs/ft_vec3_projection.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libmath/srcs/ft_vec3_scalar_multiply.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libmath/srcs/ft_vec3_substract.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libmath/srcs/ft_vec3_sum.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libmath/srcs/matrix.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_assert.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_atomic.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_audio.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_bits.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_blendmode.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_clipboard.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_config.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_cpuinfo.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_egl.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_endian.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_error.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_events.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_filesystem.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_gamecontroller.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_gesture.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_haptic.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_hints.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_joystick.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_keyboard.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_keycode.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_loadso.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_log.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_main.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_messagebox.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_mouse.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_mutex.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_name.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_opengl.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_opengl_glext.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_opengles.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_opengles2.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_opengles2_gl2.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_opengles2_gl2ext.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_opengles2_gl2platform.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_opengles2_khrplatform.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_pixels.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_platform.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_power.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_quit.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_rect.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_render.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_revision.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_rwops.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_scancode.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_sensor.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_shape.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_stdinc.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_surface.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_system.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_syswm.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_test.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_test_assert.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_test_common.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_test_compare.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_test_crc32.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_test_font.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_test_fuzzer.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_test_harness.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_test_images.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_test_log.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_test_md5.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_test_memory.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_test_random.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_thread.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_timer.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_touch.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_types.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_version.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_video.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/SDL_vulkan.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/begin_code.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/include/SDL2/close_code.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/includes/libsdl.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/srcs/ft_draw_poly.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/srcs/ft_exit.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/srcs/ft_get_color.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/srcs/ft_get_light.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/srcs/ft_hex_to_rgb.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/srcs/ft_init_window.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/srcs/ft_input.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/srcs/ft_line.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/srcs/ft_lineclip.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/srcs/ft_percent.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/srcs/ft_plot_line.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/srcs/ft_plot_wline.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/srcs/ft_ppm_image_read.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/srcs/ft_ppm_image_write.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/srcs/ft_put_pixel.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/srcs/ft_rasterizer.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/srcs/ft_rgb_to_hex.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/srcs/ft_surface_clear.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/srcs/ft_surface_combine.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/srcs/ft_surface_create.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/srcs/ft_surface_present.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/srcs/ft_texture_create.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/srcs/ft_texture_lock.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/srcs/ft_texture_present.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libsdl/srcs/ft_vline.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libvect/include/libvect.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libvect/sources/vect_add.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libvect/sources/vect_cmp.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libvect/sources/vect_del.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libvect/sources/vect_grow.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libvect/sources/vect_init.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libvect/sources/vect_memcmp.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libvect/sources/vect_memmem.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libvect/sources/vect_mset.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libvect/sources/vect_mset_end.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libvect/sources/vect_new.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libvect/sources/vect_print.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libvect/sources/vect_push.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libvect/sources/vect_req.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libvect/sources/vect_str_add.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libvect/sources/vect_str_push.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/libvect/sources/vect_wrap.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/srcs/camera/camera_move.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/srcs/camera/camera_new.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/srcs/cl_error/cl_error.h">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/srcs/cl_lib/gpu_init.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/srcs/main.c">
+			<Option target="Rtv1"/>
+		</Unit>
+		<Unit filename="/Users/olesgedz/Documents/GitHub/Rtv1/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
