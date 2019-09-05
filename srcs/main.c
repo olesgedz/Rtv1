@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/05 17:12:27 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/09/05 17:31:29 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,93 +237,6 @@ void initScene(t_obj* cpu_spheres, t_game *game)
 	cpu_spheres[5].reflection 	= 0;
 	cpu_spheres[5].texture 		= 0;
 }
-
-// void initScene(t_obj* cpu_spheres)
-// {
-// 	// left sphere
-// 	cpu_spheres[0].radius   	= 0.1f;
-// 	cpu_spheres[0].position 	= create_cfloat3 (-0.4f, 0.f, -0.1f);
-// 	cpu_spheres[0].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
-// 	cpu_spheres[0].v 			= create_cfloat3 (0.f, 1.0f, 0.0f);
-// 	cpu_spheres[0].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-// 	cpu_spheres[0].type 		= CYLINDER;
-// 	cpu_spheres[0].reflection 	= 0.f;
-
-// 	// right sphere
-// 	cpu_spheres[1].radius   	= 0.16f;
-// 	cpu_spheres[1].position 	= create_cfloat3 (0.0f, -0.f, 0.1f);
-// 	cpu_spheres[1].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
-// 	cpu_spheres[1].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-// 	cpu_spheres[1].v 			= create_cfloat3 (0.0f, 1.0f, 0.0f);
-// 	cpu_spheres[1].type 		= SPHERE;
-// 	cpu_spheres[1].reflection 	= 3.f;
-
-// 	// lightsource
-// 	cpu_spheres[2].radius   	= 0.13f; 
-// 	cpu_spheres[2].position 	= create_cfloat3 (0.0f, 0.3f, 0.0f);
-// 	cpu_spheres[2].color    	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-// 	cpu_spheres[2].emission 	= create_cfloat3 (9.0f, 8.0f, 6.0f);
-// 	cpu_spheres[2].type 		= SPHERE;
-// 	cpu_spheres[2].reflection 	= 0;
-
-// 		// left wall
-// 	cpu_spheres[6].radius		= 200.0f;
-// 	cpu_spheres[6].position 	= create_cfloat3 (-1.0f, 0.0f, 0.0f);
-// 	cpu_spheres[6].color    	= create_cfloat3 (0.75f, 0.25f, 0.25f);
-// 	cpu_spheres[6].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-// 	cpu_spheres[6].v 			= create_cfloat3 (1.0f, 0.0f, 0.0f);
-// 	cpu_spheres[6].type 		= PLANE;
-// 	cpu_spheres[6].reflection 	= 0;
-
-// 	// right wall
-// 	cpu_spheres[7].radius		= 200.0f;
-// 	cpu_spheres[7].position 	= create_cfloat3 (1.f, 0.0f, 0.0f);
-// 	cpu_spheres[7].color    	= create_cfloat3 (0.25f, 0.25f, 0.75f);
-// 	cpu_spheres[7].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-// 	cpu_spheres[7].v 			= create_cfloat3 (1.0f, 0.0f, 0.0f);
-// 	cpu_spheres[7].type 		= PLANE;
-// 	cpu_spheres[7].reflection 	= 0;
-
-// 	// floor
-// 	cpu_spheres[8].radius		= 200.0f;
-// 	cpu_spheres[8].position 	= create_cfloat3 (0.0f, 0.5f, 0.0f);
-// 	cpu_spheres[8].color		= create_cfloat3 (0.9f, 0.8f, 0.7f);
-// 	cpu_spheres[8].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-// 	cpu_spheres[8].v 			= create_cfloat3 (0.0f, -1.0f, 0.0f);
-// 	cpu_spheres[8].type 		= PLANE;
-// 	cpu_spheres[8].reflection	= 0;
-// 	// ceiling
-// 	cpu_spheres[3].radius		= 200.0f;
-// 	cpu_spheres[3].position 	= create_cfloat3 (0.0f, -0.5f, 0.0f);
-// 	cpu_spheres[3].color		= create_cfloat3 (0.9f, 0.8f, 0.7f);
-// 	cpu_spheres[3].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-// 	cpu_spheres[3].v 			= create_cfloat3 (0.0f, 1.0f, 0.0f);
-// 	cpu_spheres[3].type 		= PLANE;
-// 	cpu_spheres[3].reflection 	= 0;
-
-
-// 	// back wall
-// 	cpu_spheres[4].radius   	= 200.0f;
-// 	cpu_spheres[4].position 	= create_cfloat3 (0.0f, 0.0f, -0.3f);
-// 	cpu_spheres[4].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
-// 	cpu_spheres[4].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-// 	cpu_spheres[4].v 			= create_cfloat3 (0.0f, 0.0f, 1.0f);
-// 	cpu_spheres[4].type 		= PLANE;
-//  	cpu_spheres[4].reflection 	= 0;
-// 	cpu_spheres[4].reflection 	= 0;
-
-
-// 	// front wall 
-// 	cpu_spheres[5].radius   	= 200.0f;
-// 	cpu_spheres[5].position 	= create_cfloat3 (0.0f, 0.0f, 2.0f);
-// 	cpu_spheres[5].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
-// 	cpu_spheres[5].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-// 	cpu_spheres[5].v 			= create_cfloat3 (0.0f, 0.0f, 1.0f);
-// 	cpu_spheres[5].type 		= PLANE;
-// 	cpu_spheres[5].reflection 	= 0;
-// }
-
-
 
  void ft_run_kernel(cl_kernel kernel)
  {
