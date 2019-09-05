@@ -275,7 +275,8 @@ __global float3 * vect_temp,  __global ulong * random,  __global t_txture *textu
 
 
 
-// __kernel void render_kernel(__global int* output, int width, int height)
+// __kernel void render_kernel(__global int* output, __global t_obj* objects,
+// __global float3 * vect_temp,  __global ulong * random,  __global t_txture *textures, int width, int height,  int n_objects, int samples)
 // {
 	
 // 	output[get_global_id(0)] = 0xff0000;/* simple interpolated colour gradient based on pixel coordinates */
