@@ -14,6 +14,7 @@
 #include <float.h>
 #include <math.h>
 #include "cl_error.h"
+#include "libcl.h"
 #ifdef __APPLE__
 #include <OpenCL/opencl.h>
 #else
@@ -122,6 +123,10 @@ typedef struct			s_game
 	int init_render;
 	t_txture		*textures;
 	int				textures_num;
+	t_cl_info * cl_info;
+	t_cl_krl * kernels;
+	int * gpuOutput;
+
 } t_game;
 
 int bind_data(t_gpu *gpu, t_game *game);

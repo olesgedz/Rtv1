@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   libvect.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qle-guen <qle-guen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/06/10 16:01:26 by qle-guen          #+#    #+#             */
-/*   Updated: 2017/02/09 13:50:58 by qle-guen         ###   ########.fr       */
+/*   Created: 2019/09/02 20:15:41 by jblack-b          #+#    #+#             */
+/*   Updated: 2019/09/02 20:15:42 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #ifndef LIBVECT_H
 # define LIBVECT_H

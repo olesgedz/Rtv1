@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/05 16:10:04 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/09/05 16:23:44 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@
 //#define FPS
 
 t_game game;
-float xa, ya, za;
 
-float eyex, eyey, eyez;
 /*
 *	Funtion: handles presses mouse/keyboard
 * 	Return: value, doesnt change any parameters
@@ -52,10 +50,6 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 					case 'e': game.wsad[5] = ev->type==SDL_KEYDOWN; break;
 					case 'z': game.wsad[6] = ev->type==SDL_KEYDOWN; break;
 					case 'x': game.wsad[7] = ev->type==SDL_KEYDOWN; break;
-					case 'p': ya+=0.2; break;
-					case ';': ya-=0.2; break;
-					case SDLK_LEFT: xa+=0.05; break;
-					case SDLK_RIGHT: xa-=0.05; break;
 					default: break;
 				}
 				break;
@@ -96,7 +90,18 @@ static int toInt(float x)
 	//avg = game->sdl->surface->data[x + y * game->sdl->surface->width];
     return ft_rgb_to_hex(toInt(avg.v4[0] / total), toInt(avg.v4[1]/ total), toInt(avg.v4[2]/ total));
   }
-
+cl_ulong * get_random(cl_ulong * random)
+{
+	int i;
+	i = -1;
+	random = ft_memalloc(sizeof(cl_ulong) * WIN_H * WIN_W);
+	srand(21);
+	while (++i < WIN_H * WIN_W)
+	{
+		random[i] = rand(); 
+	}
+	return (random);
+}
 void ft_filter(t_game* game)
 {
 	int		i;
@@ -114,6 +119,235 @@ void ft_filter(t_game* game)
 		}
 	}
 }
+cl_float3 create_cfloat3 (float x, float y, float z)
+{
+	cl_float3 re;
+
+	re.v4[0] = x;
+	re.v4[1] = y;
+	re.v4[2] = z;
+	return re;
+}
+
+
+void initScene(t_obj* cpu_spheres, t_game *game)
+{
+	char						*name = "sviborg.bmp";
+	char						*secname = "sun.bmp";
+	char						*thirdname = "seamless_pawnment.bmp";
+	char						*fourthname = "concrete.bmp";
+	char						*fivename = "dead_soil.bmp";
+
+
+	game->textures_num 			= 5;
+	game->textures 				= (t_txture*)malloc(sizeof(t_txture) * game->textures_num);
+	get_texture(name, &(game->textures[0]));
+	get_texture(secname, &(game->textures[1]));
+	get_texture(thirdname, &(game->textures[2]));
+	get_texture(fourthname, &(game->textures[3]));
+	get_texture(fivename, &(game->textures[4]));
+	// left sphere
+	cpu_spheres[0].radius   	= 0.1f;
+	cpu_spheres[0].position 	= create_cfloat3 (-0.4f, 0.f, -0.1f);
+	cpu_spheres[0].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
+	cpu_spheres[0].v 			= create_cfloat3 (0.f, 1.0f, 0.0f);
+	cpu_spheres[0].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
+	cpu_spheres[0].type 		= CYLINDER;
+	cpu_spheres[0].reflection 	= 0.f;
+	cpu_spheres[0].texture 		= 3;
+
+	// right sphere
+	cpu_spheres[1].radius   	= 0.16f;
+	cpu_spheres[1].position 	= create_cfloat3 (0.0f, -0.f, 0.1f);
+	cpu_spheres[1].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
+	cpu_spheres[1].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
+	cpu_spheres[1].v 			= create_cfloat3 (0.0f, 0.0f, 0.0f);
+	cpu_spheres[1].type 		= SPHERE;
+	cpu_spheres[1].texture 		= 1;
+	cpu_spheres[1].reflection 	= 0.f;
+
+	// lightsource
+	cpu_spheres[2].radius   	= 0.1f; 
+	cpu_spheres[2].position 	= create_cfloat3 (0.0f, 0.2f, 1.0f);
+	cpu_spheres[2].color    	= create_cfloat3 (0.0f, 0.0f, 0.0f);
+	cpu_spheres[2].emission 	= create_cfloat3 (40.0f, 40.0f, 40.0f);
+	cpu_spheres[2].type 		= SPHERE;
+	cpu_spheres[2].reflection 	= 0;
+	cpu_spheres[2].texture 		= 2;
+
+		// left wall
+	cpu_spheres[6].radius		= 200.0f;
+	cpu_spheres[6].position 	= create_cfloat3 (-1.0f, 0.0f, 0.0f);
+	cpu_spheres[6].color    	= create_cfloat3 (0.75f, 0.25f, 0.25f);
+	cpu_spheres[6].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
+	cpu_spheres[6].v 			= create_cfloat3 (1.0f, 0.0f, 0.0f);
+	cpu_spheres[6].type 		= PLANE;
+	cpu_spheres[6].reflection 	= 0;
+	cpu_spheres[6].texture 		= 0;
+
+	// right wall
+	cpu_spheres[7].radius		= 200.0f;
+	cpu_spheres[7].position 	= create_cfloat3 (1.f, 0.0f, 0.0f);
+	cpu_spheres[7].color    	= create_cfloat3 (0.25f, 0.25f, 0.75f);
+	cpu_spheres[7].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
+	cpu_spheres[7].v 			= create_cfloat3 (1.0f, 0.0f, 0.0f);
+	cpu_spheres[7].type 		= PLANE;
+	cpu_spheres[7].reflection 	= 0;
+	cpu_spheres[7].texture 		= 0;
+
+	// floor
+	cpu_spheres[8].radius		= 200.0f;
+	cpu_spheres[8].position 	= create_cfloat3 (0.0f, 0.5f, 0.0f);
+	cpu_spheres[8].color		= create_cfloat3 (0.9f, 0.8f, 0.7f);
+	cpu_spheres[8].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
+	cpu_spheres[8].v 			= create_cfloat3 (0.0f, -1.0f, 0.0f);
+	cpu_spheres[8].type 		= PLANE;
+	cpu_spheres[8].reflection	= 0;
+	cpu_spheres[8].texture 		= 4;
+	// ceiling
+	cpu_spheres[3].radius		= 200.0f;
+	cpu_spheres[3].position 	= create_cfloat3 (0.0f, -0.5f, 0.0f);
+	cpu_spheres[3].color		= create_cfloat3 (0.9f, 0.8f, 0.7f);
+	cpu_spheres[3].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
+	cpu_spheres[3].v 			= create_cfloat3 (0.0f, 1.0f, 0.0f);
+	cpu_spheres[3].type 		= PLANE;
+	cpu_spheres[3].reflection 	= 0;
+	cpu_spheres[3].texture 		= 5;
+
+
+	// back wall
+	cpu_spheres[4].radius   	= 1.0f;
+	cpu_spheres[4].position 	= create_cfloat3 (0.0f, 0.0f, -0.3f);
+	cpu_spheres[4].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
+	cpu_spheres[4].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
+	cpu_spheres[4].v 			= create_cfloat3 (0.0f, 0.0f, 1.0f);
+	cpu_spheres[4].type 		= PLANE;
+ 	cpu_spheres[4].reflection 	= 0;
+	cpu_spheres[4].reflection 	= 0;
+	cpu_spheres[4].texture 		= 4;
+
+
+	// front wall 
+	cpu_spheres[5].radius   	= 200.0f;
+	cpu_spheres[5].position 	= create_cfloat3 (0.0f, 0.0f, 2.0f);
+	cpu_spheres[5].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
+	cpu_spheres[5].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
+	cpu_spheres[5].v 			= create_cfloat3 (0.0f, 0.0f, 1.0f);
+	cpu_spheres[5].type 		= PLANE;
+	cpu_spheres[5].reflection 	= 0;
+	cpu_spheres[5].texture 		= 0;
+}
+
+// void initScene(t_obj* cpu_spheres)
+// {
+// 	// left sphere
+// 	cpu_spheres[0].radius   	= 0.1f;
+// 	cpu_spheres[0].position 	= create_cfloat3 (-0.4f, 0.f, -0.1f);
+// 	cpu_spheres[0].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
+// 	cpu_spheres[0].v 			= create_cfloat3 (0.f, 1.0f, 0.0f);
+// 	cpu_spheres[0].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
+// 	cpu_spheres[0].type 		= CYLINDER;
+// 	cpu_spheres[0].reflection 	= 0.f;
+
+// 	// right sphere
+// 	cpu_spheres[1].radius   	= 0.16f;
+// 	cpu_spheres[1].position 	= create_cfloat3 (0.0f, -0.f, 0.1f);
+// 	cpu_spheres[1].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
+// 	cpu_spheres[1].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
+// 	cpu_spheres[1].v 			= create_cfloat3 (0.0f, 1.0f, 0.0f);
+// 	cpu_spheres[1].type 		= SPHERE;
+// 	cpu_spheres[1].reflection 	= 3.f;
+
+// 	// lightsource
+// 	cpu_spheres[2].radius   	= 0.13f; 
+// 	cpu_spheres[2].position 	= create_cfloat3 (0.0f, 0.3f, 0.0f);
+// 	cpu_spheres[2].color    	= create_cfloat3 (0.0f, 0.0f, 0.0f);
+// 	cpu_spheres[2].emission 	= create_cfloat3 (9.0f, 8.0f, 6.0f);
+// 	cpu_spheres[2].type 		= SPHERE;
+// 	cpu_spheres[2].reflection 	= 0;
+
+// 		// left wall
+// 	cpu_spheres[6].radius		= 200.0f;
+// 	cpu_spheres[6].position 	= create_cfloat3 (-1.0f, 0.0f, 0.0f);
+// 	cpu_spheres[6].color    	= create_cfloat3 (0.75f, 0.25f, 0.25f);
+// 	cpu_spheres[6].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
+// 	cpu_spheres[6].v 			= create_cfloat3 (1.0f, 0.0f, 0.0f);
+// 	cpu_spheres[6].type 		= PLANE;
+// 	cpu_spheres[6].reflection 	= 0;
+
+// 	// right wall
+// 	cpu_spheres[7].radius		= 200.0f;
+// 	cpu_spheres[7].position 	= create_cfloat3 (1.f, 0.0f, 0.0f);
+// 	cpu_spheres[7].color    	= create_cfloat3 (0.25f, 0.25f, 0.75f);
+// 	cpu_spheres[7].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
+// 	cpu_spheres[7].v 			= create_cfloat3 (1.0f, 0.0f, 0.0f);
+// 	cpu_spheres[7].type 		= PLANE;
+// 	cpu_spheres[7].reflection 	= 0;
+
+// 	// floor
+// 	cpu_spheres[8].radius		= 200.0f;
+// 	cpu_spheres[8].position 	= create_cfloat3 (0.0f, 0.5f, 0.0f);
+// 	cpu_spheres[8].color		= create_cfloat3 (0.9f, 0.8f, 0.7f);
+// 	cpu_spheres[8].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
+// 	cpu_spheres[8].v 			= create_cfloat3 (0.0f, -1.0f, 0.0f);
+// 	cpu_spheres[8].type 		= PLANE;
+// 	cpu_spheres[8].reflection	= 0;
+// 	// ceiling
+// 	cpu_spheres[3].radius		= 200.0f;
+// 	cpu_spheres[3].position 	= create_cfloat3 (0.0f, -0.5f, 0.0f);
+// 	cpu_spheres[3].color		= create_cfloat3 (0.9f, 0.8f, 0.7f);
+// 	cpu_spheres[3].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
+// 	cpu_spheres[3].v 			= create_cfloat3 (0.0f, 1.0f, 0.0f);
+// 	cpu_spheres[3].type 		= PLANE;
+// 	cpu_spheres[3].reflection 	= 0;
+
+
+// 	// back wall
+// 	cpu_spheres[4].radius   	= 200.0f;
+// 	cpu_spheres[4].position 	= create_cfloat3 (0.0f, 0.0f, -0.3f);
+// 	cpu_spheres[4].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
+// 	cpu_spheres[4].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
+// 	cpu_spheres[4].v 			= create_cfloat3 (0.0f, 0.0f, 1.0f);
+// 	cpu_spheres[4].type 		= PLANE;
+//  	cpu_spheres[4].reflection 	= 0;
+// 	cpu_spheres[4].reflection 	= 0;
+
+
+// 	// front wall 
+// 	cpu_spheres[5].radius   	= 200.0f;
+// 	cpu_spheres[5].position 	= create_cfloat3 (0.0f, 0.0f, 2.0f);
+// 	cpu_spheres[5].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
+// 	cpu_spheres[5].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
+// 	cpu_spheres[5].v 			= create_cfloat3 (0.0f, 0.0f, 1.0f);
+// 	cpu_spheres[5].type 		= PLANE;
+// 	cpu_spheres[5].reflection 	= 0;
+// }
+
+
+
+ void ft_run_kernel(cl_kernel kernel)
+ {
+	 int w = WIN_W;
+	int h = WIN_H;
+	size_t global = WIN_W * WIN_H;
+	int n_objects = 9;
+	game.gpu->samples += 15;
+	const int count = global;
+	game.cl_info->ret |= clSetKernelArg(kernel, 4, sizeof(cl_int), &w);
+	ERROR(game.cl_info->ret);
+	game.cl_info->ret |= clSetKernelArg(kernel, 5, sizeof(cl_int), &h);
+	ERROR(game.cl_info->ret);
+	game.cl_info->ret |= clSetKernelArg(kernel, 6, sizeof(cl_int), &n_objects);
+	ERROR(game.cl_info->ret);
+	game.cl_info->ret |= clSetKernelArg(kernel, 7, sizeof(cl_int), &game.gpu->samples);
+	ERROR(game.cl_info->ret);
+	game.cl_info->ret = cl_krl_exec(game.cl_info, kernel, 1, &global);
+	ERROR(game.cl_info->ret);
+	clFinish(game.cl_info->cmd_queue);
+	game.cl_info->ret = cl_read(game.cl_info, game.kernels->args[0], sizeof(cl_int) * count, game.gpuOutput);
+	ERROR(game.cl_info->ret);
+ }
+
 /*
 *	Fucntion: render all pixels on the surface
 *	Parameters: game, sdl
@@ -126,12 +360,15 @@ void 	ft_render(t_game* game)
 	int width = game->sdl->surface->width;
 	int height = game->sdl->surface->height;
 	j = -1;
-	ft_run_gpu(game->gpu);
+	//ft_run_gpu(game->gpu);
+	int r = rand() % 2;
+	printf("%d\n", r);
+	ft_run_kernel(game->kernels[0].krl);
 	while (++j < height)
 	{
 		i = -1;
 		while (++i < width)	
-			game->sdl->surface->data[i+j*width] =  game->gpu->cpuOutput[i+ j *width];
+			game->sdl->surface->data[i+j*width] =  game->gpuOutput[i+ j *width];
 	}
 	//ft_filter(game);
 }
@@ -178,23 +415,64 @@ void ft_update(t_game *game)
 }
 
 
+
+void opencl()
+{
+	game.kernels = ft_memalloc(sizeof(t_cl_krl) * 2);
+	game.cl_info = ft_memalloc(sizeof(t_cl_info));
+	game.gpuOutput = ft_memalloc(sizeof(int) * WIN_H * WIN_W);
+	game.gpu->spheres = ft_memalloc(sizeof(t_obj) * 9);
+	game.gpu->vec_temp = ft_memalloc(sizeof(cl_float3) * WIN_H * WIN_W);
+	game.gpu->random = get_random(game.gpu->random);
+	game.gpu->samples = 15;
+	cl_mem			textures;
+	initScene(game.gpu->spheres, &game);
+	cl_init(game.cl_info);
+	ERROR(game.cl_info->ret);
+	int fd = open("srcs/cl_files/main.cl", O_RDONLY);
+	size_t global = WIN_W * WIN_H;
+	cl_krl_init(&game.kernels[0], 5);
+	t_vect options;
+	vect_init(&options);
+	VECT_STRADD(&options, "-I srcs/cl_files/ -I includes/cl_headers/");
+	game.kernels[0].sizes[0] = sizeof(cl_int) * WIN_H * WIN_W;
+	game.kernels[0].sizes[1] =  sizeof(t_obj) * 9;
+	game.kernels[0].sizes[2] = sizeof(cl_float3) * WIN_H * WIN_W;
+	game.kernels[0].sizes[3] = WIN_H * WIN_W * sizeof(cl_ulong);
+	game.kernels[0].sizes[4] = sizeof(t_txture) * game->textures_num;
+
+	t_vect names;
+	vect_init(&names);
+	VECT_STRADD(&names, "render_kernel");
+	game.cl_info->ret = cl_krl_build(game.cl_info, game.kernels, fd, &options, &names);
+	ERROR(game.cl_info->ret);
+	game.cl_info->ret = cl_write(game.cl_info, game.kernels[0].args[0], sizeof(cl_int) * WIN_H * WIN_W, game.gpuOutput);
+	ERROR(game.cl_info->ret);
+	game.cl_info->ret = cl_write(game.cl_info, game.kernels[0].args[1], sizeof(t_obj) * 9, game.gpu->spheres);
+	ERROR(game.cl_info->ret);
+	game.cl_info->ret = cl_write(game.cl_info, game.kernels[0].args[2], sizeof(cl_float3) * WIN_H * WIN_W, game.gpu->vec_temp);
+	ERROR(game.cl_info->ret);
+	game.cl_info->ret = cl_write(game.cl_info, game.kernels[0].args[3], WIN_H * WIN_W * sizeof(cl_ulong), game.gpu->random);
+	ERROR(game.cl_info->ret);
+}
+
+
+
 int	main(int argc, char **argv)
 {
-	// t_cl_info cl_info;
-	// cl_init(&cl_info);
-	//VECT_ADD(v, "hello");
-	//printf("%s", (char *)v->data);
+
 	game.sdl = malloc(sizeof(t_sdl));
 	game.image = ft_surface_create(WIN_W, WIN_H);
 	game.init_render = 1;
 	game.origin = (t_vec3){0,0,5};
 	game.gpu = (t_gpu *)malloc(sizeof(t_gpu));
-	opencl_init(game.gpu, &game);
-	ft_init_window(game.sdl, WIN_W, WIN_H);
+	opencl();
+	// opencl_init(game.gpu, &game);
+	// ft_init_window(game.sdl, WIN_W, WIN_H);
 
-	ft_update(&game);
-	clReleaseMemObject(game.gpu->cl_bufferOut);
-	release_gpu(game.gpu);
+	// ft_update(&game);
+	// clReleaseMemObject(game.gpu->cl_bufferOut);
+	// release_gpu(game.gpu);
 
 	ft_exit(NULL);
 }

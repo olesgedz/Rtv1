@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   vect_str_add.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qle-guen <qle-guen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/06/17 11:00:19 by qle-guen          #+#    #+#             */
-/*   Updated: 2017/02/09 13:46:38 by qle-guen         ###   ########.fr       */
+/*   Created: 2019/09/02 20:06:30 by jblack-b          #+#    #+#             */
+/*   Updated: 2019/09/02 20:06:31 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "libvect.h"
 #include "libft.h"
