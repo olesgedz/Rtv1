@@ -1,3 +1,0 @@
-/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/olesgedz/Documents/GitHub/Rtv1/cmake-build-debug/CMakeFiles/Rtv1.dir
