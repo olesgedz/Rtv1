@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/05 17:31:29 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/09/06 23:11:14 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,45 @@ t_game game;
 *	- can handle multiple presses at once
 *	- that goes into libsdl void ft_input(void *main, int (*f)(void *main, SDL_Event *ev))
 */
+
+cl_float3		sum_cfloat3(cl_float3 one, cl_float3 two)
+{
+	cl_float3	res;
+
+	res.s[0] = one.s[0] + two.s[0];
+	res.s[1] = one.s[1] + two.s[1];
+	res.s[2] = one.s[2] + two.s[2];
+	return (res);
+}
+
+cl_float3		mult_cfloat3(cl_float3 one, float f)
+{
+	cl_float3	res;
+
+	res.s[0] = one.s[0] * f;
+	res.s[1] = one.s[1] * f;
+	res.s[2] = one.s[2] * f;
+	return (res);	
+}
+
+void	camera_reposition(SDL_Keycode sym)
+{
+	game.gpuOutput = ft_memset(game.gpuOutput, 0, sizeof(int) * game.image->height * game.image->width);
+	game.gpu->samples = 0;
+	switch (sym)
+	{
+		case 'w':  game.gpu->camera->position = sum_cfloat3(game.gpu->camera->position, mult_cfloat3(game.gpu->camera->direction, 0.1)); break;
+		case 's':  game.gpu->camera->position = sum_cfloat3(game.gpu->camera->position, mult_cfloat3(game.gpu->camera->direction, -0.1)); break;
+		case 'a':  break;
+		case 'd':  break;
+		case 'q':  break;
+		case 'e':  break;
+		case 'z':  break;
+		case 'x':  break;
+		default: break;
+	}
+}
+
 int		ft_input_keys(void *sdl, SDL_Event *ev)
 {
 	switch (ev->type)
@@ -39,15 +78,16 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 			case SDL_KEYUP:
 				switch (ev->key.keysym.sym)
 				{
+					camera_reposition(ev->key.keysym.sym);
 					case SDLK_LCTRL:
 					case SDLK_RCTRL:
 					case SDLK_ESCAPE: ft_exit(NULL); break;
-					case 'w': game.wsad[0] = ev->type==SDL_KEYDOWN; break;
-					case 's': game.wsad[1] = ev->type==SDL_KEYDOWN; break;
-					case 'a': game.wsad[2] = ev->type==SDL_KEYDOWN; break;
-					case 'd': game.wsad[3] = ev->type==SDL_KEYDOWN; break;
-					case 'q': game.wsad[4] = ev->type==SDL_KEYDOWN; break;
-					case 'e': game.wsad[5] = ev->type==SDL_KEYDOWN; break;
+					case 'w': game.wsad[0] = ev->type==SDL_KEYDOWN; camera_reposition(ev->key.keysym.sym); break;
+					case 's': game.wsad[1] = ev->type==SDL_KEYDOWN; camera_reposition(ev->key.keysym.sym); break;
+					case 'a': game.wsad[2] = ev->type==SDL_KEYDOWN; camera_reposition(ev->key.keysym.sym); break;
+					case 'd': game.wsad[3] = ev->type==SDL_KEYDOWN; camera_reposition(ev->key.keysym.sym); break;
+					case 'q': game.wsad[4] = ev->type==SDL_KEYDOWN; camera_reposition(ev->key.keysym.sym); break;
+					case 'e': game.wsad[5] = ev->type==SDL_KEYDOWN; camera_reposition(ev->key.keysym.sym); break;
 					case 'z': game.wsad[6] = ev->type==SDL_KEYDOWN; break;
 					case 'x': game.wsad[7] = ev->type==SDL_KEYDOWN; break;
 					default: break;
@@ -129,10 +169,20 @@ cl_float3 create_cfloat3 (float x, float y, float z)
 	return re;
 }
 
+t_cam			*init_camera(void)
+{
+	t_cam		*camera;
+
+	camera = (t_cam*)malloc(sizeof(t_cam));
+	camera->normal = create_cfloat3 (0.0f, 1.0f, 0.0f);
+	camera->direction = create_cfloat3 (0.0f, 0.0f, -1.0f);
+	camera->position = create_cfloat3 (0.0f, 0.1f, 2.f);
+	return (camera);
+}
 
 void initScene(t_obj* cpu_spheres, t_game *game)
 {
-	char						*name = "sviborg.bmp";
+	char						*name = "sobenin.bmp";
 	char						*secname = "sun.bmp";
 	char						*thirdname = "seamless_pawnment.bmp";
 	char						*fourthname = "concrete.bmp";
@@ -141,6 +191,7 @@ void initScene(t_obj* cpu_spheres, t_game *game)
 
 	game->textures_num 			= 5;
 	game->textures 				= (t_txture*)malloc(sizeof(t_txture) * game->textures_num);
+	game->gpu->camera			= init_camera();
 	get_texture(name, &(game->textures[0]));
 	get_texture(secname, &(game->textures[1]));
 	get_texture(thirdname, &(game->textures[2]));
@@ -253,6 +304,8 @@ void initScene(t_obj* cpu_spheres, t_game *game)
 	game.cl_info->ret |= clSetKernelArg(kernel, 7, sizeof(cl_int), &n_objects);
 	ERROR(game.cl_info->ret);
 	game.cl_info->ret |= clSetKernelArg(kernel, 8, sizeof(cl_int), &game.gpu->samples);
+	ERROR(game.cl_info->ret);
+	game.cl_info->ret |= clSetKernelArg(kernel, 9, sizeof(t_cam), game.gpu->camera);
 	ERROR(game.cl_info->ret);
 	game.cl_info->ret = cl_krl_exec(game.cl_info, kernel, 1, &global);
 	ERROR(game.cl_info->ret);
