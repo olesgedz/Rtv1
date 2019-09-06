@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/06 23:11:14 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/09/06 23:18:43 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,12 +291,12 @@ void initScene(t_obj* cpu_spheres, t_game *game)
 
  void ft_run_kernel(cl_kernel kernel)
  {
-	 int w = WIN_W;
+	int w = WIN_W;
 	int h = WIN_H;
 	size_t global = WIN_W * WIN_H;
 	int n_objects = 9;
-	game.gpu->samples += 15;
-	const int count = global;
+	game.gpu->samples += 5;
+	const size_t count = global;
 	game.cl_info->ret |= clSetKernelArg(kernel, 5, sizeof(cl_int), &w);
 	ERROR(game.cl_info->ret);
 	game.cl_info->ret |= clSetKernelArg(kernel, 6, sizeof(cl_int), &h);
@@ -390,7 +390,7 @@ void opencl()
 	game.gpu->spheres = ft_memalloc(sizeof(t_obj) * 9);
 	game.gpu->vec_temp = ft_memalloc(sizeof(cl_float3) * WIN_H * WIN_W);
 	game.gpu->random = get_random(game.gpu->random);
-	game.gpu->samples = 15;
+	game.gpu->samples = 0;
 	cl_mem			textures;
 	initScene(game.gpu->spheres, &game);
 	cl_init(game.cl_info);
