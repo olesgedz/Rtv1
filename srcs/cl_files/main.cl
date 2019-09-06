@@ -11,8 +11,8 @@ float3 reflect(float3 vector, float3 n);
 float3 refract(float3 vector, float3 n, float refrIndex);
 double	intersect_plane(const t_obj* plane, const t_ray * ray);
 
-#define PIX_X 50
-#define PIX_Y 50
+#define PIX_X 500
+#define PIX_Y 500
 
 
 #ifdef CMD_DEBUG
@@ -170,12 +170,13 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 		float cosine;
 		float3 newdir = sample_uniform(&intersection->normal, &cosine, scene);
 		/* add a very small offset to the hitpoint to prevent self intersection */
+		cmdlog("haha\n");
+
 		if (objecthit.reflection > 0) {
 			accum_color += mask * objecthit.emission; 
 			if (1)
 			{
 				explicit = radiance_explicit(scene, intersection);
-				cmdlog("%f\n", explicit);
 				accum_color += explicit * mask  * objecthit.color;//* intersection->material.color;
 			}				
 			/* add the colour and light contributions to the accumulated colour */ 
@@ -244,7 +245,6 @@ __global float3 * vect_temp,  __global ulong * random,  __global t_txture *textu
 	intersection.ray = createCamRay(scene.x_coord, scene.y_coord, width, height);
 	intersection_reset(&intersection.ray);
 	print_debug(scene.samples, scene.width, &scene);
-
 	for (int i = 0; i < 15; i++)
 	{	
 		finalcolor += trace(&scene,  &intersection, &seed0, &seed1);
