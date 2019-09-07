@@ -62,6 +62,16 @@ t_obj *add_cone(cl_float3 position, float radius, cl_float3 color, cl_float3 emi
     return(cone);
 }
 
+t_cam *add_cam(cl_float3 position, cl_float3 direction, cl_float3 normal)
+{
+    t_cam		*camera;
+
+	camera = (t_cam*)malloc(sizeof(t_cam));
+	camera->normal = normal;
+	camera->direction = direction;
+	camera->position =position;
+	return (camera);
+}
 // t_obj *add_triangle(t_vector *vertices, int color)
 // {
 //     t_obj *triangle;

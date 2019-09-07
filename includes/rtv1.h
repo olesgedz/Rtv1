@@ -112,8 +112,9 @@ typedef struct			s_game
 	int 				n_spheres;
 	int 				n_cones;
 	int 				n_cylinders;
-	int 				obj_quantity;
-	int 				wsad[8];
+	size_t 				obj_quantity;
+	int					cam_quantity;
+	int 				wsad[20];
 	t_vec3 				origin;
 	t_gpu 				*gpu;
 	int 				init_render;
@@ -122,7 +123,7 @@ typedef struct			s_game
 	t_cl_info 			*cl_info;
 	t_cl_krl 			*kernels;
 	int 				*gpuOutput;
-
+	int					cam_num;
 } 						t_game;
 
 int						bind_data(t_gpu *gpu, t_game *game);
@@ -146,5 +147,6 @@ t_obj *add_plane(cl_float3 position, cl_float3 color, cl_float3 emition, cl_int 
 t_obj *add_sphere(cl_float3 position, float radius, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection);
 t_obj *add_cylinder(cl_float3 position, float radius, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection, cl_float3 v);
 t_obj *add_cone(cl_float3 position, float radius, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection, cl_float3 v);
+t_cam *add_cam(cl_float3 position, cl_float3 direction, cl_float3 normal);
 void read_scene(char **argv, t_game *game);
 #endif

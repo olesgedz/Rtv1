@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/07 16:15:05 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/09/07 20:37:21 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 */
 
 //#define FPS
-
 t_game game;
 
 /*
@@ -78,7 +77,6 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 			case SDL_KEYUP:
 				switch (ev->key.keysym.sym)
 				{
-					camera_reposition(ev->key.keysym.sym);
 					case SDLK_LCTRL:
 					case SDLK_RCTRL:
 					case SDLK_ESCAPE: ft_exit(NULL); break;
@@ -90,6 +88,16 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 					case 'e': game.wsad[5] = ev->type==SDL_KEYDOWN; camera_reposition(ev->key.keysym.sym); break;
 					case 'z': game.wsad[6] = ev->type==SDL_KEYDOWN; break;
 					case 'x': game.wsad[7] = ev->type==SDL_KEYDOWN; break;
+					case ',': game.wsad[8] = ev->type==SDL_KEYDOWN;
+					game.cam_num--;
+					if (game.cam_num < 0)
+						game.cam_num = game.cam_quantity - 1; 
+					break;
+					case '.': game.wsad[9] = ev->type==SDL_KEYDOWN;
+					game.cam_num++;
+					if (game.cam_num >= game.cam_quantity)
+						game.cam_num = 0; 
+					break;
 					default: break;
 				}
 				break;
@@ -191,7 +199,7 @@ void initScene(t_obj* objects, t_game *game, char **argv)
 
 	game->textures_num 			= 5;
 	game->textures 				= (t_txture*)malloc(sizeof(t_txture) * game->textures_num);
-	game->gpu->camera			= init_camera();
+	game->gpu->camera			= NULL;
 	get_texture(name, &(game->textures[0]));
 	get_texture(secname, &(game->textures[1]));
 	get_texture(thirdname, &(game->textures[2]));
@@ -295,18 +303,17 @@ void initScene(t_obj* objects, t_game *game, char **argv)
 	int w = WIN_W;
 	int h = WIN_H;
 	size_t global = WIN_W * WIN_H;
-	int n_objects = 9;
 	game.gpu->samples += 5;
 	const size_t count = global;
 	game.cl_info->ret |= clSetKernelArg(kernel, 5, sizeof(cl_int), &w);
 	ERROR(game.cl_info->ret);
 	game.cl_info->ret |= clSetKernelArg(kernel, 6, sizeof(cl_int), &h);
 	ERROR(game.cl_info->ret);
-	game.cl_info->ret |= clSetKernelArg(kernel, 7, sizeof(cl_int), &n_objects);
+	game.cl_info->ret |= clSetKernelArg(kernel, 7, sizeof(cl_int), &game.obj_quantity);
 	ERROR(game.cl_info->ret);
 	game.cl_info->ret |= clSetKernelArg(kernel, 8, sizeof(cl_int), &game.gpu->samples);
 	ERROR(game.cl_info->ret);
-	game.cl_info->ret |= clSetKernelArg(kernel, 9, sizeof(t_cam), game.gpu->camera);
+	game.cl_info->ret |= clSetKernelArg(kernel, 9, sizeof(t_cam), &game.gpu->camera[game.cam_num]);
 	ERROR(game.cl_info->ret);
 	game.cl_info->ret = cl_krl_exec(game.cl_info, kernel, 1, &global);
 	ERROR(game.cl_info->ret);
@@ -364,7 +371,7 @@ void ft_update(t_game *game)
 		ft_input(game->sdl, &ft_input_keys);
 		if (game->init_render || game->wsad[0] || game->wsad[1] ||
 			game->wsad[2] || game->wsad[3] || game->wsad[4] || game->wsad[5] ||
-			game->wsad[6] || game->wsad[7])
+			game->wsad[6] || game->wsad[7] || game->wsad[8] || game->wsad[9] )
 			{
 				game->init_render = 0;
 				ft_render(game);
@@ -381,8 +388,6 @@ void ft_update(t_game *game)
 	}
 }
 
-
-
 void opencl(char **argv)
 {
 	game.kernels = ft_memalloc(sizeof(t_cl_krl) * 2);
@@ -393,6 +398,7 @@ void opencl(char **argv)
 	game.gpu->vec_temp = ft_memalloc(sizeof(cl_float3) * WIN_H * WIN_W);
 	game.gpu->random = get_random(game.gpu->random);
 	game.gpu->samples = 0;
+	game.cam_num = 0;	
 	cl_mem			textures;
 	initScene(game.gpu->objects, &game, argv);
 	cl_init(game.cl_info);
@@ -404,7 +410,7 @@ void opencl(char **argv)
 	vect_init(&options);
 	VECT_STRADD(&options, "-I srcs/cl_files/ -I includes/cl_headers/");
 	game.kernels[0].sizes[0] = sizeof(cl_int) * WIN_H * WIN_W;
-	game.kernels[0].sizes[1] =  sizeof(t_obj) * 9;
+	game.kernels[0].sizes[1] =  sizeof(t_obj) * game.obj_quantity;
 	game.kernels[0].sizes[2] = sizeof(cl_float3) * WIN_H * WIN_W;
 	game.kernels[0].sizes[3] = WIN_H * WIN_W * sizeof(cl_ulong);
 	game.kernels[0].sizes[4] = sizeof(t_txture) * game.textures_num;
@@ -416,7 +422,7 @@ void opencl(char **argv)
 	ERROR(game.cl_info->ret);
 	game.cl_info->ret = cl_write(game.cl_info, game.kernels[0].args[0], sizeof(cl_int) * WIN_H * WIN_W, game.gpuOutput);
 	ERROR(game.cl_info->ret);
-	game.cl_info->ret = cl_write(game.cl_info, game.kernels[0].args[1], sizeof(t_obj) * 9, game.gpu->objects);
+	game.cl_info->ret = cl_write(game.cl_info, game.kernels[0].args[1], sizeof(t_obj) * game.obj_quantity, game.gpu->objects);
 	ERROR(game.cl_info->ret);
 	game.cl_info->ret = cl_write(game.cl_info, game.kernels[0].args[2], sizeof(cl_float3) * WIN_H * WIN_W, game.gpu->vec_temp);
 	ERROR(game.cl_info->ret);
@@ -437,12 +443,11 @@ int	main(int argc, char **argv)
 	game.origin = (t_vec3){0,0,5};
 	game.gpu = (t_gpu *)malloc(sizeof(t_gpu));
 	opencl(argv);
-	// opencl_init(game.gpu, &game);
 	ft_init_window(game.sdl, WIN_W, WIN_H);
 
 	ft_update(&game);
-	// clReleaseMemObject(game.gpu->cl_bufferOut);
-	// release_gpu(game.gpu);
+	clReleaseMemObject(game.gpu->cl_bufferOut);
+	//release_gpu(game.gpu);
 
 	ft_exit(NULL);
 }

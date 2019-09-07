@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 19:04:09 by srobert-          #+#    #+#             */
-/*   Updated: 2019/09/07 16:11:10 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/09/07 20:29:46 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,15 @@ void ft_object_push(t_game *game, t_obj *object)
 	game->gpu->objects = ft_realloc(game->gpu->objects, sizeof(t_obj) * (game->obj_quantity + 1));
 	game->gpu->objects[game->obj_quantity] = *object;
 	game->obj_quantity += 1;
+}
+
+void ft_cam_push(t_game *game, t_cam *cam)
+{
+	if (game->gpu->camera == NULL)
+		game->cam_quantity = 0;
+	game->gpu->camera = ft_realloc(game->gpu->camera, sizeof(t_obj) * (game->cam_quantity + 1));
+	game->gpu->camera[game->cam_quantity] = *cam;
+	game->cam_quantity += 1;
 }
 
 static void parse_plane(char **data, t_game *game)
@@ -200,37 +209,33 @@ static void parse_cone(char **data, t_game *game)
 	ft_object_push(game, add_cone(position, radius, color, emition, texture, reflection, v));
 }
 
-// void parse_cam(char **data, t_camera *camera)
-// {
-//     char **vec;
-
-//     if (data[1] == NULL || data[2] == NULL || data[3] == NULL)
-//         terminate("missing data of cam: not enough arguments!\n");
-//     vec = ft_strsplit(data[1], ',');
-//     if (vec[0] == NULL || vec[1] == NULL || vec[2] == NULL)
-//         terminate("missing data of cam pos vector!\n");
-//     camera->pos.x = ft_atoi(vec[0]);
-//     camera->pos.y = ft_atoi(vec[1]);
-//     camera->pos.z = ft_atoi(vec[2]);
-//     feel_free(vec);
-//     vec = ft_strsplit(data[2], ',');
-//     if (vec[0] == NULL || vec[1] == NULL || vec[2] == NULL)
-//         terminate("missing data of cam dir vector!\n");
-//     camera->direct.x = ft_atoi(vec[0]);
-//     camera->direct.y = ft_atoi(vec[1]);
-//     camera->direct.z = ft_atoi(vec[2]);
-//     camera->direct = vector_normalize(camera->direct);
-//     feel_free(vec);
-//     vec = ft_strsplit(data[3], ',');
-//     if (vec[0] == NULL || vec[1] == NULL || vec[2] == NULL)
-//         terminate("missing data of cam norm vector!\n");
-//     camera->norm.x = ft_atoi(vec[0]);
-//     camera->norm.y = ft_atoi(vec[1]);
-//     camera->norm.z = ft_atoi(vec[2]);
-//     camera->norm = vector_normalize(camera->norm);
-//     feel_free(vec);
-//     free(vec);
-// }
+void parse_cam(char **data, t_game *game)
+{
+    char **vec;
+	cl_float3 position;
+	cl_float3 v;
+	cl_float3 normal;
+	
+    if (data[1] == NULL || data[2] == NULL || data[3] == NULL)
+        terminate("missing data of cam: not enough arguments!\n");
+    vec = ft_strsplit(data[1], ',');
+    if (vec[0] == NULL || vec[1] == NULL || vec[2] == NULL)
+        terminate("missing data of cam pos vector!\n");
+    position = create_cfloat3(atof(vec[0]), atof(vec[1]), atof(vec[2]));
+    feel_free(vec);
+    vec = ft_strsplit(data[2], ',');
+    if (vec[0] == NULL || vec[1] == NULL || vec[2] == NULL)
+        terminate("missing data of cam dir vector!\n");
+    v = create_cfloat3(atof(vec[0]), atof(vec[1]), atof(vec[2]));
+    feel_free(vec);
+    vec = ft_strsplit(data[3], ',');
+    if (vec[0] == NULL || vec[1] == NULL || vec[2] == NULL)
+        terminate("missing data of cam norm vector!\n");
+    normal = create_cfloat3(atof(vec[0]), atof(vec[1]), atof(vec[2]));
+    feel_free(vec);
+    free(vec);
+	ft_cam_push(game, add_cam(position, v, normal));
+}
 
 // static void parse_triangle(char **data, t_object **list)
 // {
@@ -298,8 +303,8 @@ void read_scene(char **argv, t_game *game)
 			parse_cylinder(data, game);
 		else if (ft_strcmp(data[0], "CONE") == 0)
 			parse_cone(data, game);
-		// else if (ft_strcmp(data[0], "CAM") == 0)
-		//     parse_cam(data, camera);
+		else if (ft_strcmp(data[0], "CAM") == 0)
+		    parse_cam(data, game);
 		// else if (ft_strcmp(data[0], "TRIANGLE") == 0)
 		//     parse_triangle(data, &objects->bodies);
 		feel_free(data);
