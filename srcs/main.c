@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/07 21:46:11 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/09/07 21:54:06 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	camera_reposition(SDL_Keycode sym)
 		case 's':  game.gpu->camera[game.cam_num].position = sum_cfloat3(game.gpu->camera[game.cam_num].position, mult_cfloat3(game.gpu->camera[game.cam_num].direction, -0.1)); break;
 		case 'a':  game.gpu->camera[game.cam_num].position = sum_cfloat3(game.gpu->camera[game.cam_num].position, mult_cfloat3(normalize(cross(game.gpu->camera[game.cam_num].normal, game.gpu->camera[game.cam_num].direction)), 0.1)); break;
 		case 'd':  game.gpu->camera[game.cam_num].position = sum_cfloat3(game.gpu->camera[game.cam_num].position, mult_cfloat3(normalize(cross(game.gpu->camera[game.cam_num].normal, game.gpu->camera[game.cam_num].direction)), -0.1)); break;
-		case 'q':  game.gpu->camera[game.cam_num].position = rotate(game.gpu->camera[game.cam_num].normal, game.gpu->camera[game.cam_num].direction, M_PI / 60); reconfigure_camera(&game.gpu->camera[game.cam_num]); break;
-		case 'e':  game.gpu->camera[game.cam_num].position= rotate(game.gpu->camera[game.cam_num].normal, game.gpu->camera[game.cam_num].direction, -M_PI / 60); reconfigure_camera(&game.gpu->camera[game.cam_num]); break;
+		case 'q':  game.gpu->camera[game.cam_num].direction = rotate(game.gpu->camera[game.cam_num].normal, game.gpu->camera[game.cam_num].direction, M_PI / 60); reconfigure_camera(&game.gpu->camera[game.cam_num]); break;
+		case 'e':  game.gpu->camera[game.cam_num].direction = rotate(game.gpu->camera[game.cam_num].normal, game.gpu->camera[game.cam_num].direction, -M_PI / 60); reconfigure_camera(&game.gpu->camera[game.cam_num]); break;
 		case 'z':  break;
 		case 'x':  break;
 		default: break;
@@ -141,7 +141,7 @@ void initScene(t_obj* objects, t_game *game, char **argv)
 	char						*secname = "sun.bmp";
 	char						*thirdname = "seamless_pawnment.bmp";
 	char						*fourthname = "concrete.bmp";
-	char						*fivename = "dead_soil.bmp";
+	char						*fivename = "ice.bmp";
 
 
 	game->textures_num 			= 5;
@@ -347,7 +347,6 @@ void opencl(char **argv)
 	game.cam_num = 0;	
 	cl_mem			textures;
 	initScene(game.gpu->objects, &game, argv);
-	printf("quantity %d\n", game.cam_quantity);
 	cl_init(game.cl_info);
 	ERROR(game.cl_info->ret);
 	int fd = open("srcs/cl_files/main.cl", O_RDONLY);
@@ -355,7 +354,7 @@ void opencl(char **argv)
 	cl_krl_init(&game.kernels[0], 5);
 	t_vect options;
 	vect_init(&options);
-	VECT_STRADD(&options, "-I srcs/cl_files/ -I includes/cl_headers/");
+	VECT_STRADD(&options, "-w -I srcs/cl_files/ -I includes/cl_headers/");
 	game.kernels[0].sizes[0] = sizeof(cl_int) * WIN_H * WIN_W;
 	game.kernels[0].sizes[1] =  sizeof(t_obj) * game.obj_quantity;
 	game.kernels[0].sizes[2] = sizeof(cl_float3) * WIN_H * WIN_W;
