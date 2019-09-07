@@ -39,7 +39,8 @@ float3 refract(float3 vector, float3 n, float refrIndex)
 	return (refrIndex * vector) + (refrIndex * cosI - sqrt( cosT2 )) * n;
 }
 
-static t_ray createCamRay(const int x_coord, const int y_coord, const int width, const int height){
+static t_ray createCamRay(const int x_coord, const int y_coord, const int width, const int height, t_scene *scene)
+{
 
 	float fx = (float)x_coord / (float)width;  /* convert int in range [0 - width] to float in range [0-1] */
 	float fy = (float)y_coord / (float)height; /* convert int in range [0 - height] to float in range [0-1] */
@@ -54,7 +55,7 @@ static t_ray createCamRay(const int x_coord, const int y_coord, const int width,
 
 	/* create camera ray*/
 	t_ray ray;
-	ray.origin = (float3)(0.0f, 0.1f, 2.f); /* fixed camera position */
+	ray.origin = scene->camera.position; /* fixed camera position */
 	ray.dir = normalize(pixel_pos - ray.origin); /* vector from camera to pixel on screen */
     return ray;
 }
@@ -204,7 +205,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 
 
 static t_scene scene_new(__global t_obj* objects, int n_objects, int width, int height,\
- int samples, __global ulong * random, __global t_txture *textures)
+ int samples, __global ulong * random, __global t_txture *textures, t_cam camera)
 {
 	t_scene new_scene;
 
@@ -220,11 +221,12 @@ static t_scene scene_new(__global t_obj* objects, int n_objects, int width, int 
 	new_scene.seed1 = new_scene.y_coord + rand_noise(new_scene.samples + 3) * 12312;
 	new_scene.random = random;
 	new_scene.textures = textures;
+	new_scene.camera = camera;
 	return (new_scene);
 }
 
 __kernel void render_kernel(__global int* output, __global t_obj* objects,
-__global float3 * vect_temp,  __global ulong * random,  __global t_txture *textures, int width, int height,  int n_objects, int samples)
+__global float3 * vect_temp,  __global ulong * random,  __global t_txture *textures, int width, int height,  int n_objects, int samples, t_cam camera)
 {
 	
 	t_scene scene;
@@ -241,8 +243,8 @@ __global float3 * vect_temp,  __global ulong * random,  __global t_txture *textu
 	else
 		finalcolor = vect_temp[x_coord + y_coord * width];
 	
-	scene = scene_new(objects, n_objects, width, height, samples, random, textures);
-	intersection.ray = createCamRay(scene.x_coord, scene.y_coord, width, height);
+	scene = scene_new(objects, n_objects, width, height, samples, random, textures, camera);
+	intersection.ray = createCamRay(scene.x_coord, scene.y_coord, width, height, &scene);
 	intersection_reset(&intersection.ray);
 	print_debug(scene.samples, scene.width, &scene);
 	for (int i = 0; i < 15; i++)

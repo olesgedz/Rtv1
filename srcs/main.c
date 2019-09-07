@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/06 16:41:50 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/09/07 16:31:22 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,45 @@ t_game game;
 *	- can handle multiple presses at once
 *	- that goes into libsdl void ft_input(void *main, int (*f)(void *main, SDL_Event *ev))
 */
+
+cl_float3		sum_cfloat3(cl_float3 one, cl_float3 two)
+{
+	cl_float3	res;
+
+	res.s[0] = one.s[0] + two.s[0];
+	res.s[1] = one.s[1] + two.s[1];
+	res.s[2] = one.s[2] + two.s[2];
+	return (res);
+}
+
+cl_float3		mult_cfloat3(cl_float3 one, float f)
+{
+	cl_float3	res;
+
+	res.s[0] = one.s[0] * f;
+	res.s[1] = one.s[1] * f;
+	res.s[2] = one.s[2] * f;
+	return (res);	
+}
+
+void	camera_reposition(SDL_Keycode sym)
+{
+	game.gpuOutput = ft_memset(game.gpuOutput, 0, sizeof(int) * game.image->height * game.image->width);
+	game.gpu->samples = 0;
+	switch (sym)
+	{
+		case 'w':  game.gpu->camera->position = sum_cfloat3(game.gpu->camera->position, mult_cfloat3(game.gpu->camera->direction, 0.1)); break;
+		case 's':  game.gpu->camera->position = sum_cfloat3(game.gpu->camera->position, mult_cfloat3(game.gpu->camera->direction, -0.1)); break;
+		case 'a':  break;
+		case 'd':  break;
+		case 'q':  break;
+		case 'e':  break;
+		case 'z':  break;
+		case 'x':  break;
+		default: break;
+	}
+}
+
 int		ft_input_keys(void *sdl, SDL_Event *ev)
 {
 	switch (ev->type)
@@ -38,15 +77,16 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 			case SDL_KEYUP:
 				switch (ev->key.keysym.sym)
 				{
+					camera_reposition(ev->key.keysym.sym);
 					case SDLK_LCTRL:
 					case SDLK_RCTRL:
 					case SDLK_ESCAPE: ft_exit(NULL); break;
-					case 'w': game.wsad[0] = ev->type==SDL_KEYDOWN; break;
-					case 's': game.wsad[1] = ev->type==SDL_KEYDOWN; break;
-					case 'a': game.wsad[2] = ev->type==SDL_KEYDOWN; break;
-					case 'd': game.wsad[3] = ev->type==SDL_KEYDOWN; break;
-					case 'q': game.wsad[4] = ev->type==SDL_KEYDOWN; break;
-					case 'e': game.wsad[5] = ev->type==SDL_KEYDOWN; break;
+					case 'w': game.wsad[0] = ev->type==SDL_KEYDOWN; camera_reposition(ev->key.keysym.sym); break;
+					case 's': game.wsad[1] = ev->type==SDL_KEYDOWN; camera_reposition(ev->key.keysym.sym); break;
+					case 'a': game.wsad[2] = ev->type==SDL_KEYDOWN; camera_reposition(ev->key.keysym.sym); break;
+					case 'd': game.wsad[3] = ev->type==SDL_KEYDOWN; camera_reposition(ev->key.keysym.sym); break;
+					case 'q': game.wsad[4] = ev->type==SDL_KEYDOWN; camera_reposition(ev->key.keysym.sym); break;
+					case 'e': game.wsad[5] = ev->type==SDL_KEYDOWN; camera_reposition(ev->key.keysym.sym); break;
 					case 'z': game.wsad[6] = ev->type==SDL_KEYDOWN; break;
 					case 'x': game.wsad[7] = ev->type==SDL_KEYDOWN; break;
 					default: break;
@@ -128,10 +168,20 @@ cl_float3 create_cfloat3 (float x, float y, float z)
 	return re;
 }
 
-
-void initScene(t_obj* cpu_spheres, t_game *game)
+t_cam			*init_camera(void)
 {
-	char						*name = "sviborg.bmp";
+	t_cam		*camera;
+
+	camera = (t_cam*)malloc(sizeof(t_cam));
+	camera->normal = create_cfloat3 (0.0f, 1.0f, 0.0f);
+	camera->direction = create_cfloat3 (0.0f, 0.0f, -1.0f);
+	camera->position = create_cfloat3 (0.0f, 0.1f, 2.f);
+	return (camera);
+}
+
+void initScene(t_obj* objects, t_game *game, char **argv)
+{
+	char						*name = "sobenin.bmp";
 	char						*secname = "sun.bmp";
 	char						*thirdname = "seamless_pawnment.bmp";
 	char						*fourthname = "concrete.bmp";
@@ -140,101 +190,103 @@ void initScene(t_obj* cpu_spheres, t_game *game)
 
 	game->textures_num 			= 5;
 	game->textures 				= (t_txture*)malloc(sizeof(t_txture) * game->textures_num);
+	game->gpu->camera			= init_camera();
 	get_texture(name, &(game->textures[0]));
 	get_texture(secname, &(game->textures[1]));
 	get_texture(thirdname, &(game->textures[2]));
 	get_texture(fourthname, &(game->textures[3]));
 	get_texture(fivename, &(game->textures[4]));
-	// left sphere
-	cpu_spheres[0].radius   	= 0.1f;
-	cpu_spheres[0].position 	= create_cfloat3 (-0.4f, 0.f, -0.1f);
-	cpu_spheres[0].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
-	cpu_spheres[0].v 			= create_cfloat3 (0.f, 1.0f, 0.0f);
-	cpu_spheres[0].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-	cpu_spheres[0].type 		= CYLINDER;
-	cpu_spheres[0].reflection 	= 0.f;
-	cpu_spheres[0].texture 		= 3;
+	read_scene(argv, game);
+	// // left sphere
+	// objects[0].radius   	= 0.1f;
+	// objects[0].position 	= create_cfloat3 (-0.4f, 0.f, -0.1f);
+	// objects[0].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
+	// objects[0].v 			= create_cfloat3 (0.f, 1.0f, 0.0f);
+	// objects[0].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
+	// objects[0].type 		= CYLINDER;
+	// objects[0].reflection 	= 0.f;
+	// objects[0].texture 		= 3;
 
-	// right sphere
-	cpu_spheres[1].radius   	= 0.16f;
-	cpu_spheres[1].position 	= create_cfloat3 (0.0f, -0.f, 0.1f);
-	cpu_spheres[1].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
-	cpu_spheres[1].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-	cpu_spheres[1].v 			= create_cfloat3 (0.0f, 0.0f, 0.0f);
-	cpu_spheres[1].type 		= SPHERE;
-	cpu_spheres[1].texture 		= 1;
-	cpu_spheres[1].reflection 	= 0.f;
+	// // right sphere
+	// objects[1].radius   	= 0.16f;
+	// objects[1].position 	= create_cfloat3 (0.0f, -0.f, 0.1f);
+	// objects[1].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
+	// objects[1].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
+	// objects[1].v 			= create_cfloat3 (0.0f, 0.0f, 0.0f);
+	// objects[1].type 		= SPHERE;
+	// objects[1].texture 		= 1;
+	// objects[1].reflection 	= 0.f;
 
-	// lightsource
-	cpu_spheres[2].radius   	= 0.1f; 
-	cpu_spheres[2].position 	= create_cfloat3 (0.0f, 0.2f, 1.0f);
-	cpu_spheres[2].color    	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-	cpu_spheres[2].emission 	= create_cfloat3 (40.0f, 40.0f, 40.0f);
-	cpu_spheres[2].type 		= SPHERE;
-	cpu_spheres[2].reflection 	= 0;
-	cpu_spheres[2].texture 		= 2;
+	// // lightsource
+	// objects[2].radius   	= 0.1f; 
+	// objects[2].position 	= create_cfloat3 (0.0f, 0.2f, 1.0f);
+	// objects[2].color    	= create_cfloat3 (0.0f, 0.0f, 0.0f);
+	// objects[2].emission 	= create_cfloat3 (40.0f, 40.0f, 40.0f);
+	// objects[2].type 		= SPHERE;
+	// objects[2].reflection 	= 0;
+	// objects[2].texture 		= 2;
 
-		// left wall
-	cpu_spheres[6].radius		= 200.0f;
-	cpu_spheres[6].position 	= create_cfloat3 (-1.0f, 0.0f, 0.0f);
-	cpu_spheres[6].color    	= create_cfloat3 (0.75f, 0.25f, 0.25f);
-	cpu_spheres[6].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-	cpu_spheres[6].v 			= create_cfloat3 (1.0f, 0.0f, 0.0f);
-	cpu_spheres[6].type 		= PLANE;
-	cpu_spheres[6].reflection 	= 0;
-	cpu_spheres[6].texture 		= 0;
+	// 	// left wall
+	// objects[6].radius		= .0f;
+	// objects[6].position 	= create_cfloat3 (-1.0f, 0.0f, 0.0f);
+	// objects[6].color    	= create_cfloat3 (0.75f, 0.25f, 0.25f);
+	// objects[6].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
+	// objects[6].v 			= create_cfloat3 (1.0f, 0.0f, 0.0f);
+	// objects[6].type 		= PLANE;
+	// objects[6].reflection 	= 0;
+	// objects[6].texture 		= 0;
 
-	// right wall
-	cpu_spheres[7].radius		= 200.0f;
-	cpu_spheres[7].position 	= create_cfloat3 (1.f, 0.0f, 0.0f);
-	cpu_spheres[7].color    	= create_cfloat3 (0.25f, 0.25f, 0.75f);
-	cpu_spheres[7].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-	cpu_spheres[7].v 			= create_cfloat3 (1.0f, 0.0f, 0.0f);
-	cpu_spheres[7].type 		= PLANE;
-	cpu_spheres[7].reflection 	= 0;
-	cpu_spheres[7].texture 		= 0;
+	// // right wall
+	// objects[7].radius		= 200.0f;
+	// objects[7].position 	= create_cfloat3 (1.f, 0.0f, 0.0f);
+	// objects[7].color    	= create_cfloat3 (0.25f, 0.25f, 0.75f);
+	// objects[7].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
+	// objects[7].v 			= create_cfloat3 (1.0f, 0.0f, 0.0f);
+	// objects[7].type 		= PLANE;
+	// objects[7].reflection 	= 0;
+	// objects[7].texture 		= 0;
 
-	// floor
-	cpu_spheres[8].radius		= 200.0f;
-	cpu_spheres[8].position 	= create_cfloat3 (0.0f, 0.5f, 0.0f);
-	cpu_spheres[8].color		= create_cfloat3 (0.9f, 0.8f, 0.7f);
-	cpu_spheres[8].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-	cpu_spheres[8].v 			= create_cfloat3 (0.0f, -1.0f, 0.0f);
-	cpu_spheres[8].type 		= PLANE;
-	cpu_spheres[8].reflection	= 0;
-	cpu_spheres[8].texture 		= 4;
-	// ceiling
-	cpu_spheres[3].radius		= 200.0f;
-	cpu_spheres[3].position 	= create_cfloat3 (0.0f, -0.5f, 0.0f);
-	cpu_spheres[3].color		= create_cfloat3 (0.9f, 0.8f, 0.7f);
-	cpu_spheres[3].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-	cpu_spheres[3].v 			= create_cfloat3 (0.0f, 1.0f, 0.0f);
-	cpu_spheres[3].type 		= PLANE;
-	cpu_spheres[3].reflection 	= 0;
-	cpu_spheres[3].texture 		= 5;
-
-
-	// back wall
-	cpu_spheres[4].radius   	= 1.0f;
-	cpu_spheres[4].position 	= create_cfloat3 (0.0f, 0.0f, -0.3f);
-	cpu_spheres[4].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
-	cpu_spheres[4].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-	cpu_spheres[4].v 			= create_cfloat3 (0.0f, 0.0f, 1.0f);
-	cpu_spheres[4].type 		= PLANE;
- 	cpu_spheres[4].reflection 	= 0;
-	cpu_spheres[4].reflection 	= 0;
-	cpu_spheres[4].texture 		= 4;
+	// // floor
+	// objects[8].radius		= 0.0f;
+	// objects[8].position 	= create_cfloat3 (0.0f, 0.5f, 0.0f);
+	// objects[8].color		= create_cfloat3 (0.9f, 0.8f, 0.7f);
+	// objects[8].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
+	// objects[8].v 			= create_cfloat3 (0.0f, -1.0f, 0.0f);
+	// objects[8].type 		= PLANE;
+	// objects[8].reflection	= 0;
+	// objects[8].texture 		= 4;
+	// // ceiling
+	// objects[3].radius		= 200.0f;
+	// objects[3].position 	= create_cfloat3 (0.0f, -0.5f, 0.0f);
+	// objects[3].color		= create_cfloat3 (0.9f, 0.8f, 0.7f);
+	// objects[3].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
+	// objects[3].v 			= create_cfloat3 (0.0f, 1.0f, 0.0f);
+	// objects[3].type 		= PLANE;
+	// objects[3].reflection 	= 0;
+	// objects[3].texture 		= 5;
 
 
-	// front wall 
-	cpu_spheres[5].radius   	= 200.0f;
-	cpu_spheres[5].position 	= create_cfloat3 (0.0f, 0.0f, 2.0f);
-	cpu_spheres[5].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
-	cpu_spheres[5].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-	cpu_spheres[5].v 			= create_cfloat3 (0.0f, 0.0f, 1.0f);
-	cpu_spheres[5].type 		= PLANE;
-	cpu_spheres[5].reflection 	= 0;
-	cpu_spheres[5].texture 		= 0;
+	// // back wall
+	// objects[4].radius   	= 1.0f;
+	// objects[4].position 	= create_cfloat3 (0.0f, 0.0f, -0.3f);
+	// objects[4].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
+	// objects[4].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
+	// objects[4].v 			= create_cfloat3 (0.0f, 0.0f, 1.0f);
+	// objects[4].type 		= PLANE;
+ 	// objects[4].reflection 	= 0;
+	// objects[4].reflection 	= 0;
+	// objects[4].texture 		= 4;
+
+
+	// // front wall 
+	// objects[5].radius   	= 200.0f;
+	// objects[5].position 	= create_cfloat3 (0.0f, 0.0f, 2.0f);
+	// objects[5].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
+	// objects[5].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
+	// objects[5].v 			= create_cfloat3 (0.0f, 0.0f, 1.0f);
+	// objects[5].type 		= PLANE;
+	// objects[5].reflection 	= 0;
+	// objects[5].texture 		= 0;
 }
 
  void ft_run_kernel(cl_kernel kernel)
@@ -252,6 +304,8 @@ void initScene(t_obj* cpu_spheres, t_game *game)
 	game.cl_info->ret |= clSetKernelArg(kernel, 7, sizeof(cl_int), &n_objects);
 	ERROR(game.cl_info->ret);
 	game.cl_info->ret |= clSetKernelArg(kernel, 8, sizeof(cl_int), &game.gpu->samples);
+	ERROR(game.cl_info->ret);
+	game.cl_info->ret |= clSetKernelArg(kernel, 9, sizeof(t_cam), game.gpu->camera);
 	ERROR(game.cl_info->ret);
 	game.cl_info->ret = cl_krl_exec(game.cl_info, kernel, 1, &global);
 	ERROR(game.cl_info->ret);
@@ -328,17 +382,18 @@ void ft_update(t_game *game)
 
 
 
-void opencl()
+void opencl(char **argv)
 {
 	game.kernels = ft_memalloc(sizeof(t_cl_krl) * 2);
 	game.cl_info = ft_memalloc(sizeof(t_cl_info));
 	game.gpuOutput = ft_memalloc(sizeof(int) * WIN_H * WIN_W);
-	game.gpu->spheres = ft_memalloc(sizeof(t_obj) * 9);
+	// game.gpu->objects = ft_memalloc(sizeof(t_obj) * 9);
+	game.gpu->objects = NULL;
 	game.gpu->vec_temp = ft_memalloc(sizeof(cl_float3) * WIN_H * WIN_W);
 	game.gpu->random = get_random(game.gpu->random);
 	game.gpu->samples = 0;
 	cl_mem			textures;
-	initScene(game.gpu->spheres, &game);
+	initScene(game.gpu->objects, &game, argv);
 	cl_init(game.cl_info);
 	ERROR(game.cl_info->ret);
 	int fd = open("srcs/cl_files/main.cl", O_RDONLY);
@@ -360,7 +415,7 @@ void opencl()
 	ERROR(game.cl_info->ret);
 	game.cl_info->ret = cl_write(game.cl_info, game.kernels[0].args[0], sizeof(cl_int) * WIN_H * WIN_W, game.gpuOutput);
 	ERROR(game.cl_info->ret);
-	game.cl_info->ret = cl_write(game.cl_info, game.kernels[0].args[1], sizeof(t_obj) * 9, game.gpu->spheres);
+	game.cl_info->ret = cl_write(game.cl_info, game.kernels[0].args[1], sizeof(t_obj) * 9, game.gpu->objects);
 	ERROR(game.cl_info->ret);
 	game.cl_info->ret = cl_write(game.cl_info, game.kernels[0].args[2], sizeof(cl_float3) * WIN_H * WIN_W, game.gpu->vec_temp);
 	ERROR(game.cl_info->ret);
@@ -380,7 +435,7 @@ int	main(int argc, char **argv)
 	game.init_render = 1;
 	game.origin = (t_vec3){0,0,5};
 	game.gpu = (t_gpu *)malloc(sizeof(t_gpu));
-	opencl();
+	opencl(argv);
 	// opencl_init(game.gpu, &game);
 	ft_init_window(game.sdl, WIN_W, WIN_H);
 

@@ -57,24 +57,19 @@ typedef struct Object{
 
 typedef struct s_ray
 {
-	t_vec3 orig;
-	t_vec3 dir;
-	t_vec3 hit;
-	double t;
+	t_vec3 				orig;
+	t_vec3 				dir;
+	t_vec3 				hit;
+	double 				t;
+} 						t_ray;
 
-} t_ray;
 
-
-typedef struct s_camera
+typedef struct 			s_cam
 {
 	cl_float3			position;
-	cl_float3			axis_x;
-	cl_float3			axis_y;
-	cl_float3			axis_z;
-	cl_float3			forward;
-	int					width;
-	int					height;
-}						t_camera;
+	cl_float3			direction;
+	cl_float3			normal;
+}						t_cam;
 
 typedef enum			e_camera_direction
 {
@@ -99,39 +94,40 @@ typedef struct s_gpu
 	char				*kernel_source;
 	int 				*cpuOutput;
 	cl_float3			*vec_temp;
-	t_obj				*spheres;
+	t_obj				*objects;
 	cl_mem				cl_bufferOut;
 	cl_mem				cl_cpuSpheres;
 	cl_mem				cl_cpu_vectemp;
 	cl_mem				cl_cpu_camera;
 	cl_mem 				cl_cpu_random;
-	t_camera 			*camera;
+	t_cam	 			*camera;
 	int 				samples;
 }						t_gpu;
 
 typedef struct			s_game
 {
-	t_sdl *sdl;
-	t_surface *image;
-	t_list *verties;
-	int n_spheres;
-	int n_cones;
-	int n_cylinders;
-	int wsad[8];
-	t_vec3 origin;
-	t_gpu *gpu;
-	int init_render;
-	t_txture		*textures;
-	int				textures_num;
-	t_cl_info * cl_info;
-	t_cl_krl * kernels;
-	int * gpuOutput;
+	t_sdl 				*sdl;
+	t_surface 			*image;
+	t_list				*verties;
+	int 				n_spheres;
+	int 				n_cones;
+	int 				n_cylinders;
+	int 				obj_quantity;
+	int 				wsad[8];
+	t_vec3 				origin;
+	t_gpu 				*gpu;
+	int 				init_render;
+	t_txture			*textures;
+	int					textures_num;
+	t_cl_info 			*cl_info;
+	t_cl_krl 			*kernels;
+	int 				*gpuOutput;
 
-} t_game;
+} 						t_game;
 
-int bind_data(t_gpu *gpu, t_game *game);
-void release_gpu(t_gpu *gpu);
-void ft_run_gpu(t_gpu *gpu);
+int						bind_data(t_gpu *gpu, t_game *game);
+void 					release_gpu(t_gpu *gpu);
+void 					ft_run_gpu(t_gpu *gpu);
 
 int						opencl_init(t_gpu *gpu, t_game *game);
 cl_float3				create_cfloat3 (float x, float y, float z);
@@ -139,10 +135,16 @@ cl_float3				create_cfloat3 (float x, float y, float z);
 cl_float3				cl_scalar_mul(cl_float3 vector, double scalar);
 
 cl_float3				cl_add(cl_float3 v1, cl_float3 v2);
-t_camera				*camera_new(int width, int height);
-void 					camera_move
-						(t_camera *camera,
-						t_camera_direction direction,
-						float length);
+// t_camera				*camera_new(int width, int height);
+// void 					camera_move
+// 						(t_camera *camera,
+// 						t_camera_direction direction,
+// 						float length);
 void					get_texture(char *name, t_txture *texture);
+
+t_obj *add_plane(cl_float3 position, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection, cl_float3 v);
+t_obj *add_sphere(cl_float3 position, float radius, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection);
+t_obj *add_cylinder(cl_float3 position, float radius, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection, cl_float3 v);
+t_obj *add_cone(cl_float3 position, float radius, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection, cl_float3 v);
+void read_scene(char **argv, t_game *game);
 #endif

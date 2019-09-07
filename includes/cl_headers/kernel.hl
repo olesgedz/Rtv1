@@ -51,6 +51,13 @@ typedef struct Object{
 	int		texture;
 } t_obj;
 
+typedef struct 			s_cam
+{
+	float3			position;
+	float3			direction;
+	float3			normal;
+}						t_cam;
+
 typedef struct s_scene{
 
 	__global t_obj * objects;
@@ -65,6 +72,7 @@ typedef struct s_scene{
 	unsigned int seed1;
 	__global ulong * random;
 	__global t_txture *textures;
+	t_cam				camera;
 } t_scene;
 // typedef struct s_scene{
 

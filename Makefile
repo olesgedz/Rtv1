@@ -5,10 +5,11 @@
 #                                                     +:+ +:+         +:+      #
 #    By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/03/16 12:58:07 by jblack-b          #+#    #+#              #
-#    Updated: 2019/09/07 16:24:23 by jblack-b         ###   ########.fr        #
+#    Created: Invalid date        by                   #+#    #+#              #
+#    Updated: 2019/09/07 16:31:19 by jblack-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 NAME = rtv1
 
@@ -59,9 +60,9 @@ SRCS_DIRECTORY = ./srcs/
 
 SRCS_LIST = main.c\
 			cl_lib/gpu_init.c\
-			textures.c
+			textures.c\
+			add_object.c parse.c
 
-SRCS_LIST += camera/camera_new.c camera/camera_move.c
 OBJS_DIRECTORY = objects/
 OBJS_LIST = $(patsubst %.c, %.o, $(SRCS_LIST))
 OBJS = $(addprefix $(OBJS_DIRECTORY), $(OBJS_LIST))
