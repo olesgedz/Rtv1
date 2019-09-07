@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/07 20:37:21 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/09/07 21:04:26 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ static int toInt(float x)
 { 
 	return (int)(u_clamp(x) * 255);
 }
-
+//
  int getSurroundingAverage(t_game * game, int x, int y) {
     unsigned int index = ( game->sdl->surface->height - y - 1) *  game->sdl->surface->width + x;
    cl_float3 avg;
