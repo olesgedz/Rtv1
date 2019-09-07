@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/07 20:33:14 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/09/07 20:54:10 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	camera_reposition(SDL_Keycode sym)
 		case 's':  game.gpu->camera->position = sum_cfloat3(game.gpu->camera->position, mult_cfloat3(game.gpu->camera->direction, -0.1)); break;
 		case 'a':  game.gpu->camera->position = sum_cfloat3(game.gpu->camera->position, mult_cfloat3(normalize(cross(game.gpu->camera->normal, game.gpu->camera->direction)), 0.1)); break;
 		case 'd':  game.gpu->camera->position = sum_cfloat3(game.gpu->camera->position, mult_cfloat3(normalize(cross(game.gpu->camera->normal, game.gpu->camera->direction)), -0.1)); break;
-		case 'q':  game.gpu->camera->direction = rotate(game.gpu->camera->normal, game.gpu->camera->direction, M_PI / 60); break;
-		case 'e':  game.gpu->camera->direction = rotate(game.gpu->camera->normal, game.gpu->camera->direction, -M_PI / 60); break;
+		case 'q':  game.gpu->camera->direction = rotate(game.gpu->camera->normal, game.gpu->camera->direction, M_PI / 60); reconfigure_camera(game.gpu->camera); break;
+		case 'e':  game.gpu->camera->direction = rotate(game.gpu->camera->normal, game.gpu->camera->direction, -M_PI / 60); reconfigure_camera(game.gpu->camera); break;
 		case 'z':  break;
 		case 'x':  break;
 		default: break;
@@ -140,9 +140,8 @@ void ft_filter(t_game* game)
 	}
 }
 
-t_cam			*init_camera(void)
+void			reconfigure_camera(t_cam *camera)
 {
-	t_cam		*camera;
 	cl_float3	up;
 	cl_float3	down;
 	cl_float3	right;
@@ -150,11 +149,6 @@ t_cam			*init_camera(void)
 	float		x_fov;
 	float		y_fov;
 
-	camera = (t_cam*)malloc(sizeof(t_cam));
-	camera->normal = create_cfloat3 (0.0f, 1.0f, 0.0f);
-	camera->direction = create_cfloat3 (0.0f, 0.0f, -1.0f);
-	camera->position = create_cfloat3 (0.0f, 0.1f, 2.f);
-	camera->fov = M_PI / 3;
 	x_fov = camera->fov / 2;
 	y_fov = camera->fov / 2;
 	left = rotate(camera->normal, camera->direction, x_fov);
@@ -163,6 +157,18 @@ t_cam			*init_camera(void)
 	down = rotate(cross(camera->direction, camera->normal), camera->direction, -y_fov);
 	camera->border_y = vector_diff(left, right);
 	camera->border_x = vector_diff(up, down);
+}
+
+t_cam			*init_camera(void)
+{
+	t_cam		*camera;
+
+	camera = (t_cam*)malloc(sizeof(t_cam));
+	camera->normal = create_cfloat3 (0.0f, 1.0f, 0.0f);
+	camera->direction = create_cfloat3 (0.0f, 0.0f, -1.0f);
+	camera->position = create_cfloat3 (0.0f, 0.1f, 2.f);
+	camera->fov = M_PI / 3;
+	reconfigure_camera(camera);
 	return (camera);
 }
 
@@ -363,7 +369,7 @@ void ft_update(t_game *game)
 		
 			printf("fps :%lu\n", fps);
 	#endif
-	SDL_Delay(200);
+	//SDL_Delay(5);
 	}
 }
 
