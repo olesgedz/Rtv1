@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/07 19:00:25 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/09/07 20:33:14 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ void	camera_reposition(SDL_Keycode sym)
 	{
 		case 'w':  game.gpu->camera->position = sum_cfloat3(game.gpu->camera->position, mult_cfloat3(game.gpu->camera->direction, 0.1)); break;
 		case 's':  game.gpu->camera->position = sum_cfloat3(game.gpu->camera->position, mult_cfloat3(game.gpu->camera->direction, -0.1)); break;
-		case 'a':  break;
-		case 'd':  break;
-		case 'q':  break;
-		case 'e':  break;
+		case 'a':  game.gpu->camera->position = sum_cfloat3(game.gpu->camera->position, mult_cfloat3(normalize(cross(game.gpu->camera->normal, game.gpu->camera->direction)), 0.1)); break;
+		case 'd':  game.gpu->camera->position = sum_cfloat3(game.gpu->camera->position, mult_cfloat3(normalize(cross(game.gpu->camera->normal, game.gpu->camera->direction)), -0.1)); break;
+		case 'q':  game.gpu->camera->direction = rotate(game.gpu->camera->normal, game.gpu->camera->direction, M_PI / 60); break;
+		case 'e':  game.gpu->camera->direction = rotate(game.gpu->camera->normal, game.gpu->camera->direction, -M_PI / 60); break;
 		case 'z':  break;
 		case 'x':  break;
 		default: break;
@@ -59,7 +59,6 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 			case SDL_KEYUP:
 				switch (ev->key.keysym.sym)
 				{
-					camera_reposition(ev->key.keysym.sym);
 					case SDLK_LCTRL:
 					case SDLK_RCTRL:
 					case SDLK_ESCAPE: ft_exit(NULL); break;

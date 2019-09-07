@@ -155,4 +155,5 @@ cl_float3				sum_cfloat3(cl_float3 one, cl_float3 two);
 cl_float3				rotate(cl_float3 axis, cl_float3 vector, float angle);
 cl_float3   			cross(cl_float3 one, cl_float3 two);
 cl_float3				vector_diff(cl_float3 one, cl_float3 two);
+cl_float3				normalize(cl_float3 vector);
 #endif

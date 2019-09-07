@@ -45,18 +45,23 @@ static t_ray createCamRay(const int x_coord, const int y_coord, const int width,
 	float fx = (float)x_coord / (float)width;  /* convert int in range [0 - width] to float in range [0-1] */
 	float fy = (float)y_coord / (float)height; /* convert int in range [0 - height] to float in range [0-1] */
 
-	/* calculate aspect ratio */
-	float aspect_ratio = (float)(width) / (float)(height);
-	float fx2 = (fx - 0.5f) * aspect_ratio;
-	float fy2 = fy - 0.5f;
+	// /* calculate aspect ratio */
+	// float aspect_ratio = (float)(width) / (float)(height);
+	float fx2 = (fx - 0.5f);
+	float fy2 = (fy - 0.5f);
 
 	/* determine position of pixel on screen */
-	float3 pixel_pos = (float3)(fx2, -fy2, 0.0f);
+	float3 pixel_pos = scene->camera.direction - fy2 * (scene->camera.border_x) - fx2 * (scene->camera.border_y);
 
 	/* create camera ray*/
 	t_ray ray;
 	ray.origin = scene->camera.position; /* fixed camera position */
-	ray.dir = normalize(pixel_pos - ray.origin); /* vector from camera to pixel on screen */
+	ray.dir = normalize(pixel_pos); /* vector from camera to pixel on screen */
+	if (get_global_id(0) == 0)
+	{
+		printf("%f %f %f %f\n", scene->camera.direction.x, scene->camera.direction.y, scene->camera.direction.z, length(scene->camera.direction));
+		printf("%f %f %f %f\n", scene->camera.position.x, scene->camera.position.y, scene->camera.position.z, length(scene->camera.position));
+	}
     return ray;
 }
 
