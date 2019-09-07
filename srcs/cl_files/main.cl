@@ -16,7 +16,7 @@ double	intersect_plane(const t_obj* plane, const t_ray * ray);
 
 
 #ifdef CMD_DEBUG
-#define cmdlog(x, ...) if( PIX_X == get_global_id(0) && PIX_Y == get_global_id(1) ) printf(x, __VA_ARGS__);
+#define cmdlog(x, ...) if( PIX_X == get_global_id(0) % 700 && PIX_Y == get_global_id(0) / 700 ) printf(x, __VA_ARGS__);
 #else
 #define cmdlog(x, ...) ;
 #endif
