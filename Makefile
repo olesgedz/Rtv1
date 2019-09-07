@@ -3,17 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-<<<<<<< HEAD
-#    By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/09/07 17:05:56 by sbrella          ###   ########.fr        #
-=======
 #    By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/09/07 16:31:19 by jblack-b         ###   ########.fr        #
->>>>>>> f4e27f23be43c0fa3a277ccc6dbe45b696c349bd
+#    Updated: 2019/09/07 17:20:23 by jblack-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
