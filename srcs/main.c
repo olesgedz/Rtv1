@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/07 17:10:56 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/09/07 17:12:54 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 //#define FPS
 
 t_game game;
-
 /*
 *	Funtion: handles presses mouse/keyboard
 * 	Return: value, doesnt change any parameters

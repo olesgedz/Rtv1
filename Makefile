@@ -3,10 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
+<<<<<<< HEAD
 #    By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
 #    Updated: 2019/09/07 17:05:56 by sbrella          ###   ########.fr        #
+=======
+#    By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: Invalid date        by                   #+#    #+#              #
+#    Updated: 2019/09/07 16:31:19 by jblack-b         ###   ########.fr        #
+>>>>>>> f4e27f23be43c0fa3a277ccc6dbe45b696c349bd
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +24,6 @@ FLAGS = -g
 CC = clang
 LIBRARIES = -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY) -lmath -L$(LIBMATH_DIRECTORY) -lm -framework OpenCL  -lvect -L$(LIBVECT) -lgnl -L$(LIBGNL) -lcl -L$(LIBCL)
 INCLUDES = -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)include/ -Isrcs/cl_error/ -I$(LIBGNL)include/ -I$(LIBCL)include/# -I$(LIBMATH_HEADERS)
-FRAMEWORKS = -framework OpenCL
 
 LIBFT = $(LIBFT_DIRECTORY)libft.a
 LIBFT_DIRECTORY = ./libft/
@@ -70,9 +76,6 @@ OBJS_LIST = $(patsubst %.c, %.o, $(SRCS_LIST))
 OBJS = $(addprefix $(OBJS_DIRECTORY), $(OBJS_LIST))
 SDL_LIBS = $(addprefix $(DIRECTORY)/lib/, $(LIB_LIST))
 MAKES = makes
-LIBFT = libft/libft.a
-LIBSDL_EXIST = 0
-err = no
 
 GREEN = \033[0;32m
 RED = \033[0;31m
