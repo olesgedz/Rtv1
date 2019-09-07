@@ -70,8 +70,8 @@ typedef struct 			s_cam
 	cl_float3			direction;
 	cl_float3			normal;
 	cl_float			fov;
-	cl_float3			border_left;
-	cl_float3			border_up;
+	cl_float3			border_x;
+	cl_float3			border_y;
 }						t_cam;
 
 typedef enum			e_camera_direction
@@ -152,4 +152,7 @@ t_obj 					*add_cone(cl_float3 position, float radius, cl_float3 color, cl_float
 void 					read_scene(char **argv, t_game *game);
 cl_float3				mult_cfloat3(cl_float3 one, float f);
 cl_float3				sum_cfloat3(cl_float3 one, cl_float3 two);
+cl_float3				rotate(cl_float3 axis, cl_float3 vector, float angle);
+cl_float3   			cross(cl_float3 one, cl_float3 two);
+cl_float3				vector_diff(cl_float3 one, cl_float3 two);
 #endif

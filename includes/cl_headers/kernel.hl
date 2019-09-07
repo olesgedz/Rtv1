@@ -57,8 +57,8 @@ typedef struct 			s_cam
 	float3			direction;
 	float3			normal;
 	float			fov;
-	float3			border_left;
-	float3			border_up;
+	float3			border_x;
+	float3			border_y;
 }						t_cam;
 
 typedef struct s_scene{

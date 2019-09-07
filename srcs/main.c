@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/07 17:12:54 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/09/07 18:56:58 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,13 +142,26 @@ void ft_filter(t_game* game)
 t_cam			*init_camera(void)
 {
 	t_cam		*camera;
+	cl_float3	up;
+	cl_float3	down;
+	cl_float3	right;
+	cl_float3	left;
+	float		x_fov;
+	float		y_fov;
 
 	camera = (t_cam*)malloc(sizeof(t_cam));
 	camera->normal = create_cfloat3 (0.0f, 1.0f, 0.0f);
 	camera->direction = create_cfloat3 (0.0f, 0.0f, -1.0f);
 	camera->position = create_cfloat3 (0.0f, 0.1f, 2.f);
 	camera->fov = M_PI / 3;
-	
+	x_fov = camera->fov / 2;
+	y_fov = camera->fov / 2;
+	left = rotate(camera->normal, camera->direction, x_fov);
+	right = rotate(camera->normal, camera->direction, -x_fov);
+	up = rotate(cross(camera->direction, camera->normal), camera->direction, y_fov);
+	down = rotate(cross(camera->direction, camera->normal), camera->direction, -y_fov);
+	camera->border_y = vector_diff(left, right);
+	camera->border_x = vector_diff(up, down);
 	return (camera);
 }
 
