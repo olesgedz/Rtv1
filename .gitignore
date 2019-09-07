@@ -33,3 +33,5 @@
 rtv1
 .DS_Store
 .vscode
+cmake-build-debug
+.idea
