@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/07 20:58:43 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/09/07 21:38:01 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void initScene(t_obj* objects, t_game *game, char **argv)
 	char						*secname = "sun.bmp";
 	char						*thirdname = "seamless_pawnment.bmp";
 	char						*fourthname = "concrete.bmp";
-	char						*fivename = "dead_soil.bmp";
+	char						*fivename = "ice.bmp";
 
 
 	game->textures_num 			= 5;
@@ -356,7 +356,7 @@ void opencl(char **argv)
 	cl_krl_init(&game.kernels[0], 5);
 	t_vect options;
 	vect_init(&options);
-	VECT_STRADD(&options, "-I srcs/cl_files/ -I includes/cl_headers/");
+	VECT_STRADD(&options, "-w -I srcs/cl_files/ -I includes/cl_headers/");
 	game.kernels[0].sizes[0] = sizeof(cl_int) * WIN_H * WIN_W;
 	game.kernels[0].sizes[1] =  sizeof(t_obj) * 9;
 	game.kernels[0].sizes[2] = sizeof(cl_float3) * WIN_H * WIN_W;
