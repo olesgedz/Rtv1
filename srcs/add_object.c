@@ -62,6 +62,25 @@ t_obj *add_cone(cl_float3 position, float radius, cl_float3 color, cl_float3 emi
     return(cone);
 }
 
+void			reconfigure_camera(t_cam *camera)
+{
+	cl_float3	up;
+	cl_float3	down;
+	cl_float3	right;
+	cl_float3	left;
+	float		x_fov;
+	float		y_fov;
+
+	x_fov = camera->fov / 2;
+	y_fov = camera->fov / 2;
+	left = rotate(camera->normal, camera->direction, x_fov);
+	right = rotate(camera->normal, camera->direction, -x_fov);
+	up = rotate(cross(camera->direction, camera->normal), camera->direction, y_fov);
+	down = rotate(cross(camera->direction, camera->normal), camera->direction, -y_fov);
+	camera->border_y = vector_diff(left, right);
+	camera->border_x = vector_diff(up, down);
+}
+
 t_cam *add_cam(cl_float3 position, cl_float3 direction, cl_float3 normal)
 {
     t_cam		*camera;
@@ -70,6 +89,8 @@ t_cam *add_cam(cl_float3 position, cl_float3 direction, cl_float3 normal)
 	camera->normal = normal;
 	camera->direction = direction;
 	camera->position =position;
+    camera->fov = M_PI / 3;
+	reconfigure_camera(camera);
 	return (camera);
 }
 // t_obj *add_triangle(t_vector *vertices, int color)
