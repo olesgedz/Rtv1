@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/07 20:54:10 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/09/07 20:58:43 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,26 +90,7 @@ static int toInt(float x)
 	return (int)(u_clamp(x) * 255);
 }
 
- int getSurroundingAverage(t_game * game, int x, int y) {
-    unsigned int index = ( game->sdl->surface->height - y - 1) *  game->sdl->surface->width + x;
-   cl_float3 avg;
-   cl_float3 temp;
-    int total = 1;
-	int color = 0;
-	// if(x == 0 || y == 0)
-	// 	return 0;
-	for(int j = y - 1; j < y + 1; j++)
-	{
-		for(int k = x - 1; k < x + 1; k++)
-		{
-			temp =  game->gpu->vec_temp[k + j * game->sdl->surface->width];
-			avg = (cl_float3){(avg.v4[0] + temp.v4[0]), (avg.v4[1] + temp.v4[1]), (avg.v4[2] + temp.v4[2])};
-			total++;
-		}
-	}
-	//avg = game->sdl->surface->data[x + y * game->sdl->surface->width];
-    return ft_rgb_to_hex(toInt(avg.v4[0] / total), toInt(avg.v4[1]/ total), toInt(avg.v4[2]/ total));
-  }
+
 cl_ulong * get_random(cl_ulong * random)
 {
 	int i;
@@ -121,23 +102,6 @@ cl_ulong * get_random(cl_ulong * random)
 		random[i] = rand(); 
 	}
 	return (random);
-}
-void ft_filter(t_game* game)
-{
-	int		i;
-	int		j;
-	int width = game->sdl->surface->width;
-	int height = game->sdl->surface->height;
-	j = 0;
-	while (++j < height)
-	{
-		i = 0;
-		while (++i < width)	
-		{
-			game->sdl->surface->data[i+j*width] = getSurroundingAverage(game, i, j); //game->gpu->cpuOutput[i+ j *width];
-
-		}
-	}
 }
 
 void			reconfigure_camera(t_cam *camera)
@@ -319,7 +283,6 @@ void 	ft_render(t_game* game)
 	int width = game->sdl->surface->width;
 	int height = game->sdl->surface->height;
 	j = -1;
-	//ft_run_gpu(game->gpu);
 	int r = rand() % 2;
 	printf("%d\n", r);
 	ft_run_kernel(game->kernels[0].krl);
@@ -329,7 +292,6 @@ void 	ft_render(t_game* game)
 		while (++i < width)	
 			game->sdl->surface->data[i+j*width] =  game->gpuOutput[i+ j *width];
 	}
-	//ft_filter(game);
 }
 
 /*
