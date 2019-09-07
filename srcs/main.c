@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/07 20:47:37 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/09/07 21:13:12 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 {
 	switch (ev->type)
 		{
+			//case SDL_KEYDOWN:
 			case SDL_KEYDOWN:
-			case SDL_KEYUP:
 				switch (ev->key.keysym.sym)
 				{
 					case SDLK_LCTRL:
