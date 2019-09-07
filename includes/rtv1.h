@@ -99,7 +99,7 @@ typedef struct s_gpu
 	char				*kernel_source;
 	int 				*cpuOutput;
 	cl_float3			*vec_temp;
-	t_obj				*spheres;
+	t_obj				*objects;
 	cl_mem				cl_bufferOut;
 	cl_mem				cl_cpuSpheres;
 	cl_mem				cl_cpu_vectemp;
@@ -117,6 +117,7 @@ typedef struct			s_game
 	int n_spheres;
 	int n_cones;
 	int n_cylinders;
+	int obj_quantity;
 	int wsad[8];
 	t_vec3 origin;
 	t_gpu *gpu;
@@ -145,4 +146,10 @@ void 					camera_move
 						t_camera_direction direction,
 						float length);
 void					get_texture(char *name, t_txture *texture);
+
+t_obj *add_plane(cl_float3 position, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection, cl_float3 v);
+t_obj *add_sphere(cl_float3 position, float radius, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection);
+t_obj *add_cylinder(cl_float3 position, float radius, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection, cl_float3 v);
+t_obj *add_cone(cl_float3 position, float radius, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection, cl_float3 v);
+void read_scene(char **argv, t_game *game);
 #endif

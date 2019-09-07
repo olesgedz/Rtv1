@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+         #
+#    By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/16 12:58:07 by jblack-b          #+#    #+#              #
-#    Updated: 2019/09/05 16:24:07 by jblack-b         ###   ########.fr        #
+#    Updated: 2019/09/07 15:55:36 by srobert-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,8 @@ SRCS_DIRECTORY = ./srcs/
 
 SRCS_LIST = main.c\
 			cl_lib/gpu_init.c\
-			textures.c
+			textures.c\
+			add_object.c parse.c
 
 SRCS_LIST += camera/camera_new.c camera/camera_move.c
 OBJS_DIRECTORY = objects/
