@@ -254,9 +254,9 @@ __global float3 * vect_temp,  __global ulong * random,  __global t_txture *textu
 	 unsigned int seed0 = x_coord + rng(random);
 	 unsigned int seed1 = y_coord + rng(random);
 	// check_random(work_item_id, seed0, seed1);
-	if (samples == 15)
-		finalcolor  = 0;
-	else
+	// if (samples == 15)
+	// 	finalcolor  = 0;
+	// else
 		finalcolor = vect_temp[x_coord + y_coord * width];
 	
 	scene = scene_new(objects, n_objects, width, height, samples, random, textures, camera);

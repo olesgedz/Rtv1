@@ -69,6 +69,9 @@ typedef struct 			s_cam
 	cl_float3			position;
 	cl_float3			direction;
 	cl_float3			normal;
+	cl_float			fov;
+	cl_float3			border_left;
+	cl_float3			border_up;
 }						t_cam;
 
 typedef enum			e_camera_direction
@@ -142,9 +145,11 @@ cl_float3				cl_add(cl_float3 v1, cl_float3 v2);
 // 						float length);
 void					get_texture(char *name, t_txture *texture);
 
-t_obj *add_plane(cl_float3 position, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection, cl_float3 v);
-t_obj *add_sphere(cl_float3 position, float radius, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection);
-t_obj *add_cylinder(cl_float3 position, float radius, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection, cl_float3 v);
-t_obj *add_cone(cl_float3 position, float radius, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection, cl_float3 v);
-void read_scene(char **argv, t_game *game);
+t_obj					*add_plane(cl_float3 position, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection, cl_float3 v);
+t_obj					*add_sphere(cl_float3 position, float radius, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection);
+t_obj 					*add_cylinder(cl_float3 position, float radius, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection, cl_float3 v);
+t_obj 					*add_cone(cl_float3 position, float radius, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection, cl_float3 v);
+void 					read_scene(char **argv, t_game *game);
+cl_float3				mult_cfloat3(cl_float3 one, float f);
+cl_float3				sum_cfloat3(cl_float3 one, cl_float3 two);
 #endif

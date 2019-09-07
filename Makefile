@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+         #
+#    By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/09/07 16:17:48 by srobert-         ###   ########.fr        #
+#    Updated: 2019/09/07 17:05:56 by sbrella          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,8 @@ SRCS_DIRECTORY = ./srcs/
 SRCS_LIST = main.c\
 			cl_lib/gpu_init.c\
 			textures.c\
-			add_object.c parse.c
+			add_object.c parse.c\
+			cl_float3_manage.c
 
 OBJS_DIRECTORY = objects/
 OBJS_LIST = $(patsubst %.c, %.o, $(SRCS_LIST))
