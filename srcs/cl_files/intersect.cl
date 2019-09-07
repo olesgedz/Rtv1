@@ -12,7 +12,7 @@ static float ft_solve(float a, float b, float c)
 	disc = sqrt(disc);
 	if ((res = (-b - disc) * temp) > EPSILON)
 		return res;
-    // if ((res = (-b + disc) * temp) > EPSILON)//WTF???? PROBABLY BROKEN
+    // if ((res = (-b + disc) * temp) > EPSILON)
 	// 	return res;
 	return(0.f);
 }
