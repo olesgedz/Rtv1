@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/07 21:54:06 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/09/08 18:17:51 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 //aelinor-
 //home
 /*
-* ! We can't use global variables 
+* ! We can't use global variables
 */
 
 //#define FPS
@@ -75,7 +75,7 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 
 					game.cam_num--;
 					if (game.cam_num < 0)
-						game.cam_num = game.cam_quantity - 1; 
+						game.cam_num = game.cam_quantity - 1;
 					break;
 					case '.': game.wsad[9] = ev->type==SDL_KEYDOWN;
 					game.gpu->samples = 5;
@@ -84,12 +84,12 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 
 					game.cam_num++;
 					if (game.cam_num >= game.cam_quantity)
-						game.cam_num = 0; 
+						game.cam_num = 0;
 					break;
 					default: break;
 				}
 				break;
-			case SDL_MOUSEBUTTONDOWN:  
+			case SDL_MOUSEBUTTONDOWN:
 				break;
 			case SDL_QUIT: ft_exit(NULL);
 		}
@@ -102,7 +102,7 @@ static float u_clamp(float x)
 }
 
 static int toInt(float x)
-{ 
+{
 	return (int)(u_clamp(x) * 255);
 }
 
@@ -115,7 +115,7 @@ cl_ulong * get_random(cl_ulong * random)
 	srand(21);
 	while (++i < WIN_H * WIN_W)
 	{
-		random[i] = rand(); 
+		random[i] = rand();
 	}
 	return (random);
 }
@@ -174,7 +174,7 @@ void initScene(t_obj* objects, t_game *game, char **argv)
 	// objects[1].reflection 	= 0.f;
 
 	// // lightsource
-	// objects[2].radius   	= 0.1f; 
+	// objects[2].radius   	= 0.1f;
 	// objects[2].position 	= create_cfloat3 (0.0f, 0.2f, 1.0f);
 	// objects[2].color    	= create_cfloat3 (0.0f, 0.0f, 0.0f);
 	// objects[2].emission 	= create_cfloat3 (40.0f, 40.0f, 40.0f);
@@ -234,7 +234,7 @@ void initScene(t_obj* objects, t_game *game, char **argv)
 	// objects[4].texture 		= 4;
 
 
-	// // front wall 
+	// // front wall
 	// objects[5].radius   	= 200.0f;
 	// objects[5].position 	= create_cfloat3 (0.0f, 0.0f, 2.0f);
 	// objects[5].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
@@ -287,7 +287,7 @@ void 	ft_render(t_game* game)
 	while (++j < height)
 	{
 		i = -1;
-		while (++i < width)	
+		while (++i < width)
 			game->sdl->surface->data[i+j*width] =  game->gpuOutput[i+ j *width];
 	}
 }
@@ -309,11 +309,12 @@ void ft_update(t_game *game)
 	t_rectangle r = (t_rectangle){(t_point){0,0},(t_size){WIN_W, WIN_H}};
 	clock_t current_ticks, delta_ticks;
 	clock_t fps = 0;
+	ft_surface_clear(game->sdl->surface);
 	while(TRUE)
 	{
 		current_ticks = clock();
 	//	printf("%d cam num\n", game->cam_num);
-		ft_surface_clear(game->sdl->surface);
+
 		ft_input(game->sdl, &ft_input_keys);
 		if (game->init_render || game->wsad[0] || game->wsad[1] ||
 			game->wsad[2] || game->wsad[3] || game->wsad[4] || game->wsad[5] ||
@@ -327,7 +328,7 @@ void ft_update(t_game *game)
 				 delta_ticks = clock() - current_ticks; //the time, in ms, that took to render the scene
     if(delta_ticks > 0)
         fps = CLOCKS_PER_SEC / delta_ticks;
-		
+
 			printf("fps :%lu\n", fps);
 	#endif
 	//SDL_Delay(5);
@@ -344,7 +345,7 @@ void opencl(char **argv)
 	game.gpu->vec_temp = ft_memalloc(sizeof(cl_float3) * WIN_H * WIN_W);
 	game.gpu->random = get_random(game.gpu->random);
 	game.gpu->samples = 0;
-	game.cam_num = 0;	
+	game.cam_num = 0;
 	cl_mem			textures;
 	initScene(game.gpu->objects, &game, argv);
 	cl_init(game.cl_info);
