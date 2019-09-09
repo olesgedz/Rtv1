@@ -6,7 +6,7 @@
 #    By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/09/07 19:00:23 by sbrella          ###   ########.fr        #
+#    Updated: 2019/09/09 19:08:40 by sbrella          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,26 +15,26 @@ NAME = rtv1
 
 FLAGS = -g
 CC = clang
-LIBRARIES = -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY) -lmath -L$(LIBMATH_DIRECTORY) -lm -framework OpenCL  -lvect -L$(LIBVECT) -lgnl -L$(LIBGNL) -lcl -L$(LIBCL)
-INCLUDES = -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)include/ -Isrcs/cl_error/ -I$(LIBGNL)include/ -I$(LIBCL)include/# -I$(LIBMATH_HEADERS)
+LIBRARIES = -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY)  -lm -framework OpenCL  -lvect -L$(LIBVECT) -lgnl -L$(LIBGNL) -lcl -L$(LIBCL)
+INCLUDES = -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)include/ -Isrcs/cl_error/ -I$(LIBGNL)include/ -I$(LIBCL)include/
 
 LIBFT = $(LIBFT_DIRECTORY)libft.a
-LIBFT_DIRECTORY = ./libft/
 LIBFT_HEADERS = $(LIBFT_DIRECTORY)includes/
 
 LIBMATH = $(LIBMATH_DIRECTORY)libmath.a
 LIBMATH_DIRECTORY = ./libmath/
 LIBMATH_HEADERS = $(LIBMATH_DIRECTORY)includes/
 
-LIBVECT = libvect/
-LIBCL	= libcl/
-LIBGNL	= libgnl/
+LIBFT_DIRECTORY = libs/libft/
+LIBVECT = libs/libvect/
+LIBCL	= libs/libcl/
+LIBGNL	= libs/libgnl/
+LIBSDL_DIRECTORY = libs/libsdl/
 
 
 SDL_HEADERS = include/
 
 LIBSDL = $(LIBSDL_DIRECTORY)libsdl.a
-LIBSDL_DIRECTORY = ./libsdl/
 LIBSDL_HEADERS = $(LIBSDL_DIRECTORY)includes/
 
 HEADERS_DIRECTORY = ./includes/
@@ -92,14 +92,13 @@ CURRENT_FILES = $(shell find $(DIRECTORY)/objects/ -type f 2> /dev/null | wc -l 
 all: $(MAKES) $(NAME)
 
 
-$(NAME): $(LIBFT)  $(LIBSDL) $(LIBCL) $(LIBGNL)  $(LIBVECT) $(OBJS_DIRECTORY) $(OBJS) $(HEADERS) $(LIBMATH) 
+$(NAME): $(LIBFT)  $(LIBSDL) $(LIBCL) $(LIBGNL)  $(LIBVECT) $(OBJS_DIRECTORY) $(OBJS) $(HEADERS)
 	@$(CC) $(FLAGS) $(LIBSDL) $(INCLUDES) $(OBJS) $(SDL_CFLAGS) $(SDL_LDFLAGS) -o $(NAME) $(LIBRARIES)
 	@echo "$(CLEAR_LINE)[`expr $(CURRENT_FILES) '*' 100 / $(TOTAL_FILES)`%] $(COL_BLUE)[$(NAME)] $(COL_GREEN)Finished compilation. Output file : $(COL_VIOLET)$(PWD)/$(NAME)$(COL_END)"
 
 $(MAKES):
 	@$(MAKE) -sC $(LIBFT_DIRECTORY)
 	@$(MAKE) -sC $(LIBSDL_DIRECTORY)
-	@$(MAKE) -sC $(LIBMATH_DIRECTORY)
 	@$(MAKE) -sC $(LIBVECT)
 	@$(MAKE) -sC $(LIBGNL)
 	@$(MAKE) -sC $(LIBCL)
