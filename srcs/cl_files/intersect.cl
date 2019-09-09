@@ -40,7 +40,7 @@ static float intersect_sphere(const t_obj* sphere,  t_ray *  ray) /* version usi
 	return (ft_solve(a, b, c));
 }
 
-double		intersect_plane(const t_obj* plane, const t_ray *ray)
+float		intersect_plane(const t_obj* plane, const t_ray *ray)
 {
 	float	a;
 	float	b;
@@ -53,7 +53,7 @@ double		intersect_plane(const t_obj* plane, const t_ray *ray)
 }
 
 
-static double		intersect_cylinder(const t_obj* cylinder, const t_ray *  ray)
+static float		intersect_cylinder(const t_obj* cylinder, const t_ray *  ray)
 {
 	float3	x = ray->origin - cylinder->position;
 	double	a = dot(ray->dir, cylinder->v);

@@ -9,7 +9,7 @@
 static float get_random( int * seed0, int * seed1);
 float3 reflect(float3 vector, float3 n);
 float3 refract(float3 vector, float3 n, float refrIndex);
-double	intersect_plane(const t_obj* plane, const t_ray * ray);
+float	intersect_plane(const t_obj* plane, const t_ray * ray);
 
 #define PIX_X 500
 #define PIX_Y 500
@@ -241,17 +241,13 @@ __global float3 * vect_temp,  __global ulong * random,  __global t_txture *textu
 	/* seeds for random number generator */
 	 unsigned int seed0 = x_coord + rng(random);
 	 unsigned int seed1 = y_coord + rng(random);
-	// check_random(work_item_id, seed0, seed1);
-	// if (samples == 15)
-	// 	finalcolor  = 0;
-	// else
-		finalcolor = vect_temp[x_coord + y_coord * width];
+	finalcolor = vect_temp[x_coord + y_coord * width];
 	
 	scene = scene_new(objects, n_objects, width, height, samples, random, textures, camera);
 	intersection.ray = createCamRay(scene.x_coord, scene.y_coord, width, height, &scene);
 	intersection_reset(&intersection.ray);
 	print_debug(scene.samples, scene.width, &scene);
-	for (int i = 0; i < 15; i++)
+	for (int i = 0; i < 5; i++)
 	{	
 		finalcolor += trace(&scene,  &intersection, &seed0, &seed1);
 	}

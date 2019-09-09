@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/09 19:20:04 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/09/09 19:56:39 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 				game.cl_info->ret = cl_write(game.cl_info, game.kernels[0].args[2], sizeof(cl_float3) * WIN_H * WIN_W, game.gpu->vec_temp);
 				rotate_horizontal(&(game.gpu->camera[game.cam_num]), game.gpu->camera[game.cam_num].fov / WIN_W * ev->motion.xrel);
 				rotate_vertical(&(game.gpu->camera[game.cam_num]), game.gpu->camera[game.cam_num].fov /WIN_H * -ev->motion.yrel);
+				reconfigure_camera(&game.gpu->camera[game.cam_num]);
 			}
 			break;
 			case SDL_QUIT: ft_exit(NULL);
@@ -172,7 +173,7 @@ void initScene(t_obj* objects, t_game *game, char **argv)
 	int w = WIN_W;
 	int h = WIN_H;
 	size_t global = WIN_W * WIN_H;
-	game.gpu->samples += 15;
+	game.gpu->samples += 5;
 	const size_t count = global;
 	game.cl_info->ret |= clSetKernelArg(kernel, 5, sizeof(cl_int), &w);
 	ERROR(game.cl_info->ret);
