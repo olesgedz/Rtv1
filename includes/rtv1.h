@@ -32,7 +32,8 @@ typedef enum e_figure
 	SPHERE,
 	CYLINDER,
 	CONE,
-	PLANE
+	PLANE,
+	TRIANGLE
 } 						t_type;
 
 typedef struct s_txture
@@ -53,7 +54,7 @@ typedef struct Object{
 	cl_float reflection;
 	cl_float plane_d;
 	cl_int		texture;
-
+	cl_float3	vertices[3];
 } t_obj;
 
 typedef struct s_ray
@@ -163,4 +164,5 @@ cl_float3				normalize(cl_float3 vector);
 void					reconfigure_camera(t_cam *camera);
 void					rotate_vertical(t_cam *camera, float angle);
 void					rotate_horizontal(t_cam *camera, float angle);
+t_obj *add_triangle(cl_float3 *vertices, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection);
 #endif

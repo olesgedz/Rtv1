@@ -35,7 +35,7 @@ typedef struct		s_intersection
 
 typedef enum e_figure
 {
-	 SPHERE, CYLINDER, CONE, PLANE
+	 SPHERE, CYLINDER, CONE, PLANE, TRIANGLE
 } t_type;
 
 typedef struct Object{
@@ -49,6 +49,7 @@ typedef struct Object{
 	float reflection;
 	float plane_d;
 	int		texture;
+	float3	vertices[3];
 } t_obj;
 
 typedef struct 			s_cam

@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 19:04:09 by srobert-          #+#    #+#             */
-/*   Updated: 2019/09/07 20:29:46 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/09/09 23:17:14 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,40 +237,49 @@ void parse_cam(char **data, t_game *game)
 	ft_cam_push(game, add_cam(position, v, normal));
 }
 
-// static void parse_triangle(char **data, t_object **list)
-// {
-//     char        **vec;
-//     int         color;
-//     t_vector    *vertices;
+static void parse_triangle(char **data, t_game *game)
+{
+    char        **vec;
+    cl_float3    *vertices;
+	cl_float3 color;
+	cl_float3 emition;
+	cl_float3 v;
+	cl_int texture;
+	cl_float reflection;
 
-//     vertices = (t_vector*)malloc(sizeof(t_vector) * 3);
-//     if (data[1] == NULL || data[2] == NULL || data[3] == NULL || data[4] == NULL)
-//         terminate("missing data of triangle: not enough arguments!\n");
-//     vec = ft_strsplit(data[1], ',');
-//     if (vec[0] == NULL || vec[1] == NULL || vec[2] == NULL)
-//         terminate("missing data of triangle's first vertice!\n");
-//     vertices[0].x = ft_atoi(vec[0]);
-//     vertices[0].y = ft_atoi(vec[1]);
-//     vertices[0].z = ft_atoi(vec[2]);
-//     feel_free(vec);
-//     vec = ft_strsplit(data[2], ',');
-//     if (vec[0] == NULL || vec[1] == NULL || vec[2] == NULL)
-//         terminate("missing data of triangle's second vertice!\n");
-//     vertices[1].x = ft_atoi(vec[0]);
-//     vertices[1].y = ft_atoi(vec[1]);
-//     vertices[1].z = ft_atoi(vec[2]);
-//     feel_free(vec);
-//     vec = ft_strsplit(data[3], ',');
-//     if (vec[0] == NULL || vec[1] == NULL || vec[2] == NULL)
-//         terminate("missing data of triangle's third vertice!\n");
-//     vertices[2].x = ft_atoi(vec[0]);
-//     vertices[2].y = ft_atoi(vec[1]);
-//     vertices[2].z = ft_atoi(vec[2]);
-//     feel_free(vec);
-//     free(vec);
-//     color = ft_atoi_base(data[4], 16);
-//     obj_lstadd(list, add_triangle(vertices, color));
-// }
+    vertices = (cl_float3*)malloc(sizeof(cl_float3) * 3);
+    if (data[1] == NULL || data[2] == NULL || data[3] == NULL || data[4] == NULL || data[5] == NULL || data[6] == NULL || data[7] == NULL)
+        terminate("missing data of triangle: not enough arguments!\n");
+    vec = ft_strsplit(data[1], ',');
+    if (vec[0] == NULL || vec[1] == NULL || vec[2] == NULL)
+        terminate("missing data of triangle's first vertice!\n");
+    vertices[0] = create_cfloat3(atof(vec[0]), atof(vec[1]), atof(vec[2]));
+    feel_free(vec);
+    vec = ft_strsplit(data[2], ',');
+    if (vec[0] == NULL || vec[1] == NULL || vec[2] == NULL)
+        terminate("missing data of triangle's second vertice!\n");
+	vertices[1] = create_cfloat3(atof(vec[0]), atof(vec[1]), atof(vec[2]));
+    feel_free(vec);
+    vec = ft_strsplit(data[3], ',');
+    if (vec[0] == NULL || vec[1] == NULL || vec[2] == NULL)
+        terminate("missing data of triangle's third vertice!\n");
+    vertices[2] = create_cfloat3(atof(vec[0]), atof(vec[1]), atof(vec[2]));
+    feel_free(vec);
+	vec = ft_strsplit(data[4], ',');
+	if (vec[0] == NULL || vec[1] == NULL || vec[2] == NULL)
+        terminate("missing data of triangle's color vector!\n");
+	color = create_cfloat3(atof(vec[0]), atof(vec[1]), atof(vec[2]));
+	feel_free(vec);
+	vec = ft_strsplit(data[5], ',');
+	if (vec[0] == NULL || vec[1] == NULL || vec[2] == NULL)
+        terminate("missing data of triangle's emition vector!\n");
+	emition = create_cfloat3(atof(vec[0]), atof(vec[1]), atof(vec[2]));
+	feel_free(vec);
+    free(vec);
+	reflection = atof(data[6]);
+	texture = (cl_int)ft_atoi(data[7]);
+	ft_object_push(game, add_triangle(vertices, color, emition, texture, reflection));
+}
 
 void read_scene(char **argv, t_game *game)
 {
@@ -305,8 +314,8 @@ void read_scene(char **argv, t_game *game)
 			parse_cone(data, game);
 		else if (ft_strcmp(data[0], "CAM") == 0)
 		    parse_cam(data, game);
-		// else if (ft_strcmp(data[0], "TRIANGLE") == 0)
-		//     parse_triangle(data, &objects->bodies);
+		else if (ft_strcmp(data[0], "TRIANGLE") == 0)
+		    parse_triangle(data, game);
 		feel_free(data);
 		free(line);   
 	}

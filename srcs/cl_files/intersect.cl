@@ -65,3 +65,37 @@ static float		intersect_cylinder(const t_obj* cylinder, const t_ray *  ray)
 	return (ft_solve(a, b, c));
 }
 
+static int inside_triangle(const t_obj* triangle, float3 collision)
+{
+	float3 edge_0;
+	float3 edge_1;
+	float3 edge_2;
+	float3 c_0;
+	float3 c_1;
+	float3 c_2;
+
+	c_0 = collision - triangle->vertices[0];
+	c_1 = collision - triangle->vertices[1];
+	c_2 = collision - triangle->vertices[2];
+	edge_0 = triangle->vertices[1] - triangle->vertices[0];
+	edge_1 = triangle->vertices[2] - triangle->vertices[1];
+	edge_2 = triangle->vertices[0] - triangle->vertices[2];
+	if (dot(triangle->v, cross(edge_0, c_0)) > 0 &&
+		dot(triangle->v, cross(edge_1, c_1)) > 0 &&
+		dot(triangle->v, cross(edge_2, c_2)) > 0)
+		return(1);
+	return(0);
+}
+
+static float		intersect_triangle(const t_obj* triangle, const t_ray *  ray)
+{
+	float	a;
+	float	b;
+	a = dot(triangle->v, ray->dir);
+	if (fabs(a) < EPSILON)
+		return (0);
+	b = -(dot(ray->origin - triangle->position, triangle->v)) / a;
+	if (!inside_triangle(triangle, ray->origin + ray->dir * b))
+		return (0);
+	return (b < EPSILON) ? 0 : b;
+}

@@ -93,19 +93,23 @@ t_cam *add_cam(cl_float3 position, cl_float3 direction, cl_float3 normal)
 	reconfigure_camera(camera);
 	return (camera);
 }
-// t_obj *add_triangle(t_vector *vertices, int color)
-// {
-//     t_obj *triangle;
-//     t_vector ab;
-// 	t_vector ac;
+t_obj *add_triangle(cl_float3 *vertices, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection)
+{
+    t_obj *triangle;
+    cl_float3 ab;
+	cl_float3 ac;
 
-// 	ab = vector_diff(vertices[1], vertices[0]);
-// 	ac = vector_diff(vertices[2], vertices[0]);
-//     triangle = (t_obj*)malloc(sizeof(t_obj));
-//     // triangle->plane_norm = vector_normalize(cross_product(ab, ac));
-//     triangle->plane_norm = cross_product(ab, ac);
-//     triangle->type = TRIANGLE;
-//     triangle->vertices = vertices;
-//     triangle->color = color;
-//     return(triangle);
-// }
+	ab = vector_diff(vertices[1], vertices[0]);
+	ac = vector_diff(vertices[2], vertices[0]);
+    triangle = (t_obj*)malloc(sizeof(t_obj));
+    triangle->v = normalize(cross(ab, ac));
+    triangle->type = TRIANGLE;
+    triangle->vertices[0] = vertices[0];
+    triangle->vertices[1] = vertices[1];
+    triangle->vertices[2] = vertices[2];
+    triangle->color = color;
+	triangle->emission = emition;
+	triangle->texture = texture;
+	triangle->reflection = reflection;
+    return(triangle);
+}
