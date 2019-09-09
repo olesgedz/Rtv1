@@ -34,9 +34,10 @@ float3			get_color_plane(t_obj object, float3 hitpoint, t_scene *scene)
 		vect = normalize((float3){object.v[1], -object.v[0], 0});
 	else
 		vect = (float3){0.0f, 1.0f, 0.0f};
+	// hitpoint = normalize(hitpoint);
 	secvect = cross(vect, object.v);
-	u = 0.5 + dot(vect, hitpoint) / 2;
-	v = 0.5 + dot(secvect, hitpoint) / 2;
+	u = 0.5 + fmod(dot(vect, hitpoint), 1.0f) / 2;
+	v = 0.5 + fmod(dot(secvect, hitpoint), 1.0f) / 2;
 	texture = &((scene->textures)[object.texture - 1]);
 	i = ((int)(v * (float)(texture->height - 1))) * (texture->width) + (int)(u * (float)(texture->width - 1));
 	return(cl_int_to_float3(texture->texture[i]));

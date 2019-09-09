@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2019/09/07 21:13:12 by jblack-b         ###   ########.fr       */
+=======
+/*   Updated: 2019/09/08 18:17:51 by lminta           ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +21,10 @@
 //aelinor-
 //home
 /*
-* ! We can't use global variables 
+* ! We can't use global variables
 */
 
 //#define FPS
-
 t_game game;
 /*
 *	Funtion: handles presses mouse/keyboard
@@ -39,12 +42,12 @@ void	camera_reposition(SDL_Keycode sym)
 	game.gpu->samples = 0;
 	switch (sym)
 	{
-		case 'w':  game.gpu->camera->position = sum_cfloat3(game.gpu->camera->position, mult_cfloat3(game.gpu->camera->direction, 0.1)); break;
-		case 's':  game.gpu->camera->position = sum_cfloat3(game.gpu->camera->position, mult_cfloat3(game.gpu->camera->direction, -0.1)); break;
-		case 'a':  game.gpu->camera->position = sum_cfloat3(game.gpu->camera->position, mult_cfloat3(normalize(cross(game.gpu->camera->normal, game.gpu->camera->direction)), 0.1)); break;
-		case 'd':  game.gpu->camera->position = sum_cfloat3(game.gpu->camera->position, mult_cfloat3(normalize(cross(game.gpu->camera->normal, game.gpu->camera->direction)), -0.1)); break;
-		case 'q':  game.gpu->camera->direction = rotate(game.gpu->camera->normal, game.gpu->camera->direction, M_PI / 60); break;
-		case 'e':  game.gpu->camera->direction = rotate(game.gpu->camera->normal, game.gpu->camera->direction, -M_PI / 60); break;
+		case 'w':  game.gpu->camera[game.cam_num].position = sum_cfloat3(game.gpu->camera[game.cam_num].position, mult_cfloat3(game.gpu->camera[game.cam_num].direction, 0.1)); break;
+		case 's':  game.gpu->camera[game.cam_num].position = sum_cfloat3(game.gpu->camera[game.cam_num].position, mult_cfloat3(game.gpu->camera[game.cam_num].direction, -0.1)); break;
+		case 'a':  game.gpu->camera[game.cam_num].position = sum_cfloat3(game.gpu->camera[game.cam_num].position, mult_cfloat3(normalize(cross(game.gpu->camera[game.cam_num].normal, game.gpu->camera[game.cam_num].direction)), 0.1)); break;
+		case 'd':  game.gpu->camera[game.cam_num].position = sum_cfloat3(game.gpu->camera[game.cam_num].position, mult_cfloat3(normalize(cross(game.gpu->camera[game.cam_num].normal, game.gpu->camera[game.cam_num].direction)), -0.1)); break;
+		case 'q':  game.gpu->camera[game.cam_num].direction = rotate(game.gpu->camera[game.cam_num].normal, game.gpu->camera[game.cam_num].direction, M_PI / 60); reconfigure_camera(&game.gpu->camera[game.cam_num]); break;
+		case 'e':  game.gpu->camera[game.cam_num].direction = rotate(game.gpu->camera[game.cam_num].normal, game.gpu->camera[game.cam_num].direction, -M_PI / 60); reconfigure_camera(&game.gpu->camera[game.cam_num]); break;
 		case 'z':  break;
 		case 'x':  break;
 		default: break;
@@ -70,10 +73,28 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 					case 'e': game.wsad[5] = ev->type==SDL_KEYDOWN; camera_reposition(ev->key.keysym.sym); break;
 					case 'z': game.wsad[6] = ev->type==SDL_KEYDOWN; break;
 					case 'x': game.wsad[7] = ev->type==SDL_KEYDOWN; break;
+					case ',': game.wsad[8] = ev->type==SDL_KEYDOWN;
+					game.gpu->samples = 5;
+					game.gpu->vec_temp = ft_memset(game.gpuOutput, 0, sizeof(cl_float3) * game.image->height * game.image->width);
+					game.cl_info->ret = cl_write(game.cl_info, game.kernels[0].args[2], sizeof(cl_float3) * WIN_H * WIN_W, game.gpu->vec_temp);
+
+					game.cam_num--;
+					if (game.cam_num < 0)
+						game.cam_num = game.cam_quantity - 1;
+					break;
+					case '.': game.wsad[9] = ev->type==SDL_KEYDOWN;
+					game.gpu->samples = 5;
+					game.gpu->vec_temp = ft_memset(game.gpuOutput, 0, sizeof(cl_float3) * game.image->height * game.image->width);
+					game.cl_info->ret = cl_write(game.cl_info, game.kernels[0].args[2], sizeof(cl_float3) * WIN_H * WIN_W, game.gpu->vec_temp);
+
+					game.cam_num++;
+					if (game.cam_num >= game.cam_quantity)
+						game.cam_num = 0;
+					break;
 					default: break;
 				}
 				break;
-			case SDL_MOUSEBUTTONDOWN:  
+			case SDL_MOUSEBUTTONDOWN:
 				break;
 			case SDL_QUIT: ft_exit(NULL);
 		}
@@ -86,7 +107,7 @@ static float u_clamp(float x)
 }
 
 static int toInt(float x)
-{ 
+{
 	return (int)(u_clamp(x) * 255);
 }
 
@@ -99,34 +120,23 @@ cl_ulong * get_random(cl_ulong * random)
 	srand(21);
 	while (++i < WIN_H * WIN_W)
 	{
-		random[i] = rand(); 
+		random[i] = rand();
 	}
 	return (random);
 }
 
+
+
 t_cam			*init_camera(void)
 {
 	t_cam		*camera;
-	cl_float3	up;
-	cl_float3	down;
-	cl_float3	right;
-	cl_float3	left;
-	float		x_fov;
-	float		y_fov;
 
 	camera = (t_cam*)malloc(sizeof(t_cam));
 	camera->normal = create_cfloat3 (0.0f, 1.0f, 0.0f);
 	camera->direction = create_cfloat3 (0.0f, 0.0f, -1.0f);
 	camera->position = create_cfloat3 (0.0f, 0.1f, 2.f);
 	camera->fov = M_PI / 3;
-	x_fov = camera->fov / 2;
-	y_fov = camera->fov / 2;
-	left = rotate(camera->normal, camera->direction, x_fov);
-	right = rotate(camera->normal, camera->direction, -x_fov);
-	up = rotate(cross(camera->direction, camera->normal), camera->direction, y_fov);
-	down = rotate(cross(camera->direction, camera->normal), camera->direction, -y_fov);
-	camera->border_y = vector_diff(left, right);
-	camera->border_x = vector_diff(up, down);
+	reconfigure_camera(camera);
 	return (camera);
 }
 
@@ -136,12 +146,12 @@ void initScene(t_obj* objects, t_game *game, char **argv)
 	char						*secname = "sun.bmp";
 	char						*thirdname = "seamless_pawnment.bmp";
 	char						*fourthname = "concrete.bmp";
-	char						*fivename = "dead_soil.bmp";
+	char						*fivename = "ice.bmp";
 
 
 	game->textures_num 			= 5;
 	game->textures 				= (t_txture*)malloc(sizeof(t_txture) * game->textures_num);
-	game->gpu->camera			= init_camera();
+	game->gpu->camera			= NULL;
 	get_texture(name, &(game->textures[0]));
 	get_texture(secname, &(game->textures[1]));
 	get_texture(thirdname, &(game->textures[2]));
@@ -169,7 +179,7 @@ void initScene(t_obj* objects, t_game *game, char **argv)
 	// objects[1].reflection 	= 0.f;
 
 	// // lightsource
-	// objects[2].radius   	= 0.1f; 
+	// objects[2].radius   	= 0.1f;
 	// objects[2].position 	= create_cfloat3 (0.0f, 0.2f, 1.0f);
 	// objects[2].color    	= create_cfloat3 (0.0f, 0.0f, 0.0f);
 	// objects[2].emission 	= create_cfloat3 (40.0f, 40.0f, 40.0f);
@@ -229,7 +239,7 @@ void initScene(t_obj* objects, t_game *game, char **argv)
 	// objects[4].texture 		= 4;
 
 
-	// // front wall 
+	// // front wall
 	// objects[5].radius   	= 200.0f;
 	// objects[5].position 	= create_cfloat3 (0.0f, 0.0f, 2.0f);
 	// objects[5].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
@@ -245,18 +255,17 @@ void initScene(t_obj* objects, t_game *game, char **argv)
 	int w = WIN_W;
 	int h = WIN_H;
 	size_t global = WIN_W * WIN_H;
-	int n_objects = 9;
 	game.gpu->samples += 5;
 	const size_t count = global;
 	game.cl_info->ret |= clSetKernelArg(kernel, 5, sizeof(cl_int), &w);
 	ERROR(game.cl_info->ret);
 	game.cl_info->ret |= clSetKernelArg(kernel, 6, sizeof(cl_int), &h);
 	ERROR(game.cl_info->ret);
-	game.cl_info->ret |= clSetKernelArg(kernel, 7, sizeof(cl_int), &n_objects);
+	game.cl_info->ret |= clSetKernelArg(kernel, 7, sizeof(cl_int), &game.obj_quantity);
 	ERROR(game.cl_info->ret);
 	game.cl_info->ret |= clSetKernelArg(kernel, 8, sizeof(cl_int), &game.gpu->samples);
 	ERROR(game.cl_info->ret);
-	game.cl_info->ret |= clSetKernelArg(kernel, 9, sizeof(t_cam), game.gpu->camera);
+	game.cl_info->ret |= clSetKernelArg(kernel, 9, sizeof(t_cam), &game.gpu->camera[game.cam_num]);
 	ERROR(game.cl_info->ret);
 	game.cl_info->ret = cl_krl_exec(game.cl_info, kernel, 1, &global);
 	ERROR(game.cl_info->ret);
@@ -283,7 +292,7 @@ void 	ft_render(t_game* game)
 	while (++j < height)
 	{
 		i = -1;
-		while (++i < width)	
+		while (++i < width)
 			game->sdl->surface->data[i+j*width] =  game->gpuOutput[i+ j *width];
 	}
 }
@@ -305,14 +314,16 @@ void ft_update(t_game *game)
 	t_rectangle r = (t_rectangle){(t_point){0,0},(t_size){WIN_W, WIN_H}};
 	clock_t current_ticks, delta_ticks;
 	clock_t fps = 0;
+	ft_surface_clear(game->sdl->surface);
 	while(TRUE)
 	{
 		current_ticks = clock();
-		ft_surface_clear(game->sdl->surface);
+	//	printf("%d cam num\n", game->cam_num);
+
 		ft_input(game->sdl, &ft_input_keys);
 		if (game->init_render || game->wsad[0] || game->wsad[1] ||
 			game->wsad[2] || game->wsad[3] || game->wsad[4] || game->wsad[5] ||
-			game->wsad[6] || game->wsad[7])
+			game->wsad[6] || game->wsad[7] || game->wsad[8] || game->wsad[9] )
 			{
 				game->init_render = 0;
 				ft_render(game);
@@ -322,14 +333,12 @@ void ft_update(t_game *game)
 				 delta_ticks = clock() - current_ticks; //the time, in ms, that took to render the scene
     if(delta_ticks > 0)
         fps = CLOCKS_PER_SEC / delta_ticks;
-		
+
 			printf("fps :%lu\n", fps);
 	#endif
-	SDL_Delay(5);
+	//SDL_Delay(5);
 	}
 }
-
-
 
 void opencl(char **argv)
 {
@@ -341,6 +350,7 @@ void opencl(char **argv)
 	game.gpu->vec_temp = ft_memalloc(sizeof(cl_float3) * WIN_H * WIN_W);
 	game.gpu->random = get_random(game.gpu->random);
 	game.gpu->samples = 0;
+	game.cam_num = 0;
 	cl_mem			textures;
 	initScene(game.gpu->objects, &game, argv);
 	cl_init(game.cl_info);
@@ -350,9 +360,9 @@ void opencl(char **argv)
 	cl_krl_init(&game.kernels[0], 5);
 	t_vect options;
 	vect_init(&options);
-	VECT_STRADD(&options, "-I srcs/cl_files/ -I includes/cl_headers/");
+	VECT_STRADD(&options, "-w -I srcs/cl_files/ -I includes/cl_headers/");
 	game.kernels[0].sizes[0] = sizeof(cl_int) * WIN_H * WIN_W;
-	game.kernels[0].sizes[1] =  sizeof(t_obj) * 9;
+	game.kernels[0].sizes[1] =  sizeof(t_obj) * game.obj_quantity;
 	game.kernels[0].sizes[2] = sizeof(cl_float3) * WIN_H * WIN_W;
 	game.kernels[0].sizes[3] = WIN_H * WIN_W * sizeof(cl_ulong);
 	game.kernels[0].sizes[4] = sizeof(t_txture) * game.textures_num;
@@ -364,7 +374,7 @@ void opencl(char **argv)
 	ERROR(game.cl_info->ret);
 	game.cl_info->ret = cl_write(game.cl_info, game.kernels[0].args[0], sizeof(cl_int) * WIN_H * WIN_W, game.gpuOutput);
 	ERROR(game.cl_info->ret);
-	game.cl_info->ret = cl_write(game.cl_info, game.kernels[0].args[1], sizeof(t_obj) * 9, game.gpu->objects);
+	game.cl_info->ret = cl_write(game.cl_info, game.kernels[0].args[1], sizeof(t_obj) * game.obj_quantity, game.gpu->objects);
 	ERROR(game.cl_info->ret);
 	game.cl_info->ret = cl_write(game.cl_info, game.kernels[0].args[2], sizeof(cl_float3) * WIN_H * WIN_W, game.gpu->vec_temp);
 	ERROR(game.cl_info->ret);
@@ -385,12 +395,11 @@ int	main(int argc, char **argv)
 	game.origin = (t_vec3){0,0,5};
 	game.gpu = (t_gpu *)malloc(sizeof(t_gpu));
 	opencl(argv);
-	// opencl_init(game.gpu, &game);
 	ft_init_window(game.sdl, WIN_W, WIN_H);
 
 	ft_update(&game);
-	// clReleaseMemObject(game.gpu->cl_bufferOut);
-	// release_gpu(game.gpu);
+	clReleaseMemObject(game.gpu->cl_bufferOut);
+	//release_gpu(game.gpu);
 
 	ft_exit(NULL);
 }
