@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/09 19:56:39 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/09/09 21:58:35 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ void	camera_reposition(SDL_Keycode sym)
 	game.gpu->samples = 0;
 	switch (sym)
 	{
-		case 'w':  game.gpu->camera[game.cam_num].position = sum_cfloat3(game.gpu->camera[game.cam_num].position, mult_cfloat3(game.gpu->camera[game.cam_num].direction, 0.1)); break;
-		case 's':  game.gpu->camera[game.cam_num].position = sum_cfloat3(game.gpu->camera[game.cam_num].position, mult_cfloat3(game.gpu->camera[game.cam_num].direction, -0.1)); break;
-		case 'a':  game.gpu->camera[game.cam_num].position = sum_cfloat3(game.gpu->camera[game.cam_num].position, mult_cfloat3(normalize(cross(game.gpu->camera[game.cam_num].normal, game.gpu->camera[game.cam_num].direction)), 0.1)); break;
-		case 'd':  game.gpu->camera[game.cam_num].position = sum_cfloat3(game.gpu->camera[game.cam_num].position, mult_cfloat3(normalize(cross(game.gpu->camera[game.cam_num].normal, game.gpu->camera[game.cam_num].direction)), -0.1)); break;
+		case 'w':  game.gpu->camera[game.cam_num].position = sum_cfloat3(game.gpu->camera[game.cam_num].position, mult_cfloat3(game.gpu->camera[game.cam_num].direction, 0.1)); reconfigure_camera(&game.gpu->camera[game.cam_num]); break;
+		case 's':  game.gpu->camera[game.cam_num].position = sum_cfloat3(game.gpu->camera[game.cam_num].position, mult_cfloat3(game.gpu->camera[game.cam_num].direction, -0.1)); reconfigure_camera(&game.gpu->camera[game.cam_num]); break;
+		case 'a':  game.gpu->camera[game.cam_num].position = sum_cfloat3(game.gpu->camera[game.cam_num].position, mult_cfloat3(normalize(cross(game.gpu->camera[game.cam_num].normal, game.gpu->camera[game.cam_num].direction)), 0.1)); reconfigure_camera(&game.gpu->camera[game.cam_num]); break;
+		case 'd':  game.gpu->camera[game.cam_num].position = sum_cfloat3(game.gpu->camera[game.cam_num].position, mult_cfloat3(normalize(cross(game.gpu->camera[game.cam_num].normal, game.gpu->camera[game.cam_num].direction)), -0.1)); reconfigure_camera(&game.gpu->camera[game.cam_num]); break;
 		case 'q':  game.gpu->camera[game.cam_num].direction = rotate(game.gpu->camera[game.cam_num].normal, game.gpu->camera[game.cam_num].direction, M_PI / 60); reconfigure_camera(&game.gpu->camera[game.cam_num]); break;
 		case 'e':  game.gpu->camera[game.cam_num].direction = rotate(game.gpu->camera[game.cam_num].normal, game.gpu->camera[game.cam_num].direction, -M_PI / 60); reconfigure_camera(&game.gpu->camera[game.cam_num]); break;
-		case 'z':  break;
-		case 'x':  break;
+		case 'z':  game.gpu->camera[game.cam_num].position = sum_cfloat3(game.gpu->camera[game.cam_num].position, mult_cfloat3(game.gpu->camera[game.cam_num].normal, 0.1)); reconfigure_camera(&game.gpu->camera[game.cam_num]); break;
+		case 'x':  game.gpu->camera[game.cam_num].position = sum_cfloat3(game.gpu->camera[game.cam_num].position, mult_cfloat3(game.gpu->camera[game.cam_num].normal, -0.1)); reconfigure_camera(&game.gpu->camera[game.cam_num]); break;
 		default: break;
 	}
 }
@@ -156,8 +156,9 @@ void initScene(t_obj* objects, t_game *game, char **argv)
 	char						*thirdname = "seamless_pawnment.bmp";
 	char						*fourthname = "concrete.bmp";
 	char						*fivename = "ice.bmp";
+	char						*sixname = "stars.bmp";
 
-	game->textures_num 			= 5;
+	game->textures_num 			= 6;
 	game->textures 				= (t_txture*)malloc(sizeof(t_txture) * game->textures_num);
 	game->gpu->camera			= NULL;
 	get_texture(name, &(game->textures[0]));
@@ -165,6 +166,7 @@ void initScene(t_obj* objects, t_game *game, char **argv)
 	get_texture(thirdname, &(game->textures[2]));
 	get_texture(fourthname, &(game->textures[3]));
 	get_texture(fivename, &(game->textures[4]));
+	get_texture(sixname, &(game->textures[5]));
 	read_scene(argv, game);
 }
 
