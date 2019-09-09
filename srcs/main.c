@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
+/*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/09 22:53:25 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/09/10 01:22:29 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <time.h>
 #include "libsdl.h"
 #include "libvect.h"
-
+#define SAMPLES 5
 /*
 * ! We can't use global variables
 */
@@ -70,7 +70,7 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 					case 'z': game.wsad[6] = ev->type==SDL_KEYDOWN; break;
 					case 'x': game.wsad[7] = ev->type==SDL_KEYDOWN; break;
 					case ',': game.wsad[8] = ev->type==SDL_KEYDOWN;
-					game.gpu->samples = 5;
+					game.gpu->samples = SAMPLES;
 					game.gpu->vec_temp = ft_memset(game.gpuOutput, 0, sizeof(cl_float3) * game.image->height * game.image->width);
 					game.cl_info->ret = cl_write(game.cl_info, game.kernels[0].args[2], sizeof(cl_float3) * WIN_H * WIN_W, game.gpu->vec_temp);
 
@@ -97,7 +97,7 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 			case SDL_MOUSEMOTION:
 			if (game.mouse != 0)
 			{
-				game.gpu->samples = 5;
+				game.gpu->samples = SAMPLES;
 				game.gpu->vec_temp = ft_memset(game.gpuOutput, 0, sizeof(cl_float3) * game.image->height * game.image->width);
 				game.cl_info->ret = cl_write(game.cl_info, game.kernels[0].args[2], sizeof(cl_float3) * WIN_H * WIN_W, game.gpu->vec_temp);
 				rotate_horizontal(&(game.gpu->camera[game.cam_num]), game.gpu->camera[game.cam_num].fov / WIN_W * ev->motion.xrel);
@@ -175,7 +175,7 @@ void initScene(t_obj* objects, t_game *game, char **argv)
 	int w = WIN_W;
 	int h = WIN_H;
 	size_t global = WIN_W * WIN_H;
-	game.gpu->samples += 5;
+	game.gpu->samples += SAMPLES;
 	const size_t count = global;
 	game.cl_info->ret |= clSetKernelArg(kernel, 5, sizeof(cl_int), &w);
 	ERROR(game.cl_info->ret);
