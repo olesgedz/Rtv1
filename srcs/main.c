@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/09 15:28:48 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/09/09 20:40:55 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 #include <time.h>
 #include "libsdl.h"
 #include "libvect.h"
-//aelinor-
-//home
+
 /*
 * ! We can't use global variables
 */
 
-//#define FPS
+#define FPS
 t_game game;
 /*
 *	Funtion: handles presses mouse/keyboard
@@ -154,96 +153,6 @@ void initScene(t_obj* objects, t_game *game, char **argv)
 	get_texture(fourthname, &(game->textures[3]));
 	get_texture(fivename, &(game->textures[4]));
 	read_scene(argv, game);
-	// // left sphere
-	// objects[0].radius   	= 0.1f;
-	// objects[0].position 	= create_cfloat3 (-0.4f, 0.f, -0.1f);
-	// objects[0].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
-	// objects[0].v 			= create_cfloat3 (0.f, 1.0f, 0.0f);
-	// objects[0].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-	// objects[0].type 		= CYLINDER;
-	// objects[0].reflection 	= 0.f;
-	// objects[0].texture 		= 3;
-
-	// // right sphere
-	// objects[1].radius   	= 0.16f;
-	// objects[1].position 	= create_cfloat3 (0.0f, -0.f, 0.1f);
-	// objects[1].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
-	// objects[1].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-	// objects[1].v 			= create_cfloat3 (0.0f, 0.0f, 0.0f);
-	// objects[1].type 		= SPHERE;
-	// objects[1].texture 		= 1;
-	// objects[1].reflection 	= 0.f;
-
-	// // lightsource
-	// objects[2].radius   	= 0.1f;
-	// objects[2].position 	= create_cfloat3 (0.0f, 0.2f, 1.0f);
-	// objects[2].color    	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-	// objects[2].emission 	= create_cfloat3 (40.0f, 40.0f, 40.0f);
-	// objects[2].type 		= SPHERE;
-	// objects[2].reflection 	= 0;
-	// objects[2].texture 		= 2;
-
-	// 	// left wall
-	// objects[6].radius		= .0f;
-	// objects[6].position 	= create_cfloat3 (-1.0f, 0.0f, 0.0f);
-	// objects[6].color    	= create_cfloat3 (0.75f, 0.25f, 0.25f);
-	// objects[6].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-	// objects[6].v 			= create_cfloat3 (1.0f, 0.0f, 0.0f);
-	// objects[6].type 		= PLANE;
-	// objects[6].reflection 	= 0;
-	// objects[6].texture 		= 0;
-
-	// // right wall
-	// objects[7].radius		= 200.0f;
-	// objects[7].position 	= create_cfloat3 (1.f, 0.0f, 0.0f);
-	// objects[7].color    	= create_cfloat3 (0.25f, 0.25f, 0.75f);
-	// objects[7].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-	// objects[7].v 			= create_cfloat3 (1.0f, 0.0f, 0.0f);
-	// objects[7].type 		= PLANE;
-	// objects[7].reflection 	= 0;
-	// objects[7].texture 		= 0;
-
-	// // floor
-	// objects[8].radius		= 0.0f;
-	// objects[8].position 	= create_cfloat3 (0.0f, 0.5f, 0.0f);
-	// objects[8].color		= create_cfloat3 (0.9f, 0.8f, 0.7f);
-	// objects[8].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-	// objects[8].v 			= create_cfloat3 (0.0f, -1.0f, 0.0f);
-	// objects[8].type 		= PLANE;
-	// objects[8].reflection	= 0;
-	// objects[8].texture 		= 4;
-	// // ceiling
-	// objects[3].radius		= 200.0f;
-	// objects[3].position 	= create_cfloat3 (0.0f, -0.5f, 0.0f);
-	// objects[3].color		= create_cfloat3 (0.9f, 0.8f, 0.7f);
-	// objects[3].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-	// objects[3].v 			= create_cfloat3 (0.0f, 1.0f, 0.0f);
-	// objects[3].type 		= PLANE;
-	// objects[3].reflection 	= 0;
-	// objects[3].texture 		= 5;
-
-
-	// // back wall
-	// objects[4].radius   	= 1.0f;
-	// objects[4].position 	= create_cfloat3 (0.0f, 0.0f, -0.3f);
-	// objects[4].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
-	// objects[4].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-	// objects[4].v 			= create_cfloat3 (0.0f, 0.0f, 1.0f);
-	// objects[4].type 		= PLANE;
- 	// objects[4].reflection 	= 0;
-	// objects[4].reflection 	= 0;
-	// objects[4].texture 		= 4;
-
-
-	// // front wall
-	// objects[5].radius   	= 200.0f;
-	// objects[5].position 	= create_cfloat3 (0.0f, 0.0f, 2.0f);
-	// objects[5].color    	= create_cfloat3 (0.9f, 0.8f, 0.7f);
-	// objects[5].emission 	= create_cfloat3 (0.0f, 0.0f, 0.0f);
-	// objects[5].v 			= create_cfloat3 (0.0f, 0.0f, 1.0f);
-	// objects[5].type 		= PLANE;
-	// objects[5].reflection 	= 0;
-	// objects[5].texture 		= 0;
 }
 
  void ft_run_kernel(cl_kernel kernel)
@@ -270,6 +179,24 @@ void initScene(t_obj* objects, t_game *game, char **argv)
 	ERROR(game.cl_info->ret);
  }
 
+int blur_extent = 0;
+
+
+void blur(t_surface * surface) //This manipulates with SDL_Surface and gives it box blur effect
+{
+   
+
+	for( int j = 0; j < surface->height; j++)
+	{
+			for( int k = 0; k < surface->width; k++)
+			{
+				
+			}
+	}
+
+}
+
+
 /*
 *	Fucntion: render all pixels on the surface
 *	Parameters: game, sdl
@@ -291,6 +218,8 @@ void 	ft_render(t_game* game)
 		while (++i < width)
 			game->sdl->surface->data[i+j*width] =  game->gpuOutput[i+ j *width];
 	}
+
+	blur(game->sdl->surface);
 }
 
 /*
@@ -310,7 +239,7 @@ void ft_update(t_game *game)
 	t_rectangle r = (t_rectangle){(t_point){0,0},(t_size){WIN_W, WIN_H}};
 	clock_t current_ticks, delta_ticks;
 	clock_t fps = 0;
-	ft_surface_clear(game->sdl->surface);
+	//ft_surface_clear(game->sdl->surface);
 	while(TRUE)
 	{
 		current_ticks = clock();
