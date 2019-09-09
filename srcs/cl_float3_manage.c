@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/07 17:03:05 by sbrella           #+#    #+#             */
-/*   Updated: 2019/09/07 19:53:57 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/09/09 18:29:57 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,22 @@ cl_float3	normalize(cl_float3 vector)
 	res.s[1] = vector.s[1] / norm;
 	res.s[2] = vector.s[2] / norm;
 	return (res);
+}
+
+void			rotate_horizontal(t_cam *camera, float angle)
+{
+	cl_float3	axis;
+
+	axis = create_cfloat3(0.0f, -1.0f, 0.0f);
+	camera->direction = rotate(axis, camera->direction, angle);
+	camera->normal = rotate(axis, camera->normal, angle);
+}
+
+void			rotate_vertical(t_cam *camera, float angle)
+{
+	cl_float3	axis;
+
+	axis = cross(camera->direction, camera->normal);
+	camera->direction = rotate(axis, camera->direction, angle);
+	camera->normal = rotate(axis, camera->normal, angle);
 }

@@ -127,6 +127,7 @@ typedef struct			s_game
 	t_cl_krl 			*kernels;
 	int 				*gpuOutput;
 	int					cam_num;
+	int					mouse;
 } 						t_game;
 
 int						bind_data(t_gpu *gpu, t_game *game);
@@ -159,4 +160,6 @@ cl_float3   			cross(cl_float3 one, cl_float3 two);
 cl_float3				vector_diff(cl_float3 one, cl_float3 two);
 cl_float3				normalize(cl_float3 vector);
 void					reconfigure_camera(t_cam *camera);
+void					rotate_vertical(t_cam *camera, float angle);
+void					rotate_horizontal(t_cam *camera, float angle);
 #endif

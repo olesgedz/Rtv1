@@ -77,8 +77,6 @@ static bool intersect_scene(t_scene * scene, t_intersection * intersection, t_ra
 	for (int i = 0; i < scene->n_objects; i++)  {
 		
 		t_obj object = scene->objects[i]; /* create local copy of sphere */
-		
-		/* float hitdistance = intersect_sphere(&spheres[i], ray); */
 		float hitdistance = 0; 
 		if (object.type == SPHERE)
 			hitdistance = intersect_sphere(&object, ray);
