@@ -3,9 +3,5 @@ TYPE:		POSITION:			V:					COLOR:				EMITION:			RADIUS:		REFLECTION:		TEXTURE:	NO
 CYLINDER	-0.4f,0.0f,-0.1f	0.0f,1.0f,0.0f		0.9f,0.8f,0.7f		0.0f,0.0f,0.0f		0.16f		0.0f			3
 SPHERE		0.0f,0.0f,0.1f							0.9f,0.8f,0.7f		0.0f,0.0f,0.0f		0.1f		0.0f			1
 SPHERE		0.0f,0.2f,1.0f							0.0f,0.0f,0.0f		40.0f,40.0f,40.0f	0.1f		0.0f			2
-PLANE		0.0f,0.5f,0.0f		0.0f,-1.0f,0.0f		0.9f,0.8f,0.7f		0.0f,0.0f,0.0f					0.0f			4
-PLANE		0.0f,-0.5f,0.0f		0.0f,1.0f,0.0f		0.9f,0.8f,0.7f		0.0f,0.0f,0.0f					0.0f			5
-PLANE		0.0f,0.0f,-0.3f		0.0f,0.0f,1.0f		0.9f,0.8f,0.7f		0.0f,0.0f,0.0f					0.0f			4
-PLANE		0.0f,0.0f,2.0f		0.0f,0.0f,1.0f		0.9f,0.8f,0.7f		0.0f,0.0f,0.0f					0.0f			0
 CAM			0.0f,0.1f,2.0f		0.0f,0.0f,-1.0f																						0.0f,1.0f,0.0f
 CAM			0.0f,0.2f,1.0f		0.0f,0.0f,1.0f																						0.0f,1.0f,0.0f

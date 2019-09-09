@@ -156,7 +156,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 	{
 		/* if ray misses scene, return background colour */
 		if (!intersect_scene(scene, intersection, &ray))
-			return mask * (float3)(0.7f, 0.7f, 0.7f);
+			return mask * global_texture(&ray, scene);
 		/* Russian roulette*/
 		if (bounces > 4 && cl_float3_max(scene->objects[intersection->object_id].color) < rng(scene->random))
 			break;
@@ -176,7 +176,8 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 		/* add a very small offset to the hitpoint to prevent self intersection */
 		cmdlog("haha\n");
 
-		if (objecthit.reflection > 0) {
+		if (objecthit.reflection > 0)
+		{
 			accum_color += mask * objecthit.emission; 
 			if (1)
 			{
@@ -189,7 +190,8 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 			ray.dir = reflect(ray.dir, intersection->normal);
 			ray.origin = intersection->hitpoint + ray.dir * EPSILON;
 		
-		} else {
+		} else
+		{
 			
 			accum_color += mask * objecthit.emission; 
 			if (1)
