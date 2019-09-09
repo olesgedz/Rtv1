@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/09 19:56:39 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/09/09 20:51:52 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 #include <time.h>
 #include "libsdl.h"
 #include "libvect.h"
-//aelinor-
-//home
+
 /*
 * ! We can't use global variables
 */
@@ -54,6 +53,7 @@ int		ft_input_keys(void *sdl, SDL_Event *ev)
 {
 	switch (ev->type)
 		{
+			//case SDL_KEYDOWN:
 			case SDL_KEYDOWN:
 				camera_reposition(ev->key.keysym.sym);
 				switch (ev->key.keysym.sym)
@@ -192,6 +192,24 @@ void initScene(t_obj* objects, t_game *game, char **argv)
 	ERROR(game.cl_info->ret);
  }
 
+int blur_extent = 0;
+
+
+void blur(t_surface * surface) //This manipulates with SDL_Surface and gives it box blur effect
+{
+   
+
+	for( int j = 0; j < surface->height; j++)
+	{
+			for( int k = 0; k < surface->width; k++)
+			{
+				
+			}
+	}
+
+}
+
+
 /*
 *	Fucntion: render all pixels on the surface
 *	Parameters: game, sdl
@@ -213,6 +231,8 @@ void 	ft_render(t_game* game)
 		while (++i < width)
 			game->sdl->surface->data[i+j*width] =  game->gpuOutput[i+ j *width];
 	}
+
+	blur(game->sdl->surface);
 }
 
 /*
@@ -232,7 +252,7 @@ void ft_update(t_game *game)
 	t_rectangle r = (t_rectangle){(t_point){0,0},(t_size){WIN_W, WIN_H}};
 	clock_t current_ticks, delta_ticks;
 	clock_t fps = 0;
-	ft_surface_clear(game->sdl->surface);
+	//ft_surface_clear(game->sdl->surface);
 	while(TRUE)
 	{
 		current_ticks = clock();

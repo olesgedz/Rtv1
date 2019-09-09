@@ -53,6 +53,7 @@ typedef struct Object{
 	cl_float reflection;
 	cl_float plane_d;
 	cl_int		texture;
+
 } t_obj;
 
 typedef struct s_ray
