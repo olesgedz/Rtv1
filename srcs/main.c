@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/10 20:25:56 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/09/10 22:15:35 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ void blur(t_surface * surface) //This manipulates with SDL_Surface and gives it 
 	{
 			for( int k = 0; k < surface->width; k++)
 			{
-				
+				printf("fuck You !\n");
 			}
 	}
 
@@ -216,6 +216,7 @@ void blur(t_surface * surface) //This manipulates with SDL_Surface and gives it 
 *	Fucntion: render all pixels on the surface
 *	Parameters: game, sdl
 *	Return: none
+* when 
 */
 void 	ft_render(t_game* game)
 {
@@ -227,14 +228,8 @@ void 	ft_render(t_game* game)
 	int r = rand() % 2;
 	printf("%d\n", r);
 	ft_run_kernel(game->kernels[0].krl);
-	while (++j < height)
-	{
-		i = -1;
-		while (++i < width)
-			game->sdl->surface->data[i+j*width] =  game->gpuOutput[i+ j *width];
-	}
-
-	blur(game->sdl->surface);
+	game->sdl->surface->data =  (Uint32 *)game->gpuOutput;
+	//blur(game->sdl->surface);
 }
 
 /*
