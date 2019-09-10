@@ -146,7 +146,7 @@ static float3		radiance_explicit(t_scene *scene,
 		omega = 2 * PI * (1.f - cos_a_max);
 		radiance += scene->objects[i].emission * emission_intensity * omega * _1_PI;
 	}
-	return (radiance * pdf);
+	return (radiance);
 }
 
 static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, int * seed1)
