@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+         #
+#    By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/09/09 23:24:40 by sbrella          ###   ########.fr        #
+#    Updated: 2019/09/12 00:46:55 by olesgedz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,6 +86,22 @@ COL_WHITE	:= \033[1;37m
 
 TOTAL_FILES := $(shell echo $(SRCS_LIST) | wc -w | sed -e 's/ //g')
 CURRENT_FILES = $(shell find $(DIRECTORY)/objects/ -type f 2> /dev/null | wc -l | sed -e 's/ //g')
+
+
+
+ifeq ($(OS),Windows_NT)     
+	detected_OS := Windows
+else
+	detected_OS := $(shell uname)  
+endif
+
+ifeq ($(detected_OS),Windows)
+	CFLAGS += -D WIN32
+endif
+ifeq ($(detected_OS),Darwin)        # Mac OS X
+	CFLAGS += -D OSX
+endif
+
 
 .PHONY: clean fclean re
 
