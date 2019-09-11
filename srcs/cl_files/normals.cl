@@ -68,6 +68,8 @@ float3 get_normal(t_obj * object, t_intersection * intersection)
 	 	normal = get_cylinder_normal(object, intersection);
 	else if (object->type == CONE)
 	 	normal = plane_get_normal(object, intersection);
+	else if (object->type == TRIANGLE)
+		normal = object->v;
 	else 
 		normal = sphere_get_normal(object, intersection);
 

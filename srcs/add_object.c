@@ -99,6 +99,9 @@ t_obj *add_triangle(cl_float3 *vertices, cl_float3 color, cl_float3 emition, cl_
     cl_float3 ab;
 	cl_float3 ac;
 
+    printf("vertice 1 : %f, %f, %f\n", vertices[0].x, vertices[0].y, vertices[0].z);
+    printf("vertice 2 : %f, %f, %f\n", vertices[1].x, vertices[1].y, vertices[1].z);
+    printf("vertice 3 : %f, %f, %f\n", vertices[2].x, vertices[2].y, vertices[2].z);
 	ab = vector_diff(vertices[1], vertices[0]);
 	ac = vector_diff(vertices[2], vertices[0]);
     triangle = (t_obj*)malloc(sizeof(t_obj));

@@ -146,7 +146,7 @@ static float3		radiance_explicit(t_scene *scene,
 		omega = 2 * PI * (1.f - cos_a_max);
 		radiance += scene->objects[i].emission * emission_intensity * omega * _1_PI;
 	}
-	return (radiance * pdf);
+	return (radiance);
 }
 
 static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, int * seed1)
@@ -155,7 +155,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 
 	float3 accum_color = (float3)(0.0f, 0.0f, 0.0f);
 	float3 mask = (float3)(1.0f, 1.0f, 1.0f);
-	unsigned int max_trace_depth = 1;
+	unsigned int max_trace_depth = 5;
 	float3 explicit;
 	for (int bounces = 0; bounces < max_trace_depth; bounces++)
 	{
