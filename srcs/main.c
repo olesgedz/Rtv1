@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/13 19:23:25 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/13 22:14:52 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,14 +223,14 @@ void 	ft_render(t_game* game)
 {
 	int		i;
 	int		j;
-	int width = game->sdl->surface->width;
-	int height = game->sdl->surface->height;
+	int width = game->sdl.surface->width;
+	int height = game->sdl.surface->height;
 	j = -1;
 	int r = rand() % 2;
 	printf("%d\n", r);
 	ft_run_kernel(game, game->kernels[0].krl);
-	game->sdl->surface->data =  (Uint32 *)game->gpuOutput;
-	//blur(game->sdl->surface);
+	game->sdl.surface->data =  (Uint32 *)game->gpuOutput;
+	//blur(game->sdl.surface);
 }
 
 /*
@@ -250,7 +250,7 @@ void ft_update(t_game *game)
 	t_rectangle r = (t_rectangle){(t_point){0,0},(t_size){WIN_W, WIN_H}};
 	clock_t current_ticks, delta_ticks;
 	clock_t fps = 0;
-	ft_surface_clear(game->sdl->surface);
+	ft_surface_clear(game->sdl.surface);
 	while(TRUE)
 	{
 		current_ticks = clock();
@@ -263,7 +263,7 @@ void ft_update(t_game *game)
 				game->init_render = 0;
 				ft_memset(game->wsad, 0, sizeof(game->wsad));
 				ft_render(game);
-				ft_surface_present(game->sdl, game->sdl->surface);
+				ft_surface_present(&game->sdl, game->sdl.surface);
 			}
 	#ifdef FPS
 				 delta_ticks = clock() - current_ticks; //the time, in ms, that took to render the scene
@@ -325,14 +325,12 @@ void opencl(t_game *game, char *argv)
 int	main(int argc, char **argv)
 {
 	t_game game;
-	game.sdl = malloc(sizeof(t_sdl));
-	game.gui = malloc(sizeof(t_gui));
 	game.image = ft_surface_create(WIN_W, WIN_H);
 	game.init_render = 1;
 	game.origin = (t_vec3){0,0,5};
 	game.gpu = (t_gpu *)malloc(sizeof(t_gpu));
 	game.mouse = 0;
-	ft_init_window(game.sdl, WIN_W, WIN_H);
+	ft_init_window(&game.sdl, WIN_W, WIN_H);
 	game.quit = 0;
 	g_game(&game, 1);
 	if (argc != 2)

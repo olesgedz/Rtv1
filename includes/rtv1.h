@@ -115,8 +115,8 @@ typedef struct			s_game
 {
 	char 				*av;
 	SDL_Event			ev;
-	t_gui				*gui;
-	t_sdl 				*sdl;
+	t_gui				gui;
+	t_sdl 				sdl;
 	t_surface 			*image;
 	t_list				*verties;
 	int 				n_spheres;
