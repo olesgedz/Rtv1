@@ -7,3 +7,6 @@
 [submodule "libs/libcl"]
 	path = libs/libcl
 	url = https://github.com/olesgedz/libcl.git
+[submodule "gui/KiWi"]
+	path = gui/KiWi
+	url = https://github.com/mobius3/KiWi.git
