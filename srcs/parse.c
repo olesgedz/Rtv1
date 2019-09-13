@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 19:04:09 by srobert-          #+#    #+#             */
-/*   Updated: 2019/09/09 23:17:14 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/09/13 17:08:53 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void parse_plane(char **data, t_game *game)
 	cl_float reflection;
 	cl_float3 v;
 	char **vec;
-	
+
 	if (data[1] == NULL || data[2] == NULL || data[3] == NULL || data[4] == NULL || data[5] == NULL || data[6] == NULL)
 		terminate("missing data of plane: not enough arguments!\n");
 	vec = ft_strsplit(data[1], ',');
@@ -104,7 +104,7 @@ static void parse_sphere(char **data, t_game *game)
 	cl_float reflection;
 	float     radius;
 	char		**vec;
-	
+
 	if (data[1] == NULL || data[2] == NULL || data[3] == NULL || data[4] == NULL || data[5] == NULL || data[6] == NULL)
 		terminate("missing data of sphere: not enough arguments!\n");
 	vec = ft_strsplit(data[1], ',');
@@ -139,7 +139,7 @@ static void parse_cylinder(char **data, t_game *game)
 	cl_float reflection;
 	float     radius;
 	char		**vec;
-	
+
 	if (data[1] == NULL || data[2] == NULL || data[3] == NULL || data[4] == NULL || data[5] == NULL || data[6] == NULL || data[7] == NULL)
 		terminate("missing data of cylinder: not enough arguments!\n");
 	vec = ft_strsplit(data[1], ',');
@@ -215,7 +215,7 @@ void parse_cam(char **data, t_game *game)
 	cl_float3 position;
 	cl_float3 v;
 	cl_float3 normal;
-	
+
     if (data[1] == NULL || data[2] == NULL || data[3] == NULL)
         terminate("missing data of cam: not enough arguments!\n");
     vec = ft_strsplit(data[1], ',');
@@ -281,7 +281,7 @@ static void parse_triangle(char **data, t_game *game)
 	ft_object_push(game, add_triangle(vertices, color, emition, texture, reflection));
 }
 
-void read_scene(char **argv, t_game *game)
+void read_scene(char *argv, t_game *game)
 {
 	int fd;
 	char *line;
@@ -289,10 +289,11 @@ void read_scene(char **argv, t_game *game)
 	int light_num;
 
 	light_num = 0;
-	if ((fd = open(argv[1], O_RDONLY)) <= 0)
+	printf("%s\n", argv);
+	if ((fd = open(argv, O_RDONLY)) <= 0)
 		terminate("fuck you\n");
 	while (get_next_line(fd, &line))
-	{   
+	{
 		if (ft_strlen(line) == 0)
 		{
 			free(line);
@@ -317,8 +318,8 @@ void read_scene(char **argv, t_game *game)
 		else if (ft_strcmp(data[0], "TRIANGLE") == 0)
 		    parse_triangle(data, game);
 		feel_free(data);
-		free(line);   
+		free(line);
 	}
 	free(data);
-	close(fd);  
+	close(fd);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+         #
+#    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/09/12 00:46:55 by olesgedz         ###   ########.fr        #
+#    Updated: 2019/09/13 18:12:29 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,9 @@
 NAME = rtv1
 
 FLAGS = -g
-CC = clang
-LIBRARIES = -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY)  -lm -framework OpenCL  -lvect -L$(LIBVECT) -lgnl -L$(LIBGNL) -lcl -L$(LIBCL)
-INCLUDES = -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)include/ -Isrcs/cl_error/ -I$(LIBGNL)include/ -I$(LIBCL)include/
+CC = gcc
+LIBRARIES = -L./gui/build/src -lKiWi -L/Users/lminta/.brew/Cellar/sdl2_ttf/2.0.15/lib -lSDL2_ttf -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY)  -lm -framework OpenCL  -lvect -L$(LIBVECT) -lgnl -L$(LIBGNL) -lcl -L$(LIBCL)
+INCLUDES = -I./include/SDL2 -I./gui/KiWi/src -I./gui/inc -I/Users/lminta/.brew/Cellar/sdl2_ttf/2.0.15/include/SDL2   -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)include/ -Isrcs/cl_error/ -I$(LIBGNL)include/ -I$(LIBCL)include/
 
 LIBFT = $(LIBFT_DIRECTORY)libft.a
 LIBFT_HEADERS = $(LIBFT_DIRECTORY)includes/
@@ -62,7 +62,9 @@ SRCS_LIST = main.c\
 			cl_lib/gpu_init.c\
 			textures.c\
 			add_object.c parse.c\
-			cl_float3_manage.c
+			cl_float3_manage.c\
+			../gui/src/gui_main.c\
+			../gui/src/loop.c
 
 OBJS_DIRECTORY = objects/
 OBJS_LIST = $(patsubst %.c, %.o, $(SRCS_LIST))
@@ -89,10 +91,10 @@ CURRENT_FILES = $(shell find $(DIRECTORY)/objects/ -type f 2> /dev/null | wc -l 
 
 
 
-ifeq ($(OS),Windows_NT)     
+ifeq ($(OS),Windows_NT)
 	detected_OS := Windows
 else
-	detected_OS := $(shell uname)  
+	detected_OS := $(shell uname)
 endif
 
 ifeq ($(detected_OS),Windows)
@@ -134,8 +136,8 @@ count:
 	@echo $(CURRENT_FILES)
 
 depend:
-						makedepend --$(SRCS_DIRECTORY)/$(SRCS_LIST); 
-		
+						makedepend --$(SRCS_DIRECTORY)/$(SRCS_LIST);
+
 sdl:
 	cd SDL2; ./configure --prefix=$(DIRECTORY); make;
 	$(MAKE) -sC $(DIRECTORY)/SDL2 install

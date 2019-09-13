@@ -3,7 +3,7 @@
 t_obj *add_sphere(cl_float3 position, float radius, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection)
 {
     t_obj *sphere;
-    
+
     sphere = (t_obj*)malloc(sizeof(t_obj));
     sphere->type = SPHERE;
     sphere->position = position;
@@ -49,7 +49,7 @@ t_obj *add_cylinder(cl_float3 position, float radius, cl_float3 color, cl_float3
 t_obj *add_cone(cl_float3 position, float radius, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection, cl_float3 v)
 {
     t_obj *cone;
-    
+
     cone = (t_obj*)malloc(sizeof(t_obj));
     cone->type = CONE;
     cone->position = position;

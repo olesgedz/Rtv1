@@ -21,6 +21,8 @@
 #include <Cl/cl.h>
 #endif
 
+#include "gui.h"
+
 #ifndef DEVICE
 #define DEVICE CL_DEVICE_TYPE_DEFAULT
 #endif
@@ -111,6 +113,9 @@ typedef struct s_gpu
 
 typedef struct			s_game
 {
+	char 				*av;
+	SDL_Event			ev;
+	t_gui				*gui;
 	t_sdl 				*sdl;
 	t_surface 			*image;
 	t_list				*verties;
@@ -130,6 +135,7 @@ typedef struct			s_game
 	int 				*gpuOutput;
 	int					cam_num;
 	int					mouse;
+	int					quit;
 } 						t_game;
 
 int						bind_data(t_gpu *gpu, t_game *game);
@@ -153,7 +159,7 @@ t_obj					*add_plane(cl_float3 position, cl_float3 color, cl_float3 emition, cl_
 t_obj					*add_sphere(cl_float3 position, float radius, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection);
 t_obj 					*add_cylinder(cl_float3 position, float radius, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection, cl_float3 v);
 t_obj 					*add_cone(cl_float3 position, float radius, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection, cl_float3 v);
-void 					read_scene(char **argv, t_game *game);
+void 					read_scene(char *argv, t_game *game);
 t_cam *add_cam(cl_float3 position, cl_float3 direction, cl_float3 normal);
 cl_float3				mult_cfloat3(cl_float3 one, float f);
 cl_float3				sum_cfloat3(cl_float3 one, cl_float3 two);
@@ -165,4 +171,12 @@ void					reconfigure_camera(t_cam *camera);
 void					rotate_vertical(t_cam *camera, float angle);
 void					rotate_horizontal(t_cam *camera, float angle);
 t_obj *add_triangle(cl_float3 *vertices, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection);
+int						ft_input_keys(void *game1, SDL_Event *ev);
+
+void					start_screen(t_game *game);
+void					init_kiwi(t_game *game);
+void					quit_kiwi(t_game *game);
+void					loopa(t_game *game);
+t_game					*g_game(t_game *game, int flag);
+
 #endif
