@@ -6,7 +6,7 @@
 #    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/09/13 18:12:29 by lminta           ###   ########.fr        #
+#    Updated: 2019/09/13 22:55:23 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,11 @@ NAME = rtv1
 
 FLAGS = -g
 CC = gcc
-LIBRARIES = -L./gui/build/src -lKiWi -L/Users/lminta/.brew/Cellar/sdl2_ttf/2.0.15/lib -lSDL2_ttf -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY)  -lm -framework OpenCL  -lvect -L$(LIBVECT) -lgnl -L$(LIBGNL) -lcl -L$(LIBCL)
-INCLUDES = -I./include/SDL2 -I./gui/KiWi/src -I./gui/inc -I/Users/lminta/.brew/Cellar/sdl2_ttf/2.0.15/include/SDL2   -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)include/ -Isrcs/cl_error/ -I$(LIBGNL)include/ -I$(LIBCL)include/
+LIBRARIES = $(GUI_LIB) -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY)  -lm -framework OpenCL  -lvect -L$(LIBVECT) -lgnl -L$(LIBGNL) -lcl -L$(LIBCL)
+INCLUDES = $(GUI_INC) -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)include/ -Isrcs/cl_error/ -I$(LIBGNL)include/ -I$(LIBCL)include/
+
+GUI_LIB = -L./gui/build/src -lKiWi -L/Users/lminta/.brew/Cellar/sdl2_ttf/2.0.15/lib -lSDL2_ttf
+GUI_INC = -I./include/SDL2 -I./gui/KiWi/src -I./gui/inc -I/Users/lminta/.brew/Cellar/sdl2_ttf/2.0.15/include/SDL2
 
 LIBFT = $(LIBFT_DIRECTORY)libft.a
 LIBFT_HEADERS = $(LIBFT_DIRECTORY)includes/
@@ -64,7 +67,7 @@ SRCS_LIST = main.c\
 			add_object.c parse.c\
 			cl_float3_manage.c\
 			../gui/src/gui_main.c\
-			../gui/src/loop.c
+			../gui/src/start_screen.c
 
 OBJS_DIRECTORY = objects/
 OBJS_LIST = $(patsubst %.c, %.o, $(SRCS_LIST))
