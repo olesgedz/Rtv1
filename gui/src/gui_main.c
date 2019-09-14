@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:21:19 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/13 22:52:57 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/14 15:44:09 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	loopa(t_game *game)
 		KW_Paint(game->gui.gui);
 		SDL_RenderPresent(game->sdl.renderer);
 	}
+	quit_kiwi(&game);
 }
 
 void	quit_kiwi(t_game *game)
