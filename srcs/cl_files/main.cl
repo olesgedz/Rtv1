@@ -19,7 +19,7 @@ float	intersect_plane(const t_obj* plane, const t_ray * ray);
 
 
 #ifdef CMD_DEBUG
-#define cmdlog(x, ...) if( PIX_X == get_global_id(0) % 700 && PIX_Y == get_global_id(0) / 700 ) printf(x, __VA_ARGS__);
+#define cmdlog(x, ...) if( PIX_X == get_global_id(0) % 700 && PIX_Y == get_global_id(0) / 700 ); //printf(x, __VA_ARGS__);
 #else
 #define cmdlog(x, ...) ;
 #endif
@@ -27,13 +27,13 @@ float	intersect_plane(const t_obj* plane, const t_ray * ray);
 
 static void intersection_reset(t_intersection * intersection)
 {
-	intersection->ray.t = INFINITY;	
+	intersection->ray.t = INFINITY;
 }
 
-float3 reflect(float3 vector, float3 n) 
-{ 
-    return vector - 2 * dot(vector, n) * n; 
-} 
+float3 reflect(float3 vector, float3 n)
+{
+    return vector - 2 * dot(vector, n) * n;
+}
 
 float3 refract(float3 vector, float3 n, float refrIndex)
 {
@@ -60,17 +60,17 @@ static t_ray createCamRay(const int x_coord, const int y_coord, const int width,
 	t_ray ray;
 	ray.origin = scene->camera.position; /* fixed camera position */
 	ray.dir = normalize(pixel_pos); /* vector from camera to pixel on screen */
-	if (get_global_id(0) == 0)
-	{
-		printf("%f %f %f %f\n", scene->camera.direction.x, scene->camera.direction.y, scene->camera.direction.z, length(scene->camera.direction));
-		printf("%f %f %f %f\n", scene->camera.position.x, scene->camera.position.y, scene->camera.position.z, length(scene->camera.position));
-	}
+	// if (get_global_id(0) == 0)
+	// {
+	// 	printf("%f %f %f %f\n", scene->camera.direction.x, scene->camera.direction.y, scene->camera.direction.z, length(scene->camera.direction));
+	// 	printf("%f %f %f %f\n", scene->camera.position.x, scene->camera.position.y, scene->camera.position.z, length(scene->camera.position));
+	// }
     return ray;
 }
 
 static bool intersect_scene(t_scene * scene, t_intersection * intersection, t_ray * ray)
 {
-	/* initialise t to a very large number, 
+	/* initialise t to a very large number,
 	so t will be guaranteed to be smaller
 	when a hit with the scene occurs */
 
@@ -78,9 +78,9 @@ static bool intersect_scene(t_scene * scene, t_intersection * intersection, t_ra
 
 	/* check if the ray intersects each sphere in the scene */
 	for (int i = 0; i < scene->n_objects; i++)  {
-		
+
 		t_obj object = scene->objects[i]; /* create local copy of sphere */
-		float hitdistance = 0; 
+		float hitdistance = 0;
 		if (object.type == SPHERE)
 			hitdistance = intersect_sphere(&object, ray);
 		else if (object.type == CYLINDER)
@@ -165,7 +165,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 		/* Russian roulette*/
 		if (bounces > 4 && cl_float3_max(scene->objects[intersection->object_id].color) < rng(scene->random))
 			break;
-		
+
 		t_obj objecthit = scene->objects[intersection->object_id]; /* version with local copy of sphere */
 		/* compute the hitpoint using the ray equation */
 		intersection->hitpoint =  ray.origin + ray.dir * ray.t;
@@ -183,22 +183,22 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 
 		if (objecthit.reflection > 0)
 		{
-			accum_color += mask * objecthit.emission; 
+			accum_color += mask * objecthit.emission;
 			if (1)
 			{
 				explicit = radiance_explicit(scene, intersection);
 				accum_color += explicit * mask  * objecthit.color;//* intersection->material.color;
-			}				
-			/* add the colour and light contributions to the accumulated colour */ 
+			}
+			/* add the colour and light contributions to the accumulated colour */
 			mask *= objecthit.color  * objecthit.reflection * cosine;	/* the mask colour picks up surface colours at each bounce */
-		
+
 			ray.dir = reflect(ray.dir, intersection->normal);
 			ray.origin = intersection->hitpoint + ray.dir * EPSILON;
-		
+
 		} else
 		{
-			
-			accum_color += mask * objecthit.emission; 
+
+			accum_color += mask * objecthit.emission;
 			if (1)
 			{
 				explicit = radiance_explicit(scene, intersection);
@@ -238,7 +238,7 @@ static t_scene scene_new(__global t_obj* objects, int n_objects, int width, int 
 __kernel void render_kernel(__global int* output, __global t_obj* objects,
 __global float3 * vect_temp,  __global ulong * random,  __global t_txture *textures, int width, int height,  int n_objects, int samples, t_cam camera)
 {
-	
+
 	t_scene scene;
 	t_intersection  intersection;
 	float3 finalcolor;
@@ -249,17 +249,17 @@ __global float3 * vect_temp,  __global ulong * random,  __global t_txture *textu
 	 unsigned int seed0 = x_coord + rng(random);
 	 unsigned int seed1 = y_coord + rng(random);
 	finalcolor = vect_temp[x_coord + y_coord * width];
-	
+
 	scene = scene_new(objects, n_objects, width, height, samples, random, textures, camera);
 	intersection.ray = createCamRay(scene.x_coord, scene.y_coord, width, height, &scene);
 	intersection_reset(&intersection.ray);
 	print_debug(scene.samples, scene.width, &scene);
 	for (int i = 0; i < SAMPLES; i++)
-	{	
+	{
 		finalcolor += trace(&scene,  &intersection, &seed0, &seed1);
 	}
 	vect_temp[scene.x_coord + scene.y_coord * width] = finalcolor;
-	
+
 	output[scene.x_coord + scene.y_coord * width] = ft_rgb_to_hex(toInt(finalcolor.x  / samples),
 	 toInt(finalcolor.y  / samples), toInt(finalcolor.z  / samples)); /* simple interpolated colour gradient based on pixel coordinates */
 }

@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/14 16:15:06 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/14 17:17:57 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	camera_reposition(t_game *game, SDL_Keycode sym)
 
 int		ft_input_keys(t_game *game)
 {
+	static int x = 0;
+	static int y = 0;
 	switch (game->ev.type)
 		{
 			//case SDL_KEYDOWN:
@@ -90,9 +92,19 @@ int		ft_input_keys(t_game *game)
 					default: break;
 				}
 				break;
-			case SDL_MOUSEBUTTONDOWN: game->mouse = !game->mouse;
+			case SDL_MOUSEBUTTONDOWN:
+			{
+				game->mouse = !game->mouse;
+				SDL_GetMouseState(&x, &y);
+				SDL_ShowCursor(SDL_DISABLE);
+			}
 				break;
-			case SDL_MOUSEBUTTONUP: game->mouse = !game->mouse;
+			case SDL_MOUSEBUTTONUP:
+			{
+				game->mouse = !game->mouse;
+				SDL_WarpMouseInWindow(game->sdl.window, x, y);
+				SDL_ShowCursor(SDL_ENABLE);
+			}
 				break;
 			case SDL_MOUSEMOTION:
 			if (game->mouse != 0)

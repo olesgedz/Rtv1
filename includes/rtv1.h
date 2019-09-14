@@ -1,8 +1,8 @@
 #ifndef RTV1_H
 #define RTV1_H
 
-#define WIN_W 700
-#define WIN_H 700
+#define WIN_W 1920
+#define WIN_H 1080
 #define CL_SILENCE_DEPRECATION
 #include <sys/types.h>
 #include "SDL2/SDL.h"
