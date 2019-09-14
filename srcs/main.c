@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/13 22:14:52 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/14 16:15:06 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,28 +49,27 @@ void	camera_reposition(t_game *game, SDL_Keycode sym)
 	}
 }
 
-int		ft_input_keys(void *game1, SDL_Event *ev)
+int		ft_input_keys(t_game *game)
 {
-	t_game *game = game1;
-	switch (ev->type)
+	switch (game->ev.type)
 		{
 			//case SDL_KEYDOWN:
 			case SDL_KEYDOWN:
-				camera_reposition(game, ev->key.keysym.sym);
-				switch (ev->key.keysym.sym)
+				camera_reposition(game, game->ev.key.keysym.sym);
+				switch (game->ev.key.keysym.sym)
 				{
 					case SDLK_LCTRL:
 					case SDLK_RCTRL:
 					case SDLK_ESCAPE: ft_exit(NULL); break;
-					case 's': game->wsad[1] = ev->type==SDL_KEYDOWN; break;
-					case 'a': game->wsad[2] = ev->type==SDL_KEYDOWN; break;
-					case 'd': game->wsad[3] = ev->type==SDL_KEYDOWN; break;
-					case 'q': game->wsad[4] = ev->type==SDL_KEYDOWN; break;
-					case 'e': game->wsad[5] = ev->type==SDL_KEYDOWN; break;
-					case 'w': game->wsad[0] = ev->type==SDL_KEYDOWN; break;
-					case 'z': game->wsad[6] = ev->type==SDL_KEYDOWN; break;
-					case 'x': game->wsad[7] = ev->type==SDL_KEYDOWN; break;
-					case ',': game->wsad[8] = ev->type==SDL_KEYDOWN;
+					case 's': game->wsad[1] = game->ev.type==SDL_KEYDOWN; break;
+					case 'a': game->wsad[2] = game->ev.type==SDL_KEYDOWN; break;
+					case 'd': game->wsad[3] = game->ev.type==SDL_KEYDOWN; break;
+					case 'q': game->wsad[4] = game->ev.type==SDL_KEYDOWN; break;
+					case 'e': game->wsad[5] = game->ev.type==SDL_KEYDOWN; break;
+					case 'w': game->wsad[0] = game->ev.type==SDL_KEYDOWN; break;
+					case 'z': game->wsad[6] = game->ev.type==SDL_KEYDOWN; break;
+					case 'x': game->wsad[7] = game->ev.type==SDL_KEYDOWN; break;
+					case ',': game->wsad[8] = game->ev.type==SDL_KEYDOWN;
 					game->gpu->samples = SAMPLES;
 					// game->gpu->vec_temp = ft_memset(game->gpuOutput, 0, sizeof(cl_float3) * game->image->height * game->image->width);
 					game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[2], sizeof(cl_float3) * WIN_H * WIN_W, game->gpu->vec_temp);
@@ -79,7 +78,7 @@ int		ft_input_keys(void *game1, SDL_Event *ev)
 					if (game->cam_num < 0)
 						game->cam_num = game->cam_quantity - 1;
 					break;
-					case '.': game->wsad[9] = ev->type==SDL_KEYDOWN;
+					case '.': game->wsad[9] = game->ev.type==SDL_KEYDOWN;
 					game->gpu->samples = 5;
 					// game->gpu->vec_temp = ft_memset(game->gpuOutput, 0, sizeof(cl_float3) * game->image->height * game->image->width);
 					game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[2], sizeof(cl_float3) * WIN_H * WIN_W, game->gpu->vec_temp);
@@ -101,8 +100,8 @@ int		ft_input_keys(void *game1, SDL_Event *ev)
 				game->gpu->samples = SAMPLES;
 				// game->gpu->vec_temp = ft_memset(game->gpuOutput, 0, sizeof(cl_float3) * game->image->height * game->image->width);
 				game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[2], sizeof(cl_float3) * WIN_H * WIN_W, game->gpu->vec_temp);
-				rotate_horizontal(&(game->gpu->camera[game->cam_num]), game->gpu->camera[game->cam_num].fov / WIN_W * ev->motion.xrel);
-				rotate_vertical(&(game->gpu->camera[game->cam_num]), game->gpu->camera[game->cam_num].fov /WIN_H * -ev->motion.yrel);
+				rotate_horizontal(&(game->gpu->camera[game->cam_num]), game->gpu->camera[game->cam_num].fov / WIN_W * game->ev.motion.xrel);
+				rotate_vertical(&(game->gpu->camera[game->cam_num]), game->gpu->camera[game->cam_num].fov /WIN_H * -game->ev.motion.yrel);
 				reconfigure_camera( &game->gpu->camera[game->cam_num]);
 			}
 			break;
@@ -255,7 +254,8 @@ void ft_update(t_game *game)
 	{
 		current_ticks = clock();
 
-		ft_input(game, &ft_input_keys);
+		while (SDL_PollEvent(&game->ev))
+			ft_input_keys(game);
 		if (game->init_render || game->wsad[0] || game->wsad[1] ||
 			game->wsad[2] || game->wsad[3] || game->wsad[4] || game->wsad[5] ||
 			game->wsad[6] || game->wsad[7] || game->wsad[8] || game->wsad[9] || game->mouse)

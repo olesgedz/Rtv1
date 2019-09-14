@@ -171,7 +171,7 @@ void					reconfigure_camera(t_cam *camera);
 void					rotate_vertical(t_cam *camera, float angle);
 void					rotate_horizontal(t_cam *camera, float angle);
 t_obj *add_triangle(cl_float3 *vertices, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection);
-int						ft_input_keys(void *game1, SDL_Event *ev);
+int						ft_input_keys(t_game *game);
 
 void					start_screen(t_game *game);
 void					init_kiwi(t_game *game);
