@@ -6,7 +6,7 @@
 #    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/09/13 22:55:23 by lminta           ###   ########.fr        #
+#    Updated: 2019/09/15 16:28:06 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ INCLUDES = $(GUI_INC) -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS
 
 GUI_LIB = -L./gui/build/src -lKiWi -L/Users/lminta/.brew/Cellar/sdl2_ttf/2.0.15/lib -lSDL2_ttf
 GUI_INC = -I./include/SDL2 -I./gui/KiWi/src -I./gui/inc -I/Users/lminta/.brew/Cellar/sdl2_ttf/2.0.15/include/SDL2
+DIR_KiWi = ./gui/build/src/
 
 LIBFT = $(LIBFT_DIRECTORY)libft.a
 LIBFT_HEADERS = $(LIBFT_DIRECTORY)includes/
@@ -113,17 +114,18 @@ endif
 all: $(MAKES) $(NAME)
 
 
-$(NAME): $(LIBFT)  $(LIBSDL) $(LIBCL) $(LIBGNL)  $(LIBVECT) $(OBJS_DIRECTORY) $(OBJS) $(HEADERS)
+$(NAME): $(DIR_KiWi) $(LIBFT)  $(LIBSDL) $(LIBCL) $(LIBGNL)  $(LIBVECT) $(OBJS_DIRECTORY) $(OBJS) $(HEADERS)
 	@$(CC) $(FLAGS) $(LIBSDL) $(INCLUDES) $(OBJS) $(SDL_CFLAGS) $(SDL_LDFLAGS) -o $(NAME) $(LIBRARIES)
 	@echo "$(CLEAR_LINE)[`expr $(CURRENT_FILES) '*' 100 / $(TOTAL_FILES)`%] $(COL_BLUE)[$(NAME)] $(COL_GREEN)Finished compilation. Output file : $(COL_VIOLET)$(PWD)/$(NAME)$(COL_END)"
 
 $(MAKES):
+	@cmake -S ./gui/KiWi -B ./gui/build
+	@$(MAKE) -sC $(DIR_KiWi)
 	@$(MAKE) -sC $(LIBFT_DIRECTORY)
 	@$(MAKE) -sC $(LIBSDL_DIRECTORY)
 	@$(MAKE) -sC $(LIBVECT)
 	@$(MAKE) -sC $(LIBGNL)
 	@$(MAKE) -sC $(LIBCL)
-
 
 $(OBJS_DIRECTORY):
 	@mkdir -p $(OBJS_DIRECTORY)
@@ -148,6 +150,10 @@ sdl:
 this:
 	@rm -rf $(OBJS_DIRECTORY) && make;
 
+$(GUI_KiWi):
+	@cmake -S ./gui/KiWi -B ./gui/build
+	@$(MAKE) -sC $(DIR_KiWi)
+
 $(SDL_LIBS):
 	cd SDL2; ./configure --prefix=$(DIRECTORY); make;
 	$(MAKE) -sC $(SDL_MAKE) install
@@ -161,6 +167,7 @@ $(LIBSDL):
 	@$(MAKE) -sC $(LIBSDL_DIRECTORY)
 
 clean:
+	@$(MAKE) -sC $(DIR_KiWi) clean
 	@$(MAKE) -sC $(LIBFT_DIRECTORY) clean
 	@$(MAKE) -sC $(LIBSDL_DIRECTORY) clean
 	@rm -rf $(OBJS_DIRECTORY)
@@ -176,6 +183,7 @@ lib:
 	 @$(MAKE) -sC $(LIBSDL_DIRECTORY) re
 
 fclean: clean
+	@rm -rf ./gui/build
 	@rm -r $(LIBFT)
 	@echo "$(NAME): $(RED)$(LIBFT) was deleted$(RESET)"
 	@rm -f $(NAME)
