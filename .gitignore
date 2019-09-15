@@ -35,3 +35,4 @@ rtv1
 .vscode
 cmake-build-debug
 .idea
+gui/KiWi/build
