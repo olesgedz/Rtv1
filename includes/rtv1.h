@@ -178,5 +178,6 @@ void					init_kiwi(t_game *game);
 void					quit_kiwi(t_game *game);
 void					loopa(t_game *game);
 t_game					*g_game(t_game *game, int flag);
+SDL_Texture				*load_picture(t_game *game,const char *filename);
 
 #endif

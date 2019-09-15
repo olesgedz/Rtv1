@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 22:51:42 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/13 22:53:02 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/15 22:10:55 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ok_clicked(KW_Widget *widget, int b)
 
 void	start_screen(t_game *game)
 {
-	init_kiwi(game);
+	game->gui.ed_w.backtex = load_picture(game, "gui/res/start.bmp");
 	game->gui.ed_w.framerect = (KW_Rect){10, 10, 300, 220};
 	KW_RectCenterInParent(&game->gui.ed_w.winrect, &game->gui.ed_w.framerect);
 	game->gui.ed_w.frame =

@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/13 22:46:31 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/15 21:26:24 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 
 typedef struct		t_edit_win
 {
+	SDL_Texture		*backtex;
 	KW_Rect			titlerect;
 	KW_Rect			labelrect;
 	KW_Rect			winrect;
@@ -43,6 +44,6 @@ typedef struct		s_gui
 	t_edit_win		ed_w;
 }					t_gui;
 
-
+void	print_error_gui(const char *message, const char *error_message);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/09/15 17:42:42 by lminta           ###   ########.fr        #
+#    Updated: 2019/09/15 21:28:12 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,8 @@ SRCS_LIST = main.c\
 			add_object.c parse.c\
 			cl_float3_manage.c\
 			../gui/src/gui_main.c\
-			../gui/src/start_screen.c
+			../gui/src/start_screen.c\
+			../gui/src/surf_tex.c
 
 OBJS_DIRECTORY = objects/
 OBJS_LIST = $(patsubst %.c, %.o, $(SRCS_LIST))

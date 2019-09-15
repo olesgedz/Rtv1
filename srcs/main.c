@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/14 17:17:57 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/15 22:06:59 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,8 +343,7 @@ int	main(int argc, char **argv)
 	game.gpu = (t_gpu *)malloc(sizeof(t_gpu));
 	game.mouse = 0;
 	ft_init_window(&game.sdl, WIN_W, WIN_H);
-	game.quit = 0;
-	g_game(&game, 1);
+	init_kiwi(&game);
 	if (argc != 2)
 		start_screen(&game);
 	else
