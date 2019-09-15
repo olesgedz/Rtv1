@@ -56,6 +56,7 @@ typedef struct Object{
 	cl_float reflection;
 	cl_float plane_d;
 	cl_int		texture;
+	cl_int i;
 	cl_float3	vertices[3];
 } t_obj;
 
