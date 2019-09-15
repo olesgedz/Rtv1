@@ -6,7 +6,7 @@
 #    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/09/15 16:28:06 by lminta           ###   ########.fr        #
+#    Updated: 2019/09/15 17:15:53 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,8 @@ CC = gcc
 LIBRARIES = $(GUI_LIB) -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY)  -lm -framework OpenCL  -lvect -L$(LIBVECT) -lgnl -L$(LIBGNL) -lcl -L$(LIBCL)
 INCLUDES = $(GUI_INC) -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)include/ -Isrcs/cl_error/ -I$(LIBGNL)include/ -I$(LIBCL)include/
 
-GUI_LIB = -L./gui/build/src -lKiWi -L/Users/lminta/.brew/Cellar/sdl2_ttf/2.0.15/lib -lSDL2_ttf
-GUI_INC = -I./include/SDL2 -I./gui/KiWi/src -I./gui/inc -I/Users/lminta/.brew/Cellar/sdl2_ttf/2.0.15/include/SDL2
+GUI_LIB = -L./gui/build/src -lKiWi -L/Users/$(USER)/.brew/Cellar/sdl2_ttf/2.0.15/lib -lSDL2_ttf
+GUI_INC = -I./include/SDL2 -I./gui/KiWi/src -I./gui/inc -I/Users/$(USER)/.brew/Cellar/sdl2_ttf/2.0.15/include/SDL2
 DIR_KiWi = ./gui/build/src/
 
 LIBFT = $(LIBFT_DIRECTORY)libft.a
