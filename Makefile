@@ -3,10 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
+<<<<<<< HEAD
 #    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
 #    Updated: 2019/09/15 17:26:10 by lminta           ###   ########.fr        #
+=======
+#    By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: Invalid date        by                   #+#    #+#              #
+#    Updated: 2019/09/13 10:57:24 by jblack-b         ###   ########.fr        #
+>>>>>>> jblack-b
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,8 +100,13 @@ TOTAL_FILES := $(shell echo $(SRCS_LIST) | wc -w | sed -e 's/ //g')
 CURRENT_FILES = $(shell find $(DIRECTORY)/objects/ -type f 2> /dev/null | wc -l | sed -e 's/ //g')
 
 
+<<<<<<< HEAD
 
 ifeq ($(OS),Windows_NT)
+=======
+##test
+ifeq ($(OS),Windows_NT)     
+>>>>>>> jblack-b
 	detected_OS := Windows
 else
 	detected_OS := $(shell uname)
