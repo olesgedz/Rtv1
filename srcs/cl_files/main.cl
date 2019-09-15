@@ -59,7 +59,7 @@ static t_ray createCamRay(const int x_coord, const int y_coord, const int width,
 	/* create camera ray*/
 	t_ray ray;
 	ray.origin = scene->camera.position; /* fixed camera position */
-	ray.dir = normalize(pixel_pos); /* vector from camera to pixel on screen */
+	ray.dir = normalize(pixel_pos + float3(rng(scene->random) * EPSILON, rng(scene->random) * EPSILON, rng(scene->random) * EPSILON)); /* vector from camera to pixel on screen */
 	// if (get_global_id(0) == 0)
 	// {
 	// 	printf("%f %f %f %f\n", scene->camera.direction.x, scene->camera.direction.y, scene->camera.direction.z, length(scene->camera.direction));
@@ -251,11 +251,11 @@ __global float3 * vect_temp,  __global ulong * random,  __global t_txture *textu
 	finalcolor = vect_temp[x_coord + y_coord * width];
 
 	scene = scene_new(objects, n_objects, width, height, samples, random, textures, camera);
-	intersection.ray = createCamRay(scene.x_coord, scene.y_coord, width, height, &scene);
-	intersection_reset(&intersection.ray);
 	print_debug(scene.samples, scene.width, &scene);
 	for (int i = 0; i < SAMPLES; i++)
 	{
+		intersection.ray = createCamRay(scene.x_coord, scene.y_coord, width, height, &scene);
+		intersection_reset(&intersection.ray);
 		finalcolor += trace(&scene,  &intersection, &seed0, &seed1);
 	}
 	vect_temp[scene.x_coord + scene.y_coord * width] = finalcolor;
