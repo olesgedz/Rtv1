@@ -6,7 +6,7 @@
 #    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/09/15 17:15:53 by lminta           ###   ########.fr        #
+#    Updated: 2019/09/15 17:26:10 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,8 @@ CC = gcc
 LIBRARIES = $(GUI_LIB) -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY)  -lm -framework OpenCL  -lvect -L$(LIBVECT) -lgnl -L$(LIBGNL) -lcl -L$(LIBCL)
 INCLUDES = $(GUI_INC) -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)include/ -Isrcs/cl_error/ -I$(LIBGNL)include/ -I$(LIBCL)include/
 
-GUI_LIB = -L./gui/build/src -lKiWi -L/Users/$(USER)/.brew/Cellar/sdl2_ttf/2.0.15/lib -lSDL2_ttf
-GUI_INC = -I./include/SDL2 -I./gui/KiWi/src -I./gui/inc -I/Users/$(USER)/.brew/Cellar/sdl2_ttf/2.0.15/include/SDL2
+GUI_LIB = -L./gui/build/src -lKiWi $(shell pkg-config --libs sdl2_ttf)
+GUI_INC = -I./include/SDL2 -I./gui/KiWi/src -I./gui/inc $(shell pkg-config --cflags sdl2_ttf)
 DIR_KiWi = ./gui/build/src/
 
 LIBFT = $(LIBFT_DIRECTORY)libft.a
@@ -37,7 +37,6 @@ LIBSDL_DIRECTORY = libs/libsdl/
 
 
 SDL_HEADERS = include/
-
 LIBSDL = $(LIBSDL_DIRECTORY)libsdl.a
 LIBSDL_HEADERS = $(LIBSDL_DIRECTORY)includes/
 
@@ -119,8 +118,6 @@ $(NAME): $(DIR_KiWi) $(LIBFT)  $(LIBSDL) $(LIBCL) $(LIBGNL)  $(LIBVECT) $(OBJS_D
 	@echo "$(CLEAR_LINE)[`expr $(CURRENT_FILES) '*' 100 / $(TOTAL_FILES)`%] $(COL_BLUE)[$(NAME)] $(COL_GREEN)Finished compilation. Output file : $(COL_VIOLET)$(PWD)/$(NAME)$(COL_END)"
 
 $(MAKES):
-	@cmake -S ./gui/KiWi -B ./gui/build
-	@$(MAKE) -sC $(DIR_KiWi)
 	@$(MAKE) -sC $(LIBFT_DIRECTORY)
 	@$(MAKE) -sC $(LIBSDL_DIRECTORY)
 	@$(MAKE) -sC $(LIBVECT)
@@ -150,7 +147,7 @@ sdl:
 this:
 	@rm -rf $(OBJS_DIRECTORY) && make;
 
-$(GUI_KiWi):
+$(DIR_KiWi):
 	@cmake -S ./gui/KiWi -B ./gui/build
 	@$(MAKE) -sC $(DIR_KiWi)
 
