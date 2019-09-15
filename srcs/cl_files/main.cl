@@ -68,7 +68,7 @@ static t_ray createCamRay(const int x_coord, const int y_coord, const int width,
     return ray;
 }
 
-static bool intersect_scene(t_scene * scene, t_intersection * intersection, t_ray * ray)
+static bool intersect_scene(t_scene * scene, t_intersection * intersection, t_ray * ray, int light)
 {
 	/* initialise t to a very large number,
 	so t will be guaranteed to be smaller
@@ -80,6 +80,8 @@ static bool intersect_scene(t_scene * scene, t_intersection * intersection, t_ra
 	for (int i = 0; i < scene->n_objects; i++)  {
 
 		t_obj object = scene->objects[i]; /* create local copy of sphere */
+		// if (light == 1 && cl_float3_max(object.emission) == 0)
+		// 	continue;
 		float hitdistance = 0;
 		if (object.type == SPHERE)
 			hitdistance = intersect_sphere(&object, ray);
@@ -124,13 +126,13 @@ static float3		radiance_explicit(t_scene *scene,
 			continue ;
 		if (cl_float3_max(scene->objects[i].emission) == 0.f)
 			continue ;
-		light_position = sphere_random_on_sphere(scene->objects + i, scene->random);
+		light_position = sphere_random(scene->objects + i, scene->random);
 		light_direction = normalize(light_position - intersection_object->hitpoint);
 		lightray.origin = intersection_object->hitpoint; //- light_direction * EPSILON;
 		lightray.dir = light_direction;
 		intersection_reset(&intersection_light);
 
-		if (!intersect_scene(scene, &intersection_light, &lightray))
+		if (!intersect_scene(scene, &intersection_light, &lightray, 1))
 			continue ;
 
 		if (intersection_light.object_id != i)
@@ -160,7 +162,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 	for (int bounces = 0; bounces < max_trace_depth; bounces++)
 	{
 		/* if ray misses scene, return background colour */
-		if (!intersect_scene(scene, intersection, &ray))
+		if (!intersect_scene(scene, intersection, &ray, 0))
 			return mask * global_texture(&ray, scene);
 		/* Russian roulette*/
 		if (bounces > 4 && cl_float3_max(scene->objects[intersection->object_id].color) < rng(scene->random))
