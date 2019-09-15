@@ -6,7 +6,7 @@
 #    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/09/15 17:26:10 by lminta           ###   ########.fr        #
+#    Updated: 2019/09/15 17:42:42 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ INCLUDES = $(GUI_INC) -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS
 GUI_LIB = -L./gui/build/src -lKiWi $(shell pkg-config --libs sdl2_ttf)
 GUI_INC = -I./include/SDL2 -I./gui/KiWi/src -I./gui/inc $(shell pkg-config --cflags sdl2_ttf)
 DIR_KiWi = ./gui/build/src/
+LIB_KiWi = $(DIR_KiWi)/libKiWi.dylib
 
 LIBFT = $(LIBFT_DIRECTORY)libft.a
 LIBFT_HEADERS = $(LIBFT_DIRECTORY)includes/
@@ -113,7 +114,7 @@ endif
 all: $(MAKES) $(NAME)
 
 
-$(NAME): $(DIR_KiWi) $(LIBFT)  $(LIBSDL) $(LIBCL) $(LIBGNL)  $(LIBVECT) $(OBJS_DIRECTORY) $(OBJS) $(HEADERS)
+$(NAME): $(LIB_KiWi) $(LIBFT)  $(LIBSDL) $(LIBCL) $(LIBGNL)  $(LIBVECT) $(OBJS_DIRECTORY) $(OBJS) $(HEADERS)
 	@$(CC) $(FLAGS) $(LIBSDL) $(INCLUDES) $(OBJS) $(SDL_CFLAGS) $(SDL_LDFLAGS) -o $(NAME) $(LIBRARIES)
 	@echo "$(CLEAR_LINE)[`expr $(CURRENT_FILES) '*' 100 / $(TOTAL_FILES)`%] $(COL_BLUE)[$(NAME)] $(COL_GREEN)Finished compilation. Output file : $(COL_VIOLET)$(PWD)/$(NAME)$(COL_END)"
 
@@ -147,7 +148,7 @@ sdl:
 this:
 	@rm -rf $(OBJS_DIRECTORY) && make;
 
-$(DIR_KiWi):
+$(LIB_KiWi):
 	@cmake -S ./gui/KiWi -B ./gui/build
 	@$(MAKE) -sC $(DIR_KiWi)
 
@@ -164,7 +165,7 @@ $(LIBSDL):
 	@$(MAKE) -sC $(LIBSDL_DIRECTORY)
 
 clean:
-	@$(MAKE) -sC $(DIR_KiWi) clean
+	@rm -rf ./gui/build
 	@$(MAKE) -sC $(LIBFT_DIRECTORY) clean
 	@$(MAKE) -sC $(LIBSDL_DIRECTORY) clean
 	@rm -rf $(OBJS_DIRECTORY)
@@ -180,7 +181,6 @@ lib:
 	 @$(MAKE) -sC $(LIBSDL_DIRECTORY) re
 
 fclean: clean
-	@rm -rf ./gui/build
 	@rm -r $(LIBFT)
 	@echo "$(NAME): $(RED)$(LIBFT) was deleted$(RESET)"
 	@rm -f $(NAME)
