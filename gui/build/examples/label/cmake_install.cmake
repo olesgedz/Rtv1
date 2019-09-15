@@ -1,4 +1,4 @@
-# Install script for directory: /Users/lminta/Rtv1/gui/KiWi/examples/label
+# Install script for directory: /Users/lminta/test/gui/KiWi/examples/label
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

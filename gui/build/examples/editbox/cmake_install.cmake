@@ -1,4 +1,4 @@
-# Install script for directory: /Users/lminta/Rtv1/gui/KiWi/examples/editbox
+# Install script for directory: /Users/lminta/test/gui/KiWi/examples/editbox
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

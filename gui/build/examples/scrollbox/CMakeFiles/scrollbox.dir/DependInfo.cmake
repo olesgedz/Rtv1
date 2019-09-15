@@ -4,19 +4,19 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/Users/lminta/Rtv1/gui/KiWi/examples/scrollbox/scrollbox.c" "/Users/lminta/Rtv1/gui/build/examples/scrollbox/CMakeFiles/scrollbox.dir/scrollbox.c.o"
+  "/Users/lminta/test/gui/KiWi/examples/scrollbox/scrollbox.c" "/Users/lminta/test/gui/build/examples/scrollbox/CMakeFiles/scrollbox.dir/scrollbox.c.o"
   )
 set(CMAKE_C_COMPILER_ID "Clang")
 
 # The include file search paths:
 set(CMAKE_C_TARGET_INCLUDE_PATH
   "/Users/lminta/.brew/include/SDL2"
-  "/Users/lminta/Rtv1/gui/KiWi/src"
+  "/Users/lminta/test/gui/KiWi/src"
   )
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/Users/lminta/Rtv1/gui/build/src/CMakeFiles/KiWi.dir/DependInfo.cmake"
+  "/Users/lminta/test/gui/build/src/CMakeFiles/KiWi.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

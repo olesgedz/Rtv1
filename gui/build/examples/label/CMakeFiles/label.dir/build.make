@@ -43,10 +43,10 @@ RM = /Users/lminta/.brew/Cellar/cmake/3.15.3/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/lminta/Rtv1/gui/KiWi
+CMAKE_SOURCE_DIR = /Users/lminta/test/gui/KiWi
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/lminta/Rtv1/gui/build
+CMAKE_BINARY_DIR = /Users/lminta/test/gui/build
 
 # Include any dependencies generated for this target.
 include examples/label/CMakeFiles/label.dir/depend.make
@@ -57,26 +57,26 @@ include examples/label/CMakeFiles/label.dir/progress.make
 # Include the compile flags for this target's objects.
 include examples/label/CMakeFiles/label.dir/flags.make
 
-examples/label/tileset.png: /Users/lminta/Rtv1/gui/KiWi/examples/tileset/tileset.png
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/lminta/Rtv1/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating tileset.png"
-	cd /Users/lminta/Rtv1/gui/build/examples/label && /Users/lminta/.brew/Cellar/cmake/3.15.3/bin/cmake -E copy /Users/lminta/Rtv1/gui/KiWi/examples/label/../tileset/tileset.png /Users/lminta/Rtv1/gui/build/examples/label/tileset.png
+examples/label/tileset.png: /Users/lminta/test/gui/KiWi/examples/tileset/tileset.png
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/lminta/test/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating tileset.png"
+	cd /Users/lminta/test/gui/build/examples/label && /Users/lminta/.brew/Cellar/cmake/3.15.3/bin/cmake -E copy /Users/lminta/test/gui/KiWi/examples/label/../tileset/tileset.png /Users/lminta/test/gui/build/examples/label/tileset.png
 
-examples/label/Fontin-Regular.ttf: /Users/lminta/Rtv1/gui/KiWi/examples/fonts/Fontin-Regular.ttf
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/lminta/Rtv1/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Fontin-Regular.ttf"
-	cd /Users/lminta/Rtv1/gui/build/examples/label && /Users/lminta/.brew/Cellar/cmake/3.15.3/bin/cmake -E copy /Users/lminta/Rtv1/gui/KiWi/examples/label/../fonts/Fontin-Regular.ttf /Users/lminta/Rtv1/gui/build/examples/label/Fontin-Regular.ttf
+examples/label/Fontin-Regular.ttf: /Users/lminta/test/gui/KiWi/examples/fonts/Fontin-Regular.ttf
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/lminta/test/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Fontin-Regular.ttf"
+	cd /Users/lminta/test/gui/build/examples/label && /Users/lminta/.brew/Cellar/cmake/3.15.3/bin/cmake -E copy /Users/lminta/test/gui/KiWi/examples/label/../fonts/Fontin-Regular.ttf /Users/lminta/test/gui/build/examples/label/Fontin-Regular.ttf
 
 examples/label/CMakeFiles/label.dir/label.c.o: examples/label/CMakeFiles/label.dir/flags.make
-examples/label/CMakeFiles/label.dir/label.c.o: /Users/lminta/Rtv1/gui/KiWi/examples/label/label.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/lminta/Rtv1/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object examples/label/CMakeFiles/label.dir/label.c.o"
-	cd /Users/lminta/Rtv1/gui/build/examples/label && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/label.dir/label.c.o   -c /Users/lminta/Rtv1/gui/KiWi/examples/label/label.c
+examples/label/CMakeFiles/label.dir/label.c.o: /Users/lminta/test/gui/KiWi/examples/label/label.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/lminta/test/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object examples/label/CMakeFiles/label.dir/label.c.o"
+	cd /Users/lminta/test/gui/build/examples/label && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/label.dir/label.c.o   -c /Users/lminta/test/gui/KiWi/examples/label/label.c
 
 examples/label/CMakeFiles/label.dir/label.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/label.dir/label.c.i"
-	cd /Users/lminta/Rtv1/gui/build/examples/label && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/lminta/Rtv1/gui/KiWi/examples/label/label.c > CMakeFiles/label.dir/label.c.i
+	cd /Users/lminta/test/gui/build/examples/label && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/lminta/test/gui/KiWi/examples/label/label.c > CMakeFiles/label.dir/label.c.i
 
 examples/label/CMakeFiles/label.dir/label.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/label.dir/label.c.s"
-	cd /Users/lminta/Rtv1/gui/build/examples/label && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/lminta/Rtv1/gui/KiWi/examples/label/label.c -o CMakeFiles/label.dir/label.c.s
+	cd /Users/lminta/test/gui/build/examples/label && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/lminta/test/gui/KiWi/examples/label/label.c -o CMakeFiles/label.dir/label.c.s
 
 # Object files for target label
 label_OBJECTS = \
@@ -94,8 +94,8 @@ examples/label/label: /Users/lminta/.brew/lib/libSDL2_image.dylib
 examples/label/label: /Users/lminta/.brew/lib/libSDL2_ttf.dylib
 examples/label/label: /Users/lminta/.brew/lib/libSDL2_image.dylib
 examples/label/label: examples/label/CMakeFiles/label.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/lminta/Rtv1/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable label"
-	cd /Users/lminta/Rtv1/gui/build/examples/label && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/label.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/lminta/test/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable label"
+	cd /Users/lminta/test/gui/build/examples/label && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/label.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 examples/label/CMakeFiles/label.dir/build: examples/label/label
@@ -103,11 +103,11 @@ examples/label/CMakeFiles/label.dir/build: examples/label/label
 .PHONY : examples/label/CMakeFiles/label.dir/build
 
 examples/label/CMakeFiles/label.dir/clean:
-	cd /Users/lminta/Rtv1/gui/build/examples/label && $(CMAKE_COMMAND) -P CMakeFiles/label.dir/cmake_clean.cmake
+	cd /Users/lminta/test/gui/build/examples/label && $(CMAKE_COMMAND) -P CMakeFiles/label.dir/cmake_clean.cmake
 .PHONY : examples/label/CMakeFiles/label.dir/clean
 
 examples/label/CMakeFiles/label.dir/depend: examples/label/tileset.png
 examples/label/CMakeFiles/label.dir/depend: examples/label/Fontin-Regular.ttf
-	cd /Users/lminta/Rtv1/gui/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/lminta/Rtv1/gui/KiWi /Users/lminta/Rtv1/gui/KiWi/examples/label /Users/lminta/Rtv1/gui/build /Users/lminta/Rtv1/gui/build/examples/label /Users/lminta/Rtv1/gui/build/examples/label/CMakeFiles/label.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/lminta/test/gui/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/lminta/test/gui/KiWi /Users/lminta/test/gui/KiWi/examples/label /Users/lminta/test/gui/build /Users/lminta/test/gui/build/examples/label /Users/lminta/test/gui/build/examples/label/CMakeFiles/label.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : examples/label/CMakeFiles/label.dir/depend
 

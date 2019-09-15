@@ -1,4 +1,4 @@
-# Install script for directory: /Users/lminta/Rtv1/gui/KiWi
+# Install script for directory: /Users/lminta/test/gui/KiWi
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -33,18 +33,18 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/KiWi" TYPE FILE FILES "/Users/lminta/Rtv1/gui/build/KiWiConfigVersion.cmake")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/KiWi" TYPE FILE FILES "/Users/lminta/test/gui/build/KiWiConfigVersion.cmake")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/KiWi" TYPE FILE RENAME "KiWiConfig.cmake" FILES "/Users/lminta/Rtv1/gui/build/tmpkiwiconfig")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/KiWi" TYPE FILE RENAME "KiWiConfig.cmake" FILES "/Users/lminta/test/gui/build/tmpkiwiconfig")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/KiWi/KiWiTargets.cmake")
     file(DIFFERENT EXPORT_FILE_CHANGED FILES
          "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/KiWi/KiWiTargets.cmake"
-         "/Users/lminta/Rtv1/gui/build/CMakeFiles/Export/lib/cmake/KiWi/KiWiTargets.cmake")
+         "/Users/lminta/test/gui/build/CMakeFiles/Export/lib/cmake/KiWi/KiWiTargets.cmake")
     if(EXPORT_FILE_CHANGED)
       file(GLOB OLD_CONFIG_FILES "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/KiWi/KiWiTargets-*.cmake")
       if(OLD_CONFIG_FILES)
@@ -53,16 +53,16 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
       endif()
     endif()
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/KiWi" TYPE FILE FILES "/Users/lminta/Rtv1/gui/build/CMakeFiles/Export/lib/cmake/KiWi/KiWiTargets.cmake")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/KiWi" TYPE FILE FILES "/Users/lminta/test/gui/build/CMakeFiles/Export/lib/cmake/KiWi/KiWiTargets.cmake")
   if("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^()$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/KiWi" TYPE FILE FILES "/Users/lminta/Rtv1/gui/build/CMakeFiles/Export/lib/cmake/KiWi/KiWiTargets-noconfig.cmake")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/KiWi" TYPE FILE FILES "/Users/lminta/test/gui/build/CMakeFiles/Export/lib/cmake/KiWi/KiWiTargets-noconfig.cmake")
   endif()
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/Users/lminta/Rtv1/gui/build/src/cmake_install.cmake")
-  include("/Users/lminta/Rtv1/gui/build/examples/cmake_install.cmake")
+  include("/Users/lminta/test/gui/build/src/cmake_install.cmake")
+  include("/Users/lminta/test/gui/build/examples/cmake_install.cmake")
 
 endif()
 
@@ -74,5 +74,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/lminta/Rtv1/gui/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/lminta/test/gui/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

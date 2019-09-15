@@ -48,10 +48,10 @@ RM = /Users/lminta/.brew/Cellar/cmake/3.15.3/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/lminta/Rtv1/gui/KiWi
+CMAKE_SOURCE_DIR = /Users/lminta/test/gui/KiWi
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/lminta/Rtv1/gui/build
+CMAKE_BINARY_DIR = /Users/lminta/test/gui/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -126,14 +126,14 @@ list_install_components/fast: list_install_components
 
 # The main all target
 all: cmake_check_build_system
-	cd /Users/lminta/Rtv1/gui/build && $(CMAKE_COMMAND) -E cmake_progress_start /Users/lminta/Rtv1/gui/build/CMakeFiles /Users/lminta/Rtv1/gui/build/src/CMakeFiles/progress.marks
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f CMakeFiles/Makefile2 src/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/lminta/Rtv1/gui/build/CMakeFiles 0
+	cd /Users/lminta/test/gui/build && $(CMAKE_COMMAND) -E cmake_progress_start /Users/lminta/test/gui/build/CMakeFiles /Users/lminta/test/gui/build/src/CMakeFiles/progress.marks
+	cd /Users/lminta/test/gui/build && $(MAKE) -f CMakeFiles/Makefile2 src/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/lminta/test/gui/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f CMakeFiles/Makefile2 src/clean
+	cd /Users/lminta/test/gui/build && $(MAKE) -f CMakeFiles/Makefile2 src/clean
 .PHONY : clean
 
 # The main clean target
@@ -143,22 +143,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f CMakeFiles/Makefile2 src/preinstall
+	cd /Users/lminta/test/gui/build && $(MAKE) -f CMakeFiles/Makefile2 src/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f CMakeFiles/Makefile2 src/preinstall
+	cd /Users/lminta/test/gui/build && $(MAKE) -f CMakeFiles/Makefile2 src/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /Users/lminta/Rtv1/gui/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /Users/lminta/test/gui/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 src/CMakeFiles/KiWi.dir/rule:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/KiWi.dir/rule
+	cd /Users/lminta/test/gui/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/KiWi.dir/rule
 .PHONY : src/CMakeFiles/KiWi.dir/rule
 
 # Convenience name for target.
@@ -168,7 +168,7 @@ KiWi: src/CMakeFiles/KiWi.dir/rule
 
 # fast build rule for target.
 KiWi/fast:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/build
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/build
 .PHONY : KiWi/fast
 
 KW_button.o: KW_button.c.o
@@ -177,7 +177,7 @@ KW_button.o: KW_button.c.o
 
 # target to build an object file
 KW_button.c.o:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_button.c.o
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_button.c.o
 .PHONY : KW_button.c.o
 
 KW_button.i: KW_button.c.i
@@ -186,7 +186,7 @@ KW_button.i: KW_button.c.i
 
 # target to preprocess a source file
 KW_button.c.i:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_button.c.i
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_button.c.i
 .PHONY : KW_button.c.i
 
 KW_button.s: KW_button.c.s
@@ -195,7 +195,7 @@ KW_button.s: KW_button.c.s
 
 # target to generate assembly for a file
 KW_button.c.s:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_button.c.s
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_button.c.s
 .PHONY : KW_button.c.s
 
 KW_checkbox.o: KW_checkbox.c.o
@@ -204,7 +204,7 @@ KW_checkbox.o: KW_checkbox.c.o
 
 # target to build an object file
 KW_checkbox.c.o:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_checkbox.c.o
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_checkbox.c.o
 .PHONY : KW_checkbox.c.o
 
 KW_checkbox.i: KW_checkbox.c.i
@@ -213,7 +213,7 @@ KW_checkbox.i: KW_checkbox.c.i
 
 # target to preprocess a source file
 KW_checkbox.c.i:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_checkbox.c.i
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_checkbox.c.i
 .PHONY : KW_checkbox.c.i
 
 KW_checkbox.s: KW_checkbox.c.s
@@ -222,7 +222,7 @@ KW_checkbox.s: KW_checkbox.c.s
 
 # target to generate assembly for a file
 KW_checkbox.c.s:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_checkbox.c.s
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_checkbox.c.s
 .PHONY : KW_checkbox.c.s
 
 KW_editbox.o: KW_editbox.c.o
@@ -231,7 +231,7 @@ KW_editbox.o: KW_editbox.c.o
 
 # target to build an object file
 KW_editbox.c.o:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_editbox.c.o
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_editbox.c.o
 .PHONY : KW_editbox.c.o
 
 KW_editbox.i: KW_editbox.c.i
@@ -240,7 +240,7 @@ KW_editbox.i: KW_editbox.c.i
 
 # target to preprocess a source file
 KW_editbox.c.i:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_editbox.c.i
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_editbox.c.i
 .PHONY : KW_editbox.c.i
 
 KW_editbox.s: KW_editbox.c.s
@@ -249,7 +249,7 @@ KW_editbox.s: KW_editbox.c.s
 
 # target to generate assembly for a file
 KW_editbox.c.s:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_editbox.c.s
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_editbox.c.s
 .PHONY : KW_editbox.c.s
 
 KW_editbox_internal.o: KW_editbox_internal.c.o
@@ -258,7 +258,7 @@ KW_editbox_internal.o: KW_editbox_internal.c.o
 
 # target to build an object file
 KW_editbox_internal.c.o:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_editbox_internal.c.o
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_editbox_internal.c.o
 .PHONY : KW_editbox_internal.c.o
 
 KW_editbox_internal.i: KW_editbox_internal.c.i
@@ -267,7 +267,7 @@ KW_editbox_internal.i: KW_editbox_internal.c.i
 
 # target to preprocess a source file
 KW_editbox_internal.c.i:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_editbox_internal.c.i
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_editbox_internal.c.i
 .PHONY : KW_editbox_internal.c.i
 
 KW_editbox_internal.s: KW_editbox_internal.c.s
@@ -276,7 +276,7 @@ KW_editbox_internal.s: KW_editbox_internal.c.s
 
 # target to generate assembly for a file
 KW_editbox_internal.c.s:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_editbox_internal.c.s
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_editbox_internal.c.s
 .PHONY : KW_editbox_internal.c.s
 
 KW_eventwatcher.o: KW_eventwatcher.c.o
@@ -285,7 +285,7 @@ KW_eventwatcher.o: KW_eventwatcher.c.o
 
 # target to build an object file
 KW_eventwatcher.c.o:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_eventwatcher.c.o
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_eventwatcher.c.o
 .PHONY : KW_eventwatcher.c.o
 
 KW_eventwatcher.i: KW_eventwatcher.c.i
@@ -294,7 +294,7 @@ KW_eventwatcher.i: KW_eventwatcher.c.i
 
 # target to preprocess a source file
 KW_eventwatcher.c.i:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_eventwatcher.c.i
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_eventwatcher.c.i
 .PHONY : KW_eventwatcher.c.i
 
 KW_eventwatcher.s: KW_eventwatcher.c.s
@@ -303,7 +303,7 @@ KW_eventwatcher.s: KW_eventwatcher.c.s
 
 # target to generate assembly for a file
 KW_eventwatcher.c.s:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_eventwatcher.c.s
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_eventwatcher.c.s
 .PHONY : KW_eventwatcher.c.s
 
 KW_frame.o: KW_frame.c.o
@@ -312,7 +312,7 @@ KW_frame.o: KW_frame.c.o
 
 # target to build an object file
 KW_frame.c.o:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_frame.c.o
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_frame.c.o
 .PHONY : KW_frame.c.o
 
 KW_frame.i: KW_frame.c.i
@@ -321,7 +321,7 @@ KW_frame.i: KW_frame.c.i
 
 # target to preprocess a source file
 KW_frame.c.i:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_frame.c.i
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_frame.c.i
 .PHONY : KW_frame.c.i
 
 KW_frame.s: KW_frame.c.s
@@ -330,7 +330,7 @@ KW_frame.s: KW_frame.c.s
 
 # target to generate assembly for a file
 KW_frame.c.s:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_frame.c.s
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_frame.c.s
 .PHONY : KW_frame.c.s
 
 KW_frame_internal.o: KW_frame_internal.c.o
@@ -339,7 +339,7 @@ KW_frame_internal.o: KW_frame_internal.c.o
 
 # target to build an object file
 KW_frame_internal.c.o:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_frame_internal.c.o
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_frame_internal.c.o
 .PHONY : KW_frame_internal.c.o
 
 KW_frame_internal.i: KW_frame_internal.c.i
@@ -348,7 +348,7 @@ KW_frame_internal.i: KW_frame_internal.c.i
 
 # target to preprocess a source file
 KW_frame_internal.c.i:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_frame_internal.c.i
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_frame_internal.c.i
 .PHONY : KW_frame_internal.c.i
 
 KW_frame_internal.s: KW_frame_internal.c.s
@@ -357,7 +357,7 @@ KW_frame_internal.s: KW_frame_internal.c.s
 
 # target to generate assembly for a file
 KW_frame_internal.c.s:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_frame_internal.c.s
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_frame_internal.c.s
 .PHONY : KW_frame_internal.c.s
 
 KW_gui.o: KW_gui.c.o
@@ -366,7 +366,7 @@ KW_gui.o: KW_gui.c.o
 
 # target to build an object file
 KW_gui.c.o:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_gui.c.o
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_gui.c.o
 .PHONY : KW_gui.c.o
 
 KW_gui.i: KW_gui.c.i
@@ -375,7 +375,7 @@ KW_gui.i: KW_gui.c.i
 
 # target to preprocess a source file
 KW_gui.c.i:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_gui.c.i
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_gui.c.i
 .PHONY : KW_gui.c.i
 
 KW_gui.s: KW_gui.c.s
@@ -384,7 +384,7 @@ KW_gui.s: KW_gui.c.s
 
 # target to generate assembly for a file
 KW_gui.c.s:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_gui.c.s
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_gui.c.s
 .PHONY : KW_gui.c.s
 
 KW_label.o: KW_label.c.o
@@ -393,7 +393,7 @@ KW_label.o: KW_label.c.o
 
 # target to build an object file
 KW_label.c.o:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_label.c.o
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_label.c.o
 .PHONY : KW_label.c.o
 
 KW_label.i: KW_label.c.i
@@ -402,7 +402,7 @@ KW_label.i: KW_label.c.i
 
 # target to preprocess a source file
 KW_label.c.i:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_label.c.i
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_label.c.i
 .PHONY : KW_label.c.i
 
 KW_label.s: KW_label.c.s
@@ -411,7 +411,7 @@ KW_label.s: KW_label.c.s
 
 # target to generate assembly for a file
 KW_label.c.s:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_label.c.s
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_label.c.s
 .PHONY : KW_label.c.s
 
 KW_label_internal.o: KW_label_internal.c.o
@@ -420,7 +420,7 @@ KW_label_internal.o: KW_label_internal.c.o
 
 # target to build an object file
 KW_label_internal.c.o:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_label_internal.c.o
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_label_internal.c.o
 .PHONY : KW_label_internal.c.o
 
 KW_label_internal.i: KW_label_internal.c.i
@@ -429,7 +429,7 @@ KW_label_internal.i: KW_label_internal.c.i
 
 # target to preprocess a source file
 KW_label_internal.c.i:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_label_internal.c.i
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_label_internal.c.i
 .PHONY : KW_label_internal.c.i
 
 KW_label_internal.s: KW_label_internal.c.s
@@ -438,7 +438,7 @@ KW_label_internal.s: KW_label_internal.c.s
 
 # target to generate assembly for a file
 KW_label_internal.c.s:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_label_internal.c.s
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_label_internal.c.s
 .PHONY : KW_label_internal.c.s
 
 KW_rect.o: KW_rect.c.o
@@ -447,7 +447,7 @@ KW_rect.o: KW_rect.c.o
 
 # target to build an object file
 KW_rect.c.o:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_rect.c.o
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_rect.c.o
 .PHONY : KW_rect.c.o
 
 KW_rect.i: KW_rect.c.i
@@ -456,7 +456,7 @@ KW_rect.i: KW_rect.c.i
 
 # target to preprocess a source file
 KW_rect.c.i:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_rect.c.i
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_rect.c.i
 .PHONY : KW_rect.c.i
 
 KW_rect.s: KW_rect.c.s
@@ -465,7 +465,7 @@ KW_rect.s: KW_rect.c.s
 
 # target to generate assembly for a file
 KW_rect.c.s:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_rect.c.s
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_rect.c.s
 .PHONY : KW_rect.c.s
 
 KW_renderdriver.o: KW_renderdriver.c.o
@@ -474,7 +474,7 @@ KW_renderdriver.o: KW_renderdriver.c.o
 
 # target to build an object file
 KW_renderdriver.c.o:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_renderdriver.c.o
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_renderdriver.c.o
 .PHONY : KW_renderdriver.c.o
 
 KW_renderdriver.i: KW_renderdriver.c.i
@@ -483,7 +483,7 @@ KW_renderdriver.i: KW_renderdriver.c.i
 
 # target to preprocess a source file
 KW_renderdriver.c.i:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_renderdriver.c.i
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_renderdriver.c.i
 .PHONY : KW_renderdriver.c.i
 
 KW_renderdriver.s: KW_renderdriver.c.s
@@ -492,7 +492,7 @@ KW_renderdriver.s: KW_renderdriver.c.s
 
 # target to generate assembly for a file
 KW_renderdriver.c.s:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_renderdriver.c.s
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_renderdriver.c.s
 .PHONY : KW_renderdriver.c.s
 
 KW_renderdriver_sdl2.o: KW_renderdriver_sdl2.c.o
@@ -501,7 +501,7 @@ KW_renderdriver_sdl2.o: KW_renderdriver_sdl2.c.o
 
 # target to build an object file
 KW_renderdriver_sdl2.c.o:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_renderdriver_sdl2.c.o
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_renderdriver_sdl2.c.o
 .PHONY : KW_renderdriver_sdl2.c.o
 
 KW_renderdriver_sdl2.i: KW_renderdriver_sdl2.c.i
@@ -510,7 +510,7 @@ KW_renderdriver_sdl2.i: KW_renderdriver_sdl2.c.i
 
 # target to preprocess a source file
 KW_renderdriver_sdl2.c.i:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_renderdriver_sdl2.c.i
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_renderdriver_sdl2.c.i
 .PHONY : KW_renderdriver_sdl2.c.i
 
 KW_renderdriver_sdl2.s: KW_renderdriver_sdl2.c.s
@@ -519,7 +519,7 @@ KW_renderdriver_sdl2.s: KW_renderdriver_sdl2.c.s
 
 # target to generate assembly for a file
 KW_renderdriver_sdl2.c.s:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_renderdriver_sdl2.c.s
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_renderdriver_sdl2.c.s
 .PHONY : KW_renderdriver_sdl2.c.s
 
 KW_scrollbox.o: KW_scrollbox.c.o
@@ -528,7 +528,7 @@ KW_scrollbox.o: KW_scrollbox.c.o
 
 # target to build an object file
 KW_scrollbox.c.o:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_scrollbox.c.o
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_scrollbox.c.o
 .PHONY : KW_scrollbox.c.o
 
 KW_scrollbox.i: KW_scrollbox.c.i
@@ -537,7 +537,7 @@ KW_scrollbox.i: KW_scrollbox.c.i
 
 # target to preprocess a source file
 KW_scrollbox.c.i:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_scrollbox.c.i
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_scrollbox.c.i
 .PHONY : KW_scrollbox.c.i
 
 KW_scrollbox.s: KW_scrollbox.c.s
@@ -546,7 +546,7 @@ KW_scrollbox.s: KW_scrollbox.c.s
 
 # target to generate assembly for a file
 KW_scrollbox.c.s:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_scrollbox.c.s
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_scrollbox.c.s
 .PHONY : KW_scrollbox.c.s
 
 KW_scrollbox_internal.o: KW_scrollbox_internal.c.o
@@ -555,7 +555,7 @@ KW_scrollbox_internal.o: KW_scrollbox_internal.c.o
 
 # target to build an object file
 KW_scrollbox_internal.c.o:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_scrollbox_internal.c.o
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_scrollbox_internal.c.o
 .PHONY : KW_scrollbox_internal.c.o
 
 KW_scrollbox_internal.i: KW_scrollbox_internal.c.i
@@ -564,7 +564,7 @@ KW_scrollbox_internal.i: KW_scrollbox_internal.c.i
 
 # target to preprocess a source file
 KW_scrollbox_internal.c.i:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_scrollbox_internal.c.i
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_scrollbox_internal.c.i
 .PHONY : KW_scrollbox_internal.c.i
 
 KW_scrollbox_internal.s: KW_scrollbox_internal.c.s
@@ -573,7 +573,7 @@ KW_scrollbox_internal.s: KW_scrollbox_internal.c.s
 
 # target to generate assembly for a file
 KW_scrollbox_internal.c.s:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_scrollbox_internal.c.s
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_scrollbox_internal.c.s
 .PHONY : KW_scrollbox_internal.c.s
 
 KW_tilerenderer.o: KW_tilerenderer.c.o
@@ -582,7 +582,7 @@ KW_tilerenderer.o: KW_tilerenderer.c.o
 
 # target to build an object file
 KW_tilerenderer.c.o:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_tilerenderer.c.o
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_tilerenderer.c.o
 .PHONY : KW_tilerenderer.c.o
 
 KW_tilerenderer.i: KW_tilerenderer.c.i
@@ -591,7 +591,7 @@ KW_tilerenderer.i: KW_tilerenderer.c.i
 
 # target to preprocess a source file
 KW_tilerenderer.c.i:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_tilerenderer.c.i
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_tilerenderer.c.i
 .PHONY : KW_tilerenderer.c.i
 
 KW_tilerenderer.s: KW_tilerenderer.c.s
@@ -600,7 +600,7 @@ KW_tilerenderer.s: KW_tilerenderer.c.s
 
 # target to generate assembly for a file
 KW_tilerenderer.c.s:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_tilerenderer.c.s
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_tilerenderer.c.s
 .PHONY : KW_tilerenderer.c.s
 
 KW_toggle.o: KW_toggle.c.o
@@ -609,7 +609,7 @@ KW_toggle.o: KW_toggle.c.o
 
 # target to build an object file
 KW_toggle.c.o:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_toggle.c.o
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_toggle.c.o
 .PHONY : KW_toggle.c.o
 
 KW_toggle.i: KW_toggle.c.i
@@ -618,7 +618,7 @@ KW_toggle.i: KW_toggle.c.i
 
 # target to preprocess a source file
 KW_toggle.c.i:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_toggle.c.i
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_toggle.c.i
 .PHONY : KW_toggle.c.i
 
 KW_toggle.s: KW_toggle.c.s
@@ -627,7 +627,7 @@ KW_toggle.s: KW_toggle.c.s
 
 # target to generate assembly for a file
 KW_toggle.c.s:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_toggle.c.s
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_toggle.c.s
 .PHONY : KW_toggle.c.s
 
 KW_widget.o: KW_widget.c.o
@@ -636,7 +636,7 @@ KW_widget.o: KW_widget.c.o
 
 # target to build an object file
 KW_widget.c.o:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_widget.c.o
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_widget.c.o
 .PHONY : KW_widget.c.o
 
 KW_widget.i: KW_widget.c.i
@@ -645,7 +645,7 @@ KW_widget.i: KW_widget.c.i
 
 # target to preprocess a source file
 KW_widget.c.i:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_widget.c.i
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_widget.c.i
 .PHONY : KW_widget.c.i
 
 KW_widget.s: KW_widget.c.s
@@ -654,7 +654,7 @@ KW_widget.s: KW_widget.c.s
 
 # target to generate assembly for a file
 KW_widget.c.s:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_widget.c.s
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_widget.c.s
 .PHONY : KW_widget.c.s
 
 KW_widget_eventhandlers.o: KW_widget_eventhandlers.c.o
@@ -663,7 +663,7 @@ KW_widget_eventhandlers.o: KW_widget_eventhandlers.c.o
 
 # target to build an object file
 KW_widget_eventhandlers.c.o:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_widget_eventhandlers.c.o
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_widget_eventhandlers.c.o
 .PHONY : KW_widget_eventhandlers.c.o
 
 KW_widget_eventhandlers.i: KW_widget_eventhandlers.c.i
@@ -672,7 +672,7 @@ KW_widget_eventhandlers.i: KW_widget_eventhandlers.c.i
 
 # target to preprocess a source file
 KW_widget_eventhandlers.c.i:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_widget_eventhandlers.c.i
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_widget_eventhandlers.c.i
 .PHONY : KW_widget_eventhandlers.c.i
 
 KW_widget_eventhandlers.s: KW_widget_eventhandlers.c.s
@@ -681,7 +681,7 @@ KW_widget_eventhandlers.s: KW_widget_eventhandlers.c.s
 
 # target to generate assembly for a file
 KW_widget_eventhandlers.c.s:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_widget_eventhandlers.c.s
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/KW_widget_eventhandlers.c.s
 .PHONY : KW_widget_eventhandlers.c.s
 
 resources.o: resources.c.o
@@ -690,7 +690,7 @@ resources.o: resources.c.o
 
 # target to build an object file
 resources.c.o:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/resources.c.o
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/resources.c.o
 .PHONY : resources.c.o
 
 resources.i: resources.c.i
@@ -699,7 +699,7 @@ resources.i: resources.c.i
 
 # target to preprocess a source file
 resources.c.i:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/resources.c.i
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/resources.c.i
 .PHONY : resources.c.i
 
 resources.s: resources.c.s
@@ -708,7 +708,7 @@ resources.s: resources.c.s
 
 # target to generate assembly for a file
 resources.c.s:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/resources.c.s
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/resources.c.s
 .PHONY : resources.c.s
 
 utf8.o: utf8.c.o
@@ -717,7 +717,7 @@ utf8.o: utf8.c.o
 
 # target to build an object file
 utf8.c.o:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/utf8.c.o
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/utf8.c.o
 .PHONY : utf8.c.o
 
 utf8.i: utf8.c.i
@@ -726,7 +726,7 @@ utf8.i: utf8.c.i
 
 # target to preprocess a source file
 utf8.c.i:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/utf8.c.i
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/utf8.c.i
 .PHONY : utf8.c.i
 
 utf8.s: utf8.c.s
@@ -735,7 +735,7 @@ utf8.s: utf8.c.s
 
 # target to generate assembly for a file
 utf8.c.s:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/utf8.c.s
+	cd /Users/lminta/test/gui/build && $(MAKE) -f src/CMakeFiles/KiWi.dir/build.make src/CMakeFiles/KiWi.dir/utf8.c.s
 .PHONY : utf8.c.s
 
 # Help Target
@@ -825,6 +825,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /Users/lminta/Rtv1/gui/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /Users/lminta/test/gui/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

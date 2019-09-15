@@ -1,4 +1,4 @@
-# Install script for directory: /Users/lminta/Rtv1/gui/KiWi/examples/debug-gizmos
+# Install script for directory: /Users/lminta/test/gui/KiWi/examples/debug-gizmos
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

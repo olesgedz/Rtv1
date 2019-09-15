@@ -6,5 +6,5 @@ C_FLAGS = -fPIC   -Wall
 
 C_DEFINES = -DKiWi_EXPORTS
 
-C_INCLUDES = -I/Users/lminta/.brew/include/SDL2 -I/Users/lminta/Rtv1/gui/build/src 
+C_INCLUDES = -I/Users/lminta/.brew/include/SDL2 -I/Users/lminta/test/gui/build/src 
 

@@ -1,4 +1,4 @@
-# Install script for directory: /Users/lminta/Rtv1/gui/KiWi/examples
+# Install script for directory: /Users/lminta/test/gui/KiWi/examples
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,14 +34,14 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/Users/lminta/Rtv1/gui/build/examples/custom-render/cmake_install.cmake")
-  include("/Users/lminta/Rtv1/gui/build/examples/label/cmake_install.cmake")
-  include("/Users/lminta/Rtv1/gui/build/examples/frame-family/cmake_install.cmake")
-  include("/Users/lminta/Rtv1/gui/build/examples/editbox/cmake_install.cmake")
-  include("/Users/lminta/Rtv1/gui/build/examples/styleswitcher/cmake_install.cmake")
-  include("/Users/lminta/Rtv1/gui/build/examples/scrollbox/cmake_install.cmake")
-  include("/Users/lminta/Rtv1/gui/build/examples/drag/cmake_install.cmake")
-  include("/Users/lminta/Rtv1/gui/build/examples/debug-gizmos/cmake_install.cmake")
+  include("/Users/lminta/test/gui/build/examples/custom-render/cmake_install.cmake")
+  include("/Users/lminta/test/gui/build/examples/label/cmake_install.cmake")
+  include("/Users/lminta/test/gui/build/examples/frame-family/cmake_install.cmake")
+  include("/Users/lminta/test/gui/build/examples/editbox/cmake_install.cmake")
+  include("/Users/lminta/test/gui/build/examples/styleswitcher/cmake_install.cmake")
+  include("/Users/lminta/test/gui/build/examples/scrollbox/cmake_install.cmake")
+  include("/Users/lminta/test/gui/build/examples/drag/cmake_install.cmake")
+  include("/Users/lminta/test/gui/build/examples/debug-gizmos/cmake_install.cmake")
 
 endif()
 

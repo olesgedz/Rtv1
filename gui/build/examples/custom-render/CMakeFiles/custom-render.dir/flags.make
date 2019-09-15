@@ -6,5 +6,5 @@ C_FLAGS =   -Wall -std=gnu99
 
 C_DEFINES = 
 
-C_INCLUDES = -I/Users/lminta/.brew/include/SDL2 -I/Users/lminta/Rtv1/gui/KiWi/src 
+C_INCLUDES = -I/Users/lminta/.brew/include/SDL2 -I/Users/lminta/test/gui/KiWi/src 
 

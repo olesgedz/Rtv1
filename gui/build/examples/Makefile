@@ -48,10 +48,10 @@ RM = /Users/lminta/.brew/Cellar/cmake/3.15.3/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/lminta/Rtv1/gui/KiWi
+CMAKE_SOURCE_DIR = /Users/lminta/test/gui/KiWi
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/lminta/Rtv1/gui/build
+CMAKE_BINARY_DIR = /Users/lminta/test/gui/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -126,14 +126,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /Users/lminta/Rtv1/gui/build && $(CMAKE_COMMAND) -E cmake_progress_start /Users/lminta/Rtv1/gui/build/CMakeFiles /Users/lminta/Rtv1/gui/build/examples/CMakeFiles/progress.marks
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/lminta/Rtv1/gui/build/CMakeFiles 0
+	cd /Users/lminta/test/gui/build && $(CMAKE_COMMAND) -E cmake_progress_start /Users/lminta/test/gui/build/CMakeFiles /Users/lminta/test/gui/build/examples/CMakeFiles/progress.marks
+	cd /Users/lminta/test/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/lminta/test/gui/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/clean
+	cd /Users/lminta/test/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/clean
 .PHONY : clean
 
 # The main clean target
@@ -143,17 +143,17 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/preinstall
+	cd /Users/lminta/test/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/preinstall
+	cd /Users/lminta/test/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /Users/lminta/Rtv1/gui/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /Users/lminta/test/gui/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Help Target
@@ -179,6 +179,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /Users/lminta/Rtv1/gui/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /Users/lminta/test/gui/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

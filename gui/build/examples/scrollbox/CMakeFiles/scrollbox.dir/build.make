@@ -43,10 +43,10 @@ RM = /Users/lminta/.brew/Cellar/cmake/3.15.3/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/lminta/Rtv1/gui/KiWi
+CMAKE_SOURCE_DIR = /Users/lminta/test/gui/KiWi
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/lminta/Rtv1/gui/build
+CMAKE_BINARY_DIR = /Users/lminta/test/gui/build
 
 # Include any dependencies generated for this target.
 include examples/scrollbox/CMakeFiles/scrollbox.dir/depend.make
@@ -57,46 +57,46 @@ include examples/scrollbox/CMakeFiles/scrollbox.dir/progress.make
 # Include the compile flags for this target's objects.
 include examples/scrollbox/CMakeFiles/scrollbox.dir/flags.make
 
-examples/scrollbox/tileset.png: /Users/lminta/Rtv1/gui/KiWi/examples/tileset/tileset.png
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/lminta/Rtv1/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating tileset.png"
-	cd /Users/lminta/Rtv1/gui/build/examples/scrollbox && /Users/lminta/.brew/Cellar/cmake/3.15.3/bin/cmake -E copy /Users/lminta/Rtv1/gui/KiWi/examples/scrollbox/../tileset/tileset.png /Users/lminta/Rtv1/gui/build/examples/scrollbox/tileset.png
+examples/scrollbox/tileset.png: /Users/lminta/test/gui/KiWi/examples/tileset/tileset.png
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/lminta/test/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating tileset.png"
+	cd /Users/lminta/test/gui/build/examples/scrollbox && /Users/lminta/.brew/Cellar/cmake/3.15.3/bin/cmake -E copy /Users/lminta/test/gui/KiWi/examples/scrollbox/../tileset/tileset.png /Users/lminta/test/gui/build/examples/scrollbox/tileset.png
 
-examples/scrollbox/tileset-alloy.png: /Users/lminta/Rtv1/gui/KiWi/examples/tileset/tileset-alloy.png
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/lminta/Rtv1/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating tileset-alloy.png"
-	cd /Users/lminta/Rtv1/gui/build/examples/scrollbox && /Users/lminta/.brew/Cellar/cmake/3.15.3/bin/cmake -E copy /Users/lminta/Rtv1/gui/KiWi/examples/scrollbox/../tileset/tileset-alloy.png /Users/lminta/Rtv1/gui/build/examples/scrollbox/tileset-alloy.png
+examples/scrollbox/tileset-alloy.png: /Users/lminta/test/gui/KiWi/examples/tileset/tileset-alloy.png
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/lminta/test/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating tileset-alloy.png"
+	cd /Users/lminta/test/gui/build/examples/scrollbox && /Users/lminta/.brew/Cellar/cmake/3.15.3/bin/cmake -E copy /Users/lminta/test/gui/KiWi/examples/scrollbox/../tileset/tileset-alloy.png /Users/lminta/test/gui/build/examples/scrollbox/tileset-alloy.png
 
-examples/scrollbox/tileset-futterpedia.png: /Users/lminta/Rtv1/gui/KiWi/examples/tileset/tileset-futterpedia.png
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/lminta/Rtv1/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating tileset-futterpedia.png"
-	cd /Users/lminta/Rtv1/gui/build/examples/scrollbox && /Users/lminta/.brew/Cellar/cmake/3.15.3/bin/cmake -E copy /Users/lminta/Rtv1/gui/KiWi/examples/scrollbox/../tileset/tileset-futterpedia.png /Users/lminta/Rtv1/gui/build/examples/scrollbox/tileset-futterpedia.png
+examples/scrollbox/tileset-futterpedia.png: /Users/lminta/test/gui/KiWi/examples/tileset/tileset-futterpedia.png
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/lminta/test/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating tileset-futterpedia.png"
+	cd /Users/lminta/test/gui/build/examples/scrollbox && /Users/lminta/.brew/Cellar/cmake/3.15.3/bin/cmake -E copy /Users/lminta/test/gui/KiWi/examples/scrollbox/../tileset/tileset-futterpedia.png /Users/lminta/test/gui/build/examples/scrollbox/tileset-futterpedia.png
 
-examples/scrollbox/tileset-flat.png: /Users/lminta/Rtv1/gui/KiWi/examples/tileset/tileset-flat.png
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/lminta/Rtv1/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating tileset-flat.png"
-	cd /Users/lminta/Rtv1/gui/build/examples/scrollbox && /Users/lminta/.brew/Cellar/cmake/3.15.3/bin/cmake -E copy /Users/lminta/Rtv1/gui/KiWi/examples/scrollbox/../tileset/tileset-flat.png /Users/lminta/Rtv1/gui/build/examples/scrollbox/tileset-flat.png
+examples/scrollbox/tileset-flat.png: /Users/lminta/test/gui/KiWi/examples/tileset/tileset-flat.png
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/lminta/test/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating tileset-flat.png"
+	cd /Users/lminta/test/gui/build/examples/scrollbox && /Users/lminta/.brew/Cellar/cmake/3.15.3/bin/cmake -E copy /Users/lminta/test/gui/KiWi/examples/scrollbox/../tileset/tileset-flat.png /Users/lminta/test/gui/build/examples/scrollbox/tileset-flat.png
 
-examples/scrollbox/Fontin-Regular.ttf: /Users/lminta/Rtv1/gui/KiWi/examples/fonts/Fontin-Regular.ttf
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/lminta/Rtv1/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating Fontin-Regular.ttf"
-	cd /Users/lminta/Rtv1/gui/build/examples/scrollbox && /Users/lminta/.brew/Cellar/cmake/3.15.3/bin/cmake -E copy /Users/lminta/Rtv1/gui/KiWi/examples/scrollbox/../fonts/Fontin-Regular.ttf /Users/lminta/Rtv1/gui/build/examples/scrollbox/Fontin-Regular.ttf
+examples/scrollbox/Fontin-Regular.ttf: /Users/lminta/test/gui/KiWi/examples/fonts/Fontin-Regular.ttf
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/lminta/test/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating Fontin-Regular.ttf"
+	cd /Users/lminta/test/gui/build/examples/scrollbox && /Users/lminta/.brew/Cellar/cmake/3.15.3/bin/cmake -E copy /Users/lminta/test/gui/KiWi/examples/scrollbox/../fonts/Fontin-Regular.ttf /Users/lminta/test/gui/build/examples/scrollbox/Fontin-Regular.ttf
 
-examples/scrollbox/DejaVuSans.ttf: /Users/lminta/Rtv1/gui/KiWi/examples/fonts/DejaVuSans.ttf
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/lminta/Rtv1/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating DejaVuSans.ttf"
-	cd /Users/lminta/Rtv1/gui/build/examples/scrollbox && /Users/lminta/.brew/Cellar/cmake/3.15.3/bin/cmake -E copy /Users/lminta/Rtv1/gui/KiWi/examples/scrollbox/../fonts/DejaVuSans.ttf /Users/lminta/Rtv1/gui/build/examples/scrollbox/DejaVuSans.ttf
+examples/scrollbox/DejaVuSans.ttf: /Users/lminta/test/gui/KiWi/examples/fonts/DejaVuSans.ttf
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/lminta/test/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating DejaVuSans.ttf"
+	cd /Users/lminta/test/gui/build/examples/scrollbox && /Users/lminta/.brew/Cellar/cmake/3.15.3/bin/cmake -E copy /Users/lminta/test/gui/KiWi/examples/scrollbox/../fonts/DejaVuSans.ttf /Users/lminta/test/gui/build/examples/scrollbox/DejaVuSans.ttf
 
-examples/scrollbox/SourceSansPro-Semibold.ttf: /Users/lminta/Rtv1/gui/KiWi/examples/fonts/SourceSansPro-Semibold.ttf
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/lminta/Rtv1/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Generating SourceSansPro-Semibold.ttf"
-	cd /Users/lminta/Rtv1/gui/build/examples/scrollbox && /Users/lminta/.brew/Cellar/cmake/3.15.3/bin/cmake -E copy /Users/lminta/Rtv1/gui/KiWi/examples/scrollbox/../fonts/SourceSansPro-Semibold.ttf /Users/lminta/Rtv1/gui/build/examples/scrollbox/SourceSansPro-Semibold.ttf
+examples/scrollbox/SourceSansPro-Semibold.ttf: /Users/lminta/test/gui/KiWi/examples/fonts/SourceSansPro-Semibold.ttf
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/lminta/test/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Generating SourceSansPro-Semibold.ttf"
+	cd /Users/lminta/test/gui/build/examples/scrollbox && /Users/lminta/.brew/Cellar/cmake/3.15.3/bin/cmake -E copy /Users/lminta/test/gui/KiWi/examples/scrollbox/../fonts/SourceSansPro-Semibold.ttf /Users/lminta/test/gui/build/examples/scrollbox/SourceSansPro-Semibold.ttf
 
 examples/scrollbox/CMakeFiles/scrollbox.dir/scrollbox.c.o: examples/scrollbox/CMakeFiles/scrollbox.dir/flags.make
-examples/scrollbox/CMakeFiles/scrollbox.dir/scrollbox.c.o: /Users/lminta/Rtv1/gui/KiWi/examples/scrollbox/scrollbox.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/lminta/Rtv1/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object examples/scrollbox/CMakeFiles/scrollbox.dir/scrollbox.c.o"
-	cd /Users/lminta/Rtv1/gui/build/examples/scrollbox && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/scrollbox.dir/scrollbox.c.o   -c /Users/lminta/Rtv1/gui/KiWi/examples/scrollbox/scrollbox.c
+examples/scrollbox/CMakeFiles/scrollbox.dir/scrollbox.c.o: /Users/lminta/test/gui/KiWi/examples/scrollbox/scrollbox.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/lminta/test/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object examples/scrollbox/CMakeFiles/scrollbox.dir/scrollbox.c.o"
+	cd /Users/lminta/test/gui/build/examples/scrollbox && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/scrollbox.dir/scrollbox.c.o   -c /Users/lminta/test/gui/KiWi/examples/scrollbox/scrollbox.c
 
 examples/scrollbox/CMakeFiles/scrollbox.dir/scrollbox.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/scrollbox.dir/scrollbox.c.i"
-	cd /Users/lminta/Rtv1/gui/build/examples/scrollbox && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/lminta/Rtv1/gui/KiWi/examples/scrollbox/scrollbox.c > CMakeFiles/scrollbox.dir/scrollbox.c.i
+	cd /Users/lminta/test/gui/build/examples/scrollbox && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/lminta/test/gui/KiWi/examples/scrollbox/scrollbox.c > CMakeFiles/scrollbox.dir/scrollbox.c.i
 
 examples/scrollbox/CMakeFiles/scrollbox.dir/scrollbox.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/scrollbox.dir/scrollbox.c.s"
-	cd /Users/lminta/Rtv1/gui/build/examples/scrollbox && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/lminta/Rtv1/gui/KiWi/examples/scrollbox/scrollbox.c -o CMakeFiles/scrollbox.dir/scrollbox.c.s
+	cd /Users/lminta/test/gui/build/examples/scrollbox && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/lminta/test/gui/KiWi/examples/scrollbox/scrollbox.c -o CMakeFiles/scrollbox.dir/scrollbox.c.s
 
 # Object files for target scrollbox
 scrollbox_OBJECTS = \
@@ -114,8 +114,8 @@ examples/scrollbox/scrollbox: /Users/lminta/.brew/lib/libSDL2_image.dylib
 examples/scrollbox/scrollbox: /Users/lminta/.brew/lib/libSDL2_ttf.dylib
 examples/scrollbox/scrollbox: /Users/lminta/.brew/lib/libSDL2_image.dylib
 examples/scrollbox/scrollbox: examples/scrollbox/CMakeFiles/scrollbox.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/lminta/Rtv1/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking C executable scrollbox"
-	cd /Users/lminta/Rtv1/gui/build/examples/scrollbox && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/scrollbox.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/lminta/test/gui/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking C executable scrollbox"
+	cd /Users/lminta/test/gui/build/examples/scrollbox && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/scrollbox.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 examples/scrollbox/CMakeFiles/scrollbox.dir/build: examples/scrollbox/scrollbox
@@ -123,7 +123,7 @@ examples/scrollbox/CMakeFiles/scrollbox.dir/build: examples/scrollbox/scrollbox
 .PHONY : examples/scrollbox/CMakeFiles/scrollbox.dir/build
 
 examples/scrollbox/CMakeFiles/scrollbox.dir/clean:
-	cd /Users/lminta/Rtv1/gui/build/examples/scrollbox && $(CMAKE_COMMAND) -P CMakeFiles/scrollbox.dir/cmake_clean.cmake
+	cd /Users/lminta/test/gui/build/examples/scrollbox && $(CMAKE_COMMAND) -P CMakeFiles/scrollbox.dir/cmake_clean.cmake
 .PHONY : examples/scrollbox/CMakeFiles/scrollbox.dir/clean
 
 examples/scrollbox/CMakeFiles/scrollbox.dir/depend: examples/scrollbox/tileset.png
@@ -133,6 +133,6 @@ examples/scrollbox/CMakeFiles/scrollbox.dir/depend: examples/scrollbox/tileset-f
 examples/scrollbox/CMakeFiles/scrollbox.dir/depend: examples/scrollbox/Fontin-Regular.ttf
 examples/scrollbox/CMakeFiles/scrollbox.dir/depend: examples/scrollbox/DejaVuSans.ttf
 examples/scrollbox/CMakeFiles/scrollbox.dir/depend: examples/scrollbox/SourceSansPro-Semibold.ttf
-	cd /Users/lminta/Rtv1/gui/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/lminta/Rtv1/gui/KiWi /Users/lminta/Rtv1/gui/KiWi/examples/scrollbox /Users/lminta/Rtv1/gui/build /Users/lminta/Rtv1/gui/build/examples/scrollbox /Users/lminta/Rtv1/gui/build/examples/scrollbox/CMakeFiles/scrollbox.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/lminta/test/gui/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/lminta/test/gui/KiWi /Users/lminta/test/gui/KiWi/examples/scrollbox /Users/lminta/test/gui/build /Users/lminta/test/gui/build/examples/scrollbox /Users/lminta/test/gui/build/examples/scrollbox/CMakeFiles/scrollbox.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : examples/scrollbox/CMakeFiles/scrollbox.dir/depend
 

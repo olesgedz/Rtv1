@@ -1,4 +1,4 @@
-# Install script for directory: /Users/lminta/Rtv1/gui/KiWi/examples/custom-render
+# Install script for directory: /Users/lminta/test/gui/KiWi/examples/custom-render
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

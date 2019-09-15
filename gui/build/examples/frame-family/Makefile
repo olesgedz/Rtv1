@@ -48,10 +48,10 @@ RM = /Users/lminta/.brew/Cellar/cmake/3.15.3/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/lminta/Rtv1/gui/KiWi
+CMAKE_SOURCE_DIR = /Users/lminta/test/gui/KiWi
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/lminta/Rtv1/gui/build
+CMAKE_BINARY_DIR = /Users/lminta/test/gui/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -126,14 +126,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /Users/lminta/Rtv1/gui/build && $(CMAKE_COMMAND) -E cmake_progress_start /Users/lminta/Rtv1/gui/build/CMakeFiles /Users/lminta/Rtv1/gui/build/examples/frame-family/CMakeFiles/progress.marks
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/frame-family/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/lminta/Rtv1/gui/build/CMakeFiles 0
+	cd /Users/lminta/test/gui/build && $(CMAKE_COMMAND) -E cmake_progress_start /Users/lminta/test/gui/build/CMakeFiles /Users/lminta/test/gui/build/examples/frame-family/CMakeFiles/progress.marks
+	cd /Users/lminta/test/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/frame-family/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/lminta/test/gui/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/frame-family/clean
+	cd /Users/lminta/test/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/frame-family/clean
 .PHONY : clean
 
 # The main clean target
@@ -143,22 +143,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/frame-family/preinstall
+	cd /Users/lminta/test/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/frame-family/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/frame-family/preinstall
+	cd /Users/lminta/test/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/frame-family/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /Users/lminta/Rtv1/gui/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /Users/lminta/test/gui/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 examples/frame-family/CMakeFiles/frame-family.dir/rule:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/frame-family/CMakeFiles/frame-family.dir/rule
+	cd /Users/lminta/test/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/frame-family/CMakeFiles/frame-family.dir/rule
 .PHONY : examples/frame-family/CMakeFiles/frame-family.dir/rule
 
 # Convenience name for target.
@@ -168,7 +168,7 @@ frame-family: examples/frame-family/CMakeFiles/frame-family.dir/rule
 
 # fast build rule for target.
 frame-family/fast:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f examples/frame-family/CMakeFiles/frame-family.dir/build.make examples/frame-family/CMakeFiles/frame-family.dir/build
+	cd /Users/lminta/test/gui/build && $(MAKE) -f examples/frame-family/CMakeFiles/frame-family.dir/build.make examples/frame-family/CMakeFiles/frame-family.dir/build
 .PHONY : frame-family/fast
 
 frame-family.o: frame-family.c.o
@@ -177,7 +177,7 @@ frame-family.o: frame-family.c.o
 
 # target to build an object file
 frame-family.c.o:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f examples/frame-family/CMakeFiles/frame-family.dir/build.make examples/frame-family/CMakeFiles/frame-family.dir/frame-family.c.o
+	cd /Users/lminta/test/gui/build && $(MAKE) -f examples/frame-family/CMakeFiles/frame-family.dir/build.make examples/frame-family/CMakeFiles/frame-family.dir/frame-family.c.o
 .PHONY : frame-family.c.o
 
 frame-family.i: frame-family.c.i
@@ -186,7 +186,7 @@ frame-family.i: frame-family.c.i
 
 # target to preprocess a source file
 frame-family.c.i:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f examples/frame-family/CMakeFiles/frame-family.dir/build.make examples/frame-family/CMakeFiles/frame-family.dir/frame-family.c.i
+	cd /Users/lminta/test/gui/build && $(MAKE) -f examples/frame-family/CMakeFiles/frame-family.dir/build.make examples/frame-family/CMakeFiles/frame-family.dir/frame-family.c.i
 .PHONY : frame-family.c.i
 
 frame-family.s: frame-family.c.s
@@ -195,7 +195,7 @@ frame-family.s: frame-family.c.s
 
 # target to generate assembly for a file
 frame-family.c.s:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f examples/frame-family/CMakeFiles/frame-family.dir/build.make examples/frame-family/CMakeFiles/frame-family.dir/frame-family.c.s
+	cd /Users/lminta/test/gui/build && $(MAKE) -f examples/frame-family/CMakeFiles/frame-family.dir/build.make examples/frame-family/CMakeFiles/frame-family.dir/frame-family.c.s
 .PHONY : frame-family.c.s
 
 # Help Target
@@ -225,6 +225,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /Users/lminta/Rtv1/gui/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /Users/lminta/test/gui/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

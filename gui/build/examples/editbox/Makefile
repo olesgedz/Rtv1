@@ -48,10 +48,10 @@ RM = /Users/lminta/.brew/Cellar/cmake/3.15.3/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/lminta/Rtv1/gui/KiWi
+CMAKE_SOURCE_DIR = /Users/lminta/test/gui/KiWi
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/lminta/Rtv1/gui/build
+CMAKE_BINARY_DIR = /Users/lminta/test/gui/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -126,14 +126,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /Users/lminta/Rtv1/gui/build && $(CMAKE_COMMAND) -E cmake_progress_start /Users/lminta/Rtv1/gui/build/CMakeFiles /Users/lminta/Rtv1/gui/build/examples/editbox/CMakeFiles/progress.marks
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/editbox/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/lminta/Rtv1/gui/build/CMakeFiles 0
+	cd /Users/lminta/test/gui/build && $(CMAKE_COMMAND) -E cmake_progress_start /Users/lminta/test/gui/build/CMakeFiles /Users/lminta/test/gui/build/examples/editbox/CMakeFiles/progress.marks
+	cd /Users/lminta/test/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/editbox/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/lminta/test/gui/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/editbox/clean
+	cd /Users/lminta/test/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/editbox/clean
 .PHONY : clean
 
 # The main clean target
@@ -143,22 +143,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/editbox/preinstall
+	cd /Users/lminta/test/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/editbox/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/editbox/preinstall
+	cd /Users/lminta/test/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/editbox/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /Users/lminta/Rtv1/gui/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /Users/lminta/test/gui/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 examples/editbox/CMakeFiles/editbox.dir/rule:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/editbox/CMakeFiles/editbox.dir/rule
+	cd /Users/lminta/test/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/editbox/CMakeFiles/editbox.dir/rule
 .PHONY : examples/editbox/CMakeFiles/editbox.dir/rule
 
 # Convenience name for target.
@@ -168,7 +168,7 @@ editbox: examples/editbox/CMakeFiles/editbox.dir/rule
 
 # fast build rule for target.
 editbox/fast:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f examples/editbox/CMakeFiles/editbox.dir/build.make examples/editbox/CMakeFiles/editbox.dir/build
+	cd /Users/lminta/test/gui/build && $(MAKE) -f examples/editbox/CMakeFiles/editbox.dir/build.make examples/editbox/CMakeFiles/editbox.dir/build
 .PHONY : editbox/fast
 
 editbox.o: editbox.c.o
@@ -177,7 +177,7 @@ editbox.o: editbox.c.o
 
 # target to build an object file
 editbox.c.o:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f examples/editbox/CMakeFiles/editbox.dir/build.make examples/editbox/CMakeFiles/editbox.dir/editbox.c.o
+	cd /Users/lminta/test/gui/build && $(MAKE) -f examples/editbox/CMakeFiles/editbox.dir/build.make examples/editbox/CMakeFiles/editbox.dir/editbox.c.o
 .PHONY : editbox.c.o
 
 editbox.i: editbox.c.i
@@ -186,7 +186,7 @@ editbox.i: editbox.c.i
 
 # target to preprocess a source file
 editbox.c.i:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f examples/editbox/CMakeFiles/editbox.dir/build.make examples/editbox/CMakeFiles/editbox.dir/editbox.c.i
+	cd /Users/lminta/test/gui/build && $(MAKE) -f examples/editbox/CMakeFiles/editbox.dir/build.make examples/editbox/CMakeFiles/editbox.dir/editbox.c.i
 .PHONY : editbox.c.i
 
 editbox.s: editbox.c.s
@@ -195,7 +195,7 @@ editbox.s: editbox.c.s
 
 # target to generate assembly for a file
 editbox.c.s:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f examples/editbox/CMakeFiles/editbox.dir/build.make examples/editbox/CMakeFiles/editbox.dir/editbox.c.s
+	cd /Users/lminta/test/gui/build && $(MAKE) -f examples/editbox/CMakeFiles/editbox.dir/build.make examples/editbox/CMakeFiles/editbox.dir/editbox.c.s
 .PHONY : editbox.c.s
 
 # Help Target
@@ -225,6 +225,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /Users/lminta/Rtv1/gui/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /Users/lminta/test/gui/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

@@ -1,4 +1,4 @@
-# Install script for directory: /Users/lminta/Rtv1/gui/KiWi/src
+# Install script for directory: /Users/lminta/test/gui/KiWi/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -33,7 +33,7 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/Users/lminta/Rtv1/gui/build/src/libKiWi.dylib")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/Users/lminta/test/gui/build/src/libKiWi.dylib")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libKiWi.dylib" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libKiWi.dylib")
     execute_process(COMMAND "/usr/bin/install_name_tool"
@@ -50,21 +50,21 @@ endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/KiWi" TYPE FILE FILES
-    "/Users/lminta/Rtv1/gui/KiWi/src/KW_gui.h"
-    "/Users/lminta/Rtv1/gui/KiWi/src/KW_button.h"
-    "/Users/lminta/Rtv1/gui/KiWi/src/KW_editbox.h"
-    "/Users/lminta/Rtv1/gui/KiWi/src/KW_frame.h"
-    "/Users/lminta/Rtv1/gui/KiWi/src/KW_label.h"
-    "/Users/lminta/Rtv1/gui/KiWi/src/KW_macros.h"
-    "/Users/lminta/Rtv1/gui/KiWi/src/KW_tilerenderer.h"
-    "/Users/lminta/Rtv1/gui/KiWi/src/KW_widget.h"
-    "/Users/lminta/Rtv1/gui/KiWi/src/KW_scrollbox.h"
-    "/Users/lminta/Rtv1/gui/KiWi/src/KW_renderdriver_sdl2.h"
-    "/Users/lminta/Rtv1/gui/KiWi/src/KW_renderdriver.h"
-    "/Users/lminta/Rtv1/gui/KiWi/src/KW_rect.h"
-    "/Users/lminta/Rtv1/gui/KiWi/src/KW_bool.h"
-    "/Users/lminta/Rtv1/gui/KiWi/src/KW_toggle.h"
-    "/Users/lminta/Rtv1/gui/KiWi/src/KW_checkbox.h"
+    "/Users/lminta/test/gui/KiWi/src/KW_gui.h"
+    "/Users/lminta/test/gui/KiWi/src/KW_button.h"
+    "/Users/lminta/test/gui/KiWi/src/KW_editbox.h"
+    "/Users/lminta/test/gui/KiWi/src/KW_frame.h"
+    "/Users/lminta/test/gui/KiWi/src/KW_label.h"
+    "/Users/lminta/test/gui/KiWi/src/KW_macros.h"
+    "/Users/lminta/test/gui/KiWi/src/KW_tilerenderer.h"
+    "/Users/lminta/test/gui/KiWi/src/KW_widget.h"
+    "/Users/lminta/test/gui/KiWi/src/KW_scrollbox.h"
+    "/Users/lminta/test/gui/KiWi/src/KW_renderdriver_sdl2.h"
+    "/Users/lminta/test/gui/KiWi/src/KW_renderdriver.h"
+    "/Users/lminta/test/gui/KiWi/src/KW_rect.h"
+    "/Users/lminta/test/gui/KiWi/src/KW_bool.h"
+    "/Users/lminta/test/gui/KiWi/src/KW_toggle.h"
+    "/Users/lminta/test/gui/KiWi/src/KW_checkbox.h"
     )
 endif()
 

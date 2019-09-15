@@ -48,10 +48,10 @@ RM = /Users/lminta/.brew/Cellar/cmake/3.15.3/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/lminta/Rtv1/gui/KiWi
+CMAKE_SOURCE_DIR = /Users/lminta/test/gui/KiWi
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/lminta/Rtv1/gui/build
+CMAKE_BINARY_DIR = /Users/lminta/test/gui/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -126,14 +126,14 @@ list_install_components/fast: list_install_components
 
 # The main all target
 all: cmake_check_build_system
-	cd /Users/lminta/Rtv1/gui/build && $(CMAKE_COMMAND) -E cmake_progress_start /Users/lminta/Rtv1/gui/build/CMakeFiles /Users/lminta/Rtv1/gui/build/examples/debug-gizmos/CMakeFiles/progress.marks
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/debug-gizmos/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/lminta/Rtv1/gui/build/CMakeFiles 0
+	cd /Users/lminta/test/gui/build && $(CMAKE_COMMAND) -E cmake_progress_start /Users/lminta/test/gui/build/CMakeFiles /Users/lminta/test/gui/build/examples/debug-gizmos/CMakeFiles/progress.marks
+	cd /Users/lminta/test/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/debug-gizmos/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/lminta/test/gui/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/debug-gizmos/clean
+	cd /Users/lminta/test/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/debug-gizmos/clean
 .PHONY : clean
 
 # The main clean target
@@ -143,22 +143,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/debug-gizmos/preinstall
+	cd /Users/lminta/test/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/debug-gizmos/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/debug-gizmos/preinstall
+	cd /Users/lminta/test/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/debug-gizmos/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /Users/lminta/Rtv1/gui/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /Users/lminta/test/gui/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 examples/debug-gizmos/CMakeFiles/debug-gizmos.dir/rule:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/debug-gizmos/CMakeFiles/debug-gizmos.dir/rule
+	cd /Users/lminta/test/gui/build && $(MAKE) -f CMakeFiles/Makefile2 examples/debug-gizmos/CMakeFiles/debug-gizmos.dir/rule
 .PHONY : examples/debug-gizmos/CMakeFiles/debug-gizmos.dir/rule
 
 # Convenience name for target.
@@ -168,7 +168,7 @@ debug-gizmos: examples/debug-gizmos/CMakeFiles/debug-gizmos.dir/rule
 
 # fast build rule for target.
 debug-gizmos/fast:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f examples/debug-gizmos/CMakeFiles/debug-gizmos.dir/build.make examples/debug-gizmos/CMakeFiles/debug-gizmos.dir/build
+	cd /Users/lminta/test/gui/build && $(MAKE) -f examples/debug-gizmos/CMakeFiles/debug-gizmos.dir/build.make examples/debug-gizmos/CMakeFiles/debug-gizmos.dir/build
 .PHONY : debug-gizmos/fast
 
 debug-gizmos.o: debug-gizmos.c.o
@@ -177,7 +177,7 @@ debug-gizmos.o: debug-gizmos.c.o
 
 # target to build an object file
 debug-gizmos.c.o:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f examples/debug-gizmos/CMakeFiles/debug-gizmos.dir/build.make examples/debug-gizmos/CMakeFiles/debug-gizmos.dir/debug-gizmos.c.o
+	cd /Users/lminta/test/gui/build && $(MAKE) -f examples/debug-gizmos/CMakeFiles/debug-gizmos.dir/build.make examples/debug-gizmos/CMakeFiles/debug-gizmos.dir/debug-gizmos.c.o
 .PHONY : debug-gizmos.c.o
 
 debug-gizmos.i: debug-gizmos.c.i
@@ -186,7 +186,7 @@ debug-gizmos.i: debug-gizmos.c.i
 
 # target to preprocess a source file
 debug-gizmos.c.i:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f examples/debug-gizmos/CMakeFiles/debug-gizmos.dir/build.make examples/debug-gizmos/CMakeFiles/debug-gizmos.dir/debug-gizmos.c.i
+	cd /Users/lminta/test/gui/build && $(MAKE) -f examples/debug-gizmos/CMakeFiles/debug-gizmos.dir/build.make examples/debug-gizmos/CMakeFiles/debug-gizmos.dir/debug-gizmos.c.i
 .PHONY : debug-gizmos.c.i
 
 debug-gizmos.s: debug-gizmos.c.s
@@ -195,7 +195,7 @@ debug-gizmos.s: debug-gizmos.c.s
 
 # target to generate assembly for a file
 debug-gizmos.c.s:
-	cd /Users/lminta/Rtv1/gui/build && $(MAKE) -f examples/debug-gizmos/CMakeFiles/debug-gizmos.dir/build.make examples/debug-gizmos/CMakeFiles/debug-gizmos.dir/debug-gizmos.c.s
+	cd /Users/lminta/test/gui/build && $(MAKE) -f examples/debug-gizmos/CMakeFiles/debug-gizmos.dir/build.make examples/debug-gizmos/CMakeFiles/debug-gizmos.dir/debug-gizmos.c.s
 .PHONY : debug-gizmos.c.s
 
 # Help Target
@@ -225,6 +225,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /Users/lminta/Rtv1/gui/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /Users/lminta/test/gui/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 
