@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/16 16:43:23 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/16 21:49:57 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,8 +307,6 @@ void opencl(t_game *game, char *argv)
 	size_t global = WIN_W * WIN_H;
 	cl_krl_init(&game->kernels[0], 5);
 	t_vect options;
-	vect_init(&options);
-	VECT_STRADD(&options, "-w -I srcs/cl_files/ -I includes/cl_headers/");
 	game->kernels[0].sizes[0] = sizeof(cl_int) * WIN_H * WIN_W;
 	game->kernels[0].sizes[1] =  sizeof(t_obj) * game->obj_quantity;
 	game->kernels[0].sizes[2] = sizeof(cl_float3) * WIN_H * WIN_W;
