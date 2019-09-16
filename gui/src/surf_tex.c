@@ -6,13 +6,13 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 18:04:29 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/15 21:30:31 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/16 18:27:49 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-void	print_error_gui(const char *message, const char *error_message)
+void		print_error_gui(const char *message, const char *error_message)
 {
 	if (!error_message || !message)
 		write(2,
@@ -39,14 +39,13 @@ SDL_CreateTextureFromSurface(game->sdl.renderer, surf)))
 	return (buff);
 }
 
-SDL_Texture	*load_picture(t_game *game,const char *filename)
+SDL_Texture	*load_picture(t_game *game, const char *filename)
 {
 	SDL_Surface		*surf;
 	SDL_Surface		*opt;
 	SDL_PixelFormat	fmt;
 
 	if (!(surf = SDL_LoadBMP(filename)))
-
 	{
 		print_error_gui("No picture for you: ", SDL_GetError());
 		exit(1);
@@ -62,5 +61,3 @@ SDL_Texture	*load_picture(t_game *game,const char *filename)
 	SDL_FreeSurface(surf);
 	return (surf_to_text(game, opt));
 }
-
-

@@ -6,7 +6,7 @@
 #    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/09/15 22:23:58 by lminta           ###   ########.fr        #
+#    Updated: 2019/09/16 16:42:10 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,11 @@ LIB_LIST =	libSDL2.a\
 
 SRCS_DIRECTORY = ./srcs/
 
+RMRF = gui/src/gui_main.o\
+		gui/src/start_screen.o\
+		gui/src/surf_tex.o\
+		gui/src/scene_select.o
+
 SRCS_LIST = main.c\
 			cl_lib/gpu_init.c\
 			textures.c\
@@ -69,7 +74,8 @@ SRCS_LIST = main.c\
 			cl_float3_manage.c\
 			../gui/src/gui_main.c\
 			../gui/src/start_screen.c\
-			../gui/src/surf_tex.c
+			../gui/src/surf_tex.c\
+			../gui/src/scene_select.c
 
 OBJS_DIRECTORY = objects/
 OBJS_LIST = $(patsubst %.c, %.o, $(SRCS_LIST))
@@ -166,7 +172,7 @@ $(LIBSDL):
 	@$(MAKE) -sC $(LIBSDL_DIRECTORY)
 
 clean:
-	@rm -rf ./gui/build
+	@rm -rf ./gui/build $(RMRF)
 	@$(MAKE) -sC $(LIBFT_DIRECTORY) clean
 	@$(MAKE) -sC $(LIBSDL_DIRECTORY) clean
 	@rm -rf $(OBJS_DIRECTORY)

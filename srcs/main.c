@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/15 22:24:38 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/16 16:43:23 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -345,7 +345,7 @@ int	main(int argc, char **argv)
 	ft_init_window(&game.sdl, WIN_W, WIN_H);
 	init_kiwi(&game);
 	if (argc != 2)
-		start_screen(&game);
+		start_gui(&game);
 	else
 		game.av = argv[1];
 	opencl(&game, game.av);

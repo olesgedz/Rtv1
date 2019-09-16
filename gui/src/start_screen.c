@@ -6,13 +6,13 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 22:51:42 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/15 22:10:55 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/16 18:30:29 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-void	ok_clicked(KW_Widget *widget, int b)
+static void	ok_clicked(KW_Widget *widget, int b)
 {
 	t_game	*game;
 
@@ -21,7 +21,7 @@ void	ok_clicked(KW_Widget *widget, int b)
 	game->quit = KW_TRUE;
 }
 
-void	start_screen(t_game *game)
+void		start_screen(t_game *game)
 {
 	game->gui.ed_w.backtex = load_picture(game, "gui/res/start.bmp");
 	game->gui.ed_w.framerect = (KW_Rect){10, 10, 300, 220};
@@ -47,6 +47,11 @@ void	start_screen(t_game *game)
 	game->gui.ed_w.okbutton = KW_CreateButtonAndLabel(game->gui.gui,
 	game->gui.ed_w.frame, "OK", &game->gui.ed_w.buttonrect);
 	KW_AddWidgetMouseDownHandler(game->gui.ed_w.okbutton, ok_clicked);
-	loopa(game);
 }
 
+void		start_gui(t_game *game)
+{
+	start_screen(game);
+	scene_select(game);
+	loopa(game);
+}

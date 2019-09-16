@@ -234,6 +234,10 @@ static t_scene scene_new(__global t_obj* objects, int n_objects, int width, int 
 	new_scene.random = random;
 	new_scene.textures = textures;
 	new_scene.camera = camera;
+	// if (get_global_id(0) == 500)
+	// {
+	// 	printf("%f %f %f\n", camera.position[0], camera.position[1], camera.position[2]);
+	// }
 	return (new_scene);
 }
 
