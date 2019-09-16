@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/16 17:53:02 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/16 18:52:28 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include "KW_button.h"
 # include "KW_renderdriver_sdl2.h"
 
-# define MAX_SC	64
+# define MAX_SC	21
 
 typedef struct		s_scene_select
 {
