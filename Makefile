@@ -6,7 +6,7 @@
 #    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/09/16 16:42:10 by lminta           ###   ########.fr        #
+#    Updated: 2019/09/18 21:56:39 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,6 +72,9 @@ SRCS_LIST = main.c\
 			textures.c\
 			add_object.c parse.c\
 			cl_float3_manage.c\
+			keys.c\
+			camera.c\
+			const.c\
 			../gui/src/gui_main.c\
 			../gui/src/start_screen.c\
 			../gui/src/surf_tex.c\

@@ -3,6 +3,8 @@
 
 #define WIN_W 1920
 #define WIN_H 1080
+#define SAMPLES 5
+
 #define CL_SILENCE_DEPRECATION
 #include <sys/types.h>
 #include "SDL2/SDL.h"
@@ -111,6 +113,25 @@ typedef struct s_gpu
 	int 				samples;
 }						t_gpu;
 
+
+typedef struct			s_keys
+{
+	int					q;
+	int					w;
+	int					e;
+	int					a;
+	int					s;
+	int					d;
+	int					z;
+	int					x;
+	int					lmb;
+	int					mm;
+	int					space;
+	Sint32				xrel;
+	Sint32				yrel;
+
+}						t_keys;
+
 typedef struct			s_game
 {
 	char 				*av;
@@ -126,7 +147,7 @@ typedef struct			s_game
 	int					cam_quantity;
 	int 				wsad[20];
 	t_vec3 				origin;
-	t_gpu 				*gpu;
+	t_gpu 				gpu;
 	int 				init_render;
 	t_txture			*textures;
 	int					textures_num;
@@ -136,6 +157,7 @@ typedef struct			s_game
 	int					cam_num;
 	int					mouse;
 	int					quit;
+	t_keys				keys;
 } 						t_game;
 
 int						bind_data(t_gpu *gpu, t_game *game);
@@ -172,6 +194,10 @@ void					rotate_vertical(t_cam *camera, float angle);
 void					rotate_horizontal(t_cam *camera, float angle);
 t_obj *add_triangle(cl_float3 *vertices, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection);
 int						ft_input_keys(t_game *game);
+void					key_check(t_game *game);
+void					camera_reposition(t_game *game);
+void 					ft_render(t_game* game);
+void					set_const(t_game *game);
 
 void					start_gui(t_game *gmae);
 void					scene_select(t_game *game);

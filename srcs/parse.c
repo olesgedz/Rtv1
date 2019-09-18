@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 19:04:09 by srobert-          #+#    #+#             */
-/*   Updated: 2019/09/13 17:08:53 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/18 20:17:29 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,19 @@ void feel_free(char **str)
 
 void ft_object_push(t_game *game, t_obj *object)
 {
-	if (game->gpu->objects == NULL)
+	if (game->gpu.objects == NULL)
 		game->obj_quantity = 0;
-	game->gpu->objects = ft_realloc(game->gpu->objects, sizeof(t_obj) * (game->obj_quantity + 1));
-	game->gpu->objects[game->obj_quantity] = *object;
+	game->gpu.objects = ft_realloc(game->gpu.objects, sizeof(t_obj) * (game->obj_quantity + 1));
+	game->gpu.objects[game->obj_quantity] = *object;
 	game->obj_quantity += 1;
 }
 
 void ft_cam_push(t_game *game, t_cam *cam)
 {
-	if (game->gpu->camera == NULL)
+	if (game->gpu.camera == NULL)
 		game->cam_quantity = 0;
-	game->gpu->camera = ft_realloc(game->gpu->camera, sizeof(t_obj) * (game->cam_quantity + 1));
-	game->gpu->camera[game->cam_quantity] = *cam;
+	game->gpu.camera = ft_realloc(game->gpu.camera, sizeof(t_obj) * (game->cam_quantity + 1));
+	game->gpu.camera[game->cam_quantity] = *cam;
 	game->cam_quantity += 1;
 }
 
