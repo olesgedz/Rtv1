@@ -19,7 +19,7 @@ float	intersect_plane(const t_obj* plane, const t_ray * ray);
 
 
 #ifdef CMD_DEBUG
-#define cmdlog(x, ...) if( PIX_X == get_global_id(0) % 700 && PIX_Y == get_global_id(0) / 700 ); //printf(x, __VA_ARGS__);
+#define cmdlog(x, ...) if( PIX_X == get_global_id(0) % 700 && PIX_Y == get_global_id(0) / 700 );
 #else
 #define cmdlog(x, ...) ;
 #endif
@@ -224,10 +224,6 @@ static void scene_new(__global t_obj* objects, int n_objects, int width, int hei
 	scene->random = random;
 	scene->textures = textures;
 	scene->camera = camera;
-	// if (get_global_id(0) == 500)
-	// {
-	// 	printf("%f %f %f\n", camera.position[0], camera.position[1], camera.position[2]);
-	// }
 	// return (new_scene);
 }
 
@@ -247,7 +243,7 @@ __global float3 * vect_temp,  __global ulong * random,  __global t_txture *textu
 	finalcolor = vect_temp[x_coord + y_coord * width];
 
 	scene_new(objects, n_objects, width, height, samples, random, textures, camera, &scene);
-	print_debug(scene.samples, scene.width, &scene);
+	// print_debug(scene.samples, scene.width, &scene);
 	for (int i = 0; i < SAMPLES; i++)
 	{
 		createCamRay(width, height, &scene, &(intersection.ray));

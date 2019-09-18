@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/18 20:38:39 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/09/18 20:49:24 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,7 +238,6 @@ void 	ft_render(t_game* game)
 	int height = game->sdl.surface->height;
 	j = -1;
 	int r = rand() % 2;
-	printf("%d\n", r);
 	ft_run_kernel(game, game->kernels[0].krl);
 	game->sdl.surface->data =  (Uint32 *)game->gpuOutput;
 	//blur(game->sdl.surface);
@@ -346,7 +345,6 @@ int	main(int argc, char **argv)
 	else
 		game.av = argv[1];
 	opencl(&game, game.av);
-	printf("%lu              hfgjhfhgd\n",sizeof(game));
 	ft_update(&game);
 	clReleaseMemObject(game.gpu->cl_bufferOut);
 	//release_gpu(game.gpu);

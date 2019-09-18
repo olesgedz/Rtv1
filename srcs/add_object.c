@@ -73,7 +73,6 @@ void			reconfigure_camera(t_cam *camera)
 
 	x_fov = (float)WIN_W / (float)WIN_H > 1 ? camera->fov / 2 : camera->fov / 2 * (float)WIN_W / (float)WIN_H;
 	y_fov = (float)WIN_H / (float)WIN_W > 1 ? (camera->fov / 2) : (camera->fov / 2) * ((float)WIN_H / (float)WIN_W);
-    printf("%f %f\n", x_fov, y_fov);
 	left = rotate(camera->normal, camera->direction, x_fov);
 	right = rotate(camera->normal, camera->direction, -x_fov);
 	up = rotate(cross(camera->direction, camera->normal), camera->direction, y_fov);
