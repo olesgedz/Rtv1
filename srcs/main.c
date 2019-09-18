@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/17 15:28:38 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/18 20:38:39 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int		ft_input_keys(t_game *game)
 					case 'z': game->wsad[6] = game->ev.type==SDL_KEYDOWN; break;
 					case 'x': game->wsad[7] = game->ev.type==SDL_KEYDOWN; break;
 					case ',': game->wsad[8] = game->ev.type==SDL_KEYDOWN;
-					game->gpu->samples = SAMPLES;
+					game->gpu->samples = 0;
 					// game->gpu->vec_temp = ft_memset(game->gpuOutput, 0, sizeof(cl_float3) * game->image->height * game->image->width);
 					game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[2], sizeof(cl_float3) * WIN_H * WIN_W, game->gpu->vec_temp);
 
@@ -81,9 +81,9 @@ int		ft_input_keys(t_game *game)
 						game->cam_num = game->cam_quantity - 1;
 					break;
 					case '.': game->wsad[9] = game->ev.type==SDL_KEYDOWN;
-					game->gpu->samples = 5;
+					game->gpu->samples = 0;
 					// game->gpu->vec_temp = ft_memset(game->gpuOutput, 0, sizeof(cl_float3) * game->image->height * game->image->width);
-					game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[2], sizeof(cl_float3) * WIN_H * WIN_W, game->gpu->vec_temp);
+					// game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[2], sizeof(cl_float3) * WIN_H * WIN_W, game->gpu->vec_temp);
 
 					game->cam_num++;
 					if (game->cam_num >= game->cam_quantity)
@@ -109,7 +109,7 @@ int		ft_input_keys(t_game *game)
 			case SDL_MOUSEMOTION:
 			if (game->mouse != 0)
 			{
-				game->gpu->samples = SAMPLES;
+				game->gpu->samples = 0;
 				// game->gpu->vec_temp = ft_memset(game->gpuOutput, 0, sizeof(cl_float3) * game->image->height * game->image->width);
 				game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[2], sizeof(cl_float3) * WIN_H * WIN_W, game->gpu->vec_temp);
 				rotate_horizontal(&(game->gpu->camera[game->cam_num]), game->gpu->camera[game->cam_num].fov / WIN_W * game->ev.motion.xrel);
@@ -346,6 +346,7 @@ int	main(int argc, char **argv)
 	else
 		game.av = argv[1];
 	opencl(&game, game.av);
+	printf("%lu              hfgjhfhgd\n",sizeof(game));
 	ft_update(&game);
 	clReleaseMemObject(game.gpu->cl_bufferOut);
 	//release_gpu(game.gpu);
