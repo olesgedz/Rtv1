@@ -176,13 +176,12 @@ cl_float3				cl_add(cl_float3 v1, cl_float3 v2);
 // 						t_camera_direction direction,
 // 						float length);
 void					get_texture(char *name, t_txture *texture);
-
 t_obj					*add_plane(cl_float3 position, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection, cl_float3 v);
 t_obj					*add_sphere(cl_float3 position, float radius, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection);
 t_obj 					*add_cylinder(cl_float3 position, float radius, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection, cl_float3 v);
 t_obj 					*add_cone(cl_float3 position, float radius, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection, cl_float3 v);
 void 					read_scene(char *argv, t_game *game);
-t_cam *add_cam(cl_float3 position, cl_float3 direction, cl_float3 normal);
+t_cam 					*add_cam(cl_float3 position, cl_float3 direction, cl_float3 normal);
 cl_float3				mult_cfloat3(cl_float3 one, float f);
 cl_float3				sum_cfloat3(cl_float3 one, cl_float3 two);
 cl_float3				rotate(cl_float3 axis, cl_float3 vector, float angle);
@@ -192,7 +191,7 @@ cl_float3				normalize(cl_float3 vector);
 void					reconfigure_camera(t_cam *camera);
 void					rotate_vertical(t_cam *camera, float angle);
 void					rotate_horizontal(t_cam *camera, float angle);
-t_obj *add_triangle(cl_float3 *vertices, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection);
+t_obj 					*add_triangle(cl_float3 *vertices, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection);
 int						ft_input_keys(t_game *game);
 void					key_check(t_game *game);
 void					camera_reposition(t_game *game);

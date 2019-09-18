@@ -19,7 +19,7 @@ float	intersect_plane(const t_obj* plane, const t_ray * ray);
 
 
 #ifdef CMD_DEBUG
-#define cmdlog(x, ...) if( PIX_X == get_global_id(0) % 700 && PIX_Y == get_global_id(0) / 700 ); //printf(x, __VA_ARGS__);
+#define cmdlog(x, ...) if( PIX_X == get_global_id(0) % 700 && PIX_Y == get_global_id(0) / 700 );
 #else
 #define cmdlog(x, ...) ;
 #endif
@@ -42,33 +42,23 @@ float3 refract(float3 vector, float3 n, float refrIndex)
 	return (refrIndex * vector) + (refrIndex * cosI - sqrt( cosT2 )) * n;
 }
 
-static t_ray createCamRay(const int x_coord, const int y_coord, const int width, const int height, t_scene *scene)
+static void createCamRay(const int width, const int height, t_scene *scene, t_ray *ray)
 {
 
-	float fx = (float)x_coord / (float)width;  /* convert int in range [0 - width] to float in range [0-1] */
-	float fy = (float)y_coord / (float)height; /* convert int in range [0 - height] to float in range [0-1] */
+	float fx = (float)scene->x_coord / (float)width;  /* convert int in range [0 - width] to float in range [0-1] */
+	float fy = (float)scene->y_coord / (float)height; /* convert int in range [0 - height] to float in range [0-1] */
 
-	// /* calculate aspect ratio */
-	// float aspect_ratio = (float)(width) / (float)(height);
-	float fx2 = (fx - 0.5f);
-	float fy2 = (fy - 0.5f);
-
+	fx = (fx - 0.5f);
+	fy = (fy - 0.5f);
 	/* determine position of pixel on screen */
-	float3 pixel_pos = scene->camera.direction - fy2 * (scene->camera.border_x) - fx2 * (scene->camera.border_y);
+	float3 pixel_pos = scene->camera.direction - fy * (scene->camera.border_x) - fx * (scene->camera.border_y);
 
 	/* create camera ray*/
-	t_ray ray;
-	ray.origin = scene->camera.position; /* fixed camera position */
-	ray.dir = normalize(pixel_pos + float3(rng(scene->random) * EPSILON, rng(scene->random) * EPSILON, rng(scene->random) * EPSILON)); /* vector from camera to pixel on screen */
-	// if (get_global_id(0) == 0)
-	// {
-	// 	printf("%f %f %f %f\n", scene->camera.direction.x, scene->camera.direction.y, scene->camera.direction.z, length(scene->camera.direction));
-	// 	printf("%f %f %f %f\n", scene->camera.position.x, scene->camera.position.y, scene->camera.position.z, length(scene->camera.position));
-	// }
-    return ray;
+	ray->origin = scene->camera.position; /* fixed camera position */
+	ray->dir = normalize(pixel_pos + float3(rng(scene->random) * EPSILON, rng(scene->random) * EPSILON, rng(scene->random) * EPSILON)); /* vector from camera to pixel on screen */
 }
 
-static bool intersect_scene(t_scene * scene, t_intersection * intersection, t_ray * ray, int light)
+static bool intersect_scene(t_scene *scene, t_intersection *intersection, t_ray *ray, int light)
 {
 	/* initialise t to a very large number,
 	so t will be guaranteed to be smaller
@@ -157,7 +147,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 
 	float3 accum_color = (float3)(0.0f, 0.0f, 0.0f);
 	float3 mask = (float3)(1.0f, 1.0f, 1.0f);
-	unsigned int max_trace_depth = 5;
+	unsigned int max_trace_depth = 1;
 	float3 explicit;
 	for (int bounces = 0; bounces < max_trace_depth; bounces++)
 	{
@@ -216,29 +206,25 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 }
 
 
-static t_scene scene_new(__global t_obj* objects, int n_objects, int width, int height,\
- int samples, __global ulong * random, __global t_txture *textures, t_cam camera)
+static void scene_new(__global t_obj* objects, int n_objects, int width, int height,\
+ int samples, __global ulong * random, __global t_txture *textures, t_cam camera, t_scene *scene)
 {
-	t_scene new_scene;
+	// t_scene new_scene;
 
-	new_scene.objects = objects;
-	new_scene.n_objects = n_objects;
-	new_scene.width = width;
-	new_scene.height = height;
-	new_scene.global_id = get_global_id(0);
-	new_scene.x_coord = new_scene.global_id % new_scene.width;
-	new_scene.y_coord = new_scene.global_id / new_scene.width;
-	new_scene.samples = samples;
-	new_scene.seed0 = new_scene.x_coord + rand_noise(new_scene.samples) * 12312;
-	new_scene.seed1 = new_scene.y_coord + rand_noise(new_scene.samples + 3) * 12312;
-	new_scene.random = random;
-	new_scene.textures = textures;
-	new_scene.camera = camera;
-	// if (get_global_id(0) == 500)
-	// {
-	// 	printf("%f %f %f\n", camera.position[0], camera.position[1], camera.position[2]);
-	// }
-	return (new_scene);
+	scene->objects = objects;
+	scene->n_objects = n_objects;
+	scene->width = width;
+	scene->height = height;
+	scene->global_id = get_global_id(0);
+	scene->x_coord = scene->global_id % scene->width;
+	scene->y_coord = scene->global_id / scene->width;
+	scene->samples = samples;
+	scene->seed0 = scene->x_coord + rand_noise(scene->samples) * (12312 * scene->x_coord);
+	scene->seed1 = scene->y_coord + rand_noise(scene->samples + 3) * (12312 * scene->y_coord);
+	scene->random = random;
+	scene->textures = textures;
+	scene->camera = camera;
+	// return (new_scene);
 }
 
 __kernel void render_kernel(__global int* output, __global t_obj* objects,
@@ -256,11 +242,11 @@ __global float3 * vect_temp,  __global ulong * random,  __global t_txture *textu
 	 unsigned int seed1 = y_coord + rng(random);
 	finalcolor = vect_temp[x_coord + y_coord * width];
 
-	scene = scene_new(objects, n_objects, width, height, samples, random, textures, camera);
-	print_debug(scene.samples, scene.width, &scene);
+	scene_new(objects, n_objects, width, height, samples, random, textures, camera, &scene);
+	// print_debug(scene.samples, scene.width, &scene);
 	for (int i = 0; i < SAMPLES; i++)
 	{
-		intersection.ray = createCamRay(scene.x_coord, scene.y_coord, width, height, &scene);
+		createCamRay(width, height, &scene, &(intersection.ray));
 		intersection_reset(&intersection.ray);
 		finalcolor += trace(&scene,  &intersection, &seed0, &seed1);
 	}

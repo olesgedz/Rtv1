@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 19:04:09 by srobert-          #+#    #+#             */
-/*   Updated: 2019/09/18 20:17:29 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/18 22:30:07 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,7 +289,6 @@ void read_scene(char *argv, t_game *game)
 	int light_num;
 
 	light_num = 0;
-	printf("%s\n", argv);
 	if ((fd = open(argv, O_RDONLY)) <= 0)
 		terminate("fuck you\n");
 	while (get_next_line(fd, &line))
