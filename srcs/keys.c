@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:10:38 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/19 19:35:01 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/19 21:14:33 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,14 @@ static void	mouse(t_game *game)
 	else if (game->ev.type == SDL_MOUSEBUTTONUP)
 	{
 		game->keys.lmb = 0;
-		SDL_WarpMouseInWindow(game->sdl.window, x, y);
 		SDL_ShowCursor(SDL_ENABLE);
 	}
 	else if (game->ev.type == SDL_MOUSEMOTION)
 	{
-		game->keys.xrel = game->ev.motion.xrel;
-		game->keys.yrel = game->ev.motion.yrel;
+		game->keys.xrel = -game->ev.motion.xrel;
+		game->keys.yrel = -game->ev.motion.yrel;
+		if (game->keys.lmb)
+			SDL_WarpMouseInWindow(game->sdl.window, x, y);
 		game->keys.mm = 1;
 	}
 }

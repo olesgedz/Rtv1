@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:21:19 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/18 18:17:48 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/19 21:06:38 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	loopa(t_game *game)
 
 void	quit_kiwi(t_game *game)
 {
-	KW_Quit(game->gui.gui);
 	KW_ReleaseSurface(game->gui.driver, game->gui.set);
-	KW_ReleaseRenderDriver(game->gui.driver);
+//	KW_ReleaseRenderDriver(game->gui.driver);
+	KW_Quit(game->gui.gui);
 }

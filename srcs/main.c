@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/19 20:25:45 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/09/19 21:03:27 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,6 @@ void ft_update(t_game *game)
 		camera_reposition(game);
 		ft_surface_present(&game->sdl, game->sdl.surface);
 	}
-	ft_exit(0);
 }
 
 void opencl(t_game *game, char *argv)
@@ -209,7 +208,7 @@ int	main(int argc, char **argv)
 	opencl(&game, game.av);
 	game.quit = 0;
 	ft_update(&game);
-	clReleaseMemObject(game.gpu.cl_bufferOut);
+//	clReleaseMemObject(game.gpu.cl_bufferOut);
 	//release_gpu(game.gpu);
 	quit_kiwi(&game);
 	ft_exit(NULL);
