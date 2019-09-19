@@ -7,8 +7,8 @@
 #include "textures.cl"
 
 #define SAMPLES 5
-
-
+#define BOUNCES 2
+#define LIGHTSAMPLING 1
 
 static float get_random( int * seed0, int * seed1);
 float3 reflect(float3 vector, float3 n);
@@ -147,9 +147,8 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 
 	float3 accum_color = (float3)(0.0f, 0.0f, 0.0f);
 	float3 mask = (float3)(1.0f, 1.0f, 1.0f);
-	unsigned int max_trace_depth = 4;
 	float3 explicit;
-	for (int bounces = 0; bounces < max_trace_depth; bounces++)
+	for (int bounces = 0; bounces < BOUNCES; bounces++)
 	{
 		/* if ray misses scene, return background colour */
 		if (!intersect_scene(scene, intersection, &ray, 0))
@@ -171,12 +170,10 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 		float cosine;
 		float3 newdir = sample_uniform(&intersection->normal, &cosine, scene);
 		/* add a very small offset to the hitpoint to prevent self intersection */
-		cmdlog("haha\n");
-
 		if (objecthit.reflection > 0)
 		{
 			accum_color += mask * objecthit.emission;
-			if (1)
+			if (LIGHTSAMPLING)
 			{
 				explicit = radiance_explicit(scene, intersection);
 				accum_color += explicit * mask  * objecthit.color;//* intersection->material.color;
@@ -191,7 +188,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 		{
 
 			accum_color += mask * objecthit.emission;
-			if (1)
+			if (LIGHTSAMPLING)
 			{
 				explicit = radiance_explicit(scene, intersection);
 				accum_color += explicit * mask *  objecthit.color;//intersection->material.color;

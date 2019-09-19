@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/19 21:03:27 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/19 21:49:26 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ void ft_update(t_game *game)
 	{
 		key_check(game);
 		camera_reposition(game);
+		//ft_render(game);
 		ft_surface_present(&game->sdl, game->sdl.surface);
 	}
 }
