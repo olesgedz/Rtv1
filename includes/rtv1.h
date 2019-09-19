@@ -145,7 +145,6 @@ typedef struct			s_game
 	int 				n_cylinders;
 	size_t 				obj_quantity;
 	int					cam_quantity;
-	int 				wsad[20];
 	t_vec3 				origin;
 	t_gpu 				gpu;
 	int 				init_render;
