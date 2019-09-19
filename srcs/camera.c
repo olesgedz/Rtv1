@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:50:13 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/18 22:22:26 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/19 19:27:46 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,11 @@ void	mouse_mov(t_game *game, int flag)
 	}
 	if (flag)
 	{
+		game->cl_info->ret =
+		cl_write(game->cl_info, game->kernels[0].args[2], sizeof(cl_float3) *
+		(unsigned)WIN_H * (unsigned)WIN_W, game->gpu.vec_temp);
 		game->gpu.samples = 0;
+		ERROR(game->cl_info->ret);
 		reconfigure_camera(&game->gpu.camera[game->cam_num]);
 		ft_render(game);
 	}
@@ -95,10 +99,6 @@ void		camera_reposition(t_game *game)
 	int flag;
 
 	flag = 0;
-	game->cl_info->ret =
-	cl_write(game->cl_info, game->kernels[0].args[2], sizeof(cl_float3) *
-	(unsigned)WIN_H * (unsigned)WIN_W, game->gpu.vec_temp);
-	ERROR(game->cl_info->ret);
 	if (game->keys.w)
 	{
 		game->gpu.camera[game->cam_num].position =

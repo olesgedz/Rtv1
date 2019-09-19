@@ -14,8 +14,8 @@ static float get_random( int * seed0, int * seed1);
 float3 reflect(float3 vector, float3 n);
 float3 refract(float3 vector, float3 n, float refrIndex);
 float	intersect_plane(const t_obj* plane, const t_ray * ray);
-#define PIX_X 500
-#define PIX_Y 500
+#define PIX_X 1920
+#define PIX_Y 1080
 
 
 #ifdef CMD_DEBUG
@@ -147,7 +147,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 
 	float3 accum_color = (float3)(0.0f, 0.0f, 0.0f);
 	float3 mask = (float3)(1.0f, 1.0f, 1.0f);
-	unsigned int max_trace_depth = 1;
+	unsigned int max_trace_depth = 4;
 	float3 explicit;
 	for (int bounces = 0; bounces < max_trace_depth; bounces++)
 	{
