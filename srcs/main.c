@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/18 22:30:20 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/19 19:19:15 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ void 	ft_render(t_game* game)
 	j = -1;
 	ft_run_kernel(game, game->kernels[0].krl);
 	game->sdl.surface->data =  (Uint32 *)game->gpuOutput;
+	// ft_surface_present(&game->sdl, game->sdl.surface);
 	//blur(game->sdl.surface);
 }
 
