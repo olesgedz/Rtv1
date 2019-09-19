@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 19:04:09 by srobert-          #+#    #+#             */
-/*   Updated: 2019/09/18 22:30:07 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/19 20:21:07 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void feel_free(char **str)
     i = -1;
     while (str[++i] != NULL)
         free(str[i]);
+	free(str);
 }
 
 void ft_object_push(t_game *game, t_obj *object)
@@ -89,7 +90,6 @@ static void parse_plane(char **data, t_game *game)
 		terminate("missing data of plane emition vector!\n");
 	emition = create_cfloat3(atof(vec[0]), atof(vec[1]), atof(vec[2]));
 	feel_free(vec);
-	free(vec);
 	reflection = (cl_float)atof(data[5]);
 	texture = (cl_int)ft_atoi(data[6]);
 	ft_object_push(game, add_plane(position, color, emition, texture, reflection, v));
@@ -122,7 +122,6 @@ static void parse_sphere(char **data, t_game *game)
 		terminate("missing data of emition vector!\n");
 	emition = create_cfloat3(atof(vec[0]), atof(vec[1]), atof(vec[2]));
 	feel_free(vec);
-	free(vec);
 	radius = atof(data[4]);
 	reflection = (cl_float)atof(data[5]);
 	texture = (cl_int)ft_atoi(data[6]);
@@ -162,7 +161,6 @@ static void parse_cylinder(char **data, t_game *game)
 		terminate("missing data of cylinder emition vector!\n");
 	emition = create_cfloat3(atof(vec[0]), atof(vec[1]), atof(vec[2]));
 	feel_free(vec);
-	free(vec);
 	radius = atof(data[5]);
 	reflection = (cl_float)atof(data[6]);
 	texture = (cl_int)ft_atoi(data[7]);
@@ -202,7 +200,6 @@ static void parse_cone(char **data, t_game *game)
 		terminate("missing data of cylinder emition vector!\n");
 	emition = create_cfloat3(atof(vec[0]), atof(vec[1]), atof(vec[2]));
 	feel_free(vec);
-	free(vec);
 	radius = atof(data[5]);
 	reflection = (cl_float)atof(data[6]);
 	texture = (cl_int)ft_atoi(data[7]);
@@ -233,7 +230,6 @@ void parse_cam(char **data, t_game *game)
         terminate("missing data of cam norm vector!\n");
     normal = create_cfloat3(atof(vec[0]), atof(vec[1]), atof(vec[2]));
     feel_free(vec);
-    free(vec);
 	ft_cam_push(game, add_cam(position, v, normal));
 }
 
@@ -275,7 +271,6 @@ static void parse_triangle(char **data, t_game *game)
         terminate("missing data of triangle's emition vector!\n");
 	emition = create_cfloat3(atof(vec[0]), atof(vec[1]), atof(vec[2]));
 	feel_free(vec);
-    free(vec);
 	reflection = atof(data[6]);
 	texture = (cl_int)ft_atoi(data[7]);
 	ft_object_push(game, add_triangle(vertices, color, emition, texture, reflection));
@@ -319,6 +314,5 @@ void read_scene(char *argv, t_game *game)
 		feel_free(data);
 		free(line);
 	}
-	free(data);
 	close(fd);
 }
