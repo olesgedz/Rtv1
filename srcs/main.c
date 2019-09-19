@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/19 21:52:41 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/19 22:40:13 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,7 @@ int	main(int argc, char **argv)
 		start_gui(&game);
 	else
 		game.av = argv[1];
+	SDL_SetCursor(SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR));
 	opencl(&game, game.av);
 	game.quit = 0;
 	ft_update(&game);
