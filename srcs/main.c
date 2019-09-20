@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/19 19:19:15 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/19 20:03:00 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void initScene(t_obj* objects, t_game *game, char *argv)
 	char						*name = "sobenin.bmp";
 	char						*secname = "sun.bmp";
 	char						*thirdname = "seamless_pawnment.bmp";
-	char						*fourthname = "concrete.bmp";
+	char						*fourthname = "grass_rock.bmp";
 	char						*fivename = "ice.bmp";
 	char						*sixname = "stars.bmp";
 
