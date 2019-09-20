@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/20 20:44:42 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/20 21:31:19 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_cam			*init_camera(t_game *game)
 
 void initScene(t_obj* objects, t_game *game, char *argv)
 {
-	char						*name = "sobenin.bmp";
+	char						*name = "sobenin.jpg";
 	char						*secname = "sun.bmp";
 	char						*thirdname = "seamless_pawnment.bmp";
 	char						*fourthname = "grass_rock.bmp";
@@ -207,6 +207,6 @@ int	main(int argc, char **argv)
 	game.quit = 0;
 	poopa(&game);
 //	clReleaseMemObject(game.gpu.cl_bufferOut);
-	//release_gpu(game.gpu); 
+	//release_gpu(game.gpu);
 	ft_exit(NULL);
 }
