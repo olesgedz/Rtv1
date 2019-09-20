@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:10:38 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/19 22:44:15 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/20 18:35:07 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	key_switch(t_game *game)
 		game->cam_num--;
 		if (game->cam_num < 0)
 			game->cam_num = game->cam_quantity - 1;
-		ft_render(game);
+		game->flag = 1;
 	}
 	else if (game->ev.key.keysym.sym == SDLK_PERIOD)
 	{
@@ -54,7 +54,7 @@ static void	key_switch(t_game *game)
 		game->cam_num++;
 		if (game->cam_num >= game->cam_quantity)
 			game->cam_num = 0;
-		ft_render(game);
+		game->flag = 1;
 	}
 }
 

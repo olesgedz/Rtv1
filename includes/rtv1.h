@@ -154,7 +154,7 @@ typedef struct			s_game
 	t_cl_krl 			*kernels;
 	int 				*gpuOutput;
 	int					cam_num;
-	int					mouse;
+	int					flag;
 	int					quit;
 	t_keys				keys;
 } 						t_game;

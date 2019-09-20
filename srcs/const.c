@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:04:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/19 14:59:22 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/20 16:46:06 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void		set_const(t_game *game)
 	game->init_render = 1;
 	game->origin = (t_vec3){0,0,5};
 	game->gpu.samples = 0;
-	game->mouse = 0;
 	game->quit = 0;
+	game->flag = 1;
 	set_keys(game);
 	ft_init_window(&game->sdl, WIN_W, WIN_H);
 	init_kiwi(game);
