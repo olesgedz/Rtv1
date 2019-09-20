@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/19 20:03:00 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/09/20 18:47:08 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,15 +118,11 @@ void initScene(t_obj* objects, t_game *game, char *argv)
 */
 void 	ft_render(t_game* game)
 {
-	int		i;
-	int		j;
-	int width = game->sdl.surface->width;
-	int height = game->sdl.surface->height;
-	j = -1;
+	if(!game->flag)
+		return ;
+	game->flag = 0;
 	ft_run_kernel(game, game->kernels[0].krl);
 	game->sdl.surface->data =  (Uint32 *)game->gpuOutput;
-	// ft_surface_present(&game->sdl, game->sdl.surface);
-	//blur(game->sdl.surface);
 }
 
 /*
@@ -146,14 +142,13 @@ void ft_update(t_game *game)
 	clock_t current_ticks, delta_ticks;
 	clock_t fps = 0;
 	ft_surface_clear(game->sdl.surface);
-	ft_render(game);
 	while(!game->quit)
 	{
 		key_check(game);
 		camera_reposition(game);
+		ft_render(game);
 		ft_surface_present(&game->sdl, game->sdl.surface);
 	}
-	ft_exit(0);
 }
 
 void opencl(t_game *game, char *argv)
@@ -206,10 +201,11 @@ int	main(int argc, char **argv)
 		start_gui(&game);
 	else
 		game.av = argv[1];
+	SDL_SetCursor(SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR));
 	opencl(&game, game.av);
 	game.quit = 0;
 	ft_update(&game);
-	clReleaseMemObject(game.gpu.cl_bufferOut);
+//	clReleaseMemObject(game.gpu.cl_bufferOut);
 	//release_gpu(game.gpu);
 	quit_kiwi(&game);
 	ft_exit(NULL);
