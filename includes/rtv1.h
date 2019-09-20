@@ -8,6 +8,7 @@
 #define CL_SILENCE_DEPRECATION
 #include <sys/types.h>
 #include "SDL2/SDL.h"
+#include "SDL_image.h"
 #include "libsdl.h"
 #include "libft.h"
 #include "libmath.h"

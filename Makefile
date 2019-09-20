@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
+#    By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/09/19 21:52:37 by lminta           ###   ########.fr        #
+#    Updated: 2019/09/20 19:05:49 by sbrella          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,8 @@ CC = gcc
 LIBRARIES = $(GUI_LIB) -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY)  -lm -framework OpenCL  -lvect -L$(LIBVECT) -lgnl -L$(LIBGNL) -lcl -L$(LIBCL)
 INCLUDES = $(GUI_INC) -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)include/ -Isrcs/cl_error/ -I$(LIBGNL)include/ -I$(LIBCL)include/
 
-GUI_LIB = -L./gui/build/src -lKiWi $(shell pkg-config --libs sdl2_ttf)
-GUI_INC = -I./include/SDL2 -I./gui/KiWi/src -I./gui/inc $(shell pkg-config --cflags sdl2_ttf)
+GUI_LIB = -L./gui/build/src -lKiWi $(shell pkg-config --libs sdl2_ttf) $(shell pkg-config --libs sdl2_image)
+GUI_INC = -I./include/SDL2 -I./gui/KiWi/src -I./gui/inc $(shell pkg-config --cflags sdl2_ttf) $(shell pkg-config --cflags sdl2_image)
 DIR_KiWi = ./gui/build/src/
 LIB_KiWi = $(DIR_KiWi)/libKiWi.dylib
 

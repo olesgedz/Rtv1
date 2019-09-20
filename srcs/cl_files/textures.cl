@@ -21,14 +21,14 @@ float3			get_color_sphere(t_obj *object, float3 hitpoint, t_scene *scene)
 	return(cl_int_to_float3(texture->texture[i]));
 }
 
-float3			get_color_plane(t_obj *object, float3 hitpoint, t_scene *scene)
+float3					get_color_plane(t_obj *object, float3 hitpoint, t_scene *scene)
 {
-	float3		vect;
-	float3      secvect;
+	float3				vect;
+	float3				secvect;
 	__global t_txture	*texture;
-	float		u;
-	float		v;
-	int			i;
+	float				u;
+	float				v;
+	int					i;
 
 	if (object->v[0] != 0.0f || object->v[1] != 0.0f)
 		vect = normalize((float3){object->v[1], -object->v[0], 0});

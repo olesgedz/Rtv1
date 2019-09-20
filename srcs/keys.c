@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:10:38 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/20 18:35:07 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/20 20:01:46 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ static void	key_up(t_game *game)
 void		key_check(t_game *game)
 {
 	game->keys.mm = 0;
-	while (SDL_PollEvent(&game->ev))
+	while (SDL_PollEvent(&(game->ev)))
 	{
 		if (game->ev.type == SDL_QUIT ||
 		(game->ev.type == SDL_KEYDOWN &&
