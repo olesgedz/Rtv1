@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:04:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/20 16:46:06 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/20 20:43:56 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,4 @@ void		set_const(t_game *game)
 	game->quit = 0;
 	game->flag = 1;
 	set_keys(game);
-	ft_init_window(&game->sdl, WIN_W, WIN_H);
-	init_kiwi(game);
 }

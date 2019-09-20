@@ -197,7 +197,7 @@ void					camera_reposition(t_game *game);
 void 					ft_render(t_game* game);
 void					set_const(t_game *game);
 
-void					start_gui(t_game *gmae);
+char					*start_gui(t_sdl *sdl);
 void					scene_select(t_game *game);
 void					start_screen(t_game *game);
 void					init_kiwi(t_game *game);

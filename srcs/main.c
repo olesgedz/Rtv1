@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/20 18:47:08 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/09/20 20:44:42 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ void 	ft_render(t_game* game)
 *	Return: none
 */
 
-void ft_update(t_game *game)
+void poopa(t_game *game)
 {
 	clock_t current_ticks, delta_ticks;
 	clock_t fps = 0;
@@ -196,17 +196,17 @@ int	main(int argc, char **argv)
 {
 	t_game game;
 
-	set_const(&game);
+	ft_init_window(&game.sdl, WIN_W, WIN_H);
 	if (argc != 2)
-		start_gui(&game);
+		game.av = start_gui(&game.sdl);
 	else
 		game.av = argv[1];
+	set_const(&game);
 	SDL_SetCursor(SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR));
 	opencl(&game, game.av);
 	game.quit = 0;
-	ft_update(&game);
+	poopa(&game);
 //	clReleaseMemObject(game.gpu.cl_bufferOut);
-	//release_gpu(game.gpu);
-	quit_kiwi(&game);
+	//release_gpu(game.gpu); 
 	ft_exit(NULL);
 }
