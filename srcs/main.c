@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/20 20:21:27 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/09/21 16:09:17 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ void initScene(t_obj* objects, t_game *game, char *argv)
 {
 	char						*name = "sobenin.jpg";
 	char						*secname = "sun.bmp";
-	char						*thirdname = "seamless_pawnment.bmp";
-	char						*fourthname = "grass_rock.bmp";
-	char						*fivename = "ice.bmp";
-	char						*sixname = "stars.bmp";
+	char						*thirdname = "seamless_pawnment.jpg";
+	char						*fourthname = "grass_rock.jpg";
+	char						*fivename = "ice.jpg";
+	char						*sixname = "stars.jpg";
 
 	game->textures_num 			= 6;
 	game->textures 				= (t_txture*)malloc(sizeof(t_txture) * game->textures_num);

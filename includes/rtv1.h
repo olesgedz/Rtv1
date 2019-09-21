@@ -45,7 +45,7 @@ typedef struct s_txture
 {
 	cl_int		width;
 	cl_int		height;
-	cl_int		texture[1920][1080];
+	cl_int		texture[4096][2048];
 }				t_txture;
 
 typedef struct Object{
