@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:04:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/20 20:46:56 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/09/21 16:21:38 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,4 @@ void		set_const(t_game *game)
 	game->quit = 0;
 	game->flag = 1;
 	set_keys(game);
-	ft_init_window(&game->sdl, WIN_W, WIN_H);
-	if (!(IMG_Init(img_flag) & img_flag))
-		exit(0);
-	init_kiwi(game);
 }

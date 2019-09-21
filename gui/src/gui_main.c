@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:21:19 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/19 21:06:38 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/20 21:19:54 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,13 @@ void	init_kiwi(t_game *game)
 
 void	loopa(t_game *game)
 {
-	while (!SDL_QuitRequested() && !game->quit)
+	while (!game->quit)
 	{
+		if (SDL_PollEvent(&game->ev))
+			if (game->ev.type == SDL_QUIT ||
+		(game->ev.type == SDL_KEYDOWN &&
+		game->ev.key.keysym.sym == SDLK_ESCAPE))
+			game->quit = 1;
 		SDL_RenderClear(game->sdl.renderer);
 		SDL_RenderCopy(game->sdl.renderer, game->gui.ed_w.backtex, 0, 0);
 		KW_ProcessEvents(game->gui.gui);
@@ -46,7 +51,10 @@ void	loopa(t_game *game)
 
 void	quit_kiwi(t_game *game)
 {
+	SDL_DestroyTexture(game->gui.ed_w.backtex);
+	KW_DestroyWidget(game->gui.ed_w.frame, 1);
+	KW_DestroyWidget(game->gui.s_s.frame, 1);
 	KW_ReleaseSurface(game->gui.driver, game->gui.set);
-//	KW_ReleaseRenderDriver(game->gui.driver);
+	//KW_ReleaseRenderDriver(game->gui.driver);
 	KW_Quit(game->gui.gui);
 }

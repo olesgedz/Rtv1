@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 22:51:42 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/16 18:30:29 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/20 20:43:35 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,16 @@ void		start_screen(t_game *game)
 	KW_AddWidgetMouseDownHandler(game->gui.ed_w.okbutton, ok_clicked);
 }
 
-void		start_gui(t_game *game)
+char		*start_gui(t_sdl *sdl)
 {
-	start_screen(game);
-	scene_select(game);
-	loopa(game);
+	t_game	game;
+
+	game.sdl = *sdl;
+	set_const(&game);
+	init_kiwi(&game);
+	start_screen(&game);
+	scene_select(&game);
+	loopa(&game);
+	quit_kiwi(&game);
+	return (game.av);
 }
