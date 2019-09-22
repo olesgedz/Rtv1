@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/20 21:31:19 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/22 13:54:29 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,14 +194,15 @@ void opencl(t_game *game, char *argv)
 
 int	main(int argc, char **argv)
 {
-	t_game game;
+	t_game	game;
+	t_gui	gui;
 
 	ft_init_window(&game.sdl, WIN_W, WIN_H);
+	set_const(&game, &gui);
 	if (argc != 2)
-		game.av = start_gui(&game.sdl);
+		game.av = start_gui(&gui);
 	else
 		game.av = argv[1];
-	set_const(&game);
 	SDL_SetCursor(SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR));
 	opencl(&game, game.av);
 	game.quit = 0;

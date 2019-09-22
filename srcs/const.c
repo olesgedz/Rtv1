@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:04:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/20 20:43:56 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/22 14:50:36 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	set_keys(t_game *game)
 	game->keys.space = 0;
 }
 
-void		set_const(t_game *game)
+void		set_const(t_game *game, t_gui *gui)
 {
 	if (!(game->image = ft_surface_create(WIN_W, WIN_H)))
 		exit(-1);
@@ -36,5 +36,7 @@ void		set_const(t_game *game)
 	game->gpu.samples = 0;
 	game->quit = 0;
 	game->flag = 1;
+	gui->sdl = game->sdl;
+	gui->quit = 0;
 	set_keys(game);
 }

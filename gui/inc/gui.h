@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/16 18:52:28 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/22 14:20:56 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include "KW_label.h"
 # include "KW_button.h"
 # include "KW_renderdriver_sdl2.h"
-
+# include "libsdl.h"
 # define MAX_SC	21
 
 typedef struct		s_scene_select
@@ -53,13 +53,25 @@ typedef struct		s_edit_win
 
 typedef struct		s_gui
 {
+	t_sdl 			sdl;
+	SDL_Event		ev;
+	int				quit;
 	KW_RenderDriver	*driver;
 	KW_Surface		*set;
 	KW_GUI			*gui;
 	t_edit_win		ed_w;
 	t_scene_select	s_s;
+	char 			*av;
 }					t_gui;
 
-void	print_error_gui(const char *message, const char *error_message);
+void				print_error_gui(const char *message, const char *error_message);
+char				*start_gui(t_gui *gui);
+void				scene_select(t_gui *gui);
+void				start_screen(t_gui *gui);
+void				init_kiwi(t_gui *gui);
+void				quit_kiwi(t_gui *gui);
+void				loopa(t_gui *gui);
+t_gui				*g_gui(t_gui *gui, int flag);
+SDL_Texture			*load_picture(t_gui *gui,const char *filename);
 
 #endif

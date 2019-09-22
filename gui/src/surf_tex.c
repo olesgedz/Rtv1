@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 18:04:29 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/16 18:27:49 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/22 14:12:10 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ void		print_error_gui(const char *message, const char *error_message)
 	}
 }
 
-SDL_Texture	*surf_to_text(t_game *game, SDL_Surface *surf)
+SDL_Texture	*surf_to_text(t_gui *gui, SDL_Surface *surf)
 {
 	SDL_Texture	*buff;
 
 	if (!(buff =
-SDL_CreateTextureFromSurface(game->sdl.renderer, surf)))
+SDL_CreateTextureFromSurface(gui->sdl.renderer, surf)))
 	{
 		print_error_gui("No texture for you: ", SDL_GetError());
 		exit(1);
@@ -39,7 +39,7 @@ SDL_CreateTextureFromSurface(game->sdl.renderer, surf)))
 	return (buff);
 }
 
-SDL_Texture	*load_picture(t_game *game, const char *filename)
+SDL_Texture	*load_picture(t_gui *gui, const char *filename)
 {
 	SDL_Surface		*surf;
 	SDL_Surface		*opt;
@@ -59,5 +59,5 @@ SDL_Texture	*load_picture(t_game *game, const char *filename)
 		exit(1);
 	}
 	SDL_FreeSurface(surf);
-	return (surf_to_text(game, opt));
+	return (surf_to_text(gui, opt));
 }
