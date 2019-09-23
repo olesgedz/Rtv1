@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 16:30:29 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/22 14:24:21 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/23 20:48:06 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ static void	first_button(t_gui *gui, struct dirent *name_buff)
 {
 	gui->s_s.names[0] = name_buff->d_name;
 	gui->s_s.rects[0] = &gui->s_s.buttonrect[0];
-	KW_RectFillParentHorizontally(&gui->ed_w.framerect,
+	KW_RectFillParentHorizontally(&gui->s_s.framerect,
 	gui->s_s.rects, gui->s_s.weights, 1, 10,
 	KW_RECT_ALIGN_MIDDLE);
-	gui->s_s.buttonrect[0].y -= 45;
+	gui->s_s.buttonrect[0].y += 10;
 }
 
 static int	scan_dir(t_gui *gui)
@@ -58,6 +58,7 @@ static int	scan_dir(t_gui *gui)
 		gui->s_s.framerect.h += 45;
 		i++;
 	}
+	//closedir(res);
 	return (i);
 }
 

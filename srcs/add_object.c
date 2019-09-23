@@ -88,7 +88,7 @@ t_cam *add_cam(cl_float3 position, cl_float3 direction, cl_float3 normal)
 	camera = (t_cam*)malloc(sizeof(t_cam));
 	camera->normal = normal;
 	camera->direction = direction;
-	camera->position =position;
+	camera->position = position;
     camera->fov = M_PI / 3;
 	reconfigure_camera(camera);
 	return (camera);
