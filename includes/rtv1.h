@@ -9,9 +9,10 @@
 #include <sys/types.h>
 #include "SDL2/SDL.h"
 #include "SDL_image.h"
-#include "libsdl.h"
 #include "libft.h"
 #include "libmath.h"
+#include "libsdl.h"
+#include "libvect.h"
 #include <fcntl.h>
 #include <limits.h>
 #include <float.h>
@@ -141,7 +142,6 @@ typedef struct			s_game
 {
 	char 				*av;
 	SDL_Event			ev;
-	t_gui				gui;
 	t_sdl 				sdl;
 	t_surface 			*image;
 	t_list				*verties;
@@ -200,15 +200,9 @@ int						ft_input_keys(t_game *game);
 void					key_check(t_game *game);
 void					camera_reposition(t_game *game);
 void 					ft_render(t_game* game);
-void					set_const(t_game *game);
-
-char					*start_gui(t_sdl *sdl);
-void					scene_select(t_game *game);
-void					start_screen(t_game *game);
-void					init_kiwi(t_game *game);
-void					quit_kiwi(t_game *game);
-void					loopa(t_game *game);
-t_game					*g_game(t_game *game, int flag);
-SDL_Texture				*load_picture(t_game *game,const char *filename);
+void					set_const(t_game *game, t_gui *gui);
+void					opencl(t_game *game, char *argv);
+cl_ulong				*get_random(cl_ulong *random);
+void					poopa(t_game *game, t_gui *gui);
 
 #endif

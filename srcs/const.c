@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:04:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/21 16:21:38 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/09/23 16:02:01 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	set_keys(t_game *game)
 	game->keys.space = 0;
 }
 
-void		set_const(t_game *game)
+void		set_const(t_game *game, t_gui *gui)
 {
 	int		img_flag;
 
@@ -39,5 +39,7 @@ void		set_const(t_game *game)
 	game->gpu.samples = 0;
 	game->quit = 0;
 	game->flag = 1;
+	gui->sdl = game->sdl;
+	gui->quit = 0;
 	set_keys(game);
 }
