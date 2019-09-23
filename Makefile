@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+         #
+#    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/09/20 19:05:49 by sbrella          ###   ########.fr        #
+#    Updated: 2019/09/23 15:03:19 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,6 +75,9 @@ SRCS_LIST = main.c\
 			keys.c\
 			camera.c\
 			const.c\
+			help_fun.c\
+			init_scene.c\
+			render.c\
 			../gui/src/gui_main.c\
 			../gui/src/start_screen.c\
 			../gui/src/surf_tex.c\

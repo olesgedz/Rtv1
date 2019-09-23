@@ -12,6 +12,7 @@
 #include "libft.h"
 #include "libmath.h"
 #include "libsdl.h"
+#include "libvect.h"
 #include <fcntl.h>
 #include <limits.h>
 #include <float.h>
@@ -196,5 +197,8 @@ void					key_check(t_game *game);
 void					camera_reposition(t_game *game);
 void 					ft_render(t_game* game);
 void					set_const(t_game *game, t_gui *gui);
+void					opencl(t_game *game, char *argv);
+cl_ulong				*get_random(cl_ulong *random);
+void					poopa(t_game *game, t_gui *gui);
 
 #endif
