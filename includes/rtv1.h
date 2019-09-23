@@ -199,10 +199,10 @@ t_obj 					*add_triangle(cl_float3 *vertices, cl_float3 color, cl_float3 emition
 int						ft_input_keys(t_game *game);
 void					key_check(t_game *game);
 void					camera_reposition(t_game *game);
-void 					ft_render(t_game* game);
 void					set_const(t_game *game, t_gui *gui);
 void					opencl(t_game *game, char *argv);
 cl_ulong				*get_random(cl_ulong *random);
 void					poopa(t_game *game, t_gui *gui);
+void					free_shit(t_game *game);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/23 16:01:58 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/09/23 17:37:33 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,19 @@ int	main(int argc, char **argv)
 	else
 		game.av = argv[1];
 	SDL_SetCursor(SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR));
-	// init_kiwi(&gui);
-	// while (game.av)
-	opencl(&game, game.av);
-	game.quit = 0;
-
-	poopa(&game, &gui);
-	//clReleaseMemObject(game.gpu.cl_bufferOut);
+	init_kiwi(&gui);
+	main_screen(&gui);
+	while (game.av)
+	{
+		opencl(&game, game.av);
+		ft_strdel(&game.av);
+		gui.av = 0;
+		game.quit = 0;
+		gui.quit = 0;
+		game.flag = 1;
+		poopa(&game, &gui);
+	}
+	quit_kiwi_main(&gui);
 	//release_gpu(game.gpu);
 	ft_exit(NULL);
 }

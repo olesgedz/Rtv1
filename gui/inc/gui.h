@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/22 14:20:56 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/23 17:27:43 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,7 @@ void				quit_kiwi(t_gui *gui);
 void				loopa(t_gui *gui);
 t_gui				*g_gui(t_gui *gui, int flag);
 SDL_Texture			*load_picture(t_gui *gui,const char *filename);
+void				main_screen(t_gui *gui);
+void				quit_kiwi_main(t_gui *gui);
 
 #endif

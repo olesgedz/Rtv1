@@ -6,7 +6,7 @@
 #    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/09/23 15:03:19 by lminta           ###   ########.fr        #
+#    Updated: 2019/09/23 17:10:11 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,7 +81,8 @@ SRCS_LIST = main.c\
 			../gui/src/gui_main.c\
 			../gui/src/start_screen.c\
 			../gui/src/surf_tex.c\
-			../gui/src/scene_select.c
+			../gui/src/scene_select.c\
+			../gui/src/main_screen.c
 
 OBJS_DIRECTORY = objects/
 OBJS_LIST = $(patsubst %.c, %.o, $(SRCS_LIST))

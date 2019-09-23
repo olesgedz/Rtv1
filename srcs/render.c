@@ -6,14 +6,14 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:54:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/23 15:38:41 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/23 17:48:11 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
- void	ft_run_kernel(t_game *game, cl_kernel kernel)
- {
+static void		ft_run_kernel(t_game *game, cl_kernel kernel)
+{
 	int w = WIN_W;
 	int h = WIN_H;
 	size_t global = WIN_W * WIN_H;
@@ -34,9 +34,9 @@
 	clFinish(game->cl_info->cmd_queue);
 	game->cl_info->ret = cl_read(game->cl_info, game->kernels->args[0], sizeof(cl_int) * count, game->gpuOutput);
 	ERROR(game->cl_info->ret);
- }
+}
 
-void	ft_render(t_game *game)
+static void	ft_render(t_game *game)
 {
 	if(!game->flag)
 		return ;
@@ -45,18 +45,29 @@ void	ft_render(t_game *game)
 	game->sdl.surface->data =  (Uint32 *)game->gpuOutput;
 }
 
+static void	screen_present(t_game *game, t_gui *gui)
+{
+	SDL_UpdateTexture(game->sdl.texture->sdl_texture, NULL,\
+	game->sdl.surface->data, game->sdl.surface->width * sizeof(Uint32));
+	SDL_RenderCopy(game->sdl.renderer, game->sdl.texture->sdl_texture, NULL, NULL);
+	KW_ProcessEvents(gui->gui);
+	KW_Paint(gui->gui);
+	SDL_RenderPresent(game->sdl.renderer);
+}
+
 void	poopa(t_game *game, t_gui *gui)
 {
 	clock_t current_ticks, delta_ticks;
 	clock_t fps = 0;
-	ft_surface_clear(game->sdl.surface);
-	while(!game->quit)
+
+	SDL_RenderClear(game->sdl.renderer);
+	while(!game->quit && !gui->quit)
 	{
 		key_check(game);
 		camera_reposition(game);
 		ft_render(game);
-		// KW_ProcessEvents(gui->gui);
-		// KW_Paint(gui->gui);
-		ft_surface_present(&game->sdl, game->sdl.surface);
+		screen_present(game, gui);
 	}
+	game->av = gui->av;
+	free_shit(game);
 }

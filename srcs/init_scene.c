@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:53:01 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/23 15:00:12 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/23 17:46:24 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,14 @@ void		opencl(t_game *game, char *argv)
 	ERROR(game->cl_info->ret);
 	game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[4], sizeof(t_txture) * game->textures_num, game->textures);
 	ERROR(game->cl_info->ret);
+}
+
+void	free_shit(t_game *game)
+{
+	free(game->kernels);
+	free(game->cl_info);
+	free(game->gpuOutput);
+	free(game->gpu.vec_temp);
+	free(game->gpu.random);
+	free(game->textures);
 }
