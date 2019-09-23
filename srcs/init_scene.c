@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_scene.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:53:01 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/23 15:00:12 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/23 16:29:21 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 static void	init_scene(t_obj* objects, t_game *game, char *argv)
 {
 	char						*name = "sobenin.jpg";
-	char						*secname = "sun.bmp";
-	char						*thirdname = "seamless_pawnment.bmp";
-	char						*fourthname = "grass_rock.bmp";
-	char						*fivename = "ice.bmp";
-	char						*sixname = "stars.bmp";
+	char						*secname = "sun.jpg";
+	char						*thirdname = "seamless_pawnment.jpg";
+	char						*fourthname = "grass_rock.jpg";
+	char						*fivename = "ice.jpg";
+	char						*sixname = "stars.jpg";
 
 	game->textures_num 			= 6;
 	game->textures 				= (t_txture*)malloc(sizeof(t_txture) * game->textures_num);

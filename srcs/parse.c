@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 19:04:09 by srobert-          #+#    #+#             */
-/*   Updated: 2019/09/19 20:21:07 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/09/23 17:33:21 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static void parse_plane(char **data, t_game *game)
 	vec = ft_strsplit(data[2], ',');
 	if (vec[0] == NULL || vec[1] == NULL || vec[2] == NULL)
 		terminate("missing data of plane dir vector!\n");
-	v = create_cfloat3(atof(vec[0]), atof(vec[1]), atof(vec[2]));
+	v = normalize(create_cfloat3(atof(vec[0]), atof(vec[1]), atof(vec[2])));
 	feel_free(vec);
 	vec = ft_strsplit(data[3], ',');
 	if (vec[0] == NULL || vec[1] == NULL || vec[2] == NULL)
@@ -149,7 +149,7 @@ static void parse_cylinder(char **data, t_game *game)
 	vec = ft_strsplit(data[2], ',');
 	if (vec[0] == NULL || vec[1] == NULL || vec[2] == NULL)
 		terminate("missing data of cylinder dir vector!\n");
-	v = create_cfloat3(atof(vec[0]), atof(vec[1]), atof(vec[2]));
+	v = normalize(create_cfloat3(atof(vec[0]), atof(vec[1]), atof(vec[2])));
 	feel_free(vec);
 	vec = ft_strsplit(data[3], ',');
 	if (vec[0] == NULL || vec[1] == NULL || vec[2] == NULL)
@@ -188,7 +188,7 @@ static void parse_cone(char **data, t_game *game)
 	vec = ft_strsplit(data[2], ',');
 	if (vec[0] == NULL || vec[1] == NULL || vec[2] == NULL)
 		terminate("missing data of cylinder dir vector!\n");
-	v = create_cfloat3(atof(vec[0]), atof(vec[1]), atof(vec[2]));
+	v = normalize(create_cfloat3(atof(vec[0]), atof(vec[1]), atof(vec[2])));
 	feel_free(vec);
 	vec = ft_strsplit(data[3], ',');
 	if (vec[0] == NULL || vec[1] == NULL || vec[2] == NULL)
