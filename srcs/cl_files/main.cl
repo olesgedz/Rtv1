@@ -7,7 +7,7 @@
 #include "textures.cl"
 
 #define SAMPLES 5
-#define BOUNCES 1
+#define BOUNCES 2
 #define LIGHTSAMPLING 1
 
 static float get_random( int * seed0, int * seed1);

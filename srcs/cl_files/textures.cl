@@ -47,20 +47,31 @@ float3					get_color_plane(t_obj *object, float3 hitpoint, t_scene *scene)
 	return(cl_int_to_float3(texture->texture[i]));
 }
 
-float3          get_color_cylinder(t_obj *object, float3 hitpoint, t_scene *scene)
+float3					get_color_cylinder(t_obj *object, float3 hitpoint, t_scene *scene)
 {
-	float3		vect;
+	float3				vect;
 	__global t_txture	*texture;
-	float		u;
-	float		v;
-	int			i;
-	float		a;
+	float				u;
+	float				v;
+	int					i;
+	float3				firstvect;
+	float3				secvect;
+	float3				a;
 
-	vect = normalize(hitpoint - object->position);
+	vect = hitpoint - object->position;
+	if (object->v[0] != 0.0f || object->v[1] != 0.0f)
+		firstvect = normalize((float3){object->v[1], -object->v[0], 0});
+	else
+		firstvect = (float3){0.0f, 1.0f, 0.0f};
+	// hitpoint = normalize(hitpoint);
+	secvect = cross(firstvect, object->v);
+	a[1] = dot(object->v, vect);
+	a[0] = -dot(vect, firstvect);
+	a[2] = dot(vect, secvect);
 	// u = 0.5 + (atan2(vect[2], vect[0])) / (2 * PI);
-	u = 0.5 + (atan2(vect[2], vect[0])) / (2 * PI);
+	u = 0.5 + (atan2(a[2], a[0])) / (2 * PI);
 	texture = &((scene->textures)[object->texture - 1]);
-	v = modf(0.5 + (hitpoint[1] * 1000 / texture->height) / 2, &v);
+	v = modf(0.5 + (a[1] * 1000 / texture->height) / 2, &v);
 	if (v < 0)
 		v = 1 + v;
 	i = ((int)(v * (float)(texture->height - 1))) * (texture->width) + (int)(u * (float)(texture->width - 1));
