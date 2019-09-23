@@ -1,6 +1,6 @@
 static int	ft_rgb_to_hex(int r, int g, int b)
 {
-	return (r << 16 | g << 8 | b);
+	return (r << 0 | g << 8 | b << 16);
 }
 
 static float u_clamp(float x)

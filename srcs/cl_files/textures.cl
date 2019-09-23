@@ -63,9 +63,6 @@ float3          get_color_cylinder(t_obj *object, float3 hitpoint, t_scene *scen
 	v = modf(0.5 + (hitpoint[1] * 1000 / texture->height) / 2, &v);
 	if (v < 0)
 		v = 1 + v;
-	// if (modf(hitpoint[1] * 1000 / texture->height, &a) < 0.0 && get_global_id(0) % 5 == 1)
-	// 	printf("%f\n", modf(hitpoint[1] * 1000 / texture->height, &a));
-	// v = v < 0 ? 1 + v : v;
 	i = ((int)(v * (float)(texture->height - 1))) * (texture->width) + (int)(u * (float)(texture->width - 1));
 	return(cl_int_to_float3(texture->texture[i]));
 }

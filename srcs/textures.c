@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 15:55:58 by sbrella           #+#    #+#             */
-/*   Updated: 2019/09/20 21:04:07 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/09/21 16:37:37 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ void					get_texture(char *name, t_txture *texture)
 	ft_memcpy(fmt, an_surf->format, sizeof(SDL_PixelFormat));
 	fmt->BytesPerPixel = 4;
 	fmt->BitsPerPixel = 32;
+	fmt->Rmask = RMASK;
+	fmt->Gmask = GMASK;
+	fmt->Bmask = BMASK;
+	fmt->Amask = AMASK;
 	surf = SDL_ConvertSurface(an_surf, fmt, an_surf->flags);
 	SDL_FreeSurface(an_surf);
 	free(fmt);

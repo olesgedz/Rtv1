@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/21 16:21:37 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/09/22 17:20:01 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ t_cam			*init_camera(t_game *game)
 void initScene(t_obj* objects, t_game *game, char *argv)
 {
 	char						*name = "sobenin.jpg";
-	char						*secname = "sun.bmp";
-	char						*thirdname = "seamless_pawnment.jpg";
+	char						*secname = "sun.jpg";
+	char						*thirdname = "172.JPG";
 	char						*fourthname = "grass_rock.jpg";
 	char						*fivename = "ice.jpg";
 	char						*sixname = "stars.jpg";
