@@ -52,7 +52,8 @@ typedef struct			s_txture
 	cl_int				texture[4096][2048];
 }						t_txture;
 
-typedef struct			Object{
+typedef struct			s_object
+{
 	float				radius;
 	cl_float3			position;
 	cl_float3			color;
@@ -96,7 +97,7 @@ typedef enum			e_camera_direction
 	backward
 }						t_camera_direction;
 
-typedef struct s_gpu
+typedef struct			s_gpu
 {
     cl_device_id		device_id;
     cl_context			context;
@@ -185,7 +186,7 @@ void					rotate_vertical(t_cam *camera, float angle);
 void					rotate_horizontal(t_cam *camera, float angle);
 int						ft_input_keys(t_game *game);
 void					key_check(t_game *game);
-void					camera_reposition(t_game *game);
+void					camera_reposition(t_game *game, t_gui *gui);
 void					set_const(t_game *game, t_gui *gui);
 void					opencl(t_game *game, char *argv);
 cl_ulong				*get_random(cl_ulong *random);
@@ -201,5 +202,8 @@ void					parse_cam(char **data, t_game *game);
 void					parse_cone(char **data, t_game *game);
 void					parse_cylinder(char **data, t_game *game);
 void					parse_triangle(char **data, t_game *game);
+
+void					main_screen(t_gui *gui, t_game *game);
+void					obj_select(t_gui *gui, t_obj *objs, int num);
 
 #endif

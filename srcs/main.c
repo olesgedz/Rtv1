@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/09/23 20:13:20 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/24 20:28:50 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void the_loopa(t_game *game, t_gui *gui, int argc)
 	while (game->av)
 	{
 		opencl(game, game->av);
+		main_screen(gui, game);
 		if (argc != 2)
 			ft_strdel(&game->av);
 		argc = 0;
@@ -25,6 +26,7 @@ static void the_loopa(t_game *game, t_gui *gui, int argc)
 		gui->quit = 0;
 		game->flag = 1;
 		poopa(game, gui);
+		main_screen_free(gui);
 	}
 }
 
@@ -41,7 +43,7 @@ int			main(int argc, char **argv)
 		game.av = argv[1];
 	SDL_SetCursor(SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR));
 	init_kiwi(&gui);
-	main_screen(&gui);
+	scene_select(&gui);
 	the_loopa(&game, &gui, argc);
 	quit_kiwi_main(&gui);
 	//release_gpu(game.gpu);

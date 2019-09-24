@@ -6,24 +6,20 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:50:13 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/20 17:06:05 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/24 20:56:53 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-void	mouse_mov(t_game *game)
+static void	mouse_mov(t_game *game, t_gui *gui)
 {
 	if (game->keys.lmb && game->keys.mm)
 	{
-		game->gpu.samples = 0;
-		game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[2],
-		sizeof(cl_float3) * WIN_H * WIN_W, game->gpu.vec_temp);
 		rotate_horizontal(&(game->gpu.camera[game->cam_num]),
 		game->gpu.camera[game->cam_num].fov / WIN_W * game->keys.xrel);
 		rotate_vertical(&(game->gpu.camera[game->cam_num]),
 		game->gpu.camera[game->cam_num].fov /WIN_H * -game->keys.yrel);
-		reconfigure_camera(&game->gpu.camera[game->cam_num]);
 		game->flag = 1;
 	}
 	if (game->flag)
@@ -31,15 +27,27 @@ void	mouse_mov(t_game *game)
 		game->cl_info->ret =
 		cl_write(game->cl_info, game->kernels[0].args[2], sizeof(cl_float3) *
 		(unsigned)WIN_H * (unsigned)WIN_W, game->gpu.vec_temp);
-		game->gpu.samples = 0;
 		ERROR(game->cl_info->ret);
+		game->gpu.samples = 0;
 		reconfigure_camera(&game->gpu.camera[game->cam_num]);
+	}
+	else if (gui->flag)
+	{
+		game->cl_info->ret =
+		cl_write(game->cl_info, game->kernels[0].args[2], sizeof(cl_float3) *
+		(unsigned)WIN_H * (unsigned)WIN_W, game->gpu.vec_temp);
+		ERROR(game->cl_info->ret);
+		game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[1],
+		sizeof(t_obj) * game->obj_quantity, game->gpu.objects);
+		ERROR(game->cl_info->ret);
+		game->gpu.samples = 0;
+		game->flag = 1;
 	}
 	else if (game->keys.space)
 		game->flag = 1;
 }
 
-static void	c_r(t_game *game)
+static void	c_r(t_game *game, t_gui *gui)
 {
 	if (game->keys.e)
 	{
@@ -62,10 +70,10 @@ static void	c_r(t_game *game)
 		mult_cfloat3(game->gpu.camera[game->cam_num].normal, -0.1));
 		game->flag = 1;
 	}
-	mouse_mov(game);
+	mouse_mov(game, gui);
 }
 
-static void	cam_rep(t_game *game)
+static void	cam_rep(t_game *game, t_gui *gui)
 {
 	if (game->keys.a)
 	{
@@ -90,10 +98,10 @@ static void	cam_rep(t_game *game)
 		game->gpu.camera[game->cam_num].direction, M_PI / 60);
 		game->flag = 1;
 	}
-	c_r(game);
+	c_r(game, gui);
 }
 
-void		camera_reposition(t_game *game)
+void		camera_reposition(t_game *game, t_gui *gui)
 {
 	if (game->keys.w)
 	{
@@ -109,5 +117,5 @@ void		camera_reposition(t_game *game)
 		mult_cfloat3(game->gpu.camera[game->cam_num].direction, -0.1));
 		game->flag = 1;
 	}
-	cam_rep(game);
+	cam_rep(game, gui);
 }

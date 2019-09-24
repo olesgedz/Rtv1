@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 16:30:29 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/23 20:48:06 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/24 21:40:54 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,13 @@ void		scene_select(t_gui *gui)
 {
 	int		i;
 	int		max_i;
+	int		fr_sz;
 
 	i = -1;
 	gui->s_s.weights[0] = 1;
-	gui->s_s.framerect = (KW_Rect){10, 10, 300, 100};
-	gui->s_s.titlerect = (KW_Rect){0, 10, 300, 30};
+	fr_sz = WIN_W / 10.;
+	gui->s_s.framerect = (KW_Rect){10, 10, fr_sz, 100};
+	gui->s_s.titlerect = (KW_Rect){10, 10, fr_sz - 20, 30};
 	gui->s_s.buttonrect[0] = (KW_Rect){0, 0, 30, 40};
 	if ((max_i = scan_dir(gui)) == -1)
 		return ;

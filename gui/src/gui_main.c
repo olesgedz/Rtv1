@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:21:19 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/23 17:06:50 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/24 21:42:37 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	loopa(t_gui *gui)
 			if (gui->ev.type == SDL_QUIT ||
 		(gui->ev.type == SDL_KEYDOWN &&
 		gui->ev.key.keysym.sym == SDLK_ESCAPE))
-			gui->quit = 1;
+				gui->quit = 1;
 		SDL_RenderCopy(gui->sdl.renderer, gui->ed_w.backtex, 0, 0);
 		KW_ProcessEvents(gui->gui);
 		KW_Paint(gui->gui);

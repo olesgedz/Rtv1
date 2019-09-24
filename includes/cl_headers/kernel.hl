@@ -38,7 +38,8 @@ typedef enum e_figure
 	 SPHERE, CYLINDER, CONE, PLANE, TRIANGLE
 } t_type;
 
-typedef struct Object{
+typedef struct s_object
+{
 	float radius;
 	float3 position;
 	float3 color;

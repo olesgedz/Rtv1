@@ -73,20 +73,23 @@ static bool intersect_scene(t_scene *scene, t_intersection *intersection, t_ray 
 		// if (light == 1 && cl_float3_max(object.emission) == 0)
 		// 	continue;
 		float hitdistance = 0;
-		if (object.type == SPHERE)
-			hitdistance = intersect_sphere(&object, ray);
-		else if (object.type == CYLINDER)
-			hitdistance = intersect_cylinder(&object, ray);
-		else if (object.type == CONE)
-			hitdistance = intersect_cone(&object, ray);
-		else if (object.type == PLANE)
-			hitdistance = intersect_plane(&object, ray);
-		else if (object.type == TRIANGLE)
-			hitdistance = intersect_triangle(&object, ray);
-		/* keep track of the closest intersection and hitobject found so far */
-		if (hitdistance != 0.0f && hitdistance < ray->t) {
-			ray->t = hitdistance;
-			intersection->object_id = i;
+		if (object.is_visible)
+		{
+			if (object.type == SPHERE)
+				hitdistance = intersect_sphere(&object, ray);
+			else if (object.type == CYLINDER)
+				hitdistance = intersect_cylinder(&object, ray);
+			else if (object.type == CONE)
+				hitdistance = intersect_cone(&object, ray);
+			else if (object.type == PLANE)
+				hitdistance = intersect_plane(&object, ray);
+			else if (object.type == TRIANGLE)
+				hitdistance = intersect_triangle(&object, ray);
+			/* keep track of the closest intersection and hitobject found so far */
+			if (hitdistance != 0.0f && hitdistance < ray->t) {
+				ray->t = hitdistance;
+				intersection->object_id = i;
+			}
 		}
 	}
 	return ray->t < INFINITY; /* true when ray interesects the scene */

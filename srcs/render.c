@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:54:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/23 17:48:11 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/24 21:01:29 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,12 @@ static void		ft_run_kernel(t_game *game, cl_kernel kernel)
 	ERROR(game->cl_info->ret);
 }
 
-static void	ft_render(t_game *game)
+static void	ft_render(t_game *game, t_gui *gui)
 {
-	if(!game->flag)
+	if (!game->flag && !gui->flag)
 		return ;
 	game->flag = 0;
+	gui->flag = 0;
 	ft_run_kernel(game, game->kernels[0].krl);
 	game->sdl.surface->data =  (Uint32 *)game->gpuOutput;
 }
@@ -64,8 +65,8 @@ void	poopa(t_game *game, t_gui *gui)
 	while(!game->quit && !gui->quit)
 	{
 		key_check(game);
-		camera_reposition(game);
-		ft_render(game);
+		camera_reposition(game, gui);
+		ft_render(game, gui);
 		screen_present(game, gui);
 	}
 	game->av = gui->av;

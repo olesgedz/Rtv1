@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/23 17:27:43 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/24 20:36:52 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,19 @@ typedef struct		s_scene_select
 	char			*names[MAX_SC];
 }					t_scene_select;
 
+typedef struct		s_object_select
+{
+	KW_Rect			titlerect;
+	KW_Rect			winrect;
+	KW_Rect			framerect;
+	KW_Rect			buttonrect[MAX_SC];
+	KW_Widget		*frame;
+	KW_Rect			*rects[1];
+	unsigned		weights[1];
+	KW_Widget		*buttons[MAX_SC];
+	char			*names[MAX_SC];
+}					t_object_select;
+
 typedef struct		s_edit_win
 {
 	SDL_Texture		*backtex;
@@ -61,7 +74,9 @@ typedef struct		s_gui
 	KW_GUI			*gui;
 	t_edit_win		ed_w;
 	t_scene_select	s_s;
+	t_object_select	o_s;
 	char 			*av;
+	int				flag;
 }					t_gui;
 
 void				print_error_gui(const char *message, const char *error_message);
@@ -73,7 +88,7 @@ void				quit_kiwi(t_gui *gui);
 void				loopa(t_gui *gui);
 t_gui				*g_gui(t_gui *gui, int flag);
 SDL_Texture			*load_picture(t_gui *gui,const char *filename);
-void				main_screen(t_gui *gui);
 void				quit_kiwi_main(t_gui *gui);
+void				main_screen_free(t_gui *gui);
 
 #endif
