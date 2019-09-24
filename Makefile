@@ -6,7 +6,7 @@
 #    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/09/23 17:10:11 by lminta           ###   ########.fr        #
+#    Updated: 2019/09/24 18:29:00 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,10 @@ RMRF = gui/src/gui_main.o\
 SRCS_LIST = main.c\
 			cl_lib/gpu_init.c\
 			textures.c\
-			add_object.c parse.c\
+			parse_cam.c\
+			parse_main_triangle.c\
+			parse_sphere_plane.c\
+			parse_cone_cyl.c\
 			cl_float3_manage.c\
 			keys.c\
 			camera.c\

@@ -50,6 +50,7 @@ typedef struct Object{
 	float plane_d;
 	int		texture;
 	float3	vertices[3];
+	int		is_visible;
 } t_obj;
 
 typedef struct 			s_cam

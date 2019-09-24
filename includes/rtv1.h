@@ -1,73 +1,73 @@
-#ifndef RTV1_H
-#define RTV1_H
+# ifndef RTV1_H
+# define RTV1_H
 
-#define WIN_W 1920
-#define WIN_H 1080
-#define SAMPLES 5
+# define WIN_W 1920
+# define WIN_H 1080
+# define SAMPLES 5
 
-#define CL_SILENCE_DEPRECATION
-#include <sys/types.h>
-#include "SDL2/SDL.h"
-#include "SDL_image.h"
-#include "libft.h"
-#include "libmath.h"
-#include "libsdl.h"
-#include "libvect.h"
-#include <fcntl.h>
-#include <limits.h>
-#include <float.h>
-#include <math.h>
-#include "cl_error.h"
-#include "libcl.h"
-#ifdef __APPLE__
-#include <OpenCL/opencl.h>
-#else
-#include <Cl/cl.h>
-#endif
+# define CL_SILENCE_DEPRECATION
+# include <sys/types.h>
+# include "SDL2/SDL.h"
+# include "SDL_image.h"
+# include "libft.h"
+# include "libmath.h"
+# include "libsdl.h"
+# include "libvect.h"
+# include <fcntl.h>
+# include <limits.h>
+# include <float.h>
+# include <math.h>
+# include "cl_error.h"
+# include "libcl.h"
+# ifdef __APPLE__
+# include <OpenCL/opencl.h>
+# else
+# include <Cl/cl.h>
+# endif
 
-#include "gui.h"
+# include "gui.h"
 
-#ifndef DEVICE
-#define DEVICE CL_DEVICE_TYPE_DEFAULT
-#endif
-#define RMASK 0x000000ff
-#define GMASK 0x0000ff00
-#define BMASK 0x00ff0000
-#define AMASK 0xff000000
-//#include "libmath.h"
+# ifndef DEVICE
+# define DEVICE CL_DEVICE_TYPE_DEFAULT
+# endif
+# define RMASK 0x000000ff
+# define GMASK 0x0000ff00
+# define BMASK 0x00ff0000
+# define AMASK 0xff000000
 # define DROUND(d)	ABS(d) < 0.00001 ? 0 : (d)
-//#define float double
-typedef enum e_figure
+
+typedef enum			e_figure
 {
 	SPHERE,
 	CYLINDER,
 	CONE,
 	PLANE,
 	TRIANGLE
-} 						t_type;
+}						t_type;
 
-typedef struct s_txture
+typedef struct			s_txture
 {
-	cl_int		width;
-	cl_int		height;
-	cl_int		texture[4096][2048];
-}				t_txture;
+	cl_int				width;
+	cl_int				height;
+	cl_int				texture[4096][2048];
+}						t_txture;
 
-typedef struct Object{
-	float radius;
-	cl_float3 position;
-	cl_float3 color;
-	cl_float3 emission;
-	cl_float3 v;
-	t_type type;
-	cl_float refraction;
-	cl_float reflection;
-	cl_float plane_d;
-	cl_int		texture;
-	cl_float3	vertices[3];
-} t_obj;
+typedef struct			Object{
+	float				radius;
+	cl_float3			position;
+	cl_float3			color;
+	cl_float3			emission;
+	cl_float3			v;
+	t_type				type;
+	cl_float			refraction;
+	cl_float			reflection;
+	cl_float			plane_d;
+	cl_int				texture;
+	cl_float3			vertices[3];
+	cl_int				is_visible;
+}						t_obj;
 
-typedef struct s_ray
+typedef struct			s_ray
 {
 	t_vec3 				orig;
 	t_vec3 				dir;
@@ -76,7 +76,7 @@ typedef struct s_ray
 } 						t_ray;
 
 
-typedef struct 			s_cam
+typedef struct			s_cam
 {
 	cl_float3			position;
 	cl_float3			direction;
@@ -98,11 +98,11 @@ typedef enum			e_camera_direction
 
 typedef struct s_gpu
 {
-    cl_device_id		device_id;     // compute device id
-    cl_context			context;       // compute context
-    cl_command_queue	commands;      // compute command queue
-    cl_program			program;       // compute program
-    cl_kernel			kernel;       // compute kernel
+    cl_device_id		device_id;
+    cl_context			context;
+    cl_command_queue	commands;
+    cl_program			program;
+    cl_kernel			kernel;
 	cl_uint				numPlatforms;
 	cl_int				err;
 	cl_ulong			*random;
@@ -167,23 +167,11 @@ typedef struct			s_game
 int						bind_data(t_gpu *gpu, t_game *game);
 void 					release_gpu(t_gpu *gpu);
 void 					ft_run_gpu(t_gpu *gpu);
-
 int						opencl_init(t_gpu *gpu, t_game *game);
 cl_float3				create_cfloat3 (float x, float y, float z);
-
 cl_float3				cl_scalar_mul(cl_float3 vector, double scalar);
-
 cl_float3				cl_add(cl_float3 v1, cl_float3 v2);
-// t_camera				*camera_new(int width, int height);
-// void 					camera_move
-// 						(t_camera *camera,
-// 						t_camera_direction direction,
-// 						float length);
 void					get_texture(char *name, t_txture *texture);
-t_obj					*add_plane(cl_float3 position, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection, cl_float3 v);
-t_obj					*add_sphere(cl_float3 position, float radius, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection);
-t_obj 					*add_cylinder(cl_float3 position, float radius, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection, cl_float3 v);
-t_obj 					*add_cone(cl_float3 position, float radius, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection, cl_float3 v);
 void 					read_scene(char *argv, t_game *game);
 t_cam 					*add_cam(cl_float3 position, cl_float3 direction, cl_float3 normal);
 cl_float3				mult_cfloat3(cl_float3 one, float f);
@@ -195,7 +183,6 @@ cl_float3				normalize(cl_float3 vector);
 void					reconfigure_camera(t_cam *camera);
 void					rotate_vertical(t_cam *camera, float angle);
 void					rotate_horizontal(t_cam *camera, float angle);
-t_obj 					*add_triangle(cl_float3 *vertices, cl_float3 color, cl_float3 emition, cl_int texture, cl_float reflection);
 int						ft_input_keys(t_game *game);
 void					key_check(t_game *game);
 void					camera_reposition(t_game *game);
@@ -204,5 +191,15 @@ void					opencl(t_game *game, char *argv);
 cl_ulong				*get_random(cl_ulong *random);
 void					poopa(t_game *game, t_gui *gui);
 void					free_shit(t_game *game);
+void					terminate(char *s);
+void					feel_free(char **str);
+void					ft_object_push(t_game *game, t_obj *object);
+void					ft_cam_push(t_game *game, t_cam *cam);
+void					parse_plane(char **data, t_game *game);
+void					parse_sphere(char **data, t_game *game);
+void					parse_cam(char **data, t_game *game);
+void					parse_cone(char **data, t_game *game);
+void					parse_cylinder(char **data, t_game *game);
+void					parse_triangle(char **data, t_game *game);
 
 #endif
