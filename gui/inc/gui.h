@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/25 16:16:10 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/25 18:01:57 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct		s_scene_select
 	KW_Rect			frect;
 	KW_Rect			buttonrect[MAX_SC];
 	KW_Widget		*frame;
+	KW_Widget		*label;
 	KW_Rect			*rects[1];
 	unsigned		weights[1];
 	KW_Widget		*buttons[MAX_SC];
@@ -44,6 +45,7 @@ typedef struct		s_object_select
 	KW_Rect			frect;
 	KW_Rect			buttonrect[MAX_OBJ];
 	KW_Widget		*frame;
+	KW_Widget		*label;
 	KW_Rect			*rects[1];
 	unsigned		weights[1];
 	KW_Widget		*buttons[MAX_OBJ];
@@ -61,6 +63,7 @@ typedef struct		s_edit_win
 	KW_Rect			buttonrect;
 	KW_Widget		*editBox;
 	KW_Widget		*frame;
+	KW_Widget		*label;
 	KW_Widget		*okbutton;
 	KW_Rect			*rects[2];
 	unsigned		weights[2];
@@ -79,6 +82,8 @@ typedef struct		s_gui
 	t_object_select	o_s;
 	char 			*av;
 	int				flag;
+	int				main_screen;
+	int				over_gui;
 }					t_gui;
 
 void				print_error_gui(const char *message, const char *error_message);
@@ -92,5 +97,7 @@ t_gui				*g_gui(t_gui *gui, int flag);
 SDL_Texture			*load_picture(t_gui *gui,const char *filename);
 void				quit_kiwi_main(t_gui *gui);
 void				main_screen_free(t_gui *gui);
+void				over(KW_Widget *widget, int b);
+void				leave(KW_Widget *widget, int b);
 
 #endif

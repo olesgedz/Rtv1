@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 19:08:02 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/25 17:02:48 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/25 18:18:25 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,24 +97,28 @@ void		obj_select(t_gui *gui, t_obj *objs, int num)
 	{
 		gui->o_s.frame = KW_CreateScrollbox(gui->gui, NULL, &gui->o_s.frect);
 		wid_arr = KW_GetWidgetChildren(gui->o_s.frame, &test);
+		KW_AddWidgetMouseOverHandler(wid_arr[1], &over);
+		KW_AddWidgetMouseLeaveHandler(wid_arr[1], &leave);
 		KW_HideWidget(wid_arr[2]);
 		gui->o_s.titlerect = (KW_Rect){0, 10, fr_sz - 30, 30};
 	}
 	else
 		gui->o_s.frame = KW_CreateFrame(gui->gui, NULL, &gui->o_s.frect);
-	KW_CreateLabel(gui->gui, gui->o_s.frame,
+	KW_AddWidgetMouseOverHandler(gui->o_s.frame, &over);
+	KW_AddWidgetMouseLeaveHandler(gui->o_s.frame, &leave);
+	gui->o_s.label = KW_CreateLabel(gui->gui, gui->o_s.frame,
 	"Objects in scene", &gui->o_s.titlerect);
+	KW_AddWidgetMouseOverHandler(gui->o_s.label, &over);
+	KW_AddWidgetMouseLeaveHandler(gui->o_s.label, &leave);
 	while (++i < max_i)
 	{
 		if (max_i > 21)
-			gui->o_s.buttonrect[i].x -= 15;
+		gui->o_s.buttonrect[i].x -= 15;
 		gui->o_s.buttons[i] = KW_CreateButtonAndLabel(gui->gui,
 gui->o_s.frame, gui->o_s.names[i], &gui->o_s.buttonrect[i]);
-	}
-	i = -1;
-	while (++i < max_i)
-	{
 		KW_AddWidgetMouseDownHandler(gui->o_s.buttons[i], clicked);
-		KW_SetWidgetUserData(gui->o_s.buttons[i], &objs[i]);
+		KW_SetWidgetUserData(gui->o_s.buttons[i], gui->o_s.names[i]);
+		KW_AddWidgetMouseOverHandler(gui->o_s.buttons[i], &over);
+		KW_AddWidgetMouseLeaveHandler(gui->o_s.buttons[i], &leave);
 	}
 }

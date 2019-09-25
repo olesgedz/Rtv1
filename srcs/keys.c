@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:10:38 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/20 20:01:46 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/09/25 18:06:37 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,29 @@
 
 static void	mouse(t_game *game)
 {
-	static int x = 0;
-	static int y = 0;
+	static int	x = 0;
+	static int	y = 0;
+	t_gui		*gui;
 
+	gui = g_gui(0, 0);
 	if (game->ev.type == SDL_MOUSEBUTTONDOWN)
 	{
 		game->keys.lmb = 1;
 		SDL_GetMouseState(&x, &y);
-		SDL_ShowCursor(SDL_DISABLE);
+		if (!gui->over_gui)
+			SDL_ShowCursor(SDL_DISABLE);
 	}
 	else if (game->ev.type == SDL_MOUSEBUTTONUP)
 	{
 		game->keys.lmb = 0;
-		SDL_ShowCursor(SDL_ENABLE);
+		if (!gui->over_gui)
+			SDL_ShowCursor(SDL_ENABLE);
 	}
-	else if (game->ev.type == SDL_MOUSEMOTION)
+	else if (game->ev.type == SDL_MOUSEMOTION && !gui->over_gui)
 	{
 		game->keys.xrel = -game->ev.motion.xrel;
 		game->keys.yrel = -game->ev.motion.yrel;
-		if (game->keys.lmb)
+		if (game->keys.lmb && !gui->over_gui)
 			SDL_WarpMouseInWindow(game->sdl.window, x, y);
 		game->keys.mm = 1;
 	}

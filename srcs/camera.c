@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:50:13 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/24 20:56:53 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/25 17:45:08 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	mouse_mov(t_game *game, t_gui *gui)
 {
-	if (game->keys.lmb && game->keys.mm)
+	if (game->keys.lmb && game->keys.mm && !gui->over_gui)
 	{
 		rotate_horizontal(&(game->gpu.camera[game->cam_num]),
 		game->gpu.camera[game->cam_num].fov / WIN_W * game->keys.xrel);
