@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/24 20:36:52 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/25 16:16:10 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,17 @@
 # include "KW_editbox.h"
 # include "KW_label.h"
 # include "KW_button.h"
+#include "KW_scrollbox.h"
 # include "KW_renderdriver_sdl2.h"
 # include "libsdl.h"
-# define MAX_SC	21
+# define MAX_SC		256
+# define MAX_OBJ	1024
 
 typedef struct		s_scene_select
 {
 	KW_Rect			titlerect;
 	KW_Rect			winrect;
-	KW_Rect			framerect;
+	KW_Rect			frect;
 	KW_Rect			buttonrect[MAX_SC];
 	KW_Widget		*frame;
 	KW_Rect			*rects[1];
@@ -39,13 +41,13 @@ typedef struct		s_object_select
 {
 	KW_Rect			titlerect;
 	KW_Rect			winrect;
-	KW_Rect			framerect;
-	KW_Rect			buttonrect[MAX_SC];
+	KW_Rect			frect;
+	KW_Rect			buttonrect[MAX_OBJ];
 	KW_Widget		*frame;
 	KW_Rect			*rects[1];
 	unsigned		weights[1];
-	KW_Widget		*buttons[MAX_SC];
-	char			*names[MAX_SC];
+	KW_Widget		*buttons[MAX_OBJ];
+	char			*names[MAX_OBJ];
 }					t_object_select;
 
 typedef struct		s_edit_win
@@ -55,7 +57,7 @@ typedef struct		s_edit_win
 	KW_Rect			labelrect;
 	KW_Rect			winrect;
 	KW_Rect			editboxrect;
-	KW_Rect			framerect;
+	KW_Rect			frect;
 	KW_Rect			buttonrect;
 	KW_Widget		*editBox;
 	KW_Widget		*frame;

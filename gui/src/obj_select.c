@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 19:08:02 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/24 21:43:22 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/25 17:02:48 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ static void	first_button(t_gui *gui, char *name_buff)
 {
 	gui->o_s.names[0] = name_buff;
 	gui->o_s.rects[0] = &gui->o_s.buttonrect[0];
-	KW_RectFillParentHorizontally(&gui->o_s.framerect,
-	gui->o_s.rects, gui->o_s.weights, 1, 10,
+	KW_RectFillParentHorizontally(&gui->o_s.frect,
+	gui->o_s.rects, gui->o_s.weights, 1, 15,
 	KW_RECT_ALIGN_MIDDLE);
 	gui->o_s.buttonrect[0].y += 10;
 }
@@ -66,12 +66,13 @@ static int	scan_mass(t_gui *gui, t_obj *objs, int num)
 
 	i = 1;
 	first_button(gui, fill_name(&objs[0], 0));
-	while (i < num)
+	while (i < num && i < MAX_OBJ)
 	{
 		gui->o_s.names[i] = fill_name(&objs[i], i);
 		gui->o_s.buttonrect[i] = gui->o_s.buttonrect[i - 1];
 		gui->o_s.buttonrect[i].y += 45;
-		gui->o_s.framerect.h += 45;
+		if (i < 21)
+			gui->o_s.frect.h += 45;
 		i++;
 	}
 	return (i);
@@ -79,24 +80,37 @@ static int	scan_mass(t_gui *gui, t_obj *objs, int num)
 
 void		obj_select(t_gui *gui, t_obj *objs, int num)
 {
-	int		i;
-	int		max_i;
-	int		fr_sz;
+	int					i;
+	int					max_i;
+	int					fr_sz;
+	unsigned			test;
+	KW_Widget *const	*wid_arr;
 
 	i = -1;
 	gui->o_s.weights[0] = 1;
 	fr_sz = WIN_W / 10.;
-	gui->o_s.framerect = (KW_Rect){WIN_W - 10 - fr_sz, 10, fr_sz, 100};
+	gui->o_s.frect = (KW_Rect){WIN_W - 10 - fr_sz, 10, fr_sz, 100};
 	gui->o_s.titlerect = (KW_Rect){10, 10, fr_sz - 20, 30};
 	gui->o_s.buttonrect[0] = (KW_Rect){0, 0, 30, 40};
 	max_i = scan_mass(gui, objs, num);
-	gui->o_s.frame =
-	KW_CreateFrame(gui->gui, NULL, &gui->o_s.framerect);
+	if (max_i > 21)
+	{
+		gui->o_s.frame = KW_CreateScrollbox(gui->gui, NULL, &gui->o_s.frect);
+		wid_arr = KW_GetWidgetChildren(gui->o_s.frame, &test);
+		KW_HideWidget(wid_arr[2]);
+		gui->o_s.titlerect = (KW_Rect){0, 10, fr_sz - 30, 30};
+	}
+	else
+		gui->o_s.frame = KW_CreateFrame(gui->gui, NULL, &gui->o_s.frect);
 	KW_CreateLabel(gui->gui, gui->o_s.frame,
 	"Objects in scene", &gui->o_s.titlerect);
 	while (++i < max_i)
+	{
+		if (max_i > 21)
+			gui->o_s.buttonrect[i].x -= 15;
 		gui->o_s.buttons[i] = KW_CreateButtonAndLabel(gui->gui,
 gui->o_s.frame, gui->o_s.names[i], &gui->o_s.buttonrect[i]);
+	}
 	i = -1;
 	while (++i < max_i)
 	{
