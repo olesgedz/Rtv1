@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:04:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/25 18:01:12 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/25 18:38:22 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void		set_const(t_game *game, t_gui *gui)
 	game->gpu.samples = 0;
 	game->quit = 0;
 	game->flag = 1;
+	gui->over_gui = 0;
 	gui->flag = 0;
 	gui->sdl = game->sdl;
 	gui->quit = 0;

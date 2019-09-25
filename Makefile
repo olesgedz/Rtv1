@@ -6,7 +6,7 @@
 #    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/09/25 17:34:35 by lminta           ###   ########.fr        #
+#    Updated: 2019/09/25 18:57:10 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,6 @@ RMRF = gui/src/gui_main.o\
 		gui/src/surf_tex.o\
 		gui/src/scene_select.o\
 		gui/src/main_screen.o\
-		gui/src/handlers.o\
 		gui/src/obj_select.o
 
 SRCS_LIST = main.c\
@@ -89,7 +88,6 @@ SRCS_LIST = main.c\
 			../gui/src/surf_tex.c\
 			../gui/src/scene_select.c\
 			../gui/src/main_screen.c\
-			../gui/src/handlers.c\
 			../gui/src/obj_select.c
 
 OBJS_DIRECTORY = objects/

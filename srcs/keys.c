@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:10:38 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/25 18:06:37 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/25 18:48:45 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,12 @@ static void	mouse(t_game *game)
 	gui = g_gui(0, 0);
 	if (game->ev.type == SDL_MOUSEBUTTONDOWN)
 	{
-		game->keys.lmb = 1;
-		SDL_GetMouseState(&x, &y);
 		if (!gui->over_gui)
+		{
+			game->keys.lmb = 1;
+			SDL_GetMouseState(&x, &y);
 			SDL_ShowCursor(SDL_DISABLE);
+		}
 	}
 	else if (game->ev.type == SDL_MOUSEBUTTONUP)
 	{
@@ -32,8 +34,9 @@ static void	mouse(t_game *game)
 		if (!gui->over_gui)
 			SDL_ShowCursor(SDL_ENABLE);
 	}
-	else if (game->ev.type == SDL_MOUSEMOTION && !gui->over_gui)
+	else if (game->ev.type == SDL_MOUSEMOTION)
 	{
+		pos_check(gui);
 		game->keys.xrel = -game->ev.motion.xrel;
 		game->keys.yrel = -game->ev.motion.yrel;
 		if (game->keys.lmb && !gui->over_gui)

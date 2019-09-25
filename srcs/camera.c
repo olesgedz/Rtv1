@@ -6,11 +6,30 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:50:13 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/25 17:45:08 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/25 18:48:09 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
+
+void		pos_check(t_gui *gui)
+{
+	int	tx = 0;
+	int	ty = 0;
+
+	SDL_GetMouseState(&tx, &ty);
+	gui->over_gui = 0;
+	if (tx > gui->s_s.frect.x && tx < gui->s_s.frect.x + gui->s_s.frect.w)
+		if (ty > gui->s_s.frect.y && ty < gui->s_s.frect.y + gui->s_s.frect.h)
+			gui->over_gui = 1;
+	if (tx > gui->o_s.frect.x && tx < gui->o_s.frect.x + gui->o_s.frect.w)
+		if (ty > gui->o_s.frect.y && ty < gui->o_s.frect.y + gui->o_s.frect.h)
+			gui->over_gui = 1;
+	if (gui->over_gui)
+		SDL_SetCursor(SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW));
+	else
+		SDL_SetCursor(SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR));
+}
 
 static void	mouse_mov(t_game *game, t_gui *gui)
 {

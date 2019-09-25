@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 16:30:29 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/25 18:20:59 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/25 18:57:39 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,19 +84,13 @@ void		scene_select(t_gui *gui)
 	{
 		gui->s_s.frame = KW_CreateScrollbox(gui->gui, NULL, &gui->s_s.frect);
 		wid_arr = KW_GetWidgetChildren(gui->s_s.frame, &test);
-		KW_AddWidgetMouseOverHandler(wid_arr[1], &over);
-		KW_AddWidgetMouseLeaveHandler(wid_arr[1], &leave);
 		KW_HideWidget(wid_arr[2]);
 		gui->s_s.titlerect = (KW_Rect){0, 10, fr_sz - 30, 30};
 	}
 	else
 		gui->s_s.frame = KW_CreateFrame(gui->gui, NULL, &gui->s_s.frect);
-	KW_AddWidgetMouseOverHandler(gui->s_s.frame, &over);
-	KW_AddWidgetMouseLeaveHandler(gui->s_s.frame, &leave);
 	gui->s_s.label = KW_CreateLabel(gui->gui, gui->s_s.frame,
 	"Availible scenes", &gui->s_s.titlerect);
-	KW_AddWidgetMouseOverHandler(gui->s_s.label, &over);
-	KW_AddWidgetMouseLeaveHandler(gui->s_s.label, &leave);
 	while (++i < max_i)
 	{
 		if (max_i > 21)
@@ -105,7 +99,5 @@ void		scene_select(t_gui *gui)
 gui->s_s.frame, gui->s_s.names[i], &gui->s_s.buttonrect[i]);
 		KW_AddWidgetMouseDownHandler(gui->s_s.buttons[i], clicked);
 		KW_SetWidgetUserData(gui->s_s.buttons[i], gui->s_s.names[i]);
-		KW_AddWidgetMouseOverHandler(gui->s_s.buttons[i], &over);
-		KW_AddWidgetMouseLeaveHandler(gui->s_s.buttons[i], &leave);
 	}
 }
