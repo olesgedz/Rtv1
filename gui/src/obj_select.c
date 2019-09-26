@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 19:08:02 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/26 19:15:29 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/26 19:59:54 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,6 @@ void		obj_select(t_gui *gui, t_obj *objs, int num)
 		gui->o_s.buttons[i] = KW_CreateButtonAndLabel(gui->gui,
 gui->o_s.frame, gui->o_s.names[i], &gui->o_s.buttonrect[i]);
 		KW_AddWidgetMouseDownHandler(gui->o_s.buttons[i], clicked);
-		KW_SetWidgetUserData(gui->o_s.buttons[i], gui->o_s.names[i]);
+		KW_SetWidgetUserData(gui->o_s.buttons[i], &objs[i]);
 	}
 }
