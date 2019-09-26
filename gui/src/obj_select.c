@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 19:08:02 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/25 18:58:03 by lminta           ###   ########.fr       */
+/*   Updated: 2019/09/26 19:15:29 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	scan_mass(t_gui *gui, t_obj *objs, int num)
 		gui->o_s.names[i] = fill_name(&objs[i], i);
 		gui->o_s.buttonrect[i] = gui->o_s.buttonrect[i - 1];
 		gui->o_s.buttonrect[i].y += 45;
-		if (i < 21)
+		if (i < WIN_H / 45 - 3)
 			gui->o_s.frect.h += 45;
 		i++;
 	}
@@ -93,7 +93,7 @@ void		obj_select(t_gui *gui, t_obj *objs, int num)
 	gui->o_s.titlerect = (KW_Rect){10, 10, fr_sz - 20, 30};
 	gui->o_s.buttonrect[0] = (KW_Rect){0, 0, 30, 40};
 	max_i = scan_mass(gui, objs, num);
-	if (max_i > 21)
+	if (max_i > WIN_H / 45 - 3)
 	{
 		gui->o_s.frame = KW_CreateScrollbox(gui->gui, NULL, &gui->o_s.frect);
 		wid_arr = KW_GetWidgetChildren(gui->o_s.frame, &test);
@@ -106,7 +106,7 @@ void		obj_select(t_gui *gui, t_obj *objs, int num)
 	"Objects in scene", &gui->o_s.titlerect);
 	while (++i < max_i)
 	{
-		if (max_i > 21)
+		if (max_i > WIN_H / 45 - 3)
 		gui->o_s.buttonrect[i].x -= 15;
 		gui->o_s.buttons[i] = KW_CreateButtonAndLabel(gui->gui,
 gui->o_s.frame, gui->o_s.names[i], &gui->o_s.buttonrect[i]);
