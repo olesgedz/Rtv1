@@ -6,12 +6,14 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 16:16:59 by david             #+#    #+#             */
-/*   Updated: 2019/10/01 16:23:00 by david            ###   ########.fr       */
+/*   Updated: 2019/10/02 00:18:29 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 #include "errno.h"
+
+
 
 // typedef struct  s_json
 // {
@@ -43,13 +45,6 @@ void	reconfigure_camera(t_cam *camera)
 	rotate(cross(camera->direction, camera->normal), camera->direction, y_fov),
 	rotate(cross(camera->direction, camera->normal),
 	camera->direction, -y_fov));
-}
-
-void killer(cJSON *x, cJSON *y, cJSON *z)
-{
-    free(x);
-    free(y);
-    free(z);
 }
 
 void parse_plane(const cJSON *object, t_game *game)
@@ -205,6 +200,7 @@ void parse_cylinder(const cJSON *object, t_game *game)
     cJSON *reflection;
     cJSON *texture;
     cJSON *radius;
+    cJSON *type;
     cJSON *v;
     cJSON *x;
     cJSON *y;
@@ -213,6 +209,9 @@ void parse_cylinder(const cJSON *object, t_game *game)
     cylinder = (t_obj*)malloc(sizeof(t_obj));
     
     cylinder->type = CYLINDER;
+    type = cJSON_GetObjectItemCaseSensitive(object, "type");
+    if (ft_strcmp(type->valuestring, "cone") == 0)
+        cylinder->type = CONE;
     position = cJSON_GetObjectItemCaseSensitive(object, "position");
     x = cJSON_GetArrayItem(position, 0);
     y = cJSON_GetArrayItem(position, 1);
@@ -268,6 +267,91 @@ void parse_cylinder(const cJSON *object, t_game *game)
     ft_object_push(game, cylinder);
 }
 
+cl_float3 triangle_norm(cl_float3 *vertices)
+{
+    cl_float3 ab;
+	cl_float3 ac;
+
+	ab = vector_diff(vertices[1], vertices[0]);
+	ac = vector_diff(vertices[2], vertices[0]);
+    return(normalize(cross(ab, ac)));
+}
+
+void parse_triangle(const cJSON *object, t_game *game)
+{
+    cJSON *color;
+    cJSON *emition;
+    cJSON *reflection;
+    cJSON *texture;
+    cJSON *a;
+    cJSON *b;
+    cJSON *c;
+    cJSON *x;
+    cJSON *y;
+    cJSON *z;
+    t_obj *triangle;
+
+    triangle = (t_obj*)malloc(sizeof(t_obj));
+    triangle->type = TRIANGLE;
+    a = cJSON_GetObjectItemCaseSensitive(object, "a");
+    x = cJSON_GetArrayItem(a, 0);
+    y = cJSON_GetArrayItem(a, 1);
+    z = cJSON_GetArrayItem(a, 2);
+    if (x != NULL && y != NULL && z != NULL)
+        triangle->vertices[0] = create_cfloat3(x->valuedouble, y->valuedouble, z->valuedouble);
+    else
+        terminate("missing data of triangle's first vertice!\n");
+    b = cJSON_GetObjectItemCaseSensitive(object, "b");
+    x = cJSON_GetArrayItem(b, 0);
+    y = cJSON_GetArrayItem(b, 1);
+    z = cJSON_GetArrayItem(b, 2);
+    if (x != NULL && y != NULL && z != NULL)
+        triangle->vertices[1] = create_cfloat3(x->valuedouble, y->valuedouble, z->valuedouble);
+    else
+        terminate("missing data of triangle's second vertice!\n");
+    c = cJSON_GetObjectItemCaseSensitive(object, "c");
+    x = cJSON_GetArrayItem(c, 0);
+    y = cJSON_GetArrayItem(c, 1);
+    z = cJSON_GetArrayItem(c, 2);
+    if (x != NULL && y != NULL && z != NULL)
+        triangle->vertices[2] = create_cfloat3(x->valuedouble, y->valuedouble, z->valuedouble);
+    else
+        terminate("missing data of triangle's third vertice!\n");
+    color = cJSON_GetObjectItemCaseSensitive(object, "color");
+    x = cJSON_GetArrayItem(color, 0);
+    y = cJSON_GetArrayItem(color, 1);
+    z = cJSON_GetArrayItem(color, 2);
+    if (x != NULL && y != NULL && z != NULL)
+        triangle->color = create_cfloat3(x->valuedouble, y->valuedouble, z->valuedouble);
+    else
+        terminate("missing data of triangle color vector!\n");
+    emition = cJSON_GetObjectItemCaseSensitive(object, "emition");
+    if (emition != NULL)
+    {
+        x = cJSON_GetArrayItem(emition, 0);
+        y = cJSON_GetArrayItem(emition, 1);
+        z = cJSON_GetArrayItem(emition, 2);
+        if (x != NULL && y != NULL && z != NULL)
+            triangle->emission = create_cfloat3(x->valuedouble, y->valuedouble, z->valuedouble);
+        else
+           terminate("missing data of triangle emition vector!\n"); 
+    }
+    else
+        triangle->emission = create_cfloat3(0.0, 0.0, 0.0);
+    reflection = cJSON_GetObjectItemCaseSensitive(object, "reflection");
+    if (reflection != NULL)
+        triangle->reflection = reflection->valuedouble;
+    else
+        triangle->reflection = 0.0;
+    texture = cJSON_GetObjectItemCaseSensitive(object, "texture");
+    if (texture != NULL)
+        triangle->texture = (int)texture->valuedouble;
+    else
+        triangle->texture = 0;
+    triangle->v = triangle_norm(triangle->vertices);
+    ft_object_push(game, triangle);
+}
+
 void check_object(const cJSON *object, t_game *game)
 {
     cJSON *type; 
@@ -278,10 +362,10 @@ void check_object(const cJSON *object, t_game *game)
 		parse_sphere(object, game);
 	else if (ft_strcmp(type->valuestring, "cylinder") == 0)
 		parse_cylinder(object, game);
-	// else if (ft_strcmp(type->valuestring, "cone") == 0)
-	// 	parse_cone(object, game);
-	// else if (ft_strcmp(type->valuestring, "triangle") == 0)
-	//     parse_triangle(object, game);
+	else if (ft_strcmp(type->valuestring, "cone") == 0)
+		parse_cylinder(object, game);
+	else if (ft_strcmp(type->valuestring, "triangle") == 0)
+	    parse_triangle(object, game);
 }
 
 void check_cam(const cJSON *cam, t_game *game)
@@ -334,9 +418,9 @@ void check_cam(const cJSON *cam, t_game *game)
 void read_scene(char *argv, t_game *game)
 {
     FILE *fp;
-    char buffer[1024];
+    char buffer[8096];
     fp = fopen(argv, "r");
-    fread(buffer, 1024, 1, fp);
+    fread(buffer, 8096, 1, fp);
     cJSON *json = cJSON_Parse(buffer);
 
     const cJSON *object = NULL;
