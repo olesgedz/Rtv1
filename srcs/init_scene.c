@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_scene.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:53:01 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/23 17:49:26 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/02 01:27:36 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 static void	init_scene(t_obj* objects, t_game *game, char *argv)
 {
-	char						*name = "sobenin.jpg";
-	char						*secname = "sun.jpg";
-	char						*thirdname = "seamless_pawnment.jpg";
-	char						*fourthname = "grass_rock.jpg";
-	char						*fivename = "ice.jpg";
-	char						*sixname = "stars.jpg";
+	// char						*name = "sobenin.jpg";
+	// char						*secname = "sun.jpg";
+	// char						*thirdname = "seamless_pawnment.jpg";
+	// char						*fourthname = "grass_rock.jpg";
+	// char						*fivename = "ice.jpg";
+	// char						*sixname = "stars.jpg";
 
-	game->textures_num 			= 6;
-	game->textures 				= (t_txture*)malloc(sizeof(t_txture) * game->textures_num);
-	game->gpu.camera			= NULL;
-	get_texture(name, &(game->textures[0]));
-	get_texture(secname, &(game->textures[1]));
-	get_texture(thirdname, &(game->textures[2]));
-	get_texture(fourthname, &(game->textures[3]));
-	get_texture(fivename, &(game->textures[4]));
-	get_texture(sixname, &(game->textures[5]));
+	// game->textures_num 			= 6;
+	// game->textures 				= (t_txture*)malloc(sizeof(t_txture) * game->textures_num);
+	// get_texture(name, &(game->textures[0]));
+	// get_texture(secname, &(game->textures[1]));
+	// get_texture(thirdname, &(game->textures[2]));
+	// get_texture(fourthname, &(game->textures[3]));
+	// get_texture(fivename, &(game->textures[4]));
+	// get_texture(sixname, &(game->textures[5]));
+	game->gpu.camera = NULL;
 	read_scene(argv, game);
 }
 

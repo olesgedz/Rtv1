@@ -1,4 +1,12 @@
 {
+    "textures":[
+        "sobenin.jpg",
+        "sun.jpg",
+        "seamless_pawnment.jpg",
+        "grass_rock.jpg",
+        "ice.jpg",
+        "stars.jpg"
+    ],
     "objects":[
         {
             "type": "sphere",

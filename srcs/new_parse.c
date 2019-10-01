@@ -6,12 +6,15 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 16:16:59 by david             #+#    #+#             */
-/*   Updated: 2019/10/02 00:18:29 by david            ###   ########.fr       */
+/*   Updated: 2019/10/02 01:36:17 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 #include "errno.h"
+
+//если при добавлении очередного объекта в json файл программа не работает,
+//попробуй увеличить размер buffer в функции read_scene
 
 
 
@@ -385,7 +388,7 @@ void check_cam(const cJSON *cam, t_game *game)
     z = cJSON_GetArrayItem(position, 2);
     if (x != NULL && y != NULL && z != NULL){
         camera->position = create_cfloat3(x->valuedouble, y->valuedouble, z->valuedouble);
-        printf("my start pos: %f,%f,%f\n", x->valuedouble, y->valuedouble, z->valuedouble);
+        printf("cam start pos: %f,%f,%f\n", x->valuedouble, y->valuedouble, z->valuedouble);
     }
     else
         terminate("missing data of cam start pos vector!\n");
@@ -423,6 +426,18 @@ void read_scene(char *argv, t_game *game)
     fread(buffer, 8096, 1, fp);
     cJSON *json = cJSON_Parse(buffer);
 
+    const cJSON *texture = NULL;
+    const cJSON *textures = NULL;
+    int i = 0;
+    textures = cJSON_GetObjectItemCaseSensitive(json, "textures");
+    printf("texture array size = %d\n", cJSON_GetArraySize(textures));
+    game->textures_num = cJSON_GetArraySize(textures);
+    game->textures = (t_txture*)malloc(sizeof(t_txture) * game->textures_num);
+    cJSON_ArrayForEach(texture, textures)
+    {
+        get_texture(texture->valuestring, &(game->textures[i]));
+        i++;
+    }
     const cJSON *object = NULL;
     const cJSON *objects = NULL;
     objects = cJSON_GetObjectItemCaseSensitive(json, "objects");
