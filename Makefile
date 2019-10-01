@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
+#    By: david <david@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/09/25 18:57:10 by lminta           ###   ########.fr        #
+#    Updated: 2019/10/01 16:16:43 by david            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,10 +72,6 @@ RMRF = gui/src/gui_main.o\
 SRCS_LIST = main.c\
 			cl_lib/gpu_init.c\
 			textures.c\
-			parse_cam.c\
-			parse_main_triangle.c\
-			parse_sphere_plane.c\
-			parse_cone_cyl.c\
 			cl_float3_manage.c\
 			keys.c\
 			camera.c\
@@ -88,7 +84,9 @@ SRCS_LIST = main.c\
 			../gui/src/surf_tex.c\
 			../gui/src/scene_select.c\
 			../gui/src/main_screen.c\
-			../gui/src/obj_select.c
+			../gui/src/obj_select.c\
+			../cJSON/cJSON.c\
+			new_parse.c
 
 OBJS_DIRECTORY = objects/
 OBJS_LIST = $(patsubst %.c, %.o, $(SRCS_LIST))

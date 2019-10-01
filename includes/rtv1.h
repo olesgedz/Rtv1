@@ -1,8 +1,8 @@
 # ifndef RTV1_H
 # define RTV1_H
 
-# define WIN_W 1920
-# define WIN_H 1080
+# define WIN_W 600
+# define WIN_H 600
 # define SAMPLES 5
 
 # define CL_SILENCE_DEPRECATION
@@ -26,6 +26,7 @@
 # endif
 
 # include "gui.h"
+# include "../cJSON/cJSON.h"
 
 # ifndef DEVICE
 # define DEVICE CL_DEVICE_TYPE_DEFAULT
@@ -196,12 +197,12 @@ void					terminate(char *s);
 void					feel_free(char **str);
 void					ft_object_push(t_game *game, t_obj *object);
 void					ft_cam_push(t_game *game, t_cam *cam);
-void					parse_plane(char **data, t_game *game);
-void					parse_sphere(char **data, t_game *game);
-void					parse_cam(char **data, t_game *game);
-void					parse_cone(char **data, t_game *game);
-void					parse_cylinder(char **data, t_game *game);
-void					parse_triangle(char **data, t_game *game);
+// void					parse_plane(char **data, t_game *game);
+// void					parse_sphere(char **data, t_game *game);
+// void					parse_cam(char **data, t_game *game);
+// void					parse_cone(char **data, t_game *game);
+// void					parse_cylinder(char **data, t_game *game);
+// void					parse_triangle(char **data, t_game *game);
 
 void					main_screen(t_gui *gui, t_game *game);
 void					obj_select(t_gui *gui, t_obj *objs, int num);
