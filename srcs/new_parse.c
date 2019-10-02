@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 16:16:59 by david             #+#    #+#             */
-/*   Updated: 2019/10/02 01:36:17 by david            ###   ########.fr       */
+/*   Updated: 2019/10/03 02:29:44 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -423,6 +423,8 @@ void read_scene(char *argv, t_game *game)
     FILE *fp;
     char buffer[8096];
     fp = fopen(argv, "r");
+    if (!fp || ft_strcmp(&argv[ft_strlen(argv) - 5], ".json") != 0)
+        terminate("fuck you and your file!\n");
     fread(buffer, 8096, 1, fp);
     cJSON *json = cJSON_Parse(buffer);
 
