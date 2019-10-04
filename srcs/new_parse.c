@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 16:16:59 by david             #+#    #+#             */
-/*   Updated: 2019/10/03 02:29:44 by david            ###   ########.fr       */
+/*   Updated: 2019/10/04 16:03:48 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	reconfigure_camera(t_cam *camera)
 void parse_plane(const cJSON *object, t_game *game)
 {
     t_obj *plane;
-
     cJSON *position;
     cJSON *color;
     cJSON *emition;
