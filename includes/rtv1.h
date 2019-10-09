@@ -22,7 +22,7 @@
 # ifdef __APPLE__
 # include <OpenCL/opencl.h>
 # else
-# include <Cl/cl.h>
+# include <CL/cl.h>
 # endif
 
 # include "gui.h"
