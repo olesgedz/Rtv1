@@ -122,20 +122,20 @@ static float			rng(global ulong *rng_state)
 	return (rng_lgc(rng_state));
 }
 
-// static float3					sphere_random(global t_obj *object, global int *rnd)
-// {
-// 	float 						theta;
-// 	float 						phi;
-// 	float3						random;
+static float3					sphere_random(global t_obj *object, global int *rnd)
+{
+	float 						theta;
+	float 						phi;
+	float3						random;
 
-// 	theta = rng(rnd) * PI;
-// 	phi = rng(rnd) * 2 * PI;
-// 	random.x = 0.5 * object->radius * sin(theta) * cos(phi);
-// 	random.y = 0.5 * object->radius * sin(theta) * sin(phi);
-// 	random.z = 0.5 * object->radius * cos(theta);
-// 	random = random + object->position;
-// 	return (random);
-// }
+	theta = rng(rnd) * PI;
+	phi = rng(rnd) * 2 * PI;
+	random.x = 0.5 * object->radius * sin(theta) * cos(phi);
+	random.y = 0.5 * object->radius * sin(theta) * sin(phi);
+	random.z = 0.5 * object->radius * cos(theta);
+	random = random + object->position;
+	return (random);
+}
 
 
 

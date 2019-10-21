@@ -8,7 +8,7 @@
 
 #define SAMPLES 5
 #define BOUNCES 4
-#define LIGHTSAMPLING 0
+#define LIGHTSAMPLING 1
 
 static float get_random( int * seed0, int * seed1);
 float3 reflect(float3 vector, float3 n);
