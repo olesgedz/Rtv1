@@ -27,9 +27,6 @@ float3		cl_int_to_float3(int i)
 {
 	float3		flt;
 
-	// flt[0] = ((float)((i >> 16) & 255)) / 255;
-	// flt[1] = ((float)((i >> 8) & 255)) / 255;
-	// flt[2] = ((float)((i) & 255)) / 255;
 	flt[0] = ((float)((i >> 16) & 255)) / 255;
 	flt[1] = ((float)((i >> 8) & 255)) / 255;
 	flt[2] = ((float)((i) & 255)) / 255;

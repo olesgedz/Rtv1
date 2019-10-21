@@ -8,8 +8,6 @@ static float ft_solve(float a, float b, float c)
 	float res1;
 	float res2;
 
-	// if (fabs(a * 0.5f) < EPSILON)
-	// 	return (0.0f);
  	if (disc < 0.0f) 
 		return 0.0f;
 	
@@ -23,8 +21,7 @@ static float ft_solve(float a, float b, float c)
 	return(0.f);
 }
 
-				/* (__global Sphere* sphere, const t_ray *  ray) */
-static float intersect_cone(const t_obj* cone, const t_ray *  ray) /* version using local copy of sphere */
+static float intersect_cone(const t_obj* cone, const t_ray *  ray)
 {
 	float3	x = ray->origin - cone->position;
 	float	a = dot(ray->dir, cone->v);
@@ -37,7 +34,7 @@ static float intersect_cone(const t_obj* cone, const t_ray *  ray) /* version us
 	return (ft_solve(a, b, c));
 }
 
-static float intersect_sphere(const t_obj* sphere,  t_ray *  ray) /* version using local copy of sphere */
+static float intersect_sphere(const t_obj* sphere,  t_ray *  ray)
 {
 	float3 rayToCenter = ray->origin - sphere->position;
     float a = 1;
@@ -50,8 +47,7 @@ float		intersect_plane(const t_obj* plane, const t_ray *ray)
 {
 	float	a;
 	float	b;
-	a = dot(plane->v, ray->dir);//ft_vec3_dot_multiply(ft_vec3_substract(ray->orig, plane->point), plane->normal);
-	//b = ft_vec3_dot_multiply(ray->dir, plane->normal);
+	a = dot(plane->v, ray->dir);
 	if (fabs(a) < EPSILON)
 		return (0);
 	b = -(dot(ray->origin - plane->position, plane->v)) / a;

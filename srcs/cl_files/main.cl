@@ -14,16 +14,6 @@ static float get_random( int * seed0, int * seed1);
 float3 reflect(float3 vector, float3 n);
 float3 refract(float3 vector, float3 n, float refrIndex);
 float	intersect_plane(const t_obj* plane, const t_ray * ray);
-#define PIX_X 1920
-#define PIX_Y 1080
-
-
-#ifdef CMD_DEBUG
-#define cmdlog(x, ...) if( PIX_X == get_global_id(0) % 700 && PIX_Y == get_global_id(0) / 700 );
-#else
-#define cmdlog(x, ...) ;
-#endif
-
 
 static void intersection_reset(t_intersection * intersection)
 {
@@ -63,15 +53,12 @@ static bool intersect_scene(t_scene *scene, t_intersection *intersection, t_ray 
 	/* initialise t to a very large number,
 	so t will be guaranteed to be smaller
 	when a hit with the scene occurs */
-
 	ray->t = INFINITY;
 
 	/* check if the ray intersects each sphere in the scene */
-	for (int i = 0; i < scene->n_objects; i++)  {
-
+	for (int i = 0; i < scene->n_objects; i++)
+	{
 		t_obj object = scene->objects[i]; /* create local copy of sphere */
-		// if (light == 1 && cl_float3_max(object.emission) == 0)
-		// 	continue;
 		float hitdistance = 0;
 		if (object.is_visible)
 		{
@@ -86,7 +73,8 @@ static bool intersect_scene(t_scene *scene, t_intersection *intersection, t_ray 
 			else if (object.type == TRIANGLE)
 				hitdistance = intersect_triangle(&object, ray);
 			/* keep track of the closest intersection and hitobject found so far */
-			if (hitdistance != 0.0f && hitdistance < ray->t) {
+			if (hitdistance != 0.0f && hitdistance < ray->t)
+			{
 				ray->t = hitdistance;
 				intersection->object_id = i;
 			}
@@ -127,7 +115,6 @@ static float3		radiance_explicit(t_scene *scene,
 
 		if (!intersect_scene(scene, &intersection_light, &lightray, 1))
 			continue ;
-
 		if (intersection_light.object_id != i)
 			continue ;
 		intersection_light.material.color = scene->objects[i].emission;
@@ -144,7 +131,7 @@ static float3		radiance_explicit(t_scene *scene,
 	return (radiance);
 }
 
-static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, int * seed1)
+static float3 trace(t_scene * scene, t_intersection * intersection)
 {
 	t_ray ray = intersection->ray;
 
@@ -189,8 +176,8 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 
 			ray.dir = reflect(ray.dir, intersection->normal);
 			ray.origin = intersection->hitpoint + ray.dir * EPSILON;
-
-		} else
+		}
+		else
 		{
 			accum_color += mask * objecthit.emission * pdf;
 			
@@ -241,8 +228,6 @@ __global float3 * vect_temp,  __global ulong * random,  __global t_txture *textu
 	unsigned int x_coord = work_item_id % width;			/* x-coordinate of the pixel */
 	unsigned int y_coord = work_item_id / width;			/* y-coordinate of the pixel */
 	/* seeds for random number generator */
-	 unsigned int seed0 = x_coord + rng(random);
-	 unsigned int seed1 = y_coord + rng(random);
 	finalcolor = vect_temp[x_coord + y_coord * width];
 
 	scene_new(objects, n_objects, width, height, samples, random, textures, camera, &scene);
@@ -251,10 +236,9 @@ __global float3 * vect_temp,  __global ulong * random,  __global t_txture *textu
 	{
 		createCamRay(width, height, &scene, &(intersection.ray));
 		intersection_reset(&intersection.ray);
-		finalcolor += trace(&scene,  &intersection, &seed0, &seed1);
+		finalcolor += trace(&scene,  &intersection);
 	}
 	vect_temp[scene.x_coord + scene.y_coord * width] = finalcolor;
-
 	output[scene.x_coord + scene.y_coord * width] = ft_rgb_to_hex(toInt(finalcolor.x  / samples),
 	 toInt(finalcolor.y  / samples), toInt(finalcolor.z  / samples)); /* simple interpolated colour gradient based on pixel coordinates */
 }
