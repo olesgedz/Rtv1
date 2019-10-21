@@ -7,8 +7,8 @@
 #include "textures.cl"
 
 #define SAMPLES 5
-#define BOUNCES 2
-#define LIGHTSAMPLING 1
+#define BOUNCES 4
+#define LIGHTSAMPLING 0
 
 static float get_random( int * seed0, int * seed1);
 float3 reflect(float3 vector, float3 n);
@@ -134,7 +134,7 @@ static float3		radiance_explicit(t_scene *scene,
 		emission_intensity = dot(intersection_object->normal, lightray.dir);
 		if (emission_intensity < 0.00001f)
 			continue ;
-		pdf = 0.5;
+		pdf = 0.5f;
 
 		sphere_radius = scene->objects[intersection_light.object_id].radius;
 		cos_a_max = sqrt(1.f - (sphere_radius * sphere_radius) / length(intersection_object->hitpoint - light_position));
@@ -173,9 +173,12 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 		float cosine;
 		float3 newdir = sample_uniform(&intersection->normal, &cosine, scene);
 		/* add a very small offset to the hitpoint to prevent self intersection */
+		float pdf = 1.f;
+		if (LIGHTSAMPLING)
+			pdf = 0.5f;
 		if (objecthit.reflection > 0)
 		{
-			accum_color += mask * objecthit.emission;
+			accum_color += mask * objecthit.emission * pdf;
 			if (LIGHTSAMPLING)
 			{
 				explicit = radiance_explicit(scene, intersection);
@@ -189,8 +192,8 @@ static float3 trace(t_scene * scene, t_intersection * intersection, int *seed0, 
 
 		} else
 		{
-
-			accum_color += mask * objecthit.emission;
+			accum_color += mask * objecthit.emission * pdf;
+			
 			if (LIGHTSAMPLING)
 			{
 				explicit = radiance_explicit(scene, intersection);
