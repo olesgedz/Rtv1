@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 16:16:59 by david             #+#    #+#             */
-/*   Updated: 2019/10/04 16:03:48 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/10/21 23:19:59 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,29 @@
 
 
 
-// typedef struct  s_json
-// {
-//     cJSON *position;
-//     cJSON *color;
-//     cJSON *emition;
-//     cJSON *reflection;
-//     cJSON *texture;
-//     cJSON *radius;
-//     cJSON *v;
-//     cJSON *x;
-//     cJSON *y;
-//     cJSON *z;
-// }               t_json;
+typedef struct  s_json
+{
+    cJSON *position;
+    cJSON *color;
+    cJSON *emition;
+    cJSON *reflection;
+    cJSON *texture;
+    cJSON *radius;
+    cJSON *v;
+    cJSON *x;
+    cJSON *y;
+    cJSON *z;
+    cJSON *a;
+    cJSON *b;
+    cJSON *c;
+    cJSON *shift;
+    cJSON *x_basis;
+    cJSON *y_basis;
+    cJSON *z_basis;
+    cJSON *rotation;
+    cJSON *prolapse;
+    cJSON *type;
+}               t_json;
 
 void	reconfigure_camera(t_cam *camera)
 {
@@ -53,70 +63,137 @@ void	reconfigure_camera(t_cam *camera)
 void parse_plane(const cJSON *object, t_game *game)
 {
     t_obj *plane;
-    cJSON *position;
-    cJSON *color;
-    cJSON *emition;
-    cJSON *reflection;
-    cJSON *texture;
-    cJSON *v;
-    cJSON *x;
-    cJSON *y;
-    cJSON *z;
+    t_json parse;
 
     plane = (t_obj*)malloc(sizeof(t_obj));
     plane->type = PLANE;
-    position = cJSON_GetObjectItemCaseSensitive(object, "position");
-    x = cJSON_GetArrayItem(position, 0);
-    y = cJSON_GetArrayItem(position, 1);
-    z = cJSON_GetArrayItem(position, 2);
-    if (x != NULL && y != NULL && z != NULL)
-        plane->position = create_cfloat3(x->valuedouble, y->valuedouble, z->valuedouble);
+    parse.position = cJSON_GetObjectItemCaseSensitive(object, "position");
+    parse.x = cJSON_GetArrayItem(parse.position, 0);
+    parse.y = cJSON_GetArrayItem(parse.position, 1);
+    parse.z = cJSON_GetArrayItem(parse.position, 2);
+    if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+        plane->position = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
         //printf("my start pos: %f,%f,%f\n", x->valuedouble, y->valuedouble, z->valuedouble);
     else
         terminate("missing data of plane start pos vector!\n");
     // killer(x, y, z);
-    color = cJSON_GetObjectItemCaseSensitive(object, "color");
-    x = cJSON_GetArrayItem(color, 0);
-    y = cJSON_GetArrayItem(color, 1);
-    z = cJSON_GetArrayItem(color, 2);
-    if (x != NULL && y != NULL && z != NULL)
-        plane->color = create_cfloat3(x->valuedouble, y->valuedouble, z->valuedouble);
+    parse.color = cJSON_GetObjectItemCaseSensitive(object, "color");
+    parse.x = cJSON_GetArrayItem(parse.color, 0);
+    parse.y = cJSON_GetArrayItem(parse.color, 1);
+    parse.z = cJSON_GetArrayItem(parse.color, 2);
+    if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+        plane->color = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
     else
         terminate("missing data of plane color vector!\n");
     // killer(x, y, z);
-    v = cJSON_GetObjectItemCaseSensitive(object, "dir");
-    x = cJSON_GetArrayItem(v, 0);
-    y = cJSON_GetArrayItem(v, 1);
-    z = cJSON_GetArrayItem(v, 2);
-    if (x != NULL && y != NULL && z != NULL)
-        plane->v = create_cfloat3(x->valuedouble, y->valuedouble, z->valuedouble);
+    parse.v = cJSON_GetObjectItemCaseSensitive(object, "dir");
+    parse.x = cJSON_GetArrayItem(parse.v, 0);
+    parse.y = cJSON_GetArrayItem(parse.v, 1);
+    parse.z = cJSON_GetArrayItem(parse.v, 2);
+    if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+        plane->v = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
     else
         terminate("missing data of plane dir vector!\n");
     // killer(x, y, z);
-    emition = cJSON_GetObjectItemCaseSensitive(object, "emition");
-    if (emition != NULL)
+    parse.emition = cJSON_GetObjectItemCaseSensitive(object, "emition");
+    if (parse.emition != NULL)
     {
-        x = cJSON_GetArrayItem(emition, 0);
-        y = cJSON_GetArrayItem(emition, 1);
-        z = cJSON_GetArrayItem(emition, 2);
-        if (x != NULL && y != NULL && z != NULL)
-            plane->emission = create_cfloat3(x->valuedouble, y->valuedouble, z->valuedouble);
+        parse.x = cJSON_GetArrayItem(parse.emition, 0);
+        parse.y = cJSON_GetArrayItem(parse.emition, 1);
+        parse.z = cJSON_GetArrayItem(parse.emition, 2);
+        if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+            plane->emission = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
         else
            terminate("missing data of plane emition vector!\n");
         // killer(x, y, z); 
     }
     else
         plane->emission = create_cfloat3(0.0, 0.0, 0.0);
-    reflection = cJSON_GetObjectItemCaseSensitive(object, "reflection");
-    if (reflection != NULL)
-        plane->reflection = reflection->valuedouble;
+    parse.reflection = cJSON_GetObjectItemCaseSensitive(object, "reflection");
+    if (parse.reflection != NULL)
+        plane->reflection = parse.reflection->valuedouble;
     else
         plane->reflection = 0.0;
-    texture = cJSON_GetObjectItemCaseSensitive(object, "texture");
-    if (texture != NULL)
-        plane->texture = (int)texture->valuedouble;
+    parse.texture = cJSON_GetObjectItemCaseSensitive(object, "texture");
+    if (parse.texture != NULL)
+        plane->texture = (int)parse.texture->valuedouble;
     else
         plane->texture = 0;
+    parse.shift = cJSON_GetObjectItemCaseSensitive(object, "shift");
+    if (parse.shift != NULL)
+    {
+        parse.x = cJSON_GetArrayItem(parse.shift, 0);
+        parse.y = cJSON_GetArrayItem(parse.shift, 1);
+        if (parse.x != NULL && parse.y != NULL)
+            plane->shift = create_cfloat2(parse.x->valuedouble, parse.y->valuedouble);
+        else
+           terminate("missing data of plane shift vector!\n");
+    }
+    else
+        plane->shift = create_cfloat2(0.0, 0.0);
+    parse.x_basis = cJSON_GetObjectItemCaseSensitive(object, "x_basis");
+    if (parse.x_basis != NULL)
+    {
+        parse.x = cJSON_GetArrayItem(parse.x_basis, 0);
+        parse.y = cJSON_GetArrayItem(parse.x_basis, 1);
+        parse.z = cJSON_GetArrayItem(parse.x_basis, 2);
+        if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+            plane->basis[0] = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
+        else
+           terminate("missing data of plane x_basis vector!\n");    
+    }
+    else
+        plane->basis[0] = create_cfloat3(1.0, 0.0, 0.0);
+    parse.y_basis = cJSON_GetObjectItemCaseSensitive(object, "y_basis");
+    if (parse.y_basis != NULL)
+    {
+        parse.x = cJSON_GetArrayItem(parse.y_basis, 0);
+        parse.y = cJSON_GetArrayItem(parse.y_basis, 1);
+        parse.z = cJSON_GetArrayItem(parse.y_basis, 2);
+        if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+            plane->basis[1] = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
+        else
+           terminate("missing data of plane y_basis vector!\n");    
+    }
+    else
+        plane->basis[1] = create_cfloat3(0.0, 1.0, 0.0);
+    parse.z_basis = cJSON_GetObjectItemCaseSensitive(object, "z_basis");
+    if (parse.z_basis != NULL)
+    {
+        parse.x = cJSON_GetArrayItem(parse.z_basis, 0);
+        parse.y = cJSON_GetArrayItem(parse.z_basis, 1);
+        parse.z = cJSON_GetArrayItem(parse.z_basis, 2);
+        if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+            plane->basis[2] = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
+        else
+           terminate("missing data of plane z_basis vector!\n");    
+    }
+    else
+        plane->basis[2] = create_cfloat3(0.0, 0.0, 1.0);
+    parse.rotation = cJSON_GetObjectItemCaseSensitive(object, "rotation");
+    if (parse.rotation != NULL)
+    {
+        parse.x = cJSON_GetArrayItem(parse.rotation, 0);
+        parse.y = cJSON_GetArrayItem(parse.rotation, 1);
+        if (parse.x != NULL && parse.y != NULL)
+            plane->rotation = create_cfloat2(parse.x->valuedouble, parse.y->valuedouble);
+        else
+           terminate("missing data of plane rotation vector!\n");
+    }
+    else
+        plane->rotation = create_cfloat2(0.0, 0.0);
+    parse.prolapse = cJSON_GetObjectItemCaseSensitive(object, "prolapse");
+    if (parse.prolapse != NULL)
+    {
+        parse.x = cJSON_GetArrayItem(parse.prolapse, 0);
+        parse.y = cJSON_GetArrayItem(parse.prolapse, 1);
+        if (parse.x != NULL && parse.y != NULL)
+            plane->prolapse = create_cfloat2(parse.x->valuedouble, parse.y->valuedouble);
+        else
+           terminate("missing data of plane prolapse vector!\n");
+    }
+    else
+        plane->prolapse = create_cfloat2(1000.0, 1000.0);
     // cJSON_Delete(position);
     // cJSON_Delete(color);
     // cJSON_Delete(emition);
@@ -132,140 +209,270 @@ void parse_plane(const cJSON *object, t_game *game)
 void parse_sphere(const cJSON *object, t_game *game)
 {
     t_obj *sphere;
-
-    cJSON *position;
-    cJSON *color;
-    cJSON *emition;
-    cJSON *reflection;
-    cJSON *texture;
-    cJSON *radius;
-    cJSON *x;
-    cJSON *y;
-    cJSON *z;
+    t_json parse;
 
     sphere = (t_obj*)malloc(sizeof(t_obj));
     sphere->type = SPHERE;
-    position = cJSON_GetObjectItemCaseSensitive(object, "position");
-    x = cJSON_GetArrayItem(position, 0);
-    y = cJSON_GetArrayItem(position, 1);
-    z = cJSON_GetArrayItem(position, 2);
-    if (x != NULL && y != NULL && z != NULL)
-        sphere->position = create_cfloat3(x->valuedouble, y->valuedouble, z->valuedouble);
+    parse.position = cJSON_GetObjectItemCaseSensitive(object, "position");
+    parse.x = cJSON_GetArrayItem(parse.position, 0);
+    parse.y = cJSON_GetArrayItem(parse.position, 1);
+    parse.z = cJSON_GetArrayItem(parse.position, 2);
+    if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+        sphere->position = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
     else
         terminate("missing data of sphere start pos vector!\n");
-    color = cJSON_GetObjectItemCaseSensitive(object, "color");
-    x = cJSON_GetArrayItem(color, 0);
-    y = cJSON_GetArrayItem(color, 1);
-    z = cJSON_GetArrayItem(color, 2);
-    if (x != NULL && y != NULL && z != NULL)
-        sphere->color = create_cfloat3(x->valuedouble, y->valuedouble, z->valuedouble);
+    parse.color = cJSON_GetObjectItemCaseSensitive(object, "color");
+    parse.x = cJSON_GetArrayItem(parse.color, 0);
+    parse.y = cJSON_GetArrayItem(parse.color, 1);
+    parse.z = cJSON_GetArrayItem(parse.color, 2);
+    if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+        sphere->color = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
     else
         terminate("missing data of sphere color vector!\n");
-    radius = cJSON_GetObjectItemCaseSensitive(object, "radius");
-    if (radius != NULL)
-        sphere->radius = radius->valuedouble;
+    parse.radius = cJSON_GetObjectItemCaseSensitive(object, "radius");
+    if (parse.radius != NULL)
+        sphere->radius = parse.radius->valuedouble;
     else
         terminate("missing data of sphere radius!\n");
-    emition = cJSON_GetObjectItemCaseSensitive(object, "emition");
-    if (emition != NULL)
+    parse.emition = cJSON_GetObjectItemCaseSensitive(object, "emition");
+    if (parse.emition != NULL)
     {
-        x = cJSON_GetArrayItem(emition, 0);
-        y = cJSON_GetArrayItem(emition, 1);
-        z = cJSON_GetArrayItem(emition, 2);
-        if (x != NULL && y != NULL && z != NULL)
-            sphere->emission = create_cfloat3(x->valuedouble, y->valuedouble, z->valuedouble);
+        parse.x = cJSON_GetArrayItem(parse.emition, 0);
+        parse.y = cJSON_GetArrayItem(parse.emition, 1);
+        parse.z = cJSON_GetArrayItem(parse.emition, 2);
+        if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+            sphere->emission = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
         else
            terminate("missing data of sphere emition vector!\n"); 
     }
     else
         sphere->emission = create_cfloat3(0.0, 0.0, 0.0);
-    reflection = cJSON_GetObjectItemCaseSensitive(object, "reflection");
-    if (reflection != NULL)
-        sphere->reflection = reflection->valuedouble;
+    parse.reflection = cJSON_GetObjectItemCaseSensitive(object, "reflection");
+    if (parse.reflection != NULL)
+        sphere->reflection = parse.reflection->valuedouble;
     else
         sphere->reflection = 0.0;
-    texture = cJSON_GetObjectItemCaseSensitive(object, "texture");
-    if (texture != NULL)
-        sphere->texture = (int)texture->valuedouble;
+    parse.texture = cJSON_GetObjectItemCaseSensitive(object, "texture");
+    if (parse.texture != NULL)
+        sphere->texture = (int)parse.texture->valuedouble;
     else
         sphere->texture = 0;
+    parse.shift = cJSON_GetObjectItemCaseSensitive(object, "shift");
+    if (parse.shift != NULL)
+    {
+        parse.x = cJSON_GetArrayItem(parse.shift, 0);
+        parse.y = cJSON_GetArrayItem(parse.shift, 1);
+        if (parse.x != NULL && parse.y != NULL)
+            sphere->shift = create_cfloat2(parse.x->valuedouble, parse.y->valuedouble);
+        else
+           terminate("missing data of sphere shift vector!\n");
+    }
+    else
+        sphere->shift = create_cfloat2(0.0, 0.0);
+    parse.x_basis = cJSON_GetObjectItemCaseSensitive(object, "x_basis");
+    if (parse.x_basis != NULL)
+    {
+        parse.x = cJSON_GetArrayItem(parse.x_basis, 0);
+        parse.y = cJSON_GetArrayItem(parse.x_basis, 1);
+        parse.z = cJSON_GetArrayItem(parse.x_basis, 2);
+        if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+            sphere->basis[0] = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
+        else
+           terminate("missing data of sphere x_basis vector!\n");    
+    }
+    else
+        sphere->basis[0] = create_cfloat3(1.0, 0.0, 0.0);
+    parse.y_basis = cJSON_GetObjectItemCaseSensitive(object, "y_basis");
+    if (parse.y_basis != NULL)
+    {
+        parse.x = cJSON_GetArrayItem(parse.y_basis, 0);
+        parse.y = cJSON_GetArrayItem(parse.y_basis, 1);
+        parse.z = cJSON_GetArrayItem(parse.y_basis, 2);
+        if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+            sphere->basis[1] = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
+        else
+           terminate("missing data of sphere y_basis vector!\n");    
+    }
+    else
+        sphere->basis[1] = create_cfloat3(0.0, 1.0, 0.0);
+    parse.z_basis = cJSON_GetObjectItemCaseSensitive(object, "z_basis");
+    if (parse.z_basis != NULL)
+    {
+        parse.x = cJSON_GetArrayItem(parse.z_basis, 0);
+        parse.y = cJSON_GetArrayItem(parse.z_basis, 1);
+        parse.z = cJSON_GetArrayItem(parse.z_basis, 2);
+        if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+            sphere->basis[2] = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
+        else
+           terminate("missing data of sphere z_basis vector!\n");    
+    }
+    else
+        sphere->basis[2] = create_cfloat3(0.0, 0.0, 1.0);
+    parse.rotation = cJSON_GetObjectItemCaseSensitive(object, "rotation");
+    if (parse.rotation != NULL)
+    {
+        parse.x = cJSON_GetArrayItem(parse.rotation, 0);
+        parse.y = cJSON_GetArrayItem(parse.rotation, 1);
+        if (parse.x != NULL && parse.y != NULL)
+            sphere->rotation = create_cfloat2(parse.x->valuedouble, parse.y->valuedouble);
+        else
+           terminate("missing data of sphere rotation vector!\n");
+    }
+    else
+        sphere->rotation = create_cfloat2(0.0, 0.0);
+    parse.prolapse = cJSON_GetObjectItemCaseSensitive(object, "prolapse");
+    if (parse.prolapse != NULL)
+    {
+        parse.x = cJSON_GetArrayItem(parse.prolapse, 0);
+        parse.y = cJSON_GetArrayItem(parse.prolapse, 1);
+        if (parse.x != NULL && parse.y != NULL)
+            sphere->prolapse = create_cfloat2(parse.x->valuedouble, parse.y->valuedouble);
+        else
+           terminate("missing data of sphere prolapse vector!\n");
+    }
+    else
+        sphere->prolapse = create_cfloat2(1000.0, 1000.0);
     ft_object_push(game, sphere);
 }
 
 void parse_cylinder(const cJSON *object, t_game *game)
 {
     t_obj *cylinder;
-
-    cJSON *position;
-    cJSON *color;
-    cJSON *emition;
-    cJSON *reflection;
-    cJSON *texture;
-    cJSON *radius;
-    cJSON *type;
-    cJSON *v;
-    cJSON *x;
-    cJSON *y;
-    cJSON *z;
+    t_json parse;
 
     cylinder = (t_obj*)malloc(sizeof(t_obj));
     
     cylinder->type = CYLINDER;
-    type = cJSON_GetObjectItemCaseSensitive(object, "type");
-    if (ft_strcmp(type->valuestring, "cone") == 0)
+    parse.type = cJSON_GetObjectItemCaseSensitive(object, "type");
+    if (ft_strcmp(parse.type->valuestring, "cone") == 0)
         cylinder->type = CONE;
-    position = cJSON_GetObjectItemCaseSensitive(object, "position");
-    x = cJSON_GetArrayItem(position, 0);
-    y = cJSON_GetArrayItem(position, 1);
-    z = cJSON_GetArrayItem(position, 2);
-    if (x != NULL && y != NULL && z != NULL)
-        cylinder->position = create_cfloat3(x->valuedouble, y->valuedouble, z->valuedouble);
+    parse.position = cJSON_GetObjectItemCaseSensitive(object, "position");
+    parse.x = cJSON_GetArrayItem(parse.position, 0);
+    parse.y = cJSON_GetArrayItem(parse.position, 1);
+    parse.z = cJSON_GetArrayItem(parse.position, 2);
+    if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+        cylinder->position = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
     else
         terminate("missing data of cylinder start pos vector!\n");
-    color = cJSON_GetObjectItemCaseSensitive(object, "color");
-    x = cJSON_GetArrayItem(color, 0);
-    y = cJSON_GetArrayItem(color, 1);
-    z = cJSON_GetArrayItem(color, 2);
-    if (x != NULL && y != NULL && z != NULL)
-        cylinder->color = create_cfloat3(x->valuedouble, y->valuedouble, z->valuedouble);
+    parse.color = cJSON_GetObjectItemCaseSensitive(object, "color");
+    parse.x = cJSON_GetArrayItem(parse.color, 0);
+    parse.y = cJSON_GetArrayItem(parse.color, 1);
+    parse.z = cJSON_GetArrayItem(parse.color, 2);
+    if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+        cylinder->color = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
     else
         terminate("missing data of cylinder color vector!\n");
-    radius = cJSON_GetObjectItemCaseSensitive(object, "radius");
-    if (radius != NULL)
-        cylinder->radius = radius->valuedouble;
+    parse.radius = cJSON_GetObjectItemCaseSensitive(object, "radius");
+    if (parse.radius != NULL)
+        cylinder->radius = parse.radius->valuedouble;
     else
         terminate("missing data of cylinder radius!\n");
-    emition = cJSON_GetObjectItemCaseSensitive(object, "emition");
-    if (emition != NULL)
+    parse.emition = cJSON_GetObjectItemCaseSensitive(object, "emition");
+    if (parse.emition != NULL)
     {
-        x = cJSON_GetArrayItem(emition, 0);
-        y = cJSON_GetArrayItem(emition, 1);
-        z = cJSON_GetArrayItem(emition, 2);
-        if (x != NULL && y != NULL && z != NULL)
-            cylinder->emission = create_cfloat3(x->valuedouble, y->valuedouble, z->valuedouble);
+        parse.x = cJSON_GetArrayItem(parse.emition, 0);
+        parse.y = cJSON_GetArrayItem(parse.emition, 1);
+        parse.z = cJSON_GetArrayItem(parse.emition, 2);
+        if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+            cylinder->emission = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
         else
            terminate("missing data of cylinder emition vector!\n"); 
     }
     else
         cylinder->emission = create_cfloat3(0.0, 0.0, 0.0);
-    reflection = cJSON_GetObjectItemCaseSensitive(object, "reflection");
-    if (reflection != NULL)
-        cylinder->reflection = reflection->valuedouble;
+    parse.reflection = cJSON_GetObjectItemCaseSensitive(object, "reflection");
+    if (parse.reflection != NULL)
+        cylinder->reflection = parse.reflection->valuedouble;
     else
         cylinder->reflection = 0.0;
-    texture = cJSON_GetObjectItemCaseSensitive(object, "texture");
-    if (texture != NULL)
-        cylinder->texture = (int)texture->valuedouble;
+    parse.texture = cJSON_GetObjectItemCaseSensitive(object, "texture");
+    if (parse.texture != NULL)
+        cylinder->texture = (int)parse.texture->valuedouble;
     else
         cylinder->texture = 0;
-    v = cJSON_GetObjectItemCaseSensitive(object, "dir");
-    x = cJSON_GetArrayItem(v, 0);
-    y = cJSON_GetArrayItem(v, 1);
-    z = cJSON_GetArrayItem(v, 2);
-    if (x != NULL && y != NULL && z != NULL)
-        cylinder->v = create_cfloat3(x->valuedouble, y->valuedouble, z->valuedouble);
+    parse.v = cJSON_GetObjectItemCaseSensitive(object, "dir");
+    parse.x = cJSON_GetArrayItem(parse.v, 0);
+    parse.y = cJSON_GetArrayItem(parse.v, 1);
+    parse.z = cJSON_GetArrayItem(parse.v, 2);
+    if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+        cylinder->v = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
     else
         terminate("missing data of cylinder dir vector!\n");
+    parse.shift = cJSON_GetObjectItemCaseSensitive(object, "shift");
+    if (parse.shift != NULL)
+    {
+        parse.x = cJSON_GetArrayItem(parse.shift, 0);
+        parse.y = cJSON_GetArrayItem(parse.shift, 1);
+        if (parse.x != NULL && parse.y != NULL)
+            cylinder->shift = create_cfloat2(parse.x->valuedouble, parse.y->valuedouble);
+        else
+           terminate("missing data of cylinder shift vector!\n");
+    }
+    else
+        cylinder->shift = create_cfloat2(0.0, 0.0);
+    parse.x_basis = cJSON_GetObjectItemCaseSensitive(object, "x_basis");
+    if (parse.x_basis != NULL)
+    {
+        parse.x = cJSON_GetArrayItem(parse.x_basis, 0);
+        parse.y = cJSON_GetArrayItem(parse.x_basis, 1);
+        parse.z = cJSON_GetArrayItem(parse.x_basis, 2);
+        if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+            cylinder->basis[0] = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
+        else
+           terminate("missing data of cylinder x_basis vector!\n");    
+    }
+    else
+        cylinder->basis[0] = create_cfloat3(1.0, 0.0, 0.0);
+    parse.y_basis = cJSON_GetObjectItemCaseSensitive(object, "y_basis");
+    if (parse.y_basis != NULL)
+    {
+        parse.x = cJSON_GetArrayItem(parse.y_basis, 0);
+        parse.y = cJSON_GetArrayItem(parse.y_basis, 1);
+        parse.z = cJSON_GetArrayItem(parse.y_basis, 2);
+        if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+            cylinder->basis[1] = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
+        else
+           terminate("missing data of cylinder y_basis vector!\n");    
+    }
+    else
+        cylinder->basis[1] = create_cfloat3(0.0, 1.0, 0.0);
+    parse.z_basis = cJSON_GetObjectItemCaseSensitive(object, "z_basis");
+    if (parse.z_basis != NULL)
+    {
+        parse.x = cJSON_GetArrayItem(parse.z_basis, 0);
+        parse.y = cJSON_GetArrayItem(parse.z_basis, 1);
+        parse.z = cJSON_GetArrayItem(parse.z_basis, 2);
+        if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+            cylinder->basis[2] = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
+        else
+           terminate("missing data of cylinder z_basis vector!\n");    
+    }
+    else
+        cylinder->basis[2] = create_cfloat3(0.0, 0.0, 1.0);
+    parse.rotation = cJSON_GetObjectItemCaseSensitive(object, "rotation");
+    if (parse.rotation != NULL)
+    {
+        parse.x = cJSON_GetArrayItem(parse.rotation, 0);
+        parse.y = cJSON_GetArrayItem(parse.rotation, 1);
+        if (parse.x != NULL && parse.y != NULL)
+            cylinder->rotation = create_cfloat2(parse.x->valuedouble, parse.y->valuedouble);
+        else
+           terminate("missing data of cylinder rotation vector!\n");
+    }
+    else
+        cylinder->rotation = create_cfloat2(0.0, 0.0);
+    parse.prolapse = cJSON_GetObjectItemCaseSensitive(object, "prolapse");
+    if (parse.prolapse != NULL)
+    {
+        parse.x = cJSON_GetArrayItem(parse.prolapse, 0);
+        parse.y = cJSON_GetArrayItem(parse.prolapse, 1);
+        if (parse.x != NULL && parse.y != NULL)
+            cylinder->prolapse = create_cfloat2(parse.x->valuedouble, parse.y->valuedouble);
+        else
+           terminate("missing data of cylinder prolapse vector!\n");
+    }
+    else
+        cylinder->prolapse = create_cfloat2(1000.0, 1000.0);
     ft_object_push(game, cylinder);
 }
 
@@ -281,76 +488,142 @@ cl_float3 triangle_norm(cl_float3 *vertices)
 
 void parse_triangle(const cJSON *object, t_game *game)
 {
-    cJSON *color;
-    cJSON *emition;
-    cJSON *reflection;
-    cJSON *texture;
-    cJSON *a;
-    cJSON *b;
-    cJSON *c;
-    cJSON *x;
-    cJSON *y;
-    cJSON *z;
+    t_json parse;
     t_obj *triangle;
 
     triangle = (t_obj*)malloc(sizeof(t_obj));
     triangle->type = TRIANGLE;
-    a = cJSON_GetObjectItemCaseSensitive(object, "a");
-    x = cJSON_GetArrayItem(a, 0);
-    y = cJSON_GetArrayItem(a, 1);
-    z = cJSON_GetArrayItem(a, 2);
-    if (x != NULL && y != NULL && z != NULL)
-        triangle->vertices[0] = create_cfloat3(x->valuedouble, y->valuedouble, z->valuedouble);
+    parse.a = cJSON_GetObjectItemCaseSensitive(object, "a");
+    parse.x = cJSON_GetArrayItem(parse.a, 0);
+    parse.y = cJSON_GetArrayItem(parse.a, 1);
+    parse.z = cJSON_GetArrayItem(parse.a, 2);
+    if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+        triangle->vertices[0] = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
     else
         terminate("missing data of triangle's first vertice!\n");
-    b = cJSON_GetObjectItemCaseSensitive(object, "b");
-    x = cJSON_GetArrayItem(b, 0);
-    y = cJSON_GetArrayItem(b, 1);
-    z = cJSON_GetArrayItem(b, 2);
-    if (x != NULL && y != NULL && z != NULL)
-        triangle->vertices[1] = create_cfloat3(x->valuedouble, y->valuedouble, z->valuedouble);
+    parse.b = cJSON_GetObjectItemCaseSensitive(object, "b");
+    parse.x = cJSON_GetArrayItem(parse.b, 0);
+    parse.y = cJSON_GetArrayItem(parse.b, 1);
+    parse.z = cJSON_GetArrayItem(parse.b, 2);
+    if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+        triangle->vertices[1] = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
     else
         terminate("missing data of triangle's second vertice!\n");
-    c = cJSON_GetObjectItemCaseSensitive(object, "c");
-    x = cJSON_GetArrayItem(c, 0);
-    y = cJSON_GetArrayItem(c, 1);
-    z = cJSON_GetArrayItem(c, 2);
-    if (x != NULL && y != NULL && z != NULL)
-        triangle->vertices[2] = create_cfloat3(x->valuedouble, y->valuedouble, z->valuedouble);
+    parse.c = cJSON_GetObjectItemCaseSensitive(object, "c");
+    parse.x = cJSON_GetArrayItem(parse.c, 0);
+    parse.y = cJSON_GetArrayItem(parse.c, 1);
+    parse.z = cJSON_GetArrayItem(parse.c, 2);
+    if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+        triangle->vertices[2] = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
     else
         terminate("missing data of triangle's third vertice!\n");
-    color = cJSON_GetObjectItemCaseSensitive(object, "color");
-    x = cJSON_GetArrayItem(color, 0);
-    y = cJSON_GetArrayItem(color, 1);
-    z = cJSON_GetArrayItem(color, 2);
-    if (x != NULL && y != NULL && z != NULL)
-        triangle->color = create_cfloat3(x->valuedouble, y->valuedouble, z->valuedouble);
+    parse.color = cJSON_GetObjectItemCaseSensitive(object, "color");
+    parse.x = cJSON_GetArrayItem(parse.color, 0);
+    parse.y = cJSON_GetArrayItem(parse.color, 1);
+    parse.z = cJSON_GetArrayItem(parse.color, 2);
+    if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+        triangle->color = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
     else
         terminate("missing data of triangle color vector!\n");
-    emition = cJSON_GetObjectItemCaseSensitive(object, "emition");
-    if (emition != NULL)
+    parse.emition = cJSON_GetObjectItemCaseSensitive(object, "emition");
+    if (parse.emition != NULL)
     {
-        x = cJSON_GetArrayItem(emition, 0);
-        y = cJSON_GetArrayItem(emition, 1);
-        z = cJSON_GetArrayItem(emition, 2);
-        if (x != NULL && y != NULL && z != NULL)
-            triangle->emission = create_cfloat3(x->valuedouble, y->valuedouble, z->valuedouble);
+        parse.x = cJSON_GetArrayItem(parse.emition, 0);
+        parse.y = cJSON_GetArrayItem(parse.emition, 1);
+        parse.z = cJSON_GetArrayItem(parse.emition, 2);
+        if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+            triangle->emission = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
         else
            terminate("missing data of triangle emition vector!\n"); 
     }
     else
         triangle->emission = create_cfloat3(0.0, 0.0, 0.0);
-    reflection = cJSON_GetObjectItemCaseSensitive(object, "reflection");
-    if (reflection != NULL)
-        triangle->reflection = reflection->valuedouble;
+    parse.reflection = cJSON_GetObjectItemCaseSensitive(object, "reflection");
+    if (parse.reflection != NULL)
+        triangle->reflection = parse.reflection->valuedouble;
     else
         triangle->reflection = 0.0;
-    texture = cJSON_GetObjectItemCaseSensitive(object, "texture");
-    if (texture != NULL)
-        triangle->texture = (int)texture->valuedouble;
+    parse.texture = cJSON_GetObjectItemCaseSensitive(object, "texture");
+    if (parse.texture != NULL)
+        triangle->texture = (int)parse.texture->valuedouble;
     else
         triangle->texture = 0;
     triangle->v = triangle_norm(triangle->vertices);
+    parse.shift = cJSON_GetObjectItemCaseSensitive(object, "shift");
+    if (parse.shift != NULL)
+    {
+        parse.x = cJSON_GetArrayItem(parse.shift, 0);
+        parse.y = cJSON_GetArrayItem(parse.shift, 1);
+        if (parse.x != NULL && parse.y != NULL)
+            triangle->shift = create_cfloat2(parse.x->valuedouble, parse.y->valuedouble);
+        else
+           terminate("missing data of triangle shift vector!\n");
+    }
+    else
+        triangle->shift = create_cfloat2(0.0, 0.0);
+    parse.x_basis = cJSON_GetObjectItemCaseSensitive(object, "x_basis");
+    if (parse.x_basis != NULL)
+    {
+        parse.x = cJSON_GetArrayItem(parse.x_basis, 0);
+        parse.y = cJSON_GetArrayItem(parse.x_basis, 1);
+        parse.z = cJSON_GetArrayItem(parse.x_basis, 2);
+        if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+            triangle->basis[0] = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
+        else
+           terminate("missing data of triangle x_basis vector!\n");    
+    }
+    else
+        triangle->basis[0] = create_cfloat3(1.0, 0.0, 0.0);
+    parse.y_basis = cJSON_GetObjectItemCaseSensitive(object, "y_basis");
+    if (parse.y_basis != NULL)
+    {
+        parse.x = cJSON_GetArrayItem(parse.y_basis, 0);
+        parse.y = cJSON_GetArrayItem(parse.y_basis, 1);
+        parse.z = cJSON_GetArrayItem(parse.y_basis, 2);
+        if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+            triangle->basis[1] = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
+        else
+           terminate("missing data of triangle y_basis vector!\n");    
+    }
+    else
+        triangle->basis[1] = create_cfloat3(0.0, 1.0, 0.0);
+    parse.z_basis = cJSON_GetObjectItemCaseSensitive(object, "z_basis");
+    if (parse.z_basis != NULL)
+    {
+        parse.x = cJSON_GetArrayItem(parse.z_basis, 0);
+        parse.y = cJSON_GetArrayItem(parse.z_basis, 1);
+        parse.z = cJSON_GetArrayItem(parse.z_basis, 2);
+        if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
+            triangle->basis[2] = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
+        else
+           terminate("missing data of triangle z_basis vector!\n");    
+    }
+    else
+        triangle->basis[2] = create_cfloat3(0.0, 0.0, 1.0);
+    parse.rotation = cJSON_GetObjectItemCaseSensitive(object, "rotation");
+    if (parse.rotation != NULL)
+    {
+        parse.x = cJSON_GetArrayItem(parse.rotation, 0);
+        parse.y = cJSON_GetArrayItem(parse.rotation, 1);
+        if (parse.x != NULL && parse.y != NULL)
+            triangle->rotation = create_cfloat2(parse.x->valuedouble, parse.y->valuedouble);
+        else
+           terminate("missing data of triangle rotation vector!\n");
+    }
+    else
+        triangle->rotation = create_cfloat2(0.0, 0.0);
+    parse.prolapse = cJSON_GetObjectItemCaseSensitive(object, "prolapse");
+    if (parse.prolapse != NULL)
+    {
+        parse.x = cJSON_GetArrayItem(parse.prolapse, 0);
+        parse.y = cJSON_GetArrayItem(parse.prolapse, 1);
+        if (parse.x != NULL && parse.y != NULL)
+            triangle->prolapse = create_cfloat2(parse.x->valuedouble, parse.y->valuedouble);
+        else
+           terminate("missing data of cylinder prolapse vector!\n");
+    }
+    else
+        triangle->prolapse = create_cfloat2(1000.0, 1000.0);
     ft_object_push(game, triangle);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cl_float3_manage.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/07 17:03:05 by sbrella           #+#    #+#             */
-/*   Updated: 2019/10/18 17:07:16 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/10/21 18:31:35 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,15 @@ cl_float3 create_cfloat3 (float x, float y, float z)
 	re.v4[0] = x;
 	re.v4[1] = y;
 	re.v4[2] = z;
+	return re;
+}
+
+cl_float2 create_cfloat2 (float x, float y)
+{
+	cl_float2 re;
+
+	re.s[0] = x;
+	re.s[1] = y;
 	return re;
 }
 

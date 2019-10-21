@@ -67,6 +67,10 @@ typedef struct			s_object
 	cl_int				texture;
 	cl_float3			vertices[3];
 	cl_int				is_visible;
+	cl_float2			shift;
+	cl_float3			basis[3];
+	cl_float2			rotation;
+	cl_float2			prolapse;
 }						t_obj;
 
 typedef struct			s_ray
@@ -203,7 +207,7 @@ void					ft_cam_push(t_game *game, t_cam *cam);
 // void					parse_cone(char **data, t_game *game);
 // void					parse_cylinder(char **data, t_game *game);
 // void					parse_triangle(char **data, t_game *game);
-
+cl_float2				create_cfloat2 (float x, float y);
 void					main_screen(t_gui *gui, t_game *game);
 void					obj_select(t_gui *gui, t_obj *objs, int num);
 void					pos_check(t_gui *gui);

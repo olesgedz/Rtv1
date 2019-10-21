@@ -52,6 +52,10 @@ typedef struct s_object
 	int		texture;
 	float3	vertices[3];
 	int		is_visible;
+	float2	shift;
+	float3	basis[3];
+	float2	rotation;
+	float2	prolapse;
 } t_obj;
 
 typedef struct 			s_cam
