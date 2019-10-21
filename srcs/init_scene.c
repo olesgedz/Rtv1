@@ -6,29 +6,14 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:53:01 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/21 15:35:36 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/10/21 18:12:15 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-static void	init_scene(t_obj* objects, t_game *game, char *argv)
+static void	init_scene(t_game *game, char *argv)
 {
-	// char						*name = "sobenin.jpg";
-	// char						*secname = "sun.jpg";
-	// char						*thirdname = "seamless_pawnment.jpg";
-	// char						*fourthname = "grass_rock.jpg";
-	// char						*fivename = "ice.jpg";
-	// char						*sixname = "stars.jpg";
-
-	// game->textures_num 			= 6;
-	// game->textures 				= (t_txture*)malloc(sizeof(t_txture) * game->textures_num);
-	// get_texture(name, &(game->textures[0]));
-	// get_texture(secname, &(game->textures[1]));
-	// get_texture(thirdname, &(game->textures[2]));
-	// get_texture(fourthname, &(game->textures[3]));
-	// get_texture(fivename, &(game->textures[4]));
-	// get_texture(sixname, &(game->textures[5]));
 	game->gpu.camera = NULL;
 	read_scene(argv, game);
 }
@@ -44,12 +29,10 @@ void		opencl(t_game *game, char *argv)
 	game->gpu.random = get_random(game->gpu.random);
 	game->gpu.samples = 0;
 	game->cam_num = 0;
-	cl_mem			textures;
-	init_scene(game->gpu.objects, game, argv);
+	init_scene(game, argv);
 	cl_init(game->cl_info);
 	ERROR(game->cl_info->ret);
 	int fd = open("srcs/cl_files/main.cl", O_RDONLY);
-	size_t global = WIN_W * WIN_H;
 	cl_krl_init(&game->kernels[0], 5);
 	game->kernels[0].sizes[0] = sizeof(cl_int) * WIN_H * WIN_W;
 	game->kernels[0].sizes[1] =  sizeof(t_obj) * game->obj_quantity;

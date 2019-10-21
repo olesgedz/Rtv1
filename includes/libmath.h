@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libmath.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 12:54:27 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/06/05 15:10:42 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/10/21 18:16:30 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,4 @@ t_quaternion ft_quaternion_local_rotation(t_vec3 axis, float angle);
 
 t_vec3	ft_vec3_rotate_quaterion(float angle, t_vec3 vector, t_vec3 axis);
 t_vec3	ft_vec3_rotate_quaterion2(float angle, t_vec3 vector, t_vec3 axis);
-
-
 #endif

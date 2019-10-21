@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+         #
+#    By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/10/09 18:53:14 by jblack-b         ###   ########.fr        #
+#    Updated: 2019/10/21 18:38:33 by sbrella          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME = rtv1
 
-FLAGS = -g
+FLAGS = -g -Wall -Wextra -Werror
 CC = gcc
 LIBRARIES = $(GUI_LIB) -lsdl -L$(LIBSDL_DIRECTORY)  -lm -framework OpenCL  -lvect -L$(LIBVECT) -lcl -L$(LIBCL) -lgnl -L$(LIBGNL) -lft -L$(LIBFT_DIRECTORY)
 INCLUDES = $(GUI_INC) -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)include/ -Isrcs/cl_error/ -I$(LIBGNL)include/ -I$(LIBCL)include/

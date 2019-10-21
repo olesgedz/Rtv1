@@ -48,8 +48,5 @@ float3 get_normal(t_obj * object, t_intersection * intersection)
 		normal = object->v;
 	else 
 		normal = sphere_get_normal(object, intersection);
-
-	// if (sphere->type == CYLINDER)
-	// 
 	return (normalize(normal));
 }

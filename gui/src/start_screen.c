@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_screen.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 22:51:42 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/25 16:10:13 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/21 18:13:58 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static void	ok_clicked(KW_Widget *widget, int b)
 	t_gui	*gui;
 
 	gui = g_gui(0, 0);
+	widget = NULL;
+	b = 0;
 	gui->av = (char *)KW_GetEditboxText(gui->ed_w.editBox);
 	gui->quit = KW_TRUE;
 }

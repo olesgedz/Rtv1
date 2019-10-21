@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:54:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/26 20:00:06 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/21 18:41:05 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,6 @@ static void	screen_present(t_game *game, t_gui *gui)
 
 void	poopa(t_game *game, t_gui *gui)
 {
-	clock_t current_ticks, delta_ticks;
-	clock_t fps = 0;
-
 	SDL_RenderClear(game->sdl.renderer);
 	while(!game->quit && !gui->quit)
 	{
