@@ -10,10 +10,6 @@
 #define BOUNCES 4
 #define LIGHTSAMPLING 1
 
-static float get_random( int * seed0, int * seed1);
-float3 reflect(float3 vector, float3 n);
-float3 refract(float3 vector, float3 n, float refrIndex);
-float	intersect_plane(const t_obj* plane, const t_ray * ray);
 
 static void intersection_reset(t_intersection * intersection)
 {
@@ -35,17 +31,14 @@ float3 refract(float3 vector, float3 n, float refrIndex)
 static void createCamRay(const int width, const int height, t_scene *scene, t_ray *ray)
 {
 
-	float fx = (float)scene->x_coord / (float)width;  /* convert int in range [0 - width] to float in range [0-1] */
-	float fy = (float)scene->y_coord / (float)height; /* convert int in range [0 - height] to float in range [0-1] */
+	float fx = (float)scene->x_coord / (float)width;
+	float fy = (float)scene->y_coord / (float)height;
 
 	fx = (fx - 0.5f);
 	fy = (fy - 0.5f);
-	/* determine position of pixel on screen */
 	float3 pixel_pos = scene->camera.direction - fy * (scene->camera.border_x) - fx * (scene->camera.border_y);
-
-	/* create camera ray*/
-	ray->origin = scene->camera.position; /* fixed camera position */
-	ray->dir = normalize(pixel_pos + float3(rng(scene->random) * EPSILON, rng(scene->random) * EPSILON, rng(scene->random) * EPSILON)); /* vector from camera to pixel on screen */
+	ray->origin = scene->camera.position;
+	ray->dir = normalize(pixel_pos + float3(rng(scene->random) * EPSILON, rng(scene->random) * EPSILON, rng(scene->random) * EPSILON));
 }
 
 static bool intersect_scene(t_scene *scene, t_intersection *intersection, t_ray *ray, int light)
@@ -53,8 +46,8 @@ static bool intersect_scene(t_scene *scene, t_intersection *intersection, t_ray 
 	/* initialise t to a very large number,
 	so t will be guaranteed to be smaller
 	when a hit with the scene occurs */
-	ray->t = INFINITY;
 
+	ray->t = INFINITY;
 	/* check if the ray intersects each sphere in the scene */
 	for (int i = 0; i < scene->n_objects; i++)
 	{
@@ -96,7 +89,7 @@ static float3		radiance_explicit(t_scene *scene,
 	float			cos_a_max;
 	float			omega;
 	float			sphere_radius;
-	float pdf;
+	float 			pdf;
 	radiance = 0;
 	t_ray lightray;
 	for (int i = 0; i < scene->n_objects; i++)
@@ -119,7 +112,7 @@ static float3		radiance_explicit(t_scene *scene,
 			continue ;
 		intersection_light.material.color = scene->objects[i].emission;
 		emission_intensity = dot(intersection_object->normal, lightray.dir);
-		if (emission_intensity < 0.00001f)
+		if (emission_intensity < EPSILON)
 			continue ;
 		pdf = 0.5f;
 
@@ -209,12 +202,9 @@ static void scene_new(__global t_obj* objects, int n_objects, int width, int hei
 	scene->x_coord = scene->global_id % scene->width;
 	scene->y_coord = scene->global_id / scene->width;
 	scene->samples = samples;
-	scene->seed0 = scene->x_coord + rand_noise(scene->samples) * (12312 * scene->x_coord);
-	scene->seed1 = scene->y_coord + rand_noise(scene->samples + 3) * (12312 * scene->y_coord);
 	scene->random = random;
 	scene->textures = textures;
 	scene->camera = camera;
-	// return (new_scene);
 }
 
 __kernel void render_kernel(__global int* output, __global t_obj* objects,
@@ -227,7 +217,6 @@ __global float3 * vect_temp,  __global ulong * random,  __global t_txture *textu
 	unsigned int work_item_id = get_global_id(0);	/* the unique global id of the work item for the current pixel */
 	unsigned int x_coord = work_item_id % width;			/* x-coordinate of the pixel */
 	unsigned int y_coord = work_item_id / width;			/* y-coordinate of the pixel */
-	/* seeds for random number generator */
 	finalcolor = vect_temp[x_coord + y_coord * width];
 
 	scene_new(objects, n_objects, width, height, samples, random, textures, camera, &scene);

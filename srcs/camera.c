@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:50:13 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/25 18:48:09 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/21 18:36:57 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,21 +72,21 @@ static void	c_r(t_game *game, t_gui *gui)
 	{
 		game->gpu.camera[game->cam_num].direction =
 		rotate(game->gpu.camera[game->cam_num].normal,
-		game->gpu.camera[game->cam_num].direction, -M_PI / 60);
+		game->gpu.camera[game->cam_num].direction, (float)(-M_PI) / 60);
 		game->flag = 1;
 	}
 	if (game->keys.z)
 	{
 		game->gpu.camera[game->cam_num].position =
 		sum_cfloat3(game->gpu.camera[game->cam_num].position,
-		mult_cfloat3(game->gpu.camera[game->cam_num].normal, 0.1));
+		mult_cfloat3(game->gpu.camera[game->cam_num].normal, 0.1f));
 		game->flag = 1;
 	}
 	if (game->keys.x)
 	{
 		game->gpu.camera[game->cam_num].position =
 		sum_cfloat3(game->gpu.camera[game->cam_num].position,
-		mult_cfloat3(game->gpu.camera[game->cam_num].normal, -0.1));
+		mult_cfloat3(game->gpu.camera[game->cam_num].normal, -0.1f));
 		game->flag = 1;
 	}
 	mouse_mov(game, gui);
@@ -99,7 +99,7 @@ static void	cam_rep(t_game *game, t_gui *gui)
 		game->gpu.camera[game->cam_num].position =
 		sum_cfloat3(game->gpu.camera[game->cam_num].position,
 		mult_cfloat3(normalize(cross(game->gpu.camera[game->cam_num].normal,
-		game->gpu.camera[game->cam_num].direction)), 0.1));
+		game->gpu.camera[game->cam_num].direction)), 0.1f));
 		game->flag = 1;
 	}
 	if (game->keys.d)
@@ -107,14 +107,14 @@ static void	cam_rep(t_game *game, t_gui *gui)
 		game->gpu.camera[game->cam_num].position =
 		sum_cfloat3(game->gpu.camera[game->cam_num].position,
 		mult_cfloat3(normalize(cross(game->gpu.camera[game->cam_num].normal,
-		game->gpu.camera[game->cam_num].direction)), -0.1));
+		game->gpu.camera[game->cam_num].direction)), -0.1f));
 		game->flag = 1;
 	}
 	if (game->keys.q)
 	{
 		game->gpu.camera[game->cam_num].direction =
 		rotate(game->gpu.camera[game->cam_num].normal,
-		game->gpu.camera[game->cam_num].direction, M_PI / 60);
+		game->gpu.camera[game->cam_num].direction, (float)(M_PI) / 60);
 		game->flag = 1;
 	}
 	c_r(game, gui);
@@ -126,14 +126,14 @@ void		camera_reposition(t_game *game, t_gui *gui)
 	{
 		game->gpu.camera[game->cam_num].position =
 		sum_cfloat3(game->gpu.camera[game->cam_num].position,
-		mult_cfloat3(game->gpu.camera[game->cam_num].direction, 0.1));
+		mult_cfloat3(game->gpu.camera[game->cam_num].direction, 0.1f));
 		game->flag = 1;
 	}
 	if (game->keys.s)
 	{
 		game->gpu.camera[game->cam_num].position =
 		sum_cfloat3(game->gpu.camera[game->cam_num].position,
-		mult_cfloat3(game->gpu.camera[game->cam_num].direction, -0.1));
+		mult_cfloat3(game->gpu.camera[game->cam_num].direction, -0.1f));
 		game->flag = 1;
 	}
 	cam_rep(game, gui);
