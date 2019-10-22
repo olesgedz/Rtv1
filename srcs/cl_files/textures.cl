@@ -1,6 +1,6 @@
 #include "kernel.hl"
 
-float3					get_color_sphere(t_obj *object, float3 hitpoint, t_scene *scene)
+static float3			get_color_sphere(t_obj *object, float3 hitpoint, t_scene *scene)
 {
 	float3				vect;
 	__global t_txture	*texture;
@@ -17,7 +17,7 @@ float3					get_color_sphere(t_obj *object, float3 hitpoint, t_scene *scene)
 	return(cl_int_to_float3(texture->texture[i]));
 }
 
-float3					get_color_plane(t_obj *object, float3 hitpoint, t_scene *scene)
+static float3			get_color_plane(t_obj *object, float3 hitpoint, t_scene *scene)
 {
 	float3				vect;
 	float3				secvect;
@@ -42,7 +42,7 @@ float3					get_color_plane(t_obj *object, float3 hitpoint, t_scene *scene)
 	return(cl_int_to_float3(texture->texture[i]));
 }
 
-float3					get_color_cylinder(t_obj *object, float3 hitpoint, t_scene *scene)
+static float3			get_color_cylinder(t_obj *object, float3 hitpoint, t_scene *scene)
 {
 	float3				vect;
 	__global t_txture	*texture;
@@ -71,7 +71,7 @@ float3					get_color_cylinder(t_obj *object, float3 hitpoint, t_scene *scene)
 	return(cl_int_to_float3(texture->texture[i]));
 }
 
-float3					get_color(t_obj *object, float3 hitpoint, t_scene *scene)
+static float3			get_color(t_obj *object, float3 hitpoint, t_scene *scene)
 {
 	if (object->texture > 0)
 	{

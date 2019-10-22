@@ -43,7 +43,7 @@ static float intersect_sphere(const t_obj* sphere,  t_ray *  ray)
 	return (ft_solve(a, b, c));
 }
 
-float		intersect_plane(const t_obj* plane, const t_ray *ray)
+static float		intersect_plane(const t_obj* plane, const t_ray *ray)
 {
 	float	a;
 	float	b;

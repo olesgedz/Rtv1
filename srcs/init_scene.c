@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:53:01 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/22 17:51:52 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/10/22 17:55:57 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void		opencl(t_game *game, char *argv)
 	t_vect names;
 	vect_init(&names);
 	VECT_STRADD(&names, "render_kernel");
-	game->cl_info->ret = cl_krl_build(game->cl_info, game->kernels, fd, "-w -I srcs/cl_files/ -I includes/cl_headers/", &names);
+	game->cl_info->ret = cl_krl_build(game->cl_info, game->kernels, fd, "-Werror -I srcs/cl_files/ -I includes/cl_headers/", &names);
 	ERROR(game->cl_info->ret);
 	game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[0], sizeof(cl_int) * WIN_H * WIN_W, game->gpuOutput);
 	ERROR(game->cl_info->ret);
