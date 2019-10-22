@@ -58,12 +58,10 @@ float3					get_color_cylinder(t_obj *object, float3 hitpoint, t_scene *scene)
 		firstvect = normalize((float3){object->v[1], -object->v[0], 0});
 	else
 		firstvect = (float3){0.0f, 1.0f, 0.0f};
-	// hitpoint = normalize(hitpoint);
 	secvect = cross(firstvect, object->v);
-	a[1] = dot(object->v, vect);
-	a[0] = -dot(vect, firstvect);
-	a[2] = dot(vect, secvect);
-	// u = 0.5 + (atan2(vect[2], vect[0])) / (2 * PI);
+	a.y = dot(object->v, vect);
+	a.x = -dot(vect, firstvect);
+	a.z = dot(vect, secvect);
 	u = 0.5 + (atan2(a[2], a[0])) / (2 * PI);
 	texture = &((scene->textures)[object->texture - 1]);
 	v = modf(0.5 + (a[1] * object->prolapse.y / texture->height) / 2, &v);

@@ -18,7 +18,7 @@ static float		rng(global ulong *rng_state)
 	return (rng_lgc(rng_state));
 }
 
-static float3		sphere_random(global t_obj *object, global int *rnd)
+static float3		sphere_random(global t_obj *object, global ulong *rnd)
 {
 	float 			theta;
 	float 			phi;

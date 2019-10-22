@@ -224,7 +224,7 @@ __global float3 * vect_temp,  __global ulong * random,  __global t_txture *textu
 	for (int i = 0; i < SAMPLES; i++)
 	{
 		createCamRay(width, height, &scene, &(intersection.ray));
-		intersection_reset(&intersection.ray);
+		intersection_reset(&intersection);
 		finalcolor += trace(&scene,  &intersection);
 	}
 	vect_temp[scene.x_coord + scene.y_coord * width] = finalcolor;

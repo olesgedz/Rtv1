@@ -19,7 +19,6 @@ void check_random(int work_item_id, int seed0, int seed1)
 		}
 		printf("\n\n Pi = %f\n\n", 4*float(inside_circle)/N);
 	}
-	
 }
 
 void print_debug(int samples, int width, t_scene * scene)
