@@ -5,6 +5,7 @@
 #include "normals.cl"
 #include "debug.cl"
 #include "textures.cl"
+#include "normal_mapping.cl"
 
 #define SAMPLES 5
 #define BOUNCES 4
@@ -208,7 +209,7 @@ static void scene_new(__global t_obj* objects, int n_objects, int width, int hei
 }
 
 __kernel void render_kernel(__global int* output, __global t_obj* objects,
-__global float3 * vect_temp,  __global ulong * random,  __global t_txture *textures, int width, int height,  int n_objects, int samples, t_cam camera)
+__global float3 * vect_temp,  __global ulong * random,  __global t_txture *textures, /*__global t_txture *normals,*/ int width, int height,  int n_objects, int samples, t_cam camera)
 {
 
 	t_scene scene;

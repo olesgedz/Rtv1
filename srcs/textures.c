@@ -6,20 +6,20 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 15:55:58 by sbrella           #+#    #+#             */
-/*   Updated: 2019/10/21 18:34:33 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/10/22 20:47:18 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-void					get_texture(char *name, t_txture *texture)
+void					get_texture(char *name, t_txture *texture, char *path)
 {
 	SDL_Surface			*surf;
 	SDL_Surface			*an_surf;
 	SDL_PixelFormat		*fmt;
 	char				*m;
 
-	m = ft_strjoin("./textures/", name);
+	m = ft_strjoin(path, name);
 	an_surf = IMG_Load(m);
 	fmt = malloc(sizeof(SDL_PixelFormat));
 	ft_memcpy(fmt, an_surf->format, sizeof(SDL_PixelFormat));

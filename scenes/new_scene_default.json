@@ -7,6 +7,9 @@
         "ice.jpg",
         "stars.jpg"
     ],
+    "normals":[
+        "19.jpg"
+    ],
     "objects":[
         {
             "type": "cylinder",

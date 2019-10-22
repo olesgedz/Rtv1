@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 16:16:59 by david             #+#    #+#             */
-/*   Updated: 2019/10/21 23:19:59 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/10/22 21:33:41 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct  s_json
     cJSON *rotation;
     cJSON *prolapse;
     cJSON *type;
+    cJSON *normal;
 }               t_json;
 
 void	reconfigure_camera(t_cam *camera)
@@ -119,6 +120,11 @@ void parse_plane(const cJSON *object, t_game *game)
         plane->texture = (int)parse.texture->valuedouble;
     else
         plane->texture = 0;
+    parse.normal = cJSON_GetObjectItemCaseSensitive(object, "normal");
+    if (parse.normal != NULL)
+        plane->normal = (int)parse.normal->valuedouble;
+    else
+        plane->normal = 0;
     parse.shift = cJSON_GetObjectItemCaseSensitive(object, "shift");
     if (parse.shift != NULL)
     {
@@ -257,6 +263,11 @@ void parse_sphere(const cJSON *object, t_game *game)
         sphere->texture = (int)parse.texture->valuedouble;
     else
         sphere->texture = 0;
+    parse.normal = cJSON_GetObjectItemCaseSensitive(object, "normal");
+    if (parse.normal != NULL)
+        sphere->normal = (int)parse.normal->valuedouble;
+    else
+        sphere->normal = 0;
     parse.shift = cJSON_GetObjectItemCaseSensitive(object, "shift");
     if (parse.shift != NULL)
     {
@@ -291,7 +302,7 @@ void parse_sphere(const cJSON *object, t_game *game)
         if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
             sphere->basis[1] = create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble);
         else
-           terminate("missing data of sphere y_basis vector!\n");    
+           terminate("missing data of sphere y_basis vector!\n");
     }
     else
         sphere->basis[1] = create_cfloat3(0.0, 1.0, 0.0);
@@ -388,6 +399,11 @@ void parse_cylinder(const cJSON *object, t_game *game)
     parse.texture = cJSON_GetObjectItemCaseSensitive(object, "texture");
     if (parse.texture != NULL)
         cylinder->texture = (int)parse.texture->valuedouble;
+    else
+        cylinder->texture = 0;
+    parse.normal = cJSON_GetObjectItemCaseSensitive(object, "normal");
+    if (parse.normal != NULL)
+        cylinder->normal = (int)parse.normal->valuedouble;
     else
         cylinder->texture = 0;
     parse.v = cJSON_GetObjectItemCaseSensitive(object, "dir");
@@ -548,6 +564,11 @@ void parse_triangle(const cJSON *object, t_game *game)
         triangle->texture = (int)parse.texture->valuedouble;
     else
         triangle->texture = 0;
+    parse.normal = cJSON_GetObjectItemCaseSensitive(object, "normal");
+    if (parse.normal != NULL)
+        triangle->normal = (int)parse.normal->valuedouble;
+    else
+        triangle->normal = 0;
     triangle->v = triangle_norm(triangle->vertices);
     parse.shift = cJSON_GetObjectItemCaseSensitive(object, "shift");
     if (parse.shift != NULL)
@@ -709,8 +730,20 @@ void read_scene(char *argv, t_game *game)
     game->textures = (t_txture*)malloc(sizeof(t_txture) * game->textures_num);
     cJSON_ArrayForEach(texture, textures)
     {
-        get_texture(texture->valuestring, &(game->textures[i]));
+        get_texture(texture->valuestring, &(game->textures[i]), "./textures/");
         i++;
+    }
+    const cJSON *normal = NULL;
+    const cJSON *normals = NULL;
+    int k = 0;
+    normals = cJSON_GetObjectItemCaseSensitive(json, "normals");
+    printf("normals array size = %d\n", cJSON_GetArraySize(normals));
+    game->normals_num = cJSON_GetArraySize(normals);
+    game->normals = (t_txture*)malloc(sizeof(t_txture) * game->normals_num);
+    cJSON_ArrayForEach(normal, normals)
+    {
+        get_texture(normal->valuestring, &(game->normals[k]), "./normals/");
+        k++;
     }
     const cJSON *object = NULL;
     const cJSON *objects = NULL;
