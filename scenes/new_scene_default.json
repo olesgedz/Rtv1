@@ -8,7 +8,7 @@
         "stars.jpg"
     ],
     "normals":[
-        "19.jpg"
+        "196_norm.JPG"
     ],
     "objects":[
         {
@@ -39,6 +39,7 @@
             "position": [-1.0,0.0,0.0],
             "color": [0.75,0.25,0.25],
             "dir": [1.0,0.0,0.0],
+            "reflection": 1.0,
             "texture": 0
         },
         {
@@ -46,7 +47,8 @@
             "position": [1.0,0.0,0.0],
             "color": [0.25,0.25,0.75],
             "dir": [1.0,0.0,0.0],
-            "texture": 0
+            "texture": 0,
+            "reflection": 1.0
         },
         {
             "type": "plane",

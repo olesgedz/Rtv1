@@ -2,7 +2,7 @@
     "textures":[
         "sobenin.jpg",
         "sun.jpg",
-        "seamless_pawnment.jpg",
+        "179.JPG",
         "grass_rock.jpg",
         "ice.jpg",
         "stars.jpg",
@@ -29,13 +29,13 @@
             "emition" : [0.0,0.0,0.0],
             "texture": 0,
             "reflection": 1.0,
-            "normal": 1
+            "normal": 0
         },
         {
             "type": "cylinder",
             "position": [0.0,0.0,-0.1],
             "color": [0.9,0.8,0.7],
-            "radius" : 0.1,
+            "radius" : 0.5,
             "reflection": 0.0,
             "texture": 3,
             "dir": [0.0,1.0,0.0]
@@ -46,7 +46,7 @@
             "color": [0.9,0.8,0.7],
             "radius" : 0.4,
             "reflection": 0.0,
-            "texture": 3,
+            "texture": 0,
             "dir": [0.0,1.0,0.0]
         },
         {
