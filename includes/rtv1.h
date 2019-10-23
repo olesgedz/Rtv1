@@ -1,11 +1,12 @@
 #ifndef RTV1_H
 # define RTV1_H
-# define WIN_W 1920
-# define WIN_H 1080
+# define WIN_W 400
+# define WIN_H 400
 # define SAMPLES 5
 # define CL_SILENCE_DEPRECATION
 # include <sys/types.h>
 # include "SDL2/SDL.h"
+# include "cl_error.h"
 # include "SDL_image.h"
 # include "libft.h"
 # include <dirent.h>

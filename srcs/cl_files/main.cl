@@ -224,9 +224,9 @@ __global float3 * vect_temp,  __global ulong * random,  __global t_txture *textu
 	unsigned int x_coord = work_item_id % width;			/* x-coordinate of the pixel */
 	unsigned int y_coord = work_item_id / width;			/* y-coordinate of the pixel */
 	finalcolor = vect_temp[x_coord + y_coord * width];
-
 	scene_new(objects, n_objects, width, height, samples, random, textures, camera, &scene, normals);
-	// print_debug(scene.samples, scene.width, &scene);
+	//output[scene.x_coord + scene.y_coord * width] = 0xFF0000;      /* uncomment to test if opencl runs */
+	// // print_debug(scene.samples, scene.width, &scene);
 	for (int i = 0; i < SAMPLES; i++)
 	{
 		createCamRay(width, height, &scene, &(intersection.ray));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:54:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/23 22:44:20 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/24 01:01:43 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,22 @@ static void		ft_run_kernel(t_game *game, cl_kernel kernel, int w, int h)
 
 	game->gpu.samples += SAMPLES;
 	global = WIN_W * WIN_H;
-	game->cl_info->ret |= clSetKernelArg(kernel, 5, sizeof(cl_int), &w);
-	game->cl_info->ret |= clSetKernelArg(kernel, 6, sizeof(cl_int), &h);
-	game->cl_info->ret |= clSetKernelArg(kernel, 7, sizeof(cl_int),
-	&game->obj_quantity);
+	game->cl_info->ret |= clSetKernelArg(kernel, 6, sizeof(cl_int), &w);
+	ERROR(game->cl_info->ret );	
+	game->cl_info->ret |= clSetKernelArg(kernel, 7, sizeof(cl_int), &h);
 	game->cl_info->ret |= clSetKernelArg(kernel, 8, sizeof(cl_int),
+	&game->obj_quantity);
+	game->cl_info->ret |= clSetKernelArg(kernel, 9, sizeof(cl_int),
 	&game->gpu.samples);
-	game->cl_info->ret |= clSetKernelArg(kernel, 9, sizeof(t_cam),
+	game->cl_info->ret |= clSetKernelArg(kernel, 10, sizeof(t_cam),
 	&game->gpu.camera[game->cam_num]);
+	ERROR(game->cl_info->ret );
 	game->cl_info->ret = cl_krl_exec(game->cl_info, kernel, 1, &global);
+	ERROR(game->cl_info->ret );
 	clFinish(game->cl_info->cmd_queue);
 	game->cl_info->ret = cl_read(game->cl_info, game->kernels->args[0],
 	sizeof(cl_int) * WIN_W * WIN_H, game->sdl.surface->data);
+	ERROR(game->cl_info->ret );	
 }
 
 static void		ft_render(t_game *game, t_gui *gui)
