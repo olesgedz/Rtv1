@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 16:16:59 by david             #+#    #+#             */
-/*   Updated: 2019/10/22 21:33:41 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/10/23 21:54:43 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,12 @@ void parse_plane(const cJSON *object, t_game *game)
            terminate("missing data of plane x_basis vector!\n");    
     }
     else
-        plane->basis[0] = create_cfloat3(1.0, 0.0, 0.0);
+    {
+        if (plane->v.s[0] != 0.0f || plane->v.s[1] != 0.0f)
+            plane->basis[0] = normalize(create_cfloat3(plane->v.s[1], -plane->v.s[0], 0));
+        else
+            plane->basis[0] = create_cfloat3(0.0f, 1.0f, 0.0f);
+    }
     parse.y_basis = cJSON_GetObjectItemCaseSensitive(object, "y_basis");
     if (parse.y_basis != NULL)
     {
@@ -162,7 +167,7 @@ void parse_plane(const cJSON *object, t_game *game)
            terminate("missing data of plane y_basis vector!\n");    
     }
     else
-        plane->basis[1] = create_cfloat3(0.0, 1.0, 0.0);
+        plane->basis[1] = cross(plane->v, plane->basis[0]);
     parse.z_basis = cJSON_GetObjectItemCaseSensitive(object, "z_basis");
     if (parse.z_basis != NULL)
     {
@@ -405,7 +410,7 @@ void parse_cylinder(const cJSON *object, t_game *game)
     if (parse.normal != NULL)
         cylinder->normal = (int)parse.normal->valuedouble;
     else
-        cylinder->texture = 0;
+        cylinder->normal = 0;
     parse.v = cJSON_GetObjectItemCaseSensitive(object, "dir");
     parse.x = cJSON_GetArrayItem(parse.v, 0);
     parse.y = cJSON_GetArrayItem(parse.v, 1);
@@ -438,7 +443,12 @@ void parse_cylinder(const cJSON *object, t_game *game)
            terminate("missing data of cylinder x_basis vector!\n");    
     }
     else
-        cylinder->basis[0] = create_cfloat3(1.0, 0.0, 0.0);
+    {
+        if (cylinder->v.s[0] != 0.0f || cylinder->v.s[1] != 0.0f)
+            cylinder->basis[0] = normalize(create_cfloat3(cylinder->v.s[1], -cylinder->v.s[0], 0));
+        else
+            cylinder->basis[0] = create_cfloat3(0.0f, 1.0f, 0.0f);
+    }
     parse.y_basis = cJSON_GetObjectItemCaseSensitive(object, "y_basis");
     if (parse.y_basis != NULL)
     {
@@ -451,7 +461,7 @@ void parse_cylinder(const cJSON *object, t_game *game)
            terminate("missing data of cylinder y_basis vector!\n");    
     }
     else
-        cylinder->basis[1] = create_cfloat3(0.0, 1.0, 0.0);
+        cylinder->basis[1] = cross(cylinder->basis[0], cylinder->v);
     parse.z_basis = cJSON_GetObjectItemCaseSensitive(object, "z_basis");
     if (parse.z_basis != NULL)
     {

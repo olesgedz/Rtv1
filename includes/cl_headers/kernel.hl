@@ -50,6 +50,7 @@ typedef struct			s_object
 	float				reflection;
 	float				plane_d;
 	int					texture;
+	int					normal;
 	float3				vertices[3];
 	int					is_visible;
 	float2				shift;
@@ -82,16 +83,19 @@ typedef struct			s_scene
 	unsigned int		seed1;
 	__global ulong		*random;
 	__global t_txture	*textures;
+	__global t_txture	*normals;
 	t_cam				camera;
 }						t_scene;
 
 float 					cl_float3_max(float3 v);
 float3					cl_int_to_float3(int i);
 float 					cl_float3_min(float3 v);
-float3 					get_normal(t_obj *object, t_intersection *intersection);
+float3 					get_normal(t_obj *object, t_intersection *intersection, float2 *coord, t_scene *scene);
 float3					global_texture(t_ray *ray, t_scene *scene);
 void 					print_debug(int samples, int width, t_scene *scene);
 void 					print_ray(t_scene *scene, t_ray* ray);
 float3 					reflect(float3 vector, float3 n);
 float3 					refract(float3 vector, float3 n, float refrIndex);
+float3					normal_map(t_obj *object, t_intersection *intersection, float3 normal, float2 *coord, t_scene *scene);
+float3					get_color(t_obj *object, float3 hitpoint, t_scene *scene, float2 *coord);
 #endif

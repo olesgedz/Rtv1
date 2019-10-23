@@ -34,7 +34,7 @@ static float3 plane_get_normal(t_obj * object, t_intersection * intersection)
 	return (object->v * -1);
 }
 
-float3 get_normal(t_obj * object, t_intersection * intersection)
+float3 get_normal(t_obj *object, t_intersection *intersection, float2 *coord, t_scene *scene)
 {
 	float3 normal;
 
@@ -48,5 +48,9 @@ float3 get_normal(t_obj * object, t_intersection * intersection)
 		normal = object->v;
 	else 
 		normal = sphere_get_normal(object, intersection);
+	// if (dot(intersection->ray.dir, normal) < 0)
+	// 	normal = -normal;
+	if (object->normal != 0)
+		normal = normal_map(object, intersection, normal, coord, scene);
 	return (normalize(normal));
 }

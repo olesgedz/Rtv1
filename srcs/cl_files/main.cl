@@ -6,6 +6,7 @@
 #include "debug.cl"
 #include "textures.cl"
 #include "normal_mapping.cl"
+#include "interpolate_uv.cl"
 
 #define SAMPLES 5
 #define BOUNCES 4
@@ -128,6 +129,7 @@ static float3		radiance_explicit(t_scene *scene,
 static float3 trace(t_scene * scene, t_intersection * intersection)
 {
 	t_ray ray = intersection->ray;
+	float2		img_coord;
 
 	float3 accum_color = (float3)(0.0f, 0.0f, 0.0f);
 	float3 mask = (float3)(1.0f, 1.0f, 1.0f);
@@ -144,11 +146,13 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 		t_obj objecthit = scene->objects[intersection->object_id]; /* version with local copy of sphere */
 		/* compute the hitpoint using the ray equation */
 		intersection->hitpoint =  ray.origin + ray.dir * ray.t;
-		objecthit.color = get_color(&objecthit, intersection->hitpoint, scene);
+		if (objecthit.normal || objecthit.texture)
+			interpolate_uv(&objecthit, intersection->hitpoint, scene, &img_coord);
+		objecthit.color = get_color(&objecthit, intersection->hitpoint, scene, &img_coord);
 		if (length(objecthit.emission) != 0.0f && bounces == 0)
 			return (objecthit.color);
 		/* compute the surface normal and flip it if necessary to face the incoming ray */
-		intersection->normal = get_normal(&objecthit, intersection);
+		intersection->normal = get_normal(&objecthit, intersection, &img_coord, scene);
 		intersection->normal = dot(intersection->normal, ray.dir) < 0.0f ? intersection->normal : intersection->normal * (-1.0f);
 		/* create a local orthogonal coordinate frame centered at the hitpoint */
 		float cosine;
@@ -191,7 +195,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 
 
 static void scene_new(__global t_obj* objects, int n_objects, int width, int height,\
- int samples, __global ulong * random, __global t_txture *textures, t_cam camera, t_scene *scene)
+ int samples, __global ulong * random, __global t_txture *textures, t_cam camera, t_scene *scene, __global t_txture *normals)
 {
 	// t_scene new_scene;
 
@@ -205,11 +209,12 @@ static void scene_new(__global t_obj* objects, int n_objects, int width, int hei
 	scene->samples = samples;
 	scene->random = random;
 	scene->textures = textures;
+	scene->normals = normals;
 	scene->camera = camera;
 }
 
 __kernel void render_kernel(__global int* output, __global t_obj* objects,
-__global float3 * vect_temp,  __global ulong * random,  __global t_txture *textures, /*__global t_txture *normals,*/ int width, int height,  int n_objects, int samples, t_cam camera)
+__global float3 * vect_temp,  __global ulong * random,  __global t_txture *textures, __global t_txture *normals, int width, int height,  int n_objects, int samples, t_cam camera)
 {
 
 	t_scene scene;
@@ -220,7 +225,7 @@ __global float3 * vect_temp,  __global ulong * random,  __global t_txture *textu
 	unsigned int y_coord = work_item_id / width;			/* y-coordinate of the pixel */
 	finalcolor = vect_temp[x_coord + y_coord * width];
 
-	scene_new(objects, n_objects, width, height, samples, random, textures, camera, &scene);
+	scene_new(objects, n_objects, width, height, samples, random, textures, camera, &scene, normals);
 	// print_debug(scene.samples, scene.width, &scene);
 	for (int i = 0; i < SAMPLES; i++)
 	{

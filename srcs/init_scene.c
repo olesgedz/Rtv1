@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:53:01 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/22 17:55:57 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/10/23 19:01:10 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,13 @@ void		opencl(t_game *game, char *argv)
 	cl_init(game->cl_info);
 	ERROR(game->cl_info->ret);
 	int fd = open("srcs/cl_files/main.cl", O_RDONLY);
-	cl_krl_init(&game->kernels[0], 5);
+	cl_krl_init(&game->kernels[0], 6);
 	game->kernels[0].sizes[0] = sizeof(cl_int) * WIN_H * WIN_W;
 	game->kernels[0].sizes[1] =  sizeof(t_obj) * game->obj_quantity;
 	game->kernels[0].sizes[2] = sizeof(cl_float3) * WIN_H * WIN_W;
 	game->kernels[0].sizes[3] = WIN_H * WIN_W * sizeof(cl_ulong);
 	game->kernels[0].sizes[4] = sizeof(t_txture) * game->textures_num;
+	game->kernels[0].sizes[5] = sizeof(t_txture) * game->normals_num;
 
 	t_vect names;
 	vect_init(&names);
@@ -54,6 +55,8 @@ void		opencl(t_game *game, char *argv)
 	game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[3], WIN_H * WIN_W * sizeof(cl_ulong), game->gpu.random);
 	ERROR(game->cl_info->ret);
 	game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[4], sizeof(t_txture) * game->textures_num, game->textures);
+	ERROR(game->cl_info->ret);
+	game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[5], sizeof(t_txture) * game->normals_num, game->normals);
 	ERROR(game->cl_info->ret);
 }
 
