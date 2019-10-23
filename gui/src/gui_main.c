@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:21:19 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/24 21:42:37 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/14 22:34:32 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ t_gui	*g_gui(t_gui *gui, int flag)
 
 void	init_kiwi(t_gui *gui)
 {
+	int i;
+
+	i = -1;
 	g_gui(gui, 1);
 	gui->ed_w.backtex = load_picture(gui, "gui/res/start.bmp");
 	gui->ed_w.winrect = (KW_Rect){0, 0, WIN_W, WIN_H};
@@ -30,6 +33,13 @@ void	init_kiwi(t_gui *gui)
 	KW_CreateSDL2RenderDriver(gui->sdl.renderer, gui->sdl.window);
 	gui->set = KW_LoadSurface(gui->driver, "gui/res/tileset.png");
 	gui->gui = KW_Init(gui->driver, gui->set);
+	while (++i < MAX_OBJ)
+	{
+		gui->o_s.buttons[i] = 0;
+		gui->s_s.buttons[i] = 0;
+		gui->o_s.names[i] = 0;
+		gui->s_s.names[i] = 0;
+	}
 }
 
 void	loopa(t_gui *gui)
@@ -47,14 +57,4 @@ void	loopa(t_gui *gui)
 		KW_Paint(gui->gui);
 		SDL_RenderPresent(gui->sdl.renderer);
 	}
-}
-
-void	quit_kiwi(t_gui *gui)
-{
-	SDL_DestroyTexture(gui->ed_w.backtex);
-	KW_DestroyWidget(gui->ed_w.frame, 1);
-	KW_DestroyWidget(gui->s_s.frame, 1);
-	KW_ReleaseSurface(gui->driver, gui->set);
-	//KW_ReleaseRenderDriver(gui->driver);
-	KW_Quit(gui->gui);
 }

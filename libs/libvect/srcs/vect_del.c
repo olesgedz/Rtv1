@@ -1,34 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vect_memcmp.c                                      :+:      :+:    :+:   */
+/*   vect_del.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/02 20:05:49 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/09/02 20:05:49 by jblack-b         ###   ########.fr       */
+/*   Created: 2019/09/02 20:05:33 by jblack-b          #+#    #+#             */
+/*   Updated: 2019/10/17 18:03:10 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "libvect.h"
+#include "libft.h"
 
-int		vect_memcmp(t_vect *a, unsigned char *s, size_t n)
+void		vect_del
+	(t_vect *v)
 {
-	size_t			i;
-	unsigned char	*s1;
-
-	i = 0;
-	s1 = a->data;
-	while (*s1 == *s
-		&& (void *)s1 < a->data + a->used
-		&& *s
-		&& n)
-	{
-		s1++;
-		s++;
-		n++;
-	}
-	return (*s - *s1);
+	if (!v)
+		return ;
+	if (v->total)
+		free(v->data);
+	free(v);
 }

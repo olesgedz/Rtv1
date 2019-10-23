@@ -6,11 +6,9 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 20:15:59 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/09/02 20:16:00 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/10/22 18:21:43 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "libft.h"
 #include "malloc.h"
@@ -29,9 +27,10 @@ int		gnl_lines(int fd, t_vect *lines, int opts)
 	{
 		if (!line.used)
 			continue ;
-		MALLOC_N(dup, line.used);
+		if (!(dup = ft_memalloc(sizeof(*dup) * line.used)))
+			exit(0);
 		ft_memcpy(dup, line.data, line.used);
-		VECT_ADD(lines, dup);
+		vect_add(lines, &dup, sizeof(dup));
 		line.used = 0;
 	}
 	free(line.data);

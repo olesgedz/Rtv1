@@ -6,32 +6,28 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:10:38 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/25 18:48:45 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/23 21:51:22 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-static void	mouse(t_game *game)
+static void	mouse(t_game *game, t_gui *gui)
 {
 	static int	x = 0;
 	static int	y = 0;
-	t_gui		*gui;
 
-	gui = g_gui(0, 0);
 	if (game->ev.type == SDL_MOUSEBUTTONDOWN)
 	{
-		if (!gui->over_gui)
+		if (!gui->over_gui && (game->keys.lmb = 1))
 		{
-			game->keys.lmb = 1;
 			SDL_GetMouseState(&x, &y);
 			SDL_ShowCursor(SDL_DISABLE);
 		}
 	}
 	else if (game->ev.type == SDL_MOUSEBUTTONUP)
 	{
-		game->keys.lmb = 0;
-		if (!gui->over_gui)
+		if (!gui->over_gui && !(game->keys.lmb = 0))
 			SDL_ShowCursor(SDL_ENABLE);
 	}
 	else if (game->ev.type == SDL_MOUSEMOTION)
@@ -125,6 +121,6 @@ void		key_check(t_game *game)
 		else if (game->ev.type == SDL_KEYUP)
 			key_up(game);
 		else
-			mouse(game);
+			mouse(game, g_gui(0, 0));
 	}
 }

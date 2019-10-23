@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/25 18:01:57 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/22 18:53:02 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include "KW_editbox.h"
 # include "KW_label.h"
 # include "KW_button.h"
-#include "KW_scrollbox.h"
+# include "KW_scrollbox.h"
 # include "KW_renderdriver_sdl2.h"
 # include "libsdl.h"
 # define MAX_SC		256
@@ -36,6 +36,7 @@ typedef struct		s_scene_select
 	unsigned		weights[1];
 	KW_Widget		*buttons[MAX_SC];
 	char			*names[MAX_SC];
+	int				max_i;
 }					t_scene_select;
 
 typedef struct		s_object_select
@@ -50,6 +51,7 @@ typedef struct		s_object_select
 	unsigned		weights[1];
 	KW_Widget		*buttons[MAX_OBJ];
 	char			*names[MAX_OBJ];
+	int				max_i;
 }					t_object_select;
 
 typedef struct		s_edit_win
@@ -61,7 +63,7 @@ typedef struct		s_edit_win
 	KW_Rect			editboxrect;
 	KW_Rect			frect;
 	KW_Rect			buttonrect;
-	KW_Widget		*editBox;
+	KW_Widget		*edit_box;
 	KW_Widget		*frame;
 	KW_Widget		*label;
 	KW_Widget		*okbutton;
@@ -71,7 +73,7 @@ typedef struct		s_edit_win
 
 typedef struct		s_gui
 {
-	t_sdl 			sdl;
+	t_sdl			sdl;
 	SDL_Event		ev;
 	int				quit;
 	KW_RenderDriver	*driver;
@@ -80,21 +82,22 @@ typedef struct		s_gui
 	t_edit_win		ed_w;
 	t_scene_select	s_s;
 	t_object_select	o_s;
-	char 			*av;
+	char			*av;
 	int				flag;
 	int				main_screen;
 	int				over_gui;
 }					t_gui;
 
-void				print_error_gui(const char *message, const char *error_message);
+void				print_error_gui(const char *message, const char
+*error_message);
 char				*start_gui(t_gui *gui);
-void				scene_select(t_gui *gui);
+void				scene_select(t_gui *gui, int i, KW_Widget *const *wid_arr);
 void				start_screen(t_gui *gui);
 void				init_kiwi(t_gui *gui);
 void				quit_kiwi(t_gui *gui);
 void				loopa(t_gui *gui);
 t_gui				*g_gui(t_gui *gui, int flag);
-SDL_Texture			*load_picture(t_gui *gui,const char *filename);
+SDL_Texture			*load_picture(t_gui *gui, const char *filename);
 void				quit_kiwi_main(t_gui *gui);
 void				main_screen_free(t_gui *gui);
 void				over(KW_Widget *widget, int b);

@@ -3,57 +3,85 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+         #
+#    By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2016/02/02 15:48:09 by bsouchet          #+#    #+#              #
-#    Updated: 2019/08/30 19:31:59 by olesgedz         ###   ########.fr        #
+#    Created: 2019/10/21 13:05:29 by jblack-b          #+#    #+#              #
+#    Updated: 2019/10/21 13:21:52 by jblack-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC			= clang
+NAME=libgnl.a
 
-NAME		= libgnl.a
+CC=clang
 
-FLAGS		= -Wall -Wextra -Werror -g
+CFLAGS= -g -Wall -Wextra -Werror
 
-DIR_S		= sources
+SDL_HEADERS = include/
+LIBFT_HEADERS = ../libft/includes/
+LIBVECT_HEADERS = ../libvect/includes/
+INCLUDES = -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS) -I$(LIBVECT_HEADERS)
+HEADERS_LIST =libgnl.h
 
-DIR_O		= temporary
+DIRECTORY =  $(shell pwd)
+HEADERS_DIRECTORY = includes/
+HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
 
-HEADER		= include ../libft/includes ../libvect/include
+SOURCES_DIRECTORY = srcs/
 
-SOURCES		= gnl_vect.c \
-	gnl_lines.c \
+SOURCES_LIST=	gnl_vect.c \
+				gnl_lines.c 
 
-SUB_FOLDERS	=
+SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
-SRCS		= $(addprefix $(DIR_S)/,$(SOURCES))
+OBJECTS_DIRECTORY = objects/
+OBJECTS_LIST = $(patsubst %.c, %.o, $(SOURCES_LIST))
+OBJECTS	= $(addprefix $(OBJECTS_DIRECTORY), $(OBJECTS_LIST))
 
-OBJS		= $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
+# COLORS
 
-opti:
-	@$(MAKE) all -j 8
+CLEAR_LINE	:= \033[2K
+BEGIN_LINE	:= \033[A
+COL_END		:= \033[0m
+COL_RED		:= \033[1;31m
+COL_GREEN	:= \033[1;32m
+COL_YELLOW	:= \033[1;33m
+COL_BLUE	:= \033[1;34m
+COL_VIOLET	:= \033[1;35m
+COL_CYAN	:= \033[1;36m
+COL_WHITE	:= \033[1;37m
+
+PREC = echo -ne "\r [`expr $(CURRENT_FILES) '*' 100 / $(TOTAL_FILES)`%]"
+
+TOTAL_FILES := $(shell echo $(SOURCES_LIST) | wc -w | sed -e 's/ //g')
+CURRENT_FILES = $(shell find $(DIRECTORY)/objects/ -type f 2> /dev/null | wc -l | sed -e 's/ //g')
+
+.PHONY: all clean fclean re
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	@ar rc $(NAME) $(OBJS)
+$(NAME): $(OBJECTS_DIRECTORY) $(OBJECTS)
+	@ar rc $(NAME) $(OBJECTS)
 	@ranlib $(NAME)
+	@echo "$(CLEAR_LINE)[`expr $(CURRENT_FILES) '*' 100 / $(TOTAL_FILES)`%] $(COL_BLUE)[$(NAME)] $(COL_GREEN)Finished compilation. Output file : $(COL_VIOLET)$(PWD)/$(NAME)$(COL_END)"
 
-$(DIR_O)/%.o: $(DIR_S)/%.c
-	@[ -d $(DIR_O) ] || mkdir -p $(DIR_O)
-	@$(CC) $(FLAGS) $(addprefix -I, $(HEADER)) -o $@ -c $<
+$(OBJECTS_DIRECTORY):
+	@mkdir -p $(OBJECTS_DIRECTORY)
+	@echo "$(NAME): $(GREEN)$(OBJECTS_DIRECTORY) was created$(RESET)"
 
-norme:
-	norminette ../libgnl/$(HEADER)
-	@echo
-	norminette ../libgnl/$(DIR_S)
+$(OBJECTS_DIRECTORY)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)
+	@$(CC) $(FLAGS) -c $(INCLUDES) $< -o $@
+	@echo "$(CLEAR_LINE)[`expr $(CURRENT_FILES) '*' 100 / $(TOTAL_FILES)`%] $(COL_BLUE)[$(NAME)] $(COL_GREEN)Compiling file [$(COL_VIOLET)$<$(COL_GREEN)].($(CURRENT_FILES) / $(TOTAL_FILES))$(COL_END)$(BEGIN_LINE)"
 
 clean:
-	@rm -f $(OBJS)
-	@rm -rf $(DIR_O)
+	@rm -rf $(OBJECTS_DIRECTORY)
+
+nu:
+	@echo -ne "\r [`expr $(CURRENT_FILES) '*' 100 / $(TOTAL_FILES)`%]"
 
 fclean: clean
 	@rm -f $(NAME)
+	@echo "$(NAME): $(RED)$(LIBFT) was deleted$(RESET)"
 
-re: fclean all -j 8
+re:
+	@$(MAKE) fclean
+	@$(MAKE) all

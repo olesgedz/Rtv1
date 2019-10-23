@@ -6,18 +6,19 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:51:09 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/24 20:06:55 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/23 21:54:01 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 #include "errno.h"
 
-cl_ulong	*get_random(cl_ulong * random)
+cl_ulong	*get_random(cl_ulong *random)
 {
 	int i;
+
 	i = -1;
-	if(!(random = ft_memalloc(sizeof(cl_ulong) * WIN_H * WIN_W)))
+	if (!(random = ft_memalloc(sizeof(cl_ulong) * (int)WIN_H * (int)WIN_W)))
 		ft_exit(0);
 	srand(21);
 	while (++i < WIN_H * WIN_W)

@@ -1,41 +1,51 @@
-# ifndef RTV1_H
+#ifndef RTV1_H
 # define RTV1_H
-
-# define WIN_W 1024
-# define WIN_H 720
+# define WIN_W 1920
+# define WIN_H 1080
 # define SAMPLES 5
-
 # define CL_SILENCE_DEPRECATION
 # include <sys/types.h>
 # include "SDL2/SDL.h"
 # include "SDL_image.h"
 # include "libft.h"
-# include "libmath.h"
+# include <dirent.h>
 # include "libsdl.h"
 # include "libvect.h"
 # include <fcntl.h>
 # include <limits.h>
 # include <float.h>
 # include <math.h>
-# include "cl_error.h"
 # include "libcl.h"
-# ifdef __APPLE__
-# include <OpenCL/opencl.h>
-# else
-# include <CL/cl.h>
-# endif
-
-# include "gui.h"
 # include "../cJSON/cJSON.h"
-
+# ifdef __APPLE__
+#  include <OpenCL/opencl.h>
+# else
+#  include <Cl/cl.h>
+# endif
+# include "gui.h"
 # ifndef DEVICE
-# define DEVICE CL_DEVICE_TYPE_DEFAULT
+#  define DEVICE CL_DEVICE_TYPE_DEFAULT
 # endif
 # define RMASK 0x000000ff
 # define GMASK 0x0000ff00
 # define BMASK 0x00ff0000
 # define AMASK 0xff000000
-# define DROUND(d)	ABS(d) < 0.00001 ? 0 : (d)
+
+typedef struct s_vec3	t_vec3;
+
+typedef	struct			s_point3
+{
+	float				x;
+	float				y;
+	float				z;
+}						t_point3;
+
+struct					s_vec3
+{
+	float				x;
+	float				y;
+	float				z;
+};
 
 typedef enum			e_figure
 {
@@ -76,12 +86,11 @@ typedef struct			s_object
 
 typedef struct			s_ray
 {
-	t_vec3 				orig;
-	t_vec3 				dir;
-	t_vec3 				hit;
-	double 				t;
-} 						t_ray;
-
+	t_vec3				orig;
+	t_vec3				dir;
+	t_vec3				hit;
+	double				t;
+}						t_ray;
 
 typedef struct			s_cam
 {
@@ -105,26 +114,24 @@ typedef enum			e_camera_direction
 
 typedef struct			s_gpu
 {
-    cl_device_id		device_id;
-    cl_context			context;
-    cl_command_queue	commands;
-    cl_program			program;
-    cl_kernel			kernel;
-	cl_uint				numPlatforms;
+	cl_device_id		device_id;
+	cl_context			context;
+	cl_command_queue	commands;
+	cl_program			program;
+	cl_kernel			kernel;
+	cl_uint				num_platforms;
 	cl_int				err;
 	cl_ulong			*random;
 	char				*kernel_source;
-	int 				*cpuOutput;
 	cl_float3			*vec_temp;
 	t_obj				*objects;
-	cl_mem				cl_bufferOut;
-	cl_mem				cl_cpuSpheres;
+	cl_mem				cl_cpu_spheres;
+	cl_mem				cl_buffer_out;
 	cl_mem				cl_cpu_vectemp;
 	cl_mem				cl_cpu_camera;
-	cl_mem				cl_cpu_normals;
-	cl_mem 				cl_cpu_random;
-	t_cam	 			*camera;
-	int 				samples;
+	cl_mem				cl_cpu_random;
+	t_cam				*camera;
+	int					samples;
 }						t_gpu;
 
 
@@ -148,46 +155,46 @@ typedef struct			s_keys
 
 typedef struct			s_game
 {
-	char 				*av;
+	char				*av;
 	SDL_Event			ev;
-	t_sdl 				sdl;
-	t_surface 			*image;
+	t_sdl				sdl;
+	t_surface			*image;
 	t_list				*verties;
-	int 				n_spheres;
-	int 				n_cones;
-	int 				n_cylinders;
-	size_t 				obj_quantity;
+	int					n_spheres;
+	int					n_cones;
+	int					n_cylinders;
+	size_t				obj_quantity;
 	int					cam_quantity;
-	t_vec3 				origin;
-	t_gpu 				gpu;
-	int 				init_render;
+	t_vec3				origin;
+	t_gpu				gpu;
+	int					init_render;
 	t_txture			*textures;
-	t_txture			*normals;
 	int					textures_num;
 	int					normals_num;
-	t_cl_info 			*cl_info;
-	t_cl_krl 			*kernels;
-	int 				*gpuOutput;
+	t_txture			*normals;
+	t_cl_info			*cl_info;
+	t_cl_krl			*kernels;
+	int					*gpu_output;
 	int					cam_num;
 	int					flag;
 	int					quit;
 	t_keys				keys;
-} 						t_game;
+}						t_game;
 
 int						bind_data(t_gpu *gpu, t_game *game);
-void 					release_gpu(t_gpu *gpu);
-void 					ft_run_gpu(t_gpu *gpu);
-int						opencl_init(t_gpu *gpu, t_game *game);
+void					release_gpu(t_gpu *gpu);
+void					ft_run_gpu(t_gpu *gpu);
 cl_float3				create_cfloat3 (float x, float y, float z);
 cl_float3				cl_scalar_mul(cl_float3 vector, double scalar);
 cl_float3				cl_add(cl_float3 v1, cl_float3 v2);
 void					get_texture(char *name, t_txture *texture, char *path);
-void 					read_scene(char *argv, t_game *game);
-t_cam 					*add_cam(cl_float3 position, cl_float3 direction, cl_float3 normal);
+void					read_scene(char *argv, t_game *game);
+t_cam					*add_cam(cl_float3 position,\
+cl_float3 direction, cl_float3 normal);
 cl_float3				mult_cfloat3(cl_float3 one, float f);
 cl_float3				sum_cfloat3(cl_float3 one, cl_float3 two);
 cl_float3				rotate(cl_float3 axis, cl_float3 vector, float angle);
-cl_float3   			cross(cl_float3 one, cl_float3 two);
+cl_float3				cross(cl_float3 one, cl_float3 two);
 cl_float3				vector_diff(cl_float3 one, cl_float3 two);
 cl_float3				normalize(cl_float3 vector);
 void					reconfigure_camera(t_cam *camera);
@@ -199,15 +206,17 @@ void					camera_reposition(t_game *game, t_gui *gui);
 void					set_const(t_game *game, t_gui *gui);
 void					opencl(t_game *game, char *argv);
 cl_ulong				*get_random(cl_ulong *random);
-void					poopa(t_game *game, t_gui *gui);
-void					free_shit(t_game *game);
+void					main_render(t_game *game, t_gui *gui);
+void					free_opencl(t_game *game);
 void					terminate(char *s);
 void					feel_free(char **str);
 void					ft_object_push(t_game *game, t_obj *object);
 void					ft_cam_push(t_game *game, t_cam *cam);
-cl_float2				create_cfloat2 (float x, float y);
 void					main_screen(t_gui *gui, t_game *game);
 void					obj_select(t_gui *gui, t_obj *objs, int num);
 void					pos_check(t_gui *gui);
+void					opencl_init(t_game *game);
+void					check_file(t_game *game);
+cl_float2				create_cfloat2 (float x, float y);
 
 #endif

@@ -6,25 +6,13 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 20:15:41 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/09/02 20:15:42 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/10/22 17:53:00 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #ifndef LIBVECT_H
 # define LIBVECT_H
-
 # define GROWTH_FACTOR	1.618
-
-# define VECT(p, s)		((t_vect){.data = p, .used = s, .total = s})
-
-# define VECT_ADD(v, d)		(vect_add(v, &d, sizeof(d)))
-# define VECT_STRADD(v, d)	(vect_add(v, &d, sizeof(d) - 1))
-
-# define VSTRCMP(v, s)	vect_memcmp(v, s, sizeof(s) - 1)
-# define VSTRSTR(v, s)	vect_memmem(v, s, sizeof(s) - 1)
-
 # include <stdlib.h>
 
 typedef struct	s_vect

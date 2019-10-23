@@ -3,20 +3,20 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+         #
+#    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/10/21 18:38:33 by sbrella          ###   ########.fr        #
+#    Updated: 2019/10/23 22:28:05 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME = rtv1
 
-FLAGS = -g -Wall -Wextra -Werror
+FLAGS = -g #-Wall -Wextra -Werror
 CC = gcc
-LIBRARIES = $(GUI_LIB) -lsdl -L$(LIBSDL_DIRECTORY)  -lm -framework OpenCL  -lvect -L$(LIBVECT) -lcl -L$(LIBCL) -lgnl -L$(LIBGNL) -lft -L$(LIBFT_DIRECTORY)
-INCLUDES = $(GUI_INC) -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)include/ -Isrcs/cl_error/ -I$(LIBGNL)include/ -I$(LIBCL)include/
+LIBRARIES = $(GUI_LIB) -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY)  -lm -framework OpenCL  -lvect -L$(LIBVECT) -lgnl -L$(LIBGNL) -lcl -L$(LIBCL)
+INCLUDES = $(GUI_INC) -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)includes/ -Isrcs/cl_error/ -I$(LIBGNL)includes/ -I$(LIBCL)includes/
 
 GUI_LIB = -L./gui/build/src -lKiWi $(shell pkg-config --libs sdl2_ttf) $(shell pkg-config --libs sdl2_image)
 GUI_INC = -I./include/SDL2 -I./gui/KiWi/src -I./gui/inc $(shell pkg-config --cflags sdl2_ttf) $(shell pkg-config --cflags sdl2_image)
@@ -67,12 +67,14 @@ RMRF = gui/src/gui_main.o\
 		gui/src/surf_tex.o\
 		gui/src/scene_select.o\
 		gui/src/main_screen.o\
-		gui/src/obj_select.o
+		gui/src/obj_select.o\
+		cJSON/cJSON.o
 
 SRCS_LIST = main.c\
 			cl_lib/gpu_init.c\
 			textures.c\
 			cl_float3_manage.c\
+			cl_float3_rotate.c\
 			keys.c\
 			camera.c\
 			const.c\
@@ -182,10 +184,16 @@ $(LIBSDL):
 	@echo "$(NAME): $(GREEN)Creating $(LIBSDL)...$(RESET)"
 	@$(MAKE) -sC $(LIBSDL_DIRECTORY)
 
+norm:
+	norminette gui/inc gui/src includes srcs libs/libcl libs/libft libs/libgnl libs/libsdl/includes libs/libsdl/srcs/ libs/libvect
+
 clean:
 	@rm -rf ./gui/build $(RMRF)
-	@$(MAKE) -sC $(LIBFT_DIRECTORY) clean
-	@$(MAKE) -sC $(LIBSDL_DIRECTORY) clean
+	$(MAKE) -sC $(LIBFT_DIRECTORY)	clean
+	$(MAKE) -sC $(LIBSDL_DIRECTORY) clean
+	$(MAKE) -sC $(LIBVECT)	clean
+	$(MAKE) -sC $(LIBCL)	clean
+	$(MAKE) -sC $(LIBGNL) 	clean
 	@rm -rf $(OBJS_DIRECTORY)
 	@echo "$(NAME): $(RED)$(OBJECTS_DIRECTORY) was deleted$(RESET)"
 	@echo "$(NAME): $(RED)object files were deleted$(RESET)"
@@ -205,6 +213,9 @@ fclean: clean
 	@echo "$(NAME): $(RED)$(NAME) was deleted$(RESET)"
 	@$(MAKE) -sC $(LIBFT_DIRECTORY) fclean
 	@$(MAKE) -sC $(LIBSDL_DIRECTORY) fclean
+	@$(MAKE) -sC $(LIBVECT) fclean
+	@$(MAKE) -sC $(LIBCL) fclean
+	@$(MAKE) -sC $(LIBGNL) fclean
 	#@rm -f $(DIRECTORY)/bin/sdl2-config
 	#@rm -f $(DIRECTORY)/lib/libSDL2.la
 	#@rm -f $(DIRECTORY)/lib/libSDL2main.la

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/10/21 18:40:57 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/10/23 22:04:48 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-static void the_loopa(t_game *game, t_gui *gui, int argc)
+static void	main_loop(t_game *game, t_gui *gui, int argc)
 {
 	while (game->av)
 	{
@@ -25,7 +25,7 @@ static void the_loopa(t_game *game, t_gui *gui, int argc)
 		game->quit = 0;
 		gui->quit = 0;
 		game->flag = 1;
-		poopa(game, gui);
+		main_render(game, gui);
 		main_screen_free(gui);
 	}
 }
@@ -38,16 +38,18 @@ int			main(int argc, char **argv)
 	gui.main_screen = 0;
 	ft_init_window(&game.sdl, WIN_W, WIN_H);
 	set_const(&game, &gui);
+	init_kiwi(&gui);
 	if (argc != 2)
 		game.av = start_gui(&gui);
 	else
+	{
+		scene_select(&gui, -1, 0);
 		game.av = argv[1];
+	}
 	SDL_SetCursor(SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR));
-	init_kiwi(&gui);
 	gui.main_screen = 1;
-	scene_select(&gui);
-	the_loopa(&game, &gui, argc);
+	opencl_init(&game);
+	main_loop(&game, &gui, argc);
 	quit_kiwi_main(&gui);
-	//release_gpu(game.gpu);
 	ft_exit(NULL);
 }

@@ -16,13 +16,12 @@ int print_error(t_gpu *gpu)
 	return (0);
 }
 
-
-void release_gpu(t_gpu *gpu)
+void	release_gpu(t_gpu *gpu)
 {
 	clReleaseProgram(gpu->program);
 	clReleaseKernel(gpu->kernel);
 	clReleaseCommandQueue(gpu->commands);
 	clReleaseContext(gpu->context);
-	clReleaseMemObject(gpu->cl_bufferOut);
-	clReleaseMemObject(gpu->cl_cpuSpheres);
+	clReleaseMemObject(gpu->cl_buffer_out);
+	clReleaseMemObject(gpu->cl_cpu_spheres);
 }

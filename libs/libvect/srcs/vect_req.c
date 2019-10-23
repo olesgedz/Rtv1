@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   vect_req.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 20:06:26 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/09/02 20:06:27 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/10/17 18:03:33 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "libvect.h"
 #include "malloc.h"

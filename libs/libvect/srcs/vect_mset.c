@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vect_push.c                                        :+:      :+:    :+:   */
+/*   vect_mset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/02 20:06:20 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/09/02 20:06:21 by jblack-b         ###   ########.fr       */
+/*   Created: 2019/09/02 20:06:04 by jblack-b          #+#    #+#             */
+/*   Updated: 2019/10/17 18:03:23 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "libvect.h"
 #include "malloc.h"
 #include "libft.h"
 
 static int		copy_push
-	(t_vect *v, void *data, size_t size, size_t n)
+	(t_vect *v, unsigned char c, size_t size, size_t n)
 {
 	void		*new;
 
@@ -26,29 +24,34 @@ static int		copy_push
 	while (v->total < v->used + size)
 		v->total *= GROWTH_FACTOR;
 	MALLOC(new, v->total);
-	new = ft_mempcpy(new, v->data, n);
-	new = ft_mempcpy(new, data, size);
-	new = ft_mempcpy(new, v->data + n, v->used - n);
+	ft_memcpy(new, v->data, n);
+	ft_memset(new + n, c, size);
+	ft_memcpy(new + n + size, v->data + n, v->used - n);
 	free(v->data);
 	v->used += size;
-	v->data = new - v->used;
+	v->data = new;
 	return (1);
 }
 
-int				vect_push
-	(t_vect *v, void *data, size_t size, size_t n)
+int				vect_mset
+	(t_vect *v, unsigned char c, size_t size, size_t n)
 {
 	if (n >= v->used)
-		return (vect_add(v, data, size));
+	{
+		vect_req(v, size);
+		ft_memset(v->data + v->used, c, size);
+		v->used += size;
+		return (1);
+	}
 	if (!v->total)
 	{
 		v->total = size;
 		MALLOC(v->data, size);
 	}
 	if (v->total < v->used + size)
-		return (copy_push(v, data, size, n));
+		return (copy_push(v, c, size, n));
 	ft_memmove(v->data + n + size, v->data + n, v->used - n);
-	ft_memcpy(v->data + n, data, size);
+	ft_memset(v->data + n, c, size);
 	v->used += size;
 	return (1);
 }

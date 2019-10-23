@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vect_new.c                                         :+:      :+:    :+:   */
+/*   vect_str_push.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/02 20:06:11 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/09/02 20:06:11 by jblack-b         ###   ########.fr       */
+/*   Created: 2019/09/02 20:06:39 by jblack-b          #+#    #+#             */
+/*   Updated: 2019/10/17 18:03:38 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "libvect.h"
-#include "malloc.h"
+#include "libft.h"
 
-t_vect		*vect_new(void *data, size_t size)
+int			vect_str_push
+	(t_vect *v, char *s, size_t n)
 {
-	t_vect	*ret;
-
-	MALLOC1(ret);
-	vect_init(ret);
-	vect_add(ret, data, size);
-	return (ret);
+	return (vect_push(v, s, ft_strlen(s), n));
 }

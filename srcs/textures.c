@@ -3,16 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 15:55:58 by sbrella           #+#    #+#             */
-/*   Updated: 2019/10/22 20:47:18 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/10/23 22:34:17 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-void					get_texture(char *name, t_txture *texture, char *path)
+static void	ya_kostil(SDL_PixelFormat *fmt)
+{
+	fmt->BytesPerPixel = 4;
+	fmt->BitsPerPixel = 32;
+	fmt->Rmask = RMASK;
+	fmt->Gmask = GMASK;
+	fmt->Bmask = BMASK;
+	fmt->Amask = AMASK;
+}
+
+void		get_texture(char *name, t_txture *texture, char *path)
 {
 	SDL_Surface			*surf;
 	SDL_Surface			*an_surf;
@@ -21,23 +31,18 @@ void					get_texture(char *name, t_txture *texture, char *path)
 
 	m = ft_strjoin(path, name);
 	an_surf = IMG_Load(m);
+	ft_strdel(&m);
 	fmt = malloc(sizeof(SDL_PixelFormat));
 	ft_memcpy(fmt, an_surf->format, sizeof(SDL_PixelFormat));
-	fmt->BytesPerPixel = 4;
-	fmt->BitsPerPixel = 32;
-	fmt->Rmask = RMASK;
-	fmt->Gmask = GMASK;
-	fmt->Bmask = BMASK;
-	fmt->Amask = AMASK;
+	ya_kostil(fmt);
 	surf = SDL_ConvertSurface(an_surf, fmt, an_surf->flags);
 	SDL_FreeSurface(an_surf);
-	free(fmt);
-	// SDL_SetColorKey(surf, 0, 0);
+	ft_memdel((void **)&fmt);
 	texture->width = surf->w;
 	texture->height = surf->h;
 	if (texture->height * texture->width <= 4096 * 2048)
-		ft_memcpy(texture->texture, surf->pixels, (size_t)((surf->h) * surf->pitch));
+		ft_memcpy(texture->texture, surf->pixels, (surf->h) * surf->pitch);
 	else
 		exit(0);
-	// SDL_FreeSurface(surf);
+	SDL_FreeSurface(surf);
 }
