@@ -1,7 +1,7 @@
 #ifndef RTV1_H
 # define RTV1_H
-# define WIN_W 400
-# define WIN_H 400
+# define WIN_W 1024
+# define WIN_H 720
 # define SAMPLES 5
 # define CL_SILENCE_DEPRECATION
 # include <sys/types.h>
