@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:50:13 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/25 18:17:06 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/25 22:24:17 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	mouse_mov(t_game *game, t_gui *gui)
 		game->gpu.samples = 0;
 		game->flag = 1;
 	}
-	else if (game->keys.space)
+	else if (game->keys.space || game->keys.r)
 		game->flag = 1;
 }
 

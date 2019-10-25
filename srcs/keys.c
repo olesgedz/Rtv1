@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:10:38 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/25 21:45:12 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/25 22:24:55 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ static void	key_switch(t_game *game)
 			game->cam_num = 0;
 		game->flag = 1;
 	}
+	else if (game->ev.key.keysym.sym == SDLK_r)
+		game->keys.r = !game->keys.r;
 }
 
 static void	key_down(t_game *game)
@@ -82,8 +84,6 @@ static void	key_down(t_game *game)
 		game->keys.x = 1;
 	else if (game->ev.key.keysym.sym == SDLK_SPACE)
 		game->keys.space = 1;
-	else if (game->ev.key.keysym.sym == SDLK_r)
-		game->keys.r = 1;
 	else
 		key_switch(game);
 }
@@ -106,8 +106,6 @@ static void	key_up(t_game *game)
 		game->keys.z = 0;
 	else if (game->ev.key.keysym.sym == SDLK_x)
 		game->keys.x = 0;
-	else if (game->ev.key.keysym.sym == SDLK_r)
-		game->keys.r = 1;
 	else if (game->ev.key.keysym.sym == SDLK_SPACE)
 		game->keys.space = 0;
 }
