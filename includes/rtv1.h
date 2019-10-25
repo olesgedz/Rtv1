@@ -1,7 +1,7 @@
 #ifndef RTV1_H
 # define RTV1_H
-# define WIN_W 1000
-# define WIN_H 1000
+# define WIN_W 1240
+# define WIN_H 1240
 # define SAMPLES 5
 # define CL_SILENCE_DEPRECATION
 # include <sys/types.h>
@@ -149,6 +149,7 @@ typedef struct			s_keys
 	int					lmb;
 	int					mm;
 	int					space;
+	int					r;
 	Sint32				xrel;
 	Sint32				yrel;
 

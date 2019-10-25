@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:54:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/24 01:01:43 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/10/25 19:54:19 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void		ft_run_kernel(t_game *game, cl_kernel kernel, int w, int h)
 
 static void		ft_render(t_game *game, t_gui *gui)
 {
-	if (!game->flag && !gui->flag)
+	if (!game->flag && !gui->flag && game->keys.r == 0)
 		return ;
 	game->flag = 0;
 	gui->flag = 0;
