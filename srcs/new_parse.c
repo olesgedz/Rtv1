@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 16:16:59 by david             #+#    #+#             */
-/*   Updated: 2019/10/25 16:41:10 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/10/25 22:40:09 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,7 +253,7 @@ void parse_sphere(const cJSON *object, t_game *game)
            terminate("missing data of sphere x_basis vector!\n");    
     }
     else
-        sphere->basis[0] = create_cfloat3(1.0, 0.0, 0.0);
+        sphere->basis[0] = create_cfloat3(0.0, 1.0, 0.0);
     parse.y_basis = cJSON_GetObjectItemCaseSensitive(object, "y_basis");
     if (parse.y_basis != NULL)
     {
@@ -266,7 +266,7 @@ void parse_sphere(const cJSON *object, t_game *game)
            terminate("missing data of sphere y_basis vector!\n");
     }
     else
-        sphere->basis[1] = create_cfloat3(0.0, 1.0, 0.0);
+        sphere->basis[1] = create_cfloat3(1.0, 0.0, 0.0);
     parse.z_basis = cJSON_GetObjectItemCaseSensitive(object, "z_basis");
     if (parse.z_basis != NULL)
     {

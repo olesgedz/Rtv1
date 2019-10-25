@@ -1,7 +1,7 @@
 #ifndef RTV1_H
 # define RTV1_H
-# define WIN_W 1000
-# define WIN_H 1000
+# define WIN_W 1240
+# define WIN_H 1240
 # define SAMPLES 5
 # define CL_SILENCE_DEPRECATION
 # include <sys/types.h>
@@ -27,9 +27,9 @@
 # ifndef DEVICE
 #  define DEVICE CL_DEVICE_TYPE_DEFAULT
 # endif
-# define RMASK 0x000000ff
+# define BMASK 0x000000ff
 # define GMASK 0x0000ff00
-# define BMASK 0x00ff0000
+# define RMASK 0x00ff0000
 # define AMASK 0xff000000
 
 typedef struct s_vec3	t_vec3;
@@ -149,6 +149,7 @@ typedef struct			s_keys
 	int					lmb;
 	int					mm;
 	int					space;
+	int					r;
 	Sint32				xrel;
 	Sint32				yrel;
 

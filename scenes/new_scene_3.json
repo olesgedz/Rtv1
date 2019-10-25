@@ -5,10 +5,12 @@
         "seamless_pawnment.jpg",
         "grass_rock.jpg",
         "ice.jpg",
-        "stars.jpg"
+        "stars.jpg",
+        "199.JPG"
     ],
     "normals":[
-        "196_norm.JPG"
+        "196_norm.JPG",
+        "199_norm.JPG"
     ],
     "objects":[
         {
@@ -52,6 +54,24 @@
             "dir": [0.0,1.0,0.0],
             "normal": 1,
             "texture": 1
+        },
+        {
+            "type": "sphere",
+            "position": [0.4,0.0,2.0],
+            "color": [0.0,0.0,0.0],
+            "radius" : 0.3,
+            "emition" : [0.0,0.0,0.0],
+            "texture": 1,
+            "normal": 1
+        },
+        {
+            "type": "cylinder",
+            "position": [0.0,-0.5,0.0],
+            "color": [0.9,0.8,0.7],
+            "dir": [0.0,1.0,0.0],
+            "normal": 2,
+            "radius": 0.2,
+            "texture": 7
         },
         {
             "type": "plane",

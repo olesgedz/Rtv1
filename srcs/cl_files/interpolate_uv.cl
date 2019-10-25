@@ -5,7 +5,7 @@ static void			get_color_sphere(t_obj *object, float3 hitpoint, t_scene *scene, f
 	float3				vect;
 
 	vect = normalize(hitpoint - object->position);
-	vect.zx = vect.xz;
+	// vect.zx = vect.xz;
 	coord->x = 0.5 + (atan2(vect.z, vect.x)) / (2 * PI);
 	coord->y = 0.5 - (asin(vect.y)) / PI;
 }

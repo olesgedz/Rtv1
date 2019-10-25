@@ -18,6 +18,15 @@ static float		rng(global ulong *rng_state)
 	return (rng_lgc(rng_state));
 }
 
+static float rng_range(global ulong *rng_state, float a, float b)
+{
+	if (a < b)
+		return (rng(rng_state) * (b - a) + a);
+	else
+		return (rng(rng_state) * (a - b) + b);
+
+}
+
 static float3		sphere_random(global t_obj *object, global ulong *rnd)
 {
 	float 			theta;
@@ -84,4 +93,23 @@ static float3		sample_uniform
 			sin_theta * sin(phi)
 		};
 	return (sampler_transform(normal, &sample));
+}
+
+static float get_random( int *seed0, int *seed1) {
+
+	/* hash the seeds using bitwise AND operations and bitshifts */
+	*seed0 = 36969 * ((*seed0) & 65535) + ((*seed0) >> 16);  
+	*seed1 = 18000 * ((*seed1) & 65535) + ((*seed1) >> 16);
+
+	unsigned int ires = ((*seed0) << 16) + (*seed1);
+
+	/* use union struct to convert int to float */
+	union 
+	{
+		float f;
+		unsigned int ui;
+	} res;
+
+	res.ui = (ires & 0x007fffff) | 0x40000000;  /* bitwise AND, bitwise OR */
+	return (res.f - 2.0f) / 2.0f;
 }

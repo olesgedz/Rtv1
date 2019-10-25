@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:54:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/24 01:01:43 by olesgedz         ###   ########.fr       */
+/*   Updated: 2019/10/25 22:19:56 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void		ft_run_kernel(t_game *game, cl_kernel kernel, int w, int h)
 	game->gpu.samples += SAMPLES;
 	global = WIN_W * WIN_H;
 	game->cl_info->ret |= clSetKernelArg(kernel, 6, sizeof(cl_int), &w);
-	ERROR(game->cl_info->ret );	
+	ERROR(game->cl_info->ret );
 	game->cl_info->ret |= clSetKernelArg(kernel, 7, sizeof(cl_int), &h);
 	game->cl_info->ret |= clSetKernelArg(kernel, 8, sizeof(cl_int),
 	&game->obj_quantity);
@@ -33,7 +33,7 @@ static void		ft_run_kernel(t_game *game, cl_kernel kernel, int w, int h)
 	clFinish(game->cl_info->cmd_queue);
 	game->cl_info->ret = cl_read(game->cl_info, game->kernels->args[0],
 	sizeof(cl_int) * WIN_W * WIN_H, game->sdl.surface->data);
-	ERROR(game->cl_info->ret );	
+	ERROR(game->cl_info->ret );
 }
 
 static void		ft_render(t_game *game, t_gui *gui)
