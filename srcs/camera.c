@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:50:13 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/23 21:54:54 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/25 18:17:06 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ static void	c_r(t_game *game, t_gui *gui)
 	if (game->keys.lmb && game->keys.mm && !gui->over_gui)
 	{
 		rotate_horizontal(&(game->gpu.camera[game->cam_num]),
-		game->gpu.camera[game->cam_num].fov / WIN_W * game->keys.xrel);
+		-game->gpu.camera[game->cam_num].fov / WIN_W * game->keys.xrel);
 		rotate_vertical(&(game->gpu.camera[game->cam_num]),
-		game->gpu.camera[game->cam_num].fov / WIN_H * -game->keys.yrel);
+		-game->gpu.camera[game->cam_num].fov / WIN_H * -game->keys.yrel);
 		game->flag = 1;
 	}
 	mouse_mov(game, gui);
