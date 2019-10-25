@@ -28,10 +28,17 @@
         },
         {
             "type": "sphere",
+            "position": [0.2,0.0,0.1],
+            "color": [0.9,0.8,0.7],
+            "radius" : 0.2,
+            "texture": 0
+        },
+        {
+            "type": "sphere",
             "position": [0.0,0.2,1.0],
             "color": [0.0,0.0,0.0],
             "radius" : 0.2,
-            "emition" : [160.0,160.0,160.0],
+            "emition" : [100.0,100.0,100.0],
             "texture": 2
         },
         {
@@ -46,8 +53,7 @@
             "position": [1.0,0.0,0.0],
             "color": [0.25,0.25,0.75],
             "dir": [1.0,0.0,0.0],
-            "texture": 0,
-            "reflection": 1.0
+            "texture": 0
         },
         {
             "type": "plane",

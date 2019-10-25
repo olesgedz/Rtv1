@@ -149,6 +149,7 @@ typedef struct			s_keys
 	int					lmb;
 	int					mm;
 	int					space;
+	int					r;
 	Sint32				xrel;
 	Sint32				yrel;
 
