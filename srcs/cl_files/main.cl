@@ -10,7 +10,7 @@
 
 #define SAMPLES 5
 #define BOUNCES 4
-#define LIGHTSAMPLING 1
+#define LIGHTSAMPLING 0
 
 
 static void intersection_reset(t_intersection * intersection)
@@ -36,11 +36,14 @@ static void createCamRay(const int width, const int height, t_scene *scene, t_ra
 	float fx = (float)scene->x_coord / (float)width;
 	float fy = (float)scene->y_coord / (float)height;
 
-	fx = (fx - 0.5f);
-	fy = (fy - 0.5f);
+	fx = (fx  - 0.5f);
+	fy = (fy  - 0.5f);
 	float3 pixel_pos = scene->camera.direction - fy * (scene->camera.border_x) - fx * (scene->camera.border_y);
 	ray->origin = scene->camera.position;
-	ray->dir = normalize(pixel_pos + float3(rng(scene->random) * EPSILON, rng(scene->random) * EPSILON, rng(scene->random) * EPSILON));
+	//ray->dir = normalize(pixel_pos);
+	ray->dir =  scene->camera.border_x * ((float) fy) - scene->camera.border_y * (float) (-fx);
+	ray->dir = scene->camera.direction - ray->dir;
+	ray->dir = normalize(ray->dir);
 }
 
 static bool intersect_scene(t_scene *scene, t_intersection *intersection, t_ray *ray, int light)
@@ -226,7 +229,7 @@ __global float3 * vect_temp,  __global ulong * random,  __global t_txture *textu
 	finalcolor = vect_temp[x_coord + y_coord * width];
 	scene_new(objects, n_objects, width, height, samples, random, textures, camera, &scene, normals);
 	//output[scene.x_coord + scene.y_coord * width] = 0xFF0000;      /* uncomment to test if opencl runs */
-	// // print_debug(scene.samples, scene.width, &scene);
+	 print_debug(scene.samples, scene.width, &scene);
 	for (int i = 0; i < SAMPLES; i++)
 	{
 		createCamRay(width, height, &scene, &(intersection.ray));
