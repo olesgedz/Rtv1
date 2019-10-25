@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:50:13 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/25 22:24:17 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/25 22:40:13 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
+
+void	reconfigure_camera(t_cam *camera)
+{
+	float		x_fov;
+	float		y_fov;
+
+	x_fov = (float)WIN_W / (float)WIN_H > 1 ? camera->fov / 2 :
+	camera->fov / 2 * (float)WIN_W / (float)WIN_H;
+	y_fov = (float)WIN_H / (float)WIN_W > 1 ? (camera->fov / 2) :
+	(camera->fov / 2) * ((float)WIN_H / (float)WIN_W);
+	camera->border_y = vector_diff(
+	rotate(camera->normal, camera->direction, x_fov),
+	rotate(camera->normal, camera->direction, -x_fov));
+	camera->border_x = vector_diff(
+	rotate(cross(camera->direction, camera->normal), camera->direction, y_fov),
+	rotate(cross(camera->direction, camera->normal),
+	camera->direction, -y_fov));
+}
 
 void		pos_check(t_gui *gui)
 {
