@@ -85,6 +85,7 @@ typedef struct			s_scene
 	__global t_txture	*textures;
 	__global t_txture	*normals;
 	t_cam				camera;
+	int					lightsampling;
 }						t_scene;
 
 float 					cl_float3_max(float3 v);

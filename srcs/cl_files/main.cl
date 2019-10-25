@@ -160,12 +160,12 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 		float3 newdir = sample_uniform(&intersection->normal, &cosine, scene);
 		/* add a very small offset to the hitpoint to prevent self intersection */
 		float pdf = 1.f;
-		if (LIGHTSAMPLING)
+		if (scene->lightsampling)
 			pdf = 0.3f;
 		if (objecthit.reflection > 0)
 		{
 			accum_color += mask * objecthit.emission * pdf;
-			if (LIGHTSAMPLING)
+			if (scene->lightsampling)
 			{
 				explicit = radiance_explicit(scene, intersection);
 				accum_color += explicit * mask  * objecthit.color;//* intersection->material.color;
@@ -179,8 +179,8 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 		else
 		{
 			accum_color += mask * objecthit.emission * pdf;
-			
-			if (LIGHTSAMPLING)
+
+			if (scene->lightsampling)
 			{
 				explicit = radiance_explicit(scene, intersection);
 				accum_color += explicit * mask *  objecthit.color;//intersection->material.color;
@@ -196,7 +196,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 
 
 static void scene_new(__global t_obj* objects, int n_objects, int width, int height,\
- int samples, __global ulong * random, __global t_txture *textures, t_cam camera, t_scene *scene, __global t_txture *normals)
+ int samples, __global ulong * random, __global t_txture *textures, t_cam camera, t_scene *scene, __global t_txture *normals, int lightsampling)
 {
 	// t_scene new_scene;
 
@@ -212,10 +212,11 @@ static void scene_new(__global t_obj* objects, int n_objects, int width, int hei
 	scene->textures = textures;
 	scene->normals = normals;
 	scene->camera = camera;
+	scene->lightsampling = !lightsampling;
 }
 
 __kernel void render_kernel(__global int* output, __global t_obj* objects,
-__global float3 * vect_temp,  __global ulong * random,  __global t_txture *textures, __global t_txture *normals, int width, int height,  int n_objects, int samples, t_cam camera)
+__global float3 * vect_temp,  __global ulong * random,  __global t_txture *textures, __global t_txture *normals, int width, int height,  int n_objects, int samples, t_cam camera, int lightsampling)
 {
 
 	t_scene scene;
@@ -225,7 +226,7 @@ __global float3 * vect_temp,  __global ulong * random,  __global t_txture *textu
 	unsigned int x_coord = work_item_id % width;			/* x-coordinate of the pixel */
 	unsigned int y_coord = work_item_id / width;			/* y-coordinate of the pixel */
 	finalcolor = vect_temp[x_coord + y_coord * width];
-	scene_new(objects, n_objects, width, height, samples, random, textures, camera, &scene, normals);
+	scene_new(objects, n_objects, width, height, samples, random, textures, camera, &scene, normals, lightsampling);
 	//output[scene.x_coord + scene.y_coord * width] = 0xFF0000;      /* uncomment to test if opencl runs */
 	// print_debug(scene.samples, scene.width, &scene);
 	for (int i = 0; i < SAMPLES; i++)

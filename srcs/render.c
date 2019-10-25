@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:54:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/25 22:19:56 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/25 22:53:36 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void		ft_run_kernel(t_game *game, cl_kernel kernel, int w, int h)
 {
-	size_t global;
+	size_t	global;
 
 	game->gpu.samples += SAMPLES;
 	global = WIN_W * WIN_H;
@@ -27,6 +27,8 @@ static void		ft_run_kernel(t_game *game, cl_kernel kernel, int w, int h)
 	&game->gpu.samples);
 	game->cl_info->ret |= clSetKernelArg(kernel, 10, sizeof(t_cam),
 	&game->gpu.camera[game->cam_num]);
+	game->cl_info->ret |= clSetKernelArg(kernel, 11, sizeof(int),
+	&(game->keys.r));
 	ERROR(game->cl_info->ret );
 	game->cl_info->ret = cl_krl_exec(game->cl_info, kernel, 1, &global);
 	ERROR(game->cl_info->ret );
