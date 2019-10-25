@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 16:16:59 by david             #+#    #+#             */
-/*   Updated: 2019/10/23 21:54:43 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/10/25 16:41:10 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,50 +16,6 @@
 //если при добавлении очередного объекта в json файл программа не работает,
 //попробуй увеличить размер buffer в функции read_scene
 
-
-
-typedef struct  s_json
-{
-    cJSON *position;
-    cJSON *color;
-    cJSON *emition;
-    cJSON *reflection;
-    cJSON *texture;
-    cJSON *radius;
-    cJSON *v;
-    cJSON *x;
-    cJSON *y;
-    cJSON *z;
-    cJSON *a;
-    cJSON *b;
-    cJSON *c;
-    cJSON *shift;
-    cJSON *x_basis;
-    cJSON *y_basis;
-    cJSON *z_basis;
-    cJSON *rotation;
-    cJSON *prolapse;
-    cJSON *type;
-    cJSON *normal;
-}               t_json;
-
-void	reconfigure_camera(t_cam *camera)
-{
-	float		x_fov;
-	float		y_fov;
-
-	x_fov = (float)WIN_W / (float)WIN_H > 1 ? camera->fov / 2 :
-	camera->fov / 2 * (float)WIN_W / (float)WIN_H;
-	y_fov = (float)WIN_H / (float)WIN_W > 1 ? (camera->fov / 2) :
-	(camera->fov / 2) * ((float)WIN_H / (float)WIN_W);
-	camera->border_y = vector_diff(
-	rotate(camera->normal, camera->direction, x_fov),
-	rotate(camera->normal, camera->direction, -x_fov));
-	camera->border_x = vector_diff(
-	rotate(cross(camera->direction, camera->normal), camera->direction, y_fov),
-	rotate(cross(camera->direction, camera->normal),
-	camera->direction, -y_fov));
-}
 
 void parse_plane(const cJSON *object, t_game *game)
 {
@@ -431,6 +387,9 @@ void parse_cylinder(const cJSON *object, t_game *game)
     }
     else
         cylinder->shift = create_cfloat2(0.0, 0.0);
+
+
+    
     parse.x_basis = cJSON_GetObjectItemCaseSensitive(object, "x_basis");
     if (parse.x_basis != NULL)
     {

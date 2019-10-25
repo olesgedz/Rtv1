@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
+#    By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/10/23 22:28:05 by lminta           ###   ########.fr        #
+#    Updated: 2019/10/25 17:40:18 by srobert-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,7 +88,8 @@ SRCS_LIST = main.c\
 			../gui/src/main_screen.c\
 			../gui/src/obj_select.c\
 			../cJSON/cJSON.c\
-			new_parse.c
+			new_slim_parse.c\
+			parse_util.c
 
 OBJS_DIRECTORY = objects/
 OBJS_LIST = $(patsubst %.c, %.o, $(SRCS_LIST))
