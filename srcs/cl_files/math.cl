@@ -1,6 +1,6 @@
 static int	ft_rgb_to_hex(int r, int g, int b)
 {
-	return (r << 0 | g << 8 | b << 16);
+	return (r << 16 | g << 8 | b);
 }
 
 static float u_clamp(float x)
@@ -14,7 +14,7 @@ static int	c_floor(float x)
 }
 
 static int toInt(float x)
-{ 
+{
 	return int(c_floor(x * 255.f));
 }
 
