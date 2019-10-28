@@ -54,7 +54,8 @@ typedef enum			e_figure
 	CYLINDER,
 	CONE,
 	PLANE,
-	TRIANGLE
+	TRIANGLE,
+	COMPOSED
 }						t_type;
 
 typedef struct			s_txture
