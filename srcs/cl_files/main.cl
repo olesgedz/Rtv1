@@ -135,7 +135,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 	float3 accum_color = (float3)(0.0f, 0.0f, 0.0f);
 	float3 mask = (float3)(1.0f, 1.0f, 1.0f);
 	float3 explicit;
-	for (int bounces = 0; bounces < BOUNCES; bounces++)
+	for (int bounces = 0; bounces < (scene->lightsampling ? 1 : BOUNCES); bounces++)
 	{
 		/* if ray misses scene, return background colour */
 		if (!intersect_scene(scene, intersection, &ray, 0))
