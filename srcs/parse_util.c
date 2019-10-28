@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 17:05:04 by srobert-          #+#    #+#             */
-/*   Updated: 2019/10/25 21:43:52 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/10/28 17:42:12 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 #include "errno.h"
 
 cl_float3   parse_vec3(cJSON *vec)

@@ -6,11 +6,11 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 15:55:58 by sbrella           #+#    #+#             */
-/*   Updated: 2019/10/23 22:44:24 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/28 17:42:12 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 static void	ya_kostil(SDL_PixelFormat *fmt)
 {

@@ -6,11 +6,11 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 18:04:29 by lminta            #+#    #+#             */
-/*   Updated: 2019/09/22 14:12:10 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/28 17:42:12 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 void		print_error_gui(const char *message, const char *error_message)
 {

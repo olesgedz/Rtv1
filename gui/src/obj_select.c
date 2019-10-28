@@ -6,11 +6,11 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 19:08:02 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/22 20:14:59 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/28 17:42:12 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 static void	clicked(KW_Widget *widget, int b)
 {

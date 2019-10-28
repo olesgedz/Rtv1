@@ -6,11 +6,11 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 16:30:29 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/23 22:38:20 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/28 17:42:12 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 #include "KW_scrollbox_internal.h"
 
 static void	clicked(KW_Widget *widget, int b)
