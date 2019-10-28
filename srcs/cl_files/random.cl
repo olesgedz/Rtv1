@@ -8,9 +8,9 @@ static float		rng_lgc(global ulong *rng_state)
 
 	gi = get_global_id(0);
 	x = rng_state[gi];
-	x = (0x5DEECE66DL * x + 0xBL) & ((1L << 16) - 1);
+	x = (0x5DEECE66DL * x + 0xBL) & ((1L << 32) - 1);
 	rng_state[gi] = x;
-    return ((float)x / (1L << 16));
+    return ((float)x / (1L << 32));
 }
 
 static float		rng(global ulong *rng_state)
@@ -44,22 +44,17 @@ static float3		sphere_random(global t_obj *object, global ulong *rnd)
 
 static void			create_coordinate_system(float3 *normal, float3 *nt, float3 *nb)
 {
-	if (fabs(normal->x) > fabs(normal->y))
+	if (normal->x != 0.0f || normal->z != 0.0f)
 		*nt = (float3){normal->z, 0., -1.f * normal->x};
 	else
 		*nt = (float3){0., -1.f * normal->z, normal->y};
 	*nt = normalize(*nt);
-	*nb = cross(*normal, *nt);
+	*nb = normalize(cross(*normal, *nt));
 }
 
 static float3		convert_sample(float3 *normal, float3 *sample, float3 *nt, float3 *nb)
 {
-	return ((float3)
-		{
-			sample->x * nb->x + sample->y * normal->x + sample->z * nt->x,
-			sample->x * nb->y + sample->y * normal->y + sample->z * nt->y,
-			sample->x * nb->z + sample->y * normal->z + sample->z * nt->z
-		});
+	return (sample->x * (*nt) + sample->z * (*normal) + sample->y * (*nb));
 }
 
 static float3		sampler_transform(float3 *normal, float3 *sample)
@@ -76,23 +71,28 @@ static float3		sample_uniform
 					float *cosine,
 					t_scene * scene)
 {
-	float 			r[2];
-	float3			sample;
-	float			sin_theta;
-	float			phi;
+	float3 			r;
+	float3			ret;
+	// float3			sample;
+	// float			sin_theta;
+	// float			phi;
 
-	r[0] = rng(scene->random);
-	r[1] = rng(scene->random);
-	sin_theta = sqrt(max(0.0f , 1.0f - r[0] * r[0]));
-	phi = 2.0f * PI * r[1];
-	*cosine = r[0];
-	sample = (float3)
-		{
-			sin_theta * cos(phi),
-			r[0],
-			sin_theta * sin(phi)
-		};
-	return (sampler_transform(normal, &sample));
+	r.z = rng(scene->random);
+	r.x = rng(scene->random) * 2.f - 1.f;
+	r.y = rng(scene->random) * 2.f - 1.f;
+	// sin_theta = sqrt(max(0.0f , 1.0f - r.x * r.x));
+	// phi = 2.0f * PI * r.y;
+	ret = normalize(sampler_transform(normal, &r));
+	*cosine = dot(*normal, ret);
+	// if (get_global_id(0) == 16000)
+	// 	printf("%f %f %f\n", ret.x, ret.y, ret.z);
+	// sample = (float3)
+	// 	{
+	// 		sin_theta * cos(phi),
+	// 		r[0],
+	// 		sin_theta * sin(phi)
+	// 	};
+	return (ret);
 }
 
 static float get_random( int *seed0, int *seed1) {

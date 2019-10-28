@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_slim_parse.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/10/28 17:42:12 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/28 18:06:34 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static void parse_facing(const cJSON *object, t_obj *obj, t_json *parse)
 		obj->texture = (int)parse->texture->valuedouble;
 	else
 		obj->texture = 0;
+	parse->normal = cJSON_GetObjectItemCaseSensitive(object, "normal");
 	if (parse->normal != NULL)
 		obj->normal = (int)parse->normal->valuedouble;
 	else
