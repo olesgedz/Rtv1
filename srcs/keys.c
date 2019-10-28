@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:10:38 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/28 17:42:12 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/28 21:35:34 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	mouse(t_game *game, t_gui *gui)
 	}
 	else if (game->ev.type == SDL_MOUSEMOTION)
 	{
-		pos_check(gui);
+		pos_check(game, gui);
 		game->keys.xrel = -game->ev.motion.xrel;
 		game->keys.yrel = -game->ev.motion.yrel;
 		game->keys.mm = 1;
@@ -60,6 +60,8 @@ static void	key_switch(t_game *game)
 			game->cam_num = 0;
 		game->flag = 1;
 	}
+	else if (game->ev.key.keysym.sym == SDLK_h)
+		show_hide(game, g_gui(0, 0));
 	else if (game->ev.key.keysym.sym == SDLK_r)
 		game->keys.r = !game->keys.r;
 }

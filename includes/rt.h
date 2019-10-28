@@ -152,7 +152,7 @@ typedef struct			s_keys
 	int					r;
 	Sint32				xrel;
 	Sint32				yrel;
-
+	int					show_gui;
 }						t_keys;
 
 typedef struct			s_game
@@ -241,7 +241,7 @@ void					ft_object_push(t_game *game, t_obj *object);
 void					ft_cam_push(t_game *game, t_cam *cam);
 void					main_screen(t_gui *gui, t_game *game);
 void					obj_select(t_gui *gui, t_obj *objs, int num);
-void					pos_check(t_gui *gui);
+void					pos_check(t_game *game, t_gui *gui);
 void					opencl_init(t_game *game);
 void					check_file(t_game *game);
 cl_float2				create_cfloat2 (float x, float y);
@@ -250,4 +250,5 @@ cl_float2				parse_vec2(cJSON *vec);
 void					main_screen(t_gui *gui, t_game *game);
 void					semples_to_line(t_game *game, t_gui *gui);
 void					info_button(t_game *game, t_gui *gui);
+void					show_hide(t_game *game, t_gui *gui);
 #endif

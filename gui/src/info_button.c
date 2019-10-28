@@ -6,11 +6,28 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 17:38:36 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/28 20:57:18 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/28 21:33:05 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+void		show_hide(t_game *game, t_gui *gui)
+{
+	game->keys.show_gui = !game->keys.show_gui;
+	if (game->keys.show_gui)
+	{
+		KW_ShowWidget(gui->i_b.frame);
+		KW_ShowWidget(gui->o_s.frame);
+		KW_ShowWidget(gui->s_s.frame);
+	}
+	else
+	{
+		KW_HideWidget(gui->i_b.frame);
+		KW_HideWidget(gui->o_s.frame);
+		KW_HideWidget(gui->s_s.frame);
+	}
+}
 
 static char	*filename(void)
 {
@@ -61,14 +78,14 @@ void		semples_to_line(t_game *game, t_gui *gui)
 	char *buff;
 
 	buff = ft_itoa(game->gpu.samples);
-	free(gui->inf_b.names);
-	gui->inf_b.names = ft_strjoin("Samples: ", buff);
+	free(gui->i_b.names);
+	gui->i_b.names = ft_strjoin("Samples: ", buff);
 	free(buff);
-	if (!gui->inf_b.label)
-		gui->inf_b.label = KW_CreateLabel(gui->gui, gui->inf_b.frame,
-	gui->inf_b.names, &gui->inf_b.titlerect);
+	if (!gui->i_b.label)
+		gui->i_b.label = KW_CreateLabel(gui->gui, gui->i_b.frame,
+	gui->i_b.names, &gui->i_b.titlerect);
 	else
-		KW_SetLabelText(gui->inf_b.label, gui->inf_b.names);
+		KW_SetLabelText(gui->i_b.label, gui->i_b.names);
 }
 
 void		info_button(t_game *game, t_gui *gui)
@@ -76,21 +93,21 @@ void		info_button(t_game *game, t_gui *gui)
 	unsigned			test;
 	int					fr_sz;
 
-	gui->inf_b.label = 0;
+	gui->i_b.label = 0;
 	fr_sz = WIN_W / 10.;
-	gui->inf_b.weights[0] = 1;
-	gui->inf_b.frect = (KW_Rect){10, WIN_H - 110, fr_sz, 100};
-	gui->inf_b.titlerect = (KW_Rect){10, 10, fr_sz - 20, 30};
-	gui->inf_b.buttonrect = (KW_Rect){0, 0, 30, 40};
-	gui->inf_b.rects[0] = &gui->inf_b.buttonrect;
-	KW_RectFillParentHorizontally(&gui->inf_b.frect,
-	gui->inf_b.rects, gui->inf_b.weights, 1, 15,
+	gui->i_b.weights[0] = 1;
+	gui->i_b.frect = (KW_Rect){10, WIN_H - 110, fr_sz, 100};
+	gui->i_b.titlerect = (KW_Rect){10, 10, fr_sz - 20, 30};
+	gui->i_b.buttonrect = (KW_Rect){0, 0, 30, 40};
+	gui->i_b.rects[0] = &gui->i_b.buttonrect;
+	KW_RectFillParentHorizontally(&gui->i_b.frect,
+	gui->i_b.rects, gui->i_b.weights, 1, 15,
 	KW_RECT_ALIGN_MIDDLE);
-	gui->inf_b.buttonrect.y += 10;
-	gui->inf_b.frame = KW_CreateFrame(gui->gui, NULL, &gui->inf_b.frect);
+	gui->i_b.buttonrect.y += 10;
+	gui->i_b.frame = KW_CreateFrame(gui->gui, NULL, &gui->i_b.frect);
 	semples_to_line(game, gui);
-	gui->inf_b.buttons = KW_CreateButtonAndLabel(gui->gui,
-gui->inf_b.frame, "Take picture", &gui->inf_b.buttonrect);
-	KW_AddWidgetMouseDownHandler(gui->inf_b.buttons, clicked);
-	KW_SetWidgetUserData(gui->inf_b.buttons, (void *)game);
+	gui->i_b.buttons = KW_CreateButtonAndLabel(gui->gui,
+gui->i_b.frame, "Take picture", &gui->i_b.buttonrect);
+	KW_AddWidgetMouseDownHandler(gui->i_b.buttons, clicked);
+	KW_SetWidgetUserData(gui->i_b.buttons, (void *)game);
 }

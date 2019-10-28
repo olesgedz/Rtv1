@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:50:13 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/28 19:57:24 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/28 21:17:25 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,27 @@ void	reconfigure_camera(t_cam *camera)
 	camera->direction, -y_fov));
 }
 
-void		pos_check(t_gui *gui)
+void		pos_check(t_game *game, t_gui *gui)
 {
-	int	tx;
-	int	ty;
+	int	x;
+	int	y;
 
-	tx = 0;
-	ty = 0;
-	SDL_GetMouseState(&tx, &ty);
+	x = 0;
+	y = 0;
+	SDL_GetMouseState(&x, &y);
 	gui->over_gui = 0;
-	if (tx > gui->s_s.frect.x && tx < gui->s_s.frect.x + gui->s_s.frect.w)
-		if (ty > gui->s_s.frect.y && ty < gui->s_s.frect.y + gui->s_s.frect.h)
-			gui->over_gui = 1;
-	if (tx > gui->o_s.frect.x && tx < gui->o_s.frect.x + gui->o_s.frect.w)
-		if (ty > gui->o_s.frect.y && ty < gui->o_s.frect.y + gui->o_s.frect.h)
-			gui->over_gui = 1;
-	if (tx > gui->inf_b.frect.x && tx < gui->inf_b.frect.x + gui->inf_b.frect.w)
-		if (ty > gui->inf_b.frect.y
-		&& ty < gui->inf_b.frect.y + gui->inf_b.frect.h)
-			gui->over_gui = 1;
+	if (game->keys.show_gui)
+		if (x > gui->s_s.frect.x && x < gui->s_s.frect.x + gui->s_s.frect.w)
+			if (y > gui->s_s.frect.y && y < gui->s_s.frect.y + gui->s_s.frect.h)
+				gui->over_gui = 1;
+	if (game->keys.show_gui)
+		if (x > gui->o_s.frect.x && x < gui->o_s.frect.x + gui->o_s.frect.w)
+			if (y > gui->o_s.frect.y && y < gui->o_s.frect.y + gui->o_s.frect.h)
+				gui->over_gui = 1;
+	if (game->keys.show_gui)
+		if (x > gui->i_b.frect.x && x < gui->i_b.frect.x + gui->i_b.frect.w)
+			if (y > gui->i_b.frect.y && y < gui->i_b.frect.y + gui->i_b.frect.h)
+				gui->over_gui = 1;
 	if (gui->over_gui)
 		SDL_SetCursor(SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW));
 	else

@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/28 20:08:16 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/28 21:16:14 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ typedef struct		s_gui
 	KW_RenderDriver	*driver;
 	KW_Surface		*set;
 	KW_GUI			*gui;
-	t_info_button	inf_b;
+	t_info_button	i_b;
 	t_edit_win		ed_w;
 	t_scene_select	s_s;
 	t_object_select	o_s;
