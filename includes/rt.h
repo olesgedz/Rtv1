@@ -183,30 +183,30 @@ typedef struct			s_game
 	t_keys				keys;
 }						t_game;
 
-typedef struct  s_json
+typedef struct			s_json
 {
-    cJSON *position;
-    cJSON *color;
-    cJSON *emition;
-    cJSON *reflection;
-    cJSON *texture;
-    cJSON *radius;
-    cJSON *v;
-    cJSON *x;
-    cJSON *y;
-    cJSON *z;
-    cJSON *a;
-    cJSON *b;
-    cJSON *c;
-    cJSON *shift;
-    cJSON *x_basis;
-    cJSON *y_basis;
-    cJSON *z_basis;
-    cJSON *rotation;
-    cJSON *prolapse;
-    cJSON *type;
-    cJSON *normal;
-}               t_json;
+	cJSON				*position;
+	cJSON				*color;
+	cJSON				*emition;
+	cJSON				*reflection;
+	cJSON				*texture;
+	cJSON				*radius;
+	cJSON				*v;
+	cJSON				*x;
+	cJSON				*y;
+	cJSON				*z;
+	cJSON				*a;
+	cJSON				*b;
+	cJSON				*c;
+	cJSON				*shift;
+	cJSON				*x_basis;
+	cJSON				*y_basis;
+	cJSON				*z_basis;
+	cJSON				*rotation;
+	cJSON				*prolapse;
+	cJSON				*type;
+	cJSON				*normal;
+}						t_json;
 
 int						bind_data(t_gpu *gpu, t_game *game);
 void					release_gpu(t_gpu *gpu);
@@ -246,5 +246,8 @@ void					opencl_init(t_game *game);
 void					check_file(t_game *game);
 cl_float2				create_cfloat2 (float x, float y);
 cl_float3				parse_vec3(cJSON *vec);
-cl_float2  				parse_vec2(cJSON *vec);
+cl_float2				parse_vec2(cJSON *vec);
+void					main_screen(t_gui *gui, t_game *game);
+void					semples_to_line(t_game *game, t_gui *gui);
+void					info_button(t_game *game, t_gui *gui);
 #endif
