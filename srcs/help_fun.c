@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   help_fun.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:51:09 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/28 17:42:12 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/28 19:21:44 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@ cl_ulong	*get_random(cl_ulong *random)
 	i = -1;
 	if (!(random = ft_memalloc(sizeof(cl_ulong) * (int)WIN_H * (int)WIN_W)))
 		ft_exit(0);
-	srand(21);
+	srand(time(NULL));
 	while (++i < WIN_H * WIN_W)
 	{
-		random[i] = rand();
+		// srand(time(NULL));
+		random[i] = rand() | (cl_ulong)rand() << 32;
 	}
 	return (random);
 }
