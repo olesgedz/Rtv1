@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_scene.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:53:01 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/25 18:31:31 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/10/28 17:42:12 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 static void			opencl_write_args(t_game *game)
 {
@@ -86,7 +86,7 @@ void				opencl(t_game *game, char *argv)
 	sizeof(t_txture) * game->textures_num, game->textures);
 	game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[5],\
 	sizeof(t_txture) * game->normals_num, game->normals);
-	ERROR(game->cl_info->ret );	
+	ERROR(game->cl_info->ret );
 }
 
 void				free_opencl(t_game *game)

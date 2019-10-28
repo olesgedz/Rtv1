@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+         #
+#    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/10/25 17:40:18 by srobert-         ###   ########.fr        #
+#    Updated: 2019/10/28 17:42:12 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ LIBSDL = $(LIBSDL_DIRECTORY)libsdl.a
 LIBSDL_HEADERS = $(LIBSDL_DIRECTORY)includes/
 
 HEADERS_DIRECTORY = ./includes/
-HEADERS_LIST = rtv1.h
+HEADERS_LIST = rt.h
 HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
 
 DIRECTORY =  $(shell pwd)
@@ -86,6 +86,7 @@ SRCS_LIST = main.c\
 			../gui/src/surf_tex.c\
 			../gui/src/scene_select.c\
 			../gui/src/main_screen.c\
+			../gui/src/info_button.c\
 			../gui/src/obj_select.c\
 			../cJSON/cJSON.c\
 			new_slim_parse.c\
