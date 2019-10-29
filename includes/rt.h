@@ -83,6 +83,9 @@ typedef struct			s_object
 	cl_float3			basis[3];
 	cl_float2			rotation;
 	cl_float2			prolapse;
+	cl_float3			composed_pos;
+	cl_float3			composed_v;
+	cl_int				id;
 }						t_obj;
 
 typedef struct			s_ray
@@ -185,28 +188,30 @@ typedef struct			s_game
 
 typedef struct			s_json
 {
-	cJSON				*position;
-	cJSON				*color;
-	cJSON				*emition;
-	cJSON				*reflection;
-	cJSON				*texture;
-	cJSON				*radius;
-	cJSON				*v;
-	cJSON				*x;
-	cJSON				*y;
-	cJSON				*z;
-	cJSON				*a;
-	cJSON				*b;
-	cJSON				*c;
-	cJSON				*shift;
-	cJSON				*x_basis;
-	cJSON				*y_basis;
-	cJSON				*z_basis;
-	cJSON				*rotation;
-	cJSON				*prolapse;
-	cJSON				*type;
-	cJSON				*normal;
-}						t_json;
+    cJSON *position;
+    cJSON *color;
+    cJSON *emition;
+    cJSON *reflection;
+    cJSON *texture;
+    cJSON *radius;
+    cJSON *v;
+    cJSON *x;
+    cJSON *y;
+    cJSON *z;
+    cJSON *a;
+    cJSON *b;
+    cJSON *c;
+    cJSON *shift;
+    cJSON *x_basis;
+    cJSON *y_basis;
+    cJSON *z_basis;
+    cJSON *rotation;
+    cJSON *prolapse;
+    cJSON *type;
+    cJSON *normal;
+	cJSON *composed_pos;
+	cJSON *composed_v;
+}               t_json;
 
 int						bind_data(t_gpu *gpu, t_game *game);
 void					release_gpu(t_gpu *gpu);
@@ -254,4 +259,6 @@ void					show_hide(t_game *game, t_gui *gui);
 void					mouse(t_game *game, t_gui *gui);
 void					gui_bar(t_game *game, t_gui *gui);
 void					buttons(t_game *game, t_gui *gui, int fr_sz);
+cl_float2  				parse_vec2(cJSON *vec);
+void					check_object(const cJSON *object, t_game *game, cJSON *comp_pos, cJSON *comp_v, int id);
 #endif

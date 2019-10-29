@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_slim_parse.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/10/29 18:11:37 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/29 21:45:19 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,17 @@ static void parse_necessary(const cJSON *object, t_obj *obj, t_json *parse)
 {
 	parse->position = cJSON_GetObjectItemCaseSensitive(object, "position");
 	obj->position = parse_vec3(parse->position);
-	if (obj->position.v4[0] == -9763.0 && obj->type != TRIANGLE)
+	if (isnan(obj->position.v4[0]) && obj->type != TRIANGLE)
 		terminate("missing data of obj position!\n");
+	obj->position = sum_cfloat3(obj->position, obj->composed_pos);
 	parse->v = cJSON_GetObjectItemCaseSensitive(object, "dir");
 	obj->v = parse_vec3(parse->v);
-	if (obj->v.v4[0] == -9763.0 && obj->type != SPHERE && obj->type != TRIANGLE)
+	if (isnan(obj->v.v4[0]) && obj->type != SPHERE && obj->type != TRIANGLE)
 		terminate("missing data of obj dir !\n");
+	obj->v =normalize(sum_cfloat3(obj->v, obj->composed_v));
 	parse->color = cJSON_GetObjectItemCaseSensitive(object, "color");
 	obj->color = parse_vec3(parse->color);
-	if (obj->color.v4[0] == -9763.0)
+	if (isnan(obj->color.v4[0]))
 		terminate("missing data of obj color vector!\n");
 	parse->radius = cJSON_GetObjectItemCaseSensitive(object, "radius");
 	if (parse->radius != NULL)
@@ -40,8 +42,8 @@ static void parse_facing(const cJSON *object, t_obj *obj, t_json *parse)
 	if (parse->emition != NULL)
 	{
 		obj->emission = parse_vec3(parse->emition);
-		if (obj->position.v4[0] == -9763.0)
-		terminate("missing data of obj emition vector!\n");
+		if (isnan(obj->position.v4[0]))
+		   terminate("missing data of obj emition vector!\n"); 
 	}
 	else
 		obj->emission = create_cfloat3(0.0, 0.0, 0.0);
@@ -64,8 +66,8 @@ static void parse_facing(const cJSON *object, t_obj *obj, t_json *parse)
 	if (parse->shift != NULL)
 	{
 		obj->shift = parse_vec2(parse->shift);
-		if (obj->shift.s[0] == -9763.0)
-		terminate("missing data of obj shift vector!\n");
+		if (isnan(obj->shift.s[0]))
+		   terminate("missing data of obj shift vector!\n");
 	}
 	else
 		obj->shift = create_cfloat2(0.0, 0.0);
@@ -78,8 +80,8 @@ static void plane_basis(const cJSON *object, t_obj *obj, t_json *parse)
 	if (parse->x_basis != NULL)
 	{
 		obj->basis[0] = parse_vec3(parse->x_basis);
-		if (obj->basis[0].v4[0] == -9763.0)
-		terminate("missing data of plane x_basis vector!\n");
+		if (isnan(obj->basis[0].v4[0]))
+		   terminate("missing data of plane x_basis vector!\n");    
 	}
 	else
 	{
@@ -92,8 +94,8 @@ static void plane_basis(const cJSON *object, t_obj *obj, t_json *parse)
 	if (parse->y_basis != NULL)
 	{
 		obj->basis[1] = parse_vec3(parse->x_basis);
-		if (obj->basis[1].v4[0] == -9763.0)
-		terminate("missing data of plane y_basis vector!\n");
+		if (isnan(obj->basis[1].v4[0]))
+		   terminate("missing data of plane y_basis vector!\n");    
 	}
 	else
 		obj->basis[1] = cross(obj->v, obj->basis[0]);
@@ -101,8 +103,8 @@ static void plane_basis(const cJSON *object, t_obj *obj, t_json *parse)
 	if (parse->z_basis != NULL)
 	{
 		obj->basis[2] = parse_vec3(parse->x_basis);
-		if (obj->basis[2].v4[0] == -9763.0)
-		terminate("missing data of plane z_basis vector!\n");
+		if (isnan(obj->basis[2].v4[0]))
+		   terminate("missing data of plane z_basis vector!\n");    
 	}
 	else
 		obj->basis[2] = create_cfloat3(0.0, 0.0, 1.0);
@@ -114,8 +116,8 @@ static void sphere_basis(const cJSON *object, t_obj *obj, t_json *parse)
 	if (parse->x_basis != NULL)
 	{
 		obj->basis[0] = parse_vec3(parse->x_basis);
-		if (obj->basis[0].v4[0] == -9763.0)
-			terminate("missing data of sphere x_basis vector!\n");
+		if (isnan(obj->basis[0].v4[0]))
+		   terminate("missing data of sphere x_basis vector!\n");    
 	}
 	else
 		obj->basis[0] = create_cfloat3(1.0, 0.0, 0.0);
@@ -123,8 +125,8 @@ static void sphere_basis(const cJSON *object, t_obj *obj, t_json *parse)
 	if (parse->y_basis != NULL)
 	{
 		obj->basis[1] = parse_vec3(parse->x_basis);
-		if (obj->basis[1].v4[0] == -9763.0)
-			terminate("missing data of sphere y_basis vector!\n");
+		if (isnan(obj->basis[1].v4[0]))
+		   terminate("missing data of sphere y_basis vector!\n");
 	}
 	else
 		obj->basis[1] = create_cfloat3(0.0, 1.0, 0.0);
@@ -132,8 +134,8 @@ static void sphere_basis(const cJSON *object, t_obj *obj, t_json *parse)
 	if (parse->z_basis != NULL)
 	{
 		obj->basis[2] = parse_vec3(parse->x_basis);
-		if (obj->basis[2].v4[0] == -9763.0)
-			terminate("missing data of sphere z_basis vector!\n");
+		if (isnan(obj->basis[2].v4[0]))
+		   terminate("missing data of sphere z_basis vector!\n");    
 	}
 	else
 		obj->basis[2] = create_cfloat3(0.0, 0.0, 1.0);
@@ -145,8 +147,8 @@ static void cylinder_basis(const cJSON *object, t_obj *obj, t_json *parse)
 	if (parse->x_basis != NULL)
 	{
 		obj->basis[0] = parse_vec3(parse->x_basis);
-		if (obj->basis[0].v4[0] == -9763.0)
-		terminate("missing data of cylinder x_basis vector!\n");
+		if (isnan(obj->basis[0].v4[0]))
+		   terminate("missing data of cylinder x_basis vector!\n");    
 	}
 	else
 	{
@@ -159,8 +161,8 @@ static void cylinder_basis(const cJSON *object, t_obj *obj, t_json *parse)
 	if (parse->y_basis != NULL)
 	{
 		obj->basis[1] = parse_vec3(parse->x_basis);
-		if (obj->basis[1].v4[0] == -9763.0)
-			terminate("missing data of cylinder y_basis vector!\n");
+		if (isnan(obj->basis[1].v4[0]))
+		   terminate("missing data of cylinder y_basis vector!\n");    
 	}
 	else
 		obj->basis[1] = cross(obj->basis[0], obj->v);
@@ -168,8 +170,8 @@ static void cylinder_basis(const cJSON *object, t_obj *obj, t_json *parse)
 	if (parse->z_basis != NULL)
 	{
 		obj->basis[2] = parse_vec3(parse->x_basis);
-		if (obj->basis[2].v4[0] == -9763.0)
-			terminate("missing data of cylinder z_basis vector!\n");
+		if (isnan(obj->basis[2].v4[0]))
+		   terminate("missing data of cylinder z_basis vector!\n");    
 	}
 	else
 		obj->basis[2] = create_cfloat3(0.0, 0.0, 1.0);
@@ -191,8 +193,8 @@ static void parse_rest(const cJSON *object, t_obj *obj, t_json *parse)
 	if (parse->rotation != NULL)
 	{
 		obj->rotation = parse_vec2(parse->rotation);
-		if (obj->rotation.s[0] == -9763.0)
-			terminate("missing data of obj rotation vector!\n");
+		if (isnan(obj->rotation.s[0]))
+		   terminate("missing data of obj rotation vector!\n");
 	}
 	else
 		obj->rotation = create_cfloat2(0.0, 0.0);
@@ -200,11 +202,11 @@ static void parse_rest(const cJSON *object, t_obj *obj, t_json *parse)
 	if (parse->prolapse != NULL)
 	{
 		obj->prolapse = parse_vec2(parse->rotation);
-		if (obj->prolapse.s[0] == -9763.0)
-		terminate("missing data of cylinder prolapse vector!\n");
-	}
-	else
-		obj->prolapse = create_cfloat2(1000.0, 1000.0);
+		if (isnan(obj->prolapse.s[0]))
+           terminate("missing data of cylinder prolapse vector!\n");
+    }
+    else
+    	obj->prolapse = create_cfloat2(1000.0, 1000.0);
 }
 
  static cl_float3 triangle_norm(cl_float3 *vertices)
@@ -221,25 +223,55 @@ static void parse_triangle_vert(const cJSON *object, t_obj *obj, t_json *parse)
 {
 	parse->a = cJSON_GetObjectItemCaseSensitive(object, "a");
 	obj->vertices[0] = parse_vec3(parse->a);
-	if (obj->vertices[0].v4[0] == -9763.0)
+	if (isnan(obj->vertices[0].v4[0]))
 		terminate("missing data of triangle vertice!\n");
 	parse->b = cJSON_GetObjectItemCaseSensitive(object, "b");
 	obj->vertices[1] = parse_vec3(parse->b);
-	if (obj->vertices[01].v4[0] == -9763.0)
+	if (isnan(obj->vertices[01].v4[0]))
 		terminate("missing data of triangle vertice!\n");
 	parse->c = cJSON_GetObjectItemCaseSensitive(object, "c");
 	obj->vertices[2] = parse_vec3(parse->c);
-	if (obj->vertices[2].v4[0] == -9763.0)
+	if (isnan(obj->vertices[2].v4[0]))
 		terminate("missing data of triangle vertice!\n");
 	obj->v = triangle_norm(obj->vertices);
 }
 
-void check_object(const cJSON *object, t_game *game)
+static void parse_composed(const cJSON *composed, t_game *game, t_json *parse, int id)
+{
+    const cJSON *object = NULL;
+    const cJSON *objects = NULL;
+	parse->composed_pos = cJSON_GetObjectItemCaseSensitive(composed, "position");
+	parse->composed_v = cJSON_GetObjectItemCaseSensitive(composed, "dir");
+	
+    objects = cJSON_GetObjectItemCaseSensitive(composed, "objects");
+	cJSON_ArrayForEach(object, objects)
+	{
+		check_object(object, game, parse->composed_pos, parse->composed_v, id);
+	}
+}
+
+void check_object(const cJSON *object, t_game *game, cJSON *composed_pos, cJSON *composed_v, int id)
 {
 	t_obj *obj;
 	t_json parse;
 
-	obj = (t_obj*)malloc(sizeof(t_obj));
+	obj = (t_obj*)malloc(sizeof(t_obj)); 
+	if (composed_pos != NULL)
+	{
+		obj->composed_pos = parse_vec3(composed_pos);
+		if (isnan(obj->composed_pos.v4[0]))
+			terminate("missing data of position of composed object!\n");
+	}
+	else
+		obj->composed_pos = create_cfloat3(0.0, 0.0, 0.0);
+	if (composed_v != NULL)
+	{
+		obj->composed_v = parse_vec3(composed_v);
+		if (isnan(obj->composed_v.v4[0]))
+			terminate("missing data of direction of composed object!\n");
+	}
+	else
+		obj->composed_v = create_cfloat3(0.0, 0.0, 0.0);
 	parse.type = cJSON_GetObjectItemCaseSensitive(object, "type");
 	if (ft_strcmp(parse.type->valuestring, "plane") == 0)
 		obj->type = PLANE;
@@ -251,12 +283,20 @@ void check_object(const cJSON *object, t_game *game)
 		obj->type = CONE;
 	else if (ft_strcmp(parse.type->valuestring, "triangle") == 0)
 		obj->type = TRIANGLE;
+	else if (ft_strcmp(parse.type->valuestring, "composed") == 0)
+	{
+		parse_composed(object, game, &parse, id);
+		return;
+	}
+	obj->id = id;
 	parse_necessary(object, obj, &parse);
 	parse_facing(object, obj, &parse);
 	parse_basis(object, obj, &parse);
 	if (obj->type == TRIANGLE)
 		parse_triangle_vert(object, obj, &parse);
 	parse_rest(object, obj, &parse);
+	//printf("coord == %f, %f, %f\n", obj->position.v4[0], obj->position.v4[1], obj->position.v4[2]);
+	printf("id of obj = %d\n", obj->id);
 	ft_object_push(game, obj);
 }
 
@@ -268,18 +308,18 @@ void check_cam(const cJSON *cam, t_game *game)
 	camera = (t_cam*)malloc(sizeof(t_cam));
 	parse.position = cJSON_GetObjectItemCaseSensitive(cam, "position");
 	camera->position = parse_vec3(parse.position);
-	if (camera->position.v4[0] == -9763.0)
+	if (isnan(camera->position.v4[0]))
 		terminate("missing data of cam start pos vector!\n");
 	parse.v = cJSON_GetObjectItemCaseSensitive(cam, "dir");
 	camera->direction = parse_vec3(parse.v);
-	if (camera->direction.v4[0] == -9763.0)
+	if (isnan(camera->direction.v4[0]))
 		terminate("missing data of cam dir vector!\n");
 	parse.normal = cJSON_GetObjectItemCaseSensitive(cam, "normal");
 	if (parse.normal != NULL)
 	{
 		camera->normal = parse_vec3(parse.normal);
-		if (camera->normal.v4[0] == -9763.0)
-		terminate("missing data of cam normal vector!\n");
+		if (isnan(camera->normal.v4[0]))
+		   terminate("missing data of cam normal vector!\n"); 
 	}
 	else
 		camera->normal = create_cfloat3(0.0, 1.0, 0.0);
@@ -304,7 +344,7 @@ void read_scene(char *argv, t_game *game)
 	const cJSON *textures = NULL;
 	int i = 0;
 	textures = cJSON_GetObjectItemCaseSensitive(json, "textures");
-	printf("texture array size = %d\n", cJSON_GetArraySize(textures));
+	
 	game->textures_num = cJSON_GetArraySize(textures);
 	game->textures = (t_txture*)malloc(sizeof(t_txture) * game->textures_num);
 	cJSON_ArrayForEach(texture, textures)
@@ -316,7 +356,6 @@ void read_scene(char *argv, t_game *game)
 	const cJSON *normals = NULL;
 	int k = 0;
 	normals = cJSON_GetObjectItemCaseSensitive(json, "normals");
-	printf("normals array size = %d\n", cJSON_GetArraySize(normals));
 	game->normals_num = cJSON_GetArraySize(normals);
 	game->normals = (t_txture*)malloc(sizeof(t_txture) * game->normals_num);
 	cJSON_ArrayForEach(normal, normals)
@@ -326,10 +365,12 @@ void read_scene(char *argv, t_game *game)
 	}
 	const cJSON *object = NULL;
 	const cJSON *objects = NULL;
+	int id = 0;
 	objects = cJSON_GetObjectItemCaseSensitive(json, "objects");
 	cJSON_ArrayForEach(object, objects)
 	{
-		check_object(object, game);
+		check_object(object, game, NULL, NULL, id);
+		id++;
 	}
 	const cJSON *cam = NULL;
 	const cJSON *cameras = NULL;

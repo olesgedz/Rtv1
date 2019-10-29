@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 17:05:04 by srobert-          #+#    #+#             */
-/*   Updated: 2019/10/28 17:42:12 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/28 18:44:47 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ cl_float3   parse_vec3(cJSON *vec)
     if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
         return (create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble));
     else
-        return (create_cfloat3(-9763.0, 0.0, 0.0));
+        return (create_cfloat3(NAN, 0.0, 0.0));
 }
 
 cl_float2   parse_vec2(cJSON *vec)
@@ -35,5 +35,5 @@ cl_float2   parse_vec2(cJSON *vec)
     if (parse.x != NULL && parse.y != NULL)
         return (create_cfloat2(parse.x->valuedouble, parse.y->valuedouble));
     else
-        return (create_cfloat2(-9763.0, 0.0));
+        return (create_cfloat2(NAN, 0.0));
 }
