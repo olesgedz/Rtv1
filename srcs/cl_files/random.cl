@@ -76,7 +76,7 @@ static float3		sample_uniform
 
 	r.x = rng(scene->random) * 2.f - 1.f;
 	r.y = (rng(scene->random) * 2.f - 1.f) * sqrt(1.f - r.x * r.x);
-	r.z = sqrt(1.f - r.y * r.y - r.x * r.x);
+	r.z = sqrt(fabs(1.f - r.y * r.y - r.x * r.x));
 	ret = sampler_transform(normal, &r);
 	*cosine = dot(*normal, ret);
 	return (ret);
