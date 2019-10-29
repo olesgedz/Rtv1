@@ -6,12 +6,12 @@
 #    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/10/28 21:01:02 by lminta           ###   ########.fr        #
+#    Updated: 2019/10/29 15:42:38 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
-NAME = rtv1
+NAME = rt
 
 FLAGS = -g #-Wall -Wextra -Werror
 CC = gcc
