@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_slim_parse.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/10/28 18:06:34 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/10/29 18:11:37 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void parse_facing(const cJSON *object, t_obj *obj, t_json *parse)
 	{
 		obj->emission = parse_vec3(parse->emition);
 		if (obj->position.v4[0] == -9763.0)
-		   terminate("missing data of obj emition vector!\n");
+		terminate("missing data of obj emition vector!\n");
 	}
 	else
 		obj->emission = create_cfloat3(0.0, 0.0, 0.0);
@@ -65,7 +65,7 @@ static void parse_facing(const cJSON *object, t_obj *obj, t_json *parse)
 	{
 		obj->shift = parse_vec2(parse->shift);
 		if (obj->shift.s[0] == -9763.0)
-		   terminate("missing data of obj shift vector!\n");
+		terminate("missing data of obj shift vector!\n");
 	}
 	else
 		obj->shift = create_cfloat2(0.0, 0.0);
@@ -79,7 +79,7 @@ static void plane_basis(const cJSON *object, t_obj *obj, t_json *parse)
 	{
 		obj->basis[0] = parse_vec3(parse->x_basis);
 		if (obj->basis[0].v4[0] == -9763.0)
-		   terminate("missing data of plane x_basis vector!\n");
+		terminate("missing data of plane x_basis vector!\n");
 	}
 	else
 	{
@@ -93,7 +93,7 @@ static void plane_basis(const cJSON *object, t_obj *obj, t_json *parse)
 	{
 		obj->basis[1] = parse_vec3(parse->x_basis);
 		if (obj->basis[1].v4[0] == -9763.0)
-		   terminate("missing data of plane y_basis vector!\n");
+		terminate("missing data of plane y_basis vector!\n");
 	}
 	else
 		obj->basis[1] = cross(obj->v, obj->basis[0]);
@@ -102,7 +102,7 @@ static void plane_basis(const cJSON *object, t_obj *obj, t_json *parse)
 	{
 		obj->basis[2] = parse_vec3(parse->x_basis);
 		if (obj->basis[2].v4[0] == -9763.0)
-		   terminate("missing data of plane z_basis vector!\n");
+		terminate("missing data of plane z_basis vector!\n");
 	}
 	else
 		obj->basis[2] = create_cfloat3(0.0, 0.0, 1.0);
@@ -115,7 +115,7 @@ static void sphere_basis(const cJSON *object, t_obj *obj, t_json *parse)
 	{
 		obj->basis[0] = parse_vec3(parse->x_basis);
 		if (obj->basis[0].v4[0] == -9763.0)
-		   terminate("missing data of sphere x_basis vector!\n");
+			terminate("missing data of sphere x_basis vector!\n");
 	}
 	else
 		obj->basis[0] = create_cfloat3(1.0, 0.0, 0.0);
@@ -124,7 +124,7 @@ static void sphere_basis(const cJSON *object, t_obj *obj, t_json *parse)
 	{
 		obj->basis[1] = parse_vec3(parse->x_basis);
 		if (obj->basis[1].v4[0] == -9763.0)
-		   terminate("missing data of sphere y_basis vector!\n");
+			terminate("missing data of sphere y_basis vector!\n");
 	}
 	else
 		obj->basis[1] = create_cfloat3(0.0, 1.0, 0.0);
@@ -133,7 +133,7 @@ static void sphere_basis(const cJSON *object, t_obj *obj, t_json *parse)
 	{
 		obj->basis[2] = parse_vec3(parse->x_basis);
 		if (obj->basis[2].v4[0] == -9763.0)
-		   terminate("missing data of sphere z_basis vector!\n");
+			terminate("missing data of sphere z_basis vector!\n");
 	}
 	else
 		obj->basis[2] = create_cfloat3(0.0, 0.0, 1.0);
@@ -146,7 +146,7 @@ static void cylinder_basis(const cJSON *object, t_obj *obj, t_json *parse)
 	{
 		obj->basis[0] = parse_vec3(parse->x_basis);
 		if (obj->basis[0].v4[0] == -9763.0)
-		   terminate("missing data of cylinder x_basis vector!\n");
+		terminate("missing data of cylinder x_basis vector!\n");
 	}
 	else
 	{
@@ -160,7 +160,7 @@ static void cylinder_basis(const cJSON *object, t_obj *obj, t_json *parse)
 	{
 		obj->basis[1] = parse_vec3(parse->x_basis);
 		if (obj->basis[1].v4[0] == -9763.0)
-		   terminate("missing data of cylinder y_basis vector!\n");
+			terminate("missing data of cylinder y_basis vector!\n");
 	}
 	else
 		obj->basis[1] = cross(obj->basis[0], obj->v);
@@ -169,7 +169,7 @@ static void cylinder_basis(const cJSON *object, t_obj *obj, t_json *parse)
 	{
 		obj->basis[2] = parse_vec3(parse->x_basis);
 		if (obj->basis[2].v4[0] == -9763.0)
-		   terminate("missing data of cylinder z_basis vector!\n");
+			terminate("missing data of cylinder z_basis vector!\n");
 	}
 	else
 		obj->basis[2] = create_cfloat3(0.0, 0.0, 1.0);
@@ -192,29 +192,29 @@ static void parse_rest(const cJSON *object, t_obj *obj, t_json *parse)
 	{
 		obj->rotation = parse_vec2(parse->rotation);
 		if (obj->rotation.s[0] == -9763.0)
-		   terminate("missing data of obj rotation vector!\n");
+			terminate("missing data of obj rotation vector!\n");
 	}
 	else
 		obj->rotation = create_cfloat2(0.0, 0.0);
-    parse->prolapse = cJSON_GetObjectItemCaseSensitive(object, "prolapse");
-    if (parse->prolapse != NULL)
-    {
+	parse->prolapse = cJSON_GetObjectItemCaseSensitive(object, "prolapse");
+	if (parse->prolapse != NULL)
+	{
 		obj->prolapse = parse_vec2(parse->rotation);
 		if (obj->prolapse.s[0] == -9763.0)
-           terminate("missing data of cylinder prolapse vector!\n");
-    }
-    else
-    	obj->prolapse = create_cfloat2(1000.0, 1000.0);
+		terminate("missing data of cylinder prolapse vector!\n");
+	}
+	else
+		obj->prolapse = create_cfloat2(1000.0, 1000.0);
 }
 
  static cl_float3 triangle_norm(cl_float3 *vertices)
 {
-    cl_float3 ab;
+	cl_float3 ab;
 	cl_float3 ac;
 
 	ab = vector_diff(vertices[1], vertices[0]);
 	ac = vector_diff(vertices[2], vertices[0]);
-    return(normalize(cross(ab, ac)));
+	return(normalize(cross(ab, ac)));
 }
 
 static void parse_triangle_vert(const cJSON *object, t_obj *obj, t_json *parse)
@@ -279,7 +279,7 @@ void check_cam(const cJSON *cam, t_game *game)
 	{
 		camera->normal = parse_vec3(parse.normal);
 		if (camera->normal.v4[0] == -9763.0)
-		   terminate("missing data of cam normal vector!\n");
+		terminate("missing data of cam normal vector!\n");
 	}
 	else
 		camera->normal = create_cfloat3(0.0, 1.0, 0.0);

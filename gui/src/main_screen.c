@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 16:46:11 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/28 21:16:14 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/29 18:12:37 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	main_screen_free(t_gui *gui)
 	KW_RemoveWidgetGeometryChangeHandler(gui->i_b.frame, 0);
 	KW_RemoveWidgetTilesetChangeHandler(gui->i_b.frame, 0);
 	KW_DestroyWidget(gui->i_b.frame, 1);
+	free(gui->i_b.names);
 }
 
 void	quit_kiwi_main(t_gui *gui)
@@ -53,7 +54,6 @@ void	quit_kiwi_main(t_gui *gui)
 		KW_RemoveWidgetTilesetChangeHandler(gui->s_s.frame, 0);
 		KW_DestroyWidget(gui->s_s.frame, 1);
 	}
-	free(gui->i_b.names);
 	KW_ReleaseSurface(gui->driver, gui->set);
 	KW_Quit(gui->gui);
 }

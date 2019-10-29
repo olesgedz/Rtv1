@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:10:38 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/28 21:46:55 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/29 17:47:26 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	mouse(t_game *game, t_gui *gui)
 	}
 	else if (game->ev.type == SDL_MOUSEBUTTONUP)
 	{
-		if (!gui->over_gui && !(game->keys.lmb = 0))
+		if (!gui->over_gui && !(game->keys.lmb = 0) && x && y)
 		{
 			SDL_SetRelativeMouseMode(SDL_DISABLE);
 			SDL_WarpMouseInWindow(game->sdl.window, x, y);
