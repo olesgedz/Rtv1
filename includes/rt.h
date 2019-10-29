@@ -251,4 +251,5 @@ void					main_screen(t_gui *gui, t_game *game);
 void					semples_to_line(t_game *game, t_gui *gui);
 void					info_button(t_game *game, t_gui *gui);
 void					show_hide(t_game *game, t_gui *gui);
+void					mouse(t_game *game, t_gui *gui);
 #endif

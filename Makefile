@@ -6,7 +6,7 @@
 #    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/10/29 15:42:38 by lminta           ###   ########.fr        #
+#    Updated: 2019/10/29 18:35:35 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,6 +82,7 @@ SRCS_LIST = main.c\
 			help_fun.c\
 			init_scene.c\
 			render.c\
+			mouse.c\
 			../gui/src/gui_main.c\
 			../gui/src/start_screen.c\
 			../gui/src/surf_tex.c\
