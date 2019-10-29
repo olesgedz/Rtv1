@@ -8,7 +8,8 @@ static float3			interpolate_color_as_vector(int color)
 	// new_color.y = ((float)((color >> 8) & 255) / 255.f) * 2.f - 1.f;
 	// new_color.z = ((float)((color >> 16) & 255) / 255.f);
 	new_color = cl_int_to_float3(color);
-	new_color.x = new_color.x;
+	new_color.xz = new_color.zx;
+	new_color.x = new_color.x * 2.f - 1.f;
 	new_color.y = new_color.y * 2.f - 1.f;
 	new_color.z = new_color.z * 2.f - 1.f;
 	return (new_color);
