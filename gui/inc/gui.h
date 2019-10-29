@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/28 21:16:14 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/29 19:31:49 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,19 @@ typedef struct		s_info_button
 	int				max_i;
 }					t_info_button;
 
+typedef struct		s_gui_bar
+{
+	KW_Rect			frect;
+	KW_Rect			buttonrect[30];
+	KW_Widget		*frame;
+	KW_Widget		*label;
+	KW_Rect			*rects[1];
+	unsigned		weights[1];
+	KW_Widget		*buttons[30];
+	char			*names[30];
+	int				max_i;
+}					t_gui_bar;
+
 typedef struct		s_gui
 {
 	t_sdl			sdl;
@@ -98,6 +111,7 @@ typedef struct		s_gui
 	t_edit_win		ed_w;
 	t_scene_select	s_s;
 	t_object_select	o_s;
+	t_gui_bar		g_b;
 	char			*av;
 	int				flag;
 	int				main_screen;
