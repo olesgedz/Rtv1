@@ -30,9 +30,10 @@
 *.exe
 *.out
 *.app
-rtv1
+rt
 .DS_Store
 .vscode
 cmake-build-debug
 .idea
 gui/build
+screens/

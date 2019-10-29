@@ -141,8 +141,8 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 		if (!intersect_scene(scene, intersection, &ray, 0))
 			return mask * global_texture(&ray, scene);
 		/* Russian roulette*/
-		if (bounces > 4 && cl_float3_max(scene->objects[intersection->object_id].color) < rng(scene->random))
-			break;
+		// if (bounces > 4 && cl_float3_max(scene->objects[intersection->object_id].color) < rng(scene->random))
+		// 	break;
 
 		t_obj objecthit = scene->objects[intersection->object_id]; /* version with local copy of sphere */
 		/* compute the hitpoint using the ray equation */
@@ -158,6 +158,8 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 		/* create a local orthogonal coordinate frame centered at the hitpoint */
 		float cosine;
 		float3 newdir = sample_uniform(&intersection->normal, &cosine, scene);
+		// if (get_global_id(0) == 16000)// && cosine < EPSILON)
+		// 	printf("norm %f %f %f\n", intersection->normal.x, intersection->normal.y, intersection->normal.z);
 		/* add a very small offset to the hitpoint to prevent self intersection */
 		float pdf = 1.f;
 		if (scene->lightsampling)

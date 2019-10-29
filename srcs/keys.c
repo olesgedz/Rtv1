@@ -6,41 +6,11 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:10:38 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/28 17:42:12 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/29 18:32:20 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
-
-static void	mouse(t_game *game, t_gui *gui)
-{
-	static int	x = 0;
-	static int	y = 0;
-
-	if (game->ev.type == SDL_MOUSEBUTTONDOWN)
-	{
-		if (!gui->over_gui && (game->keys.lmb = 1))
-		{
-			SDL_GetMouseState(&x, &y);
-			SDL_SetRelativeMouseMode(SDL_ENABLE);
-		}
-	}
-	else if (game->ev.type == SDL_MOUSEBUTTONUP)
-	{
-		if (!gui->over_gui && !(game->keys.lmb = 0))
-		{
-			SDL_SetRelativeMouseMode(SDL_DISABLE);
-			SDL_WarpMouseInWindow(game->sdl.window, x, y);
-		}
-	}
-	else if (game->ev.type == SDL_MOUSEMOTION)
-	{
-		pos_check(gui);
-		game->keys.xrel = -game->ev.motion.xrel;
-		game->keys.yrel = -game->ev.motion.yrel;
-		game->keys.mm = 1;
-	}
-}
 
 static void	key_switch(t_game *game)
 {
@@ -60,6 +30,8 @@ static void	key_switch(t_game *game)
 			game->cam_num = 0;
 		game->flag = 1;
 	}
+	else if (game->ev.key.keysym.sym == SDLK_i)
+		show_hide(game, g_gui(0, 0));
 	else if (game->ev.key.keysym.sym == SDLK_r)
 		game->keys.r = !game->keys.r;
 }

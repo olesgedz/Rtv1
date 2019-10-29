@@ -1,7 +1,7 @@
 #ifndef RTV1_H
 # define RTV1_H
-# define WIN_W 1240
-# define WIN_H 1240
+# define WIN_W 1920
+# define WIN_H 1080
 # define SAMPLES 5
 # define CL_SILENCE_DEPRECATION
 # include <sys/types.h>
@@ -155,7 +155,7 @@ typedef struct			s_keys
 	int					r;
 	Sint32				xrel;
 	Sint32				yrel;
-
+	int					show_gui;
 }						t_keys;
 
 typedef struct			s_game
@@ -186,7 +186,7 @@ typedef struct			s_game
 	t_keys				keys;
 }						t_game;
 
-typedef struct  s_json
+typedef struct			s_json
 {
     cJSON *position;
     cJSON *color;
@@ -246,11 +246,19 @@ void					ft_object_push(t_game *game, t_obj *object);
 void					ft_cam_push(t_game *game, t_cam *cam);
 void					main_screen(t_gui *gui, t_game *game);
 void					obj_select(t_gui *gui, t_obj *objs, int num);
-void					pos_check(t_gui *gui);
+void					pos_check(t_game *game, t_gui *gui);
 void					opencl_init(t_game *game);
 void					check_file(t_game *game);
 cl_float2				create_cfloat2 (float x, float y);
 cl_float3				parse_vec3(cJSON *vec);
+cl_float2				parse_vec2(cJSON *vec);
+void					main_screen(t_gui *gui, t_game *game);
+void					semples_to_line(t_game *game, t_gui *gui);
+void					info_button(t_game *game, t_gui *gui);
+void					show_hide(t_game *game, t_gui *gui);
+void					mouse(t_game *game, t_gui *gui);
+void					gui_bar(t_game *game, t_gui *gui);
+void					buttons(t_game *game, t_gui *gui, int fr_sz);
 cl_float2  				parse_vec2(cJSON *vec);
 void					check_object(const cJSON *object, t_game *game, cJSON *comp_pos, cJSON *comp_v, int id);
 #endif

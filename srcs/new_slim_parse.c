@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/10/29 21:34:20 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/10/29 21:45:19 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,9 +198,9 @@ static void parse_rest(const cJSON *object, t_obj *obj, t_json *parse)
 	}
 	else
 		obj->rotation = create_cfloat2(0.0, 0.0);
-    parse->prolapse = cJSON_GetObjectItemCaseSensitive(object, "prolapse");
-    if (parse->prolapse != NULL)
-    {
+	parse->prolapse = cJSON_GetObjectItemCaseSensitive(object, "prolapse");
+	if (parse->prolapse != NULL)
+	{
 		obj->prolapse = parse_vec2(parse->rotation);
 		if (isnan(obj->prolapse.s[0]))
            terminate("missing data of cylinder prolapse vector!\n");
@@ -211,12 +211,12 @@ static void parse_rest(const cJSON *object, t_obj *obj, t_json *parse)
 
  static cl_float3 triangle_norm(cl_float3 *vertices)
 {
-    cl_float3 ab;
+	cl_float3 ab;
 	cl_float3 ac;
 
 	ab = vector_diff(vertices[1], vertices[0]);
 	ac = vector_diff(vertices[2], vertices[0]);
-    return(normalize(cross(ab, ac)));
+	return(normalize(cross(ab, ac)));
 }
 
 static void parse_triangle_vert(const cJSON *object, t_obj *obj, t_json *parse)
