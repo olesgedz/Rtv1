@@ -6,13 +6,13 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 21:08:05 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/29 21:10:36 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/29 21:28:58 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void	buttons(t_game *game, t_gui *gui)
+void	buttons(t_game *game, t_gui *gui, int fr_sz)
 {
 	gui->g_b.buttonrect[0] = (KW_Rect){5, 0, fr_sz * 5, 40};
 	gui->g_b.rects[0] = &gui->g_b.buttonrect[0];

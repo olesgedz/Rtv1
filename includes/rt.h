@@ -253,5 +253,5 @@ void					info_button(t_game *game, t_gui *gui);
 void					show_hide(t_game *game, t_gui *gui);
 void					mouse(t_game *game, t_gui *gui);
 void					gui_bar(t_game *game, t_gui *gui);
-void					buttons(t_game *game, t_gui *gui);
+void					buttons(t_game *game, t_gui *gui, int fr_sz);
 #endif
