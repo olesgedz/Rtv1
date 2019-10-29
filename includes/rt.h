@@ -54,8 +54,7 @@ typedef enum			e_figure
 	CYLINDER,
 	CONE,
 	PLANE,
-	TRIANGLE,
-	COMPOSED
+	TRIANGLE
 }						t_type;
 
 typedef struct			s_txture
@@ -84,6 +83,9 @@ typedef struct			s_object
 	cl_float3			basis[3];
 	cl_float2			rotation;
 	cl_float2			prolapse;
+	cl_float3			composed_pos;
+	cl_float3			composed_v;
+	cl_int				id;
 }						t_obj;
 
 typedef struct			s_ray
@@ -207,6 +209,8 @@ typedef struct  s_json
     cJSON *prolapse;
     cJSON *type;
     cJSON *normal;
+	cJSON *composed_pos;
+	cJSON *composed_v;
 }               t_json;
 
 int						bind_data(t_gpu *gpu, t_game *game);
@@ -248,4 +252,5 @@ void					check_file(t_game *game);
 cl_float2				create_cfloat2 (float x, float y);
 cl_float3				parse_vec3(cJSON *vec);
 cl_float2  				parse_vec2(cJSON *vec);
+void					check_object(const cJSON *object, t_game *game, cJSON *comp_pos, cJSON *comp_v, int id);
 #endif

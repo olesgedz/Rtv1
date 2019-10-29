@@ -1,4 +1,4 @@
-#include "rtv1.h"
+#include "rt.h"
 
 int print_error(t_gpu *gpu)
 {

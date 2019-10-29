@@ -3134,8 +3134,8 @@ Error (line 22): Struct Object bad aligned
 Error (line 22, col 8): Object is not well prefixed.
 Error (line 22, col 8): Object not unixcase
 Norme: ./libcl/sources/cl_init.c
-Norme: ./includes/rtv1.h
-Warning: /Users/sbrella/Desktop/RT/includes/rtv1.h may not compile or is invalid for some reasons.
+Norme: ./includes/rt.h
+Warning: /Users/sbrella/Desktop/RT/includes/rt.h may not compile or is invalid for some reasons.
 Norme: ./libcl/include/libcl.h
 Error (line 17): wrong number of spaces in preprocessor indentation
 Norme: ./includes/libmath.h

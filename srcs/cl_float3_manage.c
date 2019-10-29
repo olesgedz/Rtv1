@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cl_float3_manage.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/07 17:03:05 by sbrella           #+#    #+#             */
-/*   Updated: 2019/10/21 19:44:02 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/10/28 17:42:12 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 cl_float3	cross(cl_float3 one, cl_float3 two)
 {
