@@ -73,25 +73,12 @@ static float3		sample_uniform
 {
 	float3 			r;
 	float3			ret;
-	// float3			sample;
-	// float			sin_theta;
-	// float			phi;
 
-	r.z = rng(scene->random);
 	r.x = rng(scene->random) * 2.f - 1.f;
-	r.y = rng(scene->random) * 2.f - 1.f;
-	// sin_theta = sqrt(max(0.0f , 1.0f - r.x * r.x));
-	// phi = 2.0f * PI * r.y;
-	ret = normalize(sampler_transform(normal, &r));
+	r.y = (rng(scene->random) * 2.f - 1.f) * sqrt(1.f - r.x * r.x);
+	r.z = sqrt(1.f - r.y * r.y - r.x * r.x);
+	ret = sampler_transform(normal, &r);
 	*cosine = dot(*normal, ret);
-	// if (get_global_id(0) == 16000)
-	// 	printf("%f %f %f\n", ret.x, ret.y, ret.z);
-	// sample = (float3)
-	// 	{
-	// 		sin_theta * cos(phi),
-	// 		r[0],
-	// 		sin_theta * sin(phi)
-	// 	};
 	return (ret);
 }
 
