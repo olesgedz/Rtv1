@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 22:51:42 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/30 14:27:42 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/30 20:01:44 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static void	ok_clicked(KW_Widget *widget, int b)
 
 void		start_screen(t_gui *gui)
 {
-	gui->ed_w.backtex = load_picture(gui, "gui/res/start.bmp");
 	gui->ed_w.frect = (KW_Rect){10, 10, 300, 220};
 	KW_RectCenterInParent(&gui->ed_w.winrect, &gui->ed_w.frect);
 	gui->ed_w.frame =
@@ -57,11 +56,12 @@ void		start_screen(t_gui *gui)
 **	KW_DestroyWidget(gui->ed_w.frame, 1);
 */
 
-char		*start_gui(t_gui *gui)
+char		*start_gui(t_game *game, t_gui *gui)
 {
+	opencl(game, "gui/res/start.json");
 	start_screen(gui);
 	scene_select(gui, -1, 0);
-	loopa(gui);
+	loopa(game, gui);
 	SDL_DestroyTexture(gui->ed_w.backtex);
 	KW_HideWidget(gui->ed_w.frame);
 	return (gui->av);

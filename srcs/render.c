@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:54:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/28 21:25:55 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/30 19:50:45 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void		ft_run_kernel(t_game *game, cl_kernel kernel, int w, int h)
 	ERROR(game->cl_info->ret );
 }
 
-static void		ft_render(t_game *game, t_gui *gui)
+void		ft_render(t_game *game, t_gui *gui)
 {
 	if (!game->flag && !gui->flag)
 		return ;
@@ -47,7 +47,7 @@ static void		ft_render(t_game *game, t_gui *gui)
 	ft_run_kernel(game, game->kernels[0].krl, WIN_W, WIN_H);
 }
 
-static void		screen_present(t_game *game, t_gui *gui)
+void		screen_present(t_game *game, t_gui *gui)
 {
 	SDL_UpdateTexture(game->sdl.texture->sdl_texture, NULL,\
 	game->sdl.surface->data, game->sdl.surface->width * sizeof(Uint32));

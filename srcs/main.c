@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/10/30 18:39:35 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/30 19:23:05 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int			main(int argc, char **argv)
 	init_kiwi(&gui);
 	opencl_init(&game);
 	if (argc != 2)
-		game.av = start_gui(&gui);
+		game.av = start_gui(&game, &gui);
 	else
 	{
 		scene_select(&gui, -1, 0);

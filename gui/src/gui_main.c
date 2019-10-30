@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:21:19 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/28 17:42:12 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/30 20:01:34 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	init_kiwi(t_gui *gui)
 
 	i = -1;
 	g_gui(gui, 1);
-	gui->ed_w.backtex = load_picture(gui, "gui/res/start.bmp");
 	gui->ed_w.winrect = (KW_Rect){0, 0, WIN_W, WIN_H};
 	gui->driver =
 	KW_CreateSDL2RenderDriver(gui->sdl.renderer, gui->sdl.window);
@@ -42,19 +41,26 @@ void	init_kiwi(t_gui *gui)
 	}
 }
 
-void	loopa(t_gui *gui)
+void	loopa(t_game *game, t_gui *gui)
 {
 	SDL_RenderClear(gui->sdl.renderer);
 	while (!gui->quit)
 	{
+		game->gpu.camera[game->cam_num].direction =
+		rotate(game->gpu.camera[game->cam_num].normal,
+		game->gpu.camera[game->cam_num].direction, M_PI / 720.);
+		game->flag = 1;
+		game->cl_info->ret =
+		cl_write(game->cl_info, game->kernels[0].args[2], sizeof(cl_float3) *
+		(unsigned)WIN_H * (unsigned)WIN_W, game->gpu.vec_temp);
+		game->gpu.samples = 0;
+		reconfigure_camera(&game->gpu.camera[game->cam_num]);
 		if (SDL_PollEvent(&gui->ev))
 			if (gui->ev.type == SDL_QUIT ||
 		(gui->ev.type == SDL_KEYDOWN &&
 		gui->ev.key.keysym.sym == SDLK_ESCAPE))
 				gui->quit = 1;
-		SDL_RenderCopy(gui->sdl.renderer, gui->ed_w.backtex, 0, 0);
-		KW_ProcessEvents(gui->gui);
-		KW_Paint(gui->gui);
-		SDL_RenderPresent(gui->sdl.renderer);
+		ft_render(game, gui);
+		screen_present(game, gui);
 	}
 }
