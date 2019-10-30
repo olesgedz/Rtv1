@@ -1,7 +1,7 @@
 {
     "textures":[
         "sobenin.jpg",
-        "sun.jpg",
+        "sviborg.jpg",
         "seamless_pawnment.jpg",
         "grass_rock.jpg",
         "ice.jpg",
@@ -32,7 +32,9 @@
             "color": [0.0,0.0,0.0],
             "radius" : 0.15,
             "emition" : [100.0,100.0,100.0],
-            "texture": 2
+            "texture": 2,
+            "x_basis": [0.0,0.0,1.0],
+            "y_basis": [0.0,-1.0,0.0]
         },
         {
             "type": "plane",
