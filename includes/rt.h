@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/30 14:49:24 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/30 19:51:07 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,7 +270,11 @@ void					show_hide(t_game *game, t_gui *gui);
 void					mouse(t_game *game, t_gui *gui);
 void					gui_bar(t_game *game, t_gui *gui);
 void					buttons(t_game *game, t_gui *gui, int fr_sz);
-cl_float2  				parse_vec2(cJSON *vec);
+cl_float2				parse_vec2(cJSON *vec);
+char					*start_gui(t_game *game, t_gui *gui);
+void					loopa(t_game *game, t_gui *gui);
+void					screen_present(t_game *game, t_gui *gui);
+void					ft_render(t_game *game, t_gui *gui);
 void					check_object(const cJSON *object, t_game *game,
 cJSON *comp_pos, cJSON *comp_v, int id);
 #endif
