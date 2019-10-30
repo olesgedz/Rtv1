@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/10/30 21:37:52 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/10/30 21:41:38 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static void plane_basis(const cJSON *object, t_obj *obj, t_json *parse)
 	parse->z_basis = cJSON_GetObjectItemCaseSensitive(object, "z_basis");
 	if (parse->z_basis != NULL)
 	{
-		obj->basis[2] = parse_vec3(parse->x_basis);
+		obj->basis[2] = parse_vec3(parse->z_basis);
 		if (isnan(obj->basis[2].v4[0]))
 		   terminate("missing data of plane z_basis vector!\n");
 	}
@@ -124,7 +124,7 @@ static void sphere_basis(const cJSON *object, t_obj *obj, t_json *parse)
 	parse->y_basis = cJSON_GetObjectItemCaseSensitive(object, "y_basis");
 	if (parse->y_basis != NULL)
 	{
-		obj->basis[1] = parse_vec3(parse->x_basis);
+		obj->basis[1] = parse_vec3(parse->y_basis);
 		if (isnan(obj->basis[1].v4[0]))
 		   terminate("missing data of sphere y_basis vector!\n");
 	}
@@ -133,7 +133,7 @@ static void sphere_basis(const cJSON *object, t_obj *obj, t_json *parse)
 	parse->z_basis = cJSON_GetObjectItemCaseSensitive(object, "z_basis");
 	if (parse->z_basis != NULL)
 	{
-		obj->basis[2] = parse_vec3(parse->x_basis);
+		obj->basis[2] = parse_vec3(parse->z_basis);
 		if (isnan(obj->basis[2].v4[0]))
 		   terminate("missing data of sphere z_basis vector!\n");
 	}
@@ -160,7 +160,7 @@ static void cylinder_basis(const cJSON *object, t_obj *obj, t_json *parse)
 	parse->y_basis = cJSON_GetObjectItemCaseSensitive(object, "y_basis");
 	if (parse->y_basis != NULL)
 	{
-		obj->basis[1] = parse_vec3(parse->x_basis);
+		obj->basis[1] = parse_vec3(parse->y_basis);
 		if (isnan(obj->basis[1].v4[0]))
 		   terminate("missing data of cylinder y_basis vector!\n");
 	}
@@ -169,7 +169,7 @@ static void cylinder_basis(const cJSON *object, t_obj *obj, t_json *parse)
 	parse->z_basis = cJSON_GetObjectItemCaseSensitive(object, "z_basis");
 	if (parse->z_basis != NULL)
 	{
-		obj->basis[2] = parse_vec3(parse->x_basis);
+		obj->basis[2] = parse_vec3(parse->z_basis);
 		if (isnan(obj->basis[2].v4[0]))
 		   terminate("missing data of cylinder z_basis vector!\n");
 	}
