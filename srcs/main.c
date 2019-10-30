@@ -6,11 +6,24 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/10/29 19:44:03 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/30 15:21:54 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+static void	set_icon(t_gui *gui, const char *filename)
+{
+	SDL_Surface		*surf;
+
+	if (!(surf = IMG_Load(filename)))
+	{
+		print_error_gui("No picture for you: ", SDL_GetError());
+		exit(1);
+	}
+	SDL_SetWindowIcon(gui->sdl.window, surf);
+	SDL_FreeSurface(surf);
+}
 
 static void	main_loop(t_game *game, t_gui *gui, int argc)
 {
@@ -39,6 +52,7 @@ int			main(int argc, char **argv)
 	gui.main_screen = 0;
 	ft_init_window(&game.sdl, WIN_W, WIN_H);
 	set_const(&game, &gui);
+	set_icon(&gui, "gui/res/icon.png");
 	init_kiwi(&gui);
 	if (argc != 2)
 		game.av = start_gui(&gui);

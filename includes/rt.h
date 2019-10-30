@@ -1,5 +1,17 @@
-#ifndef RTV1_H
-# define RTV1_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rt.h                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
+/*   Updated: 2019/10/30 14:49:24 by lminta           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef RT_H
+# define RT_H
 # define WIN_W 1920
 # define WIN_H 1080
 # define SAMPLES 5
@@ -138,7 +150,6 @@ typedef struct			s_gpu
 	int					samples;
 }						t_gpu;
 
-
 typedef struct			s_keys
 {
 	int					q;
@@ -260,5 +271,6 @@ void					mouse(t_game *game, t_gui *gui);
 void					gui_bar(t_game *game, t_gui *gui);
 void					buttons(t_game *game, t_gui *gui, int fr_sz);
 cl_float2  				parse_vec2(cJSON *vec);
-void					check_object(const cJSON *object, t_game *game, cJSON *comp_pos, cJSON *comp_v, int id);
+void					check_object(const cJSON *object, t_game *game,
+cJSON *comp_pos, cJSON *comp_v, int id);
 #endif
