@@ -6,7 +6,7 @@
 #    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/10/29 21:14:17 by lminta           ###   ########.fr        #
+#    Updated: 2019/10/30 18:53:28 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,12 +76,12 @@ RMRF = gui/src/gui_main.o\
 SRCS_LIST = main.c\
 			cl_lib/gpu_init.c\
 			textures.c\
-			cl_float3_manage.c\
+			schwimmer_verwalten.c\
 			cl_float3_rotate.c\
 			keys.c\
 			camera.c\
 			const.c\
-			help_fun.c\
+			hilfefunktionen.c\
 			init_scene.c\
 			render.c\
 			mouse.c\
@@ -95,8 +95,8 @@ SRCS_LIST = main.c\
 			../gui/src/info_button.c\
 			../gui/src/obj_select.c\
 			../cJSON/cJSON.c\
-			new_slim_parse.c\
-			parse_util.c
+			neue_schlanke_analyse.c\
+			analyse_dienstprogramme.c
 
 OBJS_DIRECTORY = objects/
 OBJS_LIST = $(patsubst %.c, %.o, $(SRCS_LIST))

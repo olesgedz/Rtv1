@@ -5,7 +5,7 @@
 #include "normals.cl"
 #include "debug.cl"
 #include "textures.cl"
-#include "normal_mapping.cl"
+#include "normale_zuordnung.cl"
 #include "interpolate_uv.cl"
 
 #define SAMPLES 5

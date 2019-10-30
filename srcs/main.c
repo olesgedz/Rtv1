@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/10/30 15:21:54 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/30 18:39:35 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int			main(int argc, char **argv)
 	set_const(&game, &gui);
 	set_icon(&gui, "gui/res/icon.png");
 	init_kiwi(&gui);
+	opencl_init(&game);
 	if (argc != 2)
 		game.av = start_gui(&gui);
 	else
@@ -63,7 +64,6 @@ int			main(int argc, char **argv)
 	}
 	SDL_SetCursor(SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR));
 	gui.main_screen = 1;
-	opencl_init(&game);
 	main_loop(&game, &gui, argc);
 	quit_kiwi_main(&gui);
 	ft_exit(NULL);
