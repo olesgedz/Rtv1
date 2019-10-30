@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   neue_schlanke_analyse.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/10/30 18:56:07 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/30 21:37:52 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static void plane_basis(const cJSON *object, t_obj *obj, t_json *parse)
 	parse->y_basis = cJSON_GetObjectItemCaseSensitive(object, "y_basis");
 	if (parse->y_basis != NULL)
 	{
-		obj->basis[1] = parse_vec3(parse->x_basis);
+		obj->basis[1] = parse_vec3(parse->y_basis);
 		if (isnan(obj->basis[1].v4[0]))
 		   terminate("missing data of plane y_basis vector!\n");
 	}

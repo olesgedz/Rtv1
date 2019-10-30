@@ -139,7 +139,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 	{
 		/* if ray misses scene, return background colour */
 		if (!intersect_scene(scene, intersection, &ray, 0))
-			return mask * global_texture(&ray, scene);
+			return /*accum_color + */mask * global_texture(&ray, scene);
 		/* Russian roulette*/
 		// if (bounces > 4 && cl_float3_max(scene->objects[intersection->object_id].color) < rng(scene->random))
 		// 	break;
