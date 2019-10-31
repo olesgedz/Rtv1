@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 16:46:11 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/29 18:12:37 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/31 15:24:04 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 void	main_screen(t_gui *gui, t_game *game)
 {
-	gui->i_b.names = 0;
+	gui->i_f.names = 0;
 	obj_select(gui, game->gpu.objects, game->obj_quantity);
 	info_button(game, gui);
 }
-
 
 void	main_screen_free(t_gui *gui)
 {
@@ -40,10 +39,10 @@ void	main_screen_free(t_gui *gui)
 		KW_RemoveWidgetTilesetChangeHandler(gui->o_s.frame, 0);
 		KW_DestroyWidget(gui->o_s.frame, 1);
 	}
-	KW_RemoveWidgetGeometryChangeHandler(gui->i_b.frame, 0);
-	KW_RemoveWidgetTilesetChangeHandler(gui->i_b.frame, 0);
-	KW_DestroyWidget(gui->i_b.frame, 1);
-	free(gui->i_b.names);
+	KW_RemoveWidgetGeometryChangeHandler(gui->i_f.frame, 0);
+	KW_RemoveWidgetTilesetChangeHandler(gui->i_f.frame, 0);
+	KW_DestroyWidget(gui->i_f.frame, 1);
+	free(gui->i_f.names);
 }
 
 void	quit_kiwi_main(t_gui *gui)

@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/10/31 18:21:56 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/10/31 18:22:30 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -311,7 +311,7 @@ void check_cam(const cJSON *cam, t_game *game)
 	if (isnan(camera->position.v4[0]))
 		terminate("missing data of cam start pos vector!\n");
 	parse.v = cJSON_GetObjectItemCaseSensitive(cam, "dir");
-	camera->direction = parse_vec3(parse.v);
+	camera->direction = normalize(parse_vec3(parse.v));
 	if (isnan(camera->direction.v4[0]))
 		terminate("missing data of cam dir vector!\n");
 	parse.normal = cJSON_GetObjectItemCaseSensitive(cam, "normal");
