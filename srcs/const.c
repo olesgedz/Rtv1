@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   const.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:04:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/30 14:45:12 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/31 20:01:36 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void		set_const(t_game *game, t_gui *gui)
 	if (!(game->image = ft_surface_create(WIN_W, WIN_H)))
 		exit(-1);
 	game->init_render = 1;
-	game->origin = (t_vec3){0, 0, 5};
 	game->gpu.samples = 0;
 	game->quit = 0;
 	game->flag = 1;

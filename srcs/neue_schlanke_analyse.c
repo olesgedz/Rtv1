@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/10/31 18:22:30 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/10/31 18:26:18 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ static void sphere_basis(const cJSON *object, t_obj *obj, t_json *parse)
 		   terminate("missing data of sphere z_basis vector!\n");
 	}
 	else
-		obj->basis[2] = create_cfloat3(0.0, 0.0, 1.0);
+		obj->basis[2] = cross(obj->basis[0], obj->basis[1]);
 }
 
 static void cylinder_basis(const cJSON *object, t_obj *obj, t_json *parse)

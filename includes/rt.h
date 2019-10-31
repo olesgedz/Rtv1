@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/31 15:23:08 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/31 20:18:13 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # ifdef __APPLE__
 #  include <OpenCL/opencl.h>
 # else
-#  include <Cl/cl.h>
+#  include <CL/cl.h>
 # endif
 # include "gui.h"
 # ifndef DEVICE
@@ -43,22 +43,6 @@
 # define GMASK 0x0000ff00
 # define RMASK 0x00ff0000
 # define AMASK 0xff000000
-
-typedef struct s_vec3	t_vec3;
-
-typedef	struct			s_point3
-{
-	float				x;
-	float				y;
-	float				z;
-}						t_point3;
-
-struct					s_vec3
-{
-	float				x;
-	float				y;
-	float				z;
-};
 
 typedef enum			e_figure
 {
@@ -73,20 +57,18 @@ typedef struct			s_txture
 {
 	cl_int				width;
 	cl_int				height;
-	cl_int				texture[4096][2048];
+	cl_int				texture[3840][2160];
 }						t_txture;
 
 typedef struct			s_object
 {
-	float				radius;
+	t_type				type;
+	cl_float			radius;
 	cl_float3			position;
 	cl_float3			color;
 	cl_float3			emission;
 	cl_float3			v;
-	t_type				type;
-	cl_float			refraction;
 	cl_float			reflection;
-	cl_float			plane_d;
 	cl_int				texture;
 	cl_int				normal;
 	cl_float3			vertices[3];
@@ -99,14 +81,6 @@ typedef struct			s_object
 	cl_float3			composed_v;
 	cl_int				id;
 }						t_obj;
-
-typedef struct			s_ray
-{
-	t_vec3				orig;
-	t_vec3				dir;
-	t_vec3				hit;
-	double				t;
-}						t_ray;
 
 typedef struct			s_cam
 {
@@ -175,13 +149,8 @@ typedef struct			s_game
 	SDL_Event			ev;
 	t_sdl				sdl;
 	t_surface			*image;
-	t_list				*verties;
-	int					n_spheres;
-	int					n_cones;
-	int					n_cylinders;
 	size_t				obj_quantity;
 	int					cam_quantity;
-	t_vec3				origin;
 	t_gpu				gpu;
 	int					init_render;
 	t_txture			*textures;
@@ -199,30 +168,30 @@ typedef struct			s_game
 
 typedef struct			s_json
 {
-    cJSON *position;
-    cJSON *color;
-    cJSON *emition;
-    cJSON *reflection;
-    cJSON *texture;
-    cJSON *radius;
-    cJSON *v;
-    cJSON *x;
-    cJSON *y;
-    cJSON *z;
-    cJSON *a;
-    cJSON *b;
-    cJSON *c;
-    cJSON *shift;
-    cJSON *x_basis;
-    cJSON *y_basis;
-    cJSON *z_basis;
-    cJSON *rotation;
-    cJSON *prolapse;
-    cJSON *type;
-    cJSON *normal;
-	cJSON *composed_pos;
-	cJSON *composed_v;
-}               t_json;
+    cJSON				*position;
+    cJSON				*color;
+    cJSON				*emition;
+    cJSON				*reflection;
+    cJSON				*texture;
+    cJSON				*radius;
+    cJSON				*v;
+    cJSON				*x;
+    cJSON				*y;
+    cJSON				*z;
+    cJSON				*a;
+    cJSON				*b;
+    cJSON				*c;
+    cJSON				*shift;
+    cJSON				*x_basis;
+    cJSON				*y_basis;
+    cJSON				*z_basis;
+    cJSON				*rotation;
+    cJSON				*prolapse;
+    cJSON				*type;
+    cJSON				*normal;
+	cJSON				*composed_pos;
+	cJSON				*composed_v;
+}             			t_json;
 
 int						bind_data(t_gpu *gpu, t_game *game);
 void					release_gpu(t_gpu *gpu);
