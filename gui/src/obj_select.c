@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 19:08:02 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/28 17:42:12 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/31 15:24:23 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	first_button(t_gui *gui, char *name_buff)
 	gui->o_s.buttonrect[0].y += 10;
 }
 
-static int	scan_mass(t_gui *gui, t_obj *objs, int num, int fr_sz)
+static int	scan_mass(t_gui *gui, t_obj *objs, int num)
 {
 	int		i;
 
@@ -72,8 +72,8 @@ static int	scan_mass(t_gui *gui, t_obj *objs, int num, int fr_sz)
 		gui->o_s.names[i] = 0;
 	}
 	gui->o_s.weights[0] = 1;
-	gui->o_s.frect = (KW_Rect){WIN_W - 10 - fr_sz, 10, fr_sz, 100};
-	gui->o_s.titlerect = (KW_Rect){10, 10, fr_sz - 20, 30};
+	gui->o_s.frect = (KW_Rect){WIN_W - 10 - FR_FZ, 10, FR_FZ, 100};
+	gui->o_s.titlerect = (KW_Rect){10, 10, FR_FZ - 20, 30};
 	gui->o_s.buttonrect[0] = (KW_Rect){0, 0, 30, 40};
 	i = 1;
 	first_button(gui, fill_name(&objs[0], 0));
@@ -95,7 +95,7 @@ void		obj_select(t_gui *gui, t_obj *objs, int num)
 	unsigned			test;
 	KW_Widget *const	*wid_arr;
 
-	gui->o_s.max_i = scan_mass(gui, objs, num, WIN_W / 10.);
+	gui->o_s.max_i = scan_mass(gui, objs, num);
 	if ((i = -1) && gui->o_s.max_i > WIN_H / 45 - 3)
 	{
 		gui->o_s.frame = KW_CreateScrollbox(gui->gui, NULL, &gui->o_s.frect);
