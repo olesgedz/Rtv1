@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 16:30:29 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/31 15:24:44 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/31 18:46:12 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static void	first_button(t_gui *gui, struct dirent *name_buff)
 	KW_RectFillParentHorizontally(&gui->s_s.frect,
 	gui->s_s.rects, gui->s_s.weights, 1, 15,
 	KW_RECT_ALIGN_MIDDLE);
-	gui->s_s.buttonrect[0].y += 10;
 }
 
 static int	scan_dir(t_gui *gui)
@@ -68,8 +67,7 @@ static int	scan_dir(t_gui *gui)
 static int	param_set(t_gui *gui)
 {
 	gui->s_s.weights[0] = 1;
-	gui->s_s.frect = (KW_Rect){10, 10, FR_FZ, 100};
-	gui->s_s.titlerect = (KW_Rect){10, 10, FR_FZ - 20, 30};
+	gui->s_s.frect = (KW_Rect){5, 25, FR_FZ, 80};
 	gui->s_s.buttonrect[0] = (KW_Rect){0, 0, 30, 40};
 	return (scan_dir(gui));
 }
@@ -85,12 +83,9 @@ void		scene_select(t_gui *gui, int i, KW_Widget *const *wid_arr)
 		gui->s_s.frame = KW_CreateScrollbox(gui->gui, NULL, &gui->s_s.frect);
 		wid_arr = KW_GetWidgetChildren(gui->s_s.frame, &test);
 		KW_HideWidget(wid_arr[2]);
-		gui->s_s.titlerect = (KW_Rect){0, 10, WIN_W / 10. - 30, 30};
 	}
 	else
 		gui->s_s.frame = KW_CreateFrame(gui->gui, NULL, &gui->s_s.frect);
-	gui->s_s.label = KW_CreateLabel(gui->gui, gui->s_s.frame,
-	"Availible scenes", &gui->s_s.titlerect);
 	while (++i < gui->s_s.max_i)
 	{
 		if (gui->s_s.max_i > WIN_H / 45 - 3)

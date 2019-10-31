@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/10/31 15:39:20 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/31 20:44:01 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ static void plane_basis(const cJSON *object, t_obj *obj, t_json *parse)
 		   terminate("missing data of plane z_basis vector!\n");
 	}
 	else
-		obj->basis[2] = create_cfloat3(0.0, 0.0, 1.0);
+		obj->basis[2] = cross(obj->basis[0], obj->basis[1]);
 }
 
 static void sphere_basis(const cJSON *object, t_obj *obj, t_json *parse)
@@ -138,7 +138,7 @@ static void sphere_basis(const cJSON *object, t_obj *obj, t_json *parse)
 		   terminate("missing data of sphere z_basis vector!\n");
 	}
 	else
-		obj->basis[2] = create_cfloat3(0.0, 0.0, 1.0);
+		obj->basis[2] = cross(obj->basis[0], obj->basis[1]);
 }
 
 static void cylinder_basis(const cJSON *object, t_obj *obj, t_json *parse)
@@ -332,6 +332,9 @@ void check_cam(const cJSON *cam, t_game *game)
 
 void read_scene(char *argv, t_game *game)
 {
+
+	free(game->textures);
+	free(game->normals);
 	FILE *fp;
 	char buffer[8096];
 	fp = fopen(argv, "r");

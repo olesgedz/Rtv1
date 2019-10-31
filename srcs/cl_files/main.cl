@@ -23,12 +23,12 @@ float3 reflect(float3 vector, float3 n)
     return vector - 2 * dot(vector, n) * n;
 }
 
-float3 refract(float3 vector, float3 n, float refrIndex)
-{
-	float cosI = -dot(n, vector);
-	float cosT2 = 1.0f - refrIndex * refrIndex * (1.0f - cosI * cosI);
-	return (refrIndex * vector) + (refrIndex * cosI - sqrt( cosT2 )) * n;
-}
+// float3 refract(float3 vector, float3 n, float refrIndex)
+// {
+// 	float cosI = -dot(n, vector);
+// 	float cosT2 = 1.0f - refrIndex * refrIndex * (1.0f - cosI * cosI);
+// 	return (refrIndex * vector) + (refrIndex * cosI - sqrt( cosT2 )) * n;
+// }
 
 static void createCamRay(const int width, const int height, t_scene *scene, t_ray *ray)
 {

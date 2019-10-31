@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 22:51:42 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/30 21:43:33 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/31 19:25:07 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ char		*start_gui(t_game *game, t_gui *gui)
 	scene_select(gui, -1, 0);
 	loopa(game, gui);
 	KW_HideWidget(gui->ed_w.frame);
+	gui->ed_w.show = 0;
 	return (gui->av);
 }

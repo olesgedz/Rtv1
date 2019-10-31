@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:21:19 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/30 20:01:34 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/31 19:30:46 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ void	init_kiwi(t_gui *gui)
 		gui->o_s.names[i] = 0;
 		gui->s_s.names[i] = 0;
 	}
+	gui->ed_w.show = 1;
+	gui->s_s.show = 0;
+	gui->o_s.show = 0;
+	gui->g_b.show = 0;
+	gui->i_f.show = 0;
 }
 
 void	loopa(t_game *game, t_gui *gui)
