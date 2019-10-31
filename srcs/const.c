@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:04:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/30 14:45:12 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/31 19:08:37 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static void	set_keys(t_game *game)
 	game->keys.mm = 0;
 	game->keys.space = 0;
 	game->keys.show_gui = 1;
+	game->textures = 0;
+	game->normals = 0;
 }
 
 void		set_const(t_game *game, t_gui *gui)

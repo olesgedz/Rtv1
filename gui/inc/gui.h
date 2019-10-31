@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/31 15:21:47 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/31 19:19:00 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct		s_scene_select
 	KW_Widget		*buttons[MAX_SC];
 	char			*names[MAX_SC];
 	int				max_i;
+	int				show;
 }					t_scene_select;
 
 typedef struct		s_object_select
@@ -53,6 +54,7 @@ typedef struct		s_object_select
 	KW_Widget		*buttons[MAX_OBJ];
 	char			*names[MAX_OBJ];
 	int				max_i;
+	int				show;
 }					t_object_select;
 
 typedef struct		s_edit_win
@@ -70,6 +72,7 @@ typedef struct		s_edit_win
 	KW_Widget		*okbutton;
 	KW_Rect			*rects[2];
 	unsigned		weights[2];
+	int				show;
 }					t_edit_win;
 
 typedef struct		s_info_frame
@@ -85,6 +88,7 @@ typedef struct		s_info_frame
 	KW_Widget		*buttons;
 	char			*names;
 	int				max_i;
+	int				show;
 }					t_info_frame;
 
 typedef struct		s_gui_bar
@@ -98,6 +102,7 @@ typedef struct		s_gui_bar
 	KW_Widget		*buttons[30];
 	char			*names[30];
 	int				max_i;
+	int				show;
 }					t_gui_bar;
 
 typedef struct		s_gui

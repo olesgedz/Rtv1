@@ -6,7 +6,7 @@
 #    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/10/31 15:00:36 by lminta           ###   ########.fr        #
+#    Updated: 2019/10/31 19:01:22 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ LIBSDL_HEADERS = $(LIBSDL_DIRECTORY)includes/
 
 HEADERS_DIRECTORY = ./includes/
 HEADERS_LIST = rt.h
-HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
+HEADERS = ./includes/rt.h ./gui/inc/gui.h
 
 DIRECTORY =  $(shell pwd)
 SDL_CFLAGS = $(shell sdl2-config --cflags)

@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/10/31 15:39:20 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/31 19:29:47 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -332,6 +332,9 @@ void check_cam(const cJSON *cam, t_game *game)
 
 void read_scene(char *argv, t_game *game)
 {
+
+	free(game->textures);
+	free(game->normals);
 	FILE *fp;
 	char buffer[8096];
 	fp = fopen(argv, "r");
