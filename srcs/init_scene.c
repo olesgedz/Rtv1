@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_scene.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:53:01 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/28 17:42:12 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/31 18:01:44 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void			opencl_write_args(t_game *game)
 	game->kernels[0].sizes[1] = sizeof(t_obj) * 3;     // fix this
 	game->kernels[0].sizes[2] = sizeof(cl_float3) * (int)WIN_H * (int)WIN_W;
 	game->kernels[0].sizes[3] = (int)WIN_H * (int)WIN_W * sizeof(cl_ulong);
-	game->kernels[0].sizes[4] = sizeof(t_txture) * 3; //fix this
+	game->kernels[0].sizes[4] = sizeof(t_txture) * 3;   //fix this
 	game->kernels[0].sizes[5] = sizeof(t_txture) * 3;
 	game->cl_info->ret = krl_set_args(game->cl_info->ctxt, &game->kernels[0]);
 	ERROR(game->cl_info->ret );

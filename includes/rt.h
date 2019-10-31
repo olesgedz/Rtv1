@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/31 16:11:18 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/10/31 18:08:08 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,7 +269,7 @@ void					info_button(t_game *game, t_gui *gui);
 void					show_hide(t_game *game, t_gui *gui);
 void					mouse(t_game *game, t_gui *gui);
 void					gui_bar(t_game *game, t_gui *gui);
-void					buttons(t_game *game, t_gui *gui, int fr_sz);
+void					buttons(t_game *game, t_gui *gui);
 cl_float2				parse_vec2(cJSON *vec);
 char					*start_gui(t_game *game, t_gui *gui);
 void					loopa(t_game *game, t_gui *gui);

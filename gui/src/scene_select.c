@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 16:30:29 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/28 17:42:12 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/31 15:24:44 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,9 @@ static int	scan_dir(t_gui *gui)
 
 static int	param_set(t_gui *gui)
 {
-	int					fr_sz;
-
 	gui->s_s.weights[0] = 1;
-	fr_sz = WIN_W / 10.;
-	gui->s_s.frect = (KW_Rect){10, 10, fr_sz, 100};
-	gui->s_s.titlerect = (KW_Rect){10, 10, fr_sz - 20, 30};
+	gui->s_s.frect = (KW_Rect){10, 10, FR_FZ, 100};
+	gui->s_s.titlerect = (KW_Rect){10, 10, FR_FZ - 20, 30};
 	gui->s_s.buttonrect[0] = (KW_Rect){0, 0, 30, 40};
 	return (scan_dir(gui));
 }

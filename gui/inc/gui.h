@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/30 19:42:04 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/31 15:21:47 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include "libsdl.h"
 # define MAX_SC		256
 # define MAX_OBJ	1024
+# define FR_FZ		WIN_W / 10.
 
 typedef struct		s_scene_select
 {
@@ -71,7 +72,7 @@ typedef struct		s_edit_win
 	unsigned		weights[2];
 }					t_edit_win;
 
-typedef struct		s_info_button
+typedef struct		s_info_frame
 {
 	KW_Rect			titlerect;
 	KW_Rect			winrect;
@@ -84,7 +85,7 @@ typedef struct		s_info_button
 	KW_Widget		*buttons;
 	char			*names;
 	int				max_i;
-}					t_info_button;
+}					t_info_frame;
 
 typedef struct		s_gui_bar
 {
@@ -92,8 +93,8 @@ typedef struct		s_gui_bar
 	KW_Rect			buttonrect[30];
 	KW_Widget		*frame;
 	KW_Widget		*label;
-	KW_Rect			*rects[1];
-	unsigned		weights[1];
+	KW_Rect			*rects[30];
+	unsigned		weights[30];
 	KW_Widget		*buttons[30];
 	char			*names[30];
 	int				max_i;
@@ -107,7 +108,7 @@ typedef struct		s_gui
 	KW_RenderDriver	*driver;
 	KW_Surface		*set;
 	KW_GUI			*gui;
-	t_info_button	i_b;
+	t_info_frame	i_f;
 	t_edit_win		ed_w;
 	t_scene_select	s_s;
 	t_object_select	o_s;

@@ -6,7 +6,7 @@
 #    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/10/30 18:53:28 by lminta           ###   ########.fr        #
+#    Updated: 2019/10/31 15:00:36 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ RMRF = gui/src/gui_main.o\
 		gui/src/scene_select.o\
 		gui/src/main_screen.o\
 		gui/src/obj_select.o\
-		gui/src/info_button.o\
+		gui/src/info_frame.o\
 		/gui/src/gui_bar.o\
 		/gui/src/buttons.o\
 		cJSON/cJSON.o
@@ -92,7 +92,7 @@ SRCS_LIST = main.c\
 			../gui/src/surf_tex.c\
 			../gui/src/scene_select.c\
 			../gui/src/main_screen.c\
-			../gui/src/info_button.c\
+			../gui/src/info_frame.c\
 			../gui/src/obj_select.c\
 			../cJSON/cJSON.c\
 			neue_schlanke_analyse.c\
