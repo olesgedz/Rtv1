@@ -19,7 +19,7 @@ typedef struct s_txture
 {
 	int					width;
 	int					height;
-	int					texture[4096 * 2048];
+	int					texture[3840 * 2160];
 }						t_txture;
 
 
@@ -40,15 +40,13 @@ typedef enum e_figure
 
 typedef struct			s_object
 {
+	t_type				type;
 	float				radius;
 	float3				position;
 	float3				color;
 	float3				emission;
 	float3				v;
-	t_type				type;
-	float				refraction;
 	float				reflection;
-	float				plane_d;
 	int					texture;
 	int					normal;
 	float3				vertices[3];
