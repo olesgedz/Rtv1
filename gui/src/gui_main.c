@@ -6,13 +6,13 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:21:19 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/31 19:30:46 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/31 21:31:03 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-t_gui	*g_gui(t_gui *gui, int flag)
+t_gui		*g_gui(t_gui *gui, int flag)
 {
 	static t_gui	*storage = 0;
 
@@ -21,7 +21,7 @@ t_gui	*g_gui(t_gui *gui, int flag)
 	return (storage);
 }
 
-void	init_kiwi(t_gui *gui)
+void		init_kiwi(t_gui *gui)
 {
 	int i;
 
@@ -46,20 +46,31 @@ void	init_kiwi(t_gui *gui)
 	gui->i_f.show = 0;
 }
 
-void	loopa(t_game *game, t_gui *gui)
+static void	rotator(t_game *game, t_gui *gui)
 {
-	SDL_RenderClear(gui->sdl.renderer);
-	while (!gui->quit)
+	static float angle = 0;
+
+	if (angle < M_PI / 2.)
 	{
+		angle += M_PI / 1000.;
 		game->gpu.camera[game->cam_num].direction =
 		rotate(game->gpu.camera[game->cam_num].normal,
-		game->gpu.camera[game->cam_num].direction, M_PI / 720.);
+		game->gpu.camera[game->cam_num].direction, M_PI / 1000.);
 		game->flag = 1;
 		game->cl_info->ret =
 		cl_write(game->cl_info, game->kernels[0].args[2], sizeof(cl_float3) *
 		(unsigned)WIN_H * (unsigned)WIN_W, game->gpu.vec_temp);
 		game->gpu.samples = 0;
 		reconfigure_camera(&game->gpu.camera[game->cam_num]);
+	}
+}
+
+void		loopa(t_game *game, t_gui *gui)
+{
+	SDL_RenderClear(gui->sdl.renderer);
+	while (!gui->quit)
+	{
+		rotator(game, gui);
 		if (SDL_PollEvent(&gui->ev))
 			if (gui->ev.type == SDL_QUIT ||
 		(gui->ev.type == SDL_KEYDOWN &&

@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:50:13 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/31 19:27:43 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/31 20:54:20 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,23 @@ void		pos_check(t_game *game, t_gui *gui)
 	y = 0;
 	SDL_GetMouseState(&x, &y);
 	gui->over_gui = 0;
-	if (gui->s_s.show)
+	if (game->keys.show_gui && gui->s_s.show)
 		if (x > gui->s_s.frect.x && x < gui->s_s.frect.x + gui->s_s.frect.w)
 			if (y > gui->s_s.frect.y && y < gui->s_s.frect.y + gui->s_s.frect.h)
 				gui->over_gui = 1;
-	if (gui->o_s.show)
+	if (game->keys.show_gui && gui->o_s.show)
 		if (x > gui->o_s.frect.x && x < gui->o_s.frect.x + gui->o_s.frect.w)
 			if (y > gui->o_s.frect.y && y < gui->o_s.frect.y + gui->o_s.frect.h)
 				gui->over_gui = 1;
-	if (gui->i_f.show)
+	if (game->keys.show_gui && gui->i_f.show)
 		if (x > gui->i_f.frect.x && x < gui->i_f.frect.x + gui->i_f.frect.w)
 			if (y > gui->i_f.frect.y && y < gui->i_f.frect.y + gui->i_f.frect.h)
 				gui->over_gui = 1;
-	if (gui->g_b.show)
+	if (game->keys.show_gui && gui->g_b.show)
 		if (x > gui->g_b.frect.x && x < gui->g_b.frect.x + gui->g_b.frect.w)
 			if (y > gui->g_b.frect.y && y < gui->g_b.frect.y + gui->g_b.frect.h)
 				gui->over_gui = 1;
-	if (gui->over_gui)
+	if (game->keys.show_gui && gui->over_gui)
 		SDL_SetCursor(SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW));
 	else
 		SDL_SetCursor(SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR));
