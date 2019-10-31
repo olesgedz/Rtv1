@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/31 20:18:13 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/10/31 21:33:17 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@
 # ifndef DEVICE
 #  define DEVICE CL_DEVICE_TYPE_DEFAULT
 # endif
-# define BMASK 0x000000ff
-# define GMASK 0x0000ff00
-# define RMASK 0x00ff0000
-# define AMASK 0xff000000
+// # define BMASK 0x000000ff
+// # define GMASK 0x0000ff00
+// # define RMASK 0x00ff0000
+// # define AMASK 0xff000000
 
 typedef enum			e_figure
 {
