@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:53:01 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/31 18:01:44 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/10/31 21:13:51 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void			opencl_write_args(t_game *game)
 	game->cl_info->ret = krl_set_args(game->cl_info->ctxt, &game->kernels[0]);
 	ERROR(game->cl_info->ret );
 	game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[0],\
-	sizeof(cl_int) * (int)WIN_H * (int)WIN_W, game->sdl.surface->data);
+	sizeof(cl_int) * (int)WIN_H * (int)WIN_W, game->sdl.surface->pixels);
 	game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[2],\
 	sizeof(cl_float3) * (int)WIN_H * (int)WIN_W, game->gpu.vec_temp);
 	game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[3],\

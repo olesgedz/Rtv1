@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 15:55:58 by sbrella           #+#    #+#             */
-/*   Updated: 2019/10/28 17:42:12 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/31 21:24:16 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ static void	ya_kostil(SDL_PixelFormat *fmt)
 {
 	fmt->BytesPerPixel = 4;
 	fmt->BitsPerPixel = 32;
-	fmt->Rmask = RMASK;
-	fmt->Gmask = GMASK;
-	fmt->Bmask = BMASK;
-	fmt->Amask = AMASK;
+	fmt->Rmask = BMASK;//RMASK;
+	fmt->Gmask = GMASK;//GMASK;
+	fmt->Bmask = RMASK;//BMASK;
+	fmt->Amask = AMASK;//AMASK;
 }
 
 void		get_texture(char *name, t_txture *texture, char *path)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:54:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/30 19:50:45 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/31 21:12:32 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void		ft_run_kernel(t_game *game, cl_kernel kernel, int w, int h)
 	ERROR(game->cl_info->ret );
 	clFinish(game->cl_info->cmd_queue);
 	game->cl_info->ret = cl_read(game->cl_info, game->kernels->args[0],
-	sizeof(cl_int) * WIN_W * WIN_H, game->sdl.surface->data);
+	sizeof(cl_int) * WIN_W * WIN_H, game->sdl.surface->pixels);
 	ERROR(game->cl_info->ret );
 }
 
@@ -49,9 +49,9 @@ void		ft_render(t_game *game, t_gui *gui)
 
 void		screen_present(t_game *game, t_gui *gui)
 {
-	SDL_UpdateTexture(game->sdl.texture->sdl_texture, NULL,\
-	game->sdl.surface->data, game->sdl.surface->width * sizeof(Uint32));
-	SDL_RenderCopy(game->sdl.renderer, game->sdl.texture->sdl_texture,
+	SDL_UpdateTexture(game->sdl.texture, NULL,\
+	game->sdl.surface->pixels, game->sdl.surface->w * sizeof(Uint32));
+	SDL_RenderCopy(game->sdl.renderer, game->sdl.texture,
 	NULL, NULL);
 	KW_ProcessEvents(gui->gui);
 	KW_Paint(gui->gui);

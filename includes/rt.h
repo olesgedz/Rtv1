@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/31 18:08:08 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/10/31 21:15:00 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@
 # ifndef DEVICE
 #  define DEVICE CL_DEVICE_TYPE_DEFAULT
 # endif
-# define BMASK 0x000000ff
-# define GMASK 0x0000ff00
-# define RMASK 0x00ff0000
-# define AMASK 0xff000000
+// # define BMASK 0x000000ff
+// # define GMASK 0x0000ff00
+// # define RMASK 0x00ff0000
+// # define AMASK 0xff000000
 
 typedef struct s_vec3	t_vec3;
 
