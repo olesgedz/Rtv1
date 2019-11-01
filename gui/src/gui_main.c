@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:21:19 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/01 19:39:03 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/01 22:33:59 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ static void	rotator(t_game *game, t_gui *gui)
 
 	if (angle < M_PI / 2.)
 	{
-		angle += M_PI / 1250.;
+		angle += M_PI / 1200.;
 		game->gpu.camera[game->cam_num].direction =
 		rotate(game->gpu.camera[game->cam_num].normal,
-		game->gpu.camera[game->cam_num].direction, M_PI / 1250.);
+		game->gpu.camera[game->cam_num].direction, M_PI / 1200.);
 		game->flag = 1;
 		game->cl_info->ret =
 		cl_write(game->cl_info, game->kernels[0].args[2], sizeof(cl_float3) *
@@ -68,9 +68,12 @@ static void	rotator(t_game *game, t_gui *gui)
 
 void		loopa(t_game *game, t_gui *gui)
 {
+	Uint32		time;
+
 	SDL_RenderClear(gui->sdl.renderer);
 	while (!gui->quit)
 	{
+		time = SDL_GetTicks();
 		rotator(game, gui);
 		if (SDL_PollEvent(&gui->ev))
 			if (gui->ev.type == SDL_QUIT ||
@@ -79,5 +82,8 @@ void		loopa(t_game *game, t_gui *gui)
 				gui->quit = 1;
 		ft_render(game, gui);
 		screen_present(game, gui);
+		time = SDL_GetTicks() - time;
+		if (time < TICKS_PER_FRAME)
+			SDL_Delay(TICKS_PER_FRAME - time);
 	}
 }

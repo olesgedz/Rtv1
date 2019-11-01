@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:04:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/01 22:09:39 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/01 22:34:14 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,11 @@
 
 static void	set_keys(t_game *game)
 {
-	Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+	{
+		print_error_gui("Could not initialize mixer ", Mix_GetError());
+		exit(1);
+	}
 	game->keys.q = 0;
 	game->keys.w = 0;
 	game->keys.e = 0;
@@ -43,7 +47,7 @@ void		set_const(t_game *game, t_gui *gui)
 		print_error_gui("No IMG for you: ", IMG_GetError());
 		exit(1);
 	}
-	img_flag = MIX_INIT_MP3;
+	// img_flag = MIX_INIT_MP3;
 	// if (img_flag != Mix_Init(img_flag))
 	// {
 	// 	print_error_gui("Could not initialize mixer ", Mix_GetError());

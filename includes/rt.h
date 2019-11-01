@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/01 21:57:54 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/01 22:34:09 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@
 #  define SDL_BUTTON_LEFT 3
 #  define SDL_BUTTON_RIGHT 1
 # endif
+
+# define TICKS_PER_FRAME	47
 
 // # define BMASK 0x000000ff
 // # define GMASK 0x0000ff00
@@ -255,6 +257,7 @@ char					*start_gui(t_game *game, t_gui *gui);
 void					loopa(t_game *game, t_gui *gui);
 void					screen_present(t_game *game, t_gui *gui);
 void					ft_render(t_game *game, t_gui *gui);
+void					play_stop_music(char *name);
 void					check_object(const cJSON *object, t_game *game,
 cJSON *comp_pos, cJSON *comp_v, int id);
 int 					compare_in_dict(t_game *game, char **mass, char *texture_name);

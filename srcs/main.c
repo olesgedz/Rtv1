@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/10/30 19:23:05 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/01 20:12:29 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ static void	set_icon(t_gui *gui, const char *filename)
 
 static void	main_loop(t_game *game, t_gui *gui, int argc)
 {
+	KW_HideWidget(gui->s_s.frame);
+	gui_bar(game, gui);
 	while (game->av)
 	{
 		opencl(game, game->av);
-		gui_bar(game, gui);
 		main_screen(gui, game);
 		if (argc != 2)
 			ft_strdel(&game->av);
