@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:21:19 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/01 17:06:21 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/01 19:29:01 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ static void	rotator(t_game *game, t_gui *gui)
 
 	if (angle < M_PI / 2.)
 	{
-		angle += M_PI / 1250.;
+		angle += M_PI / 1200.;
 		game->gpu.camera[game->cam_num].direction =
 		rotate(game->gpu.camera[game->cam_num].normal,
-		game->gpu.camera[game->cam_num].direction, M_PI / 1250.);
+		game->gpu.camera[game->cam_num].direction, M_PI / 1200.);
 		game->flag = 1;
 		game->cl_info->ret =
 		cl_write(game->cl_info, game->kernels[0].args[2], sizeof(cl_float3) *

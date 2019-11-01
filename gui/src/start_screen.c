@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 22:51:42 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/01 18:17:16 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/01 19:26:39 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,22 @@ static void	ok_clicked(KW_Widget *widget, int b)
 	gui->quit = KW_TRUE;
 }
 
-static void play_stop_music(t_game *game, t_gui *gui)
+void		play_stop_music(char *name)
 {
-	Mix_Music *music;
-	music = Mix_LoadMUS("");
-	Mix_PlayMusic(music, 1);
+	static Mix_Music *music = 0;
+
+	if (Mix_PlayingMusic() || !name)
+	{
+		Mix_PauseMusic();
+		if (music)
+			Mix_FreeMusic(music);
+	}
+	else
+	{
+		if (!(music = Mix_LoadMUS(name)))
+			exit(1);
+		Mix_PlayMusic(music, 1);
+	}
 }
 
 void		start_screen(t_gui *gui)
@@ -68,8 +79,9 @@ char		*start_gui(t_game *game, t_gui *gui)
 	opencl(game, "gui/res/start.json");
 	start_screen(gui);
 	scene_select(gui, -1, 0);
-	play_stop_music(game, gui);
+	play_stop_music("gui/res/main_menu.wav");
 	loopa(game, gui);
+	play_stop_music(0);
 	KW_HideWidget(gui->ed_w.frame);
 	gui->ed_w.show = 0;
 	return (gui->av);
