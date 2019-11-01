@@ -6,7 +6,7 @@
 #    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/11/01 15:23:25 by lminta           ###   ########.fr        #
+#    Updated: 2019/11/01 16:10:40 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,8 +69,8 @@ RMRF = gui/src/gui_main.o\
 		gui/src/main_screen.o\
 		gui/src/obj_select.o\
 		gui/src/ren_button.o\
-		/gui/src/gui_bar.o\
-		/gui/src/buttons.o\
+		gui/src/gui_bar.o\
+		gui/src/buttons.o\
 		cJSON/cJSON.o
 
 SRCS_LIST = main.c\
