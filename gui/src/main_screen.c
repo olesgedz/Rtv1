@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 16:46:11 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/31 20:39:24 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/01 15:54:58 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 void	main_screen(t_gui *gui, t_game *game)
 {
-	gui->i_f.names = 0;
 	KW_HideWidget(gui->s_s.frame);
 	obj_select(gui, game->gpu.objects, game->obj_quantity);
 	KW_HideWidget(gui->o_s.frame);
-	info_button(game, gui);
 }
 
 void	main_screen_free(t_gui *gui)
@@ -41,10 +39,6 @@ void	main_screen_free(t_gui *gui)
 		KW_RemoveWidgetTilesetChangeHandler(gui->o_s.frame, 0);
 		KW_DestroyWidget(gui->o_s.frame, 1);
 	}
-	KW_RemoveWidgetGeometryChangeHandler(gui->i_f.frame, 0);
-	KW_RemoveWidgetTilesetChangeHandler(gui->i_f.frame, 0);
-	KW_DestroyWidget(gui->i_f.frame, 1);
-	free(gui->i_f.names);
 }
 
 void	quit_kiwi_main(t_gui *gui)
@@ -55,6 +49,7 @@ void	quit_kiwi_main(t_gui *gui)
 		KW_RemoveWidgetTilesetChangeHandler(gui->s_s.frame, 0);
 		KW_DestroyWidget(gui->s_s.frame, 1);
 	}
+	free(gui->g_b.names[0]);
 	KW_ReleaseSurface(gui->driver, gui->set);
 	KW_Quit(gui->gui);
 }

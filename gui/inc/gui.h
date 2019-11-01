@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/31 19:19:00 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/01 15:44:38 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,22 +75,6 @@ typedef struct		s_edit_win
 	int				show;
 }					t_edit_win;
 
-typedef struct		s_info_frame
-{
-	KW_Rect			titlerect;
-	KW_Rect			winrect;
-	KW_Rect			frect;
-	KW_Rect			buttonrect;
-	KW_Widget		*frame;
-	KW_Widget		*label;
-	KW_Rect			*rects[1];
-	unsigned		weights[1];
-	KW_Widget		*buttons;
-	char			*names;
-	int				max_i;
-	int				show;
-}					t_info_frame;
-
 typedef struct		s_gui_bar
 {
 	KW_Rect			frect;
@@ -113,7 +97,6 @@ typedef struct		s_gui
 	KW_RenderDriver	*driver;
 	KW_Surface		*set;
 	KW_GUI			*gui;
-	t_info_frame	i_f;
 	t_edit_win		ed_w;
 	t_scene_select	s_s;
 	t_object_select	o_s;
