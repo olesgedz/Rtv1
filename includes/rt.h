@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/31 21:33:17 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/11/01 18:40:43 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "SDL2/SDL.h"
 # include "cl_error.h"
 # include "SDL_image.h"
+# include "SDL_mixer.h"
 # include "libft.h"
 # include <dirent.h>
 # include "libsdl.h"
@@ -39,6 +40,14 @@
 # ifndef DEVICE
 #  define DEVICE CL_DEVICE_TYPE_DEFAULT
 # endif
+
+
+// # define LOPA_POOPA
+# ifdef LOPA_POOPA
+#  define SDL_BUTTON_LEFT 3
+#  define SDL_BUTTON_RIGHT 1
+# endif
+
 // # define BMASK 0x000000ff
 // # define GMASK 0x0000ff00
 // # define RMASK 0x00ff0000

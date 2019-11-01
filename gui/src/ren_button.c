@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 17:38:36 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/01 16:04:00 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/01 18:32:14 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static void	ren_start(KW_Widget *widget, int b)
 
 	b = 0;
 	game = KW_GetWidgetUserData(widget);
+	if (game->ev.button.button != SDL_BUTTON_LEFT)
+		return ;
 	game->keys.r = !game->keys.r;
 }
 
