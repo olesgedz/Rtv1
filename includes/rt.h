@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/01 18:40:43 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/01 18:41:37 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 
 
 // # define LOPA_POOPA
-# ifdef LOPA_POOPA
+# ifdef LOOPA_POOPA
 #  define SDL_BUTTON_LEFT 3
 #  define SDL_BUTTON_RIGHT 1
 # endif
