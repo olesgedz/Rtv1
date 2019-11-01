@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:21:19 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/01 19:29:01 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/01 22:01:08 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,12 @@ static void	rotator(t_game *game, t_gui *gui)
 
 void		loopa(t_game *game, t_gui *gui)
 {
+	Uint32		time;
+
 	SDL_RenderClear(gui->sdl.renderer);
 	while (!gui->quit)
 	{
+		time = SDL_GetTicks();
 		rotator(game, gui);
 		if (SDL_PollEvent(&gui->ev))
 			if (gui->ev.type == SDL_QUIT ||
@@ -79,5 +82,8 @@ void		loopa(t_game *game, t_gui *gui)
 				gui->quit = 1;
 		ft_render(game, gui);
 		screen_present(game, gui);
+		time = SDL_GetTicks() - time;
+		if (time < TICKS_PER_FRAME)
+			SDL_Delay(TICKS_PER_FRAME - time);
 	}
 }

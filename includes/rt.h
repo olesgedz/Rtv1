@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/01 19:28:20 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/01 22:07:21 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@
 #  define SDL_BUTTON_LEFT 3
 #  define SDL_BUTTON_RIGHT 1
 # endif
+
+# define TICKS_PER_FRAME	47
 
 // # define BMASK 0x000000ff
 // # define GMASK 0x0000ff00
