@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:21:19 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/01 22:33:59 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/01 22:35:27 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void		init_kiwi(t_gui *gui)
 	gui->ed_w.winrect = (KW_Rect){0, 0, WIN_W, WIN_H};
 	gui->driver =
 	KW_CreateSDL2RenderDriver(gui->sdl.renderer, gui->sdl.window);
-	gui->set = KW_LoadSurface(gui->driver, "gui/res/tileset-flat.png");
+	gui->set = KW_LoadSurface(gui->driver, "gui/res/tileset.png");
 	gui->gui = KW_Init(gui->driver, gui->set);
 	while (++i < MAX_OBJ)
 	{

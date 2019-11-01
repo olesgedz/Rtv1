@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:04:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/01 22:34:14 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/01 22:34:49 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,6 @@ void		set_const(t_game *game, t_gui *gui)
 		print_error_gui("No IMG for you: ", IMG_GetError());
 		exit(1);
 	}
-	// img_flag = MIX_INIT_MP3;
-	// if (img_flag != Mix_Init(img_flag))
-	// {
-	// 	print_error_gui("Could not initialize mixer ", Mix_GetError());
-	// 	exit(1);
-	// }
 	if (!(game->image = ft_surface_create(WIN_W, WIN_H)))
 		exit(-1);
 	game->init_render = 1;
