@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   help_fun.c                                         :+:      :+:    :+:   */
+/*   hilfefunktionen.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:51:09 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/28 19:21:44 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/11/01 22:26:56 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,35 @@ void		ft_cam_push(t_game *game, t_cam *cam)
 	game->gpu.camera[game->cam_quantity] = *cam;
 	game->cam_quantity += 1;
 	free(cam);
+}
+
+void		ft_texture_push(t_game *game, char ***mass, char *texture_name)
+{
+	
+	if (*mass == NULL)
+		game->textures_num = 0;
+	*mass = ft_realloc(*mass,
+	sizeof(char*) * (game->textures_num + 1));
+	// get_texture(texture_name, game->textures[game->textures_num], "./textures/");
+	mass[0][game->textures_num] = ft_strdup(texture_name);
+	game->textures_num += 1;
+	//free(texture_name);
+}
+
+
+int compare_in_dict(t_game *game, char **mass, char *texture_name)
+{
+	int i;
+	
+	i = 0;
+
+	if (mass == NULL)
+		return (-1);
+	while (i < game->textures_num)
+	{
+		if (ft_strcmp(mass[i], texture_name) == 0)
+			return (i + 1);
+		i++;
+	}
+	return (-1);
 }

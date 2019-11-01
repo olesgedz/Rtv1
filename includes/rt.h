@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/01 18:41:37 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/01 21:57:54 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # endif
 
 
-// # define LOPA_POOPA
+# define LOOPA_POOPA
 # ifdef LOOPA_POOPA
 #  define SDL_BUTTON_LEFT 3
 #  define SDL_BUTTON_RIGHT 1
@@ -164,6 +164,7 @@ typedef struct			s_game
 	int					init_render;
 	t_txture			*textures;
 	int					textures_num;
+	char				**texture_list;
 	int					normals_num;
 	t_txture			*normals;
 	t_cl_info			*cl_info;
@@ -233,6 +234,7 @@ void					terminate(char *s);
 void					feel_free(char **str);
 void					ft_object_push(t_game *game, t_obj *object);
 void					ft_cam_push(t_game *game, t_cam *cam);
+void					ft_texture_push(t_game *game, char ***mass, char *texture_name);
 void					main_screen(t_gui *gui, t_game *game);
 void					obj_select(t_gui *gui, t_obj *objs, int num);
 void					pos_check(t_game *game, t_gui *gui);
@@ -255,4 +257,5 @@ void					screen_present(t_game *game, t_gui *gui);
 void					ft_render(t_game *game, t_gui *gui);
 void					check_object(const cJSON *object, t_game *game,
 cJSON *comp_pos, cJSON *comp_v, int id);
+int 					compare_in_dict(t_game *game, char **mass, char *texture_name);
 #endif

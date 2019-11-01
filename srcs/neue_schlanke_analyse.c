@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   neue_schlanke_analyse.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/10/31 20:59:47 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/01 22:26:45 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void parse_necessary(const cJSON *object, t_obj *obj, t_json *parse)
 		terminate("missing data of obj radius!\n");
 }
 
-static void parse_facing(const cJSON *object, t_obj *obj, t_json *parse)
+static void parse_facing(const cJSON *object, t_obj *obj, t_json *parse, t_game *game)
 {
 	parse->emition = cJSON_GetObjectItemCaseSensitive(object, "emition");
 	if (parse->emition != NULL)
@@ -51,10 +51,19 @@ static void parse_facing(const cJSON *object, t_obj *obj, t_json *parse)
 	if (parse->reflection != NULL)
 		obj->reflection = parse->reflection->valuedouble;
 	else
-		obj->reflection = 0.0;
+		obj->reflection = 0.0;	
 	parse->texture = cJSON_GetObjectItemCaseSensitive(object, "texture");
+
+
+	
 	if (parse->texture != NULL)
-		obj->texture = (int)parse->texture->valuedouble;
+	{
+		obj->texture = compare_in_dict(game, game->texture_list, parse->texture->valuestring);
+		if (obj->texture == -1)
+			obj->texture = 0;
+	}
+
+	
 	else
 		obj->texture = 0;
 	parse->normal = cJSON_GetObjectItemCaseSensitive(object, "normal");
@@ -290,13 +299,11 @@ void check_object(const cJSON *object, t_game *game, cJSON *composed_pos, cJSON 
 	}
 	obj->id = id;
 	parse_necessary(object, obj, &parse);
-	parse_facing(object, obj, &parse);
+	parse_facing(object, obj, &parse, game);
 	parse_basis(object, obj, &parse);
 	if (obj->type == TRIANGLE)
 		parse_triangle_vert(object, obj, &parse);
 	parse_rest(object, obj, &parse);
-	//printf("coord == %f, %f, %f\n", obj->position.v4[0], obj->position.v4[1], obj->position.v4[2]);
-	printf("id of obj = %d\n", obj->id);
 	ft_object_push(game, obj);
 }
 
@@ -311,8 +318,7 @@ void check_cam(const cJSON *cam, t_game *game)
 	if (isnan(camera->position.v4[0]))
 		terminate("missing data of cam start pos vector!\n");
 	parse.v = cJSON_GetObjectItemCaseSensitive(cam, "dir");
-	// camera->direction = normalize(parse_vec3(parse.v));
-	camera->direction = parse_vec3(parse.v);
+	camera->direction = normalize(parse_vec3(parse.v));
 	if (isnan(camera->direction.v4[0]))
 		terminate("missing data of cam dir vector!\n");
 	parse.normal = cJSON_GetObjectItemCaseSensitive(cam, "normal");
@@ -346,14 +352,19 @@ void read_scene(char *argv, t_game *game)
 
 	const cJSON *texture = NULL;
 	const cJSON *textures = NULL;
+	// char **mass = NULL;
 	int i = 0;
 	textures = cJSON_GetObjectItemCaseSensitive(json, "textures");
-
-	game->textures_num = cJSON_GetArraySize(textures);
-	game->textures = (t_txture*)malloc(sizeof(t_txture) * game->textures_num);
 	cJSON_ArrayForEach(texture, textures)
 	{
-		get_texture(texture->valuestring, &(game->textures[i]), "./textures/");
+		if (compare_in_dict(game, game->texture_list, texture->valuestring) == -1)
+			ft_texture_push(game, &(game->texture_list), texture->valuestring);
+	}
+	game->textures = (t_txture*)malloc(sizeof(t_txture) * game->textures_num);
+	while(i < game->textures_num)
+	{
+		get_texture(game->texture_list[i], &(game->textures[i]), "./textures/");
+		// printf("%s\n", mass[i]);
 		i++;
 	}
 	const cJSON *normal = NULL;

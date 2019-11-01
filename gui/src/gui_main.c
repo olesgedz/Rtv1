@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gui_main.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:21:19 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/01 17:06:21 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/01 19:39:03 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void		init_kiwi(t_gui *gui)
 	gui->ed_w.winrect = (KW_Rect){0, 0, WIN_W, WIN_H};
 	gui->driver =
 	KW_CreateSDL2RenderDriver(gui->sdl.renderer, gui->sdl.window);
-	gui->set = KW_LoadSurface(gui->driver, "gui/res/tileset.png");
+	gui->set = KW_LoadSurface(gui->driver, "gui/res/tileset-flat.png");
 	gui->gui = KW_Init(gui->driver, gui->set);
 	while (++i < MAX_OBJ)
 	{
