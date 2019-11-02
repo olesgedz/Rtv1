@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:51:09 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/02 02:58:13 by david            ###   ########.fr       */
+/*   Updated: 2019/11/03 01:34:21 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ void		ft_cam_push(t_game *game, t_cam *cam)
 
 void		ft_texture_push(t_game *game, char ***mass, char *texture_name)
 {
-	
+	if (texture_name == NULL)
+		return ;
 	if (*mass == NULL)
 		game->textures_num = 0;
 	*mass = ft_realloc(*mass,

@@ -6,14 +6,14 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/02 18:41:29 by david            ###   ########.fr       */
+/*   Updated: 2019/11/03 01:27:24 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_H
 # define RT_H
-# define WIN_W 1000
-# define WIN_H 700
+# define WIN_W 500
+# define WIN_H 400
 # define SAMPLES 5
 # define CL_SILENCE_DEPRECATION
 # include <sys/types.h>
