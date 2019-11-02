@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 15:55:58 by sbrella           #+#    #+#             */
-/*   Updated: 2019/11/01 20:29:54 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/02 18:39:27 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void		get_texture(char *name, t_txture *texture, char *path)
 	m = ft_strjoin(path, name);
 	an_surf = IMG_Load(m);
 	ft_strdel(&m);
+	if (an_surf == NULL)
+		return ;
 	fmt = malloc(sizeof(SDL_PixelFormat));
 	ft_memcpy(fmt, an_surf->format, sizeof(SDL_PixelFormat));
 	ya_kostil(fmt);

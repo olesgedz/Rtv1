@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hilfefunktionen.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:51:09 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/01 22:26:56 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/02 02:58:13 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,19 +85,19 @@ void		ft_texture_push(t_game *game, char ***mass, char *texture_name)
 }
 
 
-int compare_in_dict(t_game *game, char **mass, char *texture_name)
+int compare_in_dict(t_game *game, char *texture_name)
 {
 	int i;
 	
 	i = 0;
 
-	if (mass == NULL)
-		return (-1);
+	if (game->texture_list == NULL)
+		return (game->textures_num + 1);
 	while (i < game->textures_num)
 	{
-		if (ft_strcmp(mass[i], texture_name) == 0)
+		if (ft_strcmp(game->texture_list[i], texture_name) == 0)
 			return (i + 1);
 		i++;
 	}
-	return (-1);
+	return (game->textures_num + 1);
 }
