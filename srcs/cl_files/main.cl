@@ -36,12 +36,11 @@ static void createCamRay(t_scene *scene, t_ray *ray)
 	float fx = (float)scene->x_coord / (float)scene->width;
 	float fy = (float)scene->y_coord / (float)scene->height;
 
-	fx = (fx  - 0.5f);
-	fy = (fy  - 0.5f);
+	fx = (fx  - 0.5f) + rng(scene->random) / (float)scene->width;
+	fy = (fy  - 0.5f) + rng(scene->random) / (float)scene->height;
 	float3 pixel_pos = scene->camera.direction - fy * (scene->camera.border_x) - fx * (scene->camera.border_y);
 	ray->origin = scene->camera.position;
-	ray->dir = normalize(pixel_pos);
-	ray->dir = normalize(ray->dir);// + (float3)(rng_range(scene->random, -1.f, 1.f) * EPSILON, rng_range(scene->random, -1.f, 1.f) * EPSILON, rng_range(scene->random, -1.f, 1.f) * EPSILON));
+	ray->dir = normalize(pixel_pos);// + (float3)(rng_range(scene->random, -1.f, 1.f) * EPSILON, rng_range(scene->random, -1.f, 1.f) * EPSILON, rng_range(scene->random, -1.f, 1.f) * EPSILON));
 }
 
 static bool intersect_scene(t_scene *scene, t_intersection *intersection, t_ray *ray, int light)
@@ -139,7 +138,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 	{
 		/* if ray misses scene, return background colour */
 		if (!intersect_scene(scene, intersection, &ray, 0))
-			return /*accum_color + */mask * global_texture(&ray, scene);
+			return accum_color + mask * global_texture(&ray, scene);
 		/* Russian roulette*/
 		// if (bounces > 4 && cl_float3_max(scene->objects[intersection->object_id].color) < rng(scene->random))
 		// 	break;
@@ -172,14 +171,12 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 			}
 			/* add the colour and light contributions to the accumulated colour */
 			mask *= objecthit.color  * objecthit.reflection;	/* the mask colour picks up surface colours at each bounce */
-
 			ray.dir = reflect(ray.dir, intersection->normal);
 			ray.origin = intersection->hitpoint + ray.dir * EPSILON;
 		}
 		else
 		{
 			accum_color += mask * objecthit.emission * pdf;
-
 			if (scene->lightsampling)
 			{
 				explicit = radiance_explicit(scene, intersection);
@@ -198,8 +195,6 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 static void scene_new(__global t_obj* objects, int n_objects,\
  int samples, __global ulong * random, __global t_txture *textures, t_cam camera, t_scene *scene, __global t_txture *normals, int lightsampling)
 {
-	// t_scene new_scene;
-
 	scene->objects = objects;
 	scene->n_objects = n_objects;
 	scene->width = get_global_size(0);
@@ -214,8 +209,8 @@ static void scene_new(__global t_obj* objects, int n_objects,\
 	scene->lightsampling = !lightsampling;
 }
 
-__kernel void render_kernel(__global int* output, __global t_obj* objects,
-__global float3 * vect_temp,  __global ulong * random,  __global t_txture *textures, __global t_txture *normals, int n_objects, int samples, t_cam camera, int lightsampling)
+__kernel void render_kernel(__global int *output, __global t_obj *objects,
+__global float3 *vect_temp,  __global ulong * random,  __global t_txture *textures, __global t_txture *normals, int n_objects, int samples, t_cam camera, int lightsampling)
 {
 
 	t_scene scene;
@@ -224,7 +219,6 @@ __global float3 * vect_temp,  __global ulong * random,  __global t_txture *textu
 	scene_new(objects, n_objects, samples, random, textures, camera, &scene, normals, lightsampling);
 	finalcolor = vect_temp[scene.x_coord + scene.y_coord * scene.width];
 	//output[scene.x_coord + scene.y_coord * width] = 0xFF0000;      /* uncomment to test if opencl runs */
-	// print_debug(scene.samples, scene.width, &scene);
 	for (int i = 0; i < SAMPLES; i++)
 	{
 		createCamRay(&scene, &(intersection.ray));

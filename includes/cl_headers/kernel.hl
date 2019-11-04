@@ -79,8 +79,6 @@ typedef struct			s_scene
 	int					width;
 	int					height;
 	int					samples;
-	unsigned int		seed0;
-	unsigned int		seed1;
 	__global ulong		*random;
 	__global t_txture	*textures;
 	__global t_txture	*normals;
