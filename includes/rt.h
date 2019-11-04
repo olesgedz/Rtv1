@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/03 01:27:24 by david            ###   ########.fr       */
+/*   Updated: 2019/11/04 16:10:53 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_H
 # define RT_H
-# define WIN_W 500
-# define WIN_H 400
+# define WIN_W 1920
+# define WIN_H 1080
 # define SAMPLES 5
 # define CL_SILENCE_DEPRECATION
 # include <sys/types.h>

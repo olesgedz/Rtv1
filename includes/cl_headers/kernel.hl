@@ -74,7 +74,6 @@ typedef struct			s_scene
 {
 	__global t_obj		*objects;
 	int					n_objects;
-	unsigned int		global_id;
 	unsigned int		x_coord;
 	unsigned int		y_coord;
 	int					width;

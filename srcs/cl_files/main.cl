@@ -30,11 +30,11 @@ float3 reflect(float3 vector, float3 n)
 // 	return (refrIndex * vector) + (refrIndex * cosI - sqrt( cosT2 )) * n;
 // }
 
-static void createCamRay(const int width, const int height, t_scene *scene, t_ray *ray)
+static void createCamRay(t_scene *scene, t_ray *ray)
 {
 
-	float fx = (float)scene->x_coord / (float)width;
-	float fy = (float)scene->y_coord / (float)height;
+	float fx = (float)scene->x_coord / (float)scene->width;
+	float fy = (float)scene->y_coord / (float)scene->height;
 
 	fx = (fx  - 0.5f);
 	fy = (fy  - 0.5f);
@@ -158,8 +158,6 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 		/* create a local orthogonal coordinate frame centered at the hitpoint */
 		float cosine;
 		float3 newdir = sample_uniform(&intersection->normal, &cosine, scene);
-		// if (get_global_id(0) == 16000)// && cosine < EPSILON)
-		// 	printf("norm %f %f %f\n", intersection->normal.x, intersection->normal.y, intersection->normal.z);
 		/* add a very small offset to the hitpoint to prevent self intersection */
 		float pdf = 1.f;
 		if (scene->lightsampling)
@@ -197,18 +195,17 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 }
 
 
-static void scene_new(__global t_obj* objects, int n_objects, int width, int height,\
+static void scene_new(__global t_obj* objects, int n_objects,\
  int samples, __global ulong * random, __global t_txture *textures, t_cam camera, t_scene *scene, __global t_txture *normals, int lightsampling)
 {
 	// t_scene new_scene;
 
 	scene->objects = objects;
 	scene->n_objects = n_objects;
-	scene->width = width;
-	scene->height = height;
-	scene->global_id = get_global_id(0);
-	scene->x_coord = scene->global_id % scene->width;
-	scene->y_coord = scene->global_id / scene->width;
+	scene->width = get_global_size(0);
+	scene->height = get_global_size(1);
+	scene->x_coord = get_global_id(0);
+	scene->y_coord = get_global_id(1);
 	scene->samples = samples;
 	scene->random = random;
 	scene->textures = textures;
@@ -218,26 +215,23 @@ static void scene_new(__global t_obj* objects, int n_objects, int width, int hei
 }
 
 __kernel void render_kernel(__global int* output, __global t_obj* objects,
-__global float3 * vect_temp,  __global ulong * random,  __global t_txture *textures, __global t_txture *normals, int width, int height,  int n_objects, int samples, t_cam camera, int lightsampling)
+__global float3 * vect_temp,  __global ulong * random,  __global t_txture *textures, __global t_txture *normals, int n_objects, int samples, t_cam camera, int lightsampling)
 {
 
 	t_scene scene;
 	t_intersection  intersection;
 	float3 finalcolor;
-	unsigned int work_item_id = get_global_id(0);	/* the unique global id of the work item for the current pixel */
-	unsigned int x_coord = work_item_id % width;			/* x-coordinate of the pixel */
-	unsigned int y_coord = work_item_id / width;			/* y-coordinate of the pixel */
-	finalcolor = vect_temp[x_coord + y_coord * width];
-	scene_new(objects, n_objects, width, height, samples, random, textures, camera, &scene, normals, lightsampling);
+	scene_new(objects, n_objects, samples, random, textures, camera, &scene, normals, lightsampling);
+	finalcolor = vect_temp[scene.x_coord + scene.y_coord * scene.width];
 	//output[scene.x_coord + scene.y_coord * width] = 0xFF0000;      /* uncomment to test if opencl runs */
 	// print_debug(scene.samples, scene.width, &scene);
 	for (int i = 0; i < SAMPLES; i++)
 	{
-		createCamRay(width, height, &scene, &(intersection.ray));
+		createCamRay(&scene, &(intersection.ray));
 		intersection_reset(&intersection);
 		finalcolor += trace(&scene,  &intersection);
 	}
-	vect_temp[scene.x_coord + scene.y_coord * width] = finalcolor;
-	output[scene.x_coord + scene.y_coord * width] = ft_rgb_to_hex(toInt(finalcolor.x  / samples),
+	vect_temp[scene.x_coord + scene.y_coord * scene.width] = finalcolor;
+	output[scene.x_coord + scene.y_coord * scene.width] = ft_rgb_to_hex(toInt(finalcolor.x  / samples),
 	 toInt(finalcolor.y  / samples), toInt(finalcolor.z  / samples)); /* simple interpolated colour gradient based on pixel coordinates */
 }

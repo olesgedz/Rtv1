@@ -18,8 +18,6 @@ static void			get_color_plane(t_obj *object, float3 hitpoint, t_scene *scene, fl
 
 	u = modf((0.5 + dot(object->basis[0], hitpoint) / 2), &(u));
 	v = modf((0.5 + dot(object->basis[1], hitpoint) / 2), &(v));
-	// if (get_global_id(0) == 16000)
-		// printf("%f %f %f %f %f %f\n", object->basis[0].x, object->basis[0].y, object->basis[0].z, object->basis[1].x, object->basis[1].y, object->basis[1].z);
 	if (v < 0)
 		v += 1;
 	if (u < 0)

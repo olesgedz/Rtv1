@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:54:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/01 15:48:51 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/04 16:43:58 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,19 @@
 
 static void		ft_run_kernel(t_game *game, cl_kernel kernel, int w, int h)
 {
-	size_t	global;
+	size_t	global[2] = {WIN_W, WIN_H};
 
 	game->gpu.samples += SAMPLES;
-	global = WIN_W * WIN_H;
-	game->cl_info->ret |= clSetKernelArg(kernel, 6, sizeof(cl_int), &w);
-	ERROR(game->cl_info->ret );
-	game->cl_info->ret |= clSetKernelArg(kernel, 7, sizeof(cl_int), &h);
-	game->cl_info->ret |= clSetKernelArg(kernel, 8, sizeof(cl_int),
+	game->cl_info->ret |= clSetKernelArg(kernel, 6, sizeof(cl_int),
 	&game->obj_quantity);
-	game->cl_info->ret |= clSetKernelArg(kernel, 9, sizeof(cl_int),
+	game->cl_info->ret |= clSetKernelArg(kernel, 7, sizeof(cl_int),
 	&game->gpu.samples);
-	game->cl_info->ret |= clSetKernelArg(kernel, 10, sizeof(t_cam),
+	game->cl_info->ret |= clSetKernelArg(kernel, 8, sizeof(t_cam),
 	&game->gpu.camera[game->cam_num]);
-	game->cl_info->ret |= clSetKernelArg(kernel, 11, sizeof(int),
+	game->cl_info->ret |= clSetKernelArg(kernel, 9, sizeof(int),
 	&(game->keys.r));
 	ERROR(game->cl_info->ret );
-	game->cl_info->ret = cl_krl_exec(game->cl_info, kernel, 1, &global);
+	game->cl_info->ret = cl_krl_exec(game->cl_info, kernel, 2, global);
 	ERROR(game->cl_info->ret );
 	clFinish(game->cl_info->cmd_queue);
 	game->cl_info->ret = cl_read(game->cl_info, game->kernels->args[0],
