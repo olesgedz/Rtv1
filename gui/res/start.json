@@ -1,17 +1,15 @@
 {
-    "textures":[
-        "sobenin.jpg",
-        "sun.jpg",
-        "sviborg.jpg",
-        "seamless_pawnment.jpg",
-        "grass_rock.jpg",
-        "ice.jpg",
-        "stars.jpg"
-    ],
     "normals":[
         "196_norm.JPG"
     ],
     "objects":[
+        {
+            "type": "sphere",
+            "position": [10.0,10.0,10.1],
+            "color": [0.9,0.8,0.7],
+            "radius" : 0.0000001,
+            "texture": "sun.jpg"
+        },
         {
             "type": "sphere",
             "position": [0.0,0.15,1.0],
