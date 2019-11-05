@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/05 14:44:54 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/05 17:29:30 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,11 +166,9 @@ typedef struct			s_game
 	char				*av;
 	SDL_Event			ev;
 	t_sdl				sdl;
-	t_surface			*image;
 	size_t				obj_quantity;
 	int					cam_quantity;
 	t_gpu				gpu;
-	int					init_render;
 	t_txture			*textures;
 	int					textures_num;
 	char				**texture_list;
@@ -178,7 +176,6 @@ typedef struct			s_game
 	t_txture			*normals;
 	t_cl_info			*cl_info;
 	t_cl_krl			*kernels;
-	int					*gpu_output;
 	int					cam_num;
 	int					flag;
 	int					quit;

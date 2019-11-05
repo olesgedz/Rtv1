@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:04:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/05 14:46:14 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/05 17:27:46 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,6 @@ void		set_const(t_game *game, t_gui *gui)
 		print_error_gui("No IMG for you: ", IMG_GetError());
 		exit(1);
 	}
-	if (!(game->image = ft_surface_create(WIN_W, WIN_H)))
-		exit(-1);
-	game->init_render = 1;
 	game->gpu.samples = 0;
 	game->quit = 0;
 	game->flag = 1;
