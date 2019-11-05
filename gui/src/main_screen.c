@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 16:46:11 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/01 20:13:43 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/05 14:06:20 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void	main_screen(t_gui *gui, t_game *game)
 {
 	obj_select(gui, game->gpu.objects, game->obj_quantity);
+	if (!gui->o_s.show)
+		KW_HideWidget(gui->o_s.frame);
 }
 
 void	main_screen_free(t_gui *gui)
