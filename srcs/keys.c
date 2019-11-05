@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:10:38 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/29 18:32:20 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/05 14:45:52 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static void	key_up(t_game *game)
 
 void		key_check(t_game *game)
 {
-	game->keys.mm = 0;
+	game->mouse.mm = 0;
 	while (SDL_PollEvent(&(game->ev)))
 	{
 		if (game->ev.type == SDL_QUIT ||
@@ -95,7 +95,11 @@ void		key_check(t_game *game)
 			key_down(game);
 		else if (game->ev.type == SDL_KEYUP)
 			key_up(game);
-		else
-			mouse(game, g_gui(0, 0));
+		else if (game->ev.type == SDL_MOUSEBUTTONUP)
+			mouse_up(game, g_gui(0, 0));
+		else if (game->ev.type == SDL_MOUSEBUTTONDOWN)
+			mouse_down(game, g_gui(0, 0));
+		else if (game->ev.type == SDL_MOUSEMOTION)
+			mouse_motion(game, g_gui(0, 0));
 	}
 }

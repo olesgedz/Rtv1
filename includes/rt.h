@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/04 16:10:53 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/11/05 14:44:54 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,15 @@ typedef struct			s_gpu
 	int					samples;
 }						t_gpu;
 
+typedef struct			s_mouse_pos
+{
+	int					x;
+	int					y;
+	int					g;
+	int					lmb;
+	int					rmb;
+	int					mm;
+}						t_mouse_pos;
 typedef struct			s_keys
 {
 	int					q;
@@ -145,8 +154,6 @@ typedef struct			s_keys
 	int					d;
 	int					z;
 	int					x;
-	int					lmb;
-	int					mm;
 	int					space;
 	int					r;
 	Sint32				xrel;
@@ -176,6 +183,7 @@ typedef struct			s_game
 	int					flag;
 	int					quit;
 	t_keys				keys;
+	t_mouse_pos			mouse;
 }						t_game;
 
 typedef struct			s_json
@@ -249,7 +257,8 @@ void					main_screen(t_gui *gui, t_game *game);
 void					semples_to_line(t_game *game, t_gui *gui);
 void					info_button(t_game *game, t_gui *gui);
 void					show_hide(t_game *game, t_gui *gui);
-void					mouse(t_game *game, t_gui *gui);
+void					mouse_down(t_game *game, t_gui *gui);
+void					mouse_up(t_game *game, t_gui *gui);
 void					gui_bar(t_game *game, t_gui *gui);
 void					buttons(t_game *game, t_gui *gui);
 cl_float2				parse_vec2(cJSON *vec);
@@ -261,4 +270,5 @@ void					play_stop_music(char *name);
 void					check_object(const cJSON *object, t_game *game,
 cJSON *comp_pos, cJSON *comp_v, int id);
 int 					compare_in_dict(t_game *game, char *texture_name);
+void					mouse_motion(t_game *game, t_gui *gui);
 #endif

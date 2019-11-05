@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:50:13 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/01 15:40:55 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/05 14:46:43 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ static void	c_r(t_game *game, t_gui *gui)
 		mult_cfloat3(game->gpu.camera[game->cam_num].normal, -0.1));
 		game->flag = 1;
 	}
-	if (game->keys.lmb && game->keys.mm && !gui->over_gui)
+	if (game->mouse.rmb && game->mouse.mm && !gui->over_gui)
 	{
 		rotate_horizontal(&(game->gpu.camera[game->cam_num]),
 		-game->gpu.camera[game->cam_num].fov / WIN_W * game->keys.xrel);
@@ -137,7 +137,7 @@ static void	cam_rep(t_game *game, t_gui *gui)
 
 void		camera_reposition(t_game *game, t_gui *gui)
 {
-	if (game->keys.w)
+	if (game->keys.w || (game->mouse.lmb && game->mouse.rmb))
 	{
 		game->gpu.camera[game->cam_num].position =
 		sum_cfloat3(game->gpu.camera[game->cam_num].position,
