@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:54:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/06 19:42:49 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/06 21:10:49 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ void			main_render(t_game *game, t_gui *gui)
 		ft_render(game, gui);
 		screen_present(game, gui);
 		time = (SDL_GetTicks() - time0) / 1000.;
-		if (frames % 50 == 0)
+		if (time > 3)
 		{
-			printf("%f\n", frames / time);
+			gui->fps = 0.5 + frames / time;
 			time0 = SDL_GetTicks();
 			frames = 1;
 		}

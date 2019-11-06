@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/01 15:44:38 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/06 20:36:02 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct		s_gui
 	int				flag;
 	int				main_screen;
 	int				over_gui;
+	int				fps;
 }					t_gui;
 
 void				print_error_gui(const char *message, const char

@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 17:38:36 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/01 18:32:14 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/06 20:58:21 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,18 @@ void		show_hide(t_game *game, t_gui *gui)
 void		semples_to_line(t_game *game, t_gui *gui)
 {
 	char *buff;
+	char *fps;
 
 	buff = ft_itoa(game->gpu.samples);
 	free(gui->g_b.names[0]);
 	gui->g_b.names[0] = ft_strjoin("Samples: ", buff);
 	free(buff);
+	buff = ft_strjoin(gui->g_b.names[0], "    FPS: ");
+	free(gui->g_b.names[0]);
+	fps = ft_itoa(gui->fps);
+	gui->g_b.names[0] = ft_strjoin(buff, fps);
+	free(buff);
+	free(fps);
 	KW_SetLabelText(gui->g_b.label, gui->g_b.names[0]);
 }
 
