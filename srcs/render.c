@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:54:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/04 16:43:58 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/11/06 19:38:08 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,12 @@ void		screen_present(t_game *game, t_gui *gui)
 
 void			main_render(t_game *game, t_gui *gui)
 {
+	Uint32		time0;
+	double		time;
+	int			frames;
+
+	time0 = SDL_GetTicks();
+	frames = 1;
 	SDL_RenderClear(game->sdl.renderer);
 	while (!game->quit && !gui->quit)
 	{
@@ -64,6 +70,15 @@ void			main_render(t_game *game, t_gui *gui)
 		camera_reposition(game, gui);
 		ft_render(game, gui);
 		screen_present(game, gui);
+		time = (SDL_GetTicks() - time0) / 1000.;
+		if (frames % 10 == 0)
+			printf("%f\n", frames / time);
+		if (frames % 100 == 0)
+		{
+			time0 = SDL_GetTicks();
+			frames = 1;
+		}
+		frames++;
 	}
 	game->av = gui->av;
 	free_opencl(game);
