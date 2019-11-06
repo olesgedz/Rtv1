@@ -21,7 +21,7 @@ static float ft_solve(float a, float b, float c)
 	return(0.f);
 }
 
-static float intersect_cone(const t_obj* cone, const t_ray *  ray)
+static float intersect_cone(t_obj* cone, const t_ray *  ray)
 {
 	float3	x = ray->origin - cone->position;
 	float	a = dot(ray->dir, cone->v);
@@ -34,7 +34,7 @@ static float intersect_cone(const t_obj* cone, const t_ray *  ray)
 	return (ft_solve(a, b, c));
 }
 
-static float intersect_sphere(const t_obj* sphere,  t_ray *  ray)
+static float intersect_sphere(t_obj *sphere,  t_ray *  ray)
 {
 	float3 rayToCenter = ray->origin - sphere->position;
     float a = 1;
@@ -43,7 +43,7 @@ static float intersect_sphere(const t_obj* sphere,  t_ray *  ray)
 	return (ft_solve(a, b, c));
 }
 
-static float		intersect_plane(const t_obj* plane, const t_ray *ray)
+static float		intersect_plane(t_obj *plane, const t_ray *ray)
 {
 	float	a;
 	float	b;
@@ -55,7 +55,7 @@ static float		intersect_plane(const t_obj* plane, const t_ray *ray)
 }
 
 
-static float		intersect_cylinder(const t_obj* cylinder, const t_ray *  ray)
+static float		intersect_cylinder(t_obj *cylinder, const t_ray *  ray)
 {
 	float3	x = ray->origin - cylinder->position;
 	double	a = dot(ray->dir, cylinder->v);
@@ -67,7 +67,7 @@ static float		intersect_cylinder(const t_obj* cylinder, const t_ray *  ray)
 	return (ft_solve(a, b, c));
 }
 
-static int inside_triangle(const t_obj* triangle, float3 collision)
+static int inside_triangle(t_obj *triangle, float3 collision)
 {
 	float3 edge_0;
 	float3 edge_1;
@@ -89,7 +89,7 @@ static int inside_triangle(const t_obj* triangle, float3 collision)
 	return(0);
 }
 
-static float		intersect_triangle(const t_obj* triangle,  t_ray *  ray)
+static float		intersect_triangle(t_obj *triangle,  t_ray *  ray)
 {
 	float	a;
 	float	b;
