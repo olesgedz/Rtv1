@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   vect_req.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: olesgedz <olesgedz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 20:06:26 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/10/17 18:03:33 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/07 23:42:49 by olesgedz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "libvect.h"
 #include "malloc.h"
 
@@ -20,7 +21,8 @@ int			vect_req
 
 	if (!v->total)
 	{
-		MALLOC(v->data, size);
+		if (!(v->data = ft_memalloc(size)))
+		ft_malloc_err(size, __FUNCTION__, __FILE__, __LINE__);
 		v->total = size;
 		v->used = 0;
 	}
