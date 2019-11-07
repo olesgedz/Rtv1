@@ -19,7 +19,7 @@ typedef struct s_txture
 {
 	int					width;
 	int					height;
-	int					texture[3840 * 2160];
+	int					texture[0x1011 * 0x1012];
 }						t_txture;
 
 
