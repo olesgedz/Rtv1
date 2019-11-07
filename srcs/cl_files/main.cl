@@ -42,20 +42,20 @@ static bool intersect_scene(t_scene *scene, t_intersection *intersection, t_ray 
 	/* check if the ray intersects each sphere in the scene */
 	for (int i = 0; i < scene->n_objects; i++)
 	{
-		t_obj object = scene->objects[i]; /* create local copy of sphere */
+		__global t_obj *object = &(scene->objects[i]); /* create local copy of sphere */
 		float hitdistance = 0;
-		if (object.is_visible)
+		if (object->is_visible)
 		{
-			if (object.type == SPHERE)
-				hitdistance = intersect_sphere(&object, ray);
-			else if (object.type == CYLINDER)
-				hitdistance = intersect_cylinder(&object, ray);
-			else if (object.type == CONE)
-				hitdistance = intersect_cone(&object, ray);
-			else if (object.type == PLANE)
-				hitdistance = intersect_plane(&object, ray);
-			else if (object.type == TRIANGLE)
-				hitdistance = intersect_triangle(&object, ray);
+			if (object->type == SPHERE)
+				hitdistance = intersect_sphere(object, ray);
+			else if (object->type == CYLINDER)
+				hitdistance = intersect_cylinder(object, ray);
+			else if (object->type == CONE)
+				hitdistance = intersect_cone(object, ray);
+			else if (object->type == PLANE)
+				hitdistance = intersect_plane(object, ray);
+			else if (object->type == TRIANGLE)
+				hitdistance = intersect_triangle(object, ray);
 			/* keep track of the closest intersection and hitobject found so far */
 			if (hitdistance != 0.0f && hitdistance < ray->t)
 			{
