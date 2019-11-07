@@ -14,7 +14,7 @@
 NAME = rt
 
 FLAGS = -g #-Wall -Wextra -Werror
-CC = gcc
+CC = clang
 LIBRARIES = $(GUI_LIB) -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY)  -lm   -lvect -L$(LIBVECT) -lgnl -L$(LIBGNL) -lcl -L$(LIBCL)
 INCLUDES = $(GUI_INC) -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)includes/ -Isrcs/cl_error/ -I$(LIBGNL)includes/ -I$(LIBCL)includes/
 
