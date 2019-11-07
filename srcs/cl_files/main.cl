@@ -120,8 +120,8 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 	t_ray ray = intersection->ray;
 	float2		img_coord;
 
-	float3 accum_color = (float3)(0.0f, 0.0f, 0.0f);
-	float3 mask = (float3)(1.0f, 1.0f, 1.0f);
+	float3 accum_color = 0.0f;
+	float3 mask = 1.0f;
 	float3 explicit;
 	for (int bounces = 0; bounces < (scene->lightsampling ? 1 : BOUNCES); bounces++)
 	{

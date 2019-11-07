@@ -39,7 +39,7 @@ static void			get_color_cylinder(t_obj *object, float3 hitpoint, t_scene *scene,
 	a.z = dot(vect, object->basis[1]);
 	coord->x = 0.5 + (atan2(a[2], a[0])) / (2 * PI);
     texture = &((scene->textures)[object->texture - 1]);
-	v = modf(0.5 + (a[1] * object->prolapse.y / texture->height) / 2, &v);
+	v = modf(0.5 + (a[1] * object->prolapse.x / texture->height) / 2, &v);
 	if (v < 0)
 		v += 1;
     coord->y = v;

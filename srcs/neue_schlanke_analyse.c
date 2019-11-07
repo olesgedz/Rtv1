@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   neue_schlanke_analyse.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/11/07 18:37:25 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/07 19:19:59 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,7 @@ static void parse_rest(const cJSON *object, t_obj *obj, t_json *parse)
 	parse->prolapse = cJSON_GetObjectItemCaseSensitive(object, "prolapse");
 	if (parse->prolapse != NULL)
 	{
-		obj->prolapse = parse_vec2(parse->rotation);
+		obj->prolapse = parse_vec2(parse->prolapse);
 		if (isnan(obj->prolapse.s[0]))
            terminate("missing data of cylinder prolapse vector!\n");
     }
