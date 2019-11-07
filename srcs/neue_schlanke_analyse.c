@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   neue_schlanke_analyse.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/11/02 18:40:28 by david            ###   ########.fr       */
+/*   Updated: 2019/11/07 18:37:25 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ static void parse_facing(const cJSON *object, t_obj *obj, t_json *parse, t_game 
 	if (parse->reflection != NULL)
 		obj->reflection = parse->reflection->valuedouble;
 	else
-		obj->reflection = 0.0;	
+		obj->reflection = 0.0;
 	parse->texture = cJSON_GetObjectItemCaseSensitive(object, "texture");
 
 
-	
+
 	if (parse->texture != NULL)
 	{
 		obj->texture = compare_in_dict(game, parse->texture->valuestring);
@@ -378,12 +378,12 @@ void read_scene(char *argv, t_game *game)
 		printf("%s\n", game->texture_list[i]);
 		i++;
 	}
-	const cJSON *cam = NULL;
+	const cJSON *camera = NULL;
 	const cJSON *cameras = NULL;
 	cameras = cJSON_GetObjectItemCaseSensitive(json, "cameras");
-	cJSON_ArrayForEach(cam, cameras)
+	cJSON_ArrayForEach(camera, cameras)
 	{
-		check_cam(cam, game);
+		check_cam(camera, game);
 	}
 	cJSON_Delete(json);
 }
