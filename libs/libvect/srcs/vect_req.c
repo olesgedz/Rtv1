@@ -22,7 +22,7 @@ int			vect_req
 	if (!v->total)
 	{
 		if (!(v->data = ft_memalloc(size)))
-		ft_malloc_err(size, __FUNCTION__, __FILE__, __LINE__);
+			exit(1);
 		v->total = size;
 		v->used = 0;
 	}
