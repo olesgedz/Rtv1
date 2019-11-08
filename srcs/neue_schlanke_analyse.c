@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   neue_schlanke_analyse.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/11/07 19:19:59 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/11/08 18:09:14 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -378,6 +378,7 @@ void read_scene(char *argv, t_game *game)
 		printf("%s\n", game->texture_list[i]);
 		i++;
 	}
+	printf("\n");
 	const cJSON *camera = NULL;
 	const cJSON *cameras = NULL;
 	cameras = cJSON_GetObjectItemCaseSensitive(json, "cameras");
