@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/07 21:47:06 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/08 17:52:24 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,4 +269,5 @@ void					check_object(const cJSON *object, t_game *game,
 cJSON *comp_pos, cJSON *comp_v, int id);
 int 					compare_in_dict(t_game *game, char *texture_name);
 void					mouse_motion(t_game *game, t_gui *gui);
+void					free_list(t_game *game);
 #endif

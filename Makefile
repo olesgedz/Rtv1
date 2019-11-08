@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
+#    By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/11/01 18:26:35 by lminta           ###   ########.fr        #
+#    Updated: 2019/11/08 17:40:22 by srobert-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,7 +96,8 @@ SRCS_LIST = main.c\
 			../gui/src/obj_select.c\
 			../cJSON/cJSON.c\
 			neue_schlanke_analyse.c\
-			analyse_dienstprogramme.c
+			analyse_dienstprogramme.c\
+			util.c
 
 OBJS_DIRECTORY = objects/
 OBJS_LIST = $(patsubst %.c, %.o, $(SRCS_LIST))
