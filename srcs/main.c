@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/11/08 19:53:17 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/11/08 20:20:47 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ cl_int		cl_program_new_push(t_cl_info *cl, char *name)
 	cl->progs[cl->n_progs - 1].name = ft_strdup(name);
 	return (0);
 }
+
 cl_int cl_program_init_sources(t_cl_prog *program, char *sources)
 {
 	if (!(program->sources = ft_strdup(sources)))
@@ -111,6 +112,14 @@ cl_int			cl_prog_buildn(t_cl_info *cl, t_cl_prog *prog)
 	}
 	vect_del(lines);
 	return (ret);
+}
+
+cl_int		cl_krl_new_push(t_cl_prog *prog, char *name)
+{
+	prog->krls = ft_realloc(prog->krls, sizeof(t_cl_krl));
+	prog->n_krls++;
+	prog->krls[prog->n_krls - 1].name = ft_strdup(name);
+	return (0);
 }
 
 
