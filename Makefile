@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
+#    By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/11/01 18:26:35 by lminta           ###   ########.fr        #
+#    Updated: 2019/11/08 17:58:58 by jblack-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,29 +74,29 @@ RMRF = gui/src/gui_main.o\
 		cJSON/cJSON.o
 
 SRCS_LIST = main.c\
-			cl_lib/gpu_init.c\
-			textures.c\
-			schwimmer_verwalten.c\
-			cl_float3_rotate.c\
-			keys.c\
-			camera.c\
-			const.c\
-			hilfefunktionen.c\
-			init_scene.c\
-			render.c\
-			mouse.c\
-			../gui/src/gui_main.c\
-			../gui/src/buttons.c\
-			../gui/src/gui_bar.c\
-			../gui/src/start_screen.c\
-			../gui/src/surf_tex.c\
-			../gui/src/scene_select.c\
-			../gui/src/main_screen.c\
-			../gui/src/ren_button.c\
-			../gui/src/obj_select.c\
-			../cJSON/cJSON.c\
-			neue_schlanke_analyse.c\
-			analyse_dienstprogramme.c
+			# cl_lib/gpu_init.c\
+			# textures.c\
+			# schwimmer_verwalten.c\
+			# cl_float3_rotate.c\
+			# keys.c\
+			# camera.c\
+			# const.c\
+			# hilfefunktionen.c\
+			# init_scene.c\
+			# render.c\
+			# mouse.c\
+			# ../gui/src/gui_main.c\
+			# ../gui/src/buttons.c\
+			# ../gui/src/gui_bar.c\
+			# ../gui/src/start_screen.c\
+			# ../gui/src/surf_tex.c\
+			# ../gui/src/scene_select.c\
+			# ../gui/src/main_screen.c\
+			# ../gui/src/ren_button.c\
+			# ../gui/src/obj_select.c\
+			# ../cJSON/cJSON.c\
+			# neue_schlanke_analyse.c\
+			# analyse_dienstprogramme.c
 
 OBJS_DIRECTORY = objects/
 OBJS_LIST = $(patsubst %.c, %.o, $(SRCS_LIST))
