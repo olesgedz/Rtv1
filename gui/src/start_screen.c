@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 22:51:42 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/08 21:06:09 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/08 21:34:57 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void		start_screen(t_gui *gui)
 
 char		*start_gui(t_game *game, t_gui *gui)
 {
-	if (ft_strcmp("lminta", getlogin()))
+	if (ft_strcmp(USER, getlogin()))
 		opencl(game, "gui/res/start.json");
 	else
 		opencl(game, "gui/res/start2.json");
