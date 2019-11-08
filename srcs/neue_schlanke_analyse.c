@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/11/08 18:09:14 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/08 18:11:28 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -348,8 +348,6 @@ void read_scene(char *argv, t_game *game)
 	fread(buffer, 8096, 1, fp);
 	cJSON *json = cJSON_Parse(buffer);
 
-	const cJSON *texture = NULL;
-	const cJSON *textures = NULL;
 	const cJSON *normal = NULL;
 	const cJSON *normals = NULL;
 	int k = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_screen.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 22:51:42 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/01 19:26:39 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/08 18:14:51 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,8 @@ char		*start_gui(t_game *game, t_gui *gui)
 	play_stop_music(0);
 	KW_HideWidget(gui->ed_w.frame);
 	gui->ed_w.show = 0;
+	free_list(game);
+	game->texture_list = NULL;
+	game->textures_num = 0;
 	return (gui->av);
 }
