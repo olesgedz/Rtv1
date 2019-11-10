@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   const.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:04:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/08 22:13:02 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/10 19:32:05 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ static void	set_keys(t_game *game)
 	game->normals = NULL;
 	game->texture_list = NULL;
 	game->textures_num = 0;
+	game->normal_list = NULL;
+	game->normals_num = 0;
 }
 
 void		set_const(t_game *game, t_gui *gui)

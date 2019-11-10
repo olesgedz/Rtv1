@@ -1,8 +1,5 @@
 {
 
-    "normals":[
-        "196_norm.JPG"
-    ],
     "objects":[
         {
             "type": "sphere",
