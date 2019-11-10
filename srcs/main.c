@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/11/08 20:20:47 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/11/10 18:29:08 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ cl_int		cl_program_new_push(t_cl_info *cl, char *name)
 	cl->progs = ft_realloc(cl->progs, sizeof(t_cl_prog));
 	cl->n_progs++;
 	cl->progs[cl->n_progs - 1].name = ft_strdup(name);
+	cl->progs[cl->n_progs - 1].krls = 0;
+	cl->progs[cl->n_progs - 1].n_krls = 0;
 	return (0);
 }
 
@@ -122,6 +124,47 @@ cl_int		cl_krl_new_push(t_cl_prog *prog, char *name)
 	return (0);
 }
 
+cl_int  cl_krl_init_arg(t_cl_krl *krl, cl_uint arg_index, size_t arg_size,  void *arg_value)
+{
+	cl_int ret;
+
+	// if (!krl->args[arg_index] || !krl->sizes[arg_index])
+	// 	ft_terminate("Kernel doesn't exist.");
+	krl->cpu_srcs[arg_index] = arg_value;
+	krl->sizes[arg_index] = arg_size;
+	krl->args[arg_index] = NULL;
+	return (ret);
+}
+
+cl_int  cl_krl_mem_create(t_cl_info *cl, t_cl_krl *krl,\
+ cl_uint arg_index, cl_mem_flags FLAG)
+{
+	cl_int ret;
+	krl->args[arg_index] = clCreateBuffer(cl->ctxt, FLAG,
+	krl->sizes[arg_index], NULL, &ret);
+	return (ret);
+}
+
+cl_int cl_krl_set_arg (t_cl_krl * krl, int index)
+{
+	int ret;
+	
+	if (krl->args[index] == NULL)
+		ret = clSetKernelArg(krl->krl, index,\
+		sizeof(krl->sizes[index]), (void*)&krl->cpu_srcs[index]);
+	else
+	ret = clSetKernelArg(krl->krl, index,\
+		sizeof(cl_mem), (void*)&krl->args[index]);
+	return (ret);	
+}
+
+cl_int				cl_krl_create(t_cl_info *cl, t_cl_prog *prog, t_cl_krl *krl)
+{
+	cl_int			ret;
+
+	krl->krl =  clCreateKernel(prog->program, krl->name, &ret); 
+	return (ret);
+}
 
 int			main(int argc, char **argv)
 {
@@ -138,7 +181,34 @@ int			main(int argc, char **argv)
 	cl_program_init_flags(&game.cl_info->progs[0], "-w");
 	game.cl_info->ret = cl_prog_buildn(game.cl_info, &game.cl_info->progs[0]);
 	ERROR(game.cl_info->ret);
+	cl_krl_new_push(&game.cl_info->progs[0], "kerlnel_vect");
+	ERROR(game.cl_info->ret);
 
+	cl_krl_init(&game.cl_info->progs[0].krls[0], 3);
+	cl_krl_create(game.cl_info, &game.cl_info->progs[0], &game.cl_info->progs[0].krls[0]);
+	cl_krl_init_arg(&game.cl_info->progs[0].krls[0], 0, sizeof(int) * WIN_H * WIN_W,\
+	game.sdl.surface->pixels);
+	cl_krl_init_arg(&game.cl_info->progs[0].krls[0], 1, sizeof(cl_int),\
+	&game.sdl.surface->w);
+	cl_krl_init_arg(&game.cl_info->progs[0].krls[0], 2, sizeof(cl_int),\
+	&game.sdl.surface->h);
+	game.cl_info->ret = cl_krl_mem_create(game.cl_info, &game.cl_info->progs[0].krls[0], 0, CL_MEM_READ_WRITE);
+	ERROR(game.cl_info->ret);
+
+	game.gpu.cl_buffer_out = clCreateBuffer(game.cl_info->ctxt, CL_MEM_READ_WRITE,
+	game.cl_info->progs[0].krls[0].sizes[0], NULL, &game.cl_info->ret);
+
+	game.cl_info->ret = cl_write(game.cl_info, game.cl_info->progs[0].krls[0].args[0],\
+	 game.cl_info->progs[0].krls[0].sizes[0], game.sdl.surface->pixels);
+	ERROR(game.cl_info->ret);
+	// //CL_BUILD_ERROR
+	int i = 0;
+	while (i < 3)
+	{
+		cl_krl_set_arg (&game.cl_info->progs[0].krls[0], i);
+		i++;
+	}
+	ERROR(game.cl_info->ret);
 	// set_const(&game, &gui);
 	// set_icon(&gui, "gui/res/icon.png");
 	// init_kiwi(&gui);

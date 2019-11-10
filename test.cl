@@ -1,4 +1,4 @@
-__kernel void  kerlnel_vect (__global int * data)
+__kernel void  kerlnel_vect (__global int * data, int w, int h)
 {
 	int x = get_global_id(0);
 	int y = get_global_id(1);
