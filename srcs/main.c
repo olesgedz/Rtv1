@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/11/10 18:29:08 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/11/10 19:53:35 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ cl_int cl_krl_set_arg (t_cl_krl * krl, int index)
 	
 	if (krl->args[index] == NULL)
 		ret = clSetKernelArg(krl->krl, index,\
-		sizeof(krl->sizes[index]), (void*)&krl->cpu_srcs[index]);
+		sizeof(krl->sizes[index]), (void*)krl->cpu_srcs[index]);
 	else
 	ret = clSetKernelArg(krl->krl, index,\
 		sizeof(cl_mem), (void*)&krl->args[index]);
@@ -198,8 +198,8 @@ int			main(int argc, char **argv)
 	game.gpu.cl_buffer_out = clCreateBuffer(game.cl_info->ctxt, CL_MEM_READ_WRITE,
 	game.cl_info->progs[0].krls[0].sizes[0], NULL, &game.cl_info->ret);
 
-	game.cl_info->ret = cl_write(game.cl_info, game.cl_info->progs[0].krls[0].args[0],\
-	 game.cl_info->progs[0].krls[0].sizes[0], game.sdl.surface->pixels);
+	// game.cl_info->ret = cl_write(game.cl_info, game.cl_info->progs[0].krls[0].args[0],\
+	//  game.cl_info->progs[0].krls[0].sizes[0], game.sdl.surface->pixels);
 	ERROR(game.cl_info->ret);
 	// //CL_BUILD_ERROR
 	int i = 0;
@@ -209,6 +209,23 @@ int			main(int argc, char **argv)
 		i++;
 	}
 	ERROR(game.cl_info->ret);
+
+	size_t global[2] = {
+		WIN_W,
+		WIN_H
+	};
+	SDL_Event test_event;
+	while (1)
+	{
+		SDL_PollEvent(&test_event);
+		if (test_event.type == SDL_QUIT)
+			break;
+	cl_krl_exec(game.cl_info, game.cl_info->progs[0].krls[0].krl, 2, global);
+	cl_read(game.cl_info, game.cl_info->progs[0].krls[0].args[0],
+	sizeof(cl_int) * WIN_W * WIN_H, game.sdl.surface->pixels);
+	ft_surface_present(&game.sdl, game.sdl.surface);
+
+	}
 	// set_const(&game, &gui);
 	// set_icon(&gui, "gui/res/icon.png");
 	// init_kiwi(&gui);
