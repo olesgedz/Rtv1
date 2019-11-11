@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:21:19 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/08 22:13:24 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/11 14:24:25 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static void	in_e(t_gui *gui)
 	KW_RectCenterInParent(&gui->i_e.frect, &gui->i_e.titlerect);
 	gui->i_e.label = KW_CreateLabel(gui->gui,
 	gui->i_e.frame, "V GLAZA MNE SMOTRI", &gui->i_e.titlerect);
+	system("say -v Yuri 'В глаза мне смотри'&");
 }
 
 void		init_kiwi(t_gui *gui)
