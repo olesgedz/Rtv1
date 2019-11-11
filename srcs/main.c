@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/11/08 21:06:24 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/10 20:10:35 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ static void	main_loop(t_game *game, t_gui *gui, int argc)
 		free_list(game);
 		game->texture_list = NULL;
 		game->textures_num = 0;
+		game->normal_list = NULL;
+		game->normals_num = 0;
 		main_screen_free(gui);
 	}
 }

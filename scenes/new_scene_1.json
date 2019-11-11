@@ -1,7 +1,5 @@
 {
-    "normals":[
-        "196_norm.JPG"
-    ],
+
     "objects":[
         {
             "type": "sphere",
@@ -19,7 +17,7 @@
             "dir": [0.0,1.0,0.0],
             "emition" : [0.0,0.0,0.0],
             "reflection": 1.0,
-            "normal": 0
+            "normal": "196_norm.JPG"
         },
         {
             "type": "cylinder",

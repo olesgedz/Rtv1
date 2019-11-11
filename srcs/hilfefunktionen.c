@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hilfefunktionen.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:51:09 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/03 01:34:21 by david            ###   ########.fr       */
+/*   Updated: 2019/11/10 19:53:33 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,23 @@ void		ft_texture_push(t_game *game, char ***mass, char *texture_name)
 		game->textures_num = 0;
 	*mass = ft_realloc(*mass,
 	sizeof(char*) * (game->textures_num + 1));
-	// get_texture(texture_name, game->textures[game->textures_num], "./textures/");
 	mass[0][game->textures_num] = ft_strdup(texture_name);
 	game->textures_num += 1;
-	//free(texture_name);
 }
 
+void		ft_normal_push(t_game *game, char ***mass, char *normal_name)
+{
+	if (normal_name == NULL)
+		return ;
+	if (*mass == NULL)
+		game->normals_num = 0;
+	*mass = ft_realloc(*mass,
+	sizeof(char*) * (game->normals_num + 1));
+	mass[0][game->normals_num] = ft_strdup(normal_name);
+	game->normals_num += 1;
+}
 
-int compare_in_dict(t_game *game, char *texture_name)
+int compare_in_texture_dict(t_game *game, char *texture_name)
 {
 	int i;
 	
@@ -101,4 +110,21 @@ int compare_in_dict(t_game *game, char *texture_name)
 		i++;
 	}
 	return (game->textures_num + 1);
+}
+
+int compare_in_normal_dict(t_game *game, char *normal_name)
+{
+	int i;
+	
+	i = 0;
+
+	if (game->normal_list == NULL)
+		return (game->normals_num + 1);
+	while (i < game->normals_num)
+	{
+		if (ft_strcmp(game->normal_list[i], normal_name) == 0)
+			return (i + 1);
+		i++;
+	}
+	return (game->normals_num + 1);
 }
