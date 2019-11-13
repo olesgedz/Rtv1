@@ -13,7 +13,7 @@
 #include "rt.h"
 #define LOG_BUFSIZ 20480
 #include "libgnl.h"
-
+#include <unistd.h>
 // static void	set_icon(t_gui *gui, const char *filename)
 // {
 // 	SDL_Surface		*surf;
