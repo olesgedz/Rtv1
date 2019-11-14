@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/08 22:12:22 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/14 18:43:24 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,20 @@ typedef struct		s_in_eye
 	KW_Widget		*frame;
 	KW_Widget		*label;
 }					t_in_eye;
+
+typedef struct		s_obj_type
+{
+	KW_Rect			frect;
+	KW_Rect			buttonrect[5];
+	KW_Widget		*frame;
+	KW_Widget		*label;
+	KW_Rect			*rects[1];
+	unsigned		weights[1];
+	KW_Widget		*buttons[5];
+	char			*names[5];
+	int				max_i;
+	int				show;
+}					t_obj_type;
 typedef struct		s_gui
 {
 	t_sdl			sdl;
@@ -112,11 +126,12 @@ typedef struct		s_gui
 	t_object_select	o_s;
 	t_gui_bar		g_b;
 	t_in_eye		i_e;
+	t_obj_type		o_t;
 	char			*av;
 	int				flag;
 	int				main_screen;
 	int				over_gui;
-	float				fps;
+	float			fps;
 }					t_gui;
 
 void				print_error_gui(const char *message, const char

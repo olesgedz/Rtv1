@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+         #
+#    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/11/08 17:40:22 by srobert-         ###   ########.fr        #
+#    Updated: 2019/11/14 19:06:12 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,6 +71,7 @@ RMRF = gui/src/gui_main.o\
 		gui/src/ren_button.o\
 		gui/src/gui_bar.o\
 		gui/src/buttons.o\
+		gui/src/add_obj.o\
 		cJSON/cJSON.o
 
 SRCS_LIST = main.c\
@@ -86,6 +87,7 @@ SRCS_LIST = main.c\
 			render.c\
 			mouse.c\
 			../gui/src/gui_main.c\
+			../gui/src/add_obj.c\
 			../gui/src/buttons.c\
 			../gui/src/gui_bar.c\
 			../gui/src/start_screen.c\

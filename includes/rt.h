@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/10 19:54:02 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/14 19:24:00 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,4 +273,7 @@ int 					compare_in_texture_dict(t_game *game, char *texture_name);
 int						compare_in_normal_dict(t_game *game, char *normal_name);
 void					mouse_motion(t_game *game, t_gui *gui);
 void					free_list(t_game *game);
+void					add_obj(t_game *game, t_gui *gui);
+void					obj_type(t_game *game, t_gui *gui);
+
 #endif
