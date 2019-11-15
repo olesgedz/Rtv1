@@ -199,7 +199,8 @@ static void scene_new(__global t_obj* objects, int n_objects,\
 }
 
 __kernel void render_kernel(__global int *output, __global t_obj *objects,
-__global float3 *vect_temp,  __global ulong * random,  __global t_txture *textures, __global t_txture *normals, int n_objects, int samples, t_cam camera, int lightsampling)
+__global float3 *vect_temp,  __global ulong * random,  __global t_txture *textures,\
+ __global t_txture *normals, int n_objects, int samples, t_cam camera, int lightsampling)
 {
 
 	t_scene scene;

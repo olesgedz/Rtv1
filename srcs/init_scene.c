@@ -6,16 +6,16 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:53:01 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/15 21:02:12 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/11/15 21:50:59 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static void			opencl_write_args(t_game *game)
-{
+// static void			opencl_write_args(t_game *game)
+// {
 
-}
+// }
 
 
 cl_int  cl_krl_set_all_args(t_cl_krl *krl)
@@ -73,11 +73,12 @@ void				opencl_init(t_game *game)
 	game->cam_num = 0;
 	game->gpu.camera = NULL;
 
-
+	cl_init(game->cl_info);
 	cl_program_new_push(game->cl_info, "render");
 	cl_program_init_sources(&game->cl_info->progs[0], "srcs/cl_files/main.cl");
 	cl_program_init_flags(&game->cl_info->progs[0], "-w -I srcs/cl_files/ -I includes/cl_headers/");
 	game->cl_info->ret = cl_program_build_all(game->cl_info);
+	
 	ERROR(game->cl_info->ret);
 	cl_krl_new_push(&game->cl_info->progs[0], "render_kernel");
 	ERROR(game->cl_info->ret);
@@ -108,7 +109,7 @@ void				opencl(t_game *game, char *argv)
 	&game->gpu.samples);
 	cl_krl_init_arg(&game->cl_info->progs[0].krls[0], 8, sizeof(t_cam),\
 	&game->gpu.camera[game->cam_num]);
-	cl_krl_init_arg(&game->cl_info->progs[0].krls[0], 8, sizeof(cl_int),\
+	cl_krl_init_arg(&game->cl_info->progs[0].krls[0], 9, sizeof(cl_int),\
 	&(game->keys.r));
 	game->cl_info->ret = cl_krl_mem_create(game->cl_info, &game->cl_info->progs[0].krls[0], 0, CL_MEM_READ_WRITE);
 	ERROR(game->cl_info->ret);
@@ -122,28 +123,28 @@ void				opencl(t_game *game, char *argv)
 	ERROR(game->cl_info->ret);
 	game->cl_info->ret = cl_krl_mem_create(game->cl_info, &game->cl_info->progs[0].krls[0], 5, CL_MEM_READ_WRITE);
 	ERROR(game->cl_info->ret);
-	game->cl_info->ret =  cl_write(game->cl_info, game->cl_info->progs[0].krls[0].args[5],\
-		game->cl_info->progs[0].krls[0].sizes[5], game->cl_info->progs[0].krls[0].cpu_srcs[5]);
+	// game->cl_info->ret =  cl_write(game->cl_info, game->cl_info->progs[0].krls[0].args[5],\
+	// 	game->cl_info->progs[0].krls[0].sizes[5], game->cl_info->progs[0].krls[0].cpu_srcs[5]);
+	cl_krl_write_all(game->cl_info, &game->cl_info->progs[0].krls[0]);
+	cl_krl_set_all_args(&game->cl_info->progs[0].krls[0]);
 
-
-
-	cl_krl_init(&game->kernels[0], 6);
-	ERROR(game->cl_info->ret );
-	game->kernels[0].sizes[0] = sizeof(cl_int) * (int)WIN_H * (int)WIN_W;
-	game->kernels[0].sizes[1] = sizeof(t_obj) * 3;     // fix this
-	game->kernels[0].sizes[2] = sizeof(cl_float3) * (int)WIN_H * (int)WIN_W;
-	game->kernels[0].sizes[3] = (int)WIN_H * (int)WIN_W * sizeof(cl_ulong);
-	game->kernels[0].sizes[4] = sizeof(t_txture) * 3;   //fix this
-	game->kernels[0].sizes[5] = sizeof(t_txture) * 3;
-	game->cl_info->ret = krl_set_args(game->cl_info->ctxt, &game->kernels[0]);
-	ERROR(game->cl_info->ret );
-	game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[0],\
-	sizeof(cl_int) * (int)WIN_H * (int)WIN_W, game->sdl.surface->pixels);
-	game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[2],\
-	sizeof(cl_float3) * (int)WIN_H * (int)WIN_W, game->gpu.vec_temp);
-	game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[3],\
-	(int)WIN_H * (int)WIN_W * sizeof(cl_ulong), game->gpu.random);
-	ERROR(game->cl_info->ret );
+	// cl_krl_init(&game->kernels[0], 6);
+	// ERROR(game->cl_info->ret );
+	// game->kernels[0].sizes[0] = sizeof(cl_int) * (int)WIN_H * (int)WIN_W;
+	// game->kernels[0].sizes[1] = sizeof(t_obj) * 3;     // fix this
+	// game->kernels[0].sizes[2] = sizeof(cl_float3) * (int)WIN_H * (int)WIN_W;
+	// game->kernels[0].sizes[3] = (int)WIN_H * (int)WIN_W * sizeof(cl_ulong);
+	// game->kernels[0].sizes[4] = sizeof(t_txture) * 3;   //fix this
+	// game->kernels[0].sizes[5] = sizeof(t_txture) * 3;
+	// game->cl_info->ret = krl_set_args(game->cl_info->ctxt, &game->kernels[0]);
+	// ERROR(game->cl_info->ret );
+	// game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[0],\
+	// sizeof(cl_int) * (int)WIN_H * (int)WIN_W, game->sdl.surface->pixels);
+	// game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[2],\
+	// sizeof(cl_float3) * (int)WIN_H * (int)WIN_W, game->gpu.vec_temp);
+	// game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[3],\
+	// (int)WIN_H * (int)WIN_W * sizeof(cl_ulong), game->gpu.random);
+	// ERROR(game->cl_info->ret );
 	// game->kernels[0].sizes[1] = sizeof(t_obj) * game->obj_quantity;
 	// game->kernels[0].sizes[4] = sizeof(t_txture)  * game->textures_num;
 	// game->kernels[0].sizes[5] = sizeof(t_txture) * game->normals_num;
