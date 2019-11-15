@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 21:08:05 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/01 15:29:23 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/14 18:34:24 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	buttons(t_game *game, t_gui *gui)
 	KW_AddWidgetMouseDownHandler(gui->g_b.buttons[1], clicked_os);
 	KW_SetWidgetUserData(gui->g_b.buttons[1], (void *)game);
 	gui->g_b.buttonrect[2] = gui->g_b.buttonrect[1];
-	gui->g_b.buttonrect[2].x -= gui->g_b.buttonrect[2].w;
+	gui->g_b.buttonrect[2].x -= 2 * gui->g_b.buttonrect[2].w;
 	gui->g_b.rects[2] = &gui->g_b.buttonrect[2];
 	gui->g_b.buttons[2] = KW_CreateButtonAndLabel(gui->gui,
 	gui->g_b.frame, "Take picture", gui->g_b.rects[2]);

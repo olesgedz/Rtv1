@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   neue_schlanke_analyse.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/11/07 19:19:59 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/11/10 20:36:06 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,22 @@ static void parse_facing(const cJSON *object, t_obj *obj, t_json *parse, t_game 
 		obj->reflection = 0.0;
 	parse->texture = cJSON_GetObjectItemCaseSensitive(object, "texture");
 
-
-
 	if (parse->texture != NULL)
 	{
-		obj->texture = compare_in_dict(game, parse->texture->valuestring);
+		obj->texture = compare_in_texture_dict(game, parse->texture->valuestring);
 		if (obj->texture == game->textures_num + 1)
 			ft_texture_push(game, &(game->texture_list), parse->texture->valuestring);
 	}
 	else
 		obj->texture = 0;
+	
 	parse->normal = cJSON_GetObjectItemCaseSensitive(object, "normal");
 	if (parse->normal != NULL)
-		obj->normal = (int)parse->normal->valuedouble;
+	{
+		obj->normal = compare_in_normal_dict(game, parse->normal->valuestring);
+		if (obj->normal == game->normals_num + 1)
+			ft_normal_push(game, &(game->normal_list), parse->normal->valuestring);
+	}
 	else
 		obj->normal = 0;
 	parse->shift = cJSON_GetObjectItemCaseSensitive(object, "shift");
@@ -347,20 +350,6 @@ void read_scene(char *argv, t_game *game)
 		terminate("fuck you and your file!\n");
 	fread(buffer, 8096, 1, fp);
 	cJSON *json = cJSON_Parse(buffer);
-
-	const cJSON *texture = NULL;
-	const cJSON *textures = NULL;
-	const cJSON *normal = NULL;
-	const cJSON *normals = NULL;
-	int k = 0;
-	normals = cJSON_GetObjectItemCaseSensitive(json, "normals");
-	game->normals_num = cJSON_GetArraySize(normals);
-	game->normals = (t_txture*)malloc(sizeof(t_txture) * game->normals_num);
-	cJSON_ArrayForEach(normal, normals)
-	{
-		get_texture(normal->valuestring, &(game->normals[k]), "./normals/");
-		k++;
-	}
 	const cJSON *object = NULL;
 	const cJSON *objects = NULL;
 	int id = 0;
@@ -372,12 +361,24 @@ void read_scene(char *argv, t_game *game)
 	}
 	int i = 0;
 	game->textures = (t_txture*)malloc(sizeof(t_txture) * game->textures_num);
+	printf("textures:\n");
 	while(i < game->textures_num)
 	{
 		get_texture(game->texture_list[i], &(game->textures[i]), "./textures/");
-		printf("%s\n", game->texture_list[i]);
+		printf("\t%s\n", game->texture_list[i]);
 		i++;
 	}
+	printf("\n");
+	int k = 0;
+	game->normals = (t_txture*)malloc(sizeof(t_txture) * game->normals_num);
+	printf("normals:\n");
+	while(k < game->normals_num)
+	{
+		get_texture(game->normal_list[k], &(game->normals[k]), "./normals/");
+		printf("\t%s\n", game->normal_list[k]);
+		k++;
+	}
+	printf("\n");
 	const cJSON *camera = NULL;
 	const cJSON *cameras = NULL;
 	cameras = cJSON_GetObjectItemCaseSensitive(json, "cameras");

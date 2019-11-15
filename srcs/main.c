@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/11/01 20:12:29 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/14 22:24:44 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void	main_loop(t_game *game, t_gui *gui, int argc)
 	gui_bar(game, gui);
 	while (game->av)
 	{
+		SDL_SetWindowTitle(game->sdl.window, game->av);
 		opencl(game, game->av);
 		main_screen(gui, game);
 		if (argc != 2)
@@ -41,6 +42,11 @@ static void	main_loop(t_game *game, t_gui *gui, int argc)
 		gui->quit = 0;
 		game->flag = 1;
 		main_render(game, gui);
+		free_list(game);
+		game->texture_list = NULL;
+		game->textures_num = 0;
+		game->normal_list = NULL;
+		game->normals_num = 0;
 		main_screen_free(gui);
 	}
 }
@@ -50,6 +56,7 @@ int			main(int argc, char **argv)
 	t_game	game;
 	t_gui	gui;
 
+	system("./gui/ImageSnap-v0.2.5/imagesnap './textures/sviborg_you.jpg'");
 	gui.main_screen = 0;
 	ft_init_window(&game.sdl, WIN_W, WIN_H);
 	set_const(&game, &gui);

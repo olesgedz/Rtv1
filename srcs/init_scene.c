@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_scene.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:53:01 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/03 01:24:31 by david            ###   ########.fr       */
+/*   Updated: 2019/11/10 20:25:07 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,24 +68,33 @@ void				opencl(t_game *game, char *argv)
 	game->kernels[0].sizes[1] = sizeof(t_obj) * game->obj_quantity;
 	game->kernels[0].sizes[4] = sizeof(t_txture)  * game->textures_num;
 	game->kernels[0].sizes[5] = sizeof(t_txture) * game->normals_num;
-	game->kernels[0].args[1] = clCreateBuffer(game->cl_info->ctxt,\
-	CL_MEM_READ_WRITE, game->kernels[0].sizes[1], NULL, &game->cl_info->ret);
-	game->kernels[0].args[4] = clCreateBuffer(game->cl_info->ctxt,\
-	CL_MEM_READ_WRITE, game->kernels[0].sizes[4], NULL, &game->cl_info->ret);
-	game->kernels[0].args[5] = clCreateBuffer(game->cl_info->ctxt,\
-	CL_MEM_READ_WRITE, game->kernels[0].sizes[5], NULL, &game->cl_info->ret);
+	if (game->kernels[0].sizes[1] != 0)
+		game->kernels[0].args[1] = clCreateBuffer(game->cl_info->ctxt,\
+		CL_MEM_READ_WRITE, game->kernels[0].sizes[1], NULL, &game->cl_info->ret);
+	if (game->kernels[0].sizes[4] != 0)
+		game->kernels[0].args[4] = clCreateBuffer(game->cl_info->ctxt,\
+		CL_MEM_READ_WRITE, game->kernels[0].sizes[4], NULL, &game->cl_info->ret);
+	if (game->kernels[0].sizes[5] != 0)
+		game->kernels[0].args[5] = clCreateBuffer(game->cl_info->ctxt,\
+		CL_MEM_READ_WRITE, game->kernels[0].sizes[5], NULL, &game->cl_info->ret);
 	clSetKernelArg(game->kernels[0].krl, 1, sizeof(game->kernels[0].args[1]),
 	(void*)&game->kernels[0].args[1]);
+	ERROR(game->cl_info->ret );
 	clSetKernelArg(game->kernels[0].krl, 4, sizeof(game->kernels[0].args[4]),
 	(void*)&game->kernels[0].args[4]);
+	ERROR(game->cl_info->ret );
 	clSetKernelArg(game->kernels[0].krl, 5, sizeof(game->kernels[0].args[5]),
 	(void*)&game->kernels[0].args[5]);
-	game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[1],\
-	sizeof(t_obj) * game->obj_quantity, game->gpu.objects);
-	game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[4],\
-	sizeof(t_txture) * game->textures_num, game->textures);
-	game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[5],\
-	sizeof(t_txture) * game->normals_num, game->normals);
+	ERROR(game->cl_info->ret );
+	if (game->kernels[0].sizes[1] != 0)
+		game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[1],\
+		sizeof(t_obj) * game->obj_quantity, game->gpu.objects);
+	if (game->kernels[0].sizes[4] != 0)
+		game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[4],\
+		sizeof(t_txture) * game->textures_num, game->textures);
+	if (game->kernels[0].sizes[5] != 0)
+		game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[5],\
+		sizeof(t_txture) * game->normals_num, game->normals);
 	ERROR(game->cl_info->ret );
 }
 

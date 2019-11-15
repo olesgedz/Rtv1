@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/06 18:32:08 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/11/14 19:24:00 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct			s_txture
 {
 	cl_int				width;
 	cl_int				height;
-	cl_int				texture[3840][2160];
+	cl_int				texture[CL_DEVICE_IMAGE2D_MAX_HEIGHT][CL_DEVICE_IMAGE2D_MAX_WIDTH];
 }						t_txture;
 
 typedef struct			s_object
@@ -173,6 +173,7 @@ typedef struct			s_game
 	t_txture			*textures;
 	int					textures_num;
 	char				**texture_list;
+	char				**normal_list;
 	int					normals_num;
 	t_txture			*normals;
 	t_cl_info			*cl_info;
@@ -243,6 +244,7 @@ void					feel_free(char **str);
 void					ft_object_push(t_game *game, t_obj *object);
 void					ft_cam_push(t_game *game, t_cam *cam);
 void					ft_texture_push(t_game *game, char ***mass, char *texture_name);
+void					ft_normal_push(t_game *game, char ***mass, char *normal_name);
 void					main_screen(t_gui *gui, t_game *game);
 void					obj_select(t_gui *gui, t_obj *objs, int num);
 void					pos_check(t_game *game, t_gui *gui);
@@ -267,6 +269,11 @@ void					ft_render(t_game *game, t_gui *gui);
 void					play_stop_music(char *name);
 void					check_object(const cJSON *object, t_game *game,
 cJSON *comp_pos, cJSON *comp_v, int id);
-int 					compare_in_dict(t_game *game, char *texture_name);
+int 					compare_in_texture_dict(t_game *game, char *texture_name);
+int						compare_in_normal_dict(t_game *game, char *normal_name);
 void					mouse_motion(t_game *game, t_gui *gui);
+void					free_list(t_game *game);
+void					add_obj(t_game *game, t_gui *gui);
+void					obj_type(t_game *game, t_gui *gui);
+
 #endif

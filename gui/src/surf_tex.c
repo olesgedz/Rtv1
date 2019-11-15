@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "rt.h"
+#include <unistd.h>
 
 void		print_error_gui(const char *message, const char *error_message)
 {

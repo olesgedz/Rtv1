@@ -21,7 +21,9 @@ int			vect_grow
 	size_t	new_total;
 
 	new_total = v->total * GROWTH_FACTOR * n;
-	MALLOC(new, new_total);
+	//MALLOC(new, new_total);
+	if (!(new = ft_memalloc(new_total)))
+			exit(1);
 	ft_memcpy(new, v->data, v->used);
 	free(v->data);
 	v->data = new;

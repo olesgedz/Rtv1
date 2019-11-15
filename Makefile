@@ -6,7 +6,7 @@
 #    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/11/01 18:26:35 by lminta           ###   ########.fr        #
+#    Updated: 2019/11/14 19:06:12 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,12 +14,12 @@
 NAME = rt
 
 FLAGS = -g #-Wall -Wextra -Werror
-CC = gcc
-LIBRARIES = $(GUI_LIB) -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY)  -lm -framework OpenCL  -lvect -L$(LIBVECT) -lgnl -L$(LIBGNL) -lcl -L$(LIBCL)
+CC = clang
+LIBRARIES = $(GUI_LIB) -lft -L$(LIBFT_DIRECTORY)  -lsdl -L$(LIBSDL_DIRECTORY)  -lm   -lvect -L$(LIBVECT) -lgnl -L$(LIBGNL) -lcl -L$(LIBCL)
 INCLUDES = $(GUI_INC) -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)includes/ -Isrcs/cl_error/ -I$(LIBGNL)includes/ -I$(LIBCL)includes/
 
-GUI_LIB = -L./gui/build/src -lKiWi $(shell pkg-config --libs sdl2_ttf) $(shell pkg-config --libs sdl2_image) $(shell pkg-config --libs sdl2_mixer)
-GUI_INC = -I./include/SDL2 -I./gui/KiWi/src -I./gui/inc $(shell pkg-config --cflags sdl2_ttf) $(shell pkg-config --cflags sdl2_image) $(shell pkg-config --cflags sdl2_mixer)
+GUI_LIB = -L./gui/build/src -lKiWi #$(shell pkg-config --libs sdl2_ttf) $(shell pkg-config --libs sdl2_image) $(shell pkg-config --libs sdl2_mixer)
+GUI_INC = -I./include/SDL2 -I./gui/KiWi/src -I./gui/inc #$(shell pkg-config --cflags sdl2_ttf) $(shell pkg-config --cflags sdl2_image) $(shell pkg-config --cflags sdl2_mixer)
 DIR_KiWi = ./gui/build/src/
 LIB_KiWi = $(DIR_KiWi)/libKiWi.dylib
 
@@ -71,6 +71,7 @@ RMRF = gui/src/gui_main.o\
 		gui/src/ren_button.o\
 		gui/src/gui_bar.o\
 		gui/src/buttons.o\
+		gui/src/add_obj.o\
 		cJSON/cJSON.o
 
 SRCS_LIST = main.c\
@@ -86,6 +87,7 @@ SRCS_LIST = main.c\
 			render.c\
 			mouse.c\
 			../gui/src/gui_main.c\
+			../gui/src/add_obj.c\
 			../gui/src/buttons.c\
 			../gui/src/gui_bar.c\
 			../gui/src/start_screen.c\
@@ -96,7 +98,8 @@ SRCS_LIST = main.c\
 			../gui/src/obj_select.c\
 			../cJSON/cJSON.c\
 			neue_schlanke_analyse.c\
-			analyse_dienstprogramme.c
+			analyse_dienstprogramme.c\
+			util.c
 
 OBJS_DIRECTORY = objects/
 OBJS_LIST = $(patsubst %.c, %.o, $(SRCS_LIST))
@@ -129,11 +132,15 @@ else
 	detected_OS := $(shell uname)
 endif
 
-ifeq ($(detected_OS),Windows)
-	CFLAGS += -D WIN32
+ifeq ($(detected_OS),Linux)
+	LIBRARIES += -lOpenCL
+	GUI_LIB += $(shell pkg-config --libs SDL2_ttf) $(shell pkg-config --libs SDL2_image) $(shell pkg-config --libs SDL2_mixer)
+	 GUI_INC += $(shell pkg-config --cflags SDL2_ttf) $(shell pkg-config --cflags SDL2_image) $(shell pkg-config --cflags SDL2_mixer)
 endif
 ifeq ($(detected_OS),Darwin)        # Mac OS X
-	CFLAGS += -D OSX
+	LIBRARIES += -framework OpenCL
+	GUI_LIB += $(shell pkg-config --libs sdl2_ttf) $(shell pkg-config --libs sdl2_image) $(shell pkg-config --libs sdl2_mixer)
+  GUI_INC += $(shell pkg-config --cflags sdl2_ttf) $(shell pkg-config --cflags sdl2_image) $(shell pkg-config --cflags sdl2_mixer)
 endif
 
 

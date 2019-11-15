@@ -28,8 +28,7 @@ HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
 
 SOURCES_DIRECTORY = srcs/
 
-SOURCES_LIST=	gnl_vect.c \
-				gnl_lines.c 
+SOURCES_LIST=	gnl_vect.c gnl_lines.c 
 
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 

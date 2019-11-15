@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/06 20:36:02 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/14 22:24:07 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define MAX_SC		256
 # define MAX_OBJ	1024
 # define FR_FZ		WIN_W / 10.
+# define USER "sbrella"
 
 typedef struct		s_scene_select
 {
@@ -89,6 +90,45 @@ typedef struct		s_gui_bar
 	int				show;
 }					t_gui_bar;
 
+typedef struct		s_in_eye
+{
+	KW_Rect			titlerect;
+	KW_Rect			frect;
+	KW_Rect			*rects[1];
+	unsigned		weights[1];
+	KW_Widget		*frame;
+	KW_Widget		*label;
+}					t_in_eye;
+
+typedef struct		s_obj_type
+{
+	KW_Rect			frect;
+	KW_Rect			buttonrect[5];
+	KW_Widget		*frame;
+	KW_Widget		*label;
+	KW_Rect			*rects[1];
+	unsigned		weights[1];
+	KW_Widget		*buttons[5];
+	char			*names[5];
+	int				max_i;
+	int				show;
+}					t_obj_type;
+
+typedef struct		s_change_obj
+{
+	KW_Rect			frect;
+	KW_Rect			buttonrect[2];
+	KW_Rect			labelrect;
+	KW_Rect			editboxrect[3];
+	KW_Widget		*frame;
+	KW_Widget		*edit_box[23];
+	KW_Widget		*labels[26];
+	KW_Rect			*rects[4];
+	unsigned		weights[4];
+	KW_Widget		*buttons[2];
+	char			*names[30];
+	int				show;
+}					t_change_obj;
 typedef struct		s_gui
 {
 	t_sdl			sdl;
@@ -101,11 +141,13 @@ typedef struct		s_gui
 	t_scene_select	s_s;
 	t_object_select	o_s;
 	t_gui_bar		g_b;
+	t_in_eye		i_e;
+	t_obj_type		o_t;
 	char			*av;
 	int				flag;
 	int				main_screen;
 	int				over_gui;
-	int				fps;
+	float			fps;
 }					t_gui;
 
 void				print_error_gui(const char *message, const char

@@ -1,30 +1,11 @@
 {
-    "textures":[
-        "sobenin.jpg",
-        "sviborg.jpg",
-        "seamless_pawnment.jpg",
-        "grass_rock.jpg",
-        "ice.jpg",
-        "stars.jpg"
-    ],
-    "normals":[
-        "196_norm.JPG"
-    ],
     "objects":[
         {
-            "type": "cylinder",
-            "position": [-0.4,0.0,-0.1],
-            "color": [0.9,0.8,0.7],
-            "radius" : 0.16,
-            "texture": 3,
-            "dir": [0.0,1.0,0.0]
-        },
-        {
             "type": "sphere",
-            "position": [0.0,0.0,0.1],
+            "position": [10.0,10.0,10.1],
             "color": [0.9,0.8,0.7],
-            "radius" : 0.1,
-            "texture": 1
+            "radius" : 0.0000001,
+            "texture": "sun.jpg"
         },
         {
             "type": "sphere",
@@ -32,65 +13,14 @@
             "color": [0.0,0.0,0.0],
             "radius" : 0.15,
             "emition" : [100.0,100.0,100.0],
-            "texture": 2,
-            "x_basis": [0.0,0.0,1.0],
+            "texture": "sviborq.jpg",
             "y_basis": [0.0,1.0,0.0]
-        },
-        {
-            "type": "plane",
-            "position": [-1.0,0.0,0.0],
-            "color": [0.75,0.25,0.25],
-            "dir": [1.0,0.0,0.0],
-            "texture": 0
-        },
-        {
-            "type": "plane",
-            "position": [1.0,0.0,0.0],
-            "color": [0.25,0.25,0.75],
-            "dir": [1.0,0.0,0.0],
-            "texture": 0
-        },
-        {
-            "type": "plane",
-            "position": [0.0,0.5,0.0],
-            "color": [0.9,0.8,0.7],
-            "dir": [0.0,-1.0,0.0],
-            "texture": 4
-        },
-        {
-            "type": "plane",
-            "position": [0.0,-0.5,0.0],
-            "color": [0.9,0.8,0.7],
-            "dir": [0.0,1.0,0.0],
-            "texture": 5
-        },
-        {
-            "type": "plane",
-            "position": [0.0,0.0,-0.3],
-            "color": [0.9,0.8,0.7],
-            "dir": [0.0,0.0,1.0],
-            "texture": 4
-        },
-        {
-            "type": "plane",
-            "position": [0.0,0.0,2.0],
-            "color": [0.9,0.8,0.7],
-            "dir": [0.0,0.0,1.0],
-            "texture": 0
-        },
-        {
-            "type":"triangle",
-            "a":[0.0,0.1,0.1],
-            "b":[0.0,0.35,1.0],
-            "c":[1.0,0.0,0.0],
-            "color":[0.9,0.8,0.0],
-            "texture": 0
         }
     ],
     "cameras":[
         {
-            "position": [0.0,0.15,1.5],
-            "dir": [1.0,0.0,0.0],
+            "position": [0.76,0.2,0.56],
+            "dir": [-0.57,0.0,-1],
             "normal":[0.0,1.0,0.0]
         }
     ]
