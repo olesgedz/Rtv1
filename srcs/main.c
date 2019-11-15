@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/11/15 18:12:21 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/11/15 19:40:56 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,21 @@ cl_int  cl_krl_set_all_args(t_cl_krl *krl)
 	ret = 0;
 	i = 0;
 	while (i < krl->nargs)
-		cl_krl_set_arg(krl, i++);
+		ret = cl_krl_set_arg(krl, i++);
 	return (ret);
 }
+
+cl_int	cl_program_build_all(t_cl_info *cl)
+{
+	cl_int	ret;
+	int		i;
+
+	i = 0;
+	while (i < cl->n_progs)
+		ret = cl_prog_build(cl, &cl->progs[i++]);
+	return (ret);
+}
+
 int			main(int argc, char **argv)
 {
 	t_game	game;
@@ -69,12 +81,16 @@ int			main(int argc, char **argv)
 	cl_program_new_push(game.cl_info, "program1");
 	cl_program_init_sources(&game.cl_info->progs[0], "test.cl");
 	cl_program_init_flags(&game.cl_info->progs[0], "-w");
-	game.cl_info->ret = cl_prog_build(game.cl_info, &game.cl_info->progs[0]);
+	game.cl_info->ret = cl_program_build_all(game.cl_info);
 	ERROR(game.cl_info->ret);
 	cl_krl_new_push(&game.cl_info->progs[0], "kerlnel_vect");
 	ERROR(game.cl_info->ret);
-
-	cl_krl_init(&game.cl_info->progs[0].krls[0], 3);
+	IMG_Init(IMG_INIT_JPG);
+	SDL_Surface * img = IMG_Load("textures/stars.jpg");
+	if (img == NULL)
+		printf("error_loading");
+	printf("IMG W:%d H:%d\n", img->w, img->h);
+	cl_krl_init(&game.cl_info->progs[0].krls[0], 6);
 	cl_krl_create(game.cl_info, &game.cl_info->progs[0], &game.cl_info->progs[0].krls[0]);
 	cl_krl_init_arg(&game.cl_info->progs[0].krls[0], 0, sizeof(int) * WIN_H * WIN_W,\
 	game.sdl.surface->pixels);
@@ -82,24 +98,22 @@ int			main(int argc, char **argv)
 	&game.sdl.surface->w);
 	cl_krl_init_arg(&game.cl_info->progs[0].krls[0], 2, sizeof(cl_int),\
 	&game.sdl.surface->h);
+	cl_krl_init_arg(&game.cl_info->progs[0].krls[0], 3, sizeof(cl_int),\
+	&img->w);
+	cl_krl_init_arg(&game.cl_info->progs[0].krls[0], 4, sizeof(cl_int),\
+	&img->h);
+	cl_krl_init_arg(&game.cl_info->progs[0].krls[0], 5, sizeof(cl_int) * img->h * img->w,\
+	img->pixels);
+	
 	game.cl_info->ret = cl_krl_mem_create(game.cl_info, &game.cl_info->progs[0].krls[0], 0, CL_MEM_READ_WRITE);
 	ERROR(game.cl_info->ret);
-
-	game.gpu.cl_buffer_out = clCreateBuffer(game.cl_info->ctxt, CL_MEM_READ_WRITE,
-	game.cl_info->progs[0].krls[0].sizes[0], NULL, &game.cl_info->ret);
-
-	// game.cl_info->ret = cl_write(game.cl_info, game.cl_info->progs[0].krls[0].args[0],\
-	//  game.cl_info->progs[0].krls[0].sizes[0], game.sdl.surface->pixels);
+	game.cl_info->ret = cl_krl_mem_create(game.cl_info, &game.cl_info->progs[0].krls[0], 5, CL_MEM_READ_WRITE);
 	ERROR(game.cl_info->ret);
-	// //CL_BUILD_ERROR
-	int i = 0;
-	// while (i < 3)
-	// {
-	// 	cl_krl_set_arg (&game.cl_info->progs[0].krls[0], i);
-	// 	i++;
-	// }
-	ERROR(game.cl_info->ret);
+	game.cl_info->ret =  cl_write(game.cl_info, game.cl_info->progs[0].krls[0].args[5],\
+		game.cl_info->progs[0].krls[0].sizes[5], img->pixels);
 
+	ERROR(game.cl_info->ret);
+	//CL_BUILD_ERROR
 	size_t global[2] = {
 		WIN_W,
 		WIN_H

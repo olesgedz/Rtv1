@@ -60,31 +60,31 @@ RMRF = gui/src/gui_main.o\
 		gui/src/buttons.o\
 		cJSON/cJSON.o
 
-SRCS_LIST = main.c #\
-			# cl_lib/gpu_init.c\
-			# textures.c\
-			# schwimmer_verwalten.c\
-			# cl_float3_rotate.c\
-			# keys.c\
-			# camera.c\
-			# const.c\
-			# hilfefunktionen.c\
-			# init_scene.c\
-			# render.c\
-			# mouse.c\
-			# ../gui/src/gui_main.c\
-			# ../gui/src/buttons.c\
-			# ../gui/src/gui_bar.c\
-			# ../gui/src/start_screen.c\
-			# ../gui/src/surf_tex.c\
-			# ../gui/src/scene_select.c\
-			# ../gui/src/main_screen.c\
-			# ../gui/src/ren_button.c\
-			# ../gui/src/obj_select.c\
-			# ../cJSON/cJSON.c\
-			# neue_schlanke_analyse.c\
-			# analyse_dienstprogramme.c\
-			# util.c
+SRCS_LIST = main.c \
+			cl_lib/gpu_init.c\
+			textures.c\
+			schwimmer_verwalten.c\
+			cl_float3_rotate.c\
+			keys.c\
+			camera.c\
+			const.c\
+			hilfefunktionen.c\
+			init_scene.c\
+			render.c\
+			mouse.c\
+			../gui/src/gui_main.c\
+			../gui/src/buttons.c\
+			../gui/src/gui_bar.c\
+			../gui/src/start_screen.c\
+			../gui/src/surf_tex.c\
+			../gui/src/scene_select.c\
+			../gui/src/main_screen.c\
+			../gui/src/ren_button.c\
+			../gui/src/obj_select.c\
+			../cJSON/cJSON.c\
+			neue_schlanke_analyse.c\
+			analyse_dienstprogramme.c\
+			util.c
 
 OBJS_DIRECTORY = objects/
 OBJS_LIST = $(patsubst %.c, %.o, $(SRCS_LIST))
