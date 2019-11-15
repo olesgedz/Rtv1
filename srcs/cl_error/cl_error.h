@@ -7,7 +7,7 @@
 # define ERROR(data)						\
 	if ((data))							\
 	{											\
-		printf("{red!}Error\n");	\
+		printf("{red!}Error #%d\n", data);	\
 		printf("file : %s\n", __FILE__);		\
 		printf("function : %s\n", __func__);	\
 		printf("line : %d\n", __LINE__);		\

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
+#    By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/11/14 19:06:12 by lminta           ###   ########.fr        #
+#    Updated: 2019/11/15 22:06:30 by jblack-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,7 @@ RMRF = gui/src/gui_main.o\
 		gui/src/add_obj.o\
 		cJSON/cJSON.o
 
-SRCS_LIST = main.c\
+SRCS_LIST = main.c \
 			cl_lib/gpu_init.c\
 			textures.c\
 			schwimmer_verwalten.c\

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/11/14 22:24:44 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/15 22:06:02 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
-
+#include "libgnl.h"
+#include <unistd.h>
 static void	set_icon(t_gui *gui, const char *filename)
 {
 	SDL_Surface		*surf;
@@ -50,6 +51,7 @@ static void	main_loop(t_game *game, t_gui *gui, int argc)
 		main_screen_free(gui);
 	}
 }
+
 
 int			main(int argc, char **argv)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gui_main.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:21:19 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/14 22:22:21 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/15 22:08:35 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static void	rotator(t_game *game, t_gui *gui)
 		game->gpu.camera[game->cam_num].direction, M_PI / 1200.);
 		game->flag = 1;
 		game->cl_info->ret =
-		cl_write(game->cl_info, game->kernels[0].args[2], sizeof(cl_float3) *
+		cl_write(game->cl_info, game->cl_info->progs[0].krls->args[2], sizeof(cl_float3) *
 		(unsigned)WIN_H * (unsigned)WIN_W, game->gpu.vec_temp);
 		game->gpu.samples = 0;
 		reconfigure_camera(&game->gpu.camera[game->cam_num]);
