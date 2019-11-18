@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   neue_schlanke_analyse.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/11/10 20:36:06 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/18 16:49:22 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void parse_facing(const cJSON *object, t_obj *obj, t_json *parse, t_game 
 	if (parse->emition != NULL)
 	{
 		obj->emission = parse_vec3(parse->emition);
-		if (isnan(obj->position.v4[0]))
+		if (isnan(obj->emission.v4[0]))
 		   terminate("missing data of obj emition vector!\n");
 	}
 	else
