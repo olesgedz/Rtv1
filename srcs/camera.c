@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:50:13 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/15 21:56:09 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/11/18 10:30:30 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ static void	mouse_mov(t_game *game, t_gui *gui)
 	else if (gui->flag)
 	{
 		game->cl_info->ret =
-		cl_write(game->cl_info, game->kernels[0].args[2], sizeof(cl_float3) *
+		cl_write(game->cl_info, game->cl_info->progs[0].krls[0].args[2], sizeof(cl_float3) *
 		(unsigned)WIN_H * (unsigned)WIN_W, game->gpu.vec_temp);
-		game->cl_info->ret = cl_write(game->cl_info, game->kernels[0].args[1],
+		game->cl_info->ret = cl_write(game->cl_info, game->cl_info->progs[0].krls[0].args[1],
 		sizeof(t_obj) * game->obj_quantity, game->gpu.objects);
 		game->gpu.samples = 0;
 		game->flag = 1;
