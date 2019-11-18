@@ -121,6 +121,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 	float2		img_coord;
 
 	float3 accum_color = 0.0f;
+	float3 ambiance = 0.0f;
 	float3 mask = 1.0f;
 	float3 explicit;
 	for (int bounces = 0; bounces < (scene->lightsampling ? 1 : BOUNCES); bounces++)
@@ -165,7 +166,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 		}
 		else
 		{
-			accum_color += mask * objecthit.emission * pdf;
+			accum_color += mask * objecthit.emission * pdf + mask * (ambiance);
 			if (scene->lightsampling)
 			{
 				explicit = radiance_explicit(scene, intersection);

@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/11/18 16:49:22 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/11/18 20:59:32 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,7 @@ static void parse_rest(const cJSON *object, t_obj *obj, t_json *parse)
            terminate("missing data of cylinder prolapse vector!\n");
     }
     else
-    	obj->prolapse = create_cfloat2(1000.0, 1000.0);
+    	obj->prolapse = create_cfloat2(1.0, 1.0);
 }
 
  static cl_float3 triangle_norm(cl_float3 *vertices)
