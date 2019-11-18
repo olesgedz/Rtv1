@@ -16,8 +16,8 @@ static void			get_color_plane(t_obj *object, float3 hitpoint, t_scene *scene, fl
     float           u;
     float           v;
 
-	u = modf((0.5 + dot(object->basis[0], hitpoint) / 2), &(u));
-	v = modf((0.5 + dot(object->basis[1], hitpoint) / 2), &(v));
+	u = modf((0.5 + object->shift.x + dot(object->basis[0], hitpoint) * object->prolapse.x / 2), &(u));
+	v = modf((0.5 + object->shift.y + dot(object->basis[1], hitpoint) * object->prolapse.y / 2), &(v));
 	if (v < 0)
 		v += 1;
 	if (u < 0)
@@ -36,10 +36,10 @@ static void			get_color_cylinder(t_obj *object, float3 hitpoint, t_scene *scene,
 	vect = hitpoint - object->position;
 	a.y = dot(object->v, vect);
 	a.x = -dot(vect, object->basis[0]);
-	a.z = dot(vect, object->basis[1]);
+	a.z = dot(vect, object->basis[1]) + object->shift.y;
 	coord->x = 0.5 + (atan2(a[2], a[0])) / (2 * PI);
     texture = &((scene->textures)[object->texture - 1]);
-	v = modf(0.5 + (a[1] * object->prolapse.x / texture->height) / 2, &v);
+	v = modf(0.5 + (a[1] * object->prolapse.x), &v);
 	if (v < 0)
 		v += 1;
     coord->y = v;
