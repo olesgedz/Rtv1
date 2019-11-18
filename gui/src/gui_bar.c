@@ -6,11 +6,24 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 19:10:18 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/14 19:23:27 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/18 21:21:39 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+void	visibility(KW_Widget *widget, int b)
+{
+	t_gui		*gui;
+	t_obj		*obj;
+
+	b = 0;
+	gui = g_gui(0, 0);
+	obj = KW_GetWidgetUserData(widget);
+	obj->is_visible = !obj->is_visible;
+	visibility_name(widget, obj);
+	gui->flag = 1;
+}
 
 void		gui_bar(t_game *game, t_gui *gui)
 {
