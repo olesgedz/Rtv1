@@ -15,7 +15,7 @@ static int	c_floor(float x)
 
 static int toInt(float x)
 {
-	return int(c_floor(x * 255.f));
+	return (int)(c_floor(x * 255.f));
 }
 
 float cl_float3_max(float3 v)
