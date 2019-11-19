@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:53:01 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/19 22:12:43 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/19 22:18:01 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,12 @@ void				opencl(t_game *game, char *argv)
 	game->blured->pixels);
 	cl_krl_init_arg(&game->cl_info->progs[0].krls[1], 3, sizeof(cl_int),\
 	game->blured->pixels);
-	// game->cl_info->ret = cl_krl_mem_create(game->cl_info, &game->cl_info->progs[0].krls[1], 0, CL_MEM_READ_WRITE);
-	// game->cl_info->ret = cl_krl_mem_create(game->cl_info, &game->cl_info->progs[0].krls[1], 1, CL_MEM_READ_WRITE);
-	// cl_krl_write_all(game->cl_info, &game->cl_info->progs[0].krls[1]);
-	// ERROR(game->cl_info->ret);
-	// cl_krl_set_all_args(&game->cl_info->progs[0].krls[1]);
-	// ERROR(game->cl_info->ret);
+	game->cl_info->ret = cl_krl_mem_create(game->cl_info, &game->cl_info->progs[0].krls[1], 0, CL_MEM_READ_WRITE);
+	game->cl_info->ret = cl_krl_mem_create(game->cl_info, &game->cl_info->progs[0].krls[1], 1, CL_MEM_READ_WRITE);
+	cl_krl_write_all(game->cl_info, &game->cl_info->progs[0].krls[1]);
+	ERROR(game->cl_info->ret);
+	cl_krl_set_all_args(&game->cl_info->progs[0].krls[1]);
+	ERROR(game->cl_info->ret);
 	
 }
 
