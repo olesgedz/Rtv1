@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/18 20:54:35 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/19 20:24:00 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,6 @@ typedef struct		s_change_obj
 	KW_Rect			editboxrect[3];
 	KW_Widget		*frame;
 	KW_Widget		*edit_box[23];
-	KW_Widget		*labels[26];
 	KW_Rect			*rects[4];
 	unsigned		weights[4];
 	KW_Widget		*buttons[2];

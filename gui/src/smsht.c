@@ -6,27 +6,27 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 19:27:34 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/18 21:23:41 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/19 21:55:26 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void	obj_if(t_gui *gui, t_obj *obj)
+void		obj_if(t_gui *gui, t_obj *obj)
 {
 	if (obj->type == PLANE)
-			change_plane(gui, obj);
+		change_plane(gui, obj);
 	else if (obj->type == CONE)
-			change_cone(gui, obj);
+		change_cone(gui, obj);
 	else if (obj->type == CYLINDER)
-			change_cylin(gui, obj);
+		change_cylin(gui, obj);
 	else if (obj->type == SPHERE)
-			change_sphere(gui, obj);
+		change_sphere(gui, obj);
 	else if (obj->type == TRIANGLE)
-			change_trian(gui, obj);
+		change_trian(gui, obj);
 }
 
-void	visibility_name(KW_Widget *widget, t_obj *obj)
+void		visibility_name(KW_Widget *widget, t_obj *obj)
 {
 	char		*buff;
 	KW_Widget	*wid;
@@ -38,11 +38,43 @@ void	visibility_name(KW_Widget *widget, t_obj *obj)
 		KW_SetLabelText(wid, "Object is invisible");
 }
 
-void	obj_same(t_gui *gui, t_obj *obj)
+KW_Widget	*f_eb(t_gui *gui, double db, KW_Rect *rect)
+{
+	KW_Widget	*result;
+	char		str[100];
+
+	gcvt(db, 5, str);
+	result = KW_CreateEditbox(gui->gui, gui->c_o.frame, str, rect);
+	return (result);
+}
+
+static void	position(t_gui *gui, t_obj *obj)
+{
+	gui->c_o.labelrect = (KW_Rect){5, 5, 1, 30};
+	gui->c_o.editboxrect[0] = (KW_Rect){5, 5, 1, 30};
+	gui->c_o.editboxrect[1] = (KW_Rect){5, 5, 1, 30};
+	gui->c_o.editboxrect[2] = (KW_Rect){5, 5, 1, 30};
+	gui->c_o.weights[0] = 1;
+	gui->c_o.weights[1] = 1;
+	gui->c_o.weights[2] = 1;
+	gui->c_o.weights[3] = 1;
+	KW_RectFillParentHorizontally(&gui->c_o.frect, gui->c_o.rects,
+	gui->c_o.weights, 4, 10, KW_RECT_ALIGN_MIDDLE);
+	gui->c_o.labelrect.y -= 225;
+	gui->c_o.editboxrect[0].y -= 225;
+	gui->c_o.editboxrect[1].y -= 225;
+	gui->c_o.editboxrect[2].y -= 225;
+	KW_CreateLabel(gui->gui, gui->c_o.frame, "Position", &gui->c_o.labelrect);
+	gui->c_o.edit_box[0] = f_eb(gui, obj->position.s[0], gui->c_o.rects[1]);
+	gui->c_o.edit_box[1] = f_eb(gui, obj->position.s[1], gui->c_o.rects[2]);
+	gui->c_o.edit_box[2] = f_eb(gui, obj->position.s[2], gui->c_o.rects[3]);
+}
+
+void		obj_same(t_gui *gui, t_obj *obj)
 {
 	char	*buff;
 
-	gui->c_o.frect = (KW_Rect){0, WIN_H - FR_ZF * 5, FR_FZ * 5, FR_ZF * 5};
+	gui->c_o.frect = (KW_Rect){0, WIN_H - FR_ZF * 5, FR_FZ * 5 / 2, FR_ZF * 5};
 	gui->c_o.frame =
 	KW_CreateFrame(gui->gui, NULL, &gui->c_o.frect);
 	gui->c_o.labelrect = (KW_Rect){5, 5, 100, 30};
@@ -57,4 +89,10 @@ void	obj_same(t_gui *gui, t_obj *obj)
 	visibility_name(gui->c_o.buttons[0], obj);
 	KW_AddWidgetMouseDownHandler(gui->c_o.buttons[0], visibility);
 	KW_SetWidgetUserData(gui->c_o.buttons[0], obj);
+	gui->c_o.rects[0] = &gui->c_o.labelrect;
+	gui->c_o.rects[1] = &gui->c_o.editboxrect[0];
+	gui->c_o.rects[2] = &gui->c_o.editboxrect[1];
+	gui->c_o.rects[3] = &gui->c_o.editboxrect[2];
+	position(gui, obj);
+	color_emission(gui, obj);
 }
