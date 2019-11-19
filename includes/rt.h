@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/19 21:03:58 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/11/19 21:17:48 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ typedef struct			s_object
 	cl_float3			color;
 	cl_float3			emission;
 	cl_float3			v;
-	cl_float			reflection;
+	cl_float			metalness;
 	cl_int				texture;
 	cl_int				normal;
 	cl_float3			vertices[3];

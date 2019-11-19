@@ -46,7 +46,7 @@ typedef struct			s_object
 	float3				color;
 	float3				emission;
 	float3				v;
-	float				reflection;
+	float				metalness;
 	int					texture;
 	int					normal;
 	float3				vertices[3];

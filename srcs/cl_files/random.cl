@@ -68,14 +68,15 @@ static float3		sampler_transform(float3 *normal, float3 *sample)
 
 static float3		sample_uniform
 					(float3 *normal,
-					float *cosine,
-					t_scene * scene)
+					t_scene * scene, float metalness, float *cosine)
 {
 	float3 			r;
 	float3			ret;
 
-	r.x = rng(scene->random) * 2.f - 1.f;
-	r.y = (rng(scene->random) * 2.f - 1.f) * sqrt(1.f - r.x * r.x);
+	metalness = 1.f - metalness;
+	// metalness = cos(PI * 0.5 * metalness);
+	r.x = (rng(scene->random) * 2.f - 1.f) * metalness;
+	r.y = ((rng(scene->random) * 2.f - 1.f) * metalness) * sqrt(1.f - r.x * r.x);
 	r.z = sqrt(fabs(1.f - r.y * r.y - r.x * r.x));
 	ret = sampler_transform(normal, &r);
 	*cosine = dot(*normal, ret);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hilfefunktionen.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:51:09 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/10 19:53:33 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/19 18:37:33 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ cl_ulong	*get_random(cl_ulong *random)
 		ft_exit(0);
 	srand(time(NULL));
 	while (++i < WIN_H * WIN_W)
-	{
-		// srand(time(NULL));
 		random[i] = rand() | (cl_ulong)rand() << 32;
-	}
 	return (random);
 }
 
