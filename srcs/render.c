@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:54:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/18 09:42:40 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/11/18 15:46:37 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,28 @@ static void		ft_run_kernel(t_game *game, t_cl_krl * kernel, int w, int h)
 	ERROR(game->cl_info->ret );
 }
 
+
+static void		ft_run_kernel1(t_game *game, t_cl_krl * kernel, int w, int h)
+{
+	size_t	global[2] = {WIN_W, WIN_H};
+	int makssize = 3;
+	
+	game->cl_info->ret |= clSetKernelArg(kernel->krl, 2, sizeof(cl_int),
+	&game->gpu.samples);
+    ERROR(game->cl_info->ret );
+
+	game->cl_info->ret |= clSetKernelArg(kernel->krl, 2, sizeof(cl_int),
+	&makssize);
+    ERROR(game->cl_info->ret );
+
+	game->cl_info->ret = cl_krl_exec(game->cl_info, kernel->krl, 2, global);
+	ERROR(game->cl_info->ret );
+	clFinish(game->cl_info->cmd_queue);
+	game->cl_info->ret = cl_read(game->cl_info, kernel->args[0],
+	sizeof(cl_int) * WIN_W * WIN_H, game->sdl.surface->pixels);
+	ERROR(game->cl_info->ret );
+}
+
 void			ft_render(t_game *game, t_gui *gui)
 {
 	if (!game->flag && !gui->flag)
@@ -44,6 +66,8 @@ void			ft_render(t_game *game, t_gui *gui)
 	game->flag = 0;
 	gui->flag = 0;
 	ft_run_kernel(game, &game->cl_info->progs[0].krls[0], WIN_W, WIN_H);
+	//ft_run_kernel1(game, &game->cl_info->progs[0].krls[1], WIN_W, WIN_H);
+
 }
 
 void			screen_present(t_game *game, t_gui *gui)

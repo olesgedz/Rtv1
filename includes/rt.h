@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/19 18:01:05 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/11/19 21:17:48 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,34 +183,35 @@ typedef struct			s_game
 	int					quit;
 	t_keys				keys;
 	t_mouse_pos			mouse;
+	SDL_Surface			*blured;
 }						t_game;
 
 typedef struct			s_json
 {
-    cJSON				*position;
-    cJSON				*color;
-    cJSON				*emition;
-    cJSON				*reflection;
-    cJSON				*texture;
-    cJSON				*radius;
-    cJSON				*v;
-    cJSON				*x;
-    cJSON				*y;
-    cJSON				*z;
-    cJSON				*a;
-    cJSON				*b;
-    cJSON				*c;
-    cJSON				*shift;
-    cJSON				*x_basis;
-    cJSON				*y_basis;
-    cJSON				*z_basis;
-    cJSON				*rotation;
-    cJSON				*prolapse;
-    cJSON				*type;
-    cJSON				*normal;
+	cJSON				*position;
+	cJSON				*color;
+	cJSON				*emition;
+	cJSON				*reflection;
+	cJSON				*texture;
+	cJSON				*radius;
+	cJSON				*v;
+	cJSON				*x;
+	cJSON				*y;
+	cJSON				*z;
+	cJSON				*a;
+	cJSON				*b;
+	cJSON				*c;
+	cJSON				*shift;
+	cJSON				*x_basis;
+	cJSON				*y_basis;
+	cJSON				*z_basis;
+	cJSON				*rotation;
+	cJSON				*prolapse;
+	cJSON				*type;
+	cJSON				*normal;
 	cJSON				*composed_pos;
 	cJSON				*composed_v;
-}             			t_json;
+}						t_json;
 
 int						bind_data(t_gpu *gpu, t_game *game);
 void					release_gpu(t_gpu *gpu);
