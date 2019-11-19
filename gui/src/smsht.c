@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 19:27:34 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/19 21:55:26 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/19 22:47:39 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ static void	position(t_gui *gui, t_obj *obj)
 	gui->c_o.editboxrect[0].y -= 225;
 	gui->c_o.editboxrect[1].y -= 225;
 	gui->c_o.editboxrect[2].y -= 225;
+	if (obj->type == TRIANGLE)
+		return ;
 	KW_CreateLabel(gui->gui, gui->c_o.frame, "Position", &gui->c_o.labelrect);
 	gui->c_o.edit_box[0] = f_eb(gui, obj->position.s[0], gui->c_o.rects[1]);
 	gui->c_o.edit_box[1] = f_eb(gui, obj->position.s[1], gui->c_o.rects[2]);
