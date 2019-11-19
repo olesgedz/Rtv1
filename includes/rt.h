@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/18 21:39:32 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/19 17:03:03 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,5 +284,6 @@ void 					obj_if(t_gui *gui, t_obj *obj);
 char					*fill_name_mass(t_obj *obj, int num);
 void					obj_same(t_gui *gui, t_obj *obj);
 void					visibility_name(KW_Widget *widget, t_obj *obj);
+float					vec_len(cl_float3 vec);
 
 #endif
