@@ -1,4 +1,11 @@
 {
+    "scene":{
+        "global_texture":"sun.jpg",
+        "ambiance": 0.5,
+        "cartoon": 0,
+        "motion_blur" : 0.0,
+        "sepia" : 0
+    }, 
 
     "objects":[
         {

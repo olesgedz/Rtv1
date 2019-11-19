@@ -6,25 +6,25 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/11/10 20:36:06 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/18 21:08:53 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 #include "errno.h"
 
-static void parse_necessary(const cJSON *object, t_obj *obj, t_json *parse)
+static void parse_necessary(const cJSON *object, t_obj *obj, t_json *parse, cl_float3 composed_pos, cl_float3 composed_v)
 {
 	parse->position = cJSON_GetObjectItemCaseSensitive(object, "position");
 	obj->position = parse_vec3(parse->position);
 	if (isnan(obj->position.v4[0]) && obj->type != TRIANGLE)
 		terminate("missing data of obj position!\n");
-	obj->position = sum_cfloat3(obj->position, obj->composed_pos);
+	obj->position = sum_cfloat3(obj->position, composed_pos);
 	parse->v = cJSON_GetObjectItemCaseSensitive(object, "dir");
 	obj->v = parse_vec3(parse->v);
 	if (isnan(obj->v.v4[0]) && obj->type != SPHERE && obj->type != TRIANGLE)
 		terminate("missing data of obj dir !\n");
-	obj->v =normalize(sum_cfloat3(obj->v, obj->composed_v));
+	obj->v =normalize(sum_cfloat3(obj->v, composed_v));
 	parse->color = cJSON_GetObjectItemCaseSensitive(object, "color");
 	obj->color = parse_vec3(parse->color);
 	if (isnan(obj->color.v4[0]))
@@ -199,15 +199,6 @@ static void parse_basis(const cJSON *object, t_obj *obj, t_json *parse)
 
 static void parse_rest(const cJSON *object, t_obj *obj, t_json *parse)
 {
-	parse->rotation = cJSON_GetObjectItemCaseSensitive(object, "rotation");
-	if (parse->rotation != NULL)
-	{
-		obj->rotation = parse_vec2(parse->rotation);
-		if (isnan(obj->rotation.s[0]))
-		   terminate("missing data of obj rotation vector!\n");
-	}
-	else
-		obj->rotation = create_cfloat2(0.0, 0.0);
 	parse->prolapse = cJSON_GetObjectItemCaseSensitive(object, "prolapse");
 	if (parse->prolapse != NULL)
 	{
@@ -264,24 +255,26 @@ void check_object(const cJSON *object, t_game *game, cJSON *composed_pos, cJSON 
 {
 	t_obj *obj;
 	t_json parse;
-
+	cl_float3 composed_pos_f;
+	cl_float3 composed_v_f;
+	
 	obj = (t_obj*)malloc(sizeof(t_obj));
 	if (composed_pos != NULL)
 	{
-		obj->composed_pos = parse_vec3(composed_pos);
-		if (isnan(obj->composed_pos.v4[0]))
+		composed_pos_f = parse_vec3(composed_pos);
+		if (isnan(composed_pos_f.v4[0]))
 			terminate("missing data of position of composed object!\n");
 	}
 	else
-		obj->composed_pos = create_cfloat3(0.0, 0.0, 0.0);
+		composed_pos_f = create_cfloat3(0.0, 0.0, 0.0);
 	if (composed_v != NULL)
 	{
-		obj->composed_v = parse_vec3(composed_v);
-		if (isnan(obj->composed_v.v4[0]))
+		composed_v_f = parse_vec3(composed_v);
+		if (isnan(composed_v_f.v4[0]))
 			terminate("missing data of direction of composed object!\n");
 	}
 	else
-		obj->composed_v = create_cfloat3(0.0, 0.0, 0.0);
+		composed_v_f = create_cfloat3(0.0, 0.0, 0.0);
 	parse.type = cJSON_GetObjectItemCaseSensitive(object, "type");
 	if (ft_strcmp(parse.type->valuestring, "plane") == 0)
 		obj->type = PLANE;
@@ -299,7 +292,7 @@ void check_object(const cJSON *object, t_game *game, cJSON *composed_pos, cJSON 
 		return;
 	}
 	obj->id = id;
-	parse_necessary(object, obj, &parse);
+	parse_necessary(object, obj, &parse, composed_pos_f, composed_v_f);
 	parse_facing(object, obj, &parse, game);
 	parse_basis(object, obj, &parse);
 	if (obj->type == TRIANGLE)

@@ -53,10 +53,7 @@ typedef struct			s_object
 	int					is_visible;
 	float2				shift;
 	float3				basis[3];
-	float2				rotation;
 	float2				prolapse;
-	float3				composed_pos;
-	float3				composed_v;
 	int					id;
 }						t_obj;
 
