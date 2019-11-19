@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/19 21:55:34 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/19 22:12:20 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ typedef struct			s_object
 	cl_float3			color;
 	cl_float3			emission;
 	cl_float3			v;
-	cl_float			reflection;
+	cl_float			metalness;
 	cl_int				texture;
 	cl_int				normal;
 	cl_float3			vertices[3];
@@ -185,6 +185,7 @@ typedef struct			s_game
 	t_keys				keys;
 	t_mouse_pos			mouse;
 	cl_int				global_tex_id;
+	SDL_Surface			*blured;
 }						t_game;
 
 typedef struct	s_filter

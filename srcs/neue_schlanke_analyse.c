@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/11/19 21:59:07 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/19 22:13:10 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ static void parse_facing(const cJSON *object, t_obj *obj, t_json *parse, t_game 
 	}
 	else
 		obj->emission = create_cfloat3(0.0, 0.0, 0.0);
-	parse->reflection = cJSON_GetObjectItemCaseSensitive(object, "reflection");
+	parse->reflection = cJSON_GetObjectItemCaseSensitive(object, "metalness");
 	if (parse->reflection != NULL)
-		obj->reflection = parse->reflection->valuedouble;
+		obj->metalness = parse->reflection->valuedouble;
 	else
-		obj->reflection = 0.0;
+		obj->metalness = 0.0;
 	parse->texture = cJSON_GetObjectItemCaseSensitive(object, "texture");
 
 	if (parse->texture != NULL)
