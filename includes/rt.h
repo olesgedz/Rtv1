@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/19 22:12:20 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/19 22:53:54 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -301,6 +301,8 @@ void 					obj_if(t_gui *gui, t_obj *obj);
 char					*fill_name_mass(t_obj *obj, int num);
 void					obj_same(t_gui *gui, t_obj *obj);
 void					visibility_name(KW_Widget *widget, t_obj *obj);
+KW_Widget				*f_eb(t_gui *gui, double db, KW_Rect *rect);
+void					color_emission(t_gui *gui, t_obj *obj);
 float					vec_len(cl_float3 vec);
 
 #endif
