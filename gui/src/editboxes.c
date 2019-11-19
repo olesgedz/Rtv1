@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 20:04:17 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/19 22:06:37 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/19 22:16:04 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ void	color_emission(t_gui *gui, t_obj *obj)
 	gui->c_o.editboxrect[0].y += 30;
 	gui->c_o.editboxrect[1].y += 30;
 	gui->c_o.editboxrect[2].y += 30;
-	KW_CreateLabel(gui->gui, gui->c_o.frame, "Shift", &gui->c_o.labelrect);
-	gui->c_o.edit_box[9] = f_eb(gui, obj->shift.s[0], gui->c_o.rects[1]);
-	gui->c_o.edit_box[10] = f_eb(gui, obj->shift.s[1], gui->c_o.rects[2]);
-	gui->c_o.edit_box[11] = f_eb(gui, obj->shift.s[1], gui->c_o.rects[3]);
+	KW_CreateLabel(gui->gui, gui->c_o.frame, "Reflection", &gui->c_o.labelrect);
+	gui->c_o.edit_box[9] = f_eb(gui, obj->metalness, gui->c_o.rects[1]);
+	gui->c_o.edit_box[10] = f_eb(gui, obj->metalness, gui->c_o.rects[2]);
+	gui->c_o.edit_box[11] = f_eb(gui, obj->metalness, gui->c_o.rects[3]);
 	basis(gui, obj);
 }
