@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/19 17:03:03 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/11/19 18:01:05 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ typedef struct			s_object
 	cl_float3			color;
 	cl_float3			emission;
 	cl_float3			v;
-	cl_float			reflection;
+	cl_float			metalness;
 	cl_int				texture;
 	cl_int				normal;
 	cl_float3			vertices[3];

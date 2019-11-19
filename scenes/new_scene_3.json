@@ -11,20 +11,16 @@
         {
             "type": "plane",
             "position": [-1.0,0.0,0.0],
-            "color": [0.75,0.25,0.25],
+            "color": [1.0,1.0,1.0],
             "dir": [1.0,0.0,0.0],
-            "reflection": 1.0,
-            "normal": "196_norm.JPG",
-            "texture": "196.JPG"
+            "metalness": 1.0
         },
         {
             "type": "plane",
             "position": [1.0,0.0,0.0],
-            "color": [0.25,0.25,0.75],
+            "color": [1.0,1.0,1.0],
             "dir": [1.0,0.0,0.0],
-            "normal": "196_norm.JPG",
-            "texture": "196.JPG",
-            "reflection": 1.0
+            "metalness": 1.0
         },
         {
             "type": "plane",
