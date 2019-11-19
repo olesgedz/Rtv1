@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 19:08:02 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/31 18:49:46 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/18 21:37:28 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,40 @@
 
 static void	clicked(KW_Widget *widget, int b)
 {
-	t_gui	*gui;
-	t_obj	*obj;
+	static t_obj		*obj;
+	static KW_Widget	*wid = 0;
+	t_gui				*gui;
 
 	b = 0;
 	gui = g_gui(0, 0);
-	obj = KW_GetWidgetUserData(widget);
-	obj->is_visible = !obj->is_visible;
-	gui->flag = 1;
+	if (gui->c_o.show == 1)
+	{
+		KW_DestroyWidget(gui->c_o.frame, 1);
+		if (wid)
+			KW_SetLabelTextColor(KW_GetButtonLabel(wid),
+			(KW_Color){0, 0, 0, 255});
+		gui->c_o.show = 0;
+	}
+	if (obj != KW_GetWidgetUserData(widget))
+	{
+		obj = KW_GetWidgetUserData(widget);
+		obj_if(gui, obj);
+		wid = widget;
+		KW_SetLabelTextColor(KW_GetButtonLabel(wid),
+		(KW_Color){255, 255, 255, 255});
+		gui->c_o.show = 1;
+	}
+	else if (!(wid = 0))
+		obj = 0;
 }
 
-static char	*fill_name(t_obj *obj, int num)
+char		*fill_name_mass(t_obj *obj, int num)
 {
 	char	*number;
 	char	*res;
 	char	*buff;
 
-	number = ft_itoa(num);
+	number = ft_itoa(obj->id);
 	if (obj->type == SPHERE)
 		res = ft_strjoin("Sphere ", number);
 	else if (obj->type == CONE)
@@ -74,10 +91,10 @@ static int	scan_mass(t_gui *gui, t_obj *objs, int num)
 	gui->o_s.frect = (KW_Rect){WIN_W - 5 - FR_FZ, 25, FR_FZ, 80};
 	gui->o_s.buttonrect[0] = (KW_Rect){0, 0, 30, 40};
 	i = 1;
-	first_button(gui, fill_name(&objs[0], 0));
+	first_button(gui, fill_name_mass(&objs[0], 0));
 	while (i < num && i < MAX_OBJ)
 	{
-		gui->o_s.names[i] = fill_name(&objs[i], i);
+		gui->o_s.names[i] = fill_name_mass(&objs[i], i);
 		gui->o_s.buttonrect[i] = gui->o_s.buttonrect[i - 1];
 		gui->o_s.buttonrect[i].y += 45;
 		if (i < WIN_H / 45 - 3)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cl_float3_manage.c                                 :+:      :+:    :+:   */
+/*   schwimmer_verwalten.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/07 17:03:05 by sbrella           #+#    #+#             */
-/*   Updated: 2019/10/28 17:42:12 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/19 17:02:42 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,11 @@ cl_float3	mult_cfloat3(cl_float3 one, float f)
 	res.s[1] = one.s[1] * f;
 	res.s[2] = one.s[2] * f;
 	return (res);
+}
+
+float		vec_len(cl_float3 vec)
+{
+	if (vec.s[0] == INFINITY || vec.s[1] == INFINITY || vec.s[2] == INFINITY)
+		return (INFINITY);
+	return (sqrt(vec.s[0] * vec.s[0] + vec.s[1] * vec.s[1] + vec.s[2] * vec.s[2]));
 }

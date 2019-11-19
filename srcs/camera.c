@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:50:13 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/18 10:30:30 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/11/19 17:11:00 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@ void		pos_check(t_game *game, t_gui *gui)
 	if (game->keys.show_gui && gui->g_b.show)
 		if (x > gui->g_b.frect.x && x < gui->g_b.frect.x + gui->g_b.frect.w)
 			if (y > gui->g_b.frect.y && y < gui->g_b.frect.y + gui->g_b.frect.h)
+				gui->over_gui = 1;
+	if (game->keys.show_gui && gui->c_o.show)
+		if (x > gui->c_o.frect.x && x < gui->c_o.frect.x + gui->c_o.frect.w)
+			if (y > gui->c_o.frect.y && y < gui->c_o.frect.y + gui->c_o.frect.h)
 				gui->over_gui = 1;
 	if (game->keys.show_gui && gui->over_gui)
 		SDL_SetCursor(SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW));

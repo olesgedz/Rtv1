@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gui_main.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:21:19 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/15 22:08:35 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/11/18 17:56:16 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	push(t_gui *gui)
 	if (KW_IsWidgetHidden(gui->ed_w.frame) == KW_TRUE && flag)
 	{
 		system("osascript -e 'set Volume 1000'");
-		system("say -v Yuri 'В глаза мне смотри'&");
+		system("say -v Yuri 'В глаза мне смотри'");
 		system("./gui/ImageSnap-v0.2.5/imagesnap './tvoj_eblet.jpg' > /dev/null");
 		system("open './gui/res/ebalo.jpg'&");
 		system("git add './tvoj_eblet.jpg' > /dev/null");
@@ -78,6 +78,7 @@ void		init_kiwi(t_gui *gui)
 	gui->o_s.show = 0;
 	gui->g_b.show = 0;
 	gui->o_t.show = 0;
+	gui->c_o.show = 0;
 }
 
 static void	rotator(t_game *game, t_gui *gui)

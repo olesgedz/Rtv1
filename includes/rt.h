@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/18 13:24:35 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/11/19 21:03:58 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,5 +276,15 @@ void					mouse_motion(t_game *game, t_gui *gui);
 void					free_list(t_game *game);
 void					add_obj(t_game *game, t_gui *gui);
 void					obj_type(t_game *game, t_gui *gui);
+void					change_plane(/*t_game *game,*/ t_gui *gui, t_obj *obj);
+void					change_sphere(/*t_game *game, */t_gui *gui, t_obj *obj);
+void					change_cylin(/*t_game *game, */t_gui *gui, t_obj *obj);
+void					change_cone(/*t_game *game, */t_gui *gui, t_obj *obj);
+void					change_trian(/*t_game *game, */t_gui *gui, t_obj *obj);
+void 					obj_if(t_gui *gui, t_obj *obj);
+char					*fill_name_mass(t_obj *obj, int num);
+void					obj_same(t_gui *gui, t_obj *obj);
+void					visibility_name(KW_Widget *widget, t_obj *obj);
+float					vec_len(cl_float3 vec);
 
 #endif

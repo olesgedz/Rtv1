@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/14 22:24:07 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/18 20:54:35 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@
 # define MAX_SC		256
 # define MAX_OBJ	1024
 # define FR_FZ		WIN_W / 10.
-# define USER "sbrella"
+# define FR_ZF		WIN_H / 10.
+# define USER "jblack-b"
 
 typedef struct		s_scene_select
 {
@@ -143,6 +144,7 @@ typedef struct		s_gui
 	t_gui_bar		g_b;
 	t_in_eye		i_e;
 	t_obj_type		o_t;
+	t_change_obj	c_o;
 	char			*av;
 	int				flag;
 	int				main_screen;
@@ -162,5 +164,6 @@ void				quit_kiwi_main(t_gui *gui);
 void				main_screen_free(t_gui *gui);
 void				over(KW_Widget *widget, int b);
 void				leave(KW_Widget *widget, int b);
+void				visibility(KW_Widget *widget, int b);
 
 #endif

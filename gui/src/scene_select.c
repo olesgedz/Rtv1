@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 16:30:29 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/31 18:46:12 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/18 21:38:25 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 static void	clicked(KW_Widget *widget, int b)
 {
-	t_gui	*gui;
-	char	*name;
+	t_gui				*gui;
+	char				*name;
+	static KW_Widget	*wid = 0;
 
 	b = 0;
 	gui = g_gui(0, 0);
@@ -24,6 +25,11 @@ static void	clicked(KW_Widget *widget, int b)
 	free(gui->av);
 	gui->av = ft_strjoin("scenes/", name);
 	gui->quit = 1;
+	if (wid)
+		KW_SetLabelTextColor(KW_GetButtonLabel(wid), (KW_Color){0, 0, 0, 255});
+	wid = widget;
+	KW_SetLabelTextColor(KW_GetButtonLabel(widget),
+	(KW_Color){255, 255, 255, 255});
 }
 
 static void	first_button(t_gui *gui, struct dirent *name_buff)
