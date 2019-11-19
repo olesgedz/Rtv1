@@ -129,13 +129,16 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 		/* if ray misses scene, return background colour */
 		if (!intersect_scene(scene, intersection, &ray))
 			return accum_color + mask * global_texture(&ray, scene);
+
 		/* Russian roulette*/
 		// if (bounces > 4 && cl_float3_max(scene->objects[intersection->object_id].color) < rng(scene->random))
 		// 	break;
 
-		t_obj objecthit = scene->objects[intersection->object_id]; /* version with local copy of sphere */
+		t_obj objecthit = scene->objects[intersection->object_id];
+
 		/* compute the hitpoint using the ray equation */
 		intersection->hitpoint =  ray.origin + ray.dir * ray.t;
+
 		if (objecthit.normal || objecthit.texture)
 			interpolate_uv(&objecthit, intersection->hitpoint, scene, &img_coord);
 		objecthit.color = get_color(&objecthit, intersection->hitpoint, scene, &img_coord);
@@ -146,37 +149,20 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 		intersection->normal = dot(intersection->normal, ray.dir) < 0.0f ? intersection->normal : intersection->normal * (-1.0f);
 		/* create a local orthogonal coordinate frame centered at the hitpoint */
 		float cosine;
-		float3 newdir = sample_uniform(&intersection->normal, &cosine, scene);
+		float3 normal = objecthit.metalness > 0.0 ? normalize(reflect(ray.dir, intersection->normal)) : intersection->normal;
+		float3 newdir = sample_uniform(&normal, scene, objecthit.metalness, &cosine);
+		// cosine = dot(intersection->normal, newdir);
 		/* add a very small offset to the hitpoint to prevent self intersection */
-		float pdf = 1.f;
+		float pdf = 1.f - scene->lightsampling * 0.7f;
+		accum_color += mask * objecthit.emission * pdf + mask * (ambiance);
 		if (scene->lightsampling)
-			pdf = 0.3f;
-		if (objecthit.reflection > 0)
 		{
-			accum_color += mask * objecthit.emission * pdf;
-			if (scene->lightsampling)
-			{
-				explicit = radiance_explicit(scene, intersection);
-				accum_color += explicit * mask  * objecthit.color;//* intersection->material.color;
-			}
-			/* add the colour and light contributions to the accumulated colour */
-			mask *= objecthit.color  * objecthit.reflection;	/* the mask colour picks up surface colours at each bounce */
-			ray.dir = reflect(ray.dir, intersection->normal);
-			ray.origin = intersection->hitpoint + ray.dir * EPSILON;
+			explicit = radiance_explicit(scene, intersection);
+			accum_color += explicit * mask *  objecthit.color;
 		}
-		else
-		{
-			accum_color += mask * objecthit.emission * pdf + mask * (ambiance);
-			if (scene->lightsampling)
-			{
-				explicit = radiance_explicit(scene, intersection);
-				accum_color += explicit * mask *  objecthit.color;//intersection->material.color;
-			}
-			mask *= objecthit.color * cosine;
-
-			ray.dir = newdir;
-			ray.origin = intersection->hitpoint + ray.dir * EPSILON;
-		}
+		mask *= objecthit.color * cosine;
+		ray.dir = newdir;
+		ray.origin = intersection->hitpoint + ray.dir * EPSILON;
 	}
 	return accum_color;
 }

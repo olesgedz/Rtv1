@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/19 21:55:26 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/19 22:11:19 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ typedef struct			s_object
 	cl_float3			color;
 	cl_float3			emission;
 	cl_float3			v;
-	cl_float			reflection;
+	cl_float			metalness;
 	cl_int				texture;
 	cl_int				normal;
 	cl_float3			vertices[3];
@@ -183,34 +183,35 @@ typedef struct			s_game
 	int					quit;
 	t_keys				keys;
 	t_mouse_pos			mouse;
+	SDL_Surface			*blured;
 }						t_game;
 
 typedef struct			s_json
 {
-    cJSON				*position;
-    cJSON				*color;
-    cJSON				*emition;
-    cJSON				*reflection;
-    cJSON				*texture;
-    cJSON				*radius;
-    cJSON				*v;
-    cJSON				*x;
-    cJSON				*y;
-    cJSON				*z;
-    cJSON				*a;
-    cJSON				*b;
-    cJSON				*c;
-    cJSON				*shift;
-    cJSON				*x_basis;
-    cJSON				*y_basis;
-    cJSON				*z_basis;
-    cJSON				*rotation;
-    cJSON				*prolapse;
-    cJSON				*type;
-    cJSON				*normal;
+	cJSON				*position;
+	cJSON				*color;
+	cJSON				*emition;
+	cJSON				*reflection;
+	cJSON				*texture;
+	cJSON				*radius;
+	cJSON				*v;
+	cJSON				*x;
+	cJSON				*y;
+	cJSON				*z;
+	cJSON				*a;
+	cJSON				*b;
+	cJSON				*c;
+	cJSON				*shift;
+	cJSON				*x_basis;
+	cJSON				*y_basis;
+	cJSON				*z_basis;
+	cJSON				*rotation;
+	cJSON				*prolapse;
+	cJSON				*type;
+	cJSON				*normal;
 	cJSON				*composed_pos;
 	cJSON				*composed_v;
-}             			t_json;
+}						t_json;
 
 int						bind_data(t_gpu *gpu, t_game *game);
 void					release_gpu(t_gpu *gpu);
@@ -286,5 +287,6 @@ void					obj_same(t_gui *gui, t_obj *obj);
 void					visibility_name(KW_Widget *widget, t_obj *obj);
 KW_Widget				*f_eb(t_gui *gui, double db, KW_Rect *rect);
 void					color_emission(t_gui *gui, t_obj *obj);
+float					vec_len(cl_float3 vec);
 
 #endif
