@@ -65,6 +65,10 @@ typedef struct 			s_cam
 	float				fov;
 	float3				border_x;
 	float3				border_y;
+	int					cartoon;
+	int					sepia;
+	float				motion_blur;
+	float				ambience;
 }						t_cam;
 
 typedef struct			s_scene
@@ -81,6 +85,7 @@ typedef struct			s_scene
 	__global t_txture	*normals;
 	t_cam				camera;
 	int					lightsampling;
+	int					global_texture_id;
 }						t_scene;
 
 float 					cl_float3_max(float3 v);

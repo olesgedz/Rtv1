@@ -121,6 +121,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 	float2		img_coord;
 
 	float3 accum_color = 0.0f;
+	float3 ambiance = 0.0f;
 	float3 mask = 1.0f;
 	float3 explicit;
 	for (int bounces = 0; bounces < (scene->lightsampling ? 1 : BOUNCES); bounces++)
@@ -165,7 +166,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 		}
 		else
 		{
-			accum_color += mask * objecthit.emission * pdf;
+			accum_color += mask * objecthit.emission * pdf + mask * (ambiance);
 			if (scene->lightsampling)
 			{
 				explicit = radiance_explicit(scene, intersection);
@@ -182,7 +183,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 
 
 static void scene_new(__global t_obj* objects, int n_objects,\
- int samples, __global ulong * random, __global t_txture *textures, t_cam camera, t_scene *scene, __global t_txture *normals, int lightsampling)
+ int samples, __global ulong * random, __global t_txture *textures, t_cam camera, t_scene *scene, __global t_txture *normals, int lightsampling, int global_texture_id)
 {
 	scene->objects = objects;
 	scene->n_objects = n_objects;
@@ -196,17 +197,18 @@ static void scene_new(__global t_obj* objects, int n_objects,\
 	scene->normals = normals;
 	scene->camera = camera;
 	scene->lightsampling = !lightsampling;
+	scene->global_texture_id = global_texture_id;
 }
 
 __kernel void render_kernel(__global int *output, __global t_obj *objects,
 __global float3 *vect_temp,  __global ulong * random,  __global t_txture *textures,\
- __global t_txture *normals, int n_objects, int samples, t_cam camera, int lightsampling)
+ __global t_txture *normals, int n_objects, int samples, t_cam camera, int lightsampling, int global_texture_id)
 {
 
 	t_scene scene;
 	t_intersection  intersection;
 	float3 finalcolor;
-	scene_new(objects, n_objects, samples, random, textures, camera, &scene, normals, lightsampling);
+	scene_new(objects, n_objects, samples, random, textures, camera, &scene, normals, lightsampling, global_texture_id);
 	finalcolor = vect_temp[scene.x_coord + scene.y_coord * scene.width];
 	//output[scene.x_coord + scene.y_coord * width] = 0xFF0000;      /* uncomment to test if opencl runs */
 	for (int i = 0; i < SAMPLES; i++)

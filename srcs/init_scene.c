@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_scene.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:53:01 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/18 10:19:50 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/11/19 21:33:49 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void				opencl_init(t_game *game)
 	ERROR(game->cl_info->ret);
 	cl_krl_new_push(&game->cl_info->progs[0], "render_kernel");
 	ERROR(game->cl_info->ret);
-	cl_krl_init(&game->cl_info->progs[0].krls[0], 10);
+	cl_krl_init(&game->cl_info->progs[0].krls[0], 11);
 	cl_krl_create(game->cl_info, &game->cl_info->progs[0], &game->cl_info->progs[0].krls[0]);
 }
 
@@ -64,6 +64,9 @@ void				opencl(t_game *game, char *argv)
 	&game->gpu.camera[game->cam_num]);
 	cl_krl_init_arg(&game->cl_info->progs[0].krls[0], 9, sizeof(cl_int),\
 	&(game->keys.r));
+	cl_krl_init_arg(&game->cl_info->progs[0].krls[0], 10, sizeof(cl_int),\
+	&(game->global_tex_id));
+	
 	game->cl_info->ret = cl_krl_mem_create(game->cl_info, &game->cl_info->progs[0].krls[0], 0, CL_MEM_READ_WRITE);
 	ERROR(game->cl_info->ret);
 	game->cl_info->ret = cl_krl_mem_create(game->cl_info, &game->cl_info->progs[0].krls[0], 1, CL_MEM_READ_WRITE);

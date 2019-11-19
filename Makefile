@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+         #
+#    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/11/15 22:06:30 by jblack-b         ###   ########.fr        #
+#    Updated: 2019/11/18 19:34:25 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,6 +72,8 @@ RMRF = gui/src/gui_main.o\
 		gui/src/gui_bar.o\
 		gui/src/buttons.o\
 		gui/src/add_obj.o\
+		gui/src/change_obj.o\
+		gui/src/smsht.o\
 		cJSON/cJSON.o
 
 SRCS_LIST = main.c \
@@ -96,6 +98,8 @@ SRCS_LIST = main.c \
 			../gui/src/main_screen.c\
 			../gui/src/ren_button.c\
 			../gui/src/obj_select.c\
+			../gui/src/change_obj.c\
+			../gui/src/smsht.c\
 			../cJSON/cJSON.c\
 			neue_schlanke_analyse.c\
 			analyse_dienstprogramme.c\

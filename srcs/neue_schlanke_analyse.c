@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/11/18 21:08:53 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/19 21:59:07 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void parse_facing(const cJSON *object, t_obj *obj, t_json *parse, t_game 
 	if (parse->emition != NULL)
 	{
 		obj->emission = parse_vec3(parse->emition);
-		if (isnan(obj->position.v4[0]))
+		if (isnan(obj->emission.v4[0]))
 		   terminate("missing data of obj emition vector!\n");
 	}
 	else
@@ -207,7 +207,7 @@ static void parse_rest(const cJSON *object, t_obj *obj, t_json *parse)
            terminate("missing data of cylinder prolapse vector!\n");
     }
     else
-    	obj->prolapse = create_cfloat2(1000.0, 1000.0);
+    	obj->prolapse = create_cfloat2(1.0, 1.0);
 }
 
  static cl_float3 triangle_norm(cl_float3 *vertices)
@@ -301,7 +301,7 @@ void check_object(const cJSON *object, t_game *game, cJSON *composed_pos, cJSON 
 	ft_object_push(game, obj);
 }
 
-void check_cam(const cJSON *cam, t_game *game)
+void check_cam(const cJSON *cam, t_game *game, t_filter *filter)
 {
 	t_json parse;
 	t_cam *camera;
@@ -324,11 +324,71 @@ void check_cam(const cJSON *cam, t_game *game)
 	}
 	else
 		camera->normal = create_cfloat3(0.0, 1.0, 0.0);
-	camera->fov = M_PI / 3;
+	parse.fov = cJSON_GetObjectItemCaseSensitive(cam, "fov");
+	if (parse.fov != NULL)
+		camera->fov = parse.fov->valuedouble * M_PI / 180;
+	else
+		camera->fov = M_PI / 3;
+	camera->ambience = filter->ambiance;
+	camera->cartoon = filter->cartoon;
+	camera->sepia = filter->sepia;
+	camera->motion_blur = filter->motion_blur;
 	reconfigure_camera(camera);
 	ft_cam_push(game, camera);
 }
 
+
+void check_scene(const cJSON *json, t_game *game)
+{
+	t_json	parse;
+	t_filter filter; 
+
+	const cJSON *scene = NULL;
+	scene = cJSON_GetObjectItemCaseSensitive(json, "scene");
+	
+	parse.global_texture = cJSON_GetObjectItemCaseSensitive(scene, "global texture");
+	
+	if (parse.global_texture != NULL)
+	{
+		game->global_tex_id = compare_in_texture_dict(game, parse.global_texture->valuestring);
+		if (game->global_tex_id == game->textures_num + 1)
+		{	
+			game->global_tex_id--;
+			ft_texture_push(game, &(game->texture_list), parse.global_texture->valuestring);
+		}
+	}
+	else
+		game->global_tex_id = compare_in_texture_dict(game, "sun.jpg") - 1;
+	
+	parse.ambience = cJSON_GetObjectItemCaseSensitive(json, "ambiance");
+	if (parse.ambience != NULL)
+		filter.ambiance = parse.ambience->valuedouble;
+	else
+		filter.ambiance = 0.1;
+	if (parse.cartoon != NULL)
+		filter.cartoon = (int)parse.cartoon->valuedouble;
+	else
+		filter.cartoon = 0;
+	parse.sepia = cJSON_GetObjectItemCaseSensitive(json, "sepia");
+	if (parse.sepia!= NULL)
+		filter.sepia = (int)parse.sepia->valuedouble;
+	else
+		filter.sepia = 0;
+
+	parse.motion_blur = cJSON_GetObjectItemCaseSensitive(json, "motion blur");
+	if (parse.motion_blur != NULL)
+		filter.motion_blur = parse.motion_blur->valuedouble;
+	else
+		filter.motion_blur = 0.0;
+	
+	const cJSON *camera = NULL;
+	const cJSON *cameras = NULL;
+	cameras = cJSON_GetObjectItemCaseSensitive(json, "cameras");
+	cJSON_ArrayForEach(camera, cameras)
+	{
+		check_cam(camera, game, &filter);
+	}
+}
 
 
 void read_scene(char *argv, t_game *game)
@@ -343,6 +403,9 @@ void read_scene(char *argv, t_game *game)
 		terminate("fuck you and your file!\n");
 	fread(buffer, 8096, 1, fp);
 	cJSON *json = cJSON_Parse(buffer);
+	
+	check_scene(json, game);
+
 	const cJSON *object = NULL;
 	const cJSON *objects = NULL;
 	int id = 0;
@@ -372,12 +435,5 @@ void read_scene(char *argv, t_game *game)
 		k++;
 	}
 	printf("\n");
-	const cJSON *camera = NULL;
-	const cJSON *cameras = NULL;
-	cameras = cJSON_GetObjectItemCaseSensitive(json, "cameras");
-	cJSON_ArrayForEach(camera, cameras)
-	{
-		check_cam(camera, game);
-	}
 	cJSON_Delete(json);
 }
