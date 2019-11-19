@@ -15,13 +15,12 @@ NAME = rt
 
 FLAGS = -g #-Wall -Wextra -Werror
 CC = clang
-LIBRARIES = $(GUI_LIB)  -lsdl -L$(LIBSDL_DIRECTORY)  -lm -lvect -L$(LIBVECT) -lcl -L$(LIBCL) -lgnl -L$(LIBGNL) -lft -L$(LIBFT_DIRECTORY)
+LIBRARIES =  $(GUI_LIB) -lSDL2_image  -lSDL2_mixer  -lsdl -L$(LIBSDL_DIRECTORY)   -lcl -L$(LIBCL) -lgnl -L$(LIBGNL) -lvect -L$(LIBVECT) -lft -L$(LIBFT_DIRECTORY) -lm -lpthread
 INCLUDES = $(GUI_INC) -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)includes/ -Isrcs/cl_error/ -I$(LIBGNL)includes/ -I$(LIBCL)includes/
 
-GUI_LIB = -L./gui/build/src -lKiWi #$(shell pkg-config --libs sdl2_ttf) $(shell pkg-config --libs sdl2_image) $(shell pkg-config --libs sdl2_mixer)
+#$(shell pkg-config --libs sdl2_ttf) $(shell pkg-config --libs sdl2_image) $(shell pkg-config --libs sdl2_mixer)
 GUI_INC = -I./include/SDL2 -I./gui/KiWi/src -I./gui/inc #$(shell pkg-config --cflags sdl2_ttf) $(shell pkg-config --cflags sdl2_image) $(shell pkg-config --cflags sdl2_mixer)
 DIR_KiWi = ./gui/build/src/
-LIB_KiWi = $(DIR_KiWi)/libKiWi.dylib
 
 LIBFT = $(LIBFT_DIRECTORY)libft.a
 LIBFT_HEADERS = $(LIBFT_DIRECTORY)includes/
@@ -139,14 +138,18 @@ else
 endif
 
 ifeq ($(detected_OS),Linux)
-	LIBRARIES += -lOpenCL
-	GUI_LIB += $(shell pkg-config --libs SDL2_ttf) $(shell pkg-config --libs SDL2_image) $(shell pkg-config --libs SDL2_mixer)
+	LIBRARIES += -rpath ./gui/build/src/ -L./gui/build/src/ -lKiWi   -lOpenCL -lrt 
+	GUI_LIB +=    $(shell pkg-config --libs SDL2_image) $(shell pkg-config --libs SDL2_ttf) $(shell pkg-config --libs SDL2_mixer)
 	 GUI_INC += $(shell pkg-config --cflags SDL2_ttf) $(shell pkg-config --cflags SDL2_image) $(shell pkg-config --cflags SDL2_mixer)
+	LIB_KiWi = $(DIR_KiWi)/libKiWi.so
 endif
 ifeq ($(detected_OS),Darwin)        # Mac OS X
 	LIBRARIES += -framework OpenCL
 	GUI_LIB += $(shell pkg-config --libs sdl2_ttf) $(shell pkg-config --libs sdl2_image) $(shell pkg-config --libs sdl2_mixer)
   GUI_INC += $(shell pkg-config --cflags sdl2_ttf) $(shell pkg-config --cflags sdl2_image) $(shell pkg-config --cflags sdl2_mixer)
+	LIB_KiWi = $(DIR_KiWi)/libKiWi.dylib
+	GUI_LIB += -L./gui/build/src -lKiWi 
+
 endif
 
 
