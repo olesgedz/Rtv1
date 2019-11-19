@@ -75,8 +75,9 @@ static float3		sample_uniform
 
 	metalness = 1.f - metalness;
 	// metalness = cos(PI * 0.5 * metalness);
-	r.x = (rng(scene->random) * 2.f - 1.f) * metalness;
-	r.y = ((rng(scene->random) * 2.f - 1.f) * metalness) * sqrt(1.f - r.x * r.x);
+	r.x = (rng(scene->random) * 2.f - 1.f);
+	r.y = ((rng(scene->random) * 2.f - 1.f)) * sqrt(1.f - r.x * r.x);
+	r *= metalness;
 	r.z = sqrt(fabs(1.f - r.y * r.y - r.x * r.x));
 	ret = sampler_transform(normal, &r);
 	*cosine = dot(*normal, ret);
