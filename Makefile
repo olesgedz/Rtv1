@@ -6,7 +6,7 @@
 #    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/11/19 22:10:43 by lminta           ###   ########.fr        #
+#    Updated: 2019/11/20 21:55:25 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,6 +74,7 @@ RMRF = gui/src/gui_main.o\
 		gui/src/change_obj.o\
 		gui/src/smsht.o\
 		gui/src/editboxes.o\
+		gui/src/editboxes2.o\
 		cJSON/cJSON.o
 
 SRCS_LIST = main.c \
@@ -101,6 +102,7 @@ SRCS_LIST = main.c \
 			../gui/src/change_obj.c\
 			../gui/src/smsht.c\
 			../gui/src/editboxes.c\
+			../gui/src/editboxes2.c\
 			../cJSON/cJSON.c\
 			neue_schlanke_analyse.c\
 			analyse_dienstprogramme.c\
@@ -138,7 +140,7 @@ else
 endif
 
 ifeq ($(detected_OS),Linux)
-	LIBRARIES += -rpath ./gui/build/src/ -L./gui/build/src/ -lKiWi   -lOpenCL -lrt 
+	LIBRARIES += -rpath ./gui/build/src/ -L./gui/build/src/ -lKiWi   -lOpenCL -lrt
 	GUI_LIB +=    $(shell pkg-config --libs SDL2_image) $(shell pkg-config --libs SDL2_ttf) $(shell pkg-config --libs SDL2_mixer)
 	 GUI_INC += $(shell pkg-config --cflags SDL2_ttf) $(shell pkg-config --cflags SDL2_image) $(shell pkg-config --cflags SDL2_mixer)
 	LIB_KiWi = $(DIR_KiWi)/libKiWi.so
@@ -148,7 +150,7 @@ ifeq ($(detected_OS),Darwin)        # Mac OS X
 	GUI_LIB += $(shell pkg-config --libs sdl2_ttf) $(shell pkg-config --libs sdl2_image) $(shell pkg-config --libs sdl2_mixer)
   GUI_INC += $(shell pkg-config --cflags sdl2_ttf) $(shell pkg-config --cflags sdl2_image) $(shell pkg-config --cflags sdl2_mixer)
 	LIB_KiWi = $(DIR_KiWi)/libKiWi.dylib
-	GUI_LIB += -L./gui/build/src -lKiWi 
+	GUI_LIB += -L./gui/build/src -lKiWi
 
 endif
 

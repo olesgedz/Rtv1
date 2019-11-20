@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   neue_schlanke_analyse.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/11/19 22:13:10 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/20 20:53:55 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void parse_facing(const cJSON *object, t_obj *obj, t_json *parse, t_game 
 	}
 	else
 		obj->texture = 0;
-	
+
 	parse->normal = cJSON_GetObjectItemCaseSensitive(object, "normal");
 	if (parse->normal != NULL)
 	{
@@ -204,10 +204,10 @@ static void parse_rest(const cJSON *object, t_obj *obj, t_json *parse)
 	{
 		obj->prolapse = parse_vec2(parse->prolapse);
 		if (isnan(obj->prolapse.s[0]))
-           terminate("missing data of cylinder prolapse vector!\n");
-    }
-    else
-    	obj->prolapse = create_cfloat2(1.0, 1.0);
+		   terminate("missing data of cylinder prolapse vector!\n");
+	}
+	else
+		obj->prolapse = create_cfloat2(1.0, 1.0);
 }
 
  static cl_float3 triangle_norm(cl_float3 *vertices)
@@ -239,12 +239,12 @@ static void parse_triangle_vert(const cJSON *object, t_obj *obj, t_json *parse)
 
 static void parse_composed(const cJSON *composed, t_game *game, t_json *parse, int id)
 {
-    const cJSON *object = NULL;
-    const cJSON *objects = NULL;
+	const cJSON *object = NULL;
+	const cJSON *objects = NULL;
 	parse->composed_pos = cJSON_GetObjectItemCaseSensitive(composed, "position");
 	parse->composed_v = cJSON_GetObjectItemCaseSensitive(composed, "dir");
 
-    objects = cJSON_GetObjectItemCaseSensitive(composed, "objects");
+	objects = cJSON_GetObjectItemCaseSensitive(composed, "objects");
 	cJSON_ArrayForEach(object, objects)
 	{
 		check_object(object, game, parse->composed_pos, parse->composed_v, id);
@@ -257,7 +257,7 @@ void check_object(const cJSON *object, t_game *game, cJSON *composed_pos, cJSON 
 	t_json parse;
 	cl_float3 composed_pos_f;
 	cl_float3 composed_v_f;
-	
+
 	obj = (t_obj*)malloc(sizeof(t_obj));
 	if (composed_pos != NULL)
 	{
@@ -320,7 +320,7 @@ void check_cam(const cJSON *cam, t_game *game, t_filter *filter)
 	{
 		camera->normal = parse_vec3(parse.normal);
 		if (isnan(camera->normal.v4[0]))
-		   terminate("missing data of cam normal vector!\n");
+			terminate("missing data of cam normal vector!\n");
 	}
 	else
 		camera->normal = create_cfloat3(0.0, 1.0, 0.0);
@@ -341,25 +341,25 @@ void check_cam(const cJSON *cam, t_game *game, t_filter *filter)
 void check_scene(const cJSON *json, t_game *game)
 {
 	t_json	parse;
-	t_filter filter; 
+	t_filter filter;
 
 	const cJSON *scene = NULL;
 	scene = cJSON_GetObjectItemCaseSensitive(json, "scene");
-	
+
 	parse.global_texture = cJSON_GetObjectItemCaseSensitive(scene, "global texture");
-	
+
 	if (parse.global_texture != NULL)
 	{
 		game->global_tex_id = compare_in_texture_dict(game, parse.global_texture->valuestring);
 		if (game->global_tex_id == game->textures_num + 1)
-		{	
+		{
 			game->global_tex_id--;
 			ft_texture_push(game, &(game->texture_list), parse.global_texture->valuestring);
 		}
 	}
 	else
 		game->global_tex_id = compare_in_texture_dict(game, "sun.jpg") - 1;
-	
+
 	parse.ambience = cJSON_GetObjectItemCaseSensitive(json, "ambiance");
 	if (parse.ambience != NULL)
 		filter.ambiance = parse.ambience->valuedouble;
@@ -380,7 +380,7 @@ void check_scene(const cJSON *json, t_game *game)
 		filter.motion_blur = parse.motion_blur->valuedouble;
 	else
 		filter.motion_blur = 0.0;
-	
+
 	const cJSON *camera = NULL;
 	const cJSON *cameras = NULL;
 	cameras = cJSON_GetObjectItemCaseSensitive(json, "cameras");
@@ -403,7 +403,7 @@ void read_scene(char *argv, t_game *game)
 		terminate("fuck you and your file!\n");
 	fread(buffer, 8096, 1, fp);
 	cJSON *json = cJSON_Parse(buffer);
-	
+
 	check_scene(json, game);
 
 	const cJSON *object = NULL;

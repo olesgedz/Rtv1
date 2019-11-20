@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/19 20:24:00 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/20 21:51:25 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct		s_edit_win
 	KW_Rect			editboxrect;
 	KW_Rect			frect;
 	KW_Rect			buttonrect;
-	KW_Widget		*edit_box;
+	KW_Widget		*ed_b;
 	KW_Widget		*frame;
 	KW_Widget		*label;
 	KW_Widget		*okbutton;
@@ -122,47 +122,12 @@ typedef struct		s_change_obj
 	KW_Rect			labelrect;
 	KW_Rect			editboxrect[3];
 	KW_Widget		*frame;
-	KW_Widget		*edit_box[23];
+	KW_Widget		*ed_b[23];
 	KW_Rect			*rects[4];
 	unsigned		weights[4];
 	KW_Widget		*buttons[2];
 	char			*names[30];
 	int				show;
 }					t_change_obj;
-typedef struct		s_gui
-{
-	t_sdl			sdl;
-	SDL_Event		ev;
-	int				quit;
-	KW_RenderDriver	*driver;
-	KW_Surface		*set;
-	KW_GUI			*gui;
-	t_edit_win		ed_w;
-	t_scene_select	s_s;
-	t_object_select	o_s;
-	t_gui_bar		g_b;
-	t_in_eye		i_e;
-	t_obj_type		o_t;
-	t_change_obj	c_o;
-	char			*av;
-	int				flag;
-	int				main_screen;
-	int				over_gui;
-	float			fps;
-}					t_gui;
-
-void				print_error_gui(const char *message, const char
-*error_message);
-void				scene_select(t_gui *gui, int i, KW_Widget *const *wid_arr);
-void				start_screen(t_gui *gui);
-void				init_kiwi(t_gui *gui);
-void				quit_kiwi(t_gui *gui);
-t_gui				*g_gui(t_gui *gui, int flag);
-SDL_Texture			*load_picture(t_gui *gui, const char *filename);
-void				quit_kiwi_main(t_gui *gui);
-void				main_screen_free(t_gui *gui);
-void				over(KW_Widget *widget, int b);
-void				leave(KW_Widget *widget, int b);
-void				visibility(KW_Widget *widget, int b);
 
 #endif
