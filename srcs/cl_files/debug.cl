@@ -20,21 +20,3 @@ void print_ray(t_scene *scene, t_ray* ray)
 // 		printf("\n\n Pi = %f\n\n", 4*float(inside_circle)/N);
 // 	}
 // }
-
-void print_debug(int samples, int width, t_scene * scene)
-{
-	unsigned int work_item_id = get_global_id(0);	
-	unsigned int x = work_item_id % width;
-	unsigned int y = work_item_id / width;
-	if (x == 70 && y == 70)
-	{
-		printf("samples %d\n", samples);
-	int seed0 = scene->x_coord;
-	int seed1 = scene->y_coord;
-	for(int i = 0; i < 10; i++)
-	{
-		//printf("%f\n", get_random(&seed0, &seed1));
-		printf("%f\n", rng_range(scene->random, -0.1f, 0.2f));
-	}
-}
-}
