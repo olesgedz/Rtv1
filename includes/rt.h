@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/20 21:54:30 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/21 14:17:56 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,7 +242,6 @@ typedef struct		s_gui
 	t_scene_select	s_s;
 	t_object_select	o_s;
 	t_gui_bar		g_b;
-	t_in_eye		i_e;
 	t_obj_type		o_t;
 	t_change_obj	c_o;
 	char			*av;
