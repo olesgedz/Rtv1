@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/21 19:51:59 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/21 20:51:24 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -371,5 +371,7 @@ void					parse_text_normal(t_gui *gui, t_obj *obj, int *i);
 void					parse_bas(t_gui *gui, t_obj *obj, int *i);
 void					parse_vert(t_gui *gui, t_obj *obj, int *i);
 void					parse_shift(t_gui *gui, t_obj *obj, int *i);
+void					norma_from_obj_select(t_gui *gui, KW_Widget *widget,
+KW_Widget *wid);
 
 #endif
