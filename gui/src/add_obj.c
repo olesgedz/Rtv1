@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 18:45:37 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/14 19:28:28 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/21 22:03:11 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,11 @@ static int	scan_mass(t_gui *gui)
 void		obj_type(t_game *game, t_gui *gui)
 {
 	int					i;
+	int					*mas;
 	unsigned			test;
 	KW_Widget *const	*wid_arr;
 
+	mas = (int *)malloc(sizeof(int) * 5);
 	gui->o_t.max_i = scan_mass(gui);
 	if ((i = -1) && gui->o_t.max_i > WIN_H / 45 - 3)
 	{
@@ -90,12 +92,11 @@ void		obj_type(t_game *game, t_gui *gui)
 		gui->o_t.frame = KW_CreateFrame(gui->gui, NULL, &gui->o_t.frect);
 	while (++i < gui->o_t.max_i)
 	{
-		if (gui->o_t.max_i > WIN_H / 45 - 3)
-			gui->o_t.buttonrect[i].x -= 15;
 		gui->o_t.buttons[i] = KW_CreateButtonAndLabel(gui->gui,
 gui->o_t.frame, gui->o_t.names[i], &gui->o_t.buttonrect[i]);
-		KW_AddWidgetMouseDownHandler(gui->o_t.buttons[i], 0);
-		KW_SetWidgetUserData(gui->o_t.buttons[i], (void *)game);
+		KW_AddWidgetMouseDownHandler(gui->o_t.buttons[i], click_create);
+		*mas = i;
+		KW_SetWidgetUserData(gui->o_t.buttons[i], mas++);
 	}
 }
 

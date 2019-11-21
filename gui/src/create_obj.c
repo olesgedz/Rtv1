@@ -6,19 +6,33 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:37:51 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/21 21:04:11 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/21 21:52:14 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void	click_create(KW_Widget *widget, int b)
+void create_cone(t_game *game)
 {
-	t_gui		*gui;
+	printf("create cone\n");
+}
 
-	gui = g_gui(0, 0);
-	if (gui->game->ev.button.button != SDL_BUTTON_LEFT)
-		return ;
-	b = 0;
-	
+void create_sphere(t_game *game)
+{
+
+}
+
+void create_plane(t_game *game)
+{
+
+}
+
+void create_cylinder(t_game *game)
+{
+
+}
+
+void create_triangle(t_game *game)
+{
+
 }

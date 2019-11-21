@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 19:10:18 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/21 20:45:45 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/21 22:03:47 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,28 @@ void	visibility(KW_Widget *widget, int b)
 	obj->is_visible = !obj->is_visible;
 	visibility_name(widget, obj);
 	gui->flag = 1;
+}
+
+void	click_create(KW_Widget *widget, int b)
+{
+	t_gui		*gui;
+	int			num;
+
+	gui = g_gui(0, 0);
+	if (gui->game->ev.button.button != SDL_BUTTON_LEFT)
+		return ;
+	b = 0;
+	num = *((int *)KW_GetWidgetUserData(widget));
+	if (num == SPHERE)
+		create_sphere(gui->game);
+	else if (num == CONE)
+		create_cone(gui->game);
+	else if (num == TRIANGLE)
+		create_triangle(gui->game);
+	else if (num == CYLINDER)
+		create_cylinder(gui->game);
+	else if (num == PLANE)
+		create_plane(gui->game);
 }
 
 void	save_click(KW_Widget *widget, int b)

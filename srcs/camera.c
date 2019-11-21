@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:50:13 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/21 19:32:00 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/21 22:04:40 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,10 @@ void		pos_check(t_game *game, t_gui *gui)
 	if (game->keys.show_gui && gui->c_o.show)
 		if (x > gui->c_o.frect.x && x < gui->c_o.frect.x + gui->c_o.frect.w)
 			if (y > gui->c_o.frect.y && y < gui->c_o.frect.y + gui->c_o.frect.h)
+				gui->over_gui = 1;
+	if (game->keys.show_gui && gui->o_t.show)
+		if (x > gui->o_t.frect.x && x < gui->o_t.frect.x + gui->o_t.frect.w)
+			if (y > gui->o_t.frect.y && y < gui->o_t.frect.y + gui->o_t.frect.h)
 				gui->over_gui = 1;
 	if (game->keys.show_gui && gui->over_gui)
 		SDL_SetCursor(SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW));

@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/21 20:51:24 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/21 21:49:30 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -344,8 +344,6 @@ t_gui					*g_gui(t_gui *gui, int flag);
 SDL_Texture				*load_picture(t_gui *gui, const char *filename);
 void					quit_kiwi_main(t_gui *gui);
 void					main_screen_free(t_gui *gui);
-void					over(KW_Widget *widget, int b);
-void					leave(KW_Widget *widget, int b);
 void					visibility(KW_Widget *widget, int b);
 void					radius(t_gui *gui, t_obj *obj, int *i);
 void					direction(t_gui *gui, t_obj *obj, int *i);
@@ -373,5 +371,11 @@ void					parse_vert(t_gui *gui, t_obj *obj, int *i);
 void					parse_shift(t_gui *gui, t_obj *obj, int *i);
 void					norma_from_obj_select(t_gui *gui, KW_Widget *widget,
 KW_Widget *wid);
+void					click_create(KW_Widget *widget, int b);
+void					create_triangle(t_game *game);
+void					create_cylinder(t_game *game);
+void					create_plane(t_game *game);
+void					create_sphere(t_game *game);
+void					create_cone(t_game *game);
 
 #endif
