@@ -56,6 +56,7 @@ typedef struct			s_object
 	float2				prolapse;
 	int					id;
 	float				transparency;
+	float				refraction;
 }						t_obj;
 
 typedef struct 			s_cam

@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/21 19:15:21 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/21 19:26:57 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct			s_object
 	cl_float2			prolapse;
 	cl_int				id;
 	cl_float			transparency;
+	cl_float			refraction;
 }						t_obj;
 
 typedef struct			s_cam
@@ -230,6 +231,7 @@ typedef struct			s_json
 	cJSON				*ambience;
 	cJSON				*global_texture;
 	cJSON				*transparency;
+	cJSON				*refraction;
 }             			t_json;
 
 
