@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   neue_schlanke_analyse.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/11/20 20:53:55 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/21 19:24:08 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,10 +204,21 @@ static void parse_rest(const cJSON *object, t_obj *obj, t_json *parse)
 	{
 		obj->prolapse = parse_vec2(parse->prolapse);
 		if (isnan(obj->prolapse.s[0]))
-		   terminate("missing data of cylinder prolapse vector!\n");
-	}
+           terminate("missing data of cylinder prolapse vector!\n");
+    }
+    else
+    	obj->prolapse = create_cfloat2(1.0, 1.0);
+	
+	parse->transparency = cJSON_GetObjectItemCaseSensitive(object, "transparency");
+	if (parse->transparency != NULL)
+		obj->transparency = parse->transparency->valuedouble;
 	else
-		obj->prolapse = create_cfloat2(1.0, 1.0);
+		obj->transparency = 0.0;
+	parse->refraction = cJSON_GetObjectItemCaseSensitive(object, "refraction");
+	if (parse->refraction != NULL)
+		obj->refraction = parse->refraction->valuedouble;
+	else
+		obj->refraction = 0.0;
 }
 
  static cl_float3 triangle_norm(cl_float3 *vertices)

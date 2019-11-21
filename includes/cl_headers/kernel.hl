@@ -55,6 +55,8 @@ typedef struct			s_object
 	float3				basis[3];
 	float2				prolapse;
 	int					id;
+	float				transparency;
+	float				refraction;
 }						t_obj;
 
 typedef struct 			s_cam
