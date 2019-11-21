@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 19:10:18 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/18 21:21:39 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/21 18:09:17 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,27 @@ void	visibility(KW_Widget *widget, int b)
 	obj = KW_GetWidgetUserData(widget);
 	obj->is_visible = !obj->is_visible;
 	visibility_name(widget, obj);
+	gui->flag = 1;
+}
+
+void	save_click(KW_Widget *widget, int b)
+{
+	t_gui		*gui;
+	t_obj		*obj;
+
+	b = 0;
+	gui = g_gui(0, 0);
+	obj = KW_GetWidgetUserData(widget);
+	if (obj->type == PLANE)
+		plane_parse(gui, obj);
+	else if (obj->type == CONE)
+		cone_parse(gui, obj);
+	else if (obj->type == CYLINDER)
+		cylin_parse(gui, obj);
+	else if (obj->type == SPHERE)
+		sphere_parse(gui, obj);
+	else if (obj->type == TRIANGLE)
+		trian_parse(gui, obj);
 	gui->flag = 1;
 }
 

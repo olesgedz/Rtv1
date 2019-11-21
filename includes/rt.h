@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/21 19:26:57 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/21 19:51:59 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -348,5 +348,28 @@ void					over(KW_Widget *widget, int b);
 void					leave(KW_Widget *widget, int b);
 void					visibility(KW_Widget *widget, int b);
 void					radius(t_gui *gui, t_obj *obj, int *i);
+void					direction(t_gui *gui, t_obj *obj, int *i);
+void					vert(t_gui *gui, t_obj *obj, int *i);
+void					basis(t_gui *gui, t_obj *obj, int *i);
+void					shift(t_gui *gui, t_obj *obj, int *i);
+void					text_normal(t_gui *gui, t_obj *obj, int *i);
+void					position(t_gui *gui, t_obj *obj, int *i);
+void					prolapse(t_gui *gui, t_obj *obj, int *i);
+void					savebutton(t_gui *gui, t_obj *obj);
+void					save_click(KW_Widget *widget, int b);
+void					trian_parse(t_gui *gui, t_obj *obj);
+void					sphere_parse(t_gui *gui, t_obj *obj);
+void					cylin_parse(t_gui *gui, t_obj *obj);
+void					cone_parse(t_gui *gui, t_obj *obj);
+void					plane_parse(t_gui *gui, t_obj *obj);
+void					parse_prolapse(t_gui *gui, t_obj *obj, int *i);
+void					parse_position(t_gui *gui, t_obj *obj, int *i);
+void					parse_direction(t_gui *gui, t_obj *obj, int *i);
+void					parse_radius(t_gui *gui, t_obj *obj, int *i);
+void					parse_color_emission(t_gui *gui, t_obj *obj, int *i);
+void					parse_text_normal(t_gui *gui, t_obj *obj, int *i);
+void					parse_bas(t_gui *gui, t_obj *obj, int *i);
+void					parse_vert(t_gui *gui, t_obj *obj, int *i);
+void					parse_shift(t_gui *gui, t_obj *obj, int *i);
 
 #endif
