@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/11/19 22:13:10 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/21 18:51:30 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,12 @@ static void parse_rest(const cJSON *object, t_obj *obj, t_json *parse)
     }
     else
     	obj->prolapse = create_cfloat2(1.0, 1.0);
+	
+	parse->transparency = cJSON_GetObjectItemCaseSensitive(object, "transparency");
+	if (parse->transparency != NULL)
+		obj->transparency = parse->transparency->valuedouble;
+	else
+		obj->transparency = 0.0;
 }
 
  static cl_float3 triangle_norm(cl_float3 *vertices)

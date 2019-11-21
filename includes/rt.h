@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/19 22:53:54 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/21 18:45:40 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct			s_object
 	cl_float3			basis[3];
 	cl_float2			prolapse;
 	cl_int				id;
+	cl_float			transparency;
 }						t_obj;
 
 typedef struct			s_cam
@@ -227,6 +228,7 @@ typedef struct			s_json
 	cJSON				*motion_blur;
 	cJSON				*ambience;
 	cJSON				*global_texture;
+	cJSON				*transparency;
 }             			t_json;
 
 int						bind_data(t_gpu *gpu, t_game *game);
