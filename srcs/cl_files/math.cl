@@ -15,7 +15,7 @@ static int	c_floor(float x)
 
 static int toInt(float x)
 {
-	return int(c_floor(x * 255.f));
+	return (int)(c_floor(x * 255.f));
 }
 
 float cl_float3_max(float3 v)
@@ -32,8 +32,8 @@ float3		cl_int_to_float3(int i)
 {
 	float3		flt;
 
-	flt[2] = ((float)((i >> 16) & 255)) / 255;
-	flt[1] = ((float)((i >> 8) & 255)) / 255;
-	flt[0] = ((float)((i) & 255)) / 255;
+	flt.z = ((float)((i >> 16) & 255)) / 255;
+	flt.y = ((float)((i >> 8) & 255)) / 255;
+	flt.x = ((float)((i) & 255)) / 255;
 	return (flt);
 }

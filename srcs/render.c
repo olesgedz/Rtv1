@@ -35,6 +35,7 @@ static void		ft_run_kernel(t_game *game, t_cl_krl * kernel, int w, int h)
 	game->cl_info->ret = cl_read(game->cl_info, kernel->args[0],
 	sizeof(cl_int) * WIN_W * WIN_H, game->sdl.surface->pixels);
 	ERROR(game->cl_info->ret );
+	
 }
 
 

@@ -6,13 +6,13 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 19:08:02 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/18 21:37:28 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/20 20:49:46 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static void	clicked(KW_Widget *widget, int b)
+void		obj_click(KW_Widget *widget, int b)
 {
 	static t_obj		*obj;
 	static KW_Widget	*wid = 0;
@@ -23,12 +23,12 @@ static void	clicked(KW_Widget *widget, int b)
 	if (gui->c_o.show == 1)
 	{
 		KW_DestroyWidget(gui->c_o.frame, 1);
-		if (wid)
+		if (wid && widget)
 			KW_SetLabelTextColor(KW_GetButtonLabel(wid),
 			(KW_Color){0, 0, 0, 255});
 		gui->c_o.show = 0;
 	}
-	if (obj != KW_GetWidgetUserData(widget))
+	if (widget && (obj != KW_GetWidgetUserData(widget)))
 	{
 		obj = KW_GetWidgetUserData(widget);
 		obj_if(gui, obj);
@@ -125,7 +125,7 @@ void		obj_select(t_gui *gui, t_obj *objs, int num)
 			gui->o_s.buttonrect[i].x -= 15;
 		gui->o_s.buttons[i] = KW_CreateButtonAndLabel(gui->gui,
 gui->o_s.frame, gui->o_s.names[i], &gui->o_s.buttonrect[i]);
-		KW_AddWidgetMouseDownHandler(gui->o_s.buttons[i], clicked);
+		KW_AddWidgetMouseDownHandler(gui->o_s.buttons[i], obj_click);
 		KW_SetWidgetUserData(gui->o_s.buttons[i], &objs[i]);
 	}
 }

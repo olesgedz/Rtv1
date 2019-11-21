@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 19:27:34 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/19 22:47:39 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/20 21:53:55 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void		visibility_name(KW_Widget *widget, t_obj *obj)
 		KW_SetLabelText(wid, "Object is invisible");
 }
 
-KW_Widget	*f_eb(t_gui *gui, double db, KW_Rect *rect)
+KW_Widget	*f_e(t_gui *gui, double db, KW_Rect *rect)
 {
 	KW_Widget	*result;
 	char		str[100];
@@ -48,7 +48,7 @@ KW_Widget	*f_eb(t_gui *gui, double db, KW_Rect *rect)
 	return (result);
 }
 
-static void	position(t_gui *gui, t_obj *obj)
+static void	position(t_gui *gui, t_obj *obj, int i)
 {
 	gui->c_o.labelrect = (KW_Rect){5, 5, 1, 30};
 	gui->c_o.editboxrect[0] = (KW_Rect){5, 5, 1, 30};
@@ -66,10 +66,11 @@ static void	position(t_gui *gui, t_obj *obj)
 	gui->c_o.editboxrect[2].y -= 225;
 	if (obj->type == TRIANGLE)
 		return ;
-	KW_CreateLabel(gui->gui, gui->c_o.frame, "Position", &gui->c_o.labelrect);
-	gui->c_o.edit_box[0] = f_eb(gui, obj->position.s[0], gui->c_o.rects[1]);
-	gui->c_o.edit_box[1] = f_eb(gui, obj->position.s[1], gui->c_o.rects[2]);
-	gui->c_o.edit_box[2] = f_eb(gui, obj->position.s[2], gui->c_o.rects[3]);
+	KW_CreateLabel(gui->gui, gui->c_o.frame, "Position", gui->c_o.rects[0]);
+	gui->c_o.ed_b[i++] = f_e(gui, obj->position.s[0], gui->c_o.rects[1]);
+	gui->c_o.ed_b[i++] = f_e(gui, obj->position.s[1], gui->c_o.rects[2]);
+	gui->c_o.ed_b[i++] = f_e(gui, obj->position.s[2], gui->c_o.rects[3]);
+	color_emission(gui, obj, &i);
 }
 
 void		obj_same(t_gui *gui, t_obj *obj)
@@ -95,6 +96,5 @@ void		obj_same(t_gui *gui, t_obj *obj)
 	gui->c_o.rects[1] = &gui->c_o.editboxrect[0];
 	gui->c_o.rects[2] = &gui->c_o.editboxrect[1];
 	gui->c_o.rects[3] = &gui->c_o.editboxrect[2];
-	position(gui, obj);
-	color_emission(gui, obj);
+	position(gui, obj, 0);
 }

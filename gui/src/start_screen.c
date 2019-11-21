@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 22:51:42 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/08 21:34:57 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/21 14:17:32 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	ok_clicked(KW_Widget *widget, int b)
 	b = 0;
 	widget = 0;
 	gui = g_gui(0, 0);
-	gui->av = ft_strdup((char *)KW_GetEditboxText(gui->ed_w.edit_box));
+	gui->av = ft_strdup((char *)KW_GetEditboxText(gui->ed_w.ed_b));
 	gui->quit = KW_TRUE;
 }
 
@@ -60,7 +60,7 @@ void		start_screen(t_gui *gui)
 	"Enter the path to the scene", &gui->ed_w.titlerect);
 	KW_CreateLabel(gui->gui, gui->ed_w.frame,
 	"Path", &gui->ed_w.labelrect);
-	gui->ed_w.edit_box = KW_CreateEditbox(gui->gui,
+	gui->ed_w.ed_b = KW_CreateEditbox(gui->gui,
 	gui->ed_w.frame, "Edit me!", &gui->ed_w.editboxrect);
 	gui->ed_w.buttonrect = (KW_Rect){250, 170, 40, 40};
 	gui->ed_w.okbutton = KW_CreateButtonAndLabel(gui->gui,
@@ -76,10 +76,7 @@ void		start_screen(t_gui *gui)
 
 char		*start_gui(t_game *game, t_gui *gui)
 {
-	if (ft_strcmp(USER, getlogin()))
-		opencl(game, "gui/res/start.json");
-	else
-		opencl(game, "gui/res/start2.json");
+	opencl(game, "gui/res/start.json");
 	start_screen(gui);
 	scene_select(gui, -1, 0);
 	play_stop_music("gui/res/main_menu.wav");

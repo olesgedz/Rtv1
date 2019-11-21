@@ -58,9 +58,9 @@ static float		intersect_plane(__global t_obj *plane, const t_ray *ray)
 static float		intersect_cylinder(__global t_obj *cylinder, const t_ray *  ray)
 {
 	float3	x = ray->origin - cylinder->position;
-	double	a = dot(ray->dir, cylinder->v);
-	double	c = dot(x, cylinder->v);
-	double	b = 2 * (dot(ray->dir, x) - a * dot(x, cylinder->v));
+	float	a = dot(ray->dir, cylinder->v);
+	float	c = dot(x, cylinder->v);
+	float	b = 2 * (dot(ray->dir, x) - a * dot(x, cylinder->v));
 
 	a = dot(ray->dir, ray->dir) - a * a;
 	c = dot(x, x) - c * c - cylinder->radius * cylinder->radius;

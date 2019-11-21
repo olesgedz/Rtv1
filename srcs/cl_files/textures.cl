@@ -24,8 +24,8 @@ float3					global_texture(t_ray *ray, t_scene *scene)
 	int					i;
 
 	vect = ray->dir;
-	u = 0.5 + (atan2(vect[2], vect[0])) / (2 * PI);
-	v = 0.5 - (asin(vect[1])) / PI;
+	u = 0.5 + (atan2(vect.z, vect.x)) / (2 * PI);
+	v = 0.5 - (asin(vect.y)) / PI;
 	texture = &((scene->textures)[scene->global_texture_id]);
 	i = ((int)(v * (float)(texture->height - 1))) * (texture->width) + (int)(u * (float)(texture->width - 1));
 	return(cl_int_to_float3(texture->texture[i]));

@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 17:38:36 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/07 21:46:40 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/20 20:42:10 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,15 @@ void		show_hide(t_game *game, t_gui *gui)
 			KW_ShowWidget(gui->s_s.frame);
 		if (gui->o_s.show)
 			KW_ShowWidget(gui->o_s.frame);
+		if (gui->c_o.show)
+			KW_ShowWidget(gui->c_o.frame);
 	}
 	else
 	{
 		KW_HideWidget(gui->g_b.frame);
 		KW_HideWidget(gui->s_s.frame);
 		KW_HideWidget(gui->o_s.frame);
+		KW_HideWidget(gui->c_o.frame);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/21 18:45:40 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/21 19:15:21 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ typedef struct	s_filter
 	int		cartoon;
 	int		sepia;
 	float	motion_blur;
-		
+
 }				t_filter;
 
 typedef struct			s_json
@@ -204,6 +204,7 @@ typedef struct			s_json
     cJSON				*color;
     cJSON				*emition;
     cJSON				*reflection;
+    cJSON				*translucency;
     cJSON				*texture;
     cJSON				*radius;
     cJSON				*v;
@@ -230,6 +231,29 @@ typedef struct			s_json
 	cJSON				*global_texture;
 	cJSON				*transparency;
 }             			t_json;
+
+
+typedef struct		s_gui
+{
+	t_game			*game;
+	t_sdl			sdl;
+	SDL_Event		ev;
+	int				quit;
+	KW_RenderDriver	*driver;
+	KW_Surface		*set;
+	KW_GUI			*gui;
+	t_edit_win		ed_w;
+	t_scene_select	s_s;
+	t_object_select	o_s;
+	t_gui_bar		g_b;
+	t_obj_type		o_t;
+	t_change_obj	c_o;
+	char			*av;
+	int				flag;
+	int				main_screen;
+	int				over_gui;
+	float			fps;
+}					t_gui;
 
 int						bind_data(t_gpu *gpu, t_game *game);
 void					release_gpu(t_gpu *gpu);
@@ -303,8 +327,24 @@ void 					obj_if(t_gui *gui, t_obj *obj);
 char					*fill_name_mass(t_obj *obj, int num);
 void					obj_same(t_gui *gui, t_obj *obj);
 void					visibility_name(KW_Widget *widget, t_obj *obj);
-KW_Widget				*f_eb(t_gui *gui, double db, KW_Rect *rect);
-void					color_emission(t_gui *gui, t_obj *obj);
+KW_Widget				*f_e(t_gui *gui, double db, KW_Rect *rect);
+void					color_emission(t_gui *gui, t_obj *obj, int *i);
 float					vec_len(cl_float3 vec);
+void					obj_click(KW_Widget *widget, int b);
+void					print_error_gui(const char *message, const char
+*error_message);
+void					scene_select(t_gui *gui, int i,
+KW_Widget *const *wid_arr);
+void					start_screen(t_gui *gui);
+void					init_kiwi(t_gui *gui);
+void					quit_kiwi(t_gui *gui);
+t_gui					*g_gui(t_gui *gui, int flag);
+SDL_Texture				*load_picture(t_gui *gui, const char *filename);
+void					quit_kiwi_main(t_gui *gui);
+void					main_screen_free(t_gui *gui);
+void					over(KW_Widget *widget, int b);
+void					leave(KW_Widget *widget, int b);
+void					visibility(KW_Widget *widget, int b);
+void					radius(t_gui *gui, t_obj *obj, int *i);
 
 #endif
