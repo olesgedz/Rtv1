@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/21 14:17:56 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/21 16:46:34 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,7 @@ typedef struct			s_json
     cJSON				*color;
     cJSON				*emition;
     cJSON				*reflection;
+    cJSON				*translucency;
     cJSON				*texture;
     cJSON				*radius;
     cJSON				*v;
