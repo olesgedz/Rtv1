@@ -6,7 +6,7 @@
 #    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/11/21 21:50:20 by lminta           ###   ########.fr        #
+#    Updated: 2019/11/20 21:55:25 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,10 +75,6 @@ RMRF = gui/src/gui_main.o\
 		gui/src/smsht.o\
 		gui/src/editboxes.o\
 		gui/src/editboxes2.o\
-		gui/src/parse_obj.o\
-		gui/src/parse_box.o\
-		gui/src/parse_box2.o\
-		gui/src/create_obj.o\
 		cJSON/cJSON.o
 
 SRCS_LIST = main.c \
@@ -107,10 +103,6 @@ SRCS_LIST = main.c \
 			../gui/src/smsht.c\
 			../gui/src/editboxes.c\
 			../gui/src/editboxes2.c\
-			../gui/src/parse_obj.c\
-			../gui/src/parse_box.c\
-			../gui/src/parse_box2.c\
-			../gui/src/create_obj.c\
 			../cJSON/cJSON.c\
 			neue_schlanke_analyse.c\
 			analyse_dienstprogramme.c\
