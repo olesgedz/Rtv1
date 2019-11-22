@@ -6,13 +6,13 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 20:04:17 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/21 18:46:13 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/22 21:02:17 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void			shift(t_gui *gui, t_obj *obj, int *i)
+void		shift(t_gui *gui, t_obj *obj, int *i)
 {
 	gui->c_o.labelrect.y += 30;
 	gui->c_o.editboxrect[0].y += 30;

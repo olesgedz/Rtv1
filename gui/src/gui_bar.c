@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 19:10:18 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/22 20:54:09 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/22 22:07:30 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,18 @@ void	save_click(KW_Widget *widget, int b)
 		sphere_parse(gui, obj);
 	else if (obj->type == TRIANGLE)
 		trian_parse(gui, obj);
+	gui->flag = 1;
+}
+
+void	del_click(KW_Widget *widget, int b)
+{
+	t_gui		*gui;
+	t_obj		*obj;
+
+	b = 0;
+	gui = g_gui(0, 0);
+	obj = KW_GetWidgetUserData(widget);
+	del_obj(obj, gui->game);
 	gui->flag = 1;
 }
 

@@ -6,13 +6,13 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 15:51:24 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/22 17:55:06 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/22 21:39:08 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static void	in_cl(t_game *game)
+void	in_cl(t_game *game)
 {
 	int ret = 0;
 
