@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/21 21:49:30 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/22 16:18:09 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -377,5 +377,9 @@ void					create_cylinder(t_game *game);
 void					create_plane(t_game *game);
 void					create_sphere(t_game *game);
 void					create_cone(t_game *game);
+void					check_gui_entrance(t_game *game, t_gui *gui,
+int x, int y);
+void					same_new(t_game *game, t_obj *obj, t_type type);
+void					obj_click(KW_Widget *widget, int b);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 19:10:18 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/21 22:03:47 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/22 16:20:10 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	click_create(KW_Widget *widget, int b)
 		create_cylinder(gui->game);
 	else if (num == PLANE)
 		create_plane(gui->game);
+	obj_click(gui->o_s.buttons[gui->game->obj_quantity - 1], 0);
 }
 
 void	save_click(KW_Widget *widget, int b)

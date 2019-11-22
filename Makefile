@@ -6,7 +6,7 @@
 #    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/11/21 21:50:20 by lminta           ###   ########.fr        #
+#    Updated: 2019/11/22 15:59:25 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,6 +79,7 @@ RMRF = gui/src/gui_main.o\
 		gui/src/parse_box.o\
 		gui/src/parse_box2.o\
 		gui/src/create_obj.o\
+		gui/src/push_new.o\
 		cJSON/cJSON.o
 
 SRCS_LIST = main.c \
@@ -91,6 +92,7 @@ SRCS_LIST = main.c \
 			const.c\
 			hilfefunktionen.c\
 			init_scene.c\
+			help_fun.c\
 			render.c\
 			mouse.c\
 			../gui/src/gui_main.c\
@@ -111,6 +113,7 @@ SRCS_LIST = main.c \
 			../gui/src/parse_box.c\
 			../gui/src/parse_box2.c\
 			../gui/src/create_obj.c\
+			../gui/src/push_new.c\
 			../cJSON/cJSON.c\
 			neue_schlanke_analyse.c\
 			analyse_dienstprogramme.c\
