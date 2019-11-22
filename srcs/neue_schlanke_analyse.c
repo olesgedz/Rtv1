@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   neue_schlanke_analyse.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/11/21 19:24:08 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/22 18:22:50 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,7 @@ static void parse_rest(const cJSON *object, t_obj *obj, t_json *parse)
     }
     else
     	obj->prolapse = create_cfloat2(1.0, 1.0);
-	
+
 	parse->transparency = cJSON_GetObjectItemCaseSensitive(object, "transparency");
 	if (parse->transparency != NULL)
 		obj->transparency = parse->transparency->valuedouble;
@@ -309,6 +309,7 @@ void check_object(const cJSON *object, t_game *game, cJSON *composed_pos, cJSON 
 	if (obj->type == TRIANGLE)
 		parse_triangle_vert(object, obj, &parse);
 	parse_rest(object, obj, &parse);
+	obj->is_visible = 1;
 	ft_object_push(game, obj);
 }
 

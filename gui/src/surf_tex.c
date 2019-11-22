@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 18:04:29 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/22 16:04:55 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/22 19:12:14 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,16 @@ SDL_Texture	*load_picture(t_gui *gui, const char *filename)
 
 void	norma_from_obj_select(t_gui *gui, KW_Widget *widget, KW_Widget *wid)
 {
-	KW_Widget *label;
-
-	KW_DestroyWidget(gui->c_o.frame, 1);
+	//KW_DestroyWidget(gui->c_o.frame, 1);
+	gui->c_o.dest = 1;
 	if (wid && widget)
-	{
-		label = KW_GetButtonLabel(wid);
-		if (label)
-			KW_SetLabelTextColor(label, (KW_Color){0, 0, 0, 255});
-	}
+		KW_SetLabelTextColor(KW_GetButtonLabel(wid), (KW_Color){0, 0, 0, 255});
 	gui->c_o.show = 0;
+}
+
+void destr(t_gui *gui)
+{
+	if (!gui->c_o.dest)
+		return ;
+	KW_DestroyWidget(gui->c_o.frame, 1);
 }

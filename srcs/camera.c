@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:50:13 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/22 14:19:17 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/22 16:53:47 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,10 @@ static void	mouse_mov(t_game *game, t_gui *gui)
 		game->cl_info->ret =
 		cl_write(game->cl_info, game->cl_info->progs[0].krls[0].args[2], sizeof(cl_float3) *
 		(unsigned)WIN_H * (unsigned)WIN_W, game->gpu.vec_temp);
+		ERROR(game->cl_info->ret);
 		game->cl_info->ret = cl_write(game->cl_info, game->cl_info->progs[0].krls[0].args[1],
 		sizeof(t_obj) * game->obj_quantity, game->gpu.objects);
+		ERROR(game->cl_info->ret);
 		game->gpu.samples = 0;
 		game->flag = 1;
 	}

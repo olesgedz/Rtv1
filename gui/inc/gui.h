@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/21 16:06:45 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/22 19:06:03 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ typedef struct		s_change_obj
 	KW_Widget		*buttons[2];
 	char			*names[30];
 	int				show;
+	int				dest;
 }					t_change_obj;
 
 #endif
