@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/11/20 21:02:22 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/21 18:24:45 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ static void	main_loop(t_game *game, t_gui *gui, int argc)
 		main_screen_free(gui);
 	}
 }
-
 
 int			main(int argc, char **argv)
 {
