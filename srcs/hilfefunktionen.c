@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hilfefunktionen.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:51:09 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/19 18:37:33 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/11/21 21:14:38 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void		ft_object_push(t_game *game, t_obj *object)
 	if (game->gpu.objects == NULL)
 		game->obj_quantity = 0;
 	object->is_visible = 1;
-	game->gpu.objects = ft_realloc(game->gpu.objects,
+	game->gpu.objects = realloc(game->gpu.objects,
 	sizeof(t_obj) * (game->obj_quantity + 1));
 	game->gpu.objects[game->obj_quantity] = *object;
 	game->obj_quantity += 1;
@@ -62,7 +62,7 @@ void		ft_cam_push(t_game *game, t_cam *cam)
 	if (game->gpu.camera == NULL)
 		game->cam_quantity = 0;
 	game->gpu.camera = ft_realloc(game->gpu.camera,
-	sizeof(t_obj) * (game->cam_quantity + 1));
+	sizeof(t_cam) * (game->cam_quantity + 1));
 	game->gpu.camera[game->cam_quantity] = *cam;
 	game->cam_quantity += 1;
 	free(cam);

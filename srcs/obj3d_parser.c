@@ -6,22 +6,20 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:17:38 by srobert-          #+#    #+#             */
-/*   Updated: 2019/11/18 20:57:29 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/22 21:04:22 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void        ft_object_push(t_game *game, t_obj *object)
+void		ft_vert_push(t_game *game, cl_float3 vert)
 {
-    if (game->gpu.objects == NULL)
-        game->obj_quantity = 0;
-    object->is_visible = 1;
-    game->gpu.objects = ft_realloc(game->gpu.objects,
-    sizeof(t_obj) * (game->obj_quantity + 1));
-    game->gpu.objects[game->obj_quantity] = *object;
-    game->obj_quantity += 1;
-    free(object);
+	if (game->vertices_list == NULL)
+		game->vertices_num = 0;
+	game->vertices_list = ft_realloc(game->vertices_list,
+	sizeof(cl_float3) * (game->vertices_num + 1));
+	game->vertices_list[game->vertices_num] = vert;
+	game->vertices_num += 1;
 }
 
 
@@ -31,20 +29,47 @@ static void parse_vertice(char **data, t_game *game)
     cl_float3 vert;
 
     vert = create_cfloat3(atof(data[1]), atof(data[2]), atof(data[3]));
-    ft_vec_push();
+    ft_vert_push(game, vert);
 }
 
+static void push_facing(char **data, t_game *game)
+{
+    t_obj *obj;
 
+    obj = (t_obj*)malloc(sizeof(t_obj));
+    obj->type = TRIANGLE;
+    obj->vertices[0] = game->vertices_list[ft_atoi(data[1]) - 1];
+    obj->vertices[1] = game->vertices_list[ft_atoi(data[2]) - 1];
+    obj->vertices[2] = game->vertices_list[ft_atoi(data[3]) - 1];
+    obj->v = triangle_norm(obj->vertices);
+    obj->id = 100;
+    obj->color = create_cfloat3(1, 1, 1);
+    obj->metalness = 1;
+    obj->radius = 0;
+    obj->emission = create_cfloat3(0, 0, 0);
+    ft_object_push(game, obj);
+}
 
+static void debug(t_game *game)
+{
+    int i  = -1;
 
-void obj3d_parse(const char *name, t_game *game)
+    while(++i < game->vertices_num)
+    {
+        printf("vertice == %f, %f, %f\n", game->vertices_list[i].v4[0], game->vertices_list[i].v4[1], game->vertices_list[i].v4[2]);
+    }
+}
+
+void obj3d_parse(const cJSON *object, t_game *game, t_json *parse)
 {
     int fd;
     char *line;
     char **data;
     char *m;
 
-    m = ft_strjoin("./obj3d/", name);
+    parse->name = cJSON_GetObjectItemCaseSensitive(object, "name");
+    
+    m = ft_strjoin("./obj3d/", parse->name->valuestring);
     if ((fd = open(m, O_RDONLY)) <= 0)
         terminate("fuck you\n");
     while (get_next_line(fd, &line))
@@ -62,9 +87,11 @@ void obj3d_parse(const char *name, t_game *game)
         }
         if (ft_strcmp(data[0], "v") == 0)
             parse_vertice(data, game);
+        if (ft_strcmp(data[0], "f") == 0)
+            push_facing(data, game);
         feel_free(data);
         free(line);   
     }
-    free(data);
+    // free(data);
     close(fd);
 }

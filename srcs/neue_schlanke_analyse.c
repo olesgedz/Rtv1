@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/11/21 19:24:08 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/22 17:58:23 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ static void parse_necessary(const cJSON *object, t_obj *obj, t_json *parse, cl_f
 		obj->radius = parse->radius->valuedouble;
 	else if (obj->type != PLANE && obj->type != TRIANGLE)
 		terminate("missing data of obj radius!\n");
+		parse->tor_radius = cJSON_GetObjectItemCaseSensitive(object, "tor radius");
+		if (parse->tor_radius != NULL)
+			obj->tor_radius = parse->tor_radius->valuedouble;
+		else
+			obj->tor_radius = 0.1;
 }
 
 static void parse_facing(const cJSON *object, t_obj *obj, t_json *parse, t_game *game)
@@ -221,7 +226,7 @@ static void parse_rest(const cJSON *object, t_obj *obj, t_json *parse)
 		obj->refraction = 0.0;
 }
 
- static cl_float3 triangle_norm(cl_float3 *vertices)
+cl_float3 triangle_norm(cl_float3 *vertices)
 {
 	cl_float3 ab;
 	cl_float3 ac;
@@ -297,10 +302,15 @@ void check_object(const cJSON *object, t_game *game, cJSON *composed_pos, cJSON 
 		obj->type = CONE;
 	else if (ft_strcmp(parse.type->valuestring, "triangle") == 0)
 		obj->type = TRIANGLE;
+	else if (ft_strcmp(parse.type->valuestring, "obj3d") == 0)
+	{
+		obj3d_parse(object, game, &parse);
+		return ;
+	}
 	else if (ft_strcmp(parse.type->valuestring, "composed") == 0)
 	{
 		parse_composed(object, game, &parse, id);
-		return;
+		return ;
 	}
 	obj->id = id;
 	parse_necessary(object, obj, &parse, composed_pos_f, composed_v_f);
