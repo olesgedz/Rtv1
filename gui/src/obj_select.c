@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 19:08:02 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/21 20:52:43 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/20 20:49:46 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,14 @@ void		obj_click(KW_Widget *widget, int b)
 
 	b = 0;
 	gui = g_gui(0, 0);
-	if (gui->game->ev.button.button != SDL_BUTTON_LEFT)
-		return ;
 	if (gui->c_o.show == 1)
-		norma_from_obj_select(gui, widget, wid);
+	{
+		KW_DestroyWidget(gui->c_o.frame, 1);
+		if (wid && widget)
+			KW_SetLabelTextColor(KW_GetButtonLabel(wid),
+			(KW_Color){0, 0, 0, 255});
+		gui->c_o.show = 0;
+	}
 	if (widget && (obj != KW_GetWidgetUserData(widget)))
 	{
 		obj = KW_GetWidgetUserData(widget);
@@ -33,11 +37,8 @@ void		obj_click(KW_Widget *widget, int b)
 		(KW_Color){255, 255, 255, 255});
 		gui->c_o.show = 1;
 	}
-	else
-	{
-		wid = 0;
+	else if (!(wid = 0))
 		obj = 0;
-	}
 }
 
 char		*fill_name_mass(t_obj *obj, int num)

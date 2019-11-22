@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 18:04:29 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/21 20:50:27 by lminta           ###   ########.fr       */
+/*   Updated: 2019/10/30 15:22:42 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,4 @@ SDL_Texture	*load_picture(t_gui *gui, const char *filename)
 	}
 	SDL_FreeSurface(surf);
 	return (surf_to_text(gui, opt));
-}
-
-void	norma_from_obj_select(t_gui *gui, KW_Widget *widget, KW_Widget *wid)
-{
-	KW_DestroyWidget(gui->c_o.frame, 1);
-	if (wid && widget)
-		KW_SetLabelTextColor(KW_GetButtonLabel(wid),
-		(KW_Color){0, 0, 0, 255});
-	gui->c_o.show = 0;
 }
