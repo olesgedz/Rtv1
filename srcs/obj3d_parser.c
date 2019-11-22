@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:17:38 by srobert-          #+#    #+#             */
-/*   Updated: 2019/11/22 21:04:22 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/22 21:42:34 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,14 @@ void		ft_vert_push(t_game *game, cl_float3 vert)
 
 
 
-static void parse_vertice(char **data, t_game *game)
+static void parse_vertice(char **data, t_game *game, t_json *parse)
 {
     cl_float3 vert;
-
-    vert = create_cfloat3(atof(data[1]), atof(data[2]), atof(data[3]));
+    vert = create_cfloat3(atof(data[1]) * parse->size->valuedouble, atof(data[2]) * parse->size->valuedouble, atof(data[3]) * parse->size->valuedouble);
     ft_vert_push(game, vert);
 }
 
-static void push_facing(char **data, t_game *game)
+static void push_facing(char **data, t_game *game, t_json *parse)
 {
     t_obj *obj;
 
@@ -66,9 +65,9 @@ void obj3d_parse(const cJSON *object, t_game *game, t_json *parse)
     char *line;
     char **data;
     char *m;
-
     parse->name = cJSON_GetObjectItemCaseSensitive(object, "name");
-    
+    parse->size = cJSON_GetObjectItemCaseSensitive(object, "size");
+    parse->composed_pos = cJSON_GetObjectItemCaseSensitive(object, "position");
     m = ft_strjoin("./obj3d/", parse->name->valuestring);
     if ((fd = open(m, O_RDONLY)) <= 0)
         terminate("fuck you\n");
@@ -86,9 +85,9 @@ void obj3d_parse(const cJSON *object, t_game *game, t_json *parse)
             data = ft_strsplit(line, ' ');
         }
         if (ft_strcmp(data[0], "v") == 0)
-            parse_vertice(data, game);
+            parse_vertice(data, game, parse);
         if (ft_strcmp(data[0], "f") == 0)
-            push_facing(data, game);
+            push_facing(data, game, parse);
         feel_free(data);
         free(line);   
     }

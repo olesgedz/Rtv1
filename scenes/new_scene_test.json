@@ -11,8 +11,9 @@
         {
             "type": "obj3d",
             "name": "rat.obj",
+            "size": 0.1,
             "position": "ne rabotaet",
-            "dir": "sdohlo"
+            "dir": [0.0,1.0,0.0]
         }
     ],
 

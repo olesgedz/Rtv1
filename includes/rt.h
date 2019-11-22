@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/22 17:50:58 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/22 21:12:27 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,6 +239,7 @@ typedef struct			s_json
 	cJSON				*transparency;
 	cJSON				*refraction;
 	cJSON				*name;
+	cJSON				*size;
 }             			t_json;
 
 
