@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/22 16:18:09 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/22 20:50:51 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,6 +234,23 @@ typedef struct			s_json
 	cJSON				*refraction;
 }             			t_json;
 
+typedef struct		s_change_obj
+{
+	KW_Rect			frect;
+	KW_Rect			buttonrect[2];
+	KW_Rect			labelrect;
+	KW_Rect			editboxrect[3];
+	KW_Widget		*frame;
+	KW_Widget		*ed_b[30];
+	KW_Rect			*rects[4];
+	unsigned		weights[4];
+	KW_Widget		*buttons[2];
+	char			*names[30];
+	int				show;
+	int				dest;
+	int				create;
+	t_obj			*obj;
+}					t_change_obj;
 
 typedef struct		s_gui
 {
@@ -381,5 +398,6 @@ void					check_gui_entrance(t_game *game, t_gui *gui,
 int x, int y);
 void					same_new(t_game *game, t_obj *obj, t_type type);
 void					obj_click(KW_Widget *widget, int b);
+void					destr(t_gui *gui);
 
 #endif
