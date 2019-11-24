@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:51:09 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/22 18:22:38 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/24 21:52:04 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void		ft_object_push(t_game *game, t_obj *object)
 {
 	if (game->gpu.objects == NULL)
 		game->obj_quantity = 0;
-	game->gpu.objects = ft_realloc(game->gpu.objects,
+	game->gpu.objects = realloc(game->gpu.objects,
 	sizeof(t_obj) * (game->obj_quantity + 1));
 	game->gpu.objects[game->obj_quantity] = *object;
 	game->obj_quantity += 1;
@@ -60,7 +60,7 @@ void		ft_cam_push(t_game *game, t_cam *cam)
 {
 	if (game->gpu.camera == NULL)
 		game->cam_quantity = 0;
-	game->gpu.camera = ft_realloc(game->gpu.camera,
+	game->gpu.camera = realloc(game->gpu.camera,
 	sizeof(t_obj) * (game->cam_quantity + 1));
 	game->gpu.camera[game->cam_quantity] = *cam;
 	game->cam_quantity += 1;
@@ -73,7 +73,7 @@ void		ft_texture_push(t_game *game, char ***mass, char *texture_name)
 		return ;
 	if (*mass == NULL)
 		game->textures_num = 0;
-	*mass = ft_realloc(*mass,
+	*mass = realloc(*mass,
 	sizeof(char*) * (game->textures_num + 1));
 	mass[0][game->textures_num] = ft_strdup(texture_name);
 	game->textures_num += 1;
@@ -85,7 +85,7 @@ void		ft_normal_push(t_game *game, char ***mass, char *normal_name)
 		return ;
 	if (*mass == NULL)
 		game->normals_num = 0;
-	*mass = ft_realloc(*mass,
+	*mass = realloc(*mass,
 	sizeof(char*) * (game->normals_num + 1));
 	mass[0][game->normals_num] = ft_strdup(normal_name);
 	game->normals_num += 1;

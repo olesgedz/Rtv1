@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:17:38 by srobert-          #+#    #+#             */
-/*   Updated: 2019/11/21 16:44:30 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/24 21:52:04 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void        ft_object_push(t_game *game, t_obj *object)
 	if (game->gpu.objects == NULL)
 		game->obj_quantity = 0;
 	object->is_visible = 1;
-	game->gpu.objects = ft_realloc(game->gpu.objects,
+	game->gpu.objects = realloc(game->gpu.objects,
 	sizeof(t_obj) * (game->obj_quantity + 1));
 	game->gpu.objects[game->obj_quantity] = *object;
 	game->obj_quantity += 1;
