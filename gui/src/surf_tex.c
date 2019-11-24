@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 18:04:29 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/22 20:51:25 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/24 20:19:37 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,36 @@ SDL_Texture	*load_picture(t_gui *gui, const char *filename)
 
 void	norma_from_obj_select(t_gui *gui, KW_Widget *widget, KW_Widget *wid)
 {
-	KW_Widget *label;
+	KW_Widget	*label;
+	int			i;
 
-	gui->c_o.dest = 1;
+	i = -1;
+	while (++i < 2)
+	{
+		KW_RemoveWidgetGeometryChangeHandler(gui->c_o.buttons[i], 0);
+		KW_RemoveWidgetTilesetChangeHandler(gui->c_o.buttons[i], 0);
+		KW_RemoveWidgetMouseDownHandler(gui->c_o.buttons[i], 0);
+	}
+	i = -1;
+	while (gui->c_o.ed_b[++i] && i < 30)
+	{
+		KW_RemoveWidgetMouseUpHandler(gui->c_o.ed_b[i], 0);
+		KW_RemoveWidgetMouseOverHandler(gui->c_o.ed_b[i], 0);
+		KW_RemoveWidgetMouseLeaveHandler(gui->c_o.ed_b[i], 0);
+		KW_RemoveWidgetFocusGainHandler(gui->c_o.ed_b[i], 0);
+		KW_RemoveWidgetFocusLoseHandler(gui->c_o.ed_b[i], 0);
+		KW_RemoveWidgetKeyDownHandler(gui->c_o.ed_b[i], 0);
+		KW_RemoveWidgetTextInputHandler(gui->c_o.ed_b[i], 0);
+		KW_RemoveWidgetMouseDownHandler(gui->c_o.ed_b[i], 0);
+		KW_DestroyWidget(gui->c_o.ed_b[i], 1);
+	}
+	KW_RemoveWidgetGeometryChangeHandler(gui->c_o.frame, 0);
+	KW_RemoveWidgetTilesetChangeHandler(gui->c_o.frame, 0);
+	KW_DestroyWidget(gui->c_o.frame, 1);
+	i = -1;
+	while (++i < 30)
+		gui->c_o.ed_b[i] = 0;
+	gui->c_o.frame = 0;
 	if (wid && widget)
 	{
 		label = KW_GetButtonLabel(wid);
@@ -75,18 +102,4 @@ void	norma_from_obj_select(t_gui *gui, KW_Widget *widget, KW_Widget *wid)
 			KW_SetLabelTextColor(label, (KW_Color){0, 0, 0, 255});
 	}
 	gui->c_o.show = 0;
-}
-
-void	destr(t_gui *gui)
-{
-	if (gui->c_o.dest)
-	{
-		KW_DestroyWidget(gui->c_o.frame, 1);
-		gui->c_o.dest = 0;
-	}
-	if (gui->c_o.create)
-	{
-		obj_if(gui, gui->c_o.obj);
-		gui->c_o.create = 0;
-	}
 }

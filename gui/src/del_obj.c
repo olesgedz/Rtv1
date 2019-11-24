@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 21:38:25 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/22 22:10:55 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/24 19:24:04 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	delbutton(t_gui *gui, t_obj *obj)
 {
-	gui->c_o.buttonrect[2].x = gui->c_o.buttonrect[0] + ;
+	gui->c_o.buttonrect[2] = gui->c_o.buttonrect[0];
 	gui->c_o.buttonrect[2].x = gui->c_o.buttonrect[1].x + gui->c_o.frect.w -
 	gui->c_o.buttonrect[2].w - 10;
 	gui->c_o.buttons[1] = KW_CreateButtonAndLabel(gui->gui,

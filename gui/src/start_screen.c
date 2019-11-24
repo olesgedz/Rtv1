@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 22:51:42 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/21 20:59:44 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/24 20:48:34 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,10 @@ char		*start_gui(t_game *game, t_gui *gui)
 	play_stop_music("gui/res/main_menu.wav");
 	loopa(game, gui);
 	play_stop_music(0);
-	KW_HideWidget(gui->ed_w.frame);
+	//KW_HideWidget(gui->ed_w.frame);
+	KW_RemoveWidgetGeometryChangeHandler(gui->ed_w.frame, 0);
+	KW_RemoveWidgetTilesetChangeHandler(gui->ed_w.frame, 0);
+	KW_DestroyWidget(gui->ed_w.frame, 1);
 	gui->ed_w.show = 0;
 	free_list(game);
 	game->texture_list = NULL;

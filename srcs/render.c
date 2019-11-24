@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:54:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/22 19:26:12 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/24 20:28:02 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void			ft_render(t_game *game, t_gui *gui)
 	gui->flag = 0;
 	ft_run_kernel(game, &game->cl_info->progs[0].krls[0], WIN_W, WIN_H);
 	//ft_run_kernel1(game, &game->cl_info->progs[0].krls[1], WIN_W, WIN_H);
-
 }
 
 void			screen_present(t_game *game, t_gui *gui)
@@ -77,8 +76,11 @@ void			screen_present(t_game *game, t_gui *gui)
 	game->sdl.surface->pixels, game->sdl.surface->w * sizeof(Uint32));
 	SDL_RenderCopy(game->sdl.renderer, game->sdl.texture,
 	NULL, NULL);
-	KW_ProcessEvents(gui->gui);
-	KW_Paint(gui->gui);
+	if (!gui->click)
+	{
+		KW_ProcessEvents(gui->gui);
+		KW_Paint(gui->gui);
+	}
 	SDL_RenderPresent(game->sdl.renderer);
 }
 
@@ -97,8 +99,6 @@ void			main_render(t_game *game, t_gui *gui)
 		key_check(game);
 		camera_reposition(game, gui);
 		ft_render(game, gui);
-		destr(gui);
-		// printf("%d\n", gui->c_o.dest);
 		screen_present(game, gui);
 		time = (SDL_GetTicks() - time0) / 1000.;
 		if (time > 3)
@@ -108,6 +108,7 @@ void			main_render(t_game *game, t_gui *gui)
 			frames = 1;
 		}
 		frames++;
+		gui->click = 0;
 	}
 	game->av = gui->av;
 	free_opencl(game);

@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 19:08:02 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/22 20:42:13 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/24 19:30:12 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ void		obj_click(KW_Widget *widget, int b)
 	if (widget && (obj != KW_GetWidgetUserData(widget)))
 	{
 		obj = KW_GetWidgetUserData(widget);
-		//obj_if(gui, obj);
-		gui->c_o.create = 1;
+		obj_if(gui, obj);
 		gui->c_o.obj = obj;
 		wid = widget;
 		KW_SetLabelTextColor(KW_GetButtonLabel(wid),
