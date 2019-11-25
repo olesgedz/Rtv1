@@ -6,7 +6,7 @@
 #    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/11/24 19:23:22 by lminta           ###   ########.fr        #
+#    Updated: 2019/11/25 15:56:38 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,12 +15,10 @@ NAME = rt
 
 FLAGS = -g #-Wall -Wextra -Werror
 CC = clang
-LIBRARIES =  $(GUI_LIB) -lSDL2_image  -lSDL2_mixer  -lsdl -L$(LIBSDL_DIRECTORY)   -lcl -L$(LIBCL) -lgnl -L$(LIBGNL) -lvect -L$(LIBVECT) -lft -L$(LIBFT_DIRECTORY) -lm -lpthread
-INCLUDES = $(GUI_INC) -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)includes/ -Isrcs/cl_error/ -I$(LIBGNL)includes/ -I$(LIBCL)includes/
-
-#$(shell pkg-config --libs sdl2_ttf) $(shell pkg-config --libs sdl2_image) $(shell pkg-config --libs sdl2_mixer)
-GUI_INC = -I./include/SDL2 -I./gui/KiWi/src -I./gui/inc #$(shell pkg-config --cflags sdl2_ttf) $(shell pkg-config --cflags sdl2_image) $(shell pkg-config --cflags sdl2_mixer)
-DIR_KiWi = ./gui/build/src/
+LIBRARIES = -lSDL2_image  -lSDL2_mixer  -lsdl -L$(LIBSDL_DIRECTORY)   -lcl -L$(LIBCL) -lgnl -L$(LIBGNL) -lvect -L$(LIBVECT) -lft -L$(LIBFT_DIRECTORY) -lm -lpthread
+INCLUDES = $(GUI_INC) -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)includes/ -Isrcs/cl_error/ -I$(LIBGNL)includes/ -I$(LIBCL)includes/ $(shell pkg-config --libs sdl2_ttf) $(shell pkg-config --libs sdl2_image) $(shell pkg-config --libs sdl2_mixer)
+GUI_INC = -I./include/SDL2 -I./gui/KiWi/ -I./gui/inc $(shell pkg-config --cflags sdl2_ttf) $(shell pkg-config --cflags sdl2_image) $(shell pkg-config --cflags sdl2_mixer)
+#DIR_KiWi = ./gui/build/src/
 
 LIBFT = $(LIBFT_DIRECTORY)libft.a
 LIBFT_HEADERS = $(LIBFT_DIRECTORY)includes/
@@ -81,6 +79,29 @@ RMRF = gui/src/gui_main.o\
 		gui/src/create_obj.o\
 		gui/src/push_new.o\
 		gui/src/del_obj.o\
+		gui/KiWi/KW_button.o\
+		gui/KiWi/KW_checkbox.o\
+		gui/KiWi/KW_editbox.o\
+		gui/KiWi/KW_editbox_internal.o\
+		gui/KiWi/KW_eventwatcher.o\
+		gui/KiWi/KW_frame.o\
+		gui/KiWi/KW_frame_internal.o\
+		gui/KiWi/KW_gui.o\
+		gui/KiWi/KW_label.o\
+		gui/KiWi/KW_label_internal.o\
+		gui/KiWi/KW_rect.o\
+		gui/KiWi/KW_renderdriver.o\
+		gui/KiWi/KW_renderdriver_sdl2.o\
+		gui/KiWi/KW_scrollbox.o\
+		gui/KiWi/KW_scrollbox_internal.o\
+		gui/KiWi/KW_tilerenderer.o\
+		gui/KiWi/KW_toggle.o\
+		gui/KiWi/KW_widget.o\
+		gui/KiWi/KW_widget_eventhandlers.o\
+		gui/KiWi/file2c.o\
+		gui/KiWi/resources.o\
+		gui/KiWi/utf8.o\
+		#gui/KiWi/*.o\
 		cJSON/cJSON.o
 
 SRCS_LIST = main.c \
@@ -116,6 +137,28 @@ SRCS_LIST = main.c \
 			../gui/src/create_obj.c\
 			../gui/src/push_new.c\
 			../gui/src/del_obj.c\
+			../gui/KiWi/KW_button.c\
+			../gui/KiWi/KW_checkbox.c\
+			../gui/KiWi/KW_editbox.c\
+			../gui/KiWi/KW_editbox_internal.c\
+			../gui/KiWi/KW_eventwatcher.c\
+			../gui/KiWi/KW_frame.c\
+			../gui/KiWi/KW_frame_internal.c\
+			../gui/KiWi/KW_gui.c\
+			../gui/KiWi/KW_label.c\
+			../gui/KiWi/KW_label_internal.c\
+			../gui/KiWi/KW_rect.c\
+			../gui/KiWi/KW_renderdriver.c\
+			../gui/KiWi/KW_renderdriver_sdl2.c\
+			../gui/KiWi/KW_scrollbox.c\
+			../gui/KiWi/KW_scrollbox_internal.c\
+			../gui/KiWi/KW_tilerenderer.c\
+			../gui/KiWi/KW_toggle.c\
+			../gui/KiWi/KW_widget.c\
+			../gui/KiWi/KW_widget_eventhandlers.c\
+			../gui/KiWi/file2c.c\
+			../gui/KiWi/resources.c\
+			../gui/KiWi/utf8.c\
 			../cJSON/cJSON.c\
 			neue_schlanke_analyse.c\
 			analyse_dienstprogramme.c\
@@ -173,7 +216,7 @@ endif
 all: $(MAKES) $(NAME)
 
 
-$(NAME): $(LIB_KiWi) $(LIBFT)  $(LIBSDL) $(LIBCL) $(LIBGNL)  $(LIBVECT) $(OBJS_DIRECTORY) $(OBJS) $(HEADERS)
+$(NAME): $(LIBFT)  $(LIBSDL) $(LIBCL) $(LIBGNL)  $(LIBVECT) $(OBJS_DIRECTORY) $(OBJS) $(HEADERS)
 	@$(CC) $(FLAGS) $(LIBSDL) $(INCLUDES) $(OBJS) $(SDL_CFLAGS) $(SDL_LDFLAGS) -o $(NAME) $(LIBRARIES)
 	@echo "$(CLEAR_LINE)[`expr $(CURRENT_FILES) '*' 100 / $(TOTAL_FILES)`%] $(COL_BLUE)[$(NAME)] $(COL_GREEN)Finished compilation. Output file : $(COL_VIOLET)$(PWD)/$(NAME)$(COL_END)"
 
