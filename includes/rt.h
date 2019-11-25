@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/25 21:41:09 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/25 22:45:12 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,6 +251,7 @@ typedef struct		s_gui
 	t_gui_bar		g_b;
 	t_obj_type		o_t;
 	t_change_obj	c_o;
+	t_camera_select	c_s;
 	char			*av;
 	int				flag;
 	int				main_screen;
@@ -388,5 +389,8 @@ void					delbutton(t_gui *gui, t_obj *obj);
 void					del_click(KW_Widget *widget, int b);
 void					destr(t_gui *gui, KW_Widget *widget);
 void					cam_button(t_game *game, t_gui *gui);
+void					cam_select(t_gui *gui, t_cam *cams, int num);
+char					*cam_mass_name(t_cam *cam);
+void					cam_rename(t_game *game, t_gui *gui);
 
 #endif

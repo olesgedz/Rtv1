@@ -6,7 +6,7 @@
 #    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/11/25 21:38:39 by lminta           ###   ########.fr        #
+#    Updated: 2019/11/25 22:32:01 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,6 +82,7 @@ RMRF = gui/src/gui_main.o\
 		gui/src/push_new.o\
 		gui/src/del_obj.o\
 		gui/src/cameras.o\
+		gui/src/cam_select.o\
 		cJSON/cJSON.o
 
 SRCS_LIST = main.c \
@@ -107,6 +108,7 @@ SRCS_LIST = main.c \
 			../gui/src/main_screen.c\
 			../gui/src/ren_button.c\
 			../gui/src/obj_select.c\
+			../gui/src/cam_select.c\
 			../gui/src/change_obj.c\
 			../gui/src/smsht.c\
 			../gui/src/editboxes.c\

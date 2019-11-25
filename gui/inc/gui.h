@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/25 21:11:48 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/25 21:57:49 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,22 @@ typedef struct		s_object_select
 	int				max_i;
 	int				show;
 }					t_object_select;
+
+typedef struct		s_camera_select
+{
+	KW_Rect			titlerect;
+	KW_Rect			winrect;
+	KW_Rect			frect;
+	KW_Rect			buttonrect[MAX_OBJ];
+	KW_Widget		*frame;
+	KW_Widget		*label;
+	KW_Rect			*rects[1];
+	unsigned		weights[1];
+	KW_Widget		*buttons[MAX_OBJ];
+	char			*names[MAX_OBJ];
+	int				max_i;
+	int				show;
+}					t_camera_select;
 
 typedef struct		s_edit_win
 {

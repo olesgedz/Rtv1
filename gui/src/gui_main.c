@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:21:19 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/24 19:48:55 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/25 22:27:36 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ void		init_kiwi(t_gui *gui)
 	while (++i < MAX_OBJ)
 	{
 		gui->o_s.buttons[i] = 0;
+		gui->c_s.buttons[i] = 0;
 		gui->s_s.buttons[i] = 0;
 		gui->o_s.names[i] = 0;
+		gui->c_s.names[i] = 0;
 		gui->s_s.names[i] = 0;
 		if (i < 30)
 			gui->g_b.names[i] = 0;
@@ -46,6 +48,7 @@ void		init_kiwi(t_gui *gui)
 	gui->ed_w.show = 1;
 	gui->s_s.show = 0;
 	gui->o_s.show = 0;
+	gui->c_s.show = 0;
 	gui->g_b.show = 0;
 	gui->o_t.show = 0;
 	gui->c_o.show = 0;

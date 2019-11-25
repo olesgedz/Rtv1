@@ -6,20 +6,46 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 16:46:11 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/25 19:58:27 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/25 22:22:43 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void	main_screen(t_gui *gui, t_game *game)
+static void	cam_free(t_gui *gui)
 {
-	obj_select(gui, game->gpu.objects, game->obj_quantity);
-	if (!gui->o_s.show)
-		KW_HideWidget(gui->o_s.frame);
+	int i;
+
+	i = -1;
+	while (gui->c_s.names[++i] && i < MAX_OBJ)
+		free(gui->c_s.names[i]);
+	i = -1;
+	while (gui->c_s.buttons[++i] && i < MAX_OBJ)
+	{
+		KW_RemoveWidgetGeometryChangeHandler(gui->c_s.buttons[i], 0);
+		KW_RemoveWidgetTilesetChangeHandler(gui->c_s.buttons[i], 0);
+		KW_RemoveWidgetMouseDownHandler(gui->c_s.buttons[i], 0);
+	}
+	if (gui->c_s.max_i > 0)
+	{
+		KW_RemoveWidgetGeometryChangeHandler(gui->c_s.frame, 0);
+		KW_RemoveWidgetTilesetChangeHandler(gui->c_s.frame, 0);
+		KW_HideWidget(gui->c_s.frame);
+		destr(gui, gui->c_s.frame);
+	}
 }
 
-void	main_screen_free(t_gui *gui)
+void		main_screen(t_gui *gui, t_game *game)
+{
+	obj_select(gui, game->gpu.objects, game->obj_quantity);
+	cam_select(gui, game->gpu.camera, game->cam_quantity);
+	if (!gui->o_s.show)
+		KW_HideWidget(gui->o_s.frame);
+	if (!gui->c_s.show)
+		KW_HideWidget(gui->c_s.frame);
+}
+
+void		main_screen_free(t_gui *gui)
 {
 	int i;
 
@@ -40,9 +66,10 @@ void	main_screen_free(t_gui *gui)
 		KW_HideWidget(gui->o_s.frame);
 		destr(gui, gui->o_s.frame);
 	}
+	cam_free(gui);
 }
 
-void	quit_kiwi_main(t_gui *gui)
+void		quit_kiwi_main(t_gui *gui)
 {
 	if (gui->s_s.max_i > 0)
 	{
