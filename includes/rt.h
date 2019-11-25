@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/25 20:00:52 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/25 21:41:09 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,22 +234,6 @@ typedef struct			s_json
 	cJSON				*refraction;
 }             			t_json;
 
-typedef struct		s_change_obj
-{
-	KW_Rect			frect;
-	KW_Rect			buttonrect[3];
-	KW_Rect			labelrect;
-	KW_Rect			editboxrect[3];
-	KW_Widget		*frame;
-	KW_Widget		*ed_b[30];
-	KW_Rect			*rects[4];
-	unsigned		weights[4];
-	KW_Widget		*buttons[3];
-	char			*names[30];
-	int				show;
-	t_obj			*obj;
-}					t_change_obj;
-
 typedef struct		s_gui
 {
 	KW_Widget		*destroy[MAX_OBJ];
@@ -403,5 +387,6 @@ void					del_obj(t_obj *obj, t_game *game);
 void					delbutton(t_gui *gui, t_obj *obj);
 void					del_click(KW_Widget *widget, int b);
 void					destr(t_gui *gui, KW_Widget *widget);
+void					cam_button(t_game *game, t_gui *gui);
 
 #endif

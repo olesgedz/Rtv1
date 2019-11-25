@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 19:10:18 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/25 20:24:48 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/25 21:43:43 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,6 @@ void		gui_bar(t_game *game, t_gui *gui)
 	buttons(game, gui);
 	add_obj(game, gui);
 	obj_type(game, gui);
+	cam_button(game, gui);
 	KW_HideWidget(gui->o_t.frame);
 }

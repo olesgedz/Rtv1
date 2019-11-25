@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/25 20:28:13 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/25 21:11:48 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,21 @@ typedef struct		s_gui_bar
 	int				max_i;
 	int				show;
 }					t_gui_bar;
+
+typedef struct		s_change_obj
+{
+	KW_Rect			frect;
+	KW_Rect			buttonrect[3];
+	KW_Rect			labelrect;
+	KW_Rect			editboxrect[3];
+	KW_Widget		*frame;
+	KW_Widget		*ed_b[30];
+	KW_Rect			*rects[4];
+	unsigned		weights[4];
+	KW_Widget		*buttons[3];
+	char			*names[30];
+	int				show;
+}					t_change_obj;
 
 typedef struct		s_obj_type
 {
