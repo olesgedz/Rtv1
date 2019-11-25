@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 19:27:34 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/21 17:34:55 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/25 16:37:16 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void		obj_same(t_gui *gui, t_obj *obj)
 	KW_AddWidgetMouseDownHandler(gui->c_o.buttons[0], visibility);
 	KW_SetWidgetUserData(gui->c_o.buttons[0], obj);
 	savebutton(gui, obj);
+	delbutton(gui, obj);
 	gui->c_o.rects[0] = &gui->c_o.labelrect;
 	gui->c_o.rects[1] = &gui->c_o.editboxrect[0];
 	gui->c_o.rects[2] = &gui->c_o.editboxrect[1];

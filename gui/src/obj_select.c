@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 19:08:02 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/24 19:30:12 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/25 16:54:08 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void		obj_click(KW_Widget *widget, int b)
 	t_gui				*gui;
 	KW_Widget *label;
 	t_obj	*obje;
-
 
 	b = 0;
 	gui = g_gui(0, 0);

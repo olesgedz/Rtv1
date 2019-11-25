@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 19:10:18 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/24 20:31:30 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/25 16:53:10 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	del_click(KW_Widget *widget, int b)
 	gui = g_gui(0, 0);
 	obj = KW_GetWidgetUserData(widget);
 	del_obj(obj, gui->game);
+	obj_click(0, 0);
 	gui->flag = 1;
 }
 

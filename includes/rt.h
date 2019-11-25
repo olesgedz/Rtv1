@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/24 20:27:05 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/25 19:36:36 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,6 +252,8 @@ typedef struct		s_change_obj
 
 typedef struct		s_gui
 {
+	KW_Widget		*destroy[MAX_OBJ];
+	int				to_destroy;
 	t_game			*game;
 	t_sdl			sdl;
 	SDL_Event		ev;
@@ -267,7 +269,6 @@ typedef struct		s_gui
 	t_change_obj	c_o;
 	char			*av;
 	int				flag;
-	int				click;
 	int				main_screen;
 	int				over_gui;
 	float			fps;
@@ -400,5 +401,7 @@ void					obj_click(KW_Widget *widget, int b);
 void					destr(t_gui *gui);
 void					in_cl(t_game *game);
 void					del_obj(t_obj *obj, t_game *game);
+void					delbutton(t_gui *gui, t_obj *obj);
+void					del_click(KW_Widget *widget, int b);
 
 #endif
