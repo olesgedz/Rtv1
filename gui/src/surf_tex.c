@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 18:04:29 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/24 20:19:37 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/24 22:07:00 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void	norma_from_obj_select(t_gui *gui, KW_Widget *widget, KW_Widget *wid)
 		KW_RemoveWidgetKeyDownHandler(gui->c_o.ed_b[i], 0);
 		KW_RemoveWidgetTextInputHandler(gui->c_o.ed_b[i], 0);
 		KW_RemoveWidgetMouseDownHandler(gui->c_o.ed_b[i], 0);
-		KW_DestroyWidget(gui->c_o.ed_b[i], 1);
 	}
 	KW_RemoveWidgetGeometryChangeHandler(gui->c_o.frame, 0);
 	KW_RemoveWidgetTilesetChangeHandler(gui->c_o.frame, 0);
