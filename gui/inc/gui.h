@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/22 19:34:37 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/25 20:28:13 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,13 @@ typedef struct		s_gui_bar
 typedef struct		s_obj_type
 {
 	KW_Rect			frect;
-	KW_Rect			buttonrect[5];
+	KW_Rect			buttonrect[6];
 	KW_Widget		*frame;
 	KW_Widget		*label;
 	KW_Rect			*rects[1];
 	unsigned		weights[1];
-	KW_Widget		*buttons[5];
-	char			*names[5];
+	KW_Widget		*buttons[6];
+	char			*names[6];
 	int				max_i;
 	int				show;
 }					t_obj_type;

@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 18:45:37 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/21 22:03:11 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/25 20:24:09 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ static char	*fill_name(int num)
 		res = ft_strdup("Cylinder");
 	else if (num == PLANE)
 		res = ft_strdup("Plane");
+	else if (num == 5)
+		res = ft_strdup("Delete invisible");
 	return (res);
 }
 
@@ -61,7 +63,7 @@ static int	scan_mass(t_gui *gui)
 	KW_RectFillParentHorizontally(&gui->o_t.frect,
 	gui->o_t.rects, gui->o_t.weights, 1, 15,
 	KW_RECT_ALIGN_MIDDLE);
-	while (i < 5)
+	while (i < 6)
 	{
 		gui->o_t.names[i] = fill_name(i);
 		gui->o_t.buttonrect[i] = gui->o_t.buttonrect[i - 1];
@@ -70,7 +72,7 @@ static int	scan_mass(t_gui *gui)
 			gui->o_t.frect.h += 45;
 		i++;
 	}
-	return (5);
+	return (6);
 }
 
 void		obj_type(t_game *game, t_gui *gui)
@@ -80,7 +82,7 @@ void		obj_type(t_game *game, t_gui *gui)
 	unsigned			test;
 	KW_Widget *const	*wid_arr;
 
-	mas = (int *)malloc(sizeof(int) * 5);
+	mas = (int *)malloc(sizeof(int) * 6);
 	gui->o_t.max_i = scan_mass(gui);
 	if ((i = -1) && gui->o_t.max_i > WIN_H / 45 - 3)
 	{
