@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 16:46:11 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/05 14:06:20 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/25 19:58:27 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	main_screen_free(t_gui *gui)
 	{
 		KW_RemoveWidgetGeometryChangeHandler(gui->o_s.frame, 0);
 		KW_RemoveWidgetTilesetChangeHandler(gui->o_s.frame, 0);
-		KW_DestroyWidget(gui->o_s.frame, 1);
+		KW_HideWidget(gui->o_s.frame);
+		destr(gui, gui->o_s.frame);
 	}
 }
 

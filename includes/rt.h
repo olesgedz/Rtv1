@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/25 19:36:36 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/25 20:00:52 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -398,10 +398,10 @@ void					check_gui_entrance(t_game *game, t_gui *gui,
 int x, int y);
 void					same_new(t_game *game, t_obj *obj, t_type type);
 void					obj_click(KW_Widget *widget, int b);
-void					destr(t_gui *gui);
 void					in_cl(t_game *game);
 void					del_obj(t_obj *obj, t_game *game);
 void					delbutton(t_gui *gui, t_obj *obj);
 void					del_click(KW_Widget *widget, int b);
+void					destr(t_gui *gui, KW_Widget *widget);
 
 #endif

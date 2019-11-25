@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:54:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/24 20:28:02 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/25 19:56:30 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,8 @@ void			screen_present(t_game *game, t_gui *gui)
 	game->sdl.surface->pixels, game->sdl.surface->w * sizeof(Uint32));
 	SDL_RenderCopy(game->sdl.renderer, game->sdl.texture,
 	NULL, NULL);
-	if (!gui->click)
-	{
-		KW_ProcessEvents(gui->gui);
-		KW_Paint(gui->gui);
-	}
+	KW_ProcessEvents(gui->gui);
+	KW_Paint(gui->gui);
 	SDL_RenderPresent(game->sdl.renderer);
 }
 
@@ -108,8 +105,8 @@ void			main_render(t_game *game, t_gui *gui)
 			frames = 1;
 		}
 		frames++;
-		gui->click = 0;
 	}
+	destr(gui, 0);
 	game->av = gui->av;
 	free_opencl(game);
 }

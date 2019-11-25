@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 18:04:29 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/25 19:36:10 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/25 19:58:57 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	norma_from_obj_select(t_gui *gui, KW_Widget *widget, KW_Widget *wid)
 	KW_RemoveWidgetGeometryChangeHandler(gui->c_o.frame, 0);
 	KW_RemoveWidgetTilesetChangeHandler(gui->c_o.frame, 0);
 	KW_HideWidget(gui->c_o.frame);
-	gui->destroy[gui->to_destroy++] = gui->c_o.frame;
+	destr(gui, gui->c_o.frame);
 	i = -1;
 	while (++i < 30)
 		gui->c_o.ed_b[i] = 0;

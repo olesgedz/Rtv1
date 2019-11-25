@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 21:38:25 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/25 16:47:07 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/25 20:04:38 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,19 @@ void	del_obj(t_obj *obj, t_game *game)
 	game->obj_quantity = game_buff.obj_quantity;
 	game->gpu.objects = game_buff.gpu.objects;
 	in_cl(game);
+}
+
+void	destr(t_gui *gui, KW_Widget *widget)
+{
+	int i;
+
+	if (widget && gui->to_destroy < MAX_OBJ)
+	{
+		gui->destroy[gui->to_destroy++] = widget;
+		return ;
+	}
+	i = -1;
+	while (++i < gui->to_destroy)
+		KW_DestroyWidget(gui->destroy[i], 1);
+	gui->to_destroy = 0;
 }
