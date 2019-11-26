@@ -2,6 +2,7 @@
 #ifndef KERNEL_H
 # define KERNEL_H
 
+# define SEPIA 0x704214
 typedef struct			s_ray
 {
 	float3				origin;

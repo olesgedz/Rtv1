@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/11/22 17:58:23 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/26 22:35:28 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -381,7 +381,7 @@ void check_scene(const cJSON *json, t_game *game)
 	else
 		game->global_tex_id = compare_in_texture_dict(game, "sun.jpg") - 1;
 
-	parse.ambience = cJSON_GetObjectItemCaseSensitive(json, "ambiance");
+	parse.ambience = cJSON_GetObjectItemCaseSensitive(scene, "ambiance");
 	if (parse.ambience != NULL)
 		filter.ambiance = parse.ambience->valuedouble;
 	else
@@ -390,13 +390,13 @@ void check_scene(const cJSON *json, t_game *game)
 		filter.cartoon = (int)parse.cartoon->valuedouble;
 	else
 		filter.cartoon = 0;
-	parse.sepia = cJSON_GetObjectItemCaseSensitive(json, "sepia");
+	parse.sepia = cJSON_GetObjectItemCaseSensitive(scene, "sepia");
 	if (parse.sepia!= NULL)
 		filter.sepia = (int)parse.sepia->valuedouble;
 	else
 		filter.sepia = 0;
 
-	parse.motion_blur = cJSON_GetObjectItemCaseSensitive(json, "motion blur");
+	parse.motion_blur = cJSON_GetObjectItemCaseSensitive(scene, "motion blur");
 	if (parse.motion_blur != NULL)
 		filter.motion_blur = parse.motion_blur->valuedouble;
 	else
@@ -424,7 +424,9 @@ void read_scene(char *argv, t_game *game)
 		terminate("fuck you and your file!\n");
 	fread(buffer, 8096, 1, fp);
 	cJSON *json = cJSON_Parse(buffer);
-
+	
+	if (json == NULL)
+		terminate("\nsomething wrong with .json file, please check that commas on right positions\n");
 	check_scene(json, game);
 
 	const cJSON *object = NULL;
