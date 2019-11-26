@@ -6,13 +6,13 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 21:48:49 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/25 22:52:45 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/26 22:36:40 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void		cum_click(KW_Widget *widget, int b)
+void		cam_click(KW_Widget *widget, int b)
 {
 	static t_cam		*cam;
 	static KW_Widget	*wid = 0;
@@ -23,16 +23,16 @@ void		cum_click(KW_Widget *widget, int b)
 	gui = g_gui(0, 0);
 	if (gui->game->ev.button.button != SDL_BUTTON_LEFT)
 		return ;
-	if (gui->c_o.show == 1)
+	if (gui->c_c.show == 1)
 		norma_from_cam_select(gui, widget, wid);
 	if (widget && (cam != KW_GetWidgetUserData(widget)))
 	{
 		cam = KW_GetWidgetUserData(widget);
-		cam_if(gui, cam);
+		change_cam(gui, cam);
 		wid = widget;
 		KW_SetLabelTextColor(KW_GetButtonLabel(wid),
 		(KW_Color){255, 255, 255, 255});
-		gui->c_o.show = 1;
+		gui->c_c.show = 1;
 	}
 	else
 	{
@@ -128,7 +128,7 @@ void		cam_select(t_gui *gui, t_cam *cams, int num)
 			gui->c_s.buttonrect[i].x -= 15;
 		gui->c_s.buttons[i] = KW_CreateButtonAndLabel(gui->gui,
 gui->c_s.frame, gui->c_s.names[i], &gui->c_s.buttonrect[i]);
-		KW_AddWidgetMouseDownHandler(gui->c_s.buttons[i], cum_click);
+		KW_AddWidgetMouseDownHandler(gui->c_s.buttons[i], cam_click);
 		KW_SetWidgetUserData(gui->c_s.buttons[i], &cams[i]);
 	}
 }

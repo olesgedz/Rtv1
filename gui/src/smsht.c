@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 19:27:34 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/25 16:37:16 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/26 19:32:21 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,14 @@ void		obj_same(t_gui *gui, t_obj *obj)
 {
 	char	*buff;
 
-	gui->c_o.frect = (KW_Rect){0, WIN_H - FR_ZF * 5 + 60, FR_FZ * 5 / 2,
-	FR_ZF * 5 - 60};
+	gui->c_o.frect = (KW_Rect){WIN_W - FR_FZ * 5 / 2, WIN_H - FR_ZF * 5 + 60,
+	FR_FZ * 5 / 2, FR_ZF * 5 - 60};
 	gui->c_o.frame =
 	KW_CreateFrame(gui->gui, NULL, &gui->c_o.frect);
 	gui->c_o.labelrect = (KW_Rect){5, 5, 100, 30};
 	KW_RectHorizontallyCenterInParent(&gui->c_o.frect, &gui->c_o.labelrect);
 	buff = fill_name_mass(obj, 0);
-	KW_CreateLabel(gui->gui, gui->c_o.frame,
-	buff, &gui->c_o.labelrect);
+	KW_CreateLabel(gui->gui, gui->c_o.frame, buff, &gui->c_o.labelrect);
 	free(buff);
 	gui->c_o.buttonrect[0] = (KW_Rect){5, gui->c_o.frect.h - 45, FR_FZ, 40};
 	gui->c_o.buttons[0] = KW_CreateButtonAndLabel(gui->gui,

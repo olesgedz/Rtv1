@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:51:09 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/24 21:52:04 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/26 18:43:53 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void		ft_cam_push(t_game *game, t_cam *cam)
 		game->cam_quantity = 0;
 	game->gpu.camera = realloc(game->gpu.camera,
 	sizeof(t_obj) * (game->cam_quantity + 1));
+	cam->id = game->cam_quantity;
 	game->gpu.camera[game->cam_quantity] = *cam;
 	game->cam_quantity += 1;
 	free(cam);

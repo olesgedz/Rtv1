@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 14:11:26 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/25 22:24:40 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/26 17:08:20 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ void	check_gui_entrance(t_game *game, t_gui *gui, int x, int y)
 	if (game->keys.show_gui && gui->c_o.show)
 		if (x > gui->c_o.frect.x && x < gui->c_o.frect.x + gui->c_o.frect.w)
 			if (y > gui->c_o.frect.y && y < gui->c_o.frect.y + gui->c_o.frect.h)
+				gui->over_gui = 1;
+	if (game->keys.show_gui && gui->c_c.show)
+		if (x > gui->c_c.frect.x && x < gui->c_c.frect.x + gui->c_c.frect.w)
+			if (y > gui->c_c.frect.y && y < gui->c_c.frect.y + gui->c_c.frect.h)
 				gui->over_gui = 1;
 	if (game->keys.show_gui && gui->o_t.show)
 		if (x > gui->o_t.frect.x && x < gui->o_t.frect.x + gui->o_t.frect.w)
