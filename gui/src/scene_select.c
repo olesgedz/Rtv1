@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 16:30:29 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/27 19:51:59 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/27 15:08:48 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ static void	clicked(KW_Widget *widget, int b)
 
 	b = 0;
 	gui = g_gui(0, 0);
+	if (gui->game->ev.button.button != SDL_BUTTON_LEFT)
+		return ;
 	name = KW_GetWidgetUserData(widget);
 	free(gui->av);
 	gui->av = ft_strjoin("scenes/", name);

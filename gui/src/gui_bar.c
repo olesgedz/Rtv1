@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 19:10:18 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/27 19:51:33 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/27 15:29:33 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	visibility(KW_Widget *widget, int b)
 
 	b = 0;
 	gui = g_gui(0, 0);
+	if (gui->game->ev.button.button != SDL_BUTTON_LEFT)
+		return ;
 	obj = KW_GetWidgetUserData(widget);
 	obj->is_visible = !obj->is_visible;
 	visibility_name(widget, obj);

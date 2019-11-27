@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 22:51:42 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/27 19:52:10 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/27 14:38:33 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static void	ok_clicked(KW_Widget *widget, int b)
 	b = 0;
 	widget = 0;
 	gui = g_gui(0, 0);
+	if (gui->game->ev.button.button != SDL_BUTTON_LEFT)
+		return ;
 	gui->av = ft_strdup((char *)KW_GetEditboxText(gui->ed_w.ed_b));
 	gui->quit = KW_TRUE;
 }

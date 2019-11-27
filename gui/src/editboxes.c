@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 20:04:17 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/27 19:51:24 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/22 21:02:17 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,8 @@ void		shift(t_gui *gui, t_obj *obj, int *i)
 	gui->c_o.ed_b[(*i)++] = f_e(gui, obj->shift.s[1], gui->c_o.rects[2]);
 }
 
-static void		vert(t_gui *gui, t_obj *obj, int *i)
+void		vert(t_gui *gui, t_obj *obj, int *i)
 {
-	if (obj->type != TRIANGLE)
-		return ;
 	gui->c_o.labelrect.y += 30;
 	gui->c_o.editboxrect[0].y += 30;
 	gui->c_o.editboxrect[1].y += 30;
@@ -51,11 +49,8 @@ static void		vert(t_gui *gui, t_obj *obj, int *i)
 	gui->c_o.ed_b[(*i)++] = f_e(gui, obj->vertices[2].s[2], gui->c_o.rects[3]);
 }
 
-static void		basis(t_gui *gui, t_obj *obj, int *i)
+void		basis(t_gui *gui, t_obj *obj, int *i)
 {
-	vert(gui, obj, i);
-	if (obj->type == TRIANGLE)
-		return ;
 	gui->c_o.labelrect.y += 30;
 	gui->c_o.editboxrect[0].y += 30;
 	gui->c_o.editboxrect[1].y += 30;
@@ -80,9 +75,8 @@ static void		basis(t_gui *gui, t_obj *obj, int *i)
 	gui->c_o.ed_b[(*i)++] = f_e(gui, obj->basis[2].s[2], gui->c_o.rects[3]);
 }
 
-static void	text_normal(t_gui *gui, t_obj *obj, int *i)
+void		text_normal(t_gui *gui, t_obj *obj, int *i)
 {
-	shift(gui, obj, i);
 	gui->c_o.labelrect.y += 30;
 	gui->c_o.editboxrect[0].y += 30;
 	gui->c_o.editboxrect[1].y += 30;
@@ -121,13 +115,10 @@ void		color_emission(t_gui *gui, t_obj *obj, int *i)
 	gui->c_o.ed_b[(*i)++] = f_e(gui, obj->emission.s[0], gui->c_o.rects[1]);
 	gui->c_o.ed_b[(*i)++] = f_e(gui, obj->emission.s[1], gui->c_o.rects[2]);
 	gui->c_o.ed_b[(*i)++] = f_e(gui, obj->emission.s[2], gui->c_o.rects[3]);
-	basis(gui, obj, i);
-	text_normal(gui, obj, i);
 	gui->c_o.labelrect.y += 30;
 	gui->c_o.editboxrect[0].y += 30;
 	gui->c_o.editboxrect[1].y += 30;
 	gui->c_o.editboxrect[2].y += 30;
 	KW_CreateLabel(gui->gui, gui->c_o.frame, "Metalness", gui->c_o.rects[0]);
 	gui->c_o.ed_b[(*i)++] = f_e(gui, obj->metalness, gui->c_o.rects[1]);
-	radius(gui, obj, i);
 }
