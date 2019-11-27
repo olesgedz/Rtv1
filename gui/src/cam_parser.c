@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 18:49:58 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/26 21:46:54 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/27 16:16:45 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void			cam_fov(t_gui *gui, t_cam *cam, int *i)
 	gui->c_c.editboxrect[1].y += 30;
 	gui->c_c.editboxrect[2].y += 30;
 	KW_CreateLabel(gui->gui, gui->c_c.frame, "FOV", gui->c_c.rects[0]);
-	gui->c_c.ed_b[(*i)++] = f_c(gui, cam->border_x.s[0], gui->c_c.rects[1]);
+	gui->c_c.ed_b[(*i)++] = f_c(gui, cam->fov, gui->c_c.rects[1]);
 }
 
 void			cam_amb_blur(t_gui *gui, t_cam *cam, int *i)

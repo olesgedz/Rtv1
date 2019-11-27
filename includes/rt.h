@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/26 22:36:49 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/27 16:52:52 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,7 +302,6 @@ void					check_file(t_game *game);
 cl_float2				create_cfloat2 (float x, float y);
 cl_float3				parse_vec3(cJSON *vec);
 cl_float2				parse_vec2(cJSON *vec);
-void					main_screen(t_gui *gui, t_game *game);
 void					semples_to_line(t_game *game, t_gui *gui);
 void					info_button(t_game *game, t_gui *gui);
 void					show_hide(t_game *game, t_gui *gui);
@@ -411,5 +410,10 @@ void					cart_name(KW_Widget *widget, t_cam *cam);
 void					cart(KW_Widget *widget, int b);
 void					sep(KW_Widget *widget, int b);
 void					cam_click(KW_Widget *widget, int b);
+void					cam_free(t_gui *gui);
+void					cam_screen(t_gui *gui, t_game *game);
+void					pars_cam_box(t_gui *gui, t_cam *cam);
+void					cam_save_click(KW_Widget *widget, int b);
+void					del_cam(t_cam *cam, t_game *game);
 
 #endif

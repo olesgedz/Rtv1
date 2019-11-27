@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 21:32:09 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/25 22:44:35 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/27 16:19:46 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,42 @@ void		cam_rename(t_game *game, t_gui *gui)
 	buff = cam_mass_name(&game->gpu.camera[game->cam_num]);
 	KW_SetLabelText(label, buff);
 	free(buff);
+}
+
+void		pars_cam_box(t_gui *gui, t_cam *cam)
+{
+	int		i;
+
+	i = 0;
+
+	cam->position.s[0] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
+	cam->position.s[1] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
+	cam->position.s[2] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
+	cam->direction.s[0] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
+	cam->direction.s[1] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
+	cam->direction.s[2] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
+	cam->normal.s[0] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
+	cam->normal.s[1] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
+	cam->normal.s[2] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
+	i++;// cam->border_x.s[0] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
+	i++;// cam->border_x.s[1] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
+	i++;// cam->border_x.s[2] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
+	i++;// cam->border_y.s[0] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
+	i++;// cam->border_y.s[1] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
+	i++;// cam->border_y.s[2] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
+	cam->fov = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
+	cam->ambience = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
+	cam->motion_blur = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
+}
+
+void		cam_save_click(KW_Widget *widget, int b)
+{
+	t_gui		*gui;
+	t_cam		*cam;
+
+	b = 0;
+	gui = g_gui(0, 0);
+	cam = KW_GetWidgetUserData(widget);
+	pars_cam_box(gui, cam);
+	gui->game->flag = 1;
 }

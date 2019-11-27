@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 17:24:43 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/26 21:35:43 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/27 15:52:22 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,4 @@ void	change_cam(t_gui *gui, t_cam *cam)
 	cam_fov(gui, cam, &i);
 	cam_amb_blur(gui, cam, &i);
 	cam_eff(gui, cam, &i);
-	// color_emission(gui, cam, &i);
-	// text_normal(gui, cam, &i);
-	// basis(gui, cam, &i);
-	// shift(gui, cam, &i);
-	// prolapse(gui, cam, &i);
 }

@@ -6,11 +6,41 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 21:38:08 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/26 21:53:41 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/27 16:57:47 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+void	del_cam(t_cam *cam, t_game *game)
+{
+	t_game	game_buff;
+	t_cam	*buff;
+	int		i;
+
+	i = -1;
+	if (game->cam_quantity <= 1)
+		return ;
+	game_buff.gpu.camera = 0;
+	while (++i < game->cam_quantity)
+		if (cam && cam != &game->gpu.camera[i])
+		{
+			buff = (t_cam *)malloc(sizeof(t_cam));
+			*buff = game->gpu.camera[i];
+			ft_cam_push(&game_buff, buff);
+		}
+	free(game->gpu.camera);
+	game->cam_quantity = game_buff.cam_quantity;
+	game->gpu.camera = game_buff.gpu.camera;
+	if (cam->id == game->cam_num)
+	{
+		game->cam_num = 0;
+		game->flag = 1;
+	}
+	cam_free(g_gui(0, 0));
+	cam_screen(g_gui(0, 0), g_gui(0, 0)->game);
+	cam_click(0, 0);
+}
 
 void		cart_name(KW_Widget *widget, t_cam *cam)
 {
@@ -48,7 +78,6 @@ void	cart(KW_Widget *widget, int b)
 	cam = KW_GetWidgetUserData(widget);
 	cam->cartoon = !cam->cartoon;
 	cart_name(widget, cam);
-	gui->game->flag = 1;
 }
 
 void	sep(KW_Widget *widget, int b)
@@ -63,5 +92,4 @@ void	sep(KW_Widget *widget, int b)
 	cam = KW_GetWidgetUserData(widget);
 	cam->sepia = !cam->sepia;
 	sep_name(widget, cam);
-	gui->game->flag = 1;
 }

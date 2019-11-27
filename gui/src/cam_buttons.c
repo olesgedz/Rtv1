@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 17:59:39 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/26 18:32:14 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/27 16:57:07 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,38 +26,15 @@ void	take_cam(KW_Widget *widget, int b)
 	gui->game->flag = 1;
 }
 
-void	cam_save_click(KW_Widget *widget, int b)
-{
-	t_gui		*gui;
-	t_obj		*obj;
-
-	b = 0;
-	gui = g_gui(0, 0);
-	obj = KW_GetWidgetUserData(widget);
-	if (obj->type == PLANE)
-		plane_parse(gui, obj);
-	else if (obj->type == CONE)
-		cone_parse(gui, obj);
-	else if (obj->type == CYLINDER)
-		cylin_parse(gui, obj);
-	else if (obj->type == SPHERE)
-		sphere_parse(gui, obj);
-	else if (obj->type == TRIANGLE)
-		trian_parse(gui, obj);
-	gui->flag = 1;
-}
-
 void	cam_del_click(KW_Widget *widget, int b)
 {
 	t_gui		*gui;
-	t_obj		*obj;
+	t_cam		*cam;
 
 	b = 0;
 	gui = g_gui(0, 0);
-	obj = KW_GetWidgetUserData(widget);
-	//del_obj(obj, gui->game);
-	//obj_click(0, 0);
-	gui->game->flag = 1;
+	cam = KW_GetWidgetUserData(widget);
+	del_cam(cam, gui->game);
 }
 
 void	cam_delbutton(t_gui *gui, t_cam *cam)

@@ -6,13 +6,13 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 16:46:11 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/25 22:22:43 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/27 15:40:47 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static void	cam_free(t_gui *gui)
+void	cam_free(t_gui *gui)
 {
 	int i;
 
@@ -35,14 +35,18 @@ static void	cam_free(t_gui *gui)
 	}
 }
 
+void		cam_screen(t_gui *gui, t_game *game)
+{
+	cam_select(gui, game->gpu.camera, game->cam_quantity);
+	if (!gui->c_s.show)
+		KW_HideWidget(gui->c_s.frame);
+}
+
 void		main_screen(t_gui *gui, t_game *game)
 {
 	obj_select(gui, game->gpu.objects, game->obj_quantity);
-	cam_select(gui, game->gpu.camera, game->cam_quantity);
 	if (!gui->o_s.show)
 		KW_HideWidget(gui->o_s.frame);
-	if (!gui->c_s.show)
-		KW_HideWidget(gui->c_s.frame);
 }
 
 void		main_screen_free(t_gui *gui)
@@ -66,7 +70,6 @@ void		main_screen_free(t_gui *gui)
 		KW_HideWidget(gui->o_s.frame);
 		destr(gui, gui->o_s.frame);
 	}
-	cam_free(gui);
 }
 
 void		quit_kiwi_main(t_gui *gui)

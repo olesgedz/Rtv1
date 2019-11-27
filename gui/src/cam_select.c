@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 21:48:49 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/26 22:36:40 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/27 16:41:33 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static int	scan_mass(t_gui *gui, t_cam *cams, int num)
 		gui->c_s.names[i] = cam_mass_name(&cams[i]);
 		gui->c_s.buttonrect[i] = gui->c_s.buttonrect[i - 1];
 		gui->c_s.buttonrect[i].y += 45;
-		if (i < WIN_H / 45 - 3)
+		if (i < WIN_H / 45 - 12)
 			gui->c_s.frect.h += 45;
 		i++;
 	}
@@ -114,7 +114,7 @@ void		cam_select(t_gui *gui, t_cam *cams, int num)
 	KW_Widget *const	*wid_arr;
 
 	gui->c_s.max_i = scan_mass(gui, cams, num);
-	if ((i = -1) && gui->c_s.max_i > WIN_H / 45 - 3)
+	if ((i = -1) && gui->c_s.max_i > WIN_H / 45 - 12)
 	{
 		gui->c_s.frame = KW_CreateScrollbox(gui->gui, NULL, &gui->c_s.frect);
 		wid_arr = KW_GetWidgetChildren(gui->c_s.frame, &test);
@@ -124,7 +124,7 @@ void		cam_select(t_gui *gui, t_cam *cams, int num)
 		gui->c_s.frame = KW_CreateFrame(gui->gui, NULL, &gui->c_s.frect);
 	while (++i < gui->c_s.max_i)
 	{
-		if (gui->c_s.max_i > WIN_H / 45 - 3)
+		if (gui->c_s.max_i > WIN_H / 45 - 12)
 			gui->c_s.buttonrect[i].x -= 15;
 		gui->c_s.buttons[i] = KW_CreateButtonAndLabel(gui->gui,
 gui->c_s.frame, gui->c_s.names[i], &gui->c_s.buttonrect[i]);

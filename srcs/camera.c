@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:50:13 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/25 22:46:24 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/27 16:43:09 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,12 @@ static void	mouse_mov(t_game *game, t_gui *gui)
 		game->gpu.samples = 0;
 		reconfigure_camera(&game->gpu.camera[game->cam_num]);
 		cam_rename(game, gui);
+		if (gui->c_c.show)
+		{
+			gui->game->ev.button.button = SDL_BUTTON_LEFT;
+			cam_click(gui->c_s.buttons[game->cam_num], 0);
+			cam_click(gui->c_s.buttons[game->cam_num], 0);
+		}
 	}
 	else if (gui->flag)
 	{

@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 19:10:18 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/25 22:30:43 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/27 15:29:33 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ void	click_create(KW_Widget *widget, int b)
 		del_obj(0, gui->game);
 	gui->flag = 1;
 	obj_click(0, 0);
-	obj_click(gui->o_s.buttons[gui->game->obj_quantity - 1], 0);
+	if (num != 5)
+		obj_click(gui->o_s.buttons[gui->game->obj_quantity - 1], 0);
 }
 
 void	save_click(KW_Widget *widget, int b)
