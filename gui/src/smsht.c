@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 19:27:34 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/26 19:32:21 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/27 19:52:05 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ KW_Widget	*f_e(t_gui *gui, double db, KW_Rect *rect)
 	return (result);
 }
 
-static void	move_eb(t_gui *gui, t_obj *obj)
+static void	position(t_gui *gui, t_obj *obj, int i)
 {
 	gui->c_o.labelrect = (KW_Rect){5, 5, 1, 30};
 	gui->c_o.editboxrect[0] = (KW_Rect){5, 5, 1, 30};
@@ -60,10 +60,17 @@ static void	move_eb(t_gui *gui, t_obj *obj)
 	gui->c_o.weights[3] = 1;
 	KW_RectFillParentHorizontally(&gui->c_o.frect, gui->c_o.rects,
 	gui->c_o.weights, 4, 10, KW_RECT_ALIGN_MIDDLE);
-	gui->c_o.labelrect.y -= 215;
-	gui->c_o.editboxrect[0].y -= 215;
-	gui->c_o.editboxrect[1].y -= 215;
-	gui->c_o.editboxrect[2].y -= 215;
+	gui->c_o.labelrect.y -= 225;
+	gui->c_o.editboxrect[0].y -= 225;
+	gui->c_o.editboxrect[1].y -= 225;
+	gui->c_o.editboxrect[2].y -= 225;
+	if (obj->type == TRIANGLE)
+		return ;
+	KW_CreateLabel(gui->gui, gui->c_o.frame, "Position", gui->c_o.rects[0]);
+	gui->c_o.ed_b[i++] = f_e(gui, obj->position.s[0], gui->c_o.rects[1]);
+	gui->c_o.ed_b[i++] = f_e(gui, obj->position.s[1], gui->c_o.rects[2]);
+	gui->c_o.ed_b[i++] = f_e(gui, obj->position.s[2], gui->c_o.rects[3]);
+	color_emission(gui, obj, &i);
 }
 
 void		obj_same(t_gui *gui, t_obj *obj)
@@ -91,5 +98,5 @@ void		obj_same(t_gui *gui, t_obj *obj)
 	gui->c_o.rects[1] = &gui->c_o.editboxrect[0];
 	gui->c_o.rects[2] = &gui->c_o.editboxrect[1];
 	gui->c_o.rects[3] = &gui->c_o.editboxrect[2];
-	move_eb(gui, obj);
+	position(gui, obj, 0);
 }

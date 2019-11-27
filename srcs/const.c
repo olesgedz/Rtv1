@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:04:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/25 19:37:25 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/27 19:52:57 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,5 @@ void		set_const(t_game *game, t_gui *gui)
 	game->mouse.x = 0;
 	game->mouse.y = 0;
 	game->mouse.g = 0;
-	gui->c_o.frame = 0;
 	set_keys(game);
 }

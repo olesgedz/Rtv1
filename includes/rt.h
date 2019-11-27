@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/27 17:23:12 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/27 19:52:43 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,9 @@ typedef enum			e_figure
 	CYLINDER,
 	CONE,
 	PLANE,
-	TRIANGLE
+	TRIANGLE,
+	DISK,
+	TORUS
 }						t_type;
 
 typedef struct			s_txture
@@ -76,6 +78,7 @@ typedef struct			s_object
 {
 	t_type				type;
 	cl_float			radius;
+	cl_float			tor_radius;
 	cl_float3			position;
 	cl_float3			color;
 	cl_float3			emission;
@@ -189,6 +192,8 @@ typedef struct			s_game
 	t_mouse_pos			mouse;
 	cl_int				global_tex_id;
 	SDL_Surface			*blured;
+	cl_float3			*vertices_list;
+	int					vertices_num;
 }						t_game;
 
 typedef struct	s_filter
@@ -209,6 +214,7 @@ typedef struct			s_json
     cJSON				*translucency;
     cJSON				*texture;
     cJSON				*radius;
+	cJSON				*tor_radius;
     cJSON				*v;
     cJSON				*x;
     cJSON				*y;
@@ -233,6 +239,8 @@ typedef struct			s_json
 	cJSON				*global_texture;
 	cJSON				*transparency;
 	cJSON				*refraction;
+	cJSON				*name;
+	cJSON				*size;
 }             			t_json;
 
 typedef struct		s_gui
@@ -347,6 +355,8 @@ t_gui					*g_gui(t_gui *gui, int flag);
 SDL_Texture				*load_picture(t_gui *gui, const char *filename);
 void					quit_kiwi_main(t_gui *gui);
 void					main_screen_free(t_gui *gui);
+void					over(KW_Widget *widget, int b);
+void					leave(KW_Widget *widget, int b);
 void					visibility(KW_Widget *widget, int b);
 void					radius(t_gui *gui, t_obj *obj, int *i);
 void					direction(t_gui *gui, t_obj *obj, int *i);
@@ -417,4 +427,6 @@ void					cam_save_click(KW_Widget *widget, int b);
 void					del_cam(t_cam *cam, t_game *game);
 void					add_cam_button(t_gui *gui);
 
+void 					obj3d_parse(const cJSON *object, t_game *game, t_json *parse);
+cl_float3				triangle_norm(cl_float3 *vertices);
 #endif

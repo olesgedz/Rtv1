@@ -1,0 +1,35 @@
+{
+    "scene":{
+        "global texture":"sun.jpg",
+        "ambiance": 0.5,
+        "cartoon": 0,
+        "motion blur" : 0.0,
+        "sepia" : 0
+    }, 
+
+    "objects":[
+        {
+            "type": "obj3d",
+            "name": "rat.obj",
+            "size": 0.1,
+            "position": "ne rabotaet",
+            "dir": [0.0,1.0,0.0]
+        }
+    ],
+
+
+    "cameras":[
+        {
+            "position": [18.0,6.0,-10.0],
+            "dir": [0.0,0.0,-1.0],
+            "normal":[0.0,1.0,0.0],
+            "fov": 60
+        },
+        {
+            "position": [0.0,0.1,2.0],
+            "dir": [0.0,0.0,1.0],
+            "normal":[0.0,1.0,0.0],
+            "fov": 120
+        }
+    ]
+}

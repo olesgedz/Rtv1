@@ -186,6 +186,22 @@ static void scene_new(__global t_obj* objects, int n_objects,\
 	scene->global_texture_id = global_texture_id;
 }
 
+static int filter_mode(int color, t_cam camera)
+{
+	int red;
+	int green;
+	int blue;
+
+	if (camera.sepia == 1)
+	{
+		red = (int)(((color >> 16) & 0xFF) + ((0x704214 >> 16) & 0xFF));
+		green = (int)(((color >> 8) & 0xFF) + ((0x704214 >> 8) & 0xFF));
+		blue = (int)(((color) & 0xFF) + ((0x704214) & 0xFF));
+		color =  ft_rgb_to_hex(c_floor(red), c_floor(green), c_floor(blue));
+	}
+	return (color);
+}
+
 __kernel void render_kernel(__global int *output, __global t_obj *objects,
 __global float3 *vect_temp,  __global ulong * random,  __global t_txture *textures,\
  __global t_txture *normals, int n_objects, int samples, t_cam camera, int lightsampling, int global_texture_id)
@@ -194,6 +210,7 @@ __global float3 *vect_temp,  __global ulong * random,  __global t_txture *textur
 	t_scene scene;
 	t_intersection  intersection;
 	float3 finalcolor;
+	int hex_finalcolor;
 	scene_new(objects, n_objects, samples, random, textures, camera, &scene, normals, lightsampling, global_texture_id);
 	finalcolor = vect_temp[scene.x_coord + scene.y_coord * scene.width];
 	//output[scene.x_coord + scene.y_coord * width] = 0xFF0000;      /* uncomment to test if opencl runs */
@@ -203,7 +220,10 @@ __global float3 *vect_temp,  __global ulong * random,  __global t_txture *textur
 		intersection_reset(&intersection);
 		finalcolor += trace(&scene,  &intersection);
 	}
+	
+	hex_finalcolor = ft_rgb_to_hex(toInt(finalcolor.x  / (float)samples), toInt(finalcolor.y  / (float)samples), toInt(finalcolor.z  / (float)samples));
+
 	vect_temp[scene.x_coord + scene.y_coord * scene.width] = finalcolor;
-	output[scene.x_coord + scene.y_coord * scene.width] = ft_rgb_to_hex(toInt(finalcolor.x  / (float)samples),
-	 toInt(finalcolor.y  / (float)samples), toInt(finalcolor.z  / (float)samples)); /* simple interpolated colour gradient based on pixel coordinates */
+	output[scene.x_coord + scene.y_coord * scene.width] = filter_mode(hex_finalcolor, camera);
+	 /* simple interpolated colour gradient based on pixel coordinates */
 }

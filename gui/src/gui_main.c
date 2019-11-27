@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:21:19 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/26 17:04:12 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/27 19:51:45 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,10 @@ void		loopa(t_game *game, t_gui *gui)
 	{
 		time = SDL_GetTicks();
 		rotator(game, gui);
-		if (SDL_PollEvent(&gui->game->ev))
-			if (gui->game->ev.type == SDL_QUIT ||
-		(gui->game->ev.type == SDL_KEYDOWN &&
-		gui->game->ev.key.keysym.sym == SDLK_ESCAPE))
+		if (SDL_PollEvent(&gui->ev))
+			if (gui->ev.type == SDL_QUIT ||
+		(gui->ev.type == SDL_KEYDOWN &&
+		gui->ev.key.keysym.sym == SDLK_ESCAPE))
 				gui->quit = 1;
 		ft_render(game, gui);
 		screen_present(game, gui);
