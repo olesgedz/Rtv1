@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/21 14:17:09 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/27 19:50:48 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,22 @@ typedef struct		s_object_select
 	int				show;
 }					t_object_select;
 
+typedef struct		s_camera_select
+{
+	KW_Rect			titlerect;
+	KW_Rect			winrect;
+	KW_Rect			frect;
+	KW_Rect			buttonrect[MAX_OBJ];
+	KW_Widget		*frame;
+	KW_Widget		*label;
+	KW_Rect			*rects[1];
+	unsigned		weights[1];
+	KW_Widget		*buttons[MAX_OBJ];
+	char			*names[MAX_OBJ];
+	int				max_i;
+	int				show;
+}					t_camera_select;
+
 typedef struct		s_edit_win
 {
 	SDL_Texture		*backtex;
@@ -90,33 +106,48 @@ typedef struct		s_gui_bar
 	int				show;
 }					t_gui_bar;
 
-typedef struct		s_obj_type
-{
-	KW_Rect			frect;
-	KW_Rect			buttonrect[5];
-	KW_Widget		*frame;
-	KW_Widget		*label;
-	KW_Rect			*rects[1];
-	unsigned		weights[1];
-	KW_Widget		*buttons[5];
-	char			*names[5];
-	int				max_i;
-	int				show;
-}					t_obj_type;
-
 typedef struct		s_change_obj
 {
 	KW_Rect			frect;
-	KW_Rect			buttonrect[2];
+	KW_Rect			buttonrect[3];
+	KW_Rect			labelrect;
+	KW_Rect			editboxrect[3];
+	KW_Widget		*frame;
+	KW_Widget		*ed_b[30];
+	KW_Rect			*rects[4];
+	unsigned		weights[4];
+	KW_Widget		*buttons[3];
+	char			*names[30];
+	int				show;
+}					t_change_obj;
+
+typedef struct		s_change_cam
+{
+	KW_Rect			frect;
+	KW_Rect			buttonrect[5];
 	KW_Rect			labelrect;
 	KW_Rect			editboxrect[3];
 	KW_Widget		*frame;
 	KW_Widget		*ed_b[23];
 	KW_Rect			*rects[4];
 	unsigned		weights[4];
-	KW_Widget		*buttons[2];
+	KW_Widget		*buttons[5];
 	char			*names[30];
 	int				show;
-}					t_change_obj;
+}					t_change_cam;
+
+typedef struct		s_obj_type
+{
+	KW_Rect			frect;
+	KW_Rect			buttonrect[6];
+	KW_Widget		*frame;
+	KW_Widget		*label;
+	KW_Rect			*rects[1];
+	unsigned		weights[1];
+	KW_Widget		*buttons[6];
+	char			*names[6];
+	int				max_i;
+	int				show;
+}					t_obj_type;
 
 #endif

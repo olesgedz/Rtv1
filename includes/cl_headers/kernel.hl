@@ -69,6 +69,7 @@ typedef struct 			s_cam
 	float				fov;
 	float3				border_x;
 	float3				border_y;
+	int					id;
 	int					cartoon;
 	int					sepia;
 	float				motion_blur;

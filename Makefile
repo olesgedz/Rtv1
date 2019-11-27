@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+         #
+#    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/11/21 19:56:27 by srobert-         ###   ########.fr        #
+#    Updated: 2019/11/27 19:50:36 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,6 +75,19 @@ RMRF = gui/src/gui_main.o\
 		gui/src/smsht.o\
 		gui/src/editboxes.o\
 		gui/src/editboxes2.o\
+		gui/src/parse_obj.o\
+		gui/src/parse_box.o\
+		gui/src/parse_box2.o\
+		gui/src/create_obj.o\
+		gui/src/push_new.o\
+		gui/src/del_obj.o\
+		gui/src/cameras.o\
+		gui/src/change_cam.o\
+		gui/src/cam_buttons.o\
+		gui/src/cam_select.o\
+		gui/src/cam_parser.o\
+		gui/src/add_camera.o\
+		gui/src/eff.o\
 		cJSON/cJSON.o
 
 SRCS_LIST = main.c \
@@ -87,6 +100,7 @@ SRCS_LIST = main.c \
 			const.c\
 			hilfefunktionen.c\
 			init_scene.c\
+			help_fun.c\
 			render.c\
 			mouse.c\
 			../gui/src/gui_main.c\
@@ -99,10 +113,23 @@ SRCS_LIST = main.c \
 			../gui/src/main_screen.c\
 			../gui/src/ren_button.c\
 			../gui/src/obj_select.c\
+			../gui/src/cam_select.c\
 			../gui/src/change_obj.c\
 			../gui/src/smsht.c\
 			../gui/src/editboxes.c\
 			../gui/src/editboxes2.c\
+			../gui/src/parse_obj.c\
+			../gui/src/parse_box.c\
+			../gui/src/parse_box2.c\
+			../gui/src/create_obj.c\
+			../gui/src/push_new.c\
+			../gui/src/del_obj.c\
+			../gui/src/change_cam.c\
+			../gui/src/cam_buttons.c\
+			../gui/src/cam_parser.c\
+			../gui/src/cameras.c\
+			../gui/src/add_camera.c\
+			../gui/src/eff.c\
 			../cJSON/cJSON.c\
 			neue_schlanke_analyse.c\
 			analyse_dienstprogramme.c\

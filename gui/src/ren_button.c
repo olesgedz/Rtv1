@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 17:38:36 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/20 20:42:10 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/26 20:00:14 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,28 @@ void		show_hide(t_game *game, t_gui *gui)
 		gui->g_b.show = 1;
 		if (gui->s_s.show)
 			KW_ShowWidget(gui->s_s.frame);
+		if (gui->o_t.show)
+			KW_ShowWidget(gui->o_t.frame);
 		if (gui->o_s.show)
 			KW_ShowWidget(gui->o_s.frame);
+		if (gui->c_s.show)
+			KW_ShowWidget(gui->c_s.frame);
 		if (gui->c_o.show)
 			KW_ShowWidget(gui->c_o.frame);
+		if (gui->c_c.show)
+			KW_ShowWidget(gui->c_c.frame);
 	}
 	else
 	{
 		KW_HideWidget(gui->g_b.frame);
 		KW_HideWidget(gui->s_s.frame);
 		KW_HideWidget(gui->o_s.frame);
-		KW_HideWidget(gui->c_o.frame);
+		KW_HideWidget(gui->o_t.frame);
+		KW_HideWidget(gui->c_s.frame);
+		if (gui->c_o.frame)
+			KW_HideWidget(gui->c_o.frame);
+		if (gui->c_c.frame)
+			KW_HideWidget(gui->c_c.frame);
 	}
 }
 
@@ -65,7 +76,7 @@ void		semples_to_line(t_game *game, t_gui *gui)
 
 void		info_button(t_game *game, t_gui *gui)
 {
-	gui->g_b.buttonrect[3] = gui->g_b.buttonrect[0];
+	gui->g_b.buttonrect[3] = gui->g_b.buttonrect[5];
 	gui->g_b.buttonrect[3].x += gui->g_b.buttonrect[3].w;
 	gui->g_b.rects[3] = &gui->g_b.buttonrect[3];
 	gui->g_b.buttons[3] = KW_CreateButtonAndLabel(gui->gui,

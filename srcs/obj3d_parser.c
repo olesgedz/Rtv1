@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj3d_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:17:38 by srobert-          #+#    #+#             */
-/*   Updated: 2019/11/22 21:42:34 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/27 19:53:30 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void obj3d_parse(const cJSON *object, t_game *game, t_json *parse)
     if ((fd = open(m, O_RDONLY)) <= 0)
         terminate("fuck you\n");
     while (get_next_line(fd, &line))
-    {   
+    {
         if (ft_strlen(line) == 0)
         {
             free(line);
@@ -89,7 +89,7 @@ void obj3d_parse(const cJSON *object, t_game *game, t_json *parse)
         if (ft_strcmp(data[0], "f") == 0)
             push_facing(data, game, parse);
         feel_free(data);
-        free(line);   
+        free(line);
     }
     // free(data);
     close(fd);

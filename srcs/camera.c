@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:50:13 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/19 17:11:00 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/11/27 19:52:52 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,7 @@ void		pos_check(t_game *game, t_gui *gui)
 	y = 0;
 	SDL_GetMouseState(&x, &y);
 	gui->over_gui = 0;
-	if (game->keys.show_gui && gui->s_s.show)
-		if (x > gui->s_s.frect.x && x < gui->s_s.frect.x + gui->s_s.frect.w)
-			if (y > gui->s_s.frect.y && y < gui->s_s.frect.y + gui->s_s.frect.h)
-				gui->over_gui = 1;
-	if (game->keys.show_gui && gui->o_s.show)
-		if (x > gui->o_s.frect.x && x < gui->o_s.frect.x + gui->o_s.frect.w)
-			if (y > gui->o_s.frect.y && y < gui->o_s.frect.y + gui->o_s.frect.h)
-				gui->over_gui = 1;
-	if (game->keys.show_gui && gui->g_b.show)
-		if (x > gui->g_b.frect.x && x < gui->g_b.frect.x + gui->g_b.frect.w)
-			if (y > gui->g_b.frect.y && y < gui->g_b.frect.y + gui->g_b.frect.h)
-				gui->over_gui = 1;
-	if (game->keys.show_gui && gui->c_o.show)
-		if (x > gui->c_o.frect.x && x < gui->c_o.frect.x + gui->c_o.frect.w)
-			if (y > gui->c_o.frect.y && y < gui->c_o.frect.y + gui->c_o.frect.h)
-				gui->over_gui = 1;
+	check_gui_entrance(game, gui, x, y);
 	if (game->keys.show_gui && gui->over_gui)
 		SDL_SetCursor(SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW));
 	else
@@ -70,14 +55,23 @@ static void	mouse_mov(t_game *game, t_gui *gui)
 		(unsigned)WIN_H * (unsigned)WIN_W, game->gpu.vec_temp);
 		game->gpu.samples = 0;
 		reconfigure_camera(&game->gpu.camera[game->cam_num]);
+		cam_rename(game, gui);
+		if (gui->c_c.show)
+		{
+			gui->game->ev.button.button = SDL_BUTTON_LEFT;
+			cam_click(gui->c_s.buttons[game->cam_num], 0);
+			cam_click(gui->c_s.buttons[game->cam_num], 0);
+		}
 	}
 	else if (gui->flag)
 	{
 		game->cl_info->ret =
 		cl_write(game->cl_info, game->cl_info->progs[0].krls[0].args[2], sizeof(cl_float3) *
 		(unsigned)WIN_H * (unsigned)WIN_W, game->gpu.vec_temp);
+		ERROR(game->cl_info->ret);
 		game->cl_info->ret = cl_write(game->cl_info, game->cl_info->progs[0].krls[0].args[1],
 		sizeof(t_obj) * game->obj_quantity, game->gpu.objects);
+		ERROR(game->cl_info->ret);
 		game->gpu.samples = 0;
 		game->flag = 1;
 	}
