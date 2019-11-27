@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/27 16:52:52 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/27 17:23:12 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -415,5 +415,6 @@ void					cam_screen(t_gui *gui, t_game *game);
 void					pars_cam_box(t_gui *gui, t_cam *cam);
 void					cam_save_click(KW_Widget *widget, int b);
 void					del_cam(t_cam *cam, t_game *game);
+void					add_cam_button(t_gui *gui);
 
 #endif
