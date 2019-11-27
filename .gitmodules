@@ -1,0 +1,12 @@
+[submodule "libs/libcl"]
+	path = libs/libcl
+	url = https://github.com/olesgedz/libcl.git
+[submodule "libs/libft"]
+	path = libs/libft
+	url = https://github.com/olesgedz/libft.git
+[submodule "libs/libsdl"]
+	path = libs/libsdl
+	url = https://github.com/olesgedz/libsdl.git
+[submodule "gui/kiwi"]
+	path = gui/kiwi
+	url = https://github.com/mobius3/kiwi.git
