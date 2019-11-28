@@ -1,1 +1,0 @@
-sed 's/#.*//' apt_list.txt | xargs sudo apt install -y
