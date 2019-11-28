@@ -1,0 +1,28 @@
+{
+    "objects":[
+        {
+            "type": "sphere",
+            "position": [10.0,10.0,10.1],
+            "color": [0.9,0.8,0.7],
+            "radius" : 0.0000001,
+            "texture": "sun.jpg"
+        },
+        {
+            "type": "sphere",
+            "position": [0.0,0.15,1.0],
+            "color": [0.0,0.0,0.0],
+            "radius" : 0.15,
+            "emition" : [100.0,100.0,100.0],
+            "texture": "sviborg_you.jpg",
+            "x_basis": [0.0,0.0,1.0],
+            "y_basis": [0.0,1.0,0.0]
+        }
+    ],
+    "cameras":[
+        {
+            "position": [0.0,0.15,1.5],
+            "dir": [1.0,0.0,0.0],
+            "normal":[0.0,1.0,0.0]
+        }
+    ]
+}

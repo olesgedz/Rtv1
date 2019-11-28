@@ -1,0 +1,112 @@
+{
+    "scene":{
+        "global texture":"sviborg.jpg",
+        "ambiance": 0.5,
+        "cartoon": 0,
+        "motion blur" : 0.0,
+        "sepia" : 0
+    }, 
+    
+    "objects":[
+        {
+            "type": "sphere",
+            "position": [1.5, 0.0,-2.0],
+            "color": [0.0,0.0,0.0],
+            "radius" : 0.1,
+            "emition" : [80.0,80.0,80.0],
+            "texture": "sun.jpg"
+        },
+        {
+            "type": "composed",
+            "position":[0.0, 0.0, -5.0],
+            "dir":[1.0, -1.0, 0.0],
+            "objects":[
+                {
+                    "type": "sphere",
+                    "position": [0.0,0.0,1.0],
+                    "color": [0.9,0.8,0.7],
+                    "radius" : 0.3,
+                    "texture": "sobenin.jpg"
+                },
+                {
+                    "type": "composed",
+                    "position":[0.0, 0.0, 5.0],
+                    "dir":[1.0, -1.0, 0.0],
+                    "objects":[
+                        {
+                            "type": "sphere",
+                            "position": [0.0,0.0,1.0],
+                            "color": [0.9,0.8,0.7],
+                            "radius" : 0.3,
+                            "texture": "sobenin.jpg"
+                        },
+                        {
+                            "type": "cylinder",
+                            "position": [0.0,0.0,-0.1],
+                            "color": [0.9,0.8,0.7],
+                            "radius" : 0.5,
+                            "reflection": 0.0,
+                            "texture": "seamless_pawnment.jpg",
+                            "dir": [0.0,1.0,0.0]
+                        },
+                        {
+                            "type": "cylinder",
+                            "position": [1.5,0.0,-0.1],
+                            "color": [0.9,0.8,0.7],
+                            "radius" : 0.5,
+                            "reflection": 0.0,
+                            "texture": "seamless_pawnment.jpg",
+                            "dir": [-1.0,2.0,0.0]
+                        },
+                        {
+                            "type": "sphere",
+                            "position": [0.5,0.0,1.0],
+                            "color": [0.0,0.0,0.0],
+                            "radius" : 0.1,
+                            "emition" : [80.0,80.0,80.0],
+                            "texture": "sun.jpg"
+                        }
+                    ]
+                },
+                {
+                    "type": "cylinder",
+                    "position": [0.0,0.0,-0.1],
+                    "color": [0.9,0.8,0.7],
+                    "radius" : 0.5,
+                    "reflection": 0.0,
+                    "texture": "seamless_pawnment.jpg",
+                    "dir": [0.0,1.0,0.0]
+                },
+                {
+                    "type": "cylinder",
+                    "position": [1.5,0.0,-0.1],
+                    "color": [0.9,0.8,0.7],
+                    "radius" : 0.5,
+                    "reflection": 0.0,
+                    "texture": "seamless_pawnment.jpg",
+                    "dir": [-1.0,2.0,0.0]
+                },
+                {
+                    "type": "sphere",
+                    "position": [0.5,0.0,1.0],
+                    "color": [0.0,0.0,0.0],
+                    "radius" : 0.1,
+                    "emition" : [80.0,80.0,80.0],
+                    "texture": "sun.jpg"
+                }
+            ]
+        }
+    ],
+    "cameras":[
+        {
+            "position": [0.0,0.1,2.0],
+            "dir": [0.0,0.0,-1.0],
+            "normal":[0.0,1.0,0.0]
+        },
+        {
+            "position": [0.0,0.1,2.0],
+            "dir": [0.0,0.0,1.0],
+            "normal":[0.0,1.0,0.0]
+        }
+    ]
+}
