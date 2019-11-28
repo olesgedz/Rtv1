@@ -12,7 +12,7 @@ The final project of the graphic branch of ["School 21"](https://21-school.ru/) 
 * Optimized rendering and a lot of little things.
 
 ## My team
-* [olesgedz](https://github.com/olesgedz) or [jblack-b](https://profile.intra.42.fr/users/jblack-b) on intranet
-* [Wezun4ik](https://github.com/Wezun4ik) or [sbrella](https://profile.intra.42.fr/users/sbrella) on intranet
-* [gusario](https://github.com/gusario) or [srobert-](https://profile.intra.42.fr/users/srobert-) on intranet
+* [olesgedz](https://github.com/olesgedz) or [jblack-b](https://profile.intra.42.fr/users/jblack-b) on intranet.
+* [Wezun4ik](https://github.com/Wezun4ik) or [sbrella](https://profile.intra.42.fr/users/sbrella) on intranet.
+* [gusario](https://github.com/gusario) or [srobert-](https://profile.intra.42.fr/users/srobert-) on intranet.
 * And I [Aldarius](https://github.com/Aldarius) or [lminta](https://profile.intra.42.fr/users/lminta) on intranet.
