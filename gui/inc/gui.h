@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/27 19:50:48 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/29 17:56:31 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,14 +124,14 @@ typedef struct		s_change_obj
 typedef struct		s_change_cam
 {
 	KW_Rect			frect;
-	KW_Rect			buttonrect[5];
+	KW_Rect			buttonrect[6];
 	KW_Rect			labelrect;
 	KW_Rect			editboxrect[3];
 	KW_Widget		*frame;
 	KW_Widget		*ed_b[23];
 	KW_Rect			*rects[4];
 	unsigned		weights[4];
-	KW_Widget		*buttons[5];
+	KW_Widget		*buttons[6];
 	char			*names[30];
 	int				show;
 }					t_change_cam;

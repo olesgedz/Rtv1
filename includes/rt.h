@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/29 17:43:42 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/29 18:00:13 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -430,6 +430,8 @@ void					pars_cam_box(t_gui *gui, t_cam *cam);
 void					cam_save_click(KW_Widget *widget, int b);
 void					del_cam(t_cam *cam, t_game *game);
 void					add_cam_button(t_gui *gui);
+void					ddd_name(KW_Widget *widget, t_cam *cam);
+void					ddd(KW_Widget *widget, int b);
 
 void 					obj3d_parse(const cJSON *object, t_game *game, t_json *parse);
 cl_float3				triangle_norm(cl_float3 *vertices);

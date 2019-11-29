@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 21:32:09 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/27 16:19:46 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/29 17:51:36 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void		pars_cam_box(t_gui *gui, t_cam *cam)
 	int		i;
 
 	i = 0;
-
 	cam->position.s[0] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
 	cam->position.s[1] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
 	cam->position.s[2] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));

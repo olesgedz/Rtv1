@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 17:19:57 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/27 17:47:07 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/29 17:54:46 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static t_cam	*new_cam(void)
 	cam->sepia = 0;
 	cam->motion_blur = 0;
 	cam->fov = M_PI / 3;
+	cam->stereo = 0;
 	reconfigure_camera(cam);
 	return (cam);
 }
