@@ -39,10 +39,10 @@ static void createCamRay(t_scene *scene, t_ray *ray)
 static bool intersect_scene(t_scene *scene, t_intersection *intersection, t_ray *ray)
 {
 	ray->t = INFINITY;
-	/* check if the ray intersects each sphere in the scene */
+	/* check if the ray intersects each object in the scene */
 	for (int i = 0; i < scene->n_objects; i++)
 	{
-		__global t_obj *object = &(scene->objects[i]); /* create local copy of sphere */
+		__global t_obj *object = &(scene->objects[i]); /* create local copy of object */
 		float hitdistance = 0;
 		if (object->is_visible)
 		{
@@ -56,6 +56,8 @@ static bool intersect_scene(t_scene *scene, t_intersection *intersection, t_ray 
 				hitdistance = intersect_plane(object, ray);
 			else if (object->type == TRIANGLE)
 				hitdistance = intersect_triangle(object, ray);
+			else if (object->type == HYPERBOLOID)
+				hitdistance = intersect_hyper(object, ray);
 			/* keep track of the closest intersection and hitobject found so far */
 			if (hitdistance != 0.0f && hitdistance < ray->t)
 			{
@@ -250,8 +252,11 @@ __global float3 *vect_temp,  __global ulong * random,  __global t_txture *textur
 		finalcolor.x = (finalcolor.x + finalcolor.y + finalcolor.z) / 3;
 		finalcolor.z = 0.00;
 		finalcolor.y = 0.00;
+		float3 cross_dir = normalize(cross(camera.normal, camera.direction));
 		hex_finalcolor = ft_rgb_to_hex(toInt(finalcolor.x  / (float)samples), toInt(finalcolor.y  / (float)samples), toInt(finalcolor.z  / (float)samples));
-		scene.camera.position.x += 0.05;
+		scene.camera.position.x += cross_dir.x  * 0.05;
+		scene.camera.position.y += cross_dir.y  * 0.05;
+		scene.camera.position.z += cross_dir.z  * 0.05;
 		finalcolor1 = vect_temp1[scene.x_coord + scene.y_coord * scene.width];
 		for (int i = 0; i < SAMPLES; i++)
 		{
@@ -260,8 +265,9 @@ __global float3 *vect_temp,  __global ulong * random,  __global t_txture *textur
 			finalcolor1 += trace(&scene,  &intersection);
 		}
 		vect_temp1[scene.x_coord + scene.y_coord * scene.width] = finalcolor1;
-		scene.camera.position.x -= 0.05;
-
+		scene.camera.position.x -= cross_dir.x  * 0.05;
+		scene.camera.position.y -= cross_dir.y  * 0.05;
+		scene.camera.position.z -= cross_dir.z  * 0.05;
 		finalcolor1.z = (finalcolor1.x + finalcolor1.y + finalcolor1.z) / 3;
 		finalcolor1.x = 0.00;
 		finalcolor1.y = 0.00;

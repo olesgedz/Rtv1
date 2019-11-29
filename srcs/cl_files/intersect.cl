@@ -103,3 +103,8 @@ static float		intersect_triangle(__global t_obj *triangle,  t_ray *  ray)
 		return (0);
 	return (b < EPSILON) ? 0 : b;
 }
+
+static float		intersect_hyper(__global t_obj *hyper, t_ray *	ray)
+{
+	return (0.0f);
+}
