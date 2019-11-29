@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/29 20:19:35 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/29 21:51:18 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -360,8 +360,6 @@ t_gui					*g_gui(t_gui *gui, int flag);
 SDL_Texture				*load_picture(t_gui *gui, const char *filename);
 void					quit_kiwi_main(t_gui *gui);
 void					main_screen_free(t_gui *gui);
-void					over(KW_Widget *widget, int b);
-void					leave(KW_Widget *widget, int b);
 void					visibility(KW_Widget *widget, int b);
 void					radius(t_gui *gui, t_obj *obj, int *i);
 void					direction(t_gui *gui, t_obj *obj, int *i);
@@ -433,7 +431,8 @@ void					del_cam(t_cam *cam, t_game *game);
 void					add_cam_button(t_gui *gui);
 void					ddd_name(KW_Widget *widget, t_cam *cam);
 void					ddd(KW_Widget *widget, int b);
-
+void					push_tex(t_game *game, char *res);
 void 					obj3d_parse(const cJSON *object, t_game *game, t_json *parse);
 cl_float3				triangle_norm(cl_float3 *vertices);
+void					push_normal(t_game *game, char *res);
 #endif
