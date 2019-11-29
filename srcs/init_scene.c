@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:53:01 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/19 22:53:45 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/28 18:13:29 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void				opencl_init(t_game *game)
 	game->cl_info = ft_memalloc(sizeof(t_cl_info));
 	game->gpu.objects = NULL;
 	game->gpu.vec_temp = ft_memalloc(sizeof(cl_float3)\
+	* (int)WIN_H * (int)WIN_W);
+	game->gpu.vec_temp1 = ft_memalloc(sizeof(cl_float3)\
 	* (int)WIN_H * (int)WIN_W);
 	game->gpu.random = get_random(game->gpu.random);
 	game->gpu.samples = 0;
@@ -36,7 +38,7 @@ void				opencl_init(t_game *game)
 	cl_krl_new_push(&game->cl_info->progs[0], "render_kernel");
 	// cl_krl_new_push(&game->cl_info->progs[0], "gaussian_blur");
 	ERROR(game->cl_info->ret);
-	cl_krl_init(&game->cl_info->progs[0].krls[0], 11);
+	cl_krl_init(&game->cl_info->progs[0].krls[0], 12);
 	cl_krl_create(game->cl_info, &game->cl_info->progs[0], &game->cl_info->progs[0].krls[0]);
 //	cl_krl_create(game->cl_info, &game->cl_info->progs[0], &game->cl_info->progs[0].krls[1]);
 }
@@ -68,6 +70,8 @@ void				opencl(t_game *game, char *argv)
 	&(game->keys.r));
 	cl_krl_init_arg(&game->cl_info->progs[0].krls[0], 10, sizeof(cl_int),\
 	&(game->global_tex_id));
+	cl_krl_init_arg(&game->cl_info->progs[0].krls[0], 11, sizeof(cl_float3) * (int)WIN_H * (int)WIN_W,\
+	game->gpu.vec_temp1);
 	
 	game->cl_info->ret = cl_krl_mem_create(game->cl_info, &game->cl_info->progs[0].krls[0], 0, CL_MEM_READ_WRITE);
 	ERROR(game->cl_info->ret);
@@ -80,6 +84,8 @@ void				opencl(t_game *game, char *argv)
 	game->cl_info->ret = cl_krl_mem_create(game->cl_info, &game->cl_info->progs[0].krls[0], 4, CL_MEM_READ_WRITE);
 	ERROR(game->cl_info->ret);
 	game->cl_info->ret = cl_krl_mem_create(game->cl_info, &game->cl_info->progs[0].krls[0], 5, CL_MEM_READ_WRITE);
+	ERROR(game->cl_info->ret);
+	game->cl_info->ret = cl_krl_mem_create(game->cl_info, &game->cl_info->progs[0].krls[0], 11, CL_MEM_READ_WRITE);
 	ERROR(game->cl_info->ret);
 	cl_krl_write_all(game->cl_info, &game->cl_info->progs[0].krls[0]);
 	ERROR(game->cl_info->ret);

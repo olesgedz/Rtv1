@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/11/27 19:53:20 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/29 17:44:09 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -355,6 +355,7 @@ void check_cam(const cJSON *cam, t_game *game, t_filter *filter)
 	camera->cartoon = filter->cartoon;
 	camera->sepia = filter->sepia;
 	camera->motion_blur = filter->motion_blur;
+	camera->stereo = filter->stereo;
 	reconfigure_camera(camera);
 	ft_cam_push(game, camera);
 }
@@ -396,7 +397,13 @@ void check_scene(const cJSON *json, t_game *game)
 		filter.sepia = (int)parse.sepia->valuedouble;
 	else
 		filter.sepia = 0;
+	parse.stereo = cJSON_GetObjectItemCaseSensitive(scene, "stereo");
+	if (parse.stereo!= NULL)
+		filter.stereo = (int)parse.stereo->valuedouble;
+	else
+		filter.stereo = 0;
 
+	printf("stereo == %d\n", filter.stereo);
 	parse.motion_blur = cJSON_GetObjectItemCaseSensitive(scene, "motion blur");
 	if (parse.motion_blur != NULL)
 		filter.motion_blur = parse.motion_blur->valuedouble;
