@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/27 19:52:43 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/28 18:22:39 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ typedef struct			s_cam
 	cl_int				id;
 	cl_int				cartoon;
 	cl_int				sepia;
+	cl_int				stereo;
 	cl_float			motion_blur;
 	cl_float			ambience;
 }						t_cam;
@@ -133,6 +134,7 @@ typedef struct			s_gpu
 	cl_ulong			*random;
 	char				*kernel_source;
 	cl_float3			*vec_temp;
+	cl_float3			*vec_temp1;
 	t_obj				*objects;
 	cl_mem				cl_cpu_spheres;
 	cl_mem				cl_buffer_out;
@@ -201,6 +203,7 @@ typedef struct	s_filter
 	float	ambiance;
 	int		cartoon;
 	int		sepia;
+	int		stereo;
 	float	motion_blur;
 
 }				t_filter;
@@ -234,6 +237,7 @@ typedef struct			s_json
 	cJSON				*composed_v;
 	cJSON				*cartoon;
 	cJSON				*sepia;
+	cJSON				*stereo;
 	cJSON				*motion_blur;
 	cJSON				*ambience;
 	cJSON				*global_texture;

@@ -4,7 +4,8 @@
         "ambiance": 0.5,
         "cartoon": 0,
         "motion blur" : 0.0,
-        "sepia" : 0
+        "sepia" : 1,
+        "stereo": 1
     }, 
     
     "objects":[
@@ -20,7 +21,8 @@
             "type": "sphere",
             "position": [0.0,0.0,0.1],
             "color": [0.9,0.8,0.7],
-            "radius" : 0.1
+            "radius" : 0.1,
+            "metalness": 1.0
         },
         {
             "type": "sphere",
@@ -29,6 +31,15 @@
             "radius" : 0.15,
             "emition" : [80.0,80.0,80.0],
             "texture":  "sun.jpg"
+        },
+        {
+            "type": "sphere",
+            "position": [0.38,0.2,1.0],
+            "color": [0.0,0.0,0.0],
+            "radius" : 0.15,
+            "emition" : [0.0,0.0,0.0],
+            "texture":  "sun.jpg",
+            "metalness": 1.0
         },
         {
             "type": "plane",

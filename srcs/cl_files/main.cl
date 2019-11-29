@@ -186,31 +186,51 @@ static void scene_new(__global t_obj* objects, int n_objects,\
 	scene->global_texture_id = global_texture_id;
 }
 
-static int filter_mode(int color, t_cam camera)
+static int filter_mode(float3 finalcolor, t_cam camera, int samples)
 {
 	int red;
 	int green;
 	int blue;
+	int color;
 
+	color = ft_rgb_to_hex(toInt(finalcolor.x  / (float)samples), toInt(finalcolor.y  / (float)samples), toInt(finalcolor.z  / (float)samples));
 	if (camera.sepia == 1)
 	{
-		red = (int)(((color >> 16) & 0xFF) + ((0x704214 >> 16) & 0xFF));
-		green = (int)(((color >> 8) & 0xFF) + ((0x704214 >> 8) & 0xFF));
-		blue = (int)(((color) & 0xFF) + ((0x704214) & 0xFF));
+		finalcolor.x = (finalcolor.x + finalcolor.y + finalcolor.z) / 3;
+		finalcolor.z = (finalcolor.x + finalcolor.y + finalcolor.z) / 3;
+		finalcolor.y = (finalcolor.x + finalcolor.y + finalcolor.z) / 3;
+		color = ft_rgb_to_hex(toInt(finalcolor.x  / (float)samples), toInt(finalcolor.y  / (float)samples), toInt(finalcolor.z  / (float)samples));
+		red = (int)(((color >> 16) & 0xFF) + ((SEPIA >> 16) & 0xFF));
+		green = (int)(((color >> 8) & 0xFF) + ((SEPIA >> 8) & 0xFF));
+		blue = (int)(((color) & 0xFF) + ((SEPIA) & 0xFF));
 		color =  ft_rgb_to_hex(c_floor(red), c_floor(green), c_floor(blue));
 	}
 	return (color);
 }
 
+static int stereo_mode(int color0, int color1)
+{
+	int red;
+	int green;
+	int blue;
+
+	red = (int)(((color0 >> 16) & 0xFF) + ((color1 >> 16) & 0xFF));
+	green = (int)(((color0 >> 8) & 0xFF) + ((color1 >> 8) & 0xFF));
+	blue = (int)(((color0) & 0xFF) + ((color1) & 0xFF));
+	return (ft_rgb_to_hex(c_floor(red), c_floor(green), c_floor(blue)));
+}
+
 __kernel void render_kernel(__global int *output, __global t_obj *objects,
 __global float3 *vect_temp,  __global ulong * random,  __global t_txture *textures,\
- __global t_txture *normals, int n_objects, int samples, t_cam camera, int lightsampling, int global_texture_id)
+ __global t_txture *normals, int n_objects, int samples, t_cam camera, int lightsampling, int global_texture_id, __global float3 *vect_temp1)
 {
 
 	t_scene scene;
 	t_intersection  intersection;
 	float3 finalcolor;
 	int hex_finalcolor;
+	float3 finalcolor1;
+	int	hex_finalcolor1;
 	scene_new(objects, n_objects, samples, random, textures, camera, &scene, normals, lightsampling, global_texture_id);
 	finalcolor = vect_temp[scene.x_coord + scene.y_coord * scene.width];
 	//output[scene.x_coord + scene.y_coord * width] = 0xFF0000;      /* uncomment to test if opencl runs */
@@ -220,10 +240,32 @@ __global float3 *vect_temp,  __global ulong * random,  __global t_txture *textur
 		intersection_reset(&intersection);
 		finalcolor += trace(&scene,  &intersection);
 	}
-	
-	hex_finalcolor = ft_rgb_to_hex(toInt(finalcolor.x  / (float)samples), toInt(finalcolor.y  / (float)samples), toInt(finalcolor.z  / (float)samples));
-
 	vect_temp[scene.x_coord + scene.y_coord * scene.width] = finalcolor;
-	output[scene.x_coord + scene.y_coord * scene.width] = filter_mode(hex_finalcolor, camera);
+
+	if (camera.stereo == 1)
+	{
+		finalcolor.x = (finalcolor.x + finalcolor.y + finalcolor.z) / 3;
+		finalcolor.z = 0.00;
+		finalcolor.y = 0.00;
+		hex_finalcolor = ft_rgb_to_hex(toInt(finalcolor.x  / (float)samples), toInt(finalcolor.y  / (float)samples), toInt(finalcolor.z  / (float)samples));
+		scene.camera.position.x += 0.05;
+		finalcolor1 = vect_temp1[scene.x_coord + scene.y_coord * scene.width];
+		for (int i = 0; i < SAMPLES; i++)
+		{
+			createCamRay(&scene, &(intersection.ray));
+			intersection_reset(&intersection);
+			finalcolor1 += trace(&scene,  &intersection);
+		}
+		vect_temp1[scene.x_coord + scene.y_coord * scene.width] = finalcolor1;
+		scene.camera.position.x -= 0.05;
+
+		finalcolor1.z = (finalcolor1.x + finalcolor1.y + finalcolor1.z) / 3;
+		finalcolor1.x = 0.00;
+		finalcolor1.y = 0.00;
+		hex_finalcolor1 = ft_rgb_to_hex(toInt(finalcolor1.x  / (float)samples), toInt(finalcolor1.y  / (float)samples), toInt(finalcolor1.z  / (float)samples));
+		output[scene.x_coord + scene.y_coord * scene.width] = stereo_mode(hex_finalcolor, hex_finalcolor1);
+	}
+	else
+		output[scene.x_coord + scene.y_coord * scene.width] = filter_mode(finalcolor, camera, samples);
 	 /* simple interpolated colour gradient based on pixel coordinates */
 }

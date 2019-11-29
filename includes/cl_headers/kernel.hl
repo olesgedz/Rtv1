@@ -72,6 +72,7 @@ typedef struct 			s_cam
 	int					id;
 	int					cartoon;
 	int					sepia;
+	int					stereo;
 	float				motion_blur;
 	float				ambience;
 }						t_cam;
