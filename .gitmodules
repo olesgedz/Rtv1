@@ -1,3 +1,0 @@
-[submodule "gui/kiwi"]
-	path = gui/kiwi
-	url = https://github.com/mobius3/kiwi.git
