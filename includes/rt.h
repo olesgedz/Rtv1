@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/28 18:22:39 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/29 17:30:05 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ typedef enum			e_figure
 	PLANE,
 	TRIANGLE,
 	DISK,
-	TORUS
+	TORUS,
+	HYPERBOLOID
 }						t_type;
 
 typedef struct			s_txture

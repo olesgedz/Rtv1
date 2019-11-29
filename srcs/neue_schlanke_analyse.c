@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/11/28 20:20:53 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/29 17:34:12 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,6 +302,8 @@ void check_object(const cJSON *object, t_game *game, cJSON *composed_pos, cJSON 
 		obj->type = CONE;
 	else if (ft_strcmp(parse.type->valuestring, "triangle") == 0)
 		obj->type = TRIANGLE;
+	else if (ft_strcmp(parse.type->valuestring, "hyperboloid") == 0)
+		obj->type = HYPERBOLOID;
 	else if (ft_strcmp(parse.type->valuestring, "obj3d") == 0)
 	{
 		obj3d_parse(object, game, &parse);

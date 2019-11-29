@@ -36,7 +36,7 @@ typedef struct			s_intersection
 
 typedef enum e_figure
 {
-	 SPHERE, CYLINDER, CONE, PLANE, TRIANGLE, DISK, TORUS
+	 SPHERE, CYLINDER, CONE, PLANE, TRIANGLE, DISK, TORUS, HYPERBOLOID
 }						t_type;
 
 typedef struct			s_object
