@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_box.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 20:04:17 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 16:31:40 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/01 19:12:17 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void			parse_shift(t_gui *gui, t_obj *obj, int *i)
+void		parse_shift(t_gui *gui, t_obj *obj, int *i)
 {
 	obj->shift.s[0] = atof(KW_GetEditboxText(gui->c_o.ed_b[(*i)++]));
 	obj->shift.s[1] = atof(KW_GetEditboxText(gui->c_o.ed_b[(*i)++]));
