@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:04:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/29 17:43:59 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/01 15:25:32 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ static void	set_keys(t_game *game)
 		print_error_gui("Could not initialize mixer ", Mix_GetError());
 		exit(1);
 	}
+	game->normal_list = NULL;
+	game->normals_num = 0;
 	game->keys.q = 0;
+	game->keys.ed_box = 0;
 	game->keys.w = 0;
 	game->keys.e = 0;
 	game->keys.a = 0;
@@ -61,7 +64,5 @@ void		set_const(t_game *game, t_gui *gui)
 	game->normals = NULL;
 	game->texture_list = NULL;
 	game->textures_num = 0;
-	game->normal_list = NULL;
-	game->normals_num = 0;
 	set_keys(game);
 }

@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:50:13 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/29 17:43:51 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/01 16:19:56 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,8 @@ static void	cam_rep(t_game *game, t_gui *gui)
 
 void		camera_reposition(t_game *game, t_gui *gui)
 {
+	if (game->keys.ed_box)
+		return ;
 	if (game->keys.w || (game->mouse.lmb && game->mouse.rmb))
 	{
 		game->gpu.camera[game->cam_num].position =
