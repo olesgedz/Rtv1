@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gui_main.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:21:19 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/21 17:57:50 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/11/28 19:16:16 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,23 @@ void		init_kiwi(t_gui *gui)
 	while (++i < MAX_OBJ)
 	{
 		gui->o_s.buttons[i] = 0;
+		gui->c_s.buttons[i] = 0;
 		gui->s_s.buttons[i] = 0;
 		gui->o_s.names[i] = 0;
+		gui->c_s.names[i] = 0;
 		gui->s_s.names[i] = 0;
 		if (i < 30)
+		{
 			gui->g_b.names[i] = 0;
+			gui->c_o.ed_b[i] = 0;
+			gui->c_c.ed_b[i] = 0;
+		}
 	}
 	gui->ed_w.show = 1;
 	gui->s_s.show = 0;
 	gui->o_s.show = 0;
+	gui->c_s.show = 0;
+	gui->c_c.show = 0;
 	gui->g_b.show = 0;
 	gui->o_t.show = 0;
 	gui->c_o.show = 0;
@@ -63,6 +71,8 @@ static void	rotator(t_game *game, t_gui *gui)
 		game->cl_info->ret =
 		cl_write(game->cl_info, game->cl_info->progs[0].krls->args[2],
 		sizeof(cl_float3) * (unsigned)WIN_H * (unsigned)WIN_W, game->gpu.vec_temp);
+		cl_write(game->cl_info, game->cl_info->progs[0].krls->args[11],
+		sizeof(cl_float3) * (unsigned)WIN_H * (unsigned)WIN_W, game->gpu.vec_temp1);
 		game->gpu.samples = 0;
 		reconfigure_camera(&game->gpu.camera[game->cam_num]);
 	}
@@ -77,10 +87,10 @@ void		loopa(t_game *game, t_gui *gui)
 	{
 		time = SDL_GetTicks();
 		rotator(game, gui);
-		if (SDL_PollEvent(&gui->ev))
-			if (gui->ev.type == SDL_QUIT ||
-		(gui->ev.type == SDL_KEYDOWN &&
-		gui->ev.key.keysym.sym == SDLK_ESCAPE))
+		if (SDL_PollEvent(&gui->game->ev))
+			if (gui->game->ev.type == SDL_QUIT ||
+		(gui->game->ev.type == SDL_KEYDOWN &&
+		gui->game->ev.key.keysym.sym == SDLK_ESCAPE))
 				gui->quit = 1;
 		ft_render(game, gui);
 		screen_present(game, gui);

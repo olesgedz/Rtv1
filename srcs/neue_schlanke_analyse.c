@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/11/21 19:24:08 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/11/29 17:34:12 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ static void parse_necessary(const cJSON *object, t_obj *obj, t_json *parse, cl_f
 		obj->radius = parse->radius->valuedouble;
 	else if (obj->type != PLANE && obj->type != TRIANGLE)
 		terminate("missing data of obj radius!\n");
+		parse->tor_radius = cJSON_GetObjectItemCaseSensitive(object, "tor radius");
+		if (parse->tor_radius != NULL)
+			obj->tor_radius = parse->tor_radius->valuedouble;
+		else
+			obj->tor_radius = 0.1;
 }
 
 static void parse_facing(const cJSON *object, t_obj *obj, t_json *parse, t_game *game)
@@ -208,7 +213,7 @@ static void parse_rest(const cJSON *object, t_obj *obj, t_json *parse)
     }
     else
     	obj->prolapse = create_cfloat2(1.0, 1.0);
-	
+
 	parse->transparency = cJSON_GetObjectItemCaseSensitive(object, "transparency");
 	if (parse->transparency != NULL)
 		obj->transparency = parse->transparency->valuedouble;
@@ -221,7 +226,7 @@ static void parse_rest(const cJSON *object, t_obj *obj, t_json *parse)
 		obj->refraction = 0.0;
 }
 
- static cl_float3 triangle_norm(cl_float3 *vertices)
+cl_float3 triangle_norm(cl_float3 *vertices)
 {
 	cl_float3 ab;
 	cl_float3 ac;
@@ -297,10 +302,17 @@ void check_object(const cJSON *object, t_game *game, cJSON *composed_pos, cJSON 
 		obj->type = CONE;
 	else if (ft_strcmp(parse.type->valuestring, "triangle") == 0)
 		obj->type = TRIANGLE;
+	else if (ft_strcmp(parse.type->valuestring, "hyperboloid") == 0)
+		obj->type = HYPERBOLOID;
+	else if (ft_strcmp(parse.type->valuestring, "obj3d") == 0)
+	{
+		obj3d_parse(object, game, &parse);
+		return ;
+	}
 	else if (ft_strcmp(parse.type->valuestring, "composed") == 0)
 	{
 		parse_composed(object, game, &parse, id);
-		return;
+		return ;
 	}
 	obj->id = id;
 	parse_necessary(object, obj, &parse, composed_pos_f, composed_v_f);
@@ -309,6 +321,7 @@ void check_object(const cJSON *object, t_game *game, cJSON *composed_pos, cJSON 
 	if (obj->type == TRIANGLE)
 		parse_triangle_vert(object, obj, &parse);
 	parse_rest(object, obj, &parse);
+	obj->is_visible = 1;
 	ft_object_push(game, obj);
 }
 
@@ -344,6 +357,7 @@ void check_cam(const cJSON *cam, t_game *game, t_filter *filter)
 	camera->cartoon = filter->cartoon;
 	camera->sepia = filter->sepia;
 	camera->motion_blur = filter->motion_blur;
+	camera->stereo = filter->stereo;
 	reconfigure_camera(camera);
 	ft_cam_push(game, camera);
 }
@@ -371,7 +385,7 @@ void check_scene(const cJSON *json, t_game *game)
 	else
 		game->global_tex_id = compare_in_texture_dict(game, "sun.jpg") - 1;
 
-	parse.ambience = cJSON_GetObjectItemCaseSensitive(json, "ambiance");
+	parse.ambience = cJSON_GetObjectItemCaseSensitive(scene, "ambiance");
 	if (parse.ambience != NULL)
 		filter.ambiance = parse.ambience->valuedouble;
 	else
@@ -380,13 +394,19 @@ void check_scene(const cJSON *json, t_game *game)
 		filter.cartoon = (int)parse.cartoon->valuedouble;
 	else
 		filter.cartoon = 0;
-	parse.sepia = cJSON_GetObjectItemCaseSensitive(json, "sepia");
+	parse.sepia = cJSON_GetObjectItemCaseSensitive(scene, "sepia");
 	if (parse.sepia!= NULL)
 		filter.sepia = (int)parse.sepia->valuedouble;
 	else
 		filter.sepia = 0;
-
-	parse.motion_blur = cJSON_GetObjectItemCaseSensitive(json, "motion blur");
+	parse.stereo = cJSON_GetObjectItemCaseSensitive(scene, "stereo");
+	if (parse.stereo!= NULL)
+		filter.stereo = (int)parse.stereo->valuedouble;
+	else
+		filter.stereo = 0;
+	
+	printf("stereo == %d\n", filter.stereo);
+	parse.motion_blur = cJSON_GetObjectItemCaseSensitive(scene, "motion blur");
 	if (parse.motion_blur != NULL)
 		filter.motion_blur = parse.motion_blur->valuedouble;
 	else
@@ -415,6 +435,8 @@ void read_scene(char *argv, t_game *game)
 	fread(buffer, 8096, 1, fp);
 	cJSON *json = cJSON_Parse(buffer);
 
+	if (json == NULL)
+		terminate("\nsomething wrong with .json file, please check that commas on right positions\n");
 	check_scene(json, game);
 
 	const cJSON *object = NULL;

@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 22:51:42 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/21 14:17:32 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/27 14:38:33 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static void	ok_clicked(KW_Widget *widget, int b)
 	b = 0;
 	widget = 0;
 	gui = g_gui(0, 0);
+	if (gui->game->ev.button.button != SDL_BUTTON_LEFT)
+		return ;
 	gui->av = ft_strdup((char *)KW_GetEditboxText(gui->ed_w.ed_b));
 	gui->quit = KW_TRUE;
 }
@@ -76,12 +78,15 @@ void		start_screen(t_gui *gui)
 
 char		*start_gui(t_game *game, t_gui *gui)
 {
-	opencl(game, "gui/res/start.json");
+	opencl(game, "scenes/start.json");
 	start_screen(gui);
 	scene_select(gui, -1, 0);
 	play_stop_music("gui/res/main_menu.wav");
 	loopa(game, gui);
 	play_stop_music(0);
+	destr(gui, gui->ed_w.frame);
+	KW_RemoveWidgetGeometryChangeHandler(gui->ed_w.frame, 0);
+	KW_RemoveWidgetTilesetChangeHandler(gui->ed_w.frame, 0);
 	KW_HideWidget(gui->ed_w.frame);
 	gui->ed_w.show = 0;
 	free_list(game);

@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/11/20 21:02:22 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/27 19:53:14 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void	main_loop(t_game *game, t_gui *gui, int argc)
 		SDL_SetWindowTitle(game->sdl.window, game->av);
 		opencl(game, game->av);
 		main_screen(gui, game);
+		cam_screen(gui, game);
 		if (argc != 2)
 			ft_strdel(&game->av);
 		argc = 0;
@@ -49,6 +50,7 @@ static void	main_loop(t_game *game, t_gui *gui, int argc)
 		game->normal_list = NULL;
 		game->normals_num = 0;
 		main_screen_free(gui);
+		cam_free(gui);
 	}
 }
 

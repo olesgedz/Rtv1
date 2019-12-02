@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 21:08:05 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/14 18:34:24 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/25 22:30:33 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,4 @@ void	buttons(t_game *game, t_gui *gui)
 	gui->g_b.frame, "Take picture", gui->g_b.rects[2]);
 	KW_AddWidgetMouseDownHandler(gui->g_b.buttons[2], shot);
 	KW_SetWidgetUserData(gui->g_b.buttons[2], (void *)game);
-	info_button(game, gui);
 }

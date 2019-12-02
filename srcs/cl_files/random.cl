@@ -66,7 +66,7 @@ static float3		sample_uniform
 	// float 			phi, theta;
 	// float 			thetasin;
 
-	metalness = cos(PI * 0.5 * metalness);
+	metalness = cos(PI * 0.5f * metalness);
 	// phi = rng(scene->random) * 2 * PI;
 	// theta = rng(scene->random) * 2 * PI;
 	// thetasin = sin(theta);

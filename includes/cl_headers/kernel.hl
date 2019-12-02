@@ -2,6 +2,7 @@
 #ifndef KERNEL_H
 # define KERNEL_H
 
+# define SEPIA 0x704214
 typedef struct			s_ray
 {
 	float3				origin;
@@ -35,13 +36,14 @@ typedef struct			s_intersection
 
 typedef enum e_figure
 {
-	 SPHERE, CYLINDER, CONE, PLANE, TRIANGLE
+	 SPHERE, CYLINDER, CONE, PLANE, TRIANGLE, DISK, TORUS, HYPERBOLOID
 }						t_type;
 
 typedef struct			s_object
 {
 	t_type				type;
 	float				radius;
+	float				tor_radius;
 	float3				position;
 	float3				color;
 	float3				emission;
@@ -67,8 +69,10 @@ typedef struct 			s_cam
 	float				fov;
 	float3				border_x;
 	float3				border_y;
+	int					id;
 	int					cartoon;
 	int					sepia;
+	int					stereo;
 	float				motion_blur;
 	float				ambience;
 }						t_cam;

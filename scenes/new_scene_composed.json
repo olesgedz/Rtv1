@@ -4,7 +4,8 @@
         "ambiance": 0.5,
         "cartoon": 0,
         "motion blur" : 0.0,
-        "sepia" : 0
+        "sepia" : 0,
+        "stereo": 1
     }, 
     
     "objects":[

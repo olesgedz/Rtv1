@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 18:04:29 by lminta            #+#    #+#             */
-/*   Updated: 2019/10/30 15:22:42 by lminta           ###   ########.fr       */
+/*   Updated: 2019/11/26 21:30:12 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,86 @@ SDL_Texture	*load_picture(t_gui *gui, const char *filename)
 	}
 	SDL_FreeSurface(surf);
 	return (surf_to_text(gui, opt));
+}
+
+void	norma_from_obj_select(t_gui *gui, KW_Widget *widget, KW_Widget *wid)
+{
+	KW_Widget	*label;
+	int			i;
+
+	i = -1;
+	while (++i < 3)
+	{
+		KW_RemoveWidgetGeometryChangeHandler(gui->c_o.buttons[i], 0);
+		KW_RemoveWidgetTilesetChangeHandler(gui->c_o.buttons[i], 0);
+		KW_RemoveWidgetMouseDownHandler(gui->c_o.buttons[i], 0);
+	}
+	i = -1;
+	while (gui->c_o.ed_b[++i] && i < 30)
+	{
+		KW_RemoveWidgetMouseUpHandler(gui->c_o.ed_b[i], 0);
+		KW_RemoveWidgetMouseOverHandler(gui->c_o.ed_b[i], 0);
+		KW_RemoveWidgetMouseLeaveHandler(gui->c_o.ed_b[i], 0);
+		KW_RemoveWidgetFocusGainHandler(gui->c_o.ed_b[i], 0);
+		KW_RemoveWidgetFocusLoseHandler(gui->c_o.ed_b[i], 0);
+		KW_RemoveWidgetKeyDownHandler(gui->c_o.ed_b[i], 0);
+		KW_RemoveWidgetTextInputHandler(gui->c_o.ed_b[i], 0);
+		KW_RemoveWidgetMouseDownHandler(gui->c_o.ed_b[i], 0);
+	}
+	KW_RemoveWidgetGeometryChangeHandler(gui->c_o.frame, 0);
+	KW_RemoveWidgetTilesetChangeHandler(gui->c_o.frame, 0);
+	KW_HideWidget(gui->c_o.frame);
+	destr(gui, gui->c_o.frame);
+	i = -1;
+	while (++i < 30)
+		gui->c_o.ed_b[i] = 0;
+	gui->c_o.frame = 0;
+	if (wid && widget)
+	{
+		label = KW_GetButtonLabel(wid);
+		if (label)
+			KW_SetLabelTextColor(label, (KW_Color){0, 0, 0, 255});
+	}
+	gui->c_o.show = 0;
+}
+
+void	norma_from_cam_select(t_gui *gui, KW_Widget *widget, KW_Widget *wid)
+{
+	KW_Widget	*label;
+	int			i;
+
+	i = -1;
+	while (++i < 5)
+	{
+		KW_RemoveWidgetGeometryChangeHandler(gui->c_c.buttons[i], 0);
+		KW_RemoveWidgetTilesetChangeHandler(gui->c_c.buttons[i], 0);
+		KW_RemoveWidgetMouseDownHandler(gui->c_c.buttons[i], 0);
+	}
+	i = -1;
+	while (gui->c_c.ed_b[++i] && i < 30)
+	{
+		KW_RemoveWidgetMouseUpHandler(gui->c_c.ed_b[i], 0);
+		KW_RemoveWidgetMouseOverHandler(gui->c_c.ed_b[i], 0);
+		KW_RemoveWidgetMouseLeaveHandler(gui->c_c.ed_b[i], 0);
+		KW_RemoveWidgetFocusGainHandler(gui->c_c.ed_b[i], 0);
+		KW_RemoveWidgetFocusLoseHandler(gui->c_c.ed_b[i], 0);
+		KW_RemoveWidgetKeyDownHandler(gui->c_c.ed_b[i], 0);
+		KW_RemoveWidgetTextInputHandler(gui->c_c.ed_b[i], 0);
+		KW_RemoveWidgetMouseDownHandler(gui->c_c.ed_b[i], 0);
+	}
+	KW_RemoveWidgetGeometryChangeHandler(gui->c_c.frame, 0);
+	KW_RemoveWidgetTilesetChangeHandler(gui->c_c.frame, 0);
+	KW_HideWidget(gui->c_c.frame);
+	destr(gui, gui->c_c.frame);
+	i = -1;
+	while (++i < 30)
+		gui->c_c.ed_b[i] = 0;
+	gui->c_c.frame = 0;
+	if (wid && widget)
+	{
+		label = KW_GetButtonLabel(wid);
+		if (label)
+			KW_SetLabelTextColor(label, (KW_Color){0, 0, 0, 255});
+	}
+	gui->c_c.show = 0;
 }

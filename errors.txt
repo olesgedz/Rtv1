@@ -616,7 +616,7 @@ Norme: ./libft/objects/standart/ft_putstr.o
 Warning: Not a valid file
 Norme: ./libft/objects/standart/ft_putstr_fd.o
 Warning: Not a valid file
-Norme: ./libft/objects/standart/ft_realloc.o
+Norme: ./libft/objects/standart/realloc.o
 Warning: Not a valid file
 Norme: ./libft/objects/standart/ft_sign.o
 Warning: Not a valid file
@@ -3549,7 +3549,7 @@ Norme: ./libft/sources/standart/ft_putchar_fd.c
 Norme: ./libft/sources/standart/ft_tolower.c
 Norme: ./libft/sources/standart/ft_sign.c
 Norme: ./libft/sources/standart/ft_toupper.c
-Norme: ./libft/sources/standart/ft_realloc.c
+Norme: ./libft/sources/standart/realloc.c
 Error: file must end with a single empty line
 Error (line 34, col 0): no newline after block
 Norme: ./libft/sources/str/ft_strcat.c
