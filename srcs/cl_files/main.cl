@@ -9,7 +9,7 @@
 #include "interpolate_uv.cl"
 
 #define SAMPLES 5
-#define BOUNCES 4
+#define BOUNCES 6
 #define LIGHTSAMPLING 0
 
 
@@ -117,6 +117,18 @@ static float3		radiance_explicit(t_scene *scene,
 	return (radiance * pdf);
 }
 
+static float3 convert_normal(t_obj *object, float3 normal, float3 dir, t_scene *scene)
+{
+	if (object->transparency > rng(scene->random))
+	{
+		object->metalness = 1.f;
+		normal = dir;
+	}
+	else
+		normal = object->metalness > 0.0 ? normalize(reflect(dir, normal)) : normal;
+	return (normal);
+}
+
 static float3 trace(t_scene * scene, t_intersection * intersection)
 {
 	t_ray ray = intersection->ray;
@@ -150,18 +162,18 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 		intersection->normal = get_normal(&objecthit, intersection, &img_coord, scene);
 		intersection->normal *= -sign(dot(intersection->normal, ray.dir));
 		float cosine;
-		float3 normal = objecthit.metalness > 0.0 ? normalize(reflect(ray.dir, intersection->normal)) : intersection->normal;
-		float3 newdir = sample_uniform(&normal, scene, objecthit.metalness, &cosine);
-		cosine = dot(intersection->normal, newdir);
+		float3 normal = convert_normal(&objecthit, intersection->normal, ray.dir, scene);//;objecthit.metalness > 0.0 ? normalize(reflect(ray.dir, intersection->normal)) : intersection->normal;
+		float3 newdir = sample_uniform(&normal, scene, objecthit.metalness);
+		cosine = fabs(dot(normal, newdir));
 		/* add a very small offset to the hitpoint to prevent self intersection */
 		float pdf = 1.f - scene->lightsampling * 0.7f;
-		accum_color += mask * objecthit.emission * pdf * cosine + mask * (scene->camera.ambience);
+		accum_color += mask * objecthit.emission * pdf /** cosine*/ + mask * (scene->camera.ambience);
 		if (scene->lightsampling)
 		{
 			explicit = radiance_explicit(scene, intersection);
 			accum_color += explicit * mask * objecthit.color;
 		}
-		mask *= objecthit.color * cosine;
+		mask *= objecthit.color ;//* cosine;
 		ray.dir = newdir;
 		ray.origin = intersection->hitpoint + ray.dir * EPSILON;
 	}

@@ -59,7 +59,7 @@ static float3		sampler_transform(float3 *normal, float3 *sample)
 
 static float3		sample_uniform
 					(float3 *normal,
-					t_scene * scene, float metalness, float *cosine)
+					t_scene * scene, float metalness)
 {
 	float3 			r;
 	float3			ret;
@@ -79,7 +79,6 @@ static float3		sample_uniform
 	r *= metalness;
 	r.z = sqrt(fabs(1.f - r.y * r.y - r.x * r.x));
 	ret = sampler_transform(normal, &r);
-	*cosine = dot(*normal, ret);
 	return (ret);
 }
 

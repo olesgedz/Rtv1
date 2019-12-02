@@ -53,7 +53,7 @@ static void			get_color_cone(t_obj *object, float3 hitpoint, t_scene *scene, flo
     float               v;
 
 	vect = hitpoint - object->position;
-	a.y = dot(object->v, vect);
+	a.y = length(vect) * length(vect) / dot(object->v, vect);
 	a.x = -dot(vect, object->basis[0]);
 	a.z = dot(vect, object->basis[1]) + object->shift.y;
 	coord->x = 0.5 + (atan2(a.z, a.x)) / (2 * PI);
