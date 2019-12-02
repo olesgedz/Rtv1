@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:54:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:14:53 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/02 16:23:20 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void			main_render(t_game *game, t_gui *gui)
 	SDL_RenderClear(game->sdl.renderer);
 	while (!game->quit && !gui->quit)
 	{
-		semples_to_line(game, gui);
 		key_check(game);
 		camera_reposition(game, gui);
 		ft_render(game, gui);
@@ -105,6 +104,7 @@ void			main_render(t_game *game, t_gui *gui)
 			frames = 1;
 		}
 		frames++;
+		semples_to_line(game, gui);
 	}
 	destr(gui, 0);
 	game->av = gui->av;
