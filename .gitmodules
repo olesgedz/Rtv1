@@ -7,3 +7,6 @@
 [submodule "libs/libsdl"]
 	path = libs/libsdl
 	url = https://github.com/olesgedz/libsdl.git
+[submodule "gui/KiWi"]
+	path = gui/KiWi
+	url = https://github.com/Aldarius/kiwi.git
