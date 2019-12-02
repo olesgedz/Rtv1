@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 20:10:09 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:13:23 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/02 17:34:39 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	change_cone(t_gui *gui, t_obj *obj)
 	text_normal(gui, obj, &i);
 	basis(gui, obj, &i);
 	shift(gui, obj, &i);
+	prolapse(gui, obj, &i);
 }
 
 void	change_trian(t_gui *gui, t_obj *obj)

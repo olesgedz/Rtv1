@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 17:48:08 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:14:02 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/02 17:34:57 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	cone_parse(t_gui *gui, t_obj *obj)
 	parse_text_normal(gui, obj, &i);
 	parse_bas(gui, obj, &i);
 	parse_shift(gui, obj, &i);
+	parse_prolapse(gui, obj, &i);
 }
 
 void	trian_parse(t_gui *gui, t_obj *obj)
