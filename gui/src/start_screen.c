@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 22:51:42 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:14:13 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/02 22:27:28 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,7 @@ char		*start_gui(t_game *game, t_gui *gui)
 	free_list(game);
 	game->texture_list = NULL;
 	game->textures_num = 0;
+	game->normal_list = NULL;
+	game->normals_num = 0;
 	return (gui->av);
 }

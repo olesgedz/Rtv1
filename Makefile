@@ -1,12 +1,13 @@
+
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+         #
+#    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/12/02 21:33:26 by lminta           ###   ########.fr        #
+#    Updated: 2019/11/29 21:06:38 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +16,12 @@ NAME = rt
 
 FLAGS = -g #-Wall -Wextra -Werror
 CC = clang
-LIBRARIES = -lSDL2_image  -lSDL2_mixer  -lsdl -L$(LIBSDL_DIRECTORY)   -lcl -L$(LIBCL) -lgnl -L$(LIBGNL) -lvect -L$(LIBVECT) -lft -L$(LIBFT_DIRECTORY) -lm -lpthread
-INCLUDES = $(GUI_INC) -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)includes/ -Isrcs/cl_error/ -I$(LIBGNL)includes/ -I$(LIBCL)includes/ $(shell pkg-config --libs sdl2_ttf) $(shell pkg-config --libs sdl2_image) $(shell pkg-config --libs sdl2_mixer)
-GUI_INC = -I./include/SDL2 -I./gui/KiWi/src -I./gui/build/src -I./gui/inc $(shell pkg-config --cflags sdl2_ttf) $(shell pkg-config --cflags sdl2_image) $(shell pkg-config --cflags sdl2_mixer)
-#DIR_KiWi = ./gui/build/src/
+LIBRARIES =  $(GUI_LIB) -lSDL2_image  -lSDL2_mixer  -lsdl -L$(LIBSDL_DIRECTORY)   -lcl -L$(LIBCL) -lgnl -L$(LIBGNL) -lvect -L$(LIBVECT) -lft -L$(LIBFT_DIRECTORY) -lm -lpthread
+INCLUDES = $(GUI_INC) -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)includes/ -Isrcs/cl_error/ -I$(LIBGNL)includes/ -I$(LIBCL)includes/
+
+#$(shell pkg-config --libs sdl2_ttf) $(shell pkg-config --libs sdl2_image) $(shell pkg-config --libs sdl2_mixer)
+GUI_INC = -I./include/SDL2 -I./gui/KiWi/src -I./gui/inc #$(shell pkg-config --cflags sdl2_ttf) $(shell pkg-config --cflags sdl2_image) $(shell pkg-config --cflags sdl2_mixer)
+DIR_KiWi = ./gui/build/src/
 
 LIBFT = $(LIBFT_DIRECTORY)libft.a
 LIBFT_HEADERS = $(LIBFT_DIRECTORY)includes/
@@ -88,29 +91,6 @@ RMRF = gui/src/gui_main.o\
 		gui/src/stereo.o\
 		gui/src/eff.o\
 		gui/src/add_tex.o\
-		gui/KiWi/src/KW_button.o\
-		gui/KiWi/src/KW_checkbox.o\
-		gui/KiWi/src/KW_editbox.o\
-		gui/KiWi/src/KW_editbox_internal.o\
-		gui/KiWi/src/KW_eventwatcher.o\
-		gui/KiWi/src/KW_frame.o\
-		gui/KiWi/src/KW_frame_internal.o\
-		gui/KiWi/src/KW_gui.o\
-		gui/KiWi/src/KW_label.o\
-		gui/KiWi/src/KW_label_internal.o\
-		gui/KiWi/src/KW_rect.o\
-		gui/KiWi/src/KW_renderdriver.o\
-		gui/KiWi/src/KW_renderdriver_sdl2.o\
-		gui/KiWi/src/KW_scrollbox.o\
-		gui/KiWi/src/KW_scrollbox_internal.o\
-		gui/KiWi/src/KW_tilerenderer.o\
-		gui/KiWi/src/KW_toggle.o\
-		gui/KiWi/src/KW_widget.o\
-		gui/KiWi/src/KW_widget_eventhandlers.o\
-		gui/KiWi/src/file2c.o\
-		gui/build/src/resources.o\
-		gui/KiWi/src/utf8.o\
-		#gui/KiWi/*.o\
 		cJSON/cJSON.o
 
 SRCS_LIST = main.c \
@@ -159,29 +139,7 @@ SRCS_LIST = main.c \
 			neue_schlanke_analyse.c\
 			analyse_dienstprogramme.c\
 			util.c\
-			obj3d_parser.c\
-			../gui/KiWi/src/KW_button.c\
-			../gui/KiWi/src/KW_checkbox.c\
-			../gui/KiWi/src/KW_editbox.c\
-			../gui/KiWi/src/KW_editbox_internal.c\
-			../gui/KiWi/src/KW_eventwatcher.c\
-			../gui/KiWi/src/KW_frame.c\
-			../gui/KiWi/src/KW_frame_internal.c\
-			../gui/KiWi/src/KW_gui.c\
-			../gui/KiWi/src/KW_label.c\
-			../gui/KiWi/src/KW_label_internal.c\
-			../gui/KiWi/src/KW_rect.c\
-			../gui/KiWi/src/KW_renderdriver.c\
-			../gui/KiWi/src/KW_renderdriver_sdl2.c\
-			../gui/KiWi/src/KW_scrollbox.c\
-			../gui/KiWi/src/KW_scrollbox_internal.c\
-			../gui/KiWi/src/KW_tilerenderer.c\
-			../gui/KiWi/src/KW_toggle.c\
-			../gui/KiWi/src/KW_widget.c\
-			../gui/KiWi/src/KW_widget_eventhandlers.c\
-			../gui/KiWi/src/file2c.c\
-			../gui/build/src/resources.c\
-			../gui/KiWi/src/utf8.c
+			obj3d_parser.c
 
 OBJS_DIRECTORY = objects/
 OBJS_LIST = $(patsubst %.c, %.o, $(SRCS_LIST))
@@ -235,7 +193,7 @@ endif
 all: $(MAKES) $(NAME)
 
 
-$(NAME): $(LIBFT)  $(LIBSDL) $(LIBCL) $(LIBGNL)  $(LIBVECT) $(OBJS_DIRECTORY) $(OBJS) $(HEADERS)
+$(NAME): $(LIB_KiWi) $(LIBFT)  $(LIBSDL) $(LIBCL) $(LIBGNL)  $(LIBVECT) $(OBJS_DIRECTORY) $(OBJS) $(HEADERS)
 	@$(CC) $(FLAGS) $(LIBSDL) $(INCLUDES) $(OBJS) $(SDL_CFLAGS) $(SDL_LDFLAGS) -o $(NAME) $(LIBRARIES)
 	@echo "$(CLEAR_LINE)[`expr $(CURRENT_FILES) '*' 100 / $(TOTAL_FILES)`%] $(COL_BLUE)[$(NAME)] $(COL_GREEN)Finished compilation. Output file : $(COL_VIOLET)$(PWD)/$(NAME)$(COL_END)"
 
