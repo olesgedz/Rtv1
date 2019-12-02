@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:37:51 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:13:26 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/02 17:16:13 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	create_cylinder(t_game *game)
 	obj = (t_obj*)malloc(sizeof(t_obj));
 	obj->v = create_cfloat3(0, 1, 0);
 	obj->radius = 0.1;
+	obj->prolapse.s[0] = 1;
 	obj->prolapse.s[1] = 1;
 	same_new(game, obj, CYLINDER);
 }

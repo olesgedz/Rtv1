@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 18:49:58 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:13:02 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/02 17:07:10 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,16 @@ void			cam_position(t_gui *gui, t_cam *cam, int *i)
 
 void			cam_fov(t_gui *gui, t_cam *cam, int *i)
 {
+	double	fov;
+
+	fov = 0;
 	gui->c_c.labelrect.y += 30;
 	gui->c_c.editboxrect[0].y += 30;
 	gui->c_c.editboxrect[1].y += 30;
 	gui->c_c.editboxrect[2].y += 30;
 	KW_CreateLabel(gui->gui, gui->c_c.frame, "FOV", gui->c_c.rects[0]);
-	gui->c_c.ed_b[(*i)++] = f_c(gui, cam->fov, gui->c_c.rects[1]);
+	fov = cam->fov * 180 / M_PI;
+	gui->c_c.ed_b[(*i)++] = f_c(gui, fov, gui->c_c.rects[1]);
 	KW_CreateLabel(gui->gui, gui->c_c.frame, "3D", gui->c_c.rects[2]);
 	gui->c_c.buttons[5] = KW_CreateButtonAndLabel(gui->gui,
 	gui->c_c.frame, "test2", gui->c_c.rects[3]);

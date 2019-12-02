@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 21:32:09 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:13:11 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/02 17:15:01 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void		cam_rename(t_game *game, t_gui *gui)
 void		pars_cam_box(t_gui *gui, t_cam *cam)
 {
 	int		i;
+	double	fov;
 
 	i = 0;
 	cam->position.s[0] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
@@ -65,13 +66,9 @@ void		pars_cam_box(t_gui *gui, t_cam *cam)
 	cam->normal.s[0] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
 	cam->normal.s[1] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
 	cam->normal.s[2] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
-	i++;// cam->border_x.s[0] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
-	i++;// cam->border_x.s[1] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
-	i++;// cam->border_x.s[2] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
-	i++;// cam->border_y.s[0] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
-	i++;// cam->border_y.s[1] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
-	i++;// cam->border_y.s[2] = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
-	cam->fov = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
+	i += 6;
+	fov = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
+	cam->fov = fov * M_PI / 180;
 	cam->ambience = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
 	cam->motion_blur = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
 }
