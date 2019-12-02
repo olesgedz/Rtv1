@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
+#    By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/11/29 21:06:38 by lminta           ###   ########.fr        #
+#    Updated: 2019/12/02 20:29:47 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
