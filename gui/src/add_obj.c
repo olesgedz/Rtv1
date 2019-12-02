@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_obj.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 18:45:37 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/25 20:24:09 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/01 19:12:45 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ gui->o_t.frame, gui->o_t.names[i], &gui->o_t.buttonrect[i]);
 		*mas = i;
 		KW_SetWidgetUserData(gui->o_t.buttons[i], mas++);
 	}
+	*(--mas) = -1;
+	KW_SetWidgetUserData(gui->o_t.buttons[i], mas);
 }
 
 void		add_obj(t_game *game, t_gui *gui)

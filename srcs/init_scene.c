@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_scene.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:53:01 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/28 18:13:29 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/12/01 19:14:59 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void				opencl(t_game *game, char *argv)
 	&(game->global_tex_id));
 	cl_krl_init_arg(&game->cl_info->progs[0].krls[0], 11, sizeof(cl_float3) * (int)WIN_H * (int)WIN_W,\
 	game->gpu.vec_temp1);
-	
+
 	game->cl_info->ret = cl_krl_mem_create(game->cl_info, &game->cl_info->progs[0].krls[0], 0, CL_MEM_READ_WRITE);
 	ERROR(game->cl_info->ret);
 	game->cl_info->ret = cl_krl_mem_create(game->cl_info, &game->cl_info->progs[0].krls[0], 1, CL_MEM_READ_WRITE);

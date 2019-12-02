@@ -6,7 +6,7 @@
 #    By: lminta <lminta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2019/11/27 19:50:36 by lminta           ###   ########.fr        #
+#    Updated: 2019/11/29 21:06:38 by lminta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -87,7 +87,9 @@ RMRF = gui/src/gui_main.o\
 		gui/src/cam_select.o\
 		gui/src/cam_parser.o\
 		gui/src/add_camera.o\
+		gui/src/stereo.o\
 		gui/src/eff.o\
+		gui/src/add_tex.o\
 		cJSON/cJSON.o
 
 SRCS_LIST = main.c \
@@ -130,6 +132,8 @@ SRCS_LIST = main.c \
 			../gui/src/cameras.c\
 			../gui/src/add_camera.c\
 			../gui/src/eff.c\
+			../gui/src/add_tex.c\
+			../gui/src/stereo.c\
 			../cJSON/cJSON.c\
 			neue_schlanke_analyse.c\
 			analyse_dienstprogramme.c\

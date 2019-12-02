@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:10:38 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/05 14:45:52 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/01 19:14:41 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static void	key_switch(t_game *game)
 {
+	if (game->keys.ed_box)
+		return ;
 	if (game->ev.key.keysym.sym == SDLK_COMMA)
 	{
 		game->gpu.samples = 0;

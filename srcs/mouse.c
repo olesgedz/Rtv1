@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 18:31:59 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/24 20:32:43 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/01 19:14:45 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,12 @@ void		mouse_up(t_game *game, t_gui *gui)
 
 void		mouse_down(t_game *game, t_gui *gui)
 {
+	SDL_GetMouseState(&game->mouse.x, &game->mouse.y);
+	check_ed_box_focus(game, gui, game->mouse.x, game->mouse.y);
 	if (game->ev.button.button == SDL_BUTTON_RIGHT)
 	{
 		if (!gui->over_gui && (game->mouse.rmb = 1))
 		{
-			SDL_GetMouseState(&game->mouse.x, &game->mouse.y);
 			SDL_SetRelativeMouseMode(SDL_ENABLE);
 			game->mouse.g = 0;
 		}
