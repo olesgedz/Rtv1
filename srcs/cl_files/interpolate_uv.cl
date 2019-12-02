@@ -39,7 +39,26 @@ static void			get_color_cylinder(t_obj *object, float3 hitpoint, t_scene *scene,
 	a.z = dot(vect, object->basis[1]) + object->shift.y;
 	coord->x = 0.5 + (atan2(a.z, a.x)) / (2 * PI);
     texture = &((scene->textures)[object->texture - 1]);
-	v = modf(0.5 + (a.y * object->prolapse.x), &v);
+	v = modf(0.5 + (a.y * object->prolapse.y), &v);
+	if (v < 0)
+		v += 1;
+    coord->y = v;
+}
+
+static void			get_color_cone(t_obj *object, float3 hitpoint, t_scene *scene, float2 *coord)
+{
+	float3				vect;
+	float3				a;
+    __global t_txture	*texture;
+    float               v;
+
+	vect = hitpoint - object->position;
+	a.y = dot(object->v, vect);
+	a.x = -dot(vect, object->basis[0]);
+	a.z = dot(vect, object->basis[1]) + object->shift.y;
+	coord->x = 0.5 + (atan2(a.z, a.x)) / (2 * PI);
+    texture = &((scene->textures)[object->texture - 1]);
+	v = modf(0.5 + (a.y * object->prolapse.y), &v);
 	if (v < 0)
 		v += 1;
     coord->y = v;
@@ -53,4 +72,6 @@ static void			interpolate_uv(t_obj *object, float3 hitpoint, t_scene *scene, flo
 		get_color_cylinder(object, hitpoint, scene, coord);
 	else if (object->type == PLANE)
 		get_color_plane(object, hitpoint, scene, coord);
+	else if (object->type == CONE)
+		get_color_cone(object, hitpoint, scene, coord);
 }
