@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cam_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 18:49:58 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/27 16:16:45 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/01 19:13:02 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,12 @@ void			cam_fov(t_gui *gui, t_cam *cam, int *i)
 	gui->c_c.editboxrect[2].y += 30;
 	KW_CreateLabel(gui->gui, gui->c_c.frame, "FOV", gui->c_c.rects[0]);
 	gui->c_c.ed_b[(*i)++] = f_c(gui, cam->fov, gui->c_c.rects[1]);
+	KW_CreateLabel(gui->gui, gui->c_c.frame, "3D", gui->c_c.rects[2]);
+	gui->c_c.buttons[5] = KW_CreateButtonAndLabel(gui->gui,
+	gui->c_c.frame, "test2", gui->c_c.rects[3]);
+	ddd_name(gui->c_c.buttons[5], cam);
+	KW_AddWidgetMouseDownHandler(gui->c_c.buttons[5], ddd);
+	KW_SetWidgetUserData(gui->c_c.buttons[5], cam);
 }
 
 void			cam_amb_blur(t_gui *gui, t_cam *cam, int *i)

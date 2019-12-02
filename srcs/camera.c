@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:50:13 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/28 18:16:15 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/12/01 19:14:28 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,8 @@ static void	cam_rep(t_game *game, t_gui *gui)
 
 void		camera_reposition(t_game *game, t_gui *gui)
 {
+	if (game->keys.ed_box)
+		return ;
 	if (game->keys.w || (game->mouse.lmb && game->mouse.rmb))
 	{
 		game->gpu.camera[game->cam_num].position =

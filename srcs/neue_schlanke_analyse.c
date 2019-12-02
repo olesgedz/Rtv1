@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   neue_schlanke_analyse.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/11/29 17:34:12 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/12/01 19:14:49 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -404,7 +404,7 @@ void check_scene(const cJSON *json, t_game *game)
 		filter.stereo = (int)parse.stereo->valuedouble;
 	else
 		filter.stereo = 0;
-	
+
 	printf("stereo == %d\n", filter.stereo);
 	parse.motion_blur = cJSON_GetObjectItemCaseSensitive(scene, "motion blur");
 	if (parse.motion_blur != NULL)

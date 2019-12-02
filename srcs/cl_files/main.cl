@@ -242,6 +242,9 @@ __global float3 *vect_temp,  __global ulong * random,  __global t_txture *textur
 		intersection_reset(&intersection);
 		finalcolor += trace(&scene,  &intersection);
 	}
+
+	hex_finalcolor = ft_rgb_to_hex(toInt(finalcolor.x  / (float)samples), toInt(finalcolor.y  / (float)samples), toInt(finalcolor.z  / (float)samples));
+
 	vect_temp[scene.x_coord + scene.y_coord * scene.width] = finalcolor;
 
 	if (camera.stereo == 1)

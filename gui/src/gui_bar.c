@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gui_bar.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 19:10:18 by lminta            #+#    #+#             */
-/*   Updated: 2019/11/27 15:29:33 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/01 19:13:47 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ void	click_create(KW_Widget *widget, int b)
 		create_cylinder(gui->game);
 	else if (num == PLANE)
 		create_plane(gui->game);
-	else if (num == 5)
+	else if (num == -1)
 		del_obj(0, gui->game);
 	gui->flag = 1;
 	obj_click(0, 0);
-	if (num != 5)
+	if (num != -1)
 		obj_click(gui->o_s.buttons[gui->game->obj_quantity - 1], 0);
 }
 
