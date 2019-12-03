@@ -9,7 +9,7 @@
 #include "interpolate_uv.cl"
 
 #define SAMPLES 5
-#define BOUNCES 4
+#define BOUNCES 6
 #define LIGHTSAMPLING 0
 
 
@@ -117,16 +117,28 @@ static float3		radiance_explicit(t_scene *scene,
 	return (radiance * pdf);
 }
 
+static float3 convert_normal(t_obj *object, float3 normal, float3 dir, t_scene *scene)
+{
+	if (object->transparency > rng(scene->random))
+	{
+		object->metalness = 1.f;
+		normal = dir;
+	}
+	else
+		normal = object->metalness > 0.0 ? normalize(reflect(dir, normal)) : normal;
+	return (normal);
+}
+
 static float3 trace(t_scene * scene, t_intersection * intersection)
 {
 	t_ray ray = intersection->ray;
 	float2		img_coord;
 
 	float3 accum_color = 0.0f;
-	float3 ambiance = 0.0f;
 	float3 mask = 1.0f;
+	int bncs = scene->lightsampling ? 1 : BOUNCES;
 	float3 explicit;
-	for (int bounces = 0; bounces < (scene->lightsampling ? 1 : BOUNCES); bounces++)
+	for (int bounces = 0; bounces < bncs; bounces++)
 	{
 		/* if ray misses scene, return background colour */
 		if (!intersect_scene(scene, intersection, &ray))
@@ -148,21 +160,20 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 			return (objecthit.color);
 		/* compute the surface normal and flip it if necessary to face the incoming ray */
 		intersection->normal = get_normal(&objecthit, intersection, &img_coord, scene);
-		intersection->normal = dot(intersection->normal, ray.dir) < 0.0f ? intersection->normal : intersection->normal * (-1.0f);
-		/* create a local orthogonal coordinate frame centered at the hitpoint */
+		intersection->normal *= -sign(dot(intersection->normal, ray.dir));
 		float cosine;
-		float3 normal = objecthit.metalness > 0.0 ? normalize(reflect(ray.dir, intersection->normal)) : intersection->normal;
-		float3 newdir = sample_uniform(&normal, scene, objecthit.metalness, &cosine);
-		// cosine = dot(intersection->normal, newdir);
+		float3 normal = convert_normal(&objecthit, intersection->normal, ray.dir, scene);//;objecthit.metalness > 0.0 ? normalize(reflect(ray.dir, intersection->normal)) : intersection->normal;
+		float3 newdir = sample_uniform(&normal, scene, objecthit.metalness);
+		cosine = fabs(dot(normal, newdir));
 		/* add a very small offset to the hitpoint to prevent self intersection */
 		float pdf = 1.f - scene->lightsampling * 0.7f;
-		accum_color += mask * objecthit.emission * pdf + mask * (ambiance);
+		accum_color += mask * objecthit.emission * pdf /** cosine*/ + mask * (scene->camera.ambience);
 		if (scene->lightsampling)
 		{
 			explicit = radiance_explicit(scene, intersection);
-			accum_color += explicit * mask *  objecthit.color;
+			accum_color += explicit * mask * objecthit.color;
 		}
-		mask *= objecthit.color * cosine;
+		mask *= objecthit.color ;//* cosine;
 		ray.dir = newdir;
 		ray.origin = intersection->hitpoint + ray.dir * EPSILON;
 	}
@@ -243,20 +254,16 @@ __global float3 *vect_temp,  __global ulong * random,  __global t_txture *textur
 		finalcolor += trace(&scene,  &intersection);
 	}
 
-	hex_finalcolor = ft_rgb_to_hex(toInt(finalcolor.x  / (float)samples), toInt(finalcolor.y  / (float)samples), toInt(finalcolor.z  / (float)samples));
+	// hex_finalcolor = ft_rgb_to_hex(toInt(finalcolor.x  / (float)samples), toInt(finalcolor.y  / (float)samples), toInt(finalcolor.z  / (float)samples));
 
 	vect_temp[scene.x_coord + scene.y_coord * scene.width] = finalcolor;
 
 	if (camera.stereo == 1)
 	{
-		finalcolor.x = (finalcolor.x + finalcolor.y + finalcolor.z) / 3;
-		finalcolor.z = 0.00;
-		finalcolor.y = 0.00;
+		finalcolor = (float3)((finalcolor.x + finalcolor.y + finalcolor.z) / 3, 0.f, 0.f);
 		float3 cross_dir = normalize(cross(camera.normal, camera.direction));
 		hex_finalcolor = ft_rgb_to_hex(toInt(finalcolor.x  / (float)samples), toInt(finalcolor.y  / (float)samples), toInt(finalcolor.z  / (float)samples));
-		scene.camera.position.x += cross_dir.x  * 0.05;
-		scene.camera.position.y += cross_dir.y  * 0.05;
-		scene.camera.position.z += cross_dir.z  * 0.05;
+		scene.camera.position += cross_dir * (float3)0.05;
 		finalcolor1 = vect_temp1[scene.x_coord + scene.y_coord * scene.width];
 		for (int i = 0; i < SAMPLES; i++)
 		{
@@ -265,12 +272,8 @@ __global float3 *vect_temp,  __global ulong * random,  __global t_txture *textur
 			finalcolor1 += trace(&scene,  &intersection);
 		}
 		vect_temp1[scene.x_coord + scene.y_coord * scene.width] = finalcolor1;
-		scene.camera.position.x -= cross_dir.x  * 0.05;
-		scene.camera.position.y -= cross_dir.y  * 0.05;
-		scene.camera.position.z -= cross_dir.z  * 0.05;
-		finalcolor1.z = (finalcolor1.x + finalcolor1.y + finalcolor1.z) / 3;
-		finalcolor1.x = 0.00;
-		finalcolor1.y = 0.00;
+		scene.camera.position -= cross_dir * (float3)0.05;
+		finalcolor1 = (float3)(0.f, 0.f, (finalcolor1.x + finalcolor1.y + finalcolor1.z) / 3);
 		hex_finalcolor1 = ft_rgb_to_hex(toInt(finalcolor1.x  / (float)samples), toInt(finalcolor1.y  / (float)samples), toInt(finalcolor1.z  / (float)samples));
 		output[scene.x_coord + scene.y_coord * scene.width] = stereo_mode(hex_finalcolor, hex_finalcolor1);
 	}

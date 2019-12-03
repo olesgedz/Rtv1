@@ -1,11 +1,11 @@
 {
     "scene":{
         "global texture":"sviborg.jpg",
-        "ambiance": 0.5,
+        "ambiance": 0.0,
         "cartoon": 0,
         "motion blur" : 0.0,
-        "sepia" : 1,
-        "stereo": 1
+        "sepia" : 0,
+        "stereo": 0
     }, 
     
     "objects":[
@@ -39,6 +39,7 @@
             "radius" : 0.15,
             "emition" : [0.0,0.0,0.0],
             "texture":  "sun.jpg",
+            "transparency": 1.0,
             "metalness": 1.0
         },
         {
@@ -58,6 +59,7 @@
             "position": [0.0,0.5,0.0],
             "color": [0.9,0.8,0.7],
             "dir": [0.0,-1.0,0.0],
+            "prolapse": [15, 15],
             "texture": "grass_rock.jpg"
         },
         {
@@ -72,6 +74,7 @@
             "position": [0.0,0.0,-0.3],
             "color": [0.9,0.8,0.7],
             "dir": [0.0,0.0,1.0],
+            "prolapse": [15, 15],
             "texture": "grass_rock.jpg"
         },
         {
