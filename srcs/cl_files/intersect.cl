@@ -106,5 +106,15 @@ static float		intersect_triangle(__global t_obj *triangle,  t_ray *  ray)
 
 static float		intersect_hyper(__global t_obj *hyper, t_ray *	ray)
 {
-	return (0.0f);
+	float3 inter = (ray->origin - hyper->position) * ray->dir;
+	float a = ray->dir.x * ray->dir.x + ray->dir.y * ray->dir.y - ray->dir.z * ray->dir.z;
+	float b = 2 * (inter.x + inter.y - inter.z);
+	float3 hyp_pos = hyper->position.x * hyper->position.x;
+	float3 ray_pos = ray->origin * ray->origin;
+	inter = ray_pos + hyp_pos;
+	float3 tmp = hyper->position * ray->origin;
+	float c = (inter.x + inter.y - inter.z - 2 * tmp.x - 2 * tmp.y + 2 * tmp.z) + (hyper->radius * hyper->radius) * sign(hyper->radius); 
+
+
+	return (ft_solve(a, b, c));
 }
