@@ -5,8 +5,8 @@
 *.slo
 *.lo
 *.o
-*.obj
 *.orig
+
 # Precompiled Headers
 *.gch
 *.pch

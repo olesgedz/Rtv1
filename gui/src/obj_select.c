@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 19:08:02 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:13:55 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/03 19:38:09 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@ char		*fill_name_mass(t_obj *obj, int num)
 		res = ft_strjoin("Cylinder ", number);
 	else if (obj->type == PLANE)
 		res = ft_strjoin("Plane ", number);
+	else if (obj->type == HYPERBOLOID)
+		res = ft_strjoin("Hyperboloid ", number);
+	else if (obj->type == TORUS)
+		res = ft_strjoin("Torus ", number);
 	if ((int)(obj->emission.v4[0] + obj->emission.v4[1] + obj->emission.v4[2]))
 	{
 		buff = res;
