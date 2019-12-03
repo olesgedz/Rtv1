@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:17:38 by srobert-          #+#    #+#             */
-/*   Updated: 2019/12/01 19:14:51 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/03 19:01:30 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void		ft_vert_push(t_game *game, cl_float3 vert)
 {
 	if (game->vertices_list == NULL)
 		game->vertices_num = 0;
-	game->vertices_list = ft_realloc(game->vertices_list,
+	game->vertices_list = realloc(game->vertices_list,
 	sizeof(cl_float3) * (game->vertices_num + 1));
 	game->vertices_list[game->vertices_num] = vert;
 	game->vertices_num += 1;

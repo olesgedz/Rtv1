@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 20:53:26 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:12:49 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/03 19:08:39 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	push_tex(t_game *game, char *res)
 
 void	push_normal(t_game *game, char *res)
 {
-	ft_normal_push(game, &(game->texture_list), res);
+	ft_normal_push(game, &(game->normal_list), res);
 	game->normals =
 	realloc(game->normals, sizeof(t_txture) * game->normals_num);
 	get_texture(res, &(game->normals[game->normals_num - 1]), "./normals/");
