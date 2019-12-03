@@ -166,13 +166,13 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 		float3 newdir = sample_uniform(&normal, scene, objecthit.metalness);
 		cosine = fabs(dot(normal, newdir));
 		float pdf = 1.f - scene->lightsampling * 0.7f;
-		accum_color += mask * objecthit.emission * pdf /** cosine*/ + mask * (scene->camera.ambience);
+		accum_color += mask * objecthit.emission * pdf * cosine + mask * (scene->camera.ambience);
 		if (scene->lightsampling)
 		{
 			explicit = radiance_explicit(scene, intersection);
 			accum_color += explicit * mask * objecthit.color;
 		}
-		mask *= objecthit.color ;//* cosine;
+		mask *= objecthit.color * cosine;
 		ray.dir = newdir;
 		ray.origin = intersection->hitpoint + ray.dir * EPSILON;
 	}
