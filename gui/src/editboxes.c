@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 20:04:17 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:13:33 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/03 20:12:18 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,4 +121,6 @@ void		color_emission(t_gui *gui, t_obj *obj, int *i)
 	gui->c_o.editboxrect[2].y += 30;
 	KW_CreateLabel(gui->gui, gui->c_o.frame, "Metalness", gui->c_o.rects[0]);
 	gui->c_o.ed_b[(*i)++] = f_e(gui, obj->metalness, gui->c_o.rects[1]);
+	KW_CreateLabel(gui->gui, gui->c_o.frame, "Transparency", gui->c_o.rects[2]);
+	gui->c_o.ed_b[(*i)++] = f_e(gui, obj->transparency, gui->c_o.rects[3]);
 }

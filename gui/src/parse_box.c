@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 20:04:17 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:12:17 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/03 20:11:51 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,5 @@ void		parse_color_emission(t_gui *gui, t_obj *obj, int *i)
 	obj->emission.s[1] = atof(KW_GetEditboxText(gui->c_o.ed_b[(*i)++]));
 	obj->emission.s[2] = atof(KW_GetEditboxText(gui->c_o.ed_b[(*i)++]));
 	obj->metalness = atof(KW_GetEditboxText(gui->c_o.ed_b[(*i)++]));
+	obj->transparency = atof(KW_GetEditboxText(gui->c_o.ed_b[(*i)++]));
 }

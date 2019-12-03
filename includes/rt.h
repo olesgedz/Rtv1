@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/02 22:57:22 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/03 20:00:35 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -438,5 +438,11 @@ cl_float3				triangle_norm(cl_float3 *vertices);
 void					push_normal(t_game *game, char *res);
 void					check_ed_box_focus(t_game *game, t_gui *gui,
 int x, int y);
+void					tor_parse(t_gui *gui, t_obj *obj);
+void					hyper_parse(t_gui *gui, t_obj *obj);
+void					change_hyper(t_gui *gui, t_obj *obj);
+void					create_tor(t_game *game);
+void					create_hyper(t_game *game);
+void					change_tor(t_gui *gui, t_obj *obj);
 
 #endif

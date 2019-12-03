@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 19:27:34 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/03 19:39:32 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/03 20:01:20 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void		obj_if(t_gui *gui, t_obj *obj)
 	else if (obj->type == TRIANGLE)
 		change_trian(gui, obj);
 	else if (obj->type == TORUS)
-		change_trian(gui, obj);
+		change_tor(gui, obj);
 	else if (obj->type == HYPERBOLOID)
-		change_trian(gui, obj);
+		change_hyper(gui, obj);
 }
 
 void		visibility_name(KW_Widget *widget, t_obj *obj)
