@@ -88,8 +88,9 @@ RMRF = gui/src/gui_main.o\
 		gui/src/cam_select.o\
 		gui/src/cam_parser.o\
 		gui/src/add_camera.o\
-		../gui/src/tor_hyper.o\
-		../gui/src/pars_tor_hyper.o\
+		gui/src/tor_hyper.o\
+		gui/src/pars_tor_hyper.o\
+		gui/src/basis.o\
 		gui/src/stereo.o\
 		gui/src/eff.o\
 		gui/src/add_tex.o\
@@ -138,6 +139,7 @@ SRCS_LIST = main.c \
 			../gui/src/add_tex.c\
 			../gui/src/stereo.c\
 			../gui/src/tor_hyper.c\
+			../gui/src/basis.c\
 			../gui/src/pars_tor_hyper.c\
 			../cJSON/cJSON.c\
 			neue_schlanke_analyse.c\

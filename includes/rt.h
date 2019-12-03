@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/03 20:00:35 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/03 21:25:33 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -444,5 +444,6 @@ void					change_hyper(t_gui *gui, t_obj *obj);
 void					create_tor(t_game *game);
 void					create_hyper(t_game *game);
 void					change_tor(t_gui *gui, t_obj *obj);
+void					parse_new_basis(t_obj *obj);
 
 #endif
