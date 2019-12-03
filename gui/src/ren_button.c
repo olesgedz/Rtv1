@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 17:38:36 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:14:07 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/02 18:29:17 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void		semples_to_line(t_game *game, t_gui *gui)
 	gcvt(gui->fps, 5, fps);
 	gui->g_b.names[0] = ft_strjoin(buff, fps);
 	free(buff);
+	gui->g_b.label = KW_GetButtonLabel(gui->g_b.buttons[3]);
 	KW_SetLabelText(gui->g_b.label, gui->g_b.names[0]);
 }
 

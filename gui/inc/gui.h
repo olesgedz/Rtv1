@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gui.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 15:47:20 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/02 23:07:42 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,13 +139,13 @@ typedef struct		s_change_cam
 typedef struct		s_obj_type
 {
 	KW_Rect			frect;
-	KW_Rect			buttonrect[6];
+	KW_Rect			buttonrect[8];
 	KW_Widget		*frame;
 	KW_Widget		*label;
 	KW_Rect			*rects[1];
 	unsigned		weights[1];
-	KW_Widget		*buttons[6];
-	char			*names[6];
+	KW_Widget		*buttons[8];
+	char			*names[8];
 	int				max_i;
 	int				show;
 }					t_obj_type;

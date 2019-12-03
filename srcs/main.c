@@ -6,13 +6,14 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/12/01 19:14:43 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/02 18:06:02 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 #include "libgnl.h"
 #include <unistd.h>
+
 static void	set_icon(t_gui *gui, const char *filename)
 {
 	SDL_Surface		*surf;
@@ -53,7 +54,6 @@ static void	main_loop(t_game *game, t_gui *gui, int argc)
 		cam_free(gui);
 	}
 }
-
 
 int			main(int argc, char **argv)
 {

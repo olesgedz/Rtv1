@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 19:10:18 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:13:47 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/02 23:05:57 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,23 @@ void	click_create(KW_Widget *widget, int b)
 	num = *((int *)KW_GetWidgetUserData(widget));
 	if (num == SPHERE)
 		create_sphere(gui->game);
-	else if (num == CONE)
-		create_cone(gui->game);
-	else if (num == TRIANGLE)
-		create_triangle(gui->game);
 	else if (num == CYLINDER)
 		create_cylinder(gui->game);
+	else if (num == CONE)
+		create_cone(gui->game);
 	else if (num == PLANE)
 		create_plane(gui->game);
-	else if (num == -1)
+	else if (num == TRIANGLE)
+		create_triangle(gui->game);
+	else if (num == TORUS)
+		create_triangle(gui->game);
+	else if (num == HYPERBOLOID)
+		create_triangle(gui->game);
+	else if (num == 7)
 		del_obj(0, gui->game);
 	gui->flag = 1;
 	obj_click(0, 0);
-	if (num != -1)
+	if (num < 7)
 		obj_click(gui->o_s.buttons[gui->game->obj_quantity - 1], 0);
 }
 
@@ -72,6 +76,10 @@ void	save_click(KW_Widget *widget, int b)
 	else if (obj->type == SPHERE)
 		sphere_parse(gui, obj);
 	else if (obj->type == TRIANGLE)
+		trian_parse(gui, obj);
+	else if (obj->type == HYPERBOLOID)
+		trian_parse(gui, obj);
+	else if (obj->type == TORUS)
 		trian_parse(gui, obj);
 	gui->flag = 1;
 }

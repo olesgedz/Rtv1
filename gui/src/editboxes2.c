@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 21:30:38 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:13:37 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/02 17:15:22 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,7 @@ void			prolapse(t_gui *gui, t_obj *obj, int *i)
 	gui->c_o.editboxrect[1].y += 30;
 	gui->c_o.editboxrect[2].y += 30;
 	KW_CreateLabel(gui->gui, gui->c_o.frame, "Prolapse", gui->c_o.rects[0]);
-	if (obj->type == PLANE)
-		gui->c_o.ed_b[(*i)++] = f_e(gui, obj->prolapse.s[0], gui->c_o.rects[1]);
+	gui->c_o.ed_b[(*i)++] = f_e(gui, obj->prolapse.s[0], gui->c_o.rects[1]);
 	gui->c_o.ed_b[(*i)++] = f_e(gui, obj->prolapse.s[1], gui->c_o.rects[2]);
 }
 

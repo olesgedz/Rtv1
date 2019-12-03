@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:54:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/02 17:11:43 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/12/02 22:13:09 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void			main_render(t_game *game, t_gui *gui)
 		camera_reposition(game, gui);
 		ft_render(game, gui);
 		screen_present(game, gui);
+		semples_to_line(game, gui);
 		time = (SDL_GetTicks() - time0) / 1000.;
 		if (time > 3)
 		{

@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 18:45:37 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:12:45 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/02 23:03:00 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,19 @@ static char	*fill_name(int num)
 
 	if (num == SPHERE)
 		res = ft_strdup("Sphere");
-	else if (num == CONE)
-		res = ft_strdup("Cone");
-	else if (num == TRIANGLE)
-		res = ft_strdup("Triangle");
 	else if (num == CYLINDER)
 		res = ft_strdup("Cylinder");
+	else if (num == CONE)
+		res = ft_strdup("Cone");
 	else if (num == PLANE)
 		res = ft_strdup("Plane");
-	else if (num == 5)
+	else if (num == TRIANGLE)
+		res = ft_strdup("Triangle");
+	else if (num == TORUS)
+		res = ft_strdup("Torus");
+	else if (num == HYPERBOLOID)
+		res = ft_strdup("Hyperboloid");
+	else if (num == 7)
 		res = ft_strdup("Delete invisible");
 	return (res);
 }
@@ -63,7 +67,7 @@ static int	scan_mass(t_gui *gui)
 	KW_RectFillParentHorizontally(&gui->o_t.frect,
 	gui->o_t.rects, gui->o_t.weights, 1, 15,
 	KW_RECT_ALIGN_MIDDLE);
-	while (i < 6)
+	while (i < 8)
 	{
 		gui->o_t.names[i] = fill_name(i);
 		gui->o_t.buttonrect[i] = gui->o_t.buttonrect[i - 1];
@@ -72,7 +76,7 @@ static int	scan_mass(t_gui *gui)
 			gui->o_t.frect.h += 45;
 		i++;
 	}
-	return (6);
+	return (8);
 }
 
 void		obj_type(t_game *game, t_gui *gui)
@@ -82,7 +86,7 @@ void		obj_type(t_game *game, t_gui *gui)
 	unsigned			test;
 	KW_Widget *const	*wid_arr;
 
-	mas = (int *)malloc(sizeof(int) * 6);
+	mas = (int *)malloc(sizeof(int) * 8);
 	gui->o_t.max_i = scan_mass(gui);
 	if ((i = -1) && gui->o_t.max_i > WIN_H / 45 - 3)
 	{
@@ -100,8 +104,6 @@ gui->o_t.frame, gui->o_t.names[i], &gui->o_t.buttonrect[i]);
 		*mas = i;
 		KW_SetWidgetUserData(gui->o_t.buttons[i], mas++);
 	}
-	*(--mas) = -1;
-	KW_SetWidgetUserData(gui->o_t.buttons[i], mas);
 }
 
 void		add_obj(t_game *game, t_gui *gui)
