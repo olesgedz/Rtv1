@@ -19,8 +19,8 @@ CC = clang
 LIBRARIES =  $(GUI_LIB) -lSDL2_image  -lSDL2_mixer  -lsdl -L$(LIBSDL_DIRECTORY)   -lcl -L$(LIBCL) -lgnl -L$(LIBGNL) -lvect -L$(LIBVECT) -lft -L$(LIBFT_DIRECTORY) -lm -lpthread
 INCLUDES = $(GUI_INC) -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)includes/ -Isrcs/cl_error/ -I$(LIBGNL)includes/ -I$(LIBCL)includes/
 
-#$(shell pkg-config --libs sdl2_ttf) $(shell pkg-config --libs sdl2_image) $(shell pkg-config --libs sdl2_mixer)
-GUI_INC = -I./include/SDL2 -I./gui/KiWi/src -I./gui/inc #$(shell pkg-config --cflags sdl2_ttf) $(shell pkg-config --cflags sdl2_image) $(shell pkg-config --cflags sdl2_mixer)
+
+GUI_INC = -I./include/SDL2 -I./gui/KiWi/src -I./gui/inc
 DIR_KiWi = ./gui/build/src/
 
 LIBFT = $(LIBFT_DIRECTORY)libft.a
@@ -88,6 +88,8 @@ RMRF = gui/src/gui_main.o\
 		gui/src/cam_select.o\
 		gui/src/cam_parser.o\
 		gui/src/add_camera.o\
+		../gui/src/tor_hyper.o\
+		../gui/src/pars_tor_hyper.o\
 		gui/src/stereo.o\
 		gui/src/eff.o\
 		gui/src/add_tex.o\
@@ -135,6 +137,8 @@ SRCS_LIST = main.c \
 			../gui/src/eff.c\
 			../gui/src/add_tex.c\
 			../gui/src/stereo.c\
+			../gui/src/tor_hyper.c\
+			../gui/src/pars_tor_hyper.c\
 			../cJSON/cJSON.c\
 			neue_schlanke_analyse.c\
 			analyse_dienstprogramme.c\
@@ -174,14 +178,14 @@ endif
 
 ifeq ($(detected_OS),Linux)
 	LIBRARIES += -rpath ./gui/build/src/ -L./gui/build/src/ -lKiWi   -lOpenCL -lrt
-	GUI_LIB +=    $(shell pkg-config --libs SDL2_image) $(shell pkg-config --libs SDL2_ttf) $(shell pkg-config --libs SDL2_mixer)
-	 GUI_INC += $(shell pkg-config --cflags SDL2_ttf) $(shell pkg-config --cflags SDL2_image) $(shell pkg-config --cflags SDL2_mixer)
+	GUI_LIB +=    $(shell pkg-config --libs SDL2_image) $(shell pkg-config --libs SDL2_ttf) $(shell pkg-config --libs SDL2_mixer) $(shell pkg-config --libs SDL2_net)
+	 GUI_INC += $(shell pkg-config --cflags SDL2_ttf) $(shell pkg-config --cflags SDL2_image) $(shell pkg-config --cflags SDL2_mixer) $(shell pkg-config --cflags SDL2_net)
 	LIB_KiWi = $(DIR_KiWi)/libKiWi.so
 endif
 ifeq ($(detected_OS),Darwin)        # Mac OS X
 	LIBRARIES += -framework OpenCL
-	GUI_LIB += $(shell pkg-config --libs sdl2_ttf) $(shell pkg-config --libs sdl2_image) $(shell pkg-config --libs sdl2_mixer)
-  GUI_INC += $(shell pkg-config --cflags sdl2_ttf) $(shell pkg-config --cflags sdl2_image) $(shell pkg-config --cflags sdl2_mixer)
+	GUI_LIB += $(shell pkg-config --libs sdl2_ttf) $(shell pkg-config --libs sdl2_image) $(shell pkg-config --libs sdl2_mixer) $(shell pkg-config --libs sdl2_net)
+  GUI_INC += $(shell pkg-config --cflags sdl2_ttf) $(shell pkg-config --cflags sdl2_image) $(shell pkg-config --cflags sdl2_mixer) $(shell pkg-config --cflags sdl2_net)
 	LIB_KiWi = $(DIR_KiWi)/libKiWi.dylib
 	GUI_LIB += -L./gui/build/src -lKiWi
 
