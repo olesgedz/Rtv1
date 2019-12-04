@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hilfefunktionen.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:51:09 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/03 21:33:14 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/12/04 18:35:53 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,8 @@ int compare_in_normal_dict(t_game *game, char *normal_name)
 	int i;
 
 	i = 0;
-
+	if (ft_strcmp(normal_name, "wave") == 0)
+		return (-1);
 	if (game->normal_list == NULL)
 		return (game->normals_num + 1);
 	while (i < game->normals_num)
