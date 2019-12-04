@@ -39,3 +39,4 @@ gui/build
 screens/
 textures/sviborg_you.jpg
 sviborg_you.jpg
+srcs/main_net.c

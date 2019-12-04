@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/04 21:48:50 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/04 22:46:21 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "cl_error.h"
 # include "SDL_image.h"
 # include "SDL_mixer.h"
+# include "SDL_net.h"
 # include "libft.h"
 # include <dirent.h>
 # include "libsdl.h"
@@ -447,5 +448,7 @@ void					create_hyper(t_game *game);
 void					change_tor(t_gui *gui, t_obj *obj);
 void					parse_new_basis(t_obj *obj);
 void					gui_mod_but(t_game *game, t_gui *gui);
+void					parse_refraction(t_gui *gui, t_obj *obj, int *i);
+void					refraction(t_gui *gui, t_obj *obj, int *i);
 
 #endif
