@@ -44,7 +44,7 @@ float3 get_normal(t_obj *object, t_intersection *intersection, float2 *coord, t_
 	 	normal = get_cone_normal(object, intersection);
 	else if (object->type == TRIANGLE)
 		normal = object->v;
-	else if (object->type == HYPERBOLOID)
+	else if (object->type == PARABOLOID)
 	{
 		normal = intersection->hitpoint;
 		normal.y *= -1;

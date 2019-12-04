@@ -56,7 +56,7 @@ static bool intersect_scene(t_scene *scene, t_intersection *intersection, t_ray 
 				hitdistance = intersect_plane(object, ray);
 			else if (object->type == TRIANGLE)
 				hitdistance = intersect_triangle(object, ray);
-			else if (object->type == HYPERBOLOID)
+			else if (object->type == PARABOLOID)
 				hitdistance = intersect_hyper(object, ray);
 			/* keep track of the closest intersection and hitobject found so far */
 			if (hitdistance != 0.0f && hitdistance < ray->t)
