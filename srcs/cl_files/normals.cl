@@ -46,8 +46,8 @@ float3 get_normal(t_obj *object, t_intersection *intersection, float2 *coord, t_
 		normal = object->v;
 	else if (object->type == PARABOLOID)
 	{
-		normal = -2 * intersection->hitpoint;
-		normal.z *= -1;
+		normal = intersection->hitpoint;
+		normal.y *= -1;
 	}
 	else
 		normal = sphere_get_normal(object, intersection);
