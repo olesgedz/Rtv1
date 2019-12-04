@@ -6,12 +6,11 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 16:30:29 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:14:08 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/04 15:54:36 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
-#include "KW_scrollbox_internal.h"
 
 static void	clicked(KW_Widget *widget, int b)
 {
@@ -21,8 +20,9 @@ static void	clicked(KW_Widget *widget, int b)
 
 	b = 0;
 	gui = g_gui(0, 0);
-	if (gui->game->ev.button.button != SDL_BUTTON_LEFT)
-		return ;
+	if (gui->main_screen)
+		if (gui->game->ev.button.button != SDL_BUTTON_LEFT)
+			return ;
 	name = KW_GetWidgetUserData(widget);
 	free(gui->av);
 	gui->av = ft_strjoin("scenes/", name);

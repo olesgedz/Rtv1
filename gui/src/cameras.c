@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 21:32:09 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/02 17:15:01 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/04 16:48:53 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ void		cam_button(t_game *game, t_gui *gui)
 	KW_SetWidgetUserData(gui->g_b.buttons[5], (void *)game);
 }
 
-void		cam_rename(t_game *game, t_gui *gui)
+void		cam_rename(t_game *game, t_gui *gui, int num)
 {
 	KW_Widget	*label;
 	char		*buff;
 
-	label = KW_GetButtonLabel(gui->c_s.buttons[game->cam_num]);
-	buff = cam_mass_name(&game->gpu.camera[game->cam_num]);
+	label = KW_GetButtonLabel(gui->c_s.buttons[num]);
+	buff = cam_mass_name(game, &game->gpu.camera[num]);
 	KW_SetLabelText(label, buff);
 	free(buff);
 }
@@ -82,5 +82,6 @@ void		cam_save_click(KW_Widget *widget, int b)
 	gui = g_gui(0, 0);
 	cam = KW_GetWidgetUserData(widget);
 	pars_cam_box(gui, cam);
+	cam_rename(gui->game, gui, cam->id);
 	gui->game->flag = 1;
 }

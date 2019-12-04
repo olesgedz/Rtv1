@@ -91,6 +91,7 @@ RMRF = gui/src/gui_main.o\
 		gui/src/tor_hyper.o\
 		gui/src/pars_tor_hyper.o\
 		gui/src/basis.o\
+		gui/src/gui_mod_butt.o\
 		gui/src/stereo.o\
 		gui/src/eff.o\
 		gui/src/add_tex.o\
@@ -136,6 +137,7 @@ SRCS_LIST = main.c \
 			../gui/src/cameras.c\
 			../gui/src/add_camera.c\
 			../gui/src/eff.c\
+			../gui/src/gui_mod_butt.c\
 			../gui/src/add_tex.c\
 			../gui/src/stereo.c\
 			../gui/src/tor_hyper.c\
