@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 15:51:24 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:14:05 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/03 21:26:47 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,6 @@ void	in_cl(t_game *game)
 	ERROR(ret);
 }
 
-static void	basis_shift(t_obj *obj)
-{
-	obj->basis[0] = create_cfloat3(0, 1, 0);
-	obj->basis[1] = create_cfloat3(1, 0, 0);
-	obj->basis[2] = create_cfloat3(0, 0, 1);
-	obj->shift = create_cfloat2(1, 1);
-}
-
 void		same_new(t_game *game, t_obj *obj, t_type type)
 {
 	obj->type = type;
@@ -46,7 +38,8 @@ void		same_new(t_game *game, t_obj *obj, t_type type)
 		obj->position = create_cfloat3(0, 0, 0);
 		obj->texture = 0;
 		obj->normal = 0;
-		basis_shift(obj);
+		parse_new_basis(obj);
+		obj->shift = create_cfloat2(0, 0);
 	}
 	obj->id = game->gpu.objects[game->obj_quantity - 1].id + 1;
 	obj->emission = create_cfloat3(0, 0, 0);

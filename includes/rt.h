@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/03 20:00:35 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/04 17:19:25 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ typedef struct			s_game
 	SDL_Surface			*blured;
 	cl_float3			*vertices_list;
 	int					vertices_num;
+	int					gui_mod;
 }						t_game;
 
 typedef struct	s_filter
@@ -404,8 +405,8 @@ void					del_click(KW_Widget *widget, int b);
 void					destr(t_gui *gui, KW_Widget *widget);
 void					cam_button(t_game *game, t_gui *gui);
 void					cam_select(t_gui *gui, t_cam *cams, int num);
-char					*cam_mass_name(t_cam *cam);
-void					cam_rename(t_game *game, t_gui *gui);
+char					*cam_mass_name(t_game *game, t_cam *cam);
+void					cam_rename(t_game *game, t_gui *gui, int num);
 void					norma_from_cam_select(t_gui *gui, KW_Widget *widget,
 KW_Widget *wid);
 void					take_cam(KW_Widget *widget, int b);
@@ -444,5 +445,7 @@ void					change_hyper(t_gui *gui, t_obj *obj);
 void					create_tor(t_game *game);
 void					create_hyper(t_game *game);
 void					change_tor(t_gui *gui, t_obj *obj);
+void					parse_new_basis(t_obj *obj);
+void					gui_mod_but(t_game *game, t_gui *gui);
 
 #endif
