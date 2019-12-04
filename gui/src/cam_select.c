@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 21:48:49 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:13:05 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/04 16:52:51 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,14 @@ void		cam_click(KW_Widget *widget, int b)
 	gui = g_gui(0, 0);
 	if (gui->game->ev.button.button != SDL_BUTTON_LEFT)
 		return ;
+	if (cam)
+		cam_rename(gui->game, gui, cam->id);
 	if (gui->c_c.show == 1)
 		norma_from_cam_select(gui, widget, wid);
 	if (widget && (cam != KW_GetWidgetUserData(widget)))
 	{
-		cam = KW_GetWidgetUserData(widget);
+		if ((cam = KW_GetWidgetUserData(widget)))
+			cam_rename(gui->game, gui, cam->id);
 		change_cam(gui, cam);
 		wid = widget;
 		KW_SetLabelTextColor(KW_GetButtonLabel(wid),
@@ -41,7 +44,7 @@ void		cam_click(KW_Widget *widget, int b)
 	}
 }
 
-char		*cam_mass_name(t_cam *cam)
+char		*cam_mass_name(t_game *game, t_cam *cam)
 {
 	char	*res;
 	char	*buff;
@@ -54,7 +57,10 @@ char		*cam_mass_name(t_cam *cam)
 	else
 		con = 4;
 	gcvt(cam->position.s[0], con, str);
-	res = ft_strjoin("(", str);
+	if (cam->id == game->cam_num)
+		res = ft_strjoin(">>(", str);
+	else
+		res = ft_strjoin("(", str);
 	buff = ft_strjoin(res, ", ");
 	free(res);
 	gcvt(cam->position.s[1], con, str);
@@ -91,13 +97,13 @@ static int	scan_mass(t_gui *gui, t_cam *cams, int num, int i)
 	gui->c_s.frect.x += gui->g_b.buttonrect[0].w;
 	gui->c_s.buttonrect[0] = (KW_Rect){0, 0, 30, 40};
 	i = 0;
-	first_button(gui, cam_mass_name(&cams[0]));
+	first_button(gui, cam_mass_name(gui->game, &cams[0]));
 	while (++i < num + 1 && i < MAX_OBJ)
 	{
 		if (i == num)
 			gui->c_s.names[i] = ft_strdup("Add camera");
 		else
-			gui->c_s.names[i] = cam_mass_name(&cams[i]);
+			gui->c_s.names[i] = cam_mass_name(gui->game, &cams[i]);
 		gui->c_s.buttonrect[i] = gui->c_s.buttonrect[i - 1];
 		gui->c_s.buttonrect[i].y += 45;
 		if (i < WIN_H / 45 - 12)

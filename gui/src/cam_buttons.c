@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 17:59:39 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:12:58 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/04 16:58:58 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,16 @@ void	take_cam(KW_Widget *widget, int b)
 {
 	t_gui		*gui;
 	t_cam		*cam;
+	int			buff;
 
 	b = 0;
 	gui = g_gui(0, 0);
 	if (gui->game->ev.button.button != SDL_BUTTON_LEFT)
 		return ;
+	buff = gui->game->cam_num;
 	cam = KW_GetWidgetUserData(widget);
 	gui->game->cam_num = cam->id;
+	cam_rename(gui->game, gui, buff);
 	gui->game->flag = 1;
 }
 
