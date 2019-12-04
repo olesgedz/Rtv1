@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/04 17:55:20 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/04 21:48:50 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef enum			e_figure
 	PLANE,
 	TRIANGLE,
 	TORUS,
-	HYPERBOLOID
+	PARABOLOID
 }						t_type;
 
 typedef struct			s_txture

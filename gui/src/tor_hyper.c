@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 19:43:23 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/03 20:08:50 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/04 21:48:50 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	create_hyper(t_game *game)
 	obj = (t_obj*)malloc(sizeof(t_obj));
 	obj->v = create_cfloat3(0, 1, 0);
 	obj->radius = 0.1;
-	same_new(game, obj, HYPERBOLOID);
+	same_new(game, obj, PARABOLOID);
 }
 
 void	create_tor(t_game *game)
