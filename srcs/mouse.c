@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 18:31:59 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:14:45 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/04 17:34:43 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void		mouse_up(t_game *game, t_gui *gui)
 {
 	if (game->ev.button.button == SDL_BUTTON_RIGHT)
 	{
+		if (game->gui_mod)
+			show_hide(game, g_gui(0, 0));
 		if (!(game->mouse.rmb = 0) && !game->mouse.g)
 		{
 			SDL_SetRelativeMouseMode(SDL_DISABLE);
@@ -41,6 +43,8 @@ void		mouse_down(t_game *game, t_gui *gui)
 	check_ed_box_focus(game, gui, game->mouse.x, game->mouse.y);
 	if (game->ev.button.button == SDL_BUTTON_RIGHT)
 	{
+		if (game->gui_mod)
+			show_hide(game, g_gui(0, 0));
 		if (!gui->over_gui && (game->mouse.rmb = 1))
 		{
 			SDL_SetRelativeMouseMode(SDL_ENABLE);
