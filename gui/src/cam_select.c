@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 21:48:49 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/04 16:52:51 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/04 17:58:53 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static int	scan_mass(t_gui *gui, t_cam *cams, int num, int i)
 	}
 	gui->c_s.weights[0] = 1;
 	gui->c_s.frect = (KW_Rect){0, 25, FR_FZ, 80};
-	gui->c_s.frect.x += gui->g_b.buttonrect[0].w;
+	gui->c_s.frect.x += gui->g_b.buttonrect[0].w + 5;
 	gui->c_s.buttonrect[0] = (KW_Rect){0, 0, 30, 40};
 	i = 0;
 	first_button(gui, cam_mass_name(gui->game, &cams[0]));

@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 19:10:18 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/04 17:20:14 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/04 17:57:33 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void		gui_bar(t_game *game, t_gui *gui)
 
 	gui->g_b.label = 0;
 	gui->g_b.show = 1;
-	gui->g_b.frect = (KW_Rect){0, 0, WIN_W, FR_FZ / 5.};
+	gui->g_b.frect = (KW_Rect){0, 0, WIN_W, 38};
 	gui->g_b.frame = KW_CreateFrame(gui->gui, NULL, &gui->g_b.frect);
 	buttons(game, gui);
 	cam_button(game, gui);
