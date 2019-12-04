@@ -12,7 +12,7 @@ float3					get_color(t_obj *object, float3 hitpoint, t_scene *scene, float2 *coo
 		return(cl_int_to_float3(texture->texture[i]));
 	}
 	else if (object->texture == -1)
-		return (cl_int_to_float3((coord->x > 0.5f && coord->y > 0.5f) || (coord->x  < 0.5f && coord->y < 0.5f) ? 0xFFFFFF : 0x0));
+		return ((coord->x > 0.5f && coord->y > 0.5f) || (coord->x  < 0.5f && coord->y < 0.5f) ? cl_int_to_float3(0xFFFFFF) : object->color);
 	else
 		return (object->color);
 }
