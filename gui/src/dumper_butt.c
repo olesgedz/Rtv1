@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 14:51:12 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/05 16:30:24 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/05 17:13:04 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ static void	clicked_dump(KW_Widget *widget, int b)
 	dumper(game);
 	ss_free(gui);
 	scene_select(gui, -1, 0);
+	if (!gui->s_s.show)
+		KW_HideWidget(gui->s_s.frame);
 }
 
 void		dumper_butt(t_game *game, t_gui *gui)

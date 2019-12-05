@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 21:48:49 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/04 17:58:53 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/05 17:52:43 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		cam_click(KW_Widget *widget, int b)
 {
-	static t_cam		*cam;
+	static t_cam		*cam = 0;
 	static KW_Widget	*wid = 0;
 	t_gui				*gui;
 	KW_Widget *label;
@@ -23,14 +23,11 @@ void		cam_click(KW_Widget *widget, int b)
 	gui = g_gui(0, 0);
 	if (gui->game->ev.button.button != SDL_BUTTON_LEFT)
 		return ;
-	if (cam)
-		cam_rename(gui->game, gui, cam->id);
 	if (gui->c_c.show == 1)
 		norma_from_cam_select(gui, widget, wid);
 	if (widget && (cam != KW_GetWidgetUserData(widget)))
 	{
-		if ((cam = KW_GetWidgetUserData(widget)))
-			cam_rename(gui->game, gui, cam->id);
+		cam = KW_GetWidgetUserData(widget);
 		change_cam(gui, cam);
 		wid = widget;
 		KW_SetLabelTextColor(KW_GetButtonLabel(wid),

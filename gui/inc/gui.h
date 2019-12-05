@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/05 17:02:47 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/05 17:56:58 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ typedef struct		s_change_cam
 	KW_Widget		*buttons[6];
 	char			*names[30];
 	int				show;
+	int				cam_id;
 }					t_change_cam;
 
 typedef struct		s_obj_type

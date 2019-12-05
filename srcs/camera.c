@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:50:13 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/04 17:50:59 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/05 17:57:56 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	mouse_mov(t_game *game, t_gui *gui)
 		game->gpu.samples = 0;
 		reconfigure_camera(&game->gpu.camera[game->cam_num]);
 		cam_rename(game, gui, game->cam_num);
-		if (gui->c_c.show && game->keys.show_gui)
+		if (gui->c_c.show && game->keys.show_gui && game->cam_num == gui->c_c.cam_id)
 		{
 			gui->game->ev.button.button = SDL_BUTTON_LEFT;
 			cam_click(gui->c_s.buttons[game->cam_num], 0);

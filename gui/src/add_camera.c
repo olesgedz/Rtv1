@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 17:19:57 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:12:38 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/05 17:23:40 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void		add_cam_click(KW_Widget *widget, int b)
 	ft_cam_push(gui->game, new_cam());
 	cam_free(gui);
 	cam_screen(gui, gui->game);
-	cam_click(gui->c_s.buttons[gui->game->cam_quantity], 0);
+	cam_click(gui->c_s.buttons[gui->game->cam_quantity - 1], 0);
 }
 
 void			add_cam_button(t_gui *gui)
