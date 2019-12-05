@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 15:51:24 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/03 21:26:47 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/04 22:46:36 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,17 @@ void		same_new(t_game *game, t_obj *obj, t_type type)
 	obj->emission = create_cfloat3(0, 0, 0);
 	obj->color = create_cfloat3(1, 1, 1);
 	obj->metalness = 0;
+	obj->refraction = 0;
 	ft_object_push(game, obj);
 	in_cl(game);
+}
+
+void			refraction(t_gui *gui, t_obj *obj, int *i)
+{
+	gui->c_o.labelrect.y += 30;
+	gui->c_o.editboxrect[0].y += 30;
+	gui->c_o.editboxrect[1].y += 30;
+	gui->c_o.editboxrect[2].y += 30;
+	KW_CreateLabel(gui->gui, gui->c_o.frame, "Refraction", gui->c_o.rects[0]);
+	gui->c_o.ed_b[(*i)++] = f_e(gui, obj->refraction, gui->c_o.rects[1]);
 }

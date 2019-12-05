@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   neue_schlanke_analyse.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/12/04 22:29:40 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/12/05 19:55:59 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -412,7 +412,7 @@ void check_scene(const cJSON *json, t_game *game)
 		filter.motion_blur = parse.motion_blur->valuedouble;
 	else
 		filter.motion_blur = 0.0;
-	
+
 	const cJSON *camera = NULL;
 	const cJSON *cameras = NULL;
 	cameras = cJSON_GetObjectItemCaseSensitive(json, "cameras");
@@ -429,11 +429,11 @@ void read_scene(char *argv, t_game *game)
 	free(game->textures);
 	free(game->normals);
 	FILE *fp;
-	char buffer[8096];
+	char buffer[462144];
 	fp = fopen(argv, "r");
 	if (!fp || ft_strcmp(&argv[ft_strlen(argv) - 5], ".json") != 0)
 		terminate("fuck you and your file!\n");
-	fread(buffer, 8096, 1, fp);
+	fread(buffer, 462144, 1, fp);
 	cJSON *json = cJSON_Parse(buffer);
 
 	if (json == NULL)

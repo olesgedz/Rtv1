@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 17:24:43 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:13:15 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/05 17:57:32 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	change_cam(t_gui *gui, t_cam *cam)
 	int i;
 
 	i = 0;
+	gui->c_c.cam_id = cam->id;
 	cam_same(gui, cam);
 	cam_position(gui, cam, &i);
 	cam_border(gui, cam, &i);

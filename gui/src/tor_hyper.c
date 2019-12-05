@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 19:43:23 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/04 21:48:50 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/04 22:50:19 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	change_hyper(t_gui *gui, t_obj *obj)
 	direction(gui, obj, &i);
 	radius(gui, obj, &i);
 	color_emission(gui, obj, &i);
+	refraction(gui, obj, &i);
 }
 
 void	change_tor(t_gui *gui, t_obj *obj)
@@ -53,4 +54,5 @@ void	change_tor(t_gui *gui, t_obj *obj)
 	position(gui, obj, &i);
 	radius(gui, obj, &i);
 	color_emission(gui, obj, &i);
+	refraction(gui, obj, &i);
 }
