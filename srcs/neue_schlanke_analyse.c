@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/12/04 21:48:50 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/05 18:21:54 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -428,11 +428,11 @@ void read_scene(char *argv, t_game *game)
 	free(game->textures);
 	free(game->normals);
 	FILE *fp;
-	char buffer[8096];
+	char buffer[262144];
 	fp = fopen(argv, "r");
 	if (!fp || ft_strcmp(&argv[ft_strlen(argv) - 5], ".json") != 0)
 		terminate("fuck you and your file!\n");
-	fread(buffer, 8096, 1, fp);
+	fread(buffer, 262144, 1, fp);
 	cJSON *json = cJSON_Parse(buffer);
 
 	if (json == NULL)
