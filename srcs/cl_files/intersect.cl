@@ -104,14 +104,15 @@ static float		intersect_triangle(__global t_obj *triangle,  t_ray *  ray)
 	return (b < EPSILON) ? 0 : b;
 }
 
-static float		intersect_hyper(__global t_obj *hyper, t_ray *	ray)
+static float	intersect_parabol(__global t_obj *parabol, t_ray *ray)
 {
-	float3 x =  ray->origin - hyper->position;
-	float a = dot(ray->dir, ray->dir) - pow(dot(ray->dir, hyper->v), 2);
-	float b = 2 * (dot(ray->dir, x) - dot (ray->dir, hyper->v) *
-			(dot(x, hyper->v) + 2 * 0.5));
-	float c = dot(x, x) - dot (x, hyper->v) *
-			(dot(x, hyper->v) + 4 * 0.5);
+	float3 pos =  ray->origin - parabol->position;
+	float3 dir =  ray->dir;
+	float dv = dot(ray->dir, parabol->v);
+	float xv = dot(pos, parabol->v);
+	float a = dot(ray->dir, ray->dir) - dv * dv;
+	float b = 2 * (dot(ray->dir, pos) - dv * (xv + 2 * parabol->radius));
+	float c = dot(pos, pos) - xv * (xv + 4 * parabol->radius);
 	return (ft_solve(a, b, c));
 }
 
