@@ -6,13 +6,13 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 14:51:12 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/05 17:13:04 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/05 18:04:51 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-FILE	*newfile(void)
+static FILE	*newfile(char **str)
 {
 	FILE	*fp;
 	char	*buff;
@@ -34,20 +34,24 @@ FILE	*newfile(void)
 		name = buff;
 	}
 	fp = fopen(name, "w+");
+	*str = buff;
 	return (fp);
 }
 
-void	dumper(t_game *game)
+char	*dumper(t_game *game)
 {
 	FILE	*fp;
+	char	*name;
 
-	fp = newfile();
+	fp = newfile(&name);
+	del_obj(0, game);
 	fprintf(fp, "{\n");
 	dump_scene(game, fp);
 	dump_obj(game, fp);
 	dump_cam(game, fp);
 	fprintf(fp, "}\n");
 	fclose(fp);
+	return (name);
 }
 
 static void	clicked_dump(KW_Widget *widget, int b)
