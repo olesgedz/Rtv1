@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj3d_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:17:38 by srobert-          #+#    #+#             */
-/*   Updated: 2019/12/03 19:01:30 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/05 19:51:57 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,11 @@ static void push_facing(char **data, t_game *game, t_json *parse)
     obj->metalness = 1;
     obj->radius = 0;
     obj->emission = create_cfloat3(0, 0, 0);
+    obj->is_visible = 1;
+    obj->transparency = 0;
+    obj->refraction = 0;
+    obj->texture = 0;
+    obj->normal = 0;
     ft_object_push(game, obj);
 }
 

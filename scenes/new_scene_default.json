@@ -2,7 +2,7 @@
     "scene":{
         "global texture":"sviborg.jpg",
         "ambiance": 0.0,
-        "cartoon": 0,
+        "cartoon": 1,
         "motion blur" : 0.0,
         "sepia" : 0,
         "stereo": 0

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   neue_schlanke_analyse.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 17:46:45 by srobert-          #+#    #+#             */
-/*   Updated: 2019/12/04 21:48:50 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/04 22:29:40 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,7 +302,7 @@ void check_object(const cJSON *object, t_game *game, cJSON *composed_pos, cJSON 
 		obj->type = CONE;
 	else if (ft_strcmp(parse.type->valuestring, "triangle") == 0)
 		obj->type = TRIANGLE;
-	else if (ft_strcmp(parse.type->valuestring, "hyperboloid") == 0)
+	else if (ft_strcmp(parse.type->valuestring, "paraboloid") == 0)
 		obj->type = PARABOLOID;
 	else if (ft_strcmp(parse.type->valuestring, "obj3d") == 0)
 	{
@@ -358,6 +358,7 @@ void check_cam(const cJSON *cam, t_game *game, t_filter *filter)
 	camera->sepia = filter->sepia;
 	camera->motion_blur = filter->motion_blur;
 	camera->stereo = filter->stereo;
+	printf("cartoon == %d\n", camera->cartoon);
 	reconfigure_camera(camera);
 	ft_cam_push(game, camera);
 }
@@ -390,6 +391,7 @@ void check_scene(const cJSON *json, t_game *game)
 		filter.ambiance = parse.ambience->valuedouble;
 	else
 		filter.ambiance = 0.1;
+	parse.cartoon = cJSON_GetObjectItemCaseSensitive(scene, "cartoon");
 	if (parse.cartoon != NULL)
 		filter.cartoon = (int)parse.cartoon->valuedouble;
 	else
@@ -405,13 +407,12 @@ void check_scene(const cJSON *json, t_game *game)
 	else
 		filter.stereo = 0;
 
-	printf("stereo == %d\n", filter.stereo);
 	parse.motion_blur = cJSON_GetObjectItemCaseSensitive(scene, "motion blur");
 	if (parse.motion_blur != NULL)
 		filter.motion_blur = parse.motion_blur->valuedouble;
 	else
 		filter.motion_blur = 0.0;
-
+	
 	const cJSON *camera = NULL;
 	const cJSON *cameras = NULL;
 	cameras = cJSON_GetObjectItemCaseSensitive(json, "cameras");
