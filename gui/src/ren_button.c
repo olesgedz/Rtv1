@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 17:38:36 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/04 16:09:35 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/06 14:48:22 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void		show_hide(t_game *game, t_gui *gui)
 			KW_ShowWidget(gui->c_o.frame);
 		if (gui->c_c.show)
 			KW_ShowWidget(gui->c_c.frame);
+		if (gui->n.show)
+			KW_ShowWidget(gui->n.frame);
 	}
 	else
 	{
@@ -50,6 +52,7 @@ void		show_hide(t_game *game, t_gui *gui)
 		KW_HideWidget(gui->o_s.frame);
 		KW_HideWidget(gui->o_t.frame);
 		KW_HideWidget(gui->c_s.frame);
+		KW_HideWidget(gui->n.frame);
 		if (gui->c_o.frame)
 			KW_HideWidget(gui->c_o.frame);
 		if (gui->c_c.frame)
@@ -78,7 +81,7 @@ void		semples_to_line(t_game *game, t_gui *gui)
 void		info_button(t_game *game, t_gui *gui)
 {
 	gui->g_b.buttonrect[3] = gui->g_b.buttonrect[5];
-	gui->g_b.buttonrect[3].x += gui->g_b.buttonrect[3].w;
+	gui->g_b.buttonrect[3].x += 2 * gui->g_b.buttonrect[3].w;
 	gui->g_b.rects[3] = &gui->g_b.buttonrect[3];
 	gui->g_b.buttons[3] = KW_CreateButtonAndLabel(gui->gui,
 	gui->g_b.frame, "Objects", gui->g_b.rects[3]);

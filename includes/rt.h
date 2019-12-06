@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/05 18:03:02 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/06 16:50:01 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,6 +269,7 @@ typedef struct		s_gui
 	t_change_obj	c_o;
 	t_change_cam	c_c;
 	t_camera_select	c_s;
+	t_network		n;
 	char			*av;
 	int				flag;
 	int				main_screen;
@@ -457,5 +458,9 @@ void					basis_print(t_obj *obj, FILE *fp);
 void					dump_obj(t_game *game, FILE *fp);
 void					dump_cam(t_game *game, FILE *fp);
 void					ss_free(t_gui *gui);
+void					net_butt(t_game *game, t_gui *gui);
+void					net_list(t_game *game, t_gui *gui);
+void					server_client(t_game *game, t_gui *gui);
+void					network_buttons(t_gui *gui);
 
 #endif

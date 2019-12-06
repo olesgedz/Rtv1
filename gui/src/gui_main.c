@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:21:19 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/04 15:33:05 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/06 14:29:09 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void		init_kiwi(t_gui *gui)
 	gui->g_b.show = 0;
 	gui->o_t.show = 0;
 	gui->c_o.show = 0;
+	gui->n.show = 0;
 }
 
 static void	rotator(t_game *game, t_gui *gui)

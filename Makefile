@@ -62,7 +62,9 @@ LIB_LIST =	libSDL2.a\
 
 SRCS_DIRECTORY = ./srcs/
 
-RMRF = gui/src/gui_main.o\
+RMRF =	gui/net/net_gui.o\
+		gui/net/net_connect.o\
+		gui/src/gui_main.o\
 		gui/src/start_screen.o\
 		gui/src/surf_tex.o\
 		gui/src/scene_select.o\
@@ -113,6 +115,8 @@ SRCS_LIST = main.c \
 			help_fun.c\
 			render.c\
 			mouse.c\
+			../gui/net/net_gui.c\
+			../gui/net/net_connect.c\
 			../gui/src/gui_main.c\
 			../gui/src/add_obj.c\
 			../gui/src/buttons.c\

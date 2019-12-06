@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:04:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/04 17:05:16 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/06 13:44:25 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ void		set_const(t_game *game, t_gui *gui)
 	{
 		print_error_gui("No IMG for you: ", IMG_GetError());
 		exit(1);
+	}
+	if (SDLNet_Init() == -1)
+	{
+		print_error_gui("SDLNet_Init: %s\n", SDLNet_GetError());
+		exit(2);
 	}
 	game->gpu.samples = 0;
 	game->quit = 0;

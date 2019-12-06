@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/05 17:56:58 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/06 15:48:21 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,5 +149,32 @@ typedef struct		s_obj_type
 	int				max_i;
 	int				show;
 }					t_obj_type;
+
+typedef struct		s_server_client
+{
+	KW_Rect			frect;
+	KW_Rect			buttonrect[2];
+	KW_Widget		*frame;
+	KW_Widget		*label;
+	KW_Rect			*rects[1];
+	unsigned		weights[1];
+	KW_Widget		*buttons[2];
+	char			*names[2];
+	int				show;
+}					t_server_client;
+
+typedef struct		s_network
+{
+	t_server_client	s_c;
+	KW_Rect			frect;
+	KW_Rect			buttonrect[3];
+	KW_Widget		*frame;
+	KW_Widget		*label;
+	KW_Rect			*rects[1];
+	unsigned		weights[1];
+	KW_Widget		*buttons[3];
+	char			*names[3];
+	int				show;
+}					t_network;
 
 #endif
