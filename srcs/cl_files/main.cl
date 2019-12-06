@@ -9,7 +9,7 @@
 #include "interpolate_uv.cl"
 
 #define SAMPLES 5
-#define BOUNCES 4
+#define BOUNCES 8
 #define LIGHTSAMPLING 0
 #define CARTOON 2.0f
 
@@ -158,7 +158,10 @@ static float3 convert_normal(t_obj *object, float3 normal, float3 dir, t_scene *
 		// (*bounces)--;
 	}
 	else
+	{
+		normal *= -sign(dot(normal, dir));
 		normal = object->metalness > 0.0 ? normalize(reflect(dir, normal)) : normal;
+	}
 	return (normal);
 }
 
@@ -192,7 +195,6 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 			return (objecthit.color);
 		/* compute the surface normal and flip it if necessary to face the incoming ray */
 		intersection->normal = get_normal(&objecthit, intersection, &img_coord, scene);
-		intersection->normal *= -sign(dot(intersection->normal, ray.dir));
 		float cosine;
 		float3 normal = convert_normal(&objecthit, intersection->normal, ray.dir, scene, &bounces);//;objecthit.metalness > 0.0 ? normalize(reflect(ray.dir, intersection->normal)) : intersection->normal;
 		float3 newdir = sample_uniform(&normal, scene, objecthit.metalness);

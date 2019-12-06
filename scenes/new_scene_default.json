@@ -41,7 +41,7 @@
             "emition" : [0.0,0.0,0.0],
             "texture":  "sun.jpg",
             "transparency": 1.0,
-            "refraction": 0.5,
+            "refraction": 2.0,
             "metalness": 1.0
         },
         {
