@@ -117,12 +117,44 @@ static float3		radiance_explicit(t_scene *scene,
 	return (radiance * pdf);
 }
 
+// float3 refract(float3 vector, float3 n, float refrIndex)
+// {
+// 	float cosI = -dot(n, vector);
+// 	float cosT2 = 1.0f - refrIndex * refrIndex * (1.0f - cosI * cosI);
+// 	return normalize((refrIndex * vector) + (refrIndex * cosI - fabs(sqrt( cosT2 ))) * n);
+// }
+
+float3 refract(float3 I, float3 N, float ior) 
+{ 
+    float cosi = clamp(dot(I, N), -1.0f, 1.0f);
+    float etai = 1;
+	float etat = ior;
+    float3 n1 = N; 
+    if (cosi < 0)
+		cosi = -cosi;
+	else
+	{
+		// swap(etai, etat);
+		float trans = etai;
+		etai = etat;
+		etat = trans;
+		n1 = -N;
+	} 
+    float eta = etai / etat;
+    float k = 1 - eta * eta * (1 - cosi * cosi);
+	if (k < 0)
+		return (reflect(I, N));
+	else
+    	return normalize(eta * I + (eta * cosi - fabs(sqrt(k))) * n1); 
+} 
+
 static float3 convert_normal(t_obj *object, float3 normal, float3 dir, t_scene *scene, int *bounces)
 {
 	if (object->transparency > rng(scene->random))
 	{
 		object->metalness = 1.f;
-		normal = dir;
+		// normal = dir;
+		normal = refract(dir, normal, object->refraction);
 		// (*bounces)--;
 	}
 	else

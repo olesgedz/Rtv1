@@ -40,6 +40,7 @@
             "emition" : [0.0,0.0,0.0],
             "texture":  "sun.jpg",
             "transparency": 1.0,
+            "refraction": 0.5,
             "metalness": 1.0
         },
         {
@@ -47,7 +48,8 @@
             "position": [-1.0,0.0,0.0],
             "color": [1.0,1.0,1.0],
             "dir": [1.0,0.0,0.0],
-            "transparency": 1.0
+            "transparency": 1.0,
+            "refraction": 1.0
         },
         {
             "type": "plane",
