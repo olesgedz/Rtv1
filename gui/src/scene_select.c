@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 16:30:29 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/04 15:54:36 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/05 17:02:35 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,16 @@ static void	first_button(t_gui *gui, struct dirent *name_buff)
 	KW_RECT_ALIGN_MIDDLE);
 }
 
-static int	scan_dir(t_gui *gui)
+static int	scan_dir(t_gui *gui, int i)
 {
 	DIR				*res;
 	struct dirent	*name_buff;
-	int				i;
 
+	while (++i < MAX_OBJ)
+	{
+		gui->s_s.buttons[i] = 0;
+		gui->s_s.names[i] = 0;
+	}
 	if (!(res = opendir("scenes")))
 		return (-1);
 	while ((name_buff = readdir(res)) && (name_buff->d_type != 8
@@ -61,7 +65,7 @@ static int	scan_dir(t_gui *gui)
 		first_button(gui, name_buff);
 	else
 		return (-1);
-	while ((name_buff = readdir(res)) && i < MAX_SC)
+	while ((name_buff = readdir(res)) && i < MAX_OBJ)
 		if (ft_strstr(name_buff->d_name, ".json") && name_buff->d_type == 8)
 		{
 			gui->s_s.names[i] = ft_strdup(name_buff->d_name);
@@ -79,7 +83,7 @@ static int	param_set(t_gui *gui)
 	gui->s_s.weights[0] = 1;
 	gui->s_s.frect = (KW_Rect){5, 25, FR_FZ, 80};
 	gui->s_s.buttonrect[0] = (KW_Rect){0, 0, 30, 40};
-	return (scan_dir(gui));
+	return (scan_dir(gui, -1));
 }
 
 void		scene_select(t_gui *gui, int i, KW_Widget *const *wid_arr)

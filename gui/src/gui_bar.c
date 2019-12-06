@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 19:10:18 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/04 17:57:33 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/05 14:55:53 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	click_create(KW_Widget *widget, int b)
 		create_triangle(gui->game);
 	else if (num == TORUS)
 		create_tor(gui->game);
-	else if (num == HYPERBOLOID)
+	else if (num == PARABOLOID)
 		create_hyper(gui->game);
 	else if (num == 7)
 		del_obj(0, gui->game);
@@ -77,7 +77,7 @@ void	save_click(KW_Widget *widget, int b)
 		sphere_parse(gui, obj);
 	else if (obj->type == TRIANGLE)
 		trian_parse(gui, obj);
-	else if (obj->type == HYPERBOLOID)
+	else if (obj->type == PARABOLOID)
 		hyper_parse(gui, obj);
 	else if (obj->type == TORUS)
 		tor_parse(gui, obj);
@@ -110,6 +110,7 @@ void		gui_bar(t_game *game, t_gui *gui)
 	info_button(game, gui);
 	add_obj(game, gui);
 	gui_mod_but(game, gui);
+	dumper_butt(game, gui);
 	obj_type(game, gui);
 	KW_HideWidget(gui->o_t.frame);
 }

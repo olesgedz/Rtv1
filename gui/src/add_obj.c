@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 18:45:37 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/02 23:03:00 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/04 21:49:09 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ static char	*fill_name(int num)
 		res = ft_strdup("Triangle");
 	else if (num == TORUS)
 		res = ft_strdup("Torus");
-	else if (num == HYPERBOLOID)
-		res = ft_strdup("Hyperboloid");
+	else if (num == PARABOLOID)
+		res = ft_strdup("Paraboloid");
 	else if (num == 7)
 		res = ft_strdup("Delete invisible");
 	return (res);

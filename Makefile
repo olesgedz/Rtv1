@@ -93,6 +93,9 @@ RMRF = gui/src/gui_main.o\
 		gui/src/basis.o\
 		gui/src/gui_mod_butt.o\
 		gui/src/stereo.o\
+		gui/src/dumper_butt.o\
+		gui/src/dumper_parts.o\
+		gui/src/dumper_parts2.o\
 		gui/src/eff.o\
 		gui/src/add_tex.o\
 		cJSON/cJSON.o
@@ -143,6 +146,9 @@ SRCS_LIST = main.c \
 			../gui/src/tor_hyper.c\
 			../gui/src/basis.c\
 			../gui/src/pars_tor_hyper.c\
+			../gui/src/dumper_butt.c\
+			../gui/src/dumper_parts.c\
+			../gui/src/dumper_parts2.c\
 			../cJSON/cJSON.c\
 			neue_schlanke_analyse.c\
 			analyse_dienstprogramme.c\

@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/04 17:55:20 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/05 18:03:02 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "cl_error.h"
 # include "SDL_image.h"
 # include "SDL_mixer.h"
+# include "SDL_net.h"
 # include "libft.h"
 # include <dirent.h>
 # include "libsdl.h"
@@ -64,7 +65,7 @@ typedef enum			e_figure
 	PLANE,
 	TRIANGLE,
 	TORUS,
-	HYPERBOLOID
+	PARABOLOID
 }						t_type;
 
 typedef struct			s_txture
@@ -447,5 +448,14 @@ void					create_hyper(t_game *game);
 void					change_tor(t_gui *gui, t_obj *obj);
 void					parse_new_basis(t_obj *obj);
 void					gui_mod_but(t_game *game, t_gui *gui);
+void					parse_refraction(t_gui *gui, t_obj *obj, int *i);
+void					refraction(t_gui *gui, t_obj *obj, int *i);
+void					dumper_butt(t_game *game, t_gui *gui);
+char					*dumper(t_game *game);
+void					dump_scene(t_game *game, FILE *fp);
+void					basis_print(t_obj *obj, FILE *fp);
+void					dump_obj(t_game *game, FILE *fp);
+void					dump_cam(t_game *game, FILE *fp);
+void					ss_free(t_gui *gui);
 
 #endif

@@ -11,7 +11,7 @@
 #define SAMPLES 5
 #define BOUNCES 4
 #define LIGHTSAMPLING 0
-
+#define CARTOON 2.0f
 
 static void intersection_reset(t_intersection * intersection)
 {
@@ -56,8 +56,8 @@ static bool intersect_scene(t_scene *scene, t_intersection *intersection, t_ray 
 				hitdistance = intersect_plane(object, ray);
 			else if (object->type == TRIANGLE)
 				hitdistance = intersect_triangle(object, ray);
-			else if (object->type == HYPERBOLOID)
-				hitdistance = intersect_hyper(object, ray);
+			else if (object->type == PARABOLOID)
+				hitdistance = intersect_parabol(object, ray);
 			/* keep track of the closest intersection and hitobject found so far */
 			if (hitdistance != 0.0f && hitdistance < ray->t)
 			{
@@ -246,6 +246,13 @@ static int filter_mode(float3 finalcolor, t_cam camera, int samples)
 		green = (int)(((color >> 8) & 0xFF) + ((SEPIA >> 8) & 0xFF));
 		blue = (int)(((color) & 0xFF) + ((SEPIA) & 0xFF));
 		color =  ft_rgb_to_hex(c_floor(red), c_floor(green), c_floor(blue));
+	}
+	if (camera.cartoon == 1)
+	{
+		finalcolor.x = floor(finalcolor.x * CARTOON) / CARTOON;
+		finalcolor.y = floor(finalcolor.y * CARTOON) / CARTOON;
+		finalcolor.z = floor(finalcolor.z * CARTOON) / CARTOON;
+		color = ft_rgb_to_hex(toInt(finalcolor.x  / (float)samples), toInt(finalcolor.y  / (float)samples), toInt(finalcolor.z  / (float)samples));
 	}
 	return (color);
 }

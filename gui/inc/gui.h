@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/02 23:07:42 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/05 17:56:58 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include "KW_scrollbox.h"
 # include "KW_renderdriver_sdl2.h"
 # include "libsdl.h"
-# define MAX_SC		256
 # define MAX_OBJ	1024
 # define FR_FZ		WIN_W / 10.
 # define FR_ZF		WIN_H / 10.
@@ -31,13 +30,13 @@ typedef struct		s_scene_select
 	KW_Rect			titlerect;
 	KW_Rect			winrect;
 	KW_Rect			frect;
-	KW_Rect			buttonrect[MAX_SC];
+	KW_Rect			buttonrect[MAX_OBJ];
 	KW_Widget		*frame;
 	KW_Widget		*label;
 	KW_Rect			*rects[1];
 	unsigned		weights[1];
-	KW_Widget		*buttons[MAX_SC];
-	char			*names[MAX_SC];
+	KW_Widget		*buttons[MAX_OBJ];
+	char			*names[MAX_OBJ];
 	int				max_i;
 	int				show;
 }					t_scene_select;
@@ -134,6 +133,7 @@ typedef struct		s_change_cam
 	KW_Widget		*buttons[6];
 	char			*names[30];
 	int				show;
+	int				cam_id;
 }					t_change_cam;
 
 typedef struct		s_obj_type
