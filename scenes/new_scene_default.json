@@ -2,7 +2,7 @@
     "scene":{
         "global texture": "sviborg.jpg",
         "ambiance": 0.0,
-        "cartoon": 1,
+        "cartoon": 0,
         "motion blur" : 0.0,
         "sepia" : 0,
         "stereo": 0
@@ -48,7 +48,9 @@
             "position": [-1.0,0.0,0.0],
             "color": [1.0,1.0,1.0],
             "dir": [1.0,0.0,0.0],
-            "transparency": 1.0
+            "transparency": 1.0,
+            "texture": "perlin",
+            "prolapse": [5, 5]
         },
         {
             "type": "plane",
@@ -60,7 +62,9 @@
             "type": "plane",
             "position": [1.0,0.0,0.0],
             "color": [0.25,0.25,0.75],
-            "dir": [1.0,0.0,0.0]
+            "dir": [1.0,0.0,0.0],
+            "texture": "perlin",
+            "prolapse": [5, 5]
         },
         {
             "type": "plane",
