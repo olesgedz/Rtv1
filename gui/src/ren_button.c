@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 17:38:36 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/06 14:48:22 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/06 17:26:50 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void		show_hide(t_game *game, t_gui *gui)
 			KW_ShowWidget(gui->c_c.frame);
 		if (gui->n.show)
 			KW_ShowWidget(gui->n.frame);
+		if (gui->ed_w.show)
+			KW_ShowWidget(gui->ed_w.frame);
 	}
 	else
 	{
@@ -53,6 +55,7 @@ void		show_hide(t_game *game, t_gui *gui)
 		KW_HideWidget(gui->o_t.frame);
 		KW_HideWidget(gui->c_s.frame);
 		KW_HideWidget(gui->n.frame);
+		KW_HideWidget(gui->ed_w.frame);
 		if (gui->c_o.frame)
 			KW_HideWidget(gui->c_o.frame);
 		if (gui->c_c.frame)

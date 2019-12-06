@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 21:08:05 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:12:54 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/06 17:39:10 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,17 @@ static void	clicked_ss(KW_Widget *widget, int b)
 	gui = g_gui(0, 0);
 	gui->s_s.show = !gui->s_s.show;
 	if (gui->s_s.show)
+	{
 		KW_ShowWidget(gui->s_s.frame);
+		KW_SetLabelTextColor(KW_GetButtonLabel(widget),
+		(KW_Color){255, 255, 255, 255});
+	}
 	else
+	{
 		KW_HideWidget(gui->s_s.frame);
+		KW_SetLabelTextColor(KW_GetButtonLabel(widget),
+		(KW_Color){0, 0, 0, 0});
+	}
 }
 
 static void	clicked_os(KW_Widget *widget, int b)
@@ -86,9 +94,17 @@ static void	clicked_os(KW_Widget *widget, int b)
 	gui = g_gui(0, 0);
 	gui->o_s.show = !gui->o_s.show;
 	if (gui->o_s.show)
+	{
 		KW_ShowWidget(gui->o_s.frame);
+		KW_SetLabelTextColor(KW_GetButtonLabel(widget),
+		(KW_Color){255, 255, 255, 255});
+	}
 	else
+	{
 		KW_HideWidget(gui->o_s.frame);
+		KW_SetLabelTextColor(KW_GetButtonLabel(widget),
+		(KW_Color){0, 0, 0, 0});
+	}
 }
 
 void	buttons(t_game *game, t_gui *gui)

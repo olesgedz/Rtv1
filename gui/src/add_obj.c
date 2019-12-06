@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 18:45:37 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/04 21:49:09 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/06 17:39:47 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,17 @@ static void	clicked_ot(KW_Widget *widget, int b)
 	gui = g_gui(0, 0);
 	gui->o_t.show = !gui->o_t.show;
 	if (gui->o_t.show)
+	{
 		KW_ShowWidget(gui->o_t.frame);
+		KW_SetLabelTextColor(KW_GetButtonLabel(widget),
+		(KW_Color){255, 255, 255, 255});
+	}
 	else
+	{
 		KW_HideWidget(gui->o_t.frame);
+		KW_SetLabelTextColor(KW_GetButtonLabel(widget),
+		(KW_Color){0, 0, 0, 0});
+	}
 }
 
 static char	*fill_name(int num)

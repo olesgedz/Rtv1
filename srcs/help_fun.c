@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 14:11:26 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/06 16:27:07 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/06 16:59:51 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ static void	check_change_windows(t_game *game, t_gui *gui, int x, int y)
 		if (x > gui->n.frect.x && x < gui->n.frect.x + gui->n.frect.w)
 			if (y > gui->n.frect.y && y < gui->n.frect.y + gui->n.frect.h)
 				gui->over_gui = 1;
-	if (game->keys.show_gui && gui->n.s_c.show)
-		if (x > gui->n.s_c.frect.x && x < gui->n.s_c.frect.x
-		+ gui->n.s_c.frect.w)
-			if (y > gui->n.s_c.frect.y && y < gui->n.s_c.frect.y
-			+ gui->n.s_c.frect.h)
+	if (game->keys.show_gui && gui->ed_w.show)
+		if (x > gui->ed_w.frect.x && x < gui->ed_w.frect.x
+		+ gui->ed_w.frect.w)
+			if (y > gui->ed_w.frect.y && y < gui->ed_w.frect.y
+			+ gui->ed_w.frect.h)
 				gui->over_gui = 1;
 }
 

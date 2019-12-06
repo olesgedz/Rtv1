@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 13:50:08 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/06 16:46:11 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/06 17:34:34 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void		net_list(t_game *game, t_gui *gui)
 	while (++i < 3)
 		gui->n.buttons[i] = KW_CreateButtonAndLabel(gui->gui,
 		gui->n.frame, gui->n.names[i], &gui->n.buttonrect[i]);
-	server_client(game, gui);
-	KW_HideWidget(gui->n.s_c.frame);
+	edit_ip(gui);
+	KW_HideWidget(gui->ed_w.frame);
 	network_buttons(gui);
 }
 
@@ -60,9 +60,17 @@ static void	clicked_net(KW_Widget *widget, int b)
 	gui = g_gui(0, 0);
 	gui->n.show = !gui->n.show;
 	if (gui->n.show)
+	{
 		KW_ShowWidget(gui->n.frame);
+		KW_SetLabelTextColor(KW_GetButtonLabel(widget),
+		(KW_Color){255, 255, 255, 255});
+	}
 	else
+	{
 		KW_HideWidget(gui->n.frame);
+		KW_SetLabelTextColor(KW_GetButtonLabel(widget),
+		(KW_Color){0, 0, 0, 0});
+	}
 }
 
 void		net_butt(t_game *game, t_gui *gui)
