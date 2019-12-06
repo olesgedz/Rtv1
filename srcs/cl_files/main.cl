@@ -177,7 +177,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 	for (int bounces = 0; bounces < bncs; bounces++)
 	{
 		/* if ray misses scene, return background colour */
-		if (!intersect_scene(scene, intersection, &ray))
+		if (!intersect_scene(scene, intersection, &ray) || length(mask) < EPSILON)
 			return accum_color + mask * global_texture(&ray, scene);
 
 		/* Russian roulette*/
@@ -195,6 +195,8 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 			return (objecthit.color);
 		/* compute the surface normal and flip it if necessary to face the incoming ray */
 		intersection->normal = get_normal(&objecthit, intersection, &img_coord, scene);
+		if (scene->lightsampling)
+			intersection->normal *= -sign(dot(intersection->normal, ray.dir));
 		float cosine;
 		float3 normal = convert_normal(&objecthit, intersection->normal, ray.dir, scene, &bounces);//;objecthit.metalness > 0.0 ? normalize(reflect(ray.dir, intersection->normal)) : intersection->normal;
 		float3 newdir = sample_uniform(&normal, scene, objecthit.metalness);
