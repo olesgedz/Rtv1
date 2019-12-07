@@ -9,7 +9,7 @@
 #include "interpolate_uv.cl"
 
 #define SAMPLES 5
-#define BOUNCES 4
+#define BOUNCES 8
 #define LIGHTSAMPLING 0
 #define CARTOON 2.0f
 
@@ -117,16 +117,51 @@ static float3		radiance_explicit(t_scene *scene,
 	return (radiance * pdf);
 }
 
+// float3 refract(float3 vector, float3 n, float refrIndex)
+// {
+// 	float cosI = -dot(n, vector);
+// 	float cosT2 = 1.0f - refrIndex * refrIndex * (1.0f - cosI * cosI);
+// 	return normalize((refrIndex * vector) + (refrIndex * cosI - fabs(sqrt( cosT2 ))) * n);
+// }
+
+float3 refract(float3 I, float3 N, float ior) 
+{ 
+    float cosi = clamp(dot(I, N), -1.0f, 1.0f);
+    float etai = 1;
+	float etat = ior;
+    float3 n1 = N; 
+    if (cosi < 0)
+		cosi = -cosi;
+	else
+	{
+		// swap(etai, etat);
+		float trans = etai;
+		etai = etat;
+		etat = trans;
+		n1 = -N;
+	} 
+    float eta = etai / etat;
+    float k = 1 - eta * eta * (1 - cosi * cosi);
+	if (k < 0)
+		return (reflect(I, N));
+	else
+    	return normalize(eta * I + (eta * cosi - fabs(sqrt(k))) * n1); 
+} 
+
 static float3 convert_normal(t_obj *object, float3 normal, float3 dir, t_scene *scene, int *bounces)
 {
 	if (object->transparency > rng(scene->random))
 	{
 		object->metalness = 1.f;
-		normal = dir;
+		// normal = dir;
+		normal = refract(dir, normal, object->refraction);
 		// (*bounces)--;
 	}
 	else
+	{
+		normal *= -sign(dot(normal, dir));
 		normal = object->metalness > 0.0 ? normalize(reflect(dir, normal)) : normal;
+	}
 	return (normal);
 }
 
@@ -142,7 +177,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 	for (int bounces = 0; bounces < bncs; bounces++)
 	{
 		/* if ray misses scene, return background colour */
-		if (!intersect_scene(scene, intersection, &ray))
+		if (!intersect_scene(scene, intersection, &ray) || length(mask) < EPSILON)
 			return accum_color + mask * global_texture(&ray, scene);
 
 		/* Russian roulette*/
@@ -160,7 +195,8 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 			return (objecthit.color);
 		/* compute the surface normal and flip it if necessary to face the incoming ray */
 		intersection->normal = get_normal(&objecthit, intersection, &img_coord, scene);
-		intersection->normal *= -sign(dot(intersection->normal, ray.dir));
+		if (scene->lightsampling)
+			intersection->normal *= -sign(dot(intersection->normal, ray.dir));
 		float cosine;
 		float3 normal = convert_normal(&objecthit, intersection->normal, ray.dir, scene, &bounces);//;objecthit.metalness > 0.0 ? normalize(reflect(ray.dir, intersection->normal)) : intersection->normal;
 		float3 newdir = sample_uniform(&normal, scene, objecthit.metalness);

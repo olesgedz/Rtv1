@@ -69,22 +69,22 @@ static float		intersect_cylinder(__global t_obj *cylinder, const t_ray *  ray)
 
 static int inside_triangle(__global t_obj *triangle, float3 collision)
 {
-	float3 edge_0;
-	float3 edge_1;
-	float3 edge_2;
-	float3 c_0;
-	float3 c_1;
-	float3 c_2;
+	// float3 edge_0;
+	// float3 edge_1;
+	// float3 edge_2;
+	// float3 c_0;
+	// float3 c_1;
+	// float3 c_2;
 
-	c_0 = collision - triangle->vertices[0];
-	c_1 = collision - triangle->vertices[1];
-	c_2 = collision - triangle->vertices[2];
-	edge_0 = triangle->vertices[1] - triangle->vertices[0];
-	edge_1 = triangle->vertices[2] - triangle->vertices[1];
-	edge_2 = triangle->vertices[0] - triangle->vertices[2];
-	if (dot(triangle->v, cross(edge_0, c_0)) > 0 &&
-		dot(triangle->v, cross(edge_1, c_1)) > 0 &&
-		dot(triangle->v, cross(edge_2, c_2)) > 0)
+	// c_0 = collision - triangle->vertices[0];
+	// c_1 = collision - triangle->vertices[1];
+	// c_2 = collision - triangle->vertices[2];
+	// edge_0 = triangle->vertices[1] - triangle->vertices[0];
+	// edge_1 = triangle->vertices[2] - triangle->vertices[1];
+	// edge_2 = triangle->vertices[0] - triangle->vertices[2];
+	if (dot(triangle->v, cross(triangle->vertices[1] - triangle->vertices[0], collision - triangle->vertices[0])) > 0 &&
+		dot(triangle->v, cross(triangle->vertices[2] - triangle->vertices[1], collision - triangle->vertices[1])) > 0 &&
+		dot(triangle->v, cross(triangle->vertices[0] - triangle->vertices[2], collision - triangle->vertices[2])) > 0)
 		return(1);
 	return(0);
 }
