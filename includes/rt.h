@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/06 17:10:29 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/07 21:46:11 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,7 @@ typedef struct			s_game
 	cl_float3			*vertices_list;
 	int					vertices_num;
 	int					gui_mod;
+	int					server;
 }						t_game;
 
 typedef struct	s_filter
@@ -462,5 +463,7 @@ void					net_butt(t_game *game, t_gui *gui);
 void					net_list(t_game *game, t_gui *gui);
 void					network_buttons(t_gui *gui);
 void					edit_ip(t_gui *gui);
+void					server_on(KW_Widget *widget, int b);
+void					net_wait(t_game *game, t_gui *gui);
 
 #endif

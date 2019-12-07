@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 15:27:04 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/06 17:32:09 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/07 22:25:58 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,30 @@ void		network_buttons(t_gui *gui)
 static void	ok_clicked(KW_Widget *widget, int b)
 {
 	t_gui	*gui;
+	char	*str_ip;
 
 	b = 0;
 	widget = 0;
 	gui = g_gui(0, 0);
 	if (gui->ev.button.button != SDL_BUTTON_LEFT)
 		return ;
-	// gui->av = ft_strdup((char *)KW_GetEditboxText(gui->ed_w.ed_b));
+	str_ip = ft_strdup((char *)KW_GetEditboxText(gui->ed_w.ed_b));
 	// gui->quit = KW_TRUE;
+	SDLNet_ResolveHost(&gui->n.ip, str_ip, 9999);
+	gui->n.tcpsock = SDLNet_TCP_Open(&gui->n.ip);
+	free(str_ip);
+}
+
+static void	serv_butt(t_gui *gui)
+{
+	gui->ed_w.buttonrect = (KW_Rect){210, 170, 80, 40};
+	gui->ed_w.okbutton = KW_CreateButtonAndLabel(gui->gui,
+	gui->ed_w.frame, "OK", &gui->ed_w.buttonrect);
+	KW_AddWidgetMouseDownHandler(gui->ed_w.okbutton, ok_clicked);
+	gui->ed_w.buttonrect.x = 10;
+	gui->ed_w.servbut = KW_CreateButtonAndLabel(gui->gui,
+	gui->ed_w.frame, "Client", &gui->ed_w.buttonrect);
+	KW_AddWidgetMouseDownHandler(gui->ed_w.servbut, server_on);
 }
 
 void		edit_ip(t_gui *gui)
@@ -69,14 +85,11 @@ void		edit_ip(t_gui *gui)
 	gui->ed_w.weights[1] = 4;
 	KW_RectFillParentHorizontally(&gui->ed_w.frect,
 	gui->ed_w.rects, gui->ed_w.weights, 2, 10, KW_RECT_ALIGN_MIDDLE);
-	KW_CreateLabel(gui->gui, gui->ed_w.frame,
+	gui->ed_w.label = KW_CreateLabel(gui->gui, gui->ed_w.frame,
 	"Enter host's IP", &gui->ed_w.titlerect);
 	KW_CreateLabel(gui->gui, gui->ed_w.frame,
 	"IP", &gui->ed_w.labelrect);
 	gui->ed_w.ed_b = KW_CreateEditbox(gui->gui,
 	gui->ed_w.frame, "Edit me!", &gui->ed_w.editboxrect);
-	gui->ed_w.buttonrect = (KW_Rect){250, 170, 40, 40};
-	gui->ed_w.okbutton = KW_CreateButtonAndLabel(gui->gui,
-	gui->ed_w.frame, "OK", &gui->ed_w.buttonrect);
-	KW_AddWidgetMouseDownHandler(gui->ed_w.okbutton, ok_clicked);
+	serv_butt(gui);
 }
