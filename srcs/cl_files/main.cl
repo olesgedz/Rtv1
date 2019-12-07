@@ -139,13 +139,13 @@ float3 refract(float3 I, float3 N, float ior)
 		etai = etat;
 		etat = trans;
 		n1 = -N;
-	} 
+	}
     float eta = etai / etat;
     float k = 1 - eta * eta * (1 - cosi * cosi);
 	if (k < 0)
-		return (reflect(I, N));
+		return (reflect(I, dot(I, N) > 0.f ? -N : N));
 	else
-    	return normalize(eta * I + (eta * cosi - fabs(sqrt(k))) * n1); 
+    	return normalize(eta * I + (eta * cosi - sqrt(fabs(k))) * n1); 
 } 
 
 static float3 convert_normal(t_obj *object, float3 normal, float3 dir, t_scene *scene, int *bounces)
@@ -154,7 +154,7 @@ static float3 convert_normal(t_obj *object, float3 normal, float3 dir, t_scene *
 	{
 		object->metalness = 1.f;
 		// normal = dir;
-		normal = refract(dir, normal, object->refraction);
+		normal = refract(dir, normal, object->refraction > 0 ? object->refraction : 1.0f);
 		// (*bounces)--;
 	}
 	else
