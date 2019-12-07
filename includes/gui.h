@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/06 16:57:49 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/07 18:44:59 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "KW_renderdriver_sdl2.h"
 # include "libsdl.h"
 # define MAX_OBJ	1024
+# define MAX_CL		4
 # define FR_FZ		WIN_W / 10.
 # define FR_ZF		WIN_H / 10.
 
