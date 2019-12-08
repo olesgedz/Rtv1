@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 19:25:08 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 20:01:07 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,26 +45,26 @@ void		server_on(KW_Widget *widget, int b)
 static void	client_side(t_game *game, t_gui *gui)
 {
 	char		message[FILE_SIZE];
-	FILE		*fp;
+	static FILE	*fp;
 
 	SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
 	if (ft_strstr(message, ".json"))
 	{
 		if (!(fp = fopen(message, "w")))
-			return ;
+			exit(0);
 		free(gui->av);
 		gui->av = ft_strdup(message);
 		gui->quit = 1;
 		SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
-		while (ft_strstr(message, "ping!"))
-			SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
+	}
+	if (!ft_strstr(message, "ping!"))
+	{
 		fprintf(fp, "%s", message);
 		fclose(fp);
 		SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
-		while (ft_strstr(message, "ping!"))
-			SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
-		game->samples_to_do = ft_atoi(message);
 	}
+	if (!ft_strstr(message, "ping!") && ft_strstr(message, "smpl"))
+		game->samples_to_do = ft_atoi(message);
 }
 
 void		send_ping(t_game *game, t_gui *gui)
