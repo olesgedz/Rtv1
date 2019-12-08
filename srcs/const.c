@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:04:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 17:23:30 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 18:11:21 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,6 @@ void		set_const(t_game *game, t_gui *gui)
 	game->normals = NULL;
 	game->texture_list = NULL;
 	game->textures_num = 0;
-	game->semples_to_do = 0;
+	game->samples_to_do = 0;
 	set_keys(game);
 }

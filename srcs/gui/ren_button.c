@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 17:38:36 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/06 17:26:50 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 18:37:58 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,12 @@ void		show_hide(t_game *game, t_gui *gui)
 	}
 }
 
-void		semples_to_line(t_game *game, t_gui *gui)
+Uint32		samples_to_line(t_game *game, t_gui *gui, Uint32 time0)
 {
-	char *buff;
-	char fps[100];
+	char		*buff;
+	char		fps[100];
+	float		time;
+	static int	frames = 1;
 
 	buff = ft_itoa(game->gpu.samples);
 	free(gui->g_b.names[0]);
@@ -79,6 +81,15 @@ void		semples_to_line(t_game *game, t_gui *gui)
 	free(buff);
 	gui->g_b.label = KW_GetButtonLabel(gui->g_b.buttons[3]);
 	KW_SetLabelText(gui->g_b.label, gui->g_b.names[0]);
+	time = (SDL_GetTicks() - time0) / 1000.;
+	if (time > 3)
+	{
+		gui->fps = frames / time;
+		time0 = SDL_GetTicks();
+		frames = 1;
+	}
+	frames++;
+	return (time0);
 }
 
 void		info_button(t_game *game, t_gui *gui)
@@ -89,7 +100,7 @@ void		info_button(t_game *game, t_gui *gui)
 	gui->g_b.buttons[3] = KW_CreateButtonAndLabel(gui->gui,
 	gui->g_b.frame, "Objects", gui->g_b.rects[3]);
 	gui->g_b.label = KW_GetButtonLabel(gui->g_b.buttons[3]);
-	semples_to_line(game, gui);
+	samples_to_line(game, gui, SDL_GetTicks());
 	KW_AddWidgetMouseDownHandler(gui->g_b.buttons[3], ren_start);
 	KW_SetWidgetUserData(gui->g_b.buttons[3], (void *)game);
 }

@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 17:23:05 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 18:23:17 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,7 @@ typedef struct			s_game
 	int					vertices_num;
 	int					gui_mod;
 	int					server;
-	int					semples_to_do;
+	int					samples_to_do;
 }						t_game;
 
 typedef struct	s_filter
@@ -321,7 +321,7 @@ void					check_file(t_game *game);
 cl_float2				create_cfloat2 (float x, float y);
 cl_float3				parse_vec3(cJSON *vec);
 cl_float2				parse_vec2(cJSON *vec);
-void					semples_to_line(t_game *game, t_gui *gui);
+Uint32					samples_to_line(t_game *game, t_gui *gui, Uint32 time0);
 void					info_button(t_game *game, t_gui *gui);
 void					show_hide(t_game *game, t_gui *gui);
 void					mouse_down(t_game *game, t_gui *gui);
@@ -342,11 +342,11 @@ void					mouse_motion(t_game *game, t_gui *gui);
 void					free_list(t_game *game);
 void					add_obj(t_game *game, t_gui *gui);
 void					obj_type(t_game *game, t_gui *gui);
-void					change_plane(/*t_game *game,*/ t_gui *gui, t_obj *obj);
-void					change_sphere(/*t_game *game, */t_gui *gui, t_obj *obj);
-void					change_cylin(/*t_game *game, */t_gui *gui, t_obj *obj);
-void					change_cone(/*t_game *game, */t_gui *gui, t_obj *obj);
-void					change_trian(/*t_game *game, */t_gui *gui, t_obj *obj);
+void					change_plane(t_gui *gui, t_obj *obj);
+void					change_sphere(t_gui *gui, t_obj *obj);
+void					change_cylin(t_gui *gui, t_obj *obj);
+void					change_cone(t_gui *gui, t_obj *obj);
+void					change_trian(t_gui *gui, t_obj *obj);
 void 					obj_if(t_gui *gui, t_obj *obj);
 char					*fill_name_mass(t_obj *obj, int num);
 void					obj_same(t_gui *gui, t_obj *obj);

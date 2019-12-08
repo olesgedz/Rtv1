@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:54:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 17:31:14 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 18:32:08 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void			screen_present(t_game *game, t_gui *gui)
 	game->sdl.surface->pixels, game->sdl.surface->w * sizeof(Uint32));
 	SDL_RenderCopy(game->sdl.renderer, game->sdl.texture,
 	NULL, NULL);
-	KW_ProcessEvents(gui->gui);
+	if (!game->samples_to_do)
+		KW_ProcessEvents(gui->gui);
 	KW_Paint(gui->gui);
 	SDL_RenderPresent(game->sdl.renderer);
 }
@@ -84,29 +85,20 @@ void			screen_present(t_game *game, t_gui *gui)
 void			main_render(t_game *game, t_gui *gui)
 {
 	Uint32		time0;
-	float		time;
-	int			frames;
 
 	time0 = SDL_GetTicks();
-	frames = 1;
 	SDL_RenderClear(game->sdl.renderer);
 	while (!game->quit && !gui->quit)
 	{
-		key_check(game);
+		if (!game->samples_to_do)
+		{
+			key_check(game);
+			net_wait(game, gui);
+		}
 		camera_reposition(game, gui);
 		ft_render(game, gui);
 		screen_present(game, gui);
-		semples_to_line(game, gui);
-		time = (SDL_GetTicks() - time0) / 1000.;
-		if (time > 3)
-		{
-			gui->fps = frames / time;
-			time0 = SDL_GetTicks();
-			frames = 1;
-		}
-		frames++;
-		net_wait(game, gui);
-		printf("%d\n", game->semples_to_do);
+		time0 = samples_to_line(game, gui, time0);
 	}
 	destr(gui, 0);
 	game->av = gui->av;
