@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 15:27:04 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 14:39:10 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 14:43:12 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void		network_buttons(t_gui *gui)
 	KW_AddWidgetMouseDownHandler(gui->n.buttons[0], clicked_connect);
 }
 
-static void	ok_clicked(KW_Widget *widget, int b)
+static void	ok_cl(KW_Widget *widget, int b)
 {
 	t_gui	*gui;
 	char	*str_ip;
@@ -64,7 +64,7 @@ static void	serv_butt(t_gui *gui)
 	gui->ed_w.buttonrect = (KW_Rect){210, 170, 80, 40};
 	gui->ed_w.okbutton = KW_CreateButtonAndLabel(gui->gui,
 	gui->ed_w.frame, "OK", &gui->ed_w.buttonrect);
-	KW_AddWidgetMouseDownHandler(gui->ed_w.okbutton, ok_clicked);
+	KW_AddWidgetMouseDownHandler(gui->ed_w.okbutton, ok_cl);
 	gui->ed_w.buttonrect.x = 10;
 	gui->ed_w.servbut = KW_CreateButtonAndLabel(gui->gui,
 	gui->ed_w.frame, "Client", &gui->ed_w.buttonrect);
