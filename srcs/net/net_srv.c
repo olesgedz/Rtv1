@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 21:41:11 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 21:43:47 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	client_side(t_game *game, t_gui *gui)
 	char		*map = 0;
 
 	SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
-	printf("%s\n", message);
+	//printf("%s\n", message);
 	if (!ft_strcmp(message, "ping!"))
 	{
 		//printf("ping\n");
@@ -121,7 +121,7 @@ void		net_wait(t_game *game, t_gui *gui)
 	}
 }
 
-void		send_map(t_game *game, t_gui *gui)
+void		send_map(t_game *game, t_gui *gui, char *tmp)
 {
 	int		i;
 	int		len[2];
@@ -138,7 +138,7 @@ void		send_map(t_game *game, t_gui *gui)
 	fd = open(name, O_RDONLY);
 	len[1] = read(fd, buff, FILE_SIZE);
 	buff[len[1]] = 0;
-	name = ft_strjoin(name, buff);
+	tmp = ft_strjoin(name, buff);
 	while (++i < gui->n.clients)
 	{
 		SDLNet_TCP_Send(gui->n.client[i], name, len[0]+ len[1] + 1);

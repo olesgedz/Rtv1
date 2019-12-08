@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 19:09:58 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 21:44:04 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -467,7 +467,7 @@ void					network_buttons(t_gui *gui);
 void					edit_ip(t_gui *gui);
 void					server_on(KW_Widget *widget, int b);
 void					net_wait(t_game *game, t_gui *gui);
-void					send_map(t_game *game, t_gui *gui);
+void					send_map(t_game *game, t_gui *gui, char *tmp);
 void					clicked_send(KW_Widget *widget, int b);
 
 #endif
