@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 21:44:04 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 22:15:31 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 # endif
 
 # define TICKS_PER_FRAME	47
-# define FILE_SIZE			462144
+# define FILE_SIZE			800000
 
 // # define BMASK 0x000000ff
 // # define GMASK 0x0000ff00
