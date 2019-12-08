@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 19:10:23 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 19:25:08 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,13 @@ static void	client_side(t_game *game, t_gui *gui)
 		gui->av = ft_strdup(message);
 		gui->quit = 1;
 		SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
+		while (ft_strstr(message, "ping!"))
+			SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
 		fprintf(fp, "%s", message);
 		fclose(fp);
 		SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
+		while (ft_strstr(message, "ping!"))
+			SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
 		game->samples_to_do = ft_atoi(message);
 	}
 }
@@ -109,17 +113,20 @@ void		send_map(t_game *game, t_gui *gui)
 
 	if (!gui->game->server)
 		return ;
-	name = dumper(game, gui);
+	if (!(name = dumper(game, gui)))
+		exit(0);
 	i = -1;
 	len = strlen(name);
 	while (++i < gui->n.clients)
-		SDLNet_TCP_Send(gui->n.client[i], name, len + 1);
+		if (!(SDLNet_TCP_Send(gui->n.client[i], name, len + 1)))
+			exit(0);
 	fd = open(name, O_RDONLY);
 	len = read(fd, buff, FILE_SIZE);
 	buff[len] = 0;
 	i = -1;
 	while (++i < gui->n.clients)
-		SDLNet_TCP_Send(gui->n.client[i], buff, len + 1);
+		if (!(SDLNet_TCP_Send(gui->n.client[i], buff, len + 1)))
+			exit(0);
 	close(fd);
 	free(gui->av);
 	gui->av = name;
