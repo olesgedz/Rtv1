@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 21:08:22 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 21:15:15 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,21 @@ static void	client_side(t_game *game, t_gui *gui)
 {
 	char		message[FILE_SIZE];
 	static FILE	*fp = 0;
+	static char	*name = 0;
 
 	SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
+	printf("%s\n", message);
 	if (!ft_strcmp(message, "ping!"))
 	{
 		//printf("ping\n");
 		return ;
 	}
 	if (!ft_strcmp(&message[ft_strlen(message) - 5], ".json"))
-	{printf("%s\n", message);
+	{
 		printf("json\n");
 		if (!(fp = fopen(message, "w")))
 			exit(0);
+		name = message;
 	}
 	// else if (ft_strstr(message, "smpl"))
 	// {
@@ -65,13 +68,13 @@ static void	client_side(t_game *game, t_gui *gui)
 	// 	game->samples_to_do = ft_atoi(message);
 	// }
 	else
-	{printf("%s\n", message);
+	{
 		printf("map\n");
 		fprintf(fp, "%s", message);
 		fclose(fp);
 		fp = 0;
 		free(gui->av);
-		gui->av = ft_strdup(message);
+		gui->av = name;
 		gui->quit = 1;
 	}
 }
