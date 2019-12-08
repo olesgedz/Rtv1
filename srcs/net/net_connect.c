@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 15:27:04 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 16:11:45 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 20:39:28 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,6 @@ void		edit_ip(t_gui *gui)
 	KW_CreateLabel(gui->gui, gui->ed_w.frame,
 	"IP", &gui->ed_w.labelrect);
 	gui->ed_w.ed_b = KW_CreateEditbox(gui->gui,
-	gui->ed_w.frame, "Edit me!", &gui->ed_w.editboxrect);
+	gui->ed_w.frame, "localhost", &gui->ed_w.editboxrect);
 	serv_butt(gui);
 }
