@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:54:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/07 22:15:00 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 17:31:14 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void			main_render(t_game *game, t_gui *gui)
 		}
 		frames++;
 		net_wait(game, gui);
+		printf("%d\n", game->semples_to_do);
 	}
 	destr(gui, 0);
 	game->av = gui->av;

@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 13:50:08 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 16:20:33 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 17:30:27 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,14 @@ void		net_butt(t_game *game, t_gui *gui)
 void	clicked_send(KW_Widget *widget, int b)
 {
 	t_gui		*gui;
+	int			i;
 
 	gui = g_gui(0, 0);
 	if (gui->game->ev.button.button != SDL_BUTTON_LEFT)
 		return ;
 	b = 0;
 	send_map(gui->game, gui);
+	i = -1;
+	while (++i < gui->n.clients)
+		SDLNet_TCP_Send(gui->n.client[i], "3s", 3);
 }

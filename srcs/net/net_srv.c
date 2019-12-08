@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 16:33:53 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 17:26:37 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ static void	client_side(t_game *game, t_gui *gui)
 	SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
 	if (ft_strstr(message, ".json"))
 	{
-		printf("%s\n", message);
 		if (!(fp = fopen(message, "w")))
 			return ;
 		free(gui->av);
@@ -59,9 +58,9 @@ static void	client_side(t_game *game, t_gui *gui)
 		SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
 		fprintf(fp, "%s", message);
 		fclose(fp);
+		SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
+		game->semples_to_do = ft_atoi(message);
 	}
-	else if (ft_strstr(message, "ping!"))
-		return ;
 }
 
 void		send_ping(t_game *game, t_gui *gui)
@@ -111,7 +110,6 @@ void		send_map(t_game *game, t_gui *gui)
 	if (!gui->game->server)
 		return ;
 	name = dumper(game);
-	printf("%s\n", name);
 	i = -1;
 	len = strlen(name);
 	while (++i < gui->n.clients)
@@ -123,4 +121,7 @@ void		send_map(t_game *game, t_gui *gui)
 	while (++i < gui->n.clients)
 		SDLNet_TCP_Send(gui->n.client[i], buff, len + 1);
 	close(fd);
+	free(gui->av);
+	gui->av = name;
+	gui->quit = 1;
 }

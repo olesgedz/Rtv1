@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 16:11:36 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 17:23:05 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,7 @@ typedef struct			s_game
 	int					vertices_num;
 	int					gui_mod;
 	int					server;
+	int					semples_to_do;
 }						t_game;
 
 typedef struct	s_filter
