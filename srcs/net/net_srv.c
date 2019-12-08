@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 21:43:47 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 21:47:23 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static void	client_side(t_game *game, t_gui *gui)
 	}
 
 	map = ft_strstr(message, ".json") + 5;
+	name = ft_strnew(message - map + 1);
 	name = ft_strncpy(name, message, message - map);
 	printf("%s\n", name);
 
