@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 22:09:38 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 22:12:01 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,18 @@ static void	client_side(t_game *game, t_gui *gui)
 		return ;
 	}
 	buff = ft_strdup(message);
-	printf("%s\n", buff);
 	map = ft_strstr(buff, ".json") + 5;
 	name = malloc(map - buff + 1);
 	name = ft_strncpy(name, buff, map - buff);
 	name[18] = 0;
-	printf("%s\n", name);
 	if (!(fp = fopen(name, "w")))
 		exit(0);
-	printf("%s\n", map);
 	fprintf(fp, "%s", map);
 	fclose(fp);
+	free(gui->av);
+	gui->av = name;
+	gui->quit = 1;
+	
 	// if (!ft_strcmp(&message[ft_strlen(message) - 5], ".json"))
 	// {
 	// 	printf("json\n");
