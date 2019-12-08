@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 20:37:18 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 20:43:59 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,13 @@ static void	client_side(t_game *game, t_gui *gui)
 	static FILE	*fp = 0;
 
 	SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
-	printf("%s\n", message);
 	if (ft_strstr(message, "ping!"))
 	{
 		//printf("ping\n");
 		return ;
 	}
 	if (ft_strstr(message, ".json"))
-	{
+	{printf("%s\n", message);
 		printf("json\n");
 		if (!(fp = fopen(message, "w")))
 			exit(0);
@@ -66,7 +65,7 @@ static void	client_side(t_game *game, t_gui *gui)
 	// 	game->samples_to_do = ft_atoi(message);
 	// }
 	else if (fp)
-	{
+	{printf("%s\n", message);
 		printf("map\n");
 		fprintf(fp, "%s", message);
 		fclose(fp);
