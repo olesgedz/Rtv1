@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 22:03:28 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 22:06:04 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static void	client_side(t_game *game, t_gui *gui)
 	map = ft_strstr(buff, ".json") + 5;
 	name = malloc(map - buff + 1);
 	name = ft_strncpy(name, buff, map - buff);
+	name[18] = 0;
 	printf("%s\n", name);
 	if (!(fp = fopen(name, "w")))
 		exit(0);
