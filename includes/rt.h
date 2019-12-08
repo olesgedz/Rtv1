@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 18:23:17 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 19:09:58 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -455,7 +455,7 @@ void					gui_mod_but(t_game *game, t_gui *gui);
 void					parse_refraction(t_gui *gui, t_obj *obj, int *i);
 void					refraction(t_gui *gui, t_obj *obj, int *i);
 void					dumper_butt(t_game *game, t_gui *gui);
-char					*dumper(t_game *game);
+char					*dumper(t_game *game, t_gui *gui);
 void					dump_scene(t_game *game, FILE *fp);
 void					basis_print(t_obj *obj, FILE *fp);
 void					dump_obj(t_game *game, FILE *fp);

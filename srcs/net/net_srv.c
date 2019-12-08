@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 18:11:21 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 19:10:23 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void		send_map(t_game *game, t_gui *gui)
 
 	if (!gui->game->server)
 		return ;
-	name = dumper(game);
+	name = dumper(game, gui);
 	i = -1;
 	len = strlen(name);
 	while (++i < gui->n.clients)
