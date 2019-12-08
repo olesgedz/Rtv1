@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 15:27:04 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/07 22:25:58 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 14:39:10 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static void	ok_clicked(KW_Widget *widget, int b)
 	SDLNet_ResolveHost(&gui->n.ip, str_ip, 9999);
 	gui->n.tcpsock = SDLNet_TCP_Open(&gui->n.ip);
 	free(str_ip);
+	KW_HideWidget(gui->ed_w.frame);
 }
 
 static void	serv_butt(t_gui *gui)

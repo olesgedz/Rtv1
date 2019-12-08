@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/07 23:00:06 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 14:37:14 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	net_wait(t_game *game, t_gui *gui)
 	gui->n.client[gui->n.clients] = SDLNet_TCP_Accept(gui->n.server);
 	if (gui->n.client[gui->n.clients] && gui->n.clients < MAX_CL)
 	{
+		printf("HI!");
 		gui->n.clients++;
 		ita = ft_itoa(gui->n.clients);
 		buff = ft_strjoin("Connected - ", ita);
