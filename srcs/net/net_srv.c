@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 22:12:01 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 22:29:23 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void		server_on(KW_Widget *widget, int b)
 	if (gui->game->server)
 	{
 		KW_SetLabelText(wid, "Server");
+		free(gui->n.str_ip);
+		gui->n.str_ip = 0;
 		SDLNet_TCP_Close(gui->n.tcpsock);
 		if ((SDLNet_ResolveHost(&gui->n.ip, NULL, 9999)) == -1)
 			exit(0);
@@ -69,7 +71,7 @@ static void	client_side(t_game *game, t_gui *gui)
 	free(gui->av);
 	gui->av = name;
 	gui->quit = 1;
-	
+
 	// if (!ft_strcmp(&message[ft_strlen(message) - 5], ".json"))
 	// {
 	// 	printf("json\n");
