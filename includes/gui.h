@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/07 22:53:56 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 15:24:58 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ typedef struct		s_network
 	TCPsocket		client[MAX_CL];
 	int				clients;
 	IPaddress		ip;
+	char			*str_ip;
 //	IPaddress		*remoteip;
 }					t_network;
 

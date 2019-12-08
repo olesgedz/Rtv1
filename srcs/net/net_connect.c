@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 15:27:04 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 14:43:12 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 16:11:45 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,26 @@ static void	clicked_connect(KW_Widget *widget, int b)
 void		network_buttons(t_gui *gui)
 {
 	KW_AddWidgetMouseDownHandler(gui->n.buttons[0], clicked_connect);
+	KW_AddWidgetMouseDownHandler(gui->n.buttons[1], clicked_send);
 }
 
 static void	ok_cl(KW_Widget *widget, int b)
 {
 	t_gui	*gui;
-	char	*str_ip;
 
 	b = 0;
 	widget = 0;
 	gui = g_gui(0, 0);
-	if (gui->ev.button.button != SDL_BUTTON_LEFT)
+	if (gui->game->ev.button.button != SDL_BUTTON_LEFT)
 		return ;
-	str_ip = ft_strdup((char *)KW_GetEditboxText(gui->ed_w.ed_b));
-	// gui->quit = KW_TRUE;
-	SDLNet_ResolveHost(&gui->n.ip, str_ip, 9999);
+	free(gui->n.str_ip);
+	gui->n.str_ip = ft_strdup((char *)KW_GetEditboxText(gui->ed_w.ed_b));
+	SDLNet_ResolveHost(&gui->n.ip, gui->n.str_ip, 9999);
 	gui->n.tcpsock = SDLNet_TCP_Open(&gui->n.ip);
-	free(str_ip);
 	KW_HideWidget(gui->ed_w.frame);
+	gui->ed_w.show = 0;
+	KW_SetLabelTextColor(KW_GetButtonLabel(gui->n.buttons[0]),
+	(KW_Color){0, 0, 0, 0});
 }
 
 static void	serv_butt(t_gui *gui)

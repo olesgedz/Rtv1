@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:04:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/07 21:55:21 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 15:28:26 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void		set_const(t_game *game, t_gui *gui)
 	gui->fps = 0;
 	gui->to_destroy = 0;
 	gui->n.clients = 0;
+	gui->n.str_ip = 0;
 	game->mouse.x = 0;
 	game->mouse.y = 0;
 	game->mouse.g = 0;

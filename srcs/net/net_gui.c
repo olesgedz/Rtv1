@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 13:50:08 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/06 17:34:34 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 16:20:33 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,15 @@ void		net_butt(t_game *game, t_gui *gui)
 	gui->g_b.frame, "Network", gui->g_b.rects[7]);
 	KW_AddWidgetMouseDownHandler(gui->g_b.buttons[7], clicked_net);
 	KW_SetWidgetUserData(gui->g_b.buttons[7], (void *)game);
+}
+
+void	clicked_send(KW_Widget *widget, int b)
+{
+	t_gui		*gui;
+
+	gui = g_gui(0, 0);
+	if (gui->game->ev.button.button != SDL_BUTTON_LEFT)
+		return ;
+	b = 0;
+	send_map(gui->game, gui);
 }
