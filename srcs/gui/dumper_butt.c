@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 14:51:12 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 19:09:42 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 19:34:02 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static FILE	*newfile(char **str)
 		name = buff;
 	}
 	fp = fopen(name, "w+");
-	*str = buff;
+	*str = name;
 	return (fp);
 }
 
