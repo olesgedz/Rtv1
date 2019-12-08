@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 20:43:59 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 21:00:57 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ static void	client_side(t_game *game, t_gui *gui)
 	static FILE	*fp = 0;
 
 	SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
-	if (ft_strstr(message, "ping!"))
+	if (!ft_strcmp(message, "ping!"))
 	{
 		//printf("ping\n");
 		return ;
 	}
-	if (ft_strstr(message, ".json"))
+	if (!ft_strcmp(&message[ft_strlen(message) - 5], ".json"))
 	{printf("%s\n", message);
 		printf("json\n");
 		if (!(fp = fopen(message, "w")))
@@ -74,7 +74,6 @@ static void	client_side(t_game *game, t_gui *gui)
 		gui->av = ft_strdup(message);
 		gui->quit = 1;
 	}
-
 }
 
 void		send_ping(t_game *game, t_gui *gui)
@@ -135,8 +134,11 @@ void		send_map(t_game *game, t_gui *gui)
 	buff[len] = 0;
 	i = -1;
 	while (++i < gui->n.clients)
+	{
 		if (!(SDLNet_TCP_Send(gui->n.client[i], buff, len + 1)))
 			exit(0);
+			printf("%s\n", buff);
+	}
 	close(fd);
 	free(gui->av);
 	gui->av = name;
