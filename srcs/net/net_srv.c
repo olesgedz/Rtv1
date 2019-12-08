@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 22:06:04 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 22:09:38 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static void	client_side(t_game *game, t_gui *gui)
 		return ;
 	}
 	buff = ft_strdup(message);
+	printf("%s\n", buff);
 	map = ft_strstr(buff, ".json") + 5;
 	name = malloc(map - buff + 1);
 	name = ft_strncpy(name, buff, map - buff);
@@ -65,6 +66,7 @@ static void	client_side(t_game *game, t_gui *gui)
 	printf("%s\n", name);
 	if (!(fp = fopen(name, "w")))
 		exit(0);
+	printf("%s\n", map);
 	fprintf(fp, "%s", map);
 	fclose(fp);
 	// if (!ft_strcmp(&message[ft_strlen(message) - 5], ".json"))
@@ -147,7 +149,7 @@ void		send_map(t_game *game, t_gui *gui, char *tmp)
 	tmp = ft_strjoin(name, buff);
 	while (++i < gui->n.clients)
 	{
-		SDLNet_TCP_Send(gui->n.client[i], name, len[0]+ len[1] + 1);
+		SDLNet_TCP_Send(gui->n.client[i], tmp, len[0]+ len[1] + 1);
 		//SDLNet_TCP_Send(gui->n.client[i], buff, len[1] + 1);
 	}
 	close(fd);
