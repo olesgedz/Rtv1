@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 21:24:39 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 21:25:31 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,10 +133,12 @@ void		send_map(t_game *game, t_gui *gui)
 	len[1] = read(fd, buff, FILE_SIZE);
 	buff[len[1]] = 0;
 	while (++i < gui->n.clients)
+	{
 		if (!(SDLNet_TCP_Send(gui->n.client[i], name, len[0] + 1)))
 			exit(0);
 		if (!(SDLNet_TCP_Send(gui->n.client[i], buff, len[1] + 1)))
 			exit(0);
+	}
 	close(fd);
 	free(gui->av);
 	gui->av = name;
