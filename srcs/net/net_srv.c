@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 21:00:57 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 21:04:21 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	client_side(t_game *game, t_gui *gui)
 	// 	printf("smpls\n");
 	// 	game->samples_to_do = ft_atoi(message);
 	// }
-	else if (fp)
+	if (fp)
 	{printf("%s\n", message);
 		printf("map\n");
 		fprintf(fp, "%s", message);
@@ -135,9 +135,10 @@ void		send_map(t_game *game, t_gui *gui)
 	i = -1;
 	while (++i < gui->n.clients)
 	{
-		if (!(SDLNet_TCP_Send(gui->n.client[i], buff, len + 1)))
+		int tmp;
+		if (!(tmp = (SDLNet_TCP_Send(gui->n.client[i], buff, len + 1))))
 			exit(0);
-			printf("%s\n", buff);
+		printf("%d\n", tmp);
 	}
 	close(fd);
 	free(gui->av);
