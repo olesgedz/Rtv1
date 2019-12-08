@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 20:29:51 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 20:33:13 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,6 @@ static void	client_side(t_game *game, t_gui *gui)
 		if (!(fp = fopen(message, "w")))
 			exit(0);
 	}
-	else if (ft_strstr(message, "smpl"))
-	{
-		printf("smpls\n");
-		game->samples_to_do = ft_atoi(message);
-	}
 	else if (fp)
 	{
 		printf("map\n");
@@ -74,6 +69,11 @@ static void	client_side(t_game *game, t_gui *gui)
 		free(gui->av);
 		gui->av = ft_strdup(message);
 		gui->quit = 1;
+	}
+	else if (ft_strstr(message, "smpl"))
+	{
+		printf("smpls\n");
+		game->samples_to_do = ft_atoi(message);
 	}
 }
 
