@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 20:08:27 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 20:12:46 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ static void	client_side(t_game *game, t_gui *gui)
 			exit(0);
 	}
 	else if (ft_strstr(message, "smpl"))
+	{
 		game->samples_to_do = ft_atoi(message);
+		printf("here\n");
+	}
 	else if (fp)
 	{
 		fprintf(fp, "%s", message);
