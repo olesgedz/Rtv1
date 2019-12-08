@@ -36,7 +36,6 @@
 /* disable warning about single line comments in system headers */
 #pragma warning (disable : 4001)
 #endif
-
 #include <string.h>
 #include <stdio.h>
 #include <math.h>
@@ -57,7 +56,7 @@
 
 //DON'T forget to fix it!
 #include "cJSON.h"
-//#include "rt.h"
+
 
 /* define our own boolean type */
 #ifdef true
@@ -273,7 +272,6 @@ typedef struct
 #define cannot_access_at_index(buffer, index) (!can_access_at_index(buffer, index))
 /* get a pointer to the buffer at the position */
 #define buffer_at_offset(buffer) ((buffer)->content + (buffer)->offset)
-
 /* Parse the input text to generate a number, and populate the result into item. */
 static cJSON_bool parse_number(cJSON * const item, parse_buffer * const input_buffer)
 {

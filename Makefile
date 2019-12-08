@@ -16,8 +16,8 @@ NAME = rt
 
 FLAGS = -g #-Wall -Wextra -Werror
 CC = clang
-LIBRARIES =  $(GUI_LIB) -lSDL2_image  -lSDL2_mixer  -lsdl -L$(LIBSDL_DIRECTORY)   -lcl -L$(LIBCL) -lgnl -L$(LIBGNL) -lvect -L$(LIBVECT) -lft -L$(LIBFT_DIRECTORY) -lm -lpthread
-INCLUDES = $(GUI_INC) -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)includes/ -Isrcs/cl_error/ -I$(LIBGNL)includes/ -I$(LIBCL)includes/
+LIBRARIES =  $(GUI_LIB) -lSDL2_image  -lSDL2_mixer  -lsdl -L$(LIBSDL_DIRECTORY)   -lcl -L$(LIBCL) -lgnl -L$(LIBGNL) -lvect -L$(LIBVECT) -lft -L$(LIBFT_DIRECTORY) -lm -lpthread -ljson -L$(cJSON_DIRECTORY)
+INCLUDES = $(GUI_INC) -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)includes/ -Isrcs/cl_error/ -I$(LIBGNL)includes/ -I$(LIBCL)includes/ -I$(cJSON_DIRECTORY)
 
 
 GUI_INC = -I./include/SDL2 -I./gui/KiWi/src
@@ -25,6 +25,8 @@ DIR_KiWi = ./gui/build/src
 
 LIBFT = $(LIBFT_DIRECTORY)libft.a
 LIBFT_HEADERS = $(LIBFT_DIRECTORY)includes/
+
+cJSON = $(cJSON_DIRECTORY)libjson.a
 
 LIBMATH = $(LIBMATH_DIRECTORY)libmath.a
 LIBMATH_DIRECTORY = ./libmath/
@@ -35,6 +37,7 @@ LIBVECT = libs/libvect/
 LIBCL	= libs/libcl/
 LIBGNL	= libs/libgnl/
 LIBSDL_DIRECTORY = libs/libsdl/
+cJSON_DIRECTORY = cJSON/
 
 
 SDL_HEADERS = include/
@@ -118,7 +121,17 @@ SRCS_LIST = main.c \
 			neue_schlanke_analyse.c\
 			analyse_dienstprogramme.c\
 			util.c\
-			obj3d_parser.c
+			parse/obj3d_parser.c\
+			parse/read_scene.c\
+			parse/check_scene.c\
+			parse/check_cam.c\
+			parse/check_object.c\
+			parse/parse_triangle.c\
+			parse/parse_rest.c\
+			parse/parse_basis.c\
+			parse/parse_facing.c\
+			parse/parse_necessary.c
+
 
 OBJS_DIRECTORY = objects/
 OBJS_LIST = $(patsubst %.c, %.o, $(SRCS_LIST))
@@ -172,7 +185,7 @@ endif
 all: $(MAKES) $(NAME)
 
 
-$(NAME): $(LIB_KiWi) $(LIBFT)  $(LIBSDL) $(LIBCL) $(LIBGNL)  $(LIBVECT) $(OBJS_DIRECTORY) $(OBJS) $(HEADERS)
+$(NAME): $(LIB_KiWi) $(LIBFT) $(cJSON)  $(LIBSDL) $(LIBCL) $(LIBGNL)  $(LIBVECT) $(OBJS_DIRECTORY) $(OBJS) $(HEADERS)
 	@$(CC) $(FLAGS) $(LIBSDL) $(INCLUDES) $(OBJS) $(SDL_CFLAGS) $(SDL_LDFLAGS) -o $(NAME) $(LIBRARIES)
 	@echo "$(CLEAR_LINE)[`expr $(CURRENT_FILES) '*' 100 / $(TOTAL_FILES)`%] $(COL_BLUE)[$(NAME)] $(COL_GREEN)Finished compilation. Output file : $(COL_VIOLET)$(PWD)/$(NAME)$(COL_END)"
 
@@ -182,6 +195,7 @@ $(MAKES):
 	@$(MAKE) -sC $(LIBVECT)
 	@$(MAKE) -sC $(LIBGNL)
 	@$(MAKE) -sC $(LIBCL)
+	@$(MAKE) -sC $(cJSON_DIRECTORY)
 
 $(OBJS_DIRECTORY):
 	@mkdir -p $(OBJS_DIRECTORY)
@@ -232,6 +246,7 @@ clean:
 	$(MAKE) -sC $(LIBVECT)	clean
 	$(MAKE) -sC $(LIBCL)	clean
 	$(MAKE) -sC $(LIBGNL) 	clean
+	$(MAKE) -sC $(cJSON_DIRECTORY)	clean
 	@rm -rf $(OBJS_DIRECTORY)
 	@echo "$(NAME): $(RED)$(OBJECTS_DIRECTORY) was deleted$(RESET)"
 	@echo "$(NAME): $(RED)object files were deleted$(RESET)"
@@ -254,6 +269,7 @@ fclean: clean
 	@$(MAKE) -sC $(LIBVECT) fclean
 	@$(MAKE) -sC $(LIBCL) fclean
 	@$(MAKE) -sC $(LIBGNL) fclean
+	@$(MAKE) -sC $(cJSON_DIRECTORY) fclean
 	#@rm -f $(DIRECTORY)/bin/sdl2-config
 	#@rm -f $(DIRECTORY)/lib/libSDL2.la
 	#@rm -f $(DIRECTORY)/lib/libSDL2main.la

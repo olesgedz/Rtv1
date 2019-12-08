@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hilfefunktionen.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:51:09 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/05 17:43:02 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 19:02:35 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,4 +128,33 @@ int compare_in_normal_dict(t_game *game, char *normal_name)
 		i++;
 	}
 	return (game->normals_num + 1);
+}
+
+cl_float3 get_composed_pos(cJSON *composed_pos)
+{
+	cl_float3 composed_pos_f;
+
+	if (composed_pos != NULL)
+	{
+		composed_pos_f = parse_vec3(composed_pos, 0);
+		if (isnan(composed_pos_f.v4[0]))
+			terminate("missing data of position of composed object!\n");
+	}
+	else
+		composed_pos_f = create_cfloat3(0.0, 0.0, 0.0);
+	return (composed_pos_f);
+}
+
+cl_float3 get_composed_v(cJSON *composed_v)
+{
+	cl_float3 composed_v_f;
+	if (composed_v != NULL)
+	{
+		composed_v_f = parse_vec3(composed_v, 0);
+		if (isnan(composed_v_f.v4[0]))
+			terminate("missing data of direction of composed object!\n");
+	}
+	else
+		composed_v_f = create_cfloat3(0.0, 0.0, 0.0);
+	return (composed_v_f);
 }

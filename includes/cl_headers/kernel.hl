@@ -59,6 +59,9 @@ typedef struct			s_object
 	int					id;
 	float				transparency;
 	float				refraction;
+	float3				composed_pos;
+	float3				composed_v;
+	int					is_negative;
 }						t_obj;
 
 typedef struct 			s_cam

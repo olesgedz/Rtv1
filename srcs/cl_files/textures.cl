@@ -13,7 +13,9 @@ float3					get_color(t_obj *object, float3 hitpoint, t_scene *scene, float2 *coo
 	}
 	else if (object->texture == -1)
 		return ((coord->x > 0.5f && coord->y > 0.5f) || (coord->x  < 0.5f && coord->y < 0.5f) ? cl_int_to_float3(0xFFFFFF) : object->color);
-	else
+	else if (object->texture == -2) // just for check, it's not perlin it's some weird stuff i've snatched from internet
+		return (object->color * clamp(fabs(sin((coord->x + coord->y) * object->prolapse.x * object->prolapse.y)), 0.5f, 1.0f));
+	else 
 		return (object->color);
 }
 
