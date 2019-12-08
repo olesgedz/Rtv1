@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 21:25:31 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 21:41:11 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static void	client_side(t_game *game, t_gui *gui)
 	char		message[FILE_SIZE];
 	static FILE	*fp = 0;
 	static char	*name = 0;
+	char		*map = 0;
 
 	SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
 	printf("%s\n", message);
@@ -55,28 +56,33 @@ static void	client_side(t_game *game, t_gui *gui)
 		//printf("ping\n");
 		return ;
 	}
-	if (!ft_strcmp(&message[ft_strlen(message) - 5], ".json"))
-	{
-		printf("json\n");
-		if (!(fp = fopen(message, "w")))
-			exit(0);
-		name = ft_strdup(message);
-	}
-	// else if (ft_strstr(message, "smpl"))
+
+	map = ft_strstr(message, ".json") + 5;
+	name = ft_strncpy(name, message, message - map);
+	printf("%s\n", name);
+
+	// if (!ft_strcmp(&message[ft_strlen(message) - 5], ".json"))
 	// {
-	// 	printf("smpls\n");
-	// 	game->samples_to_do = ft_atoi(message);
+	// 	printf("json\n");
+	// 	if (!(fp = fopen(message, "w")))
+	// 		exit(0);
+	// 	name = ft_strdup(message);
 	// }
-	else
-	{
-		printf("map\n");
-		fprintf(fp, "%s", message);
-		fclose(fp);
-		fp = 0;
-		free(gui->av);
-		gui->av = name;
-		gui->quit = 1;
-	}
+	// // else if (ft_strstr(message, "smpl"))
+	// // {
+	// // 	printf("smpls\n");
+	// // 	game->samples_to_do = ft_atoi(message);
+	// // }
+	// else
+	// {
+	// 	printf("map\n");
+	// 	fprintf(fp, "%s", message);
+	// 	fclose(fp);
+	// 	fp = 0;
+	// 	free(gui->av);
+	// 	gui->av = name;
+	// 	gui->quit = 1;
+	// }
 }
 
 void		send_ping(t_game *game, t_gui *gui)
@@ -132,12 +138,11 @@ void		send_map(t_game *game, t_gui *gui)
 	fd = open(name, O_RDONLY);
 	len[1] = read(fd, buff, FILE_SIZE);
 	buff[len[1]] = 0;
+	name = ft_strjoin(name, buff);
 	while (++i < gui->n.clients)
 	{
-		if (!(SDLNet_TCP_Send(gui->n.client[i], name, len[0] + 1)))
-			exit(0);
-		if (!(SDLNet_TCP_Send(gui->n.client[i], buff, len[1] + 1)))
-			exit(0);
+		SDLNet_TCP_Send(gui->n.client[i], name, len[0]+ len[1] + 1);
+		//SDLNet_TCP_Send(gui->n.client[i], buff, len[1] + 1);
 	}
 	close(fd);
 	free(gui->av);
