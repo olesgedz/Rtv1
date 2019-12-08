@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 20:26:51 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/12/08 22:22:31 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@
 # endif
 
 # define TICKS_PER_FRAME	47
+# define FILE_SIZE			462144
 
 // # define BMASK 0x000000ff
 // # define GMASK 0x0000ff00
@@ -202,6 +203,8 @@ typedef struct			s_game
 	cl_float3			*vertices_list;
 	int					vertices_num;
 	int					gui_mod;
+	int					server;
+	int					samples_to_do;
 }						t_game;
 
 typedef struct	s_filter
@@ -278,6 +281,7 @@ typedef struct		s_gui
 	t_change_obj	c_o;
 	t_change_cam	c_c;
 	t_camera_select	c_s;
+	t_network		n;
 	char			*av;
 	int				flag;
 	int				main_screen;
@@ -326,7 +330,7 @@ void					check_file(t_game *game);
 cl_float2				create_cfloat2 (float x, float y);
 cl_float3				parse_vec3(cJSON *vec, int flag);
 cl_float2				parse_vec2(cJSON *vec);
-void					semples_to_line(t_game *game, t_gui *gui);
+Uint32					samples_to_line(t_game *game, t_gui *gui, Uint32 time0);
 void					info_button(t_game *game, t_gui *gui);
 void					show_hide(t_game *game, t_gui *gui);
 void					mouse_down(t_game *game, t_gui *gui);
@@ -345,11 +349,11 @@ void					mouse_motion(t_game *game, t_gui *gui);
 void					free_list(t_game *game);
 void					add_obj(t_game *game, t_gui *gui);
 void					obj_type(t_game *game, t_gui *gui);
-void					change_plane(/*t_game *game,*/ t_gui *gui, t_obj *obj);
-void					change_sphere(/*t_game *game, */t_gui *gui, t_obj *obj);
-void					change_cylin(/*t_game *game, */t_gui *gui, t_obj *obj);
-void					change_cone(/*t_game *game, */t_gui *gui, t_obj *obj);
-void					change_trian(/*t_game *game, */t_gui *gui, t_obj *obj);
+void					change_plane(t_gui *gui, t_obj *obj);
+void					change_sphere(t_gui *gui, t_obj *obj);
+void					change_cylin(t_gui *gui, t_obj *obj);
+void					change_cone(t_gui *gui, t_obj *obj);
+void					change_trian(t_gui *gui, t_obj *obj);
 void 					obj_if(t_gui *gui, t_obj *obj);
 char					*fill_name_mass(t_obj *obj, int num);
 void					obj_same(t_gui *gui, t_obj *obj);
@@ -458,12 +462,21 @@ void					gui_mod_but(t_game *game, t_gui *gui);
 void					parse_refraction(t_gui *gui, t_obj *obj, int *i);
 void					refraction(t_gui *gui, t_obj *obj, int *i);
 void					dumper_butt(t_game *game, t_gui *gui);
-char					*dumper(t_game *game);
+char					*dumper(t_game *game, t_gui *gui);
 void					dump_scene(t_game *game, FILE *fp);
 void					basis_print(t_obj *obj, FILE *fp);
 void					dump_obj(t_game *game, FILE *fp);
 void					dump_cam(t_game *game, FILE *fp);
 void					ss_free(t_gui *gui);
+void					net_butt(t_game *game, t_gui *gui);
+void					net_list(t_game *game, t_gui *gui);
+void					network_buttons(t_gui *gui);
+void					edit_ip(t_gui *gui);
+void					server_on(KW_Widget *widget, int b);
+void					net_wait(t_game *game, t_gui *gui);
+void					send_map(t_game *game, t_gui *gui, char *tmp);
+void					clicked_send(KW_Widget *widget, int b);
+
 void					check_scene(t_json json, t_game *game);
 void					read_scene(char *argv, t_game *game);
 void					check_object(const cJSON *object, t_game *game, t_json parse, int id);

@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/12/02 18:06:02 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 19:14:26 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void	main_loop(t_game *game, t_gui *gui, int argc)
 	gui_bar(game, gui);
 	while (game->av)
 	{
+		printf(">>>>%s\n", game->av);
 		SDL_SetWindowTitle(game->sdl.window, game->av);
 		opencl(game, game->av);
 		main_screen(gui, game);
