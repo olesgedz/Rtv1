@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 21:47:23 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 21:52:25 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static void	client_side(t_game *game, t_gui *gui)
 	static FILE	*fp = 0;
 	static char	*name = 0;
 	char		*map = 0;
+	char		*buff = 0;
 
 	SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
 	//printf("%s\n", message);
@@ -56,11 +57,12 @@ static void	client_side(t_game *game, t_gui *gui)
 		//printf("ping\n");
 		return ;
 	}
+	buff = ft_strdup(message);
+	map = ft_strstr(buff, ".json") + 5;
+	// name = malloc(message - map + 1);
+	printf("%d\n", (int)(buff - map));
+	name = ft_strncpy(name, buff, buff - map);
 
-	map = ft_strstr(message, ".json") + 5;
-	name = ft_strnew(message - map + 1);
-	name = ft_strncpy(name, message, message - map);
-	printf("%s\n", name);
 
 	// if (!ft_strcmp(&message[ft_strlen(message) - 5], ".json"))
 	// {
