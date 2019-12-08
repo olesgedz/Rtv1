@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 16:32:23 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 16:33:53 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	client_side(t_game *game, t_gui *gui)
 		if (!(fp = fopen(message, "w")))
 			return ;
 		free(gui->av);
-		gui->av = ft_srtdup(message);
+		gui->av = ft_strdup(message);
 		gui->quit = 1;
 		SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
 		fprintf(fp, "%s", message);
