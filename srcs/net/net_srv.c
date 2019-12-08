@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 21:15:15 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 21:24:39 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	client_side(t_game *game, t_gui *gui)
 		printf("json\n");
 		if (!(fp = fopen(message, "w")))
 			exit(0);
-		name = message;
+		name = ft_strdup(message);
 	}
 	// else if (ft_strstr(message, "smpl"))
 	// {
@@ -118,7 +118,7 @@ void		net_wait(t_game *game, t_gui *gui)
 void		send_map(t_game *game, t_gui *gui)
 {
 	int		i;
-	int		len;
+	int		len[2];
 	int		fd;
 	char	*name;
 	char	buff[FILE_SIZE];
@@ -128,21 +128,15 @@ void		send_map(t_game *game, t_gui *gui)
 	if (!(name = dumper(game, gui)))
 		exit(0);
 	i = -1;
-	len = strlen(name);
-	while (++i < gui->n.clients)
-		if (!(SDLNet_TCP_Send(gui->n.client[i], name, len + 1)))
-			exit(0);
+	len[0] = strlen(name);
 	fd = open(name, O_RDONLY);
-	len = read(fd, buff, FILE_SIZE);
-	buff[len] = 0;
-	i = -1;
+	len[1] = read(fd, buff, FILE_SIZE);
+	buff[len[1]] = 0;
 	while (++i < gui->n.clients)
-	{
-		int tmp;
-		if (!(tmp = (SDLNet_TCP_Send(gui->n.client[i], buff, len + 1))))
+		if (!(SDLNet_TCP_Send(gui->n.client[i], name, len[0] + 1)))
 			exit(0);
-		printf("%d, %d\n", tmp, len+1);
-	}
+		if (!(SDLNet_TCP_Send(gui->n.client[i], buff, len[1] + 1)))
+			exit(0);
 	close(fd);
 	free(gui->av);
 	gui->av = name;
