@@ -18,7 +18,7 @@ static float3	get_cylinder_normal(t_obj * object, t_intersection * intersection)
 		float3		cp = object->position - intersection->hitpoint;
 		float3		g = dot(object->v, cp) * object->v;
 
-		norm = normalize(g - cp);
+		norm = -normalize(g - cp);
 		return(norm);
 	}
 
