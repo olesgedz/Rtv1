@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/05 23:13:30 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/12/08 20:26:51 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # include <math.h>
 # include <time.h>
 # include "libcl.h"
-# include "../cJSON/cJSON.h"
+# include "cJSON.h"
 # ifdef __APPLE__
 #  include <OpenCL/opencl.h>
 # else
@@ -95,6 +95,9 @@ typedef struct			s_object
 	cl_int				id;
 	cl_float			transparency;
 	cl_float			refraction;
+	cl_float3			composed_pos;
+	cl_float3			composed_v;
+	cl_int				is_negative;
 }						t_obj;
 
 typedef struct			s_cam
@@ -213,6 +216,11 @@ typedef struct	s_filter
 
 typedef struct			s_json
 {
+	cJSON				*json;
+	const cJSON 		*object;
+	const cJSON			*objects;
+	const cJSON			*camera;
+	const cJSON			*cameras;
     cJSON				*position;
     cJSON				*color;
     cJSON				*emition;
@@ -248,6 +256,7 @@ typedef struct			s_json
 	cJSON				*refraction;
 	cJSON				*name;
 	cJSON				*size;
+	cJSON				*negative;
 }             			t_json;
 
 typedef struct		s_gui
@@ -315,7 +324,7 @@ void					pos_check(t_game *game, t_gui *gui);
 void					opencl_init(t_game *game);
 void					check_file(t_game *game);
 cl_float2				create_cfloat2 (float x, float y);
-cl_float3				parse_vec3(cJSON *vec);
+cl_float3				parse_vec3(cJSON *vec, int flag);
 cl_float2				parse_vec2(cJSON *vec);
 void					semples_to_line(t_game *game, t_gui *gui);
 void					info_button(t_game *game, t_gui *gui);
@@ -330,8 +339,6 @@ void					loopa(t_game *game, t_gui *gui);
 void					screen_present(t_game *game, t_gui *gui);
 void					ft_render(t_game *game, t_gui *gui);
 void					play_stop_music(char *name);
-void					check_object(const cJSON *object, t_game *game,
-cJSON *comp_pos, cJSON *comp_v, int id);
 int 					compare_in_texture_dict(t_game *game, char *texture_name);
 int						compare_in_normal_dict(t_game *game, char *normal_name);
 void					mouse_motion(t_game *game, t_gui *gui);
@@ -457,5 +464,17 @@ void					basis_print(t_obj *obj, FILE *fp);
 void					dump_obj(t_game *game, FILE *fp);
 void					dump_cam(t_game *game, FILE *fp);
 void					ss_free(t_gui *gui);
-
+void					check_scene(t_json json, t_game *game);
+void					read_scene(char *argv, t_game *game);
+void					check_object(const cJSON *object, t_game *game, t_json parse, int id);
+void					check_scene(t_json parse, t_game *game);
+void					check_cam(t_json parse, t_game *game, t_filter *filter);
+cl_float3				get_composed_pos(cJSON *composed_pos);
+cl_float3				get_composed_v(cJSON *composed_v);
+void					parse_necessary(const cJSON *object, t_obj *obj, t_json *parse);
+void					parse_facing(const cJSON *object, t_obj *obj, t_json *parse, t_game *game);
+void					parse_basis(const cJSON *object, t_obj *obj, t_json *parse);
+void					parse_rest(const cJSON *object, t_obj *obj, t_json *parse);
+void					parse_triangle_vert(const cJSON *object, t_obj *obj, t_json *parse);
+void prepare_data(char ***data, char *line);
 #endif

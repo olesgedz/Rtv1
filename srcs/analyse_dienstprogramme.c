@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   analyse_dienstprogramme.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 17:05:04 by srobert-          #+#    #+#             */
-/*   Updated: 2019/12/01 19:14:24 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 20:23:15 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 #include "errno.h"
 
-cl_float3	parse_vec3(cJSON *vec)
+cl_float3	parse_vec3(cJSON *vec, int flag)
 {
 	t_json parse;
 
@@ -21,9 +21,11 @@ cl_float3	parse_vec3(cJSON *vec)
 	parse.y = cJSON_GetArrayItem(vec, 1);
 	parse.z = cJSON_GetArrayItem(vec, 2);
 	if (parse.x != NULL && parse.y != NULL && parse.z != NULL)
-		return (create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, parse.z->valuedouble));
-	else
-		return (create_cfloat3(NAN, 0.0, 0.0));
+		return (create_cfloat3(parse.x->valuedouble, parse.y->valuedouble, \
+														parse.z->valuedouble));
+	if (flag == 1)
+		terminate("missing data of basis");
+	return (create_cfloat3(NAN, 0.0, 0.0));
 }
 
 cl_float2	parse_vec2(cJSON *vec)
