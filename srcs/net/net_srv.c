@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 16:17:35 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 16:32:23 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,26 +45,23 @@ void		server_on(KW_Widget *widget, int b)
 static void	client_side(t_game *game, t_gui *gui)
 {
 	char		message[FILE_SIZE];
-	static FILE	*fp = 0;
-	static char	*name = 0;
+	FILE		*fp;
 
-	if (!SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE))
-		return ;
+	SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
 	if (ft_strstr(message, ".json"))
 	{
-		fp = fopen(message, "w");
-		name = ft_strdup(message);
+		printf("%s\n", message);
+		if (!(fp = fopen(message, "w")))
+			return ;
+		free(gui->av);
+		gui->av = ft_srtdup(message);
+		gui->quit = 1;
+		SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
+		fprintf(fp, "%s", message);
+		fclose(fp);
 	}
 	else if (ft_strstr(message, "ping!"))
 		return ;
-	else
-	{
-		fprintf(fp, "%s", message);
-		fclose(fp);
-		free(gui->av);
-		gui->av = name;
-		gui->quit = 1;
-	}
 }
 
 void		send_ping(t_game *game, t_gui *gui)
@@ -114,15 +111,16 @@ void		send_map(t_game *game, t_gui *gui)
 	if (!gui->game->server)
 		return ;
 	name = dumper(game);
+	printf("%s\n", name);
 	i = -1;
 	len = strlen(name);
 	while (++i < gui->n.clients)
-		SDLNet_TCP_Send(gui->n.client[i], name, len);
+		SDLNet_TCP_Send(gui->n.client[i], name, len + 1);
 	fd = open(name, O_RDONLY);
 	len = read(fd, buff, FILE_SIZE);
 	buff[len] = 0;
 	i = -1;
 	while (++i < gui->n.clients)
-		SDLNet_TCP_Send(gui->n.client[i], buff, len);
+		SDLNet_TCP_Send(gui->n.client[i], buff, len + 1);
 	close(fd);
 }
