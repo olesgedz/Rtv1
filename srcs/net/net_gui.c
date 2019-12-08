@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 13:50:08 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 20:00:41 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 20:37:36 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,6 @@ void	clicked_send(KW_Widget *widget, int b)
 	b = 0;
 	send_map(gui->game, gui);
 	i = -1;
-	while (++i < gui->n.clients)
-		SDLNet_TCP_Send(gui->n.client[i], "0 smpl", 7);
+	// while (++i < gui->n.clients)
+	// 	SDLNet_TCP_Send(gui->n.client[i], "0 smpl", 7);
 }
