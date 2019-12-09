@@ -20,8 +20,8 @@ LIBRARIES =  $(GUI_LIB) -lSDL2_image  -lSDL2_mixer  -lsdl -L$(LIBSDL_DIRECTORY) 
 INCLUDES = $(GUI_INC) -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT)includes/ -Isrcs/cl_error/ -I$(LIBGNL)includes/ -I$(LIBCL)includes/ -I$(cJSON_DIRECTORY)
 
 
-GUI_INC = -I./include/SDL2 -I./gui/KiWi/src -I./gui/inc
-DIR_KiWi = ./gui/build/src/
+GUI_INC = -I./include/SDL2 -I./gui/KiWi/src
+DIR_KiWi = ./gui/build/src
 
 LIBFT = $(LIBFT_DIRECTORY)libft.a
 LIBFT_HEADERS = $(LIBFT_DIRECTORY)includes/
@@ -46,7 +46,7 @@ LIBSDL_HEADERS = $(LIBSDL_DIRECTORY)includes/
 
 HEADERS_DIRECTORY = ./includes/
 HEADERS_LIST = rt.h
-HEADERS = ./includes/rt.h ./gui/inc/gui.h
+HEADERS = ./includes/rt.h ./includes/gui.h
 
 DIRECTORY =  $(shell pwd)
 SDL_CFLAGS = $(shell sdl2-config --cflags)
@@ -65,44 +65,6 @@ LIB_LIST =	libSDL2.a\
 
 SRCS_DIRECTORY = ./srcs/
 
-RMRF = gui/src/gui_main.o\
-		gui/src/start_screen.o\
-		gui/src/surf_tex.o\
-		gui/src/scene_select.o\
-		gui/src/main_screen.o\
-		gui/src/obj_select.o\
-		gui/src/ren_button.o\
-		gui/src/gui_bar.o\
-		gui/src/buttons.o\
-		gui/src/add_obj.o\
-		gui/src/change_obj.o\
-		gui/src/smsht.o\
-		gui/src/editboxes.o\
-		gui/src/editboxes2.o\
-		gui/src/parse_obj.o\
-		gui/src/parse_box.o\
-		gui/src/parse_box2.o\
-		gui/src/create_obj.o\
-		gui/src/push_new.o\
-		gui/src/del_obj.o\
-		gui/src/cameras.o\
-		gui/src/change_cam.o\
-		gui/src/cam_buttons.o\
-		gui/src/cam_select.o\
-		gui/src/cam_parser.o\
-		gui/src/add_camera.o\
-		gui/src/tor_hyper.o\
-		gui/src/pars_tor_hyper.o\
-		gui/src/basis.o\
-		gui/src/gui_mod_butt.o\
-		gui/src/stereo.o\
-		gui/src/dumper_butt.o\
-		gui/src/dumper_parts.o\
-		gui/src/dumper_parts2.o\
-		gui/src/eff.o\
-		gui/src/add_tex.o\
-		cJSON/cJSON.o
-
 SRCS_LIST = main.c \
 			cl_lib/gpu_init.c\
 			textures.c\
@@ -116,42 +78,46 @@ SRCS_LIST = main.c \
 			help_fun.c\
 			render.c\
 			mouse.c\
-			../gui/src/gui_main.c\
-			../gui/src/add_obj.c\
-			../gui/src/buttons.c\
-			../gui/src/gui_bar.c\
-			../gui/src/start_screen.c\
-			../gui/src/surf_tex.c\
-			../gui/src/scene_select.c\
-			../gui/src/main_screen.c\
-			../gui/src/ren_button.c\
-			../gui/src/obj_select.c\
-			../gui/src/cam_select.c\
-			../gui/src/change_obj.c\
-			../gui/src/smsht.c\
-			../gui/src/editboxes.c\
-			../gui/src/editboxes2.c\
-			../gui/src/parse_obj.c\
-			../gui/src/parse_box.c\
-			../gui/src/parse_box2.c\
-			../gui/src/create_obj.c\
-			../gui/src/push_new.c\
-			../gui/src/del_obj.c\
-			../gui/src/change_cam.c\
-			../gui/src/cam_buttons.c\
-			../gui/src/cam_parser.c\
-			../gui/src/cameras.c\
-			../gui/src/add_camera.c\
-			../gui/src/eff.c\
-			../gui/src/gui_mod_butt.c\
-			../gui/src/add_tex.c\
-			../gui/src/stereo.c\
-			../gui/src/tor_hyper.c\
-			../gui/src/basis.c\
-			../gui/src/pars_tor_hyper.c\
-			../gui/src/dumper_butt.c\
-			../gui/src/dumper_parts.c\
-			../gui/src/dumper_parts2.c\
+			net/net_gui.c\
+			net/net_connect.c\
+			net/net_srv.c\
+			gui/gui_main.c\
+			gui/add_obj.c\
+			gui/buttons.c\
+			gui/gui_bar.c\
+			gui/start_screen.c\
+			gui/surf_tex.c\
+			gui/scene_select.c\
+			gui/main_screen.c\
+			gui/ren_button.c\
+			gui/obj_select.c\
+			gui/cam_select.c\
+			gui/change_obj.c\
+			gui/smsht.c\
+			gui/editboxes.c\
+			gui/editboxes2.c\
+			gui/parse_obj.c\
+			gui/parse_box.c\
+			gui/parse_box2.c\
+			gui/create_obj.c\
+			gui/push_new.c\
+			gui/del_obj.c\
+			gui/change_cam.c\
+			gui/cam_buttons.c\
+			gui/cam_parser.c\
+			gui/cameras.c\
+			gui/add_camera.c\
+			gui/eff.c\
+			gui/gui_mod_butt.c\
+			gui/add_tex.c\
+			gui/stereo.c\
+			gui/tor_hyper.c\
+			gui/basis.c\
+			gui/pars_tor_hyper.c\
+			gui/dumper_butt.c\
+			gui/dumper_parts.c\
+			gui/dumper_parts2.c\
+			../cJSON/cJSON.c\
 			neue_schlanke_analyse.c\
 			analyse_dienstprogramme.c\
 			util.c\
@@ -199,7 +165,7 @@ else
 endif
 
 ifeq ($(detected_OS),Linux)
-	LIBRARIES += -rpath ./gui/build/src/ -L./gui/build/src/ -lKiWi   -lOpenCL -lrt
+	LIBRARIES += -rpath ./gui/build/ -L./gui/build/ -lKiWi   -lOpenCL -lrt
 	GUI_LIB +=    $(shell pkg-config --libs SDL2_image) $(shell pkg-config --libs SDL2_ttf) $(shell pkg-config --libs SDL2_mixer) $(shell pkg-config --libs SDL2_net)
 	 GUI_INC += $(shell pkg-config --cflags SDL2_ttf) $(shell pkg-config --cflags SDL2_image) $(shell pkg-config --cflags SDL2_mixer) $(shell pkg-config --cflags SDL2_net)
 	LIB_KiWi = $(DIR_KiWi)/libKiWi.so
@@ -271,10 +237,10 @@ $(LIBSDL):
 	@$(MAKE) -sC $(LIBSDL_DIRECTORY)
 
 norm:
-	norminette gui/inc gui/src includes srcs libs/libcl libs/libft libs/libgnl libs/libsdl/includes libs/libsdl/srcs/ libs/libvect
+	norminette gui/inc gui includes srcs libs/libcl libs/libft libs/libgnl libs/libsdl/includes libs/libsdl/srcs/ libs/libvect
 
 clean:
-	@rm -rf ./gui/build $(RMRF)
+	@rm -rf ./gui/build
 	$(MAKE) -sC $(LIBFT_DIRECTORY)	clean
 	$(MAKE) -sC $(LIBSDL_DIRECTORY) clean
 	$(MAKE) -sC $(LIBVECT)	clean

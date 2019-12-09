@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 21:32:09 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/05 17:53:20 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/06 17:37:45 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,17 @@ static void	clicked_cs(KW_Widget *widget, int b)
 	gui = g_gui(0, 0);
 	gui->c_s.show = !gui->c_s.show;
 	if (gui->c_s.show)
+	{
 		KW_ShowWidget(gui->c_s.frame);
+		KW_SetLabelTextColor(KW_GetButtonLabel(widget),
+		(KW_Color){255, 255, 255, 255});
+	}
 	else
+	{
 		KW_HideWidget(gui->c_s.frame);
+		KW_SetLabelTextColor(KW_GetButtonLabel(widget),
+		(KW_Color){0, 0, 0, 0});
+	}
 }
 
 void		cam_button(t_game *game, t_gui *gui)

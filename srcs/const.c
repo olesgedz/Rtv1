@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   const.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:04:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 20:03:39 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/12/08 22:22:51 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void	set_keys(t_game *game)
 	game->mouse.mm = 0;
 	game->keys.space = 0;
 	game->keys.show_gui = 1;
+	game->server = 0;
 }
 
 void		set_const(t_game *game, t_gui *gui)
@@ -48,6 +49,11 @@ void		set_const(t_game *game, t_gui *gui)
 		print_error_gui("No IMG for you: ", IMG_GetError());
 		exit(1);
 	}
+	if (SDLNet_Init() == -1)
+	{
+		print_error_gui("SDLNet_Init: %s\n", SDLNet_GetError());
+		exit(2);
+	}
 	game->gpu.samples = 0;
 	game->quit = 0;
 	game->gui_mod = 0;
@@ -58,6 +64,8 @@ void		set_const(t_game *game, t_gui *gui)
 	gui->quit = 0;
 	gui->fps = 0;
 	gui->to_destroy = 0;
+	gui->n.clients = 0;
+	gui->n.str_ip = 0;
 	game->mouse.x = 0;
 	game->mouse.y = 0;
 	game->mouse.g = 0;
@@ -65,6 +73,7 @@ void		set_const(t_game *game, t_gui *gui)
 	game->normals = NULL;
 	game->texture_list = NULL;
 	game->textures_num = 0;
+	game->samples_to_do = 0;
 	game->vertices_list = NULL;
 	game->vertices_num = 0;
 	set_keys(game);

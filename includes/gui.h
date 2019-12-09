@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/05 17:56:58 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 15:24:58 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "KW_renderdriver_sdl2.h"
 # include "libsdl.h"
 # define MAX_OBJ	1024
+# define MAX_CL		4
 # define FR_FZ		WIN_W / 10.
 # define FR_ZF		WIN_H / 10.
 
@@ -86,6 +87,7 @@ typedef struct		s_edit_win
 	KW_Widget		*frame;
 	KW_Widget		*label;
 	KW_Widget		*okbutton;
+	KW_Widget		*servbut;
 	KW_Rect			*rects[2];
 	unsigned		weights[2];
 	int				show;
@@ -149,5 +151,25 @@ typedef struct		s_obj_type
 	int				max_i;
 	int				show;
 }					t_obj_type;
+
+typedef struct		s_network
+{
+	KW_Rect			frect;
+	KW_Rect			buttonrect[3];
+	KW_Widget		*frame;
+	KW_Widget		*label;
+	KW_Rect			*rects[1];
+	unsigned		weights[1];
+	KW_Widget		*buttons[3];
+	char			*names[3];
+	int				show;
+	TCPsocket		server;
+	TCPsocket 		tcpsock;
+	TCPsocket		client[MAX_CL];
+	int				clients;
+	IPaddress		ip;
+	char			*str_ip;
+//	IPaddress		*remoteip;
+}					t_network;
 
 #endif

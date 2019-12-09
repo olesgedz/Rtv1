@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 14:51:12 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/05 18:04:51 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/08 19:34:02 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ static FILE	*newfile(char **str)
 		name = buff;
 	}
 	fp = fopen(name, "w+");
-	*str = buff;
+	*str = name;
 	return (fp);
 }
 
-char	*dumper(t_game *game)
+char	*dumper(t_game *game, t_gui *gui)
 {
 	FILE	*fp;
 	char	*name;
@@ -51,6 +51,10 @@ char	*dumper(t_game *game)
 	dump_cam(game, fp);
 	fprintf(fp, "}\n");
 	fclose(fp);
+	ss_free(gui);
+	scene_select(gui, -1, 0);
+	if (!gui->s_s.show)
+		KW_HideWidget(gui->s_s.frame);
 	return (name);
 }
 
@@ -64,11 +68,7 @@ static void	clicked_dump(KW_Widget *widget, int b)
 		return ;
 	b = 0;
 	gui = g_gui(0, 0);
-	dumper(game);
-	ss_free(gui);
-	scene_select(gui, -1, 0);
-	if (!gui->s_s.show)
-		KW_HideWidget(gui->s_s.frame);
+	free(dumper(game, gui));
 }
 
 void		dumper_butt(t_game *game, t_gui *gui)
