@@ -58,6 +58,8 @@ static bool intersect_scene(t_scene *scene, t_intersection *intersection, t_ray 
 				hitdistance = intersect_triangle(object, ray);
 			else if (object->type == PARABOLOID)
 				hitdistance = intersect_parabol(object, ray);
+			else if (object->type == TORUS)
+				hitdistance = intersection_torus(object, ray);
 			/* keep track of the closest intersection and hitobject found so far */
 			if (hitdistance != 0.0f && hitdistance < ray->t)
 			{

@@ -97,6 +97,16 @@ typedef struct			s_scene
 	int					global_texture_id;
 }						t_scene;
 
+typedef struct			s_quad
+{
+	float a;
+	float b;
+	float c;
+	float d;
+	float res;
+}						t_quad;
+
+
 float 					cl_float3_max(float3 v);
 float3					cl_int_to_float3(int i);
 float 					cl_float3_min(float3 v);
