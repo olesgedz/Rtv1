@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 13:50:08 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/09 16:01:57 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/09 20:24:07 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void		net_list(t_game *game, t_gui *gui)
 		gui->n.frame, gui->n.names[i], &gui->n.buttonrect[i]);
 	edit_ip(gui);
 	KW_HideWidget(gui->ed_w.frame);
+	gui->ed_w.show = 0;
 	network_buttons(gui);
 }
 
@@ -95,6 +96,4 @@ void	clicked_send(KW_Widget *widget, int b)
 	b = 0;
 	send_map(gui->game, gui, 0, 0);
 	i = -1;
-	// while (++i < gui->n.clients)
-	// 	SDLNet_TCP_Send(gui->n.client[i], "0 smpl", 7);
 }

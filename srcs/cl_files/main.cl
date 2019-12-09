@@ -124,12 +124,12 @@ static float3		radiance_explicit(t_scene *scene,
 // 	return normalize((refrIndex * vector) + (refrIndex * cosI - fabs(sqrt( cosT2 ))) * n);
 // }
 
-float3 refract(float3 I, float3 N, float ior) 
-{ 
+float3 refract(float3 I, float3 N, float ior)
+{
     float cosi = clamp(dot(I, N), -1.0f, 1.0f);
     float etai = 1;
 	float etat = ior;
-    float3 n1 = N; 
+    float3 n1 = N;
     if (cosi < 0)
 		cosi = -cosi;
 	else
@@ -145,8 +145,8 @@ float3 refract(float3 I, float3 N, float ior)
 	if (k < 0)
 		return (reflect(I, dot(I, N) > 0.f ? -N : N));
 	else
-    	return normalize(eta * I + (eta * cosi - sqrt(fabs(k))) * n1); 
-} 
+    	return normalize(eta * I + (eta * cosi - sqrt(fabs(k))) * n1);
+}
 
 static float3 convert_normal(t_obj *object, float3 normal, float3 dir, t_scene *scene, int *bounces)
 {
