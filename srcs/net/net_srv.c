@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 22:38:20 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/09 17:16:58 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,53 +47,24 @@ void		server_on(KW_Widget *widget, int b)
 static void	client_side(t_game *game, t_gui *gui)
 {
 	char		message[FILE_SIZE];
-	static FILE	*fp = 0;
-	static char	*name = 0;
-	char		*map = 0;
-	char		*buff = 0;
+	FILE		*fp;
+	char		**buff;
 
 	SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
-	//printf("%s\n", message);
 	if (!ft_strcmp(message, "ping!"))
-	{
-		//printf("ping\n");
 		return ;
-	}
-	buff = ft_strdup(message);
-	map = ft_strstr(buff, ".json") + 5;
-	name = malloc(map - buff + 1);
-	name = ft_strncpy(name, buff, map - buff);
-	name[18] = 0;
-	if (!(fp = fopen(name, "w")))
+	buff = ft_strsplit(message, '|');
+	if (!(fp = fopen(buff[0], "w")))
 		exit(0);
-	fprintf(fp, "%s", map);
+	game->samples_to_do = ft_atoi(buff[1]);
+	fprintf(fp, "%s", buff[2]);
 	fclose(fp);
 	free(gui->av);
-	gui->av = name;
+	gui->av = buff[0];
 	gui->quit = 1;
-
-	// if (!ft_strcmp(&message[ft_strlen(message) - 5], ".json"))
-	// {
-	// 	printf("json\n");
-	// 	if (!(fp = fopen(message, "w")))
-	// 		exit(0);
-	// 	name = ft_strdup(message);
-	// }
-	// // else if (ft_strstr(message, "smpl"))
-	// // {
-	// // 	printf("smpls\n");
-	// // 	game->samples_to_do = ft_atoi(message);
-	// // }
-	// else
-	// {
-	// 	printf("map\n");
-	// 	fprintf(fp, "%s", message);
-	// 	fclose(fp);
-	// 	fp = 0;
-	// 	free(gui->av);
-	// 	gui->av = name;
-	// 	gui->quit = 1;
-	// }
+	free(buff[1]);
+	free(buff[2]);
+	free(buff);
 }
 
 void		send_ping(t_game *game, t_gui *gui)
@@ -132,30 +103,22 @@ void		net_wait(t_game *game, t_gui *gui)
 	}
 }
 
-void		send_map(t_game *game, t_gui *gui, char *tmp)
+void		send_map(t_game *game, t_gui *gui, char *tmp, int smpls)
 {
 	int		i;
-	int		len[2];
-	int		fd;
+	int		len;
 	char	*name;
-	char	buff[FILE_SIZE];
 
 	if (!gui->game->server)
 		return ;
 	if (!(name = dumper(game, gui)))
 		exit(0);
 	i = -1;
-	len[0] = strlen(name);
-	fd = open(name, O_RDONLY);
-	len[1] = read(fd, buff, FILE_SIZE);
-	buff[len[1]] = 0;
-	tmp = ft_strjoin(name, buff);
+	tmp = make_string(name, smpls, 0);
+	len = ft_strlen(tmp);
 	while (++i < gui->n.clients)
-	{
-		SDLNet_TCP_Send(gui->n.client[i], tmp, len[0]+ len[1] + 1);
-		//SDLNet_TCP_Send(gui->n.client[i], buff, len[1] + 1);
-	}
-	close(fd);
+		SDLNet_TCP_Send(gui->n.client[i], tmp, len + 1);
+	free(tmp);
 	free(gui->av);
 	gui->av = name;
 	gui->quit = 1;

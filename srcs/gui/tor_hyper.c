@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 19:43:23 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/04 22:50:19 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/09 19:59:06 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	change_tor(t_gui *gui, t_obj *obj)
 	i = 0;
 	obj_same(gui, obj);
 	position(gui, obj, &i);
+	direction(gui, obj, &i);
 	radius(gui, obj, &i);
 	color_emission(gui, obj, &i);
 	refraction(gui, obj, &i);
