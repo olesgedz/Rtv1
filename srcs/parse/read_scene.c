@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 18:07:07 by srobert-          #+#    #+#             */
-/*   Updated: 2019/12/08 19:11:26 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/12/09 18:35:49 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static t_json	prepare_scene(char *argv, t_game *game)
 		terminate("fuck you and your file!\n");
 	fread(buffer, 462144, 1, fp);
 	json.json = cJSON_Parse(buffer);
-	if (json.json == NULL)
+	if (json.json == NULL || buffer[0] != '{')
 		terminate("\nsomething wrong with .json file, \
 please check that commas on right positions\n");
 	json.composed_pos = NULL;
