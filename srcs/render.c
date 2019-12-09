@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:54:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 20:37:54 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/09 20:37:22 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,10 @@ void			main_render(t_game *game, t_gui *gui)
 		ft_render(game, gui);
 		screen_present(game, gui);
 		time0 = samples_to_line(game, gui, time0);
+		while (game->samples_to_do > 0)
+			game->samples_to_do -= SAMPLES;
+		if (game->samples_to_do < 0)
+			game->samples_to_do = 0;
 	}
 	destr(gui, 0);
 	game->av = gui->av;

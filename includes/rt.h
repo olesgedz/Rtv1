@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 22:22:31 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/09 16:45:10 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,7 +264,7 @@ typedef struct			s_json
 
 typedef struct		s_gui
 {
-	KW_Widget		*destroy[MAX_OBJ];
+	KW_Widget		*destroy[MAX_OBJ * 5];
 	int				to_destroy;
 	t_game			*game;
 	t_sdl			sdl;
@@ -474,7 +474,7 @@ void					network_buttons(t_gui *gui);
 void					edit_ip(t_gui *gui);
 void					server_on(KW_Widget *widget, int b);
 void					net_wait(t_game *game, t_gui *gui);
-void					send_map(t_game *game, t_gui *gui, char *tmp);
+void					send_map(t_game *game, t_gui *gui, char *tmp, int smpls);
 void					clicked_send(KW_Widget *widget, int b);
 
 void					check_scene(t_json json, t_game *game);
@@ -489,5 +489,6 @@ void					parse_facing(const cJSON *object, t_obj *obj, t_json *parse, t_game *ga
 void					parse_basis(const cJSON *object, t_obj *obj, t_json *parse);
 void					parse_rest(const cJSON *object, t_obj *obj, t_json *parse);
 void					parse_triangle_vert(const cJSON *object, t_obj *obj, t_json *parse);
-void prepare_data(char ***data, char *line);
+void					prepare_data(char ***data, char *line);
+char					*make_string(char *name, int smpls, int fd);
 #endif

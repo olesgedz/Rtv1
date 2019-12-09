@@ -50,6 +50,7 @@ void		show_hide(t_game *game, t_gui *gui)
 	else
 	{
 		KW_HideWidget(gui->g_b.frame);
+		gui->g_b.show = 0;
 		KW_HideWidget(gui->s_s.frame);
 		KW_HideWidget(gui->o_s.frame);
 		KW_HideWidget(gui->o_t.frame);

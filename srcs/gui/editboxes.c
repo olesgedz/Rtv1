@@ -6,7 +6,7 @@
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 20:04:17 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/09 17:48:06 by sbrella          ###   ########.fr       */
+/*   Updated: 2019/12/09 22:45:48 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,12 @@ void		text_normal(t_gui *gui, t_obj *obj, int *i)
 		if (obj->texture > 0)
 			gui->c_o.ed_b[(*i)++] = KW_CreateEditbox(gui->gui, gui->c_o.frame,
 			gui->game->texture_list[obj->texture - 1], gui->c_o.rects[1]);
-		if (obj->texture == -1)
+		else if (obj->texture == -1)
 		{
 			gui->c_o.ed_b[(*i)++] = KW_CreateEditbox(gui->gui, gui->c_o.frame,
 			"chess", gui->c_o.rects[1]);
 		}
-		if (obj->texture == -2)
+		else if (obj->texture == -2)
 		{
 			gui->c_o.ed_b[(*i)++] = KW_CreateEditbox(gui->gui, gui->c_o.frame,
 			"perlin", gui->c_o.rects[1]);
