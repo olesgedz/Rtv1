@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 18:47:46 by srobert-          #+#    #+#             */
-/*   Updated: 2019/12/08 20:04:31 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/12/08 22:47:09 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ static void	set_type(t_obj *obj, cJSON *type)
 		obj->type = TRIANGLE;
 	else if (ft_strcmp(type->valuestring, "paraboloid") == 0)
 		obj->type = PARABOLOID;
+	else if (ft_strcmp(type->valuestring, "torus") == 0)
+		obj->type = TORUS;
 }
 
 static void	parse_object(const cJSON *object, t_obj *obj, \
