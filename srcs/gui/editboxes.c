@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   editboxes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 20:04:17 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/05 23:20:36 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/12/09 17:48:06 by sbrella          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void		text_normal(t_gui *gui, t_obj *obj, int *i)
 	gui->c_o.editboxrect[2].y += 30;
 	KW_CreateLabel(gui->gui, gui->c_o.frame, "Textures", gui->c_o.rects[0]);
 	if (obj->texture)
+	{
 		if (obj->texture > 0)
 			gui->c_o.ed_b[(*i)++] = KW_CreateEditbox(gui->gui, gui->c_o.frame,
 			gui->game->texture_list[obj->texture - 1], gui->c_o.rects[1]);
@@ -96,6 +97,7 @@ void		text_normal(t_gui *gui, t_obj *obj, int *i)
 			gui->c_o.ed_b[(*i)++] = KW_CreateEditbox(gui->gui, gui->c_o.frame,
 			"perlin", gui->c_o.rects[1]);
 		}
+	}
 	else
 		gui->c_o.ed_b[(*i)++] = KW_CreateEditbox(gui->gui, gui->c_o.frame,
 		"No texture", gui->c_o.rects[1]);

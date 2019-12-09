@@ -193,8 +193,8 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 		if (objecthit.normal || objecthit.texture)
 			interpolate_uv(&objecthit, intersection->hitpoint, scene, &img_coord);
 		objecthit.color = get_color(&objecthit, intersection->hitpoint, scene, &img_coord);
-		if (length(objecthit.emission) != 0.0f && bounces == 0)
-			return (objecthit.color);
+		// if (length(objecthit.emission) != 0.0f && bounces == 0)
+		// 	return (objecthit.color);
 		/* compute the surface normal and flip it if necessary to face the incoming ray */
 		intersection->normal = get_normal(&objecthit, intersection, &img_coord, scene);
 		if (scene->lightsampling)
@@ -204,7 +204,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 		float3 newdir = sample_uniform(&normal, scene, objecthit.metalness);
 		cosine = fabs(dot(normal, newdir));
 		float pdf = 1.f - scene->lightsampling * 0.7f;
-		accum_color += mask * objecthit.emission * pdf * cosine + mask * (scene->camera.ambience);
+		accum_color += mask * objecthit.emission * pdf * cosine * (1.f - clamp(0.0f, 1.0f, objecthit.transparency)) + mask * (scene->camera.ambience);
 		if (scene->lightsampling)
 		{
 			explicit = radiance_explicit(scene, intersection);
