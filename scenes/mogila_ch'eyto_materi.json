@@ -1,4 +1,4 @@
-{
+
     "scene":{
         "global texture":"sviborg.jpg",
         "ambiance": 0.5,
@@ -6,16 +6,17 @@
         "motion blur" : 0.0,
         "sepia" : 0,
         "stereo": 0
-    }, 
-    
+    },
+
     "objects":[
         {
-            "type": "moebius",
+            "type": "torus",
             "position": [-1.0,1.0,-0.1],
-            "color": [0.0,0.9,0.7],
-            "radius" : 0.1,
+            "color": [1.0,0.0,0.0],
+			"radius" : 1.0,
+			"tor radius": 0.6,
             "reflection": 0.0,
-            "dir": [0.10,1.00,0.10]
+            "dir": [1,1.00,0.10]
         },
         {
             "type": "sphere",
@@ -24,6 +25,15 @@
             "radius" : 0.15,
             "emition" : [80.0,80.0,80.0],
             "texture":  "sun.jpg"
+		},
+		{
+            "type": "plane",
+            "position": [-1.0,0.0,0.0],
+            "color": [1.0,1.0,1.0],
+            "dir": [1.0,0.0,0.0],
+            "transparency": 0.0,
+			"refraction": 0.0,
+			"texture" :"oles.jpg"
         }
     ],
     "cameras":[

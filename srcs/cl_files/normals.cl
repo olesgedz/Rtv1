@@ -49,6 +49,16 @@ float3 get_normal(t_obj *object, t_intersection *intersection, float2 *coord, t_
 		normal = intersection->hitpoint - object->v * object->radius;
 		normal = normalize(normal);
 	}
+	else if (object->type == TORUS)
+	{
+		float3 govno = intersection->hitpoint;
+
+		govno -= object->position;
+		normal = govno - dot(govno, object->v) * object->v;
+		normal = normalize(normal);
+		normal = govno - normal * object->radius;
+		normal = normalize(normal);
+	}
 	else
 		normal = sphere_get_normal(object, intersection);
 	// if (dot(intersection->ray.dir, normal) < 0)
