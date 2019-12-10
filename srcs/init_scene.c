@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_scene.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:53:01 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:14:59 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 16:23:35 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,9 @@ void				opencl_init(t_game *game)
 
 	ERROR(game->cl_info->ret);
 	cl_krl_new_push(&game->cl_info->progs[0], "render_kernel");
-	// cl_krl_new_push(&game->cl_info->progs[0], "gaussian_blur");
 	ERROR(game->cl_info->ret);
 	cl_krl_init(&game->cl_info->progs[0].krls[0], 12);
 	cl_krl_create(game->cl_info, &game->cl_info->progs[0], &game->cl_info->progs[0].krls[0]);
-//	cl_krl_create(game->cl_info, &game->cl_info->progs[0], &game->cl_info->progs[0].krls[1]);
 }
 
 void				opencl(t_game *game, char *argv)
@@ -91,28 +89,16 @@ void				opencl(t_game *game, char *argv)
 	ERROR(game->cl_info->ret);
 	cl_krl_set_all_args(&game->cl_info->progs[0].krls[0]);
 	ERROR(game->cl_info->ret);
-
-
-	// cl_krl_init_arg(&game->cl_info->progs[0].krls[1], 0, sizeof(cl_int) * WIN_H * WIN_W,\
-	// game->sdl.surface->pixels);
-	// cl_krl_init_arg(&game->cl_info->progs[0].krls[1], 1, sizeof(cl_int) * WIN_H * WIN_W,\
-	// game->blured->pixels);
-	// cl_krl_init_arg(&game->cl_info->progs[0].krls[1], 2, sizeof(cl_int),\
-	// game->blured->pixels);
-	// cl_krl_init_arg(&game->cl_info->progs[0].krls[1], 3, sizeof(cl_int),\
-	// game->blured->pixels);
-	// game->cl_info->ret = cl_krl_mem_create(game->cl_info, &game->cl_info->progs[0].krls[1], 0, CL_MEM_READ_WRITE);
-	// game->cl_info->ret = cl_krl_mem_create(game->cl_info, &game->cl_info->progs[0].krls[1], 1, CL_MEM_READ_WRITE);
-	// cl_krl_write_all(game->cl_info, &game->cl_info->progs[0].krls[1]);
-	// ERROR(game->cl_info->ret);
-	// cl_krl_set_all_args(&game->cl_info->progs[0].krls[1]);
-	// ERROR(game->cl_info->ret);
-
 }
 
 void				free_opencl(t_game *game)
 {
-	// clReleaseMemObject(game->kernels[0].args[1]);
-	// clReleaseMemObject(game->kernels[0].args[4]);
-	// clReleaseMemObject(game->kernels[0].args[5]);
+	// clReleaseMemObject(game->cl_info->progs[0].krls[0].args[0]);
+	// clReleaseMemObject(game->cl_info->progs[0].krls[0].args[1]);
+	// clReleaseMemObject(game->cl_info->progs[0].krls[0].args[2]);
+	// clReleaseMemObject(game->cl_info->progs[0].krls[0].args[3]);
+	// clReleaseMemObject(game->cl_info->progs[0].krls[0].args[4]);
+	// clReleaseMemObject(game->cl_info->progs[0].krls[0].args[5]);
+	// clReleaseMemObject(game->cl_info->progs[0].krls[0].args[11]);
+	cl_krl_mem_release_all(game->cl_info, &game->cl_info->progs[0].krls[0]);
 }

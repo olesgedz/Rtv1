@@ -160,8 +160,8 @@ COL_WHITE	:= \033[1;37m
 
 TOTAL_FILES := $(shell echo $(SRCS_LIST) | wc -w | sed -e 's/ //g')
 CURRENT_FILES = $(shell find $(DIRECTORY)/objects/ -type f 2> /dev/null | wc -l | sed -e 's/ //g')
-
-
+START_FILES = $(shell find $(DIRECTORY)/objects/ -type f 2> /dev/null | wc -l | sed -e 's/ //g')
+START_FILES_N := $(START_FILES)
 
 ifeq ($(OS),Windows_NT)
 	detected_OS := Windows
@@ -178,10 +178,9 @@ endif
 ifeq ($(detected_OS),Darwin)        # Mac OS X
 	LIBRARIES += -framework OpenCL
 	GUI_LIB += $(shell pkg-config --libs sdl2_ttf) $(shell pkg-config --libs sdl2_image) $(shell pkg-config --libs sdl2_mixer) $(shell pkg-config --libs sdl2_net)
-  GUI_INC += $(shell pkg-config --cflags sdl2_ttf) $(shell pkg-config --cflags sdl2_image) $(shell pkg-config --cflags sdl2_mixer) $(shell pkg-config --cflags sdl2_net)
+    GUI_INC += $(shell pkg-config --cflags sdl2_ttf) $(shell pkg-config --cflags sdl2_image) $(shell pkg-config --cflags sdl2_mixer) $(shell pkg-config --cflags sdl2_net)
 	LIB_KiWi = $(DIR_KiWi)/libKiWi.dylib
 	GUI_LIB += -L./gui/build/src -lKiWi
-
 endif
 
 
@@ -192,7 +191,7 @@ all: $(MAKES) $(NAME)
 
 $(NAME): $(LIB_KiWi) $(LIBFT) $(cJSON)  $(LIBSDL) $(LIBCL_DIR) $(LIBGNL_DIR)  $(LIBVECT_DIR) $(OBJS_DIRECTORY) $(OBJS) $(HEADERS)
 	@$(CC) $(FLAGS) $(LIBSDL) $(INCLUDES) $(OBJS) $(SDL_CFLAGS) $(SDL_LDFLAGS) -o $(NAME) $(LIBRARIES)
-	@echo "$(CLEAR_LINE)[`expr $(CURRENT_FILES) '*' 100 / $(TOTAL_FILES)`%] $(COL_BLUE)[$(NAME)] $(COL_GREEN)Finished compilation. Output file : $(COL_VIOLET)$(PWD)/$(NAME)$(COL_END)"
+	@echo "$(CLEAR_LINE)[`expr $(CURRENT_FILES) '*' 100 / $(TOTAL_FILES) `%] $(COL_BLUE)[$(NAME)] $(COL_GREEN)Finished compilation. Output file : $(COL_VIOLET)$(PWD)/$(NAME)$(COL_END)"
 
 $(MAKES):
 	@$(MAKE) -sC $(LIBFT_DIRECTORY)
@@ -209,7 +208,7 @@ $(OBJS_DIRECTORY):
 $(OBJS_DIRECTORY)%.o : $(SRCS_DIRECTORY)%.c $(HEADERS)
 	@mkdir -p $(@D)
 	@$(CC) $(FLAGS) -c $(INCLUDES) $< -o $@
-	@echo "$(CLEAR_LINE)[`expr $(CURRENT_FILES) '*' 100 / $(TOTAL_FILES)`%] $(COL_BLUE)[$(NAME)] $(COL_GREEN)Compiling file [$(COL_VIOLET)$<$(COL_GREEN)].($(CURRENT_FILES) / $(TOTAL_FILES))$(COL_END)$(BEGIN_LINE)"
+	@echo "$(CLEAR_LINE)[`expr $(CURRENT_FILES) '*' 100 / $(TOTAL_FILES) `%] $(COL_BLUE)[$(NAME)] $(COL_GREEN)Compiling file [$(COL_VIOLET)$<$(COL_GREEN)].($(CURRENT_FILES) / $(TOTAL_FILES))$(COL_END)$(BEGIN_LINE)"
 
 count:
 	@echo $(TOTAL_FILES)
