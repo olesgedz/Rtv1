@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 15:27:04 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 18:40:41 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 20:47:23 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,16 @@ static void	ok_cl(KW_Widget *widget, int b)
 		return ;
 	free(gui->n.str_ip);
 	gui->n.str_ip = ft_strdup((char *)KW_GetEditboxText(gui->ed_w.ed_b));
-	SDLNet_ResolveHost(&gui->n.ip, gui->n.str_ip, 9999);
-	gui->n.tcpsock = SDLNet_TCP_Open(&gui->n.ip);
+	if (SDLNet_ResolveHost(&gui->n.ip, gui->n.str_ip, 9999) == -1)
+	{
+		gui->n.str_ip = 0;
+		return ;
+	}
+	if (!(gui->n.tcpsock = SDLNet_TCP_Open(&gui->n.ip)))
+	{
+		gui->n.str_ip = 0;
+		return ;
+	}
 	KW_HideWidget(gui->ed_w.frame);
 	gui->ed_w.show = 0;
 	KW_SetLabelTextColor(KW_GetButtonLabel(gui->n.buttons[0]),
