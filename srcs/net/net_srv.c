@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/09 17:16:58 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 18:35:06 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,21 +49,35 @@ static void	client_side(t_game *game, t_gui *gui)
 	char		message[FILE_SIZE];
 	FILE		*fp;
 	char		**buff;
+	int 		len;
+	int			current;
 
-	SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
+	len = SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
 	if (!ft_strcmp(message, "ping!"))
 		return ;
 	buff = ft_strsplit(message, '|');
-	if (!(fp = fopen(buff[0], "w")))
+	if (!(fp = fopen(buff[1], "w")))
 		exit(0);
-	game->samples_to_do = ft_atoi(buff[1]);
-	fprintf(fp, "%s", buff[2]);
+	game->samples_to_do = ft_atoi(buff[2]);
+	len = ft_atoi(buff[0]) - len + ft_strlen(buff[0]);
+	fprintf(fp, "%s", buff[3]);
+	while (len > 0)
+	{
+		current = SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
+		fprintf(fp, "%s", message);
+		len -= current;
+	}
 	fclose(fp);
 	free(gui->av);
-	gui->av = buff[0];
+	scene_select(gui, -1, 0);
+	scene_click(0, 0);
+	if (!gui->s_s.show)
+		KW_HideWidget(gui->s_s.frame);
+	gui->av = buff[1];
 	gui->quit = 1;
-	free(buff[1]);
+	free(buff[0]);
 	free(buff[2]);
+	free(buff[3]);
 	free(buff);
 }
 
@@ -98,7 +112,6 @@ void		net_wait(t_game *game, t_gui *gui)
 			free(ita);
 			KW_SetLabelText(gui->ed_w.label, buff);
 			free(buff);
-			//gui->n.remoteip = SDLNet_TCP_GetPeerAddress(gui->n.client);
 		}
 	}
 }

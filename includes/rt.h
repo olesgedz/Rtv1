@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/09 21:18:38 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/12/10 20:03:40 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -493,4 +493,6 @@ void					parse_rest(const cJSON *object, t_obj *obj, t_json *parse);
 void					parse_triangle_vert(const cJSON *object, t_obj *obj, t_json *parse);
 void					prepare_data(char ***data, char *line);
 char					*make_string(char *name, int smpls, int fd);
+void					scene_click(KW_Widget *widget, int b);
+void					net_render(KW_Widget *widget, int b);
 #endif
