@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:54:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/09 22:48:55 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 18:57:17 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,8 @@ void			main_render(t_game *game, t_gui *gui)
 	while (!game->quit && !gui->quit)
 	{
 		if (!game->samples_to_do)
-		{
-			key_check(game);
 			net_wait(game, gui);
-		}
+		key_check(game);
 		camera_reposition(game, gui);
 		ft_render(game, gui);
 		screen_present(game, gui);
