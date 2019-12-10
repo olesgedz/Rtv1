@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   const.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:04:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 22:22:51 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/09 21:22:54 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,6 @@ void		set_const(t_game *game, t_gui *gui)
 	game->samples_to_do = 0;
 	game->vertices_list = NULL;
 	game->vertices_num = 0;
+	game->music = NULL;
 	set_keys(game);
 }

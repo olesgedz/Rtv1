@@ -16,7 +16,8 @@
 			"radius" : 1.0,
 			"tor radius": 0.6,
             "reflection": 0.0,
-            "dir": [1,1.00,0.10]
+			"dir": [1,1.00,0.10],
+			"texture":  "sviborg_you.jpg"
         },
         {
             "type": "sphere",

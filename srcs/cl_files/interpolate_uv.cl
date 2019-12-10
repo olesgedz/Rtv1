@@ -66,7 +66,7 @@ static void			get_color_cone(t_obj *object, float3 hitpoint, t_scene *scene, flo
 
 static void			interpolate_uv(t_obj *object, float3 hitpoint, t_scene *scene, float2 *coord)
 {
-	if (object->type == SPHERE)
+	if (object->type == SPHERE || object->type == TORUS)
 		get_color_sphere(object, hitpoint, scene, coord);
 	else if (object->type == CYLINDER)
 		get_color_cylinder(object, hitpoint, scene, coord);
