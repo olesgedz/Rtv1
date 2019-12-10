@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/09 16:22:55 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/09 17:18:03 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 17:29:39 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ char	*make_string(char *name, int smpls, int fd)
 	free(tmp);
 	tmp = ft_strjoin(res, buff);
 	free(res);
+	res = ft_strjoin("|", tmp);
+	free(tmp);
+	str_smpl = ft_itoa(ft_strlen(res));
+	tmp = ft_strjoin(str_smpl, res);
+	free(res);
+	free(str_smpl);
 	close(fd);
 	return (tmp);
 }
