@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:54:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 18:57:17 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 23:15:03 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static void		ft_run_kernel(t_game *game, t_cl_krl * kernel, int w, int h)
 	game->cl_info->ret = cl_read(game->cl_info, kernel->args[0],
 	sizeof(cl_int) * WIN_W * WIN_H, game->sdl.surface->pixels);
 	ERROR(game->cl_info->ret );
-
 }
 
 void			ft_render(t_game *game, t_gui *gui)
@@ -45,7 +44,6 @@ void			ft_render(t_game *game, t_gui *gui)
 	game->flag = 0;
 	gui->flag = 0;
 	ft_run_kernel(game, &game->cl_info->progs[0].krls[0], WIN_W, WIN_H);
-	//ft_run_kernel1(game, &game->cl_info->progs[0].krls[1], WIN_W, WIN_H);
 }
 
 void			screen_present(t_game *game, t_gui *gui)
@@ -81,6 +79,7 @@ void			main_render(t_game *game, t_gui *gui)
 		{
 			game->samples_to_do = 0;
 			game->keys.r = 0;
+			net_return(game, gui);
 		}
 	}
 	destr(gui, 0);

@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 20:03:40 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 22:37:14 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -495,4 +495,5 @@ void					prepare_data(char ***data, char *line);
 char					*make_string(char *name, int smpls, int fd);
 void					scene_click(KW_Widget *widget, int b);
 void					net_render(KW_Widget *widget, int b);
+void					net_return(t_game *game, t_gui *gui);
 #endif

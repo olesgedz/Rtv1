@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:53:01 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:14:59 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 21:31:43 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ void				opencl_init(t_game *game)
 	game->gpu.vec_temp1 = ft_memalloc(sizeof(cl_float3)\
 	* (int)WIN_H * (int)WIN_W);
 	game->gpu.random = get_random(game->gpu.random);
-	game->gpu.samples = 0;
-	game->cam_num = 0;
 	game->gpu.camera = NULL;
 	game->blured = ft_surface_create(WIN_W, WIN_H);
 	cl_init(game->cl_info);
@@ -45,6 +43,8 @@ void				opencl_init(t_game *game)
 
 void				opencl(t_game *game, char *argv)
 {
+	game->cam_num = 0;
+	game->gpu.samples = 0;
 	game->obj_quantity = 0;
 	ft_memdel((void **)&game->gpu.camera);
 	read_scene(argv, game);
