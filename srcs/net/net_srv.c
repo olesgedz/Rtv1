@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 18:35:06 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 20:34:47 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static void	client_side(t_game *game, t_gui *gui)
 	int			current;
 
 	len = SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
+	message[len] = 0;
 	if (!ft_strcmp(message, "ping!"))
 		return ;
 	buff = ft_strsplit(message, '|');
@@ -63,6 +64,7 @@ static void	client_side(t_game *game, t_gui *gui)
 	fprintf(fp, "%s", buff[3]);
 	while (len > 0)
 	{
+		ft_bzero(message, FILE_SIZE);
 		current = SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
 		fprintf(fp, "%s", message);
 		len -= current;
