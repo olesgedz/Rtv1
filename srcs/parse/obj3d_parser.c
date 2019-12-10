@@ -84,9 +84,9 @@ void		obj3d_parse(const cJSON *object, t_game *game, t_json *parse)
 	parse->name = cJSON_GetObjectItemCaseSensitive(object, "name");
 	m = ft_strjoin("./obj3d/", parse->name->valuestring);
 	if ((fd = open(m, O_RDONLY)) <= 0)
-		terminate("fuck you\n");
+		terminate("No file\n");
 	free(m);
-	while (get_next_line(fd, &line))
+	while (get_next_line(fd, &line) > 0)
 	{
 		if (ft_strlen(line) == 0)
 		{
@@ -97,5 +97,6 @@ void		obj3d_parse(const cJSON *object, t_game *game, t_json *parse)
 		hate_norm(object, game, parse, data);
 		free(line);
 	}
+	free(line);
 	close(fd);
 }

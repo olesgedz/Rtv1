@@ -266,7 +266,7 @@ typedef struct			s_json
 
 typedef struct		s_gui
 {
-	KW_Widget		*destroy[MAX_OBJ];
+	KW_Widget		*destroy[MAX_OBJ * 5];
 	int				to_destroy;
 	t_game			*game;
 	t_sdl			sdl;

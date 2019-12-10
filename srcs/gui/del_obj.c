@@ -50,7 +50,7 @@ void	destr(t_gui *gui, KW_Widget *widget)
 {
 	int i;
 
-	if (widget && gui->to_destroy < MAX_OBJ)
+	if (widget && gui->to_destroy < MAX_OBJ * 5)
 	{
 		gui->destroy[gui->to_destroy++] = widget;
 		return ;
