@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 18:08:12 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 18:35:06 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ static void	client_side(t_game *game, t_gui *gui)
 	free(gui->av);
 	scene_select(gui, -1, 0);
 	scene_click(0, 0);
+	if (!gui->s_s.show)
+		KW_HideWidget(gui->s_s.frame);
 	gui->av = buff[1];
 	gui->quit = 1;
 	free(buff[0]);
@@ -110,7 +112,6 @@ void		net_wait(t_game *game, t_gui *gui)
 			free(ita);
 			KW_SetLabelText(gui->ed_w.label, buff);
 			free(buff);
-			//gui->n.remoteip = SDLNet_TCP_GetPeerAddress(gui->n.client);
 		}
 	}
 }
@@ -121,8 +122,6 @@ void		send_map(t_game *game, t_gui *gui, char *tmp, int smpls)
 	int		len;
 	char	*name;
 
-	int		test;
-
 	if (!gui->game->server)
 		return ;
 	if (!(name = dumper(game, gui)))
@@ -131,8 +130,7 @@ void		send_map(t_game *game, t_gui *gui, char *tmp, int smpls)
 	tmp = make_string(name, smpls, 0);
 	len = ft_strlen(tmp);
 	while (++i < gui->n.clients)
-		test = SDLNet_TCP_Send(gui->n.client[i], tmp, len + 1);
-	printf("S - %d - %d\n", test, len);
+		SDLNet_TCP_Send(gui->n.client[i], tmp, len + 1);
 	free(tmp);
 	free(gui->av);
 	gui->av = name;

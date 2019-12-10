@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/09 16:22:55 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 17:29:39 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 18:39:27 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,16 @@ char	*make_string(char *name, int smpls, int fd)
 	free(str_smpl);
 	close(fd);
 	return (tmp);
+}
+
+void		net_render(KW_Widget *widget, int b)
+{
+	t_gui		*gui;
+	int			i;
+
+	gui = g_gui(0, 0);
+	if (gui->game->ev.button.button != SDL_BUTTON_LEFT)
+		return ;
+	b = 0;
+	send_map(gui->game, gui, 0, ft_atoi(KW_GetEditboxText(gui->n.ed_b)));
 }
