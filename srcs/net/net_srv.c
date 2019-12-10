@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/09 17:16:58 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 16:09:52 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ static void	client_side(t_game *game, t_gui *gui)
 	FILE		*fp;
 	char		**buff;
 
-	SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
+	int test, len;
+
+	test = SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
+	printf("%R - d - %d\n", test, FILE_SIZE);
 	if (!ft_strcmp(message, "ping!"))
 		return ;
 	buff = ft_strsplit(message, '|');
@@ -109,6 +112,8 @@ void		send_map(t_game *game, t_gui *gui, char *tmp, int smpls)
 	int		len;
 	char	*name;
 
+	int		test;
+
 	if (!gui->game->server)
 		return ;
 	if (!(name = dumper(game, gui)))
@@ -117,7 +122,8 @@ void		send_map(t_game *game, t_gui *gui, char *tmp, int smpls)
 	tmp = make_string(name, smpls, 0);
 	len = ft_strlen(tmp);
 	while (++i < gui->n.clients)
-		SDLNet_TCP_Send(gui->n.client[i], tmp, len + 1);
+		test = SDLNet_TCP_Send(gui->n.client[i], tmp, len + 1);
+	printf("S - %d - %d\n", test, len);
 	free(tmp);
 	free(gui->av);
 	gui->av = name;
