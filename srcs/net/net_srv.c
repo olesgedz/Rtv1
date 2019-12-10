@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 17:48:53 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 18:08:12 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ static void	client_side(t_game *game, t_gui *gui)
 	}
 	fclose(fp);
 	free(gui->av);
+	scene_select(gui, -1, 0);
+	scene_click(0, 0);
 	gui->av = buff[1];
 	gui->quit = 1;
 	free(buff[0]);

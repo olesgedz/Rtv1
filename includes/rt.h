@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/09 16:45:10 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 18:01:46 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -491,4 +491,5 @@ void					parse_rest(const cJSON *object, t_obj *obj, t_json *parse);
 void					parse_triangle_vert(const cJSON *object, t_obj *obj, t_json *parse);
 void					prepare_data(char ***data, char *line);
 char					*make_string(char *name, int smpls, int fd);
+void					scene_click(KW_Widget *widget, int b);
 #endif
