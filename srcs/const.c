@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:04:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 16:00:31 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 20:03:46 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,6 @@ void		set_const(t_game *game, t_gui *gui)
 	game->samples_to_do = 0;
 	game->vertices_list = NULL;
 	game->vertices_num = 0;
+	game->music = NULL;
 	set_keys(game);
 }

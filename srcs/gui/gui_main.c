@@ -56,6 +56,8 @@ void		init_kiwi(t_gui *gui)
 	gui->o_t.show = 0;
 	gui->c_o.show = 0;
 	gui->n.show = 0;
+	gui->c_c.frame = 0;
+	gui->c_o.frame = 0;
 }
 
 static void	rotator(t_game *game, t_gui *gui)

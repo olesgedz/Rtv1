@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 18:40:13 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 20:03:40 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,6 +205,7 @@ typedef struct			s_game
 	int					gui_mod;
 	int					server;
 	int					samples_to_do;
+	char				*music;
 }						t_game;
 
 typedef struct	s_filter
@@ -260,11 +261,12 @@ typedef struct			s_json
 	cJSON				*name;
 	cJSON				*size;
 	cJSON				*negative;
-}             			t_json;
+	cJSON				*music;
+}						t_json;
 
 typedef struct		s_gui
 {
-	KW_Widget		*destroy[MAX_OBJ];
+	KW_Widget		*destroy[MAX_OBJ * 5];
 	int				to_destroy;
 	t_game			*game;
 	t_sdl			sdl;

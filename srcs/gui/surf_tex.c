@@ -12,6 +12,8 @@
 
 #include "rt.h"
 #include <unistd.h>
+#include "KW_editbox_internal.h"
+#include "KW_widget_internal.h"
 
 void		print_error_gui(const char *message, const char *error_message)
 {
@@ -108,6 +110,7 @@ void	norma_from_cam_select(t_gui *gui, KW_Widget *widget, KW_Widget *wid)
 {
 	KW_Widget	*label;
 	int			i;
+	KW_Editbox *edit;
 
 	i = -1;
 	while (++i < 5)
@@ -127,6 +130,8 @@ void	norma_from_cam_select(t_gui *gui, KW_Widget *widget, KW_Widget *wid)
 		KW_RemoveWidgetKeyDownHandler(gui->c_c.ed_b[i], 0);
 		KW_RemoveWidgetTextInputHandler(gui->c_c.ed_b[i], 0);
 		KW_RemoveWidgetMouseDownHandler(gui->c_c.ed_b[i], 0);
+		edit = (KW_Editbox *)gui->c_c.ed_b[i]->privdata;
+		KW_ReleaseTexture(gui->driver, edit->textrender);
 	}
 	KW_RemoveWidgetGeometryChangeHandler(gui->c_c.frame, 0);
 	KW_RemoveWidgetTilesetChangeHandler(gui->c_c.frame, 0);

@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 18:47:46 by srobert-          #+#    #+#             */
-/*   Updated: 2019/12/08 19:13:25 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/12/09 20:59:24 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static void	cylinder_basis(const cJSON *object, t_obj *obj, t_json *parse)
 
 void		parse_basis(const cJSON *object, t_obj *obj, t_json *parse)
 {
-	if (obj->type == SPHERE)
+	if (obj->type == SPHERE || obj->type == TORUS)
 		sphere_basis(object, obj, parse);
 	else if (obj->type == CYLINDER)
 		cylinder_basis(object, obj, parse);
