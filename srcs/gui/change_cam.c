@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   change_cam.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 17:24:43 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/05 17:57:32 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 21:53:22 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static void	move_eb(t_gui *gui)
+static void		move_eb(t_gui *gui)
 {
 	gui->c_c.labelrect = (KW_Rect){5, 5, 1, 30};
 	gui->c_c.editboxrect[0] = (KW_Rect){5, 5, 1, 30};
@@ -30,7 +30,7 @@ static void	move_eb(t_gui *gui)
 	gui->c_c.editboxrect[2].y -= 215;
 }
 
-static char	*cam_name(t_cam *cam)
+static char		*cam_name(t_cam *cam)
 {
 	char	*number;
 	char	*res;
@@ -41,7 +41,7 @@ static char	*cam_name(t_cam *cam)
 	return (res);
 }
 
-static void	cam_same(t_gui *gui, t_cam *cam)
+static void		cam_same(t_gui *gui, t_cam *cam)
 {
 	char	*buff;
 
@@ -68,7 +68,7 @@ static void	cam_same(t_gui *gui, t_cam *cam)
 	move_eb(gui);
 }
 
-KW_Widget	*f_c(t_gui *gui, double db, KW_Rect *rect)
+KW_Widget		*f_c(t_gui *gui, double db, KW_Rect *rect)
 {
 	KW_Widget	*result;
 	char		str[100];
@@ -78,7 +78,7 @@ KW_Widget	*f_c(t_gui *gui, double db, KW_Rect *rect)
 	return (result);
 }
 
-void	change_cam(t_gui *gui, t_cam *cam)
+void			change_cam(t_gui *gui, t_cam *cam)
 {
 	int i;
 

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   buttons.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 21:08:05 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/06 17:39:10 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 21:52:26 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static char	*filename(void)
+static char		*filename(void)
 {
 	FILE	*fp;
 	char	*buff;
@@ -36,7 +36,7 @@ static char	*filename(void)
 	return (name);
 }
 
-static void	shot(KW_Widget *widget, int b)
+static void		shot(KW_Widget *widget, int b)
 {
 	t_gui		*gui;
 	t_game		*game;
@@ -57,7 +57,7 @@ static void	shot(KW_Widget *widget, int b)
 	SDL_FreeSurface(surface);
 }
 
-static void	clicked_ss(KW_Widget *widget, int b)
+static void		clicked_ss(KW_Widget *widget, int b)
 {
 	t_gui		*gui;
 	t_game		*game;
@@ -82,7 +82,7 @@ static void	clicked_ss(KW_Widget *widget, int b)
 	}
 }
 
-static void	clicked_os(KW_Widget *widget, int b)
+static void		clicked_os(KW_Widget *widget, int b)
 {
 	t_gui		*gui;
 	t_game		*game;
@@ -107,7 +107,7 @@ static void	clicked_os(KW_Widget *widget, int b)
 	}
 }
 
-void	buttons(t_game *game, t_gui *gui)
+void			buttons(t_game *game, t_gui *gui)
 {
 	gui->g_b.buttonrect[0] = (KW_Rect){5, 0, FR_FZ, 40};
 	gui->g_b.rects[0] = &gui->g_b.buttonrect[0];

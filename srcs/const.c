@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   const.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:04:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 22:22:51 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 18:17:26 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,25 @@ static void	set_keys(t_game *game)
 	game->server = 0;
 }
 
+static void	set_const_c(t_game *game, t_gui *gui)
+{
+	gui->fps = 0;
+	gui->to_destroy = 0;
+	gui->n.clients = 0;
+	gui->n.str_ip = 0;
+	game->mouse.x = 0;
+	game->mouse.y = 0;
+	game->mouse.g = 0;
+	game->textures = NULL;
+	game->normals = NULL;
+	game->texture_list = NULL;
+	game->textures_num = 0;
+	game->samples_to_do = 0;
+	game->vertices_list = NULL;
+	game->vertices_num = 0;
+	set_keys(game);
+}
+
 void		set_const(t_game *game, t_gui *gui)
 {
 	int		img_flag;
@@ -62,19 +81,5 @@ void		set_const(t_game *game, t_gui *gui)
 	gui->flag = 0;
 	gui->sdl = game->sdl;
 	gui->quit = 0;
-	gui->fps = 0;
-	gui->to_destroy = 0;
-	gui->n.clients = 0;
-	gui->n.str_ip = 0;
-	game->mouse.x = 0;
-	game->mouse.y = 0;
-	game->mouse.g = 0;
-	game->textures = NULL;
-	game->normals = NULL;
-	game->texture_list = NULL;
-	game->textures_num = 0;
-	game->samples_to_do = 0;
-	game->vertices_list = NULL;
-	game->vertices_num = 0;
-	set_keys(game);
+	set_const_c(game, gui);
 }
