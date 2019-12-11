@@ -6,13 +6,13 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 21:33:44 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/11 16:00:58 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/11 16:24:15 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static void summator(cl_float3 *dest, cl_float3 *src, int len)
+static void			summator(cl_float3 *dest, cl_float3 *src, int len)
 {
 	int	i;
 
@@ -25,17 +25,27 @@ static void summator(cl_float3 *dest, cl_float3 *src, int len)
 	}
 }
 
-static void	serv_side(t_game *game, t_gui *gui, int len)
+static cl_float3	*fill_tmp(t_game *game, int len)
+{
+	cl_float3	*tmp;
+
+	tmp = (cl_float3 *)malloc(len);
+	game->cl_info->ret = cl_read(game->cl_info,
+	game->cl_info->progs[0].krls[0].args[2], len, tmp);
+	return (tmp);
+}
+
+static void			serv_side(t_game *game, t_gui *gui, int len)
 {
 	int			current;
 	int			i;
 	int			all;
 	cl_float3	buff[WIN_W];
+	cl_float3	*tmp;
 
 	i = -1;
 	game->gpu.samples *= gui->n.clients;
-	game->cl_info->ret = cl_read(game->cl_info,
-	game->cl_info->progs[0].krls[0].args[2], len, game->gpu.vec_temp);
+	tmp = fill_tmp(game, len);
 	while (++i < gui->n.clients)
 	{
 		all = 0;
@@ -50,10 +60,13 @@ static void	serv_side(t_game *game, t_gui *gui, int len)
 		}
 	}
 	game->cl_info->ret = cl_write(game->cl_info,
-	game->cl_info->progs[0].krls[0].args[2], len, game->gpu.vec_temp);
+	game->cl_info->progs[0].krls[0].args[2], len, tmp);
+	ft_run_kernel(game, &game->cl_info->progs[0].krls[0], WIN_W, WIN_H);
+	screen_present(game, gui);
+	free(tmp);
 }
 
-void		net_return(t_game *game, t_gui *gui)
+void				net_return(t_game *game, t_gui *gui)
 {
 	int		len;
 
