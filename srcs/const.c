@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:04:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 20:03:46 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/11 21:14:22 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void		set_const(t_game *game, t_gui *gui)
 	}
 	game->gpu.samples = 0;
 	game->quit = 0;
+	game->music = 0;
 	game->gui_mod = 0;
 	game->flag = 1;
 	gui->over_gui = 0;
