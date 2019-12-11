@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 21:33:44 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/11 15:44:01 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/11 16:00:58 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,23 @@ static void	serv_side(t_game *game, t_gui *gui, int len)
 
 	i = -1;
 	game->gpu.samples *= gui->n.clients;
+	game->cl_info->ret = cl_read(game->cl_info,
+	game->cl_info->progs[0].krls[0].args[2], len, game->gpu.vec_temp);
 	while (++i < gui->n.clients)
 	{
-		game->cl_info->ret = cl_read(game->cl_info,
-	game->cl_info->progs[0].krls[0].args[2], len, game->gpu.vec_temp);
 		all = 0;
 		while (all < len)
 		{
 			current = 0;
 			current = SDLNet_TCP_Recv(gui->n.client[i],
 			buff, sizeof(cl_float3) * WIN_W);
-			summator(game->gpu.vec_temp + current , buff,
+			summator(game->gpu.vec_temp + current, buff,
 			current / sizeof(cl_float3));
 			all += current;
 		}
 	}
+	game->cl_info->ret = cl_write(game->cl_info,
+	game->cl_info->progs[0].krls[0].args[2], len, game->gpu.vec_temp);
 }
 
 void		net_return(t_game *game, t_gui *gui)
