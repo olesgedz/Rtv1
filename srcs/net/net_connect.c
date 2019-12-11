@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 15:27:04 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 20:47:23 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/11 19:29:28 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	ok_cl(KW_Widget *widget, int b)
 	b = 0;
 	widget = 0;
 	gui = g_gui(0, 0);
-	if (gui->game->ev.button.button != SDL_BUTTON_LEFT)
+	if (gui->game->ev.button.button != SDL_BUTTON_LEFT || gui->game->server)
 		return ;
 	free(gui->n.str_ip);
 	gui->n.str_ip = ft_strdup((char *)KW_GetEditboxText(gui->ed_w.ed_b));
