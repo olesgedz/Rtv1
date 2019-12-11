@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/11 20:29:45 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/11 20:56:12 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void		server_on(KW_Widget *widget, int b)
 	if (gui->game->server)
 	{
 		KW_SetLabelText(wid, "Server");
-		// free(gui->n.str_ip);
-		// gui->n.str_ip = 0;
-		// SDLNet_TCP_Close(gui->n.tcpsock);
+		free(gui->n.str_ip);
+		gui->n.str_ip = 0;
+		SDLNet_TCP_Close(gui->n.tcpsock);
 		if ((SDLNet_ResolveHost(&gui->n.ip, NULL, 9999)) == -1)
 			exit(0);
 		if (!(gui->n.server = SDLNet_TCP_Open(&gui->n.ip)))
@@ -49,7 +49,7 @@ static void	client_side(t_game *game, t_gui *gui)
 	char		message[FILE_SIZE];
 	FILE		*fp;
 	char		**buff;
-	int 		len;
+	int			len;
 	int			current;
 
 	len = SDLNet_TCP_Recv(gui->n.tcpsock, message, FILE_SIZE);
@@ -69,18 +69,7 @@ static void	client_side(t_game *game, t_gui *gui)
 		fprintf(fp, "%s", message);
 		len -= current;
 	}
-	fclose(fp);
-	free(gui->av);
-	scene_select(gui, -1, 0);
-	scene_click(0, 0);
-	if (!gui->s_s.show)
-		KW_HideWidget(gui->s_s.frame);
-	gui->av = buff[1];
-	gui->quit = 1;
-	free(buff[0]);
-	free(buff[2]);
-	free(buff[3]);
-	free(buff);
+	client_side_free(gui, buff, fp);
 }
 
 void		send_ping(t_game *game, t_gui *gui)
