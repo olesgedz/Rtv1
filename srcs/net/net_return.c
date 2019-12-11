@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 21:33:44 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/11 16:24:15 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/11 16:34:52 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void			serv_side(t_game *game, t_gui *gui, int len)
 	cl_float3	*tmp;
 
 	i = -1;
-	game->gpu.samples *= gui->n.clients;
+	game->gpu.samples *= gui->n.clients + 1;
 	tmp = fill_tmp(game, len);
 	while (++i < gui->n.clients)
 	{
@@ -71,12 +71,12 @@ void				net_return(t_game *game, t_gui *gui)
 	int		len;
 
 	len = sizeof(cl_float3) * (int)WIN_H * (int)WIN_W;
-	if (!game->server)
+	if (!game->server && gui->n.str_ip)
 	{
 		game->cl_info->ret = cl_read(game->cl_info,
 	game->cl_info->progs[0].krls[0].args[2], len, game->gpu.vec_temp);
 		SDLNet_TCP_Send(gui->n.tcpsock, game->gpu.vec_temp, len);
 	}
-	else
+	else if (game->server && gui->n.clients)
 		serv_side(game, gui, len);
 }
