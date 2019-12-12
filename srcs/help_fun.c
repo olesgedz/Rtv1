@@ -6,13 +6,13 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 14:11:26 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 21:24:16 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/12 16:49:21 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static void		check_ed_box_focus_c_o(t_game *game,\
+static int		check_ed_box_focus_c_o(t_game *game,\
 t_gui *gui, t_point *p, KW_Rect *frect)
 {
 	int i;
@@ -27,12 +27,13 @@ t_gui *gui, t_point *p, KW_Rect *frect)
 			if (p->y > frect->y && p->y < frect->y + frect->h)
 			{
 				game->keys.ed_box = 1;
-				return ;
+				return (1);
 			}
 	}
+	return (0);
 }
 
-static void		check_ed_box_focus_ed_b(t_game *game,\
+static int		check_ed_box_focus_ed_b(t_game *game,\
 t_gui *gui, t_point *p, KW_Rect *frect)
 {
 	int i;
@@ -47,12 +48,13 @@ t_gui *gui, t_point *p, KW_Rect *frect)
 			if (p->y > frect->y && p->y < frect->y + frect->h)
 			{
 				game->keys.ed_box = 1;
-				return ;
+				return (1);
 			}
 	}
+	return (0);
 }
 
-static void		check_ed_box_focus_ed_w(t_game *game,\
+static int		check_ed_box_focus_ed_w(t_game *game,\
 t_gui *gui, t_point *p, KW_Rect *frect)
 {
 	if (gui->ed_w.show)
@@ -64,9 +66,10 @@ t_gui *gui, t_point *p, KW_Rect *frect)
 			if (p->y > frect->y && p->y < frect->y + frect->h)
 			{
 				game->keys.ed_box = 1;
-				return ;
+				return (1);
 			}
 	}
+	return (0);
 }
 
 void			check_ed_box_focus(t_game *game, t_gui *gui, int x, int y)
@@ -78,9 +81,12 @@ void			check_ed_box_focus(t_game *game, t_gui *gui, int x, int y)
 
 	p.x = x;
 	p.y = y;
-	check_ed_box_focus_c_o(game, gui, &p, &frect);
-	check_ed_box_focus_ed_b(game, gui, &p, &frect);
-	check_ed_box_focus_ed_w(game, gui, &p, &frect);
+	if (!check_ed_box_focus_c_o(game, gui, &p, &frect))
+		return ;
+	if (!check_ed_box_focus_ed_b(game, gui, &p, &frect))
+		return ;
+	if (!check_ed_box_focus_ed_w(game, gui, &p, &frect))
+		return ;
 	KW_SetFocusedWidget(gui->g_b.frame);
 	game->keys.ed_box = 0;
 }

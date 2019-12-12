@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cam_select.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 21:48:49 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/05 17:52:43 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/12 16:40:12 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		cam_click(KW_Widget *widget, int b)
 	static t_cam		*cam = 0;
 	static KW_Widget	*wid = 0;
 	t_gui				*gui;
-	KW_Widget *label;
+	KW_Widget			*label;
 
 	b = 0;
 	gui = g_gui(0, 0);
@@ -40,6 +40,11 @@ void		cam_click(KW_Widget *widget, int b)
 		cam = 0;
 	}
 }
+
+// static char		*cam_mass_name_switch(t_cam *cam, char *res, char)
+// {
+
+// }
 
 char		*cam_mass_name(t_game *game, t_cam *cam)
 {
