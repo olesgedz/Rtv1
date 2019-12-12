@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/12/11 21:44:26 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/12 16:57:31 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,17 @@ static void	set_icon(t_gui *gui, const char *filename)
 	}
 	SDL_SetWindowIcon(gui->sdl.window, surf);
 	SDL_FreeSurface(surf);
+}
+
+static void	main_loop_free(t_game *game, t_gui *gui)
+{
+	free_list(game);
+	game->texture_list = NULL;
+	game->textures_num = 0;
+	game->normal_list = NULL;
+	game->normals_num = 0;
+	main_screen_free(gui);
+	cam_free(gui);
 }
 
 static void	main_loop(t_game *game, t_gui *gui, int argc)
@@ -49,13 +60,7 @@ static void	main_loop(t_game *game, t_gui *gui, int argc)
 		play_stop_music(game->music);
 		main_render(game, gui);
 		play_stop_music(0);
-		free_list(game);
-		game->texture_list = NULL;
-		game->textures_num = 0;
-		game->normal_list = NULL;
-		game->normals_num = 0;
-		main_screen_free(gui);
-		cam_free(gui);
+		main_loop_free(game, gui);
 	}
 }
 

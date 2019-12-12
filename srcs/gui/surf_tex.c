@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 18:04:29 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 17:22:10 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/12 18:33:47 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 #include "KW_editbox_internal.h"
 #include "KW_widget_internal.h"
 
-void		print_error_gui(const char *message, const char *error_message)
+void			print_error_gui(const char *message, const char *error_message)
 {
 	if (!error_message || !message)
-		write(2,
-"FUCK MAN! YOUR WHOLE FUCKING PROGRAM IS FUCKING BROCKEN! FUCKING SHIT!\n", 71);
+		write(2, "error in print_error_gui!\n", 71);
 	else
 	{
 		write(2, message, ft_strlen(message));
@@ -28,7 +27,7 @@ void		print_error_gui(const char *message, const char *error_message)
 	}
 }
 
-SDL_Texture	*surf_to_text(t_gui *gui, SDL_Surface *surf)
+SDL_Texture		*surf_to_text(t_gui *gui, SDL_Surface *surf)
 {
 	SDL_Texture	*buff;
 
@@ -42,7 +41,7 @@ SDL_CreateTextureFromSurface(gui->sdl.renderer, surf)))
 	return (buff);
 }
 
-SDL_Texture	*load_picture(t_gui *gui, const char *filename)
+SDL_Texture		*load_picture(t_gui *gui, const char *filename)
 {
 	SDL_Surface		*surf;
 	SDL_Surface		*opt;
@@ -63,92 +62,4 @@ SDL_Texture	*load_picture(t_gui *gui, const char *filename)
 	}
 	SDL_FreeSurface(surf);
 	return (surf_to_text(gui, opt));
-}
-
-void	norma_from_obj_select(t_gui *gui, KW_Widget *widget, KW_Widget *wid)
-{
-	KW_Widget	*label;
-	int			i;
-	KW_Editbox *edit;
-
-	i = -1;
-	while (++i < 3)
-	{
-		KW_RemoveWidgetGeometryChangeHandler(gui->c_o.buttons[i], 0);
-		KW_RemoveWidgetTilesetChangeHandler(gui->c_o.buttons[i], 0);
-		KW_RemoveWidgetMouseDownHandler(gui->c_o.buttons[i], 0);
-	}
-	i = -1;
-	while (gui->c_o.ed_b[++i] && i < 30)
-	{
-		KW_RemoveWidgetMouseUpHandler(gui->c_o.ed_b[i], 0);
-		KW_RemoveWidgetMouseOverHandler(gui->c_o.ed_b[i], 0);
-		KW_RemoveWidgetMouseLeaveHandler(gui->c_o.ed_b[i], 0);
-		KW_RemoveWidgetFocusGainHandler(gui->c_o.ed_b[i], 0);
-		KW_RemoveWidgetFocusLoseHandler(gui->c_o.ed_b[i], 0);
-		KW_RemoveWidgetKeyDownHandler(gui->c_o.ed_b[i], 0);
-		KW_RemoveWidgetTextInputHandler(gui->c_o.ed_b[i], 0);
-		KW_RemoveWidgetMouseDownHandler(gui->c_o.ed_b[i], 0);
-		edit = (KW_Editbox *)gui->c_o.ed_b[i]->privdata;
-		KW_ReleaseTexture(gui->driver, edit->textrender);
-	}
-	KW_RemoveWidgetGeometryChangeHandler(gui->c_o.frame, 0);
-	KW_RemoveWidgetTilesetChangeHandler(gui->c_o.frame, 0);
-	KW_HideWidget(gui->c_o.frame);
-	destr(gui, gui->c_o.frame);
-	i = -1;
-	while (++i < 30)
-		gui->c_o.ed_b[i] = 0;
-	gui->c_o.frame = 0;
-	if (wid && widget)
-	{
-		label = KW_GetButtonLabel(wid);
-		if (label)
-			KW_SetLabelTextColor(label, (KW_Color){0, 0, 0, 255});
-	}
-	gui->c_o.show = 0;
-}
-
-void	norma_from_cam_select(t_gui *gui, KW_Widget *widget, KW_Widget *wid)
-{
-	KW_Widget	*label;
-	int			i;
-	KW_Editbox *edit;
-
-	i = -1;
-	while (++i < 5)
-	{
-		KW_RemoveWidgetGeometryChangeHandler(gui->c_c.buttons[i], 0);
-		KW_RemoveWidgetTilesetChangeHandler(gui->c_c.buttons[i], 0);
-		KW_RemoveWidgetMouseDownHandler(gui->c_c.buttons[i], 0);
-	}
-	i = -1;
-	while (gui->c_c.ed_b[++i] && i < 30)
-	{
-		KW_RemoveWidgetMouseUpHandler(gui->c_c.ed_b[i], 0);
-		KW_RemoveWidgetMouseOverHandler(gui->c_c.ed_b[i], 0);
-		KW_RemoveWidgetMouseLeaveHandler(gui->c_c.ed_b[i], 0);
-		KW_RemoveWidgetFocusGainHandler(gui->c_c.ed_b[i], 0);
-		KW_RemoveWidgetFocusLoseHandler(gui->c_c.ed_b[i], 0);
-		KW_RemoveWidgetKeyDownHandler(gui->c_c.ed_b[i], 0);
-		KW_RemoveWidgetTextInputHandler(gui->c_c.ed_b[i], 0);
-		KW_RemoveWidgetMouseDownHandler(gui->c_c.ed_b[i], 0);
-		edit = (KW_Editbox *)gui->c_c.ed_b[i]->privdata;
-		KW_ReleaseTexture(gui->driver, edit->textrender);
-	}
-	KW_RemoveWidgetGeometryChangeHandler(gui->c_c.frame, 0);
-	KW_RemoveWidgetTilesetChangeHandler(gui->c_c.frame, 0);
-	KW_HideWidget(gui->c_c.frame);
-	destr(gui, gui->c_c.frame);
-	i = -1;
-	while (++i < 30)
-		gui->c_c.ed_b[i] = 0;
-	gui->c_c.frame = 0;
-	if (wid && widget)
-	{
-		label = KW_GetButtonLabel(wid);
-		if (label)
-			KW_SetLabelTextColor(label, (KW_Color){0, 0, 0, 255});
-	}
-	gui->c_c.show = 0;
 }

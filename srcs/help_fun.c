@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 14:11:26 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 16:49:21 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/12 18:20:19 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,11 @@ void			check_ed_box_focus(t_game *game, t_gui *gui, int x, int y)
 
 	p.x = x;
 	p.y = y;
-	if (!check_ed_box_focus_c_o(game, gui, &p, &frect))
+	if (check_ed_box_focus_c_o(game, gui, &p, &frect))
 		return ;
-	if (!check_ed_box_focus_ed_b(game, gui, &p, &frect))
+	if (check_ed_box_focus_ed_b(game, gui, &p, &frect))
 		return ;
-	if (!check_ed_box_focus_ed_w(game, gui, &p, &frect))
+	if (check_ed_box_focus_ed_w(game, gui, &p, &frect))
 		return ;
 	KW_SetFocusedWidget(gui->g_b.frame);
 	game->keys.ed_box = 0;
