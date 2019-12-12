@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 15:27:04 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/09 15:49:52 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 18:40:41 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ void		network_buttons(t_gui *gui)
 {
 	KW_AddWidgetMouseDownHandler(gui->n.buttons[0], clicked_connect);
 	KW_AddWidgetMouseDownHandler(gui->n.buttons[1], clicked_send);
+	KW_AddWidgetMouseDownHandler(gui->n.buttons[2], net_render);
+	gui->n.ed_b = KW_CreateEditbox(gui->gui,
+	gui->n.frame, "10000", &gui->n.buttonrect[3]);
 }
 
 static void	ok_cl(KW_Widget *widget, int b)

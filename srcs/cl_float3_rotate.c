@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cl_float3_rotate.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 13:50:09 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/12/01 19:15:01 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 18:10:07 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-cl_float2	create_cfloat2 (float x, float y)
+cl_float2	create_cfloat2(float x, float y)
 {
 	cl_float2 re;
 

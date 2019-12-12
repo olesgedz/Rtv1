@@ -3,47 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:50:13 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/05 17:57:56 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 18:08:56 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void	reconfigure_camera(t_cam *camera)
+static void	mouse_mov_switch(t_game *game, t_gui *gui)
 {
-	float		x_fov;
-	float		y_fov;
-
-	x_fov = (float)WIN_W / (float)WIN_H > 1 ? camera->fov / 2 :
-	camera->fov / 2 * (float)WIN_W / (float)WIN_H;
-	y_fov = (float)WIN_H / (float)WIN_W > 1 ? (camera->fov / 2) :
-	(camera->fov / 2) * ((float)WIN_H / (float)WIN_W);
-	camera->border_y = vector_diff(
-	rotate(camera->normal, camera->direction, x_fov),
-	rotate(camera->normal, camera->direction, -x_fov));
-	camera->border_x = vector_diff(
-	rotate(cross(camera->direction, camera->normal), camera->direction, y_fov),
-	rotate(cross(camera->direction, camera->normal),
-	camera->direction, -y_fov));
-}
-
-void		pos_check(t_game *game, t_gui *gui)
-{
-	int	x;
-	int	y;
-
-	x = 0;
-	y = 0;
-	SDL_GetMouseState(&x, &y);
-	gui->over_gui = 0;
-	check_gui_entrance(game, gui, x, y);
-	if (game->keys.show_gui && gui->over_gui)
-		SDL_SetCursor(SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW));
-	else
-		SDL_SetCursor(SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR));
+	game->cl_info->ret =
+	cl_write(game->cl_info, game->cl_info->progs[0].krls[0].args[2],
+	sizeof(cl_float3) * (unsigned)WIN_H * (unsigned)WIN_W, game->gpu.vec_temp);
+	game->cl_info->ret =
+	cl_write(game->cl_info, game->cl_info->progs[0].krls[0].args[11],
+	sizeof(cl_float3) * (unsigned)WIN_H * (unsigned)WIN_W, game->gpu.vec_temp1);
+	game->cl_info->ret = cl_write(game->cl_info,
+	game->cl_info->progs[0].krls[0].args[1],
+	sizeof(t_obj) * game->obj_quantity, game->gpu.objects);
+	game->gpu.samples = 0;
+	game->flag = 1;
 }
 
 static void	mouse_mov(t_game *game, t_gui *gui)
@@ -51,15 +32,16 @@ static void	mouse_mov(t_game *game, t_gui *gui)
 	if (game->flag)
 	{
 		game->cl_info->ret =
-		cl_write(game->cl_info, game->cl_info->progs[0].krls[0].args[2], sizeof(cl_float3) *
-		(unsigned)WIN_H * (unsigned)WIN_W, game->gpu.vec_temp);
+		cl_write(game->cl_info, game->cl_info->progs[0].krls[0].args[2],\
+	sizeof(cl_float3) * (unsigned)WIN_H * (unsigned)WIN_W, game->gpu.vec_temp);
 		game->cl_info->ret =
-		cl_write(game->cl_info, game->cl_info->progs[0].krls[0].args[11], sizeof(cl_float3) *
-		(unsigned)WIN_H * (unsigned)WIN_W, game->gpu.vec_temp1);
+		cl_write(game->cl_info, game->cl_info->progs[0].krls[0].args[11],
+	sizeof(cl_float3) * (unsigned)WIN_H * (unsigned)WIN_W, game->gpu.vec_temp1);
 		game->gpu.samples = 0;
 		reconfigure_camera(&game->gpu.camera[game->cam_num]);
 		cam_rename(game, gui, game->cam_num);
-		if (gui->c_c.show && game->keys.show_gui && game->cam_num == gui->c_c.cam_id)
+		if (gui->c_c.show && game->keys.show_gui\
+		&& game->cam_num == gui->c_c.cam_id)
 		{
 			gui->game->ev.button.button = SDL_BUTTON_LEFT;
 			cam_click(gui->c_s.buttons[game->cam_num], 0);
@@ -68,19 +50,7 @@ static void	mouse_mov(t_game *game, t_gui *gui)
 	}
 	else if (gui->flag)
 	{
-		game->cl_info->ret =
-		cl_write(game->cl_info, game->cl_info->progs[0].krls[0].args[2], sizeof(cl_float3) *
-		(unsigned)WIN_H * (unsigned)WIN_W, game->gpu.vec_temp);
-		ERROR(game->cl_info->ret);
-		game->cl_info->ret =
-		cl_write(game->cl_info, game->cl_info->progs[0].krls[0].args[11], sizeof(cl_float3) *
-		(unsigned)WIN_H * (unsigned)WIN_W, game->gpu.vec_temp1);
-		ERROR(game->cl_info->ret);
-		game->cl_info->ret = cl_write(game->cl_info, game->cl_info->progs[0].krls[0].args[1],
-		sizeof(t_obj) * game->obj_quantity, game->gpu.objects);
-		ERROR(game->cl_info->ret);
-		game->gpu.samples = 0;
-		game->flag = 1;
+		mouse_mov_switch(game, gui);
 	}
 	else if (game->keys.space || game->keys.r)
 		game->flag = 1;

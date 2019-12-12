@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 13:50:08 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/09 20:24:07 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 18:39:16 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	net_name(t_gui *gui)
 	gui->n.buttonrect[0] = (KW_Rect){0, 0, 30, 40};
 	gui->n.names[0] = "Connect";
 	gui->n.names[1] = "Send map";
-	gui->n.names[2] = "Render 10000";
+	gui->n.names[2] = "Net Render";
 }
 
 void		net_list(t_game *game, t_gui *gui)
@@ -32,7 +32,7 @@ void		net_list(t_game *game, t_gui *gui)
 	KW_RectFillParentHorizontally(&gui->n.frect,
 	gui->n.rects, gui->n.weights, 1, 15, KW_RECT_ALIGN_MIDDLE);
 	i = 0;
-	while (++i < 3)
+	while (++i < 4)
 	{
 		gui->n.buttonrect[i] = gui->n.buttonrect[i - 1];
 		gui->n.buttonrect[i].y += 45;
@@ -88,12 +88,10 @@ void		net_butt(t_game *game, t_gui *gui)
 void	clicked_send(KW_Widget *widget, int b)
 {
 	t_gui		*gui;
-	int			i;
 
 	gui = g_gui(0, 0);
 	if (gui->game->ev.button.button != SDL_BUTTON_LEFT)
 		return ;
 	b = 0;
 	send_map(gui->game, gui, 0, 0);
-	i = -1;
 }

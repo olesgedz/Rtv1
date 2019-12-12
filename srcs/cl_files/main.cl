@@ -260,7 +260,20 @@ static int filter_mode(float3 finalcolor, t_cam camera, int samples)
 		finalcolor.z = floor(finalcolor.z * CARTOON) / CARTOON;
 		color = ft_rgb_to_hex(toInt(finalcolor.x  / (float)samples), toInt(finalcolor.y  / (float)samples), toInt(finalcolor.z  / (float)samples));
 	}
-	return (color);
+	// if (camera.motion_blur > 0.0)
+	// {
+	// 	int maskSize = 2;
+	// 	float3 sum = 0.f;
+	// 	for(int a = -maskSize; a < maskSize+1; a++) {
+	// 		for(int b = -maskSize; b < maskSize+1; b++) {
+	// 			sum += vect_temp[[y_coord + a][x_coord  + b];
+
+	// 		}
+	// 	}
+	// 	color = ft_rgb_to_hex(toInt(sum.x / (float)samples),
+	// 		toInt(sum.y / (float)samples), toInt(sum.z / (float)samples));
+	// }
+		return (color);
 }
 
 static int stereo_mode(int color0, int color1)

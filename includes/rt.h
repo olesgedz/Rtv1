@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/09 16:45:10 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/12 16:15:39 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@
 #  define DEVICE CL_DEVICE_TYPE_DEFAULT
 # endif
 
-
-// # define LOOPA_POOPA
 # ifdef LOOPA_POOPA
 #  define SDL_BUTTON_LEFT 3
 #  define SDL_BUTTON_RIGHT 1
@@ -52,11 +50,6 @@
 
 # define TICKS_PER_FRAME	47
 # define FILE_SIZE			462144
-
-// # define BMASK 0x000000ff
-// # define GMASK 0x0000ff00
-// # define RMASK 0x00ff0000
-// # define AMASK 0xff000000
 
 typedef enum			e_figure
 {
@@ -73,7 +66,8 @@ typedef struct			s_txture
 {
 	cl_int				width;
 	cl_int				height;
-	cl_int				texture[CL_DEVICE_IMAGE2D_MAX_HEIGHT][CL_DEVICE_IMAGE2D_MAX_WIDTH];
+	cl_int				texture[CL_DEVICE_IMAGE2D_MAX_HEIGHT]\
+	[CL_DEVICE_IMAGE2D_MAX_WIDTH];
 }						t_txture;
 
 typedef struct			s_object
@@ -205,6 +199,7 @@ typedef struct			s_game
 	int					gui_mod;
 	int					server;
 	int					samples_to_do;
+	char				*music;
 }						t_game;
 
 typedef struct	s_filter
@@ -220,33 +215,33 @@ typedef struct	s_filter
 typedef struct			s_json
 {
 	cJSON				*json;
-	const cJSON 		*object;
+	const cJSON			*object;
 	const cJSON			*objects;
 	const cJSON			*camera;
 	const cJSON			*cameras;
-    cJSON				*position;
-    cJSON				*color;
-    cJSON				*emition;
-    cJSON				*reflection;
-    cJSON				*translucency;
-    cJSON				*texture;
-    cJSON				*radius;
+	cJSON				*position;
+	cJSON				*color;
+	cJSON				*emition;
+	cJSON				*reflection;
+	cJSON				*translucency;
+	cJSON				*texture;
+	cJSON				*radius;
 	cJSON				*tor_radius;
-    cJSON				*v;
-    cJSON				*x;
-    cJSON				*y;
-    cJSON				*z;
-    cJSON				*a;
-    cJSON				*b;
-    cJSON				*c;
+	cJSON				*v;
+	cJSON				*x;
+	cJSON				*y;
+	cJSON				*z;
+	cJSON				*a;
+	cJSON				*b;
+	cJSON				*c;
 	cJSON				*fov;
-    cJSON				*shift;
-    cJSON				*x_basis;
-    cJSON				*y_basis;
-    cJSON				*z_basis;
-    cJSON				*prolapse;
-    cJSON				*type;
-    cJSON				*normal;
+	cJSON				*shift;
+	cJSON				*x_basis;
+	cJSON				*y_basis;
+	cJSON				*z_basis;
+	cJSON				*prolapse;
+	cJSON				*type;
+	cJSON				*normal;
 	cJSON				*composed_pos;
 	cJSON				*composed_v;
 	cJSON				*cartoon;
@@ -260,7 +255,8 @@ typedef struct			s_json
 	cJSON				*name;
 	cJSON				*size;
 	cJSON				*negative;
-}             			t_json;
+	cJSON				*music;
+}						t_json;
 
 typedef struct		s_gui
 {
@@ -320,8 +316,10 @@ void					terminate(char *s);
 void					feel_free(char **str);
 void					ft_object_push(t_game *game, t_obj *object);
 void					ft_cam_push(t_game *game, t_cam *cam);
-void					ft_texture_push(t_game *game, char ***mass, char *texture_name);
-void					ft_normal_push(t_game *game, char ***mass, char *normal_name);
+void					ft_texture_push(t_game *game, char ***mass,\
+char *texture_name);
+void					ft_normal_push(t_game *game, char ***mass,\
+char *normal_name);
 void					main_screen(t_gui *gui, t_game *game);
 void					obj_select(t_gui *gui, t_obj *objs, int num);
 void					pos_check(t_game *game, t_gui *gui);
@@ -343,7 +341,8 @@ void					loopa(t_game *game, t_gui *gui);
 void					screen_present(t_game *game, t_gui *gui);
 void					ft_render(t_game *game, t_gui *gui);
 void					play_stop_music(char *name);
-int 					compare_in_texture_dict(t_game *game, char *texture_name);
+int 					compare_in_texture_dict(t_game *game,\
+char *texture_name);
 int						compare_in_normal_dict(t_game *game, char *normal_name);
 void					mouse_motion(t_game *game, t_gui *gui);
 void					free_list(t_game *game);
@@ -474,21 +473,30 @@ void					network_buttons(t_gui *gui);
 void					edit_ip(t_gui *gui);
 void					server_on(KW_Widget *widget, int b);
 void					net_wait(t_game *game, t_gui *gui);
-void					send_map(t_game *game, t_gui *gui, char *tmp, int smpls);
+void					send_map(t_game *game, t_gui *gui, char *tmp,\
+int smpls);
 void					clicked_send(KW_Widget *widget, int b);
 
 void					check_scene(t_json json, t_game *game);
 void					read_scene(char *argv, t_game *game);
-void					check_object(const cJSON *object, t_game *game, t_json parse, int id);
+void					check_object(const cJSON *object, t_game *game,\
+t_json parse, int id);
 void					check_scene(t_json parse, t_game *game);
 void					check_cam(t_json parse, t_game *game, t_filter *filter);
 cl_float3				get_composed_pos(cJSON *composed_pos);
 cl_float3				get_composed_v(cJSON *composed_v);
-void					parse_necessary(const cJSON *object, t_obj *obj, t_json *parse);
-void					parse_facing(const cJSON *object, t_obj *obj, t_json *parse, t_game *game);
-void					parse_basis(const cJSON *object, t_obj *obj, t_json *parse);
-void					parse_rest(const cJSON *object, t_obj *obj, t_json *parse);
-void					parse_triangle_vert(const cJSON *object, t_obj *obj, t_json *parse);
+void					parse_necessary(const cJSON *object, t_obj *obj,\
+t_json *parse);
+void					parse_facing(const cJSON *object, t_obj *obj,\
+t_json *parse, t_game *game);
+void					parse_basis(const cJSON *object, t_obj *obj,\
+t_json *parse);
+void					parse_rest(const cJSON *object, t_obj *obj,\
+t_json *parse);
+void					parse_triangle_vert(const cJSON *object,\
+t_obj *obj, t_json *parse);
 void					prepare_data(char ***data, char *line);
 char					*make_string(char *name, int smpls, int fd);
+void					scene_click(KW_Widget *widget, int b);
+void					net_render(KW_Widget *widget, int b);
 #endif

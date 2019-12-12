@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:10:38 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:14:41 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 18:57:44 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,15 +93,15 @@ void		key_check(t_game *game)
 		(game->ev.type == SDL_KEYDOWN &&
 		game->ev.key.keysym.sym == SDLK_ESCAPE))
 			game->quit = 1;
-		else if (game->ev.type == SDL_KEYDOWN)
+		else if (game->ev.type == SDL_KEYDOWN && !game->samples_to_do)
 			key_down(game);
-		else if (game->ev.type == SDL_KEYUP)
+		else if (game->ev.type == SDL_KEYUP && !game->samples_to_do)
 			key_up(game);
-		else if (game->ev.type == SDL_MOUSEBUTTONUP)
+		else if (game->ev.type == SDL_MOUSEBUTTONUP && !game->samples_to_do)
 			mouse_up(game, g_gui(0, 0));
-		else if (game->ev.type == SDL_MOUSEBUTTONDOWN)
+		else if (game->ev.type == SDL_MOUSEBUTTONDOWN && !game->samples_to_do)
 			mouse_down(game, g_gui(0, 0));
-		else if (game->ev.type == SDL_MOUSEMOTION)
+		else if (game->ev.type == SDL_MOUSEMOTION && !game->samples_to_do)
 			mouse_motion(game, g_gui(0, 0));
 	}
 }

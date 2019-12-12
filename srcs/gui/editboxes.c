@@ -3,10 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   editboxes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: sbrella <sbrella@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 20:04:17 by lminta            #+#    #+#             */
 /*   Updated: 2019/12/09 22:45:48 by sbrella          ###   ########.fr       */
+=======
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/19 20:04:17 by lminta            #+#    #+#             */
+/*   Updated: 2019/12/10 22:21:28 by jblack-b         ###   ########.fr       */
+>>>>>>> b8ff091aab5cc31c91824410cc3f7e776572bca8
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,41 +80,6 @@ void		basis(t_gui *gui, t_obj *obj, int *i)
 	gui->c_o.ed_b[(*i)++] = f_e(gui, obj->basis[2].s[0], gui->c_o.rects[1]);
 	gui->c_o.ed_b[(*i)++] = f_e(gui, obj->basis[2].s[1], gui->c_o.rects[2]);
 	gui->c_o.ed_b[(*i)++] = f_e(gui, obj->basis[2].s[2], gui->c_o.rects[3]);
-}
-
-void		text_normal(t_gui *gui, t_obj *obj, int *i)
-{
-	gui->c_o.labelrect.y += 30;
-	gui->c_o.editboxrect[0].y += 30;
-	gui->c_o.editboxrect[1].y += 30;
-	gui->c_o.editboxrect[2].y += 30;
-	KW_CreateLabel(gui->gui, gui->c_o.frame, "Textures", gui->c_o.rects[0]);
-	if (obj->texture)
-	{
-		if (obj->texture > 0)
-			gui->c_o.ed_b[(*i)++] = KW_CreateEditbox(gui->gui, gui->c_o.frame,
-			gui->game->texture_list[obj->texture - 1], gui->c_o.rects[1]);
-		else if (obj->texture == -1)
-		{
-			gui->c_o.ed_b[(*i)++] = KW_CreateEditbox(gui->gui, gui->c_o.frame,
-			"chess", gui->c_o.rects[1]);
-		}
-		else if (obj->texture == -2)
-		{
-			gui->c_o.ed_b[(*i)++] = KW_CreateEditbox(gui->gui, gui->c_o.frame,
-			"perlin", gui->c_o.rects[1]);
-		}
-	}
-	else
-		gui->c_o.ed_b[(*i)++] = KW_CreateEditbox(gui->gui, gui->c_o.frame,
-		"No texture", gui->c_o.rects[1]);
-	KW_CreateLabel(gui->gui, gui->c_o.frame, "Normals", gui->c_o.rects[2]);
-	if (obj->normal)
-		gui->c_o.ed_b[(*i)++] = KW_CreateEditbox(gui->gui, gui->c_o.frame,
-		gui->game->normal_list[obj->normal - 1], gui->c_o.rects[3]);
-	else
-		gui->c_o.ed_b[(*i)++] = KW_CreateEditbox(gui->gui, gui->c_o.frame,
-		"No normal", gui->c_o.rects[3]);
 }
 
 void		color_emission(t_gui *gui, t_obj *obj, int *i)
