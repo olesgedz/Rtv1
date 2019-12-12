@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_scene.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:53:01 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 17:33:59 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/12/12 22:56:57 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,6 @@ void				opencl(t_game *game, char *argv)
 
 void				free_opencl(t_game *game)
 {
+	destr(g_gui(0, 0), 0);
 	cl_krl_mem_release_all(game->cl_info, &game->cl_info->progs[0].krls[0]);
 }
