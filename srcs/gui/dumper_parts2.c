@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dumper_parts2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 16:13:54 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/05 17:05:18 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 21:56:29 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,6 @@ void		ss_free(t_gui *gui)
 	int i;
 
 	i = -1;
-	// while (gui->s_s.names[++i] && i < MAX_OBJ)
-	// {
-	// 	printf("%s\n", gui->s_s.names[i]);
-	// 	free(gui->s_s.names[i]);
-	// }
 	i = -1;
 	while (gui->s_s.buttons[++i] && i < MAX_OBJ)
 	{

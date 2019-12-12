@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   surf_tex.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 18:04:29 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:14:18 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 17:22:10 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	norma_from_obj_select(t_gui *gui, KW_Widget *widget, KW_Widget *wid)
 {
 	KW_Widget	*label;
 	int			i;
+	KW_Editbox *edit;
 
 	i = -1;
 	while (++i < 3)
@@ -88,6 +89,8 @@ void	norma_from_obj_select(t_gui *gui, KW_Widget *widget, KW_Widget *wid)
 		KW_RemoveWidgetKeyDownHandler(gui->c_o.ed_b[i], 0);
 		KW_RemoveWidgetTextInputHandler(gui->c_o.ed_b[i], 0);
 		KW_RemoveWidgetMouseDownHandler(gui->c_o.ed_b[i], 0);
+		edit = (KW_Editbox *)gui->c_o.ed_b[i]->privdata;
+		KW_ReleaseTexture(gui->driver, edit->textrender);
 	}
 	KW_RemoveWidgetGeometryChangeHandler(gui->c_o.frame, 0);
 	KW_RemoveWidgetTilesetChangeHandler(gui->c_o.frame, 0);

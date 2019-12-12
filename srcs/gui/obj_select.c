@@ -3,75 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   obj_select.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 19:08:02 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/04 21:49:09 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 23:05:36 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
-
-void		obj_click(KW_Widget *widget, int b)
-{
-	static t_obj		*obj;
-	static KW_Widget	*wid = 0;
-	t_gui				*gui;
-	KW_Widget *label;
-	t_obj	*obje;
-
-	b = 0;
-	gui = g_gui(0, 0);
-	if (gui->game->ev.button.button != SDL_BUTTON_LEFT)
-		return ;
-	if (gui->c_o.show == 1)
-		norma_from_obj_select(gui, widget, wid);
-	if (widget && (obj != KW_GetWidgetUserData(widget)))
-	{
-		obj = KW_GetWidgetUserData(widget);
-		obj_if(gui, obj);
-		wid = widget;
-		KW_SetLabelTextColor(KW_GetButtonLabel(wid),
-		(KW_Color){255, 255, 255, 255});
-		gui->c_o.show = 1;
-	}
-	else
-	{
-		wid = 0;
-		obj = 0;
-	}
-}
-
-char		*fill_name_mass(t_obj *obj, int num)
-{
-	char	*number;
-	char	*res;
-	char	*buff;
-
-	number = ft_itoa(obj->id);
-	if (obj->type == SPHERE)
-		res = ft_strjoin("Sphere ", number);
-	else if (obj->type == CONE)
-		res = ft_strjoin("Cone ", number);
-	else if (obj->type == TRIANGLE)
-		res = ft_strjoin("Triangle ", number);
-	else if (obj->type == CYLINDER)
-		res = ft_strjoin("Cylinder ", number);
-	else if (obj->type == PLANE)
-		res = ft_strjoin("Plane ", number);
-	else if (obj->type == PARABOLOID)
-		res = ft_strjoin("Paraboloid ", number);
-	else if (obj->type == TORUS)
-		res = ft_strjoin("Torus ", number);
-	if ((int)(obj->emission.v4[0] + obj->emission.v4[1] + obj->emission.v4[2]))
-	{
-		buff = res;
-		res = ft_strjoin("Light ", res);
-		free(buff);
-	}
-	free(number);
-	return (res);
-}
 
 static void	first_button(t_gui *gui, char *name_buff)
 {

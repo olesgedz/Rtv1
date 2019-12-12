@@ -3,16 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   eff.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 21:38:08 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:13:40 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 22:44:49 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void	del_cam(t_cam *cam, t_game *game)
+static void		del_cam_h(t_cam *cam, t_game *game)
+{
+	cam_free(g_gui(0, 0));
+	cam_screen(g_gui(0, 0), g_gui(0, 0)->game);
+	cam_click(0, 0);
+}
+
+void			del_cam(t_cam *cam, t_game *game)
 {
 	t_game	game_buff;
 	t_cam	*buff;
@@ -37,12 +44,10 @@ void	del_cam(t_cam *cam, t_game *game)
 		game->cam_num = 0;
 		game->flag = 1;
 	}
-	cam_free(g_gui(0, 0));
-	cam_screen(g_gui(0, 0), g_gui(0, 0)->game);
-	cam_click(0, 0);
+	del_cam_h(cam, game);
 }
 
-void		cart_name(KW_Widget *widget, t_cam *cam)
+void			cart_name(KW_Widget *widget, t_cam *cam)
 {
 	char		*buff;
 	KW_Widget	*wid;
@@ -54,7 +59,7 @@ void		cart_name(KW_Widget *widget, t_cam *cam)
 		KW_SetLabelText(wid, "OFF");
 }
 
-void		sep_name(KW_Widget *widget, t_cam *cam)
+void			sep_name(KW_Widget *widget, t_cam *cam)
 {
 	char		*buff;
 	KW_Widget	*wid;
@@ -66,7 +71,7 @@ void		sep_name(KW_Widget *widget, t_cam *cam)
 		KW_SetLabelText(wid, "OFF");
 }
 
-void	cart(KW_Widget *widget, int b)
+void			cart(KW_Widget *widget, int b)
 {
 	t_gui		*gui;
 	t_cam		*cam;
@@ -78,18 +83,4 @@ void	cart(KW_Widget *widget, int b)
 	cam = KW_GetWidgetUserData(widget);
 	cam->cartoon = !cam->cartoon;
 	cart_name(widget, cam);
-}
-
-void	sep(KW_Widget *widget, int b)
-{
-	t_gui		*gui;
-	t_cam		*cam;
-
-	b = 0;
-	gui = g_gui(0, 0);
-	if (gui->game->ev.button.button != SDL_BUTTON_LEFT)
-		return ;
-	cam = KW_GetWidgetUserData(widget);
-	cam->sepia = !cam->sepia;
-	sep_name(widget, cam);
 }
