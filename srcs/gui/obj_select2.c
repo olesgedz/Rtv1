@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 23:05:06 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/12/10 23:22:15 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/12 16:51:05 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ char				*fill_name_mass(t_obj *obj, int num)
 }
 
 static void			obj_click_ur(t_gui *gui, KW_Widget *widget,\
-KW_Widget *wid, t_obj *obj)
+KW_Widget **wid, t_obj **obj)
 {
-	obj = KW_GetWidgetUserData(widget);
-	obj_if(gui, obj);
-	wid = widget;
-	KW_SetLabelTextColor(KW_GetButtonLabel(wid),
+	*obj = KW_GetWidgetUserData(widget);
+	obj_if(gui, *obj);
+	*wid = widget;
+	KW_SetLabelTextColor(KW_GetButtonLabel(*wid),
 	(KW_Color){255, 255, 255, 255});
 	gui->c_o.show = 1;
 }
@@ -78,7 +78,7 @@ void				obj_click(KW_Widget *widget, int b)
 		norma_from_obj_select(gui, widget, wid);
 	if (widget && (obj != KW_GetWidgetUserData(widget)))
 	{
-		obj_click_ur(gui, widget, wid, obj);
+		obj_click_ur(gui, widget, &wid, &obj);
 	}
 	else
 	{

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:54:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 16:12:30 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/12 16:29:21 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static void		ft_run_kernel(t_game *game, t_cl_krl *kernel, int w, int h)
+void		ft_run_kernel(t_game *game, t_cl_krl * kernel, int w, int h)
 {
 	size_t	global[2];
 
@@ -73,6 +73,7 @@ void			main_render(t_game *game, t_gui *gui)
 			game->keys.r = 1;
 		if (game->samples_to_do && game->samples_to_do <= game->gpu.samples)
 		{
+			net_return(game, gui);
 			game->samples_to_do = 0;
 			game->keys.r = 0;
 		}

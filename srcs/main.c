@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/12/09 20:18:00 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/11 21:44:26 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static void	main_loop(t_game *game, t_gui *gui, int argc)
 	gui_bar(game, gui);
 	while (game->av)
 	{
+		free(game->music);
+		game->music = 0;
 		SDL_SetWindowTitle(game->sdl.window, game->av);
 		opencl(game, game->av);
 		main_screen(gui, game);
@@ -44,7 +46,9 @@ static void	main_loop(t_game *game, t_gui *gui, int argc)
 		game->quit = 0;
 		gui->quit = 0;
 		game->flag = 1;
+		play_stop_music(game->music);
 		main_render(game, gui);
+		play_stop_music(0);
 		free_list(game);
 		game->texture_list = NULL;
 		game->textures_num = 0;

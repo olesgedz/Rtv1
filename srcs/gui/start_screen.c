@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 22:51:42 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/04 15:33:14 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/11 21:45:53 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,19 @@ void		play_stop_music(char *name)
 {
 	static Mix_Music *music = 0;
 
-	if (Mix_PlayingMusic() || !name)
+	if (Mix_PlayingMusic() && !name)
 	{
 		Mix_PauseMusic();
 		if (music)
+		{
 			Mix_FreeMusic(music);
+			music = 0;
+		}
 	}
-	else
+	else if (name)
 	{
 		if (!(music = Mix_LoadMUS(name)))
-			exit(1);
+			return ;
 		Mix_PlayMusic(music, 1);
 	}
 }
@@ -81,7 +84,7 @@ char		*start_gui(t_game *game, t_gui *gui)
 	opencl(game, "scenes/start.json");
 	start_screen(gui);
 	scene_select(gui, -1, 0);
-	play_stop_music("gui/res/main_menu.wav");
+	play_stop_music(game->music);
 	loopa(game, gui);
 	play_stop_music(0);
 	destr(gui, gui->ed_w.frame);
