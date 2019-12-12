@@ -18,15 +18,19 @@ float3					get_color(t_obj *object, float3 hitpoint, t_scene *scene, float2 *coo
 	{
 		texture = &((scene->textures)[object->texture - 1]);
 		i = ((int)(coord->y * (float)(texture->height))) * (texture->width) + (int)(coord->x * (float)(texture->width));
-		if (((texture->texture[i] >> 24) && 0xFFFF) == 0)
-			object->transparency = 1.f;// - (float)(texture->texture[i] >> 24 && 0xFFFF) / 255.f;
-		return(cl_int_to_float3(texture->texture[i]));
+	//	if (((texture->texture[i] >> 24) & 0xFF) != 255)
+		{
+			object->transparency = 1.f - (float)(texture->texture[i] >> 24 & 0xFF) / 255.f;
+			if (object->transparency > 0.99)
+				return ((float3)(1.f, 1.f, 1.f));
+		}
+		return (cl_int_to_float3(texture->texture[i]));
 	}
 	else if (object->texture == -1)
 		return (chess(object, coord));
 	else if (object->texture == -2) // just for check, it's not perlin it's some weird stuff i've snatched from internet
 		return (object->color * clamp(fabs(sin((coord->x + coord->y) * object->prolapse.x * object->prolapse.y)), 0.5f, 1.0f));
-	else 
+	else
 		return (object->color);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 22:51:42 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/11 21:45:53 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/12 18:50:18 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void		start_screen(t_gui *gui)
 	KW_CreateLabel(gui->gui, gui->ed_w.frame,
 	"Path", &gui->ed_w.labelrect);
 	gui->ed_w.ed_b = KW_CreateEditbox(gui->gui,
-	gui->ed_w.frame, "Edit me!", &gui->ed_w.editboxrect);
+	gui->ed_w.frame, "scenes/", &gui->ed_w.editboxrect);
 	gui->ed_w.buttonrect = (KW_Rect){250, 170, 40, 40};
 	gui->ed_w.okbutton = KW_CreateButtonAndLabel(gui->gui,
 	gui->ed_w.frame, "OK", &gui->ed_w.buttonrect);
