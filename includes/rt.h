@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 16:26:44 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/12 20:15:11 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # define CL_SILENCE_DEPRECATION
 # include <sys/types.h>
 # include "SDL2/SDL.h"
-# include "cl_error.h"
 # include "SDL_image.h"
 # include "SDL_mixer.h"
 # include "SDL_net.h"
