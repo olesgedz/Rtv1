@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:54:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 22:15:50 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/12 23:06:55 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,6 @@ void			main_render(t_game *game, t_gui *gui)
 	SDL_RenderClear(game->sdl.renderer);
 	while (!game->quit && !gui->quit)
 	{
-		if (!game->samples_to_do)
-			net_wait(game, gui);
-		else
-			game->keys.r = 1;
 		key_check(game);
 		camera_reposition(game, gui);
 		ft_render(game, gui);
@@ -77,6 +73,10 @@ void			main_render(t_game *game, t_gui *gui)
 			game->keys.r = 0;
 			net_return(game, gui);
 		}
+		if (!game->samples_to_do)
+			net_wait(game, gui);
+		else
+			game->keys.r = 1;
 	}
 	destr(gui, 0);
 	game->av = gui->av;

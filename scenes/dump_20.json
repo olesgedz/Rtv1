@@ -1,0 +1,62 @@
+{
+    "scene":{
+        "global texture": "sviborg.jpg",
+        "ambiance": 0.500,
+        "cartoon": 0,
+        "motion blur": 0.000,
+        "sepia": 0,
+        "stereo": 0
+    },
+
+    "objects":[
+        {
+            "type": "torus",
+            "transparency": 0.000,
+            "metalness": 0.000,
+            "refraction": 0.000,
+            "color": [1.000, 0.000, 0.000],
+            "emition": [0.000, 0.000, 0.000],
+            "position": [-1.000, 1.000, -0.100],
+            "radius": 1.000,
+            "texture": "sviborg_you.jpg",
+            "prolapse": [1.000, 1.000],
+            "shift": [0.000, 0.000],
+            "tor_radius": 0.100,
+            "dir": [0.705, 0.705, 0.071],
+            "x_basis": [1.000, 0.000, 0.000],
+            "y_basis": [0.000, 1.000, 0.000],
+            "z_basis": [0.000, 0.000, 1.000]
+        },
+        {
+            "type": "sphere",
+            "transparency": 0.000,
+            "metalness": 0.000,
+            "refraction": 0.000,
+            "color": [0.000, 0.000, 0.000],
+            "emition": [80.000, 80.000, 80.000],
+            "position": [0.000, 0.200, 1.000],
+            "radius": 0.150,
+            "texture": "sun.jpg",
+            "prolapse": [1.000, 1.000],
+            "shift": [0.000, 0.000],
+            "x_basis": [1.000, 0.000, 0.000],
+            "y_basis": [0.000, 1.000, 0.000],
+            "z_basis": [0.000, 0.000, 1.000]
+        }
+    ],
+
+    "cameras":[
+        {
+            "position": [2.535, -0.478, 2.956],
+            "dir": [-0.768, 0.338, -0.544],
+            "normal": [0.276, 0.941, 0.195],
+            "fov": 60.000
+        },
+        {
+            "position": [0.000, 0.100, 2.000],
+            "dir": [0.000, 0.000, 1.000],
+            "normal": [0.000, 1.000, 0.000],
+            "fov": 60.000
+        }
+    ]
+}
