@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 21:33:44 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 18:18:57 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/12 18:33:09 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void			summator(cl_float3 *dest, cl_float3 *src, int len)
 	int	i;
 
 	i = -1;
+	len = len / sizeof(cl_float3);
 	while (++i < len)
 	{
 		dest[i].s[0] += src[i].s[0];
