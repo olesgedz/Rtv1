@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 21:33:44 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/11 19:17:08 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/12 15:48:11 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void			serv_side(t_game *game, t_gui *gui, int len, cl_float3 *tmp)
 	int			current;
 	int			i;
 	int			all;
-	cl_float3	buff[WIN_W];
+	cl_float3	buff[WIN_H / 10];
 
 	i = -1;
 	game->gpu.samples *= gui->n.clients + 1;
@@ -52,10 +52,12 @@ static void			serv_side(t_game *game, t_gui *gui, int len, cl_float3 *tmp)
 		{
 			current = 0;
 			current = SDLNet_TCP_Recv(gui->n.client[i],
-			buff, sizeof(cl_float3) * WIN_W);
+			buff, sizeof(cl_float3) * WIN_H / 10);
 			summator(&tmp[all / sizeof(cl_float3)], buff,
 			current / sizeof(cl_float3));
 			all += current;
+			if (current % sizeof(cl_float3))
+			all++;
 		}
 	}
 	printf(">>>>%f, %f, %f \n", tmp[1000].s[0], tmp[1000].s[2], tmp[1000].s[2]);
