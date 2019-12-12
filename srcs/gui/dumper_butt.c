@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   dumper_butt.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 14:51:12 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 18:03:41 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/12 16:12:26 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static FILE	*newfile(char **str)
+static FILE			*newfile(char **str)
 {
 	FILE	*fp;
 	char	*buff;
@@ -38,7 +38,7 @@ static FILE	*newfile(char **str)
 	return (fp);
 }
 
-char	*dumper(t_game *game, t_gui *gui)
+char				*dumper(t_game *game, t_gui *gui)
 {
 	FILE	*fp;
 	char	*name;
@@ -59,7 +59,7 @@ char	*dumper(t_game *game, t_gui *gui)
 	return (name);
 }
 
-static void	clicked_dump(KW_Widget *widget, int b)
+static void			clicked_dump(KW_Widget *widget, int b)
 {
 	t_gui		*gui;
 	t_game		*game;
@@ -72,7 +72,7 @@ static void	clicked_dump(KW_Widget *widget, int b)
 	free(dumper(game, gui));
 }
 
-void		dumper_butt(t_game *game, t_gui *gui)
+void				dumper_butt(t_game *game, t_gui *gui)
 {
 	gui->g_b.buttonrect[7] = gui->g_b.buttonrect[2];
 	gui->g_b.buttonrect[7].x -= gui->g_b.buttonrect[7].w;
