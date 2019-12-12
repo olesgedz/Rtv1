@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 16:15:39 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/12 16:26:44 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -499,4 +499,8 @@ void					prepare_data(char ***data, char *line);
 char					*make_string(char *name, int smpls, int fd);
 void					scene_click(KW_Widget *widget, int b);
 void					net_render(KW_Widget *widget, int b);
+void					net_return(t_game *game, t_gui *gui);
+void					ft_run_kernel(t_game *game,
+t_cl_krl *kernel, int w, int h);
+void					client_side_free(t_gui *gui, char **buff, FILE *fp);
 #endif
