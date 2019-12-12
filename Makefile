@@ -135,7 +135,8 @@ SRCS_LIST = main.c \
 			parse/parse_rest.c\
 			parse/parse_basis.c\
 			parse/parse_facing.c\
-			parse/parse_necessary.c
+			parse/parse_necessary.c\
+			create_blur_mask.c
 
 
 OBJS_DIRECTORY = objects/

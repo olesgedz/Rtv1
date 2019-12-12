@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_scene.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:53:01 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:14:59 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/12 17:24:41 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void				opencl_init(t_game *game)
 	cl_krl_new_push(&game->cl_info->progs[0], "render_kernel");
 	// cl_krl_new_push(&game->cl_info->progs[0], "gaussian_blur");
 	ERROR(game->cl_info->ret);
-	cl_krl_init(&game->cl_info->progs[0].krls[0], 12);
+	cl_krl_init(&game->cl_info->progs[0].krls[0], 13);
 	cl_krl_create(game->cl_info, &game->cl_info->progs[0], &game->cl_info->progs[0].krls[0]);
 //	cl_krl_create(game->cl_info, &game->cl_info->progs[0], &game->cl_info->progs[0].krls[1]);
 }
@@ -72,6 +72,8 @@ void				opencl(t_game *game, char *argv)
 	&(game->global_tex_id));
 	cl_krl_init_arg(&game->cl_info->progs[0].krls[0], 11, sizeof(cl_float3) * (int)WIN_H * (int)WIN_W,\
 	game->gpu.vec_temp1);
+	
+
 
 	game->cl_info->ret = cl_krl_mem_create(game->cl_info, &game->cl_info->progs[0].krls[0], 0, CL_MEM_READ_WRITE);
 	ERROR(game->cl_info->ret);

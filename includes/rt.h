@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 20:03:40 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/12 17:21:01 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ typedef struct			s_cam
 	cl_int				stereo;
 	cl_float			motion_blur;
 	cl_float			ambience;
+	cl_int				mask_size;
 }						t_cam;
 
 typedef enum			e_camera_direction
@@ -206,6 +207,7 @@ typedef struct			s_game
 	int					server;
 	int					samples_to_do;
 	char				*music;
+	cl_float			*mask;
 }						t_game;
 
 typedef struct	s_filter
@@ -495,4 +497,5 @@ void					prepare_data(char ***data, char *line);
 char					*make_string(char *name, int smpls, int fd);
 void					scene_click(KW_Widget *widget, int b);
 void					net_render(KW_Widget *widget, int b);
+float					*create_blur_mask(float sigma, int * mask_size_pointer);
 #endif
