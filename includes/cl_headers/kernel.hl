@@ -78,6 +78,7 @@ typedef struct 			s_cam
 	int					stereo;
 	float				motion_blur;
 	float				ambience;
+	int					mask_size;
 }						t_cam;
 
 typedef struct			s_scene

@@ -3,7 +3,7 @@
         "global texture": "sviborg.jpg",
         "ambiance": 0.0,
         "cartoon": 0,
-        "motion blur" : 0.0,
+        "motion blur" : 5.0,
         "sepia" : 0,
         "stereo": 0
     },

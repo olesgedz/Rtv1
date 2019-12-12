@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ren_button.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 17:38:36 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 18:37:58 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/12 17:28:54 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,47 +21,6 @@ static void	ren_start(KW_Widget *widget, int b)
 	if (game->ev.button.button != SDL_BUTTON_LEFT)
 		return ;
 	game->keys.r = !game->keys.r;
-}
-
-void		show_hide(t_game *game, t_gui *gui)
-{
-	game->keys.show_gui = !game->keys.show_gui;
-	if (game->keys.show_gui)
-	{
-		KW_ShowWidget(gui->g_b.frame);
-		gui->g_b.show = 1;
-		if (gui->s_s.show)
-			KW_ShowWidget(gui->s_s.frame);
-		if (gui->o_t.show)
-			KW_ShowWidget(gui->o_t.frame);
-		if (gui->o_s.show)
-			KW_ShowWidget(gui->o_s.frame);
-		if (gui->c_s.show)
-			KW_ShowWidget(gui->c_s.frame);
-		if (gui->c_o.show)
-			KW_ShowWidget(gui->c_o.frame);
-		if (gui->c_c.show)
-			KW_ShowWidget(gui->c_c.frame);
-		if (gui->n.show)
-			KW_ShowWidget(gui->n.frame);
-		if (gui->ed_w.show)
-			KW_ShowWidget(gui->ed_w.frame);
-	}
-	else
-	{
-		KW_HideWidget(gui->g_b.frame);
-		gui->g_b.show = 0;
-		KW_HideWidget(gui->s_s.frame);
-		KW_HideWidget(gui->o_s.frame);
-		KW_HideWidget(gui->o_t.frame);
-		KW_HideWidget(gui->c_s.frame);
-		KW_HideWidget(gui->n.frame);
-		KW_HideWidget(gui->ed_w.frame);
-		if (gui->c_o.frame)
-			KW_HideWidget(gui->c_o.frame);
-		if (gui->c_c.frame)
-			KW_HideWidget(gui->c_c.frame);
-	}
 }
 
 Uint32		samples_to_line(t_game *game, t_gui *gui, Uint32 time0)

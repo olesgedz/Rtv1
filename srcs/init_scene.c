@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_scene.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:53:01 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 16:28:54 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/12 17:33:59 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void				opencl_init(t_game *game)
 	"-w -I srcs/cl_files/ -I includes/cl_headers/");
 	game->cl_info->ret = cl_program_build_all(game->cl_info);
 	cl_krl_new_push(&game->cl_info->progs[0], "render_kernel");
-	cl_krl_init(&game->cl_info->progs[0].krls[0], 12);
+	cl_krl_init(&game->cl_info->progs[0].krls[0], 13);
 	cl_krl_create(game->cl_info, &game->cl_info->progs[0],\
 	&game->cl_info->progs[0].krls[0]);
 }
@@ -54,6 +54,8 @@ static void			opencl_mem_create(t_game *game)
 	&game->cl_info->progs[0].krls[0], 5, CL_MEM_READ_WRITE);
 	game->cl_info->ret = cl_krl_mem_create(game->cl_info,\
 	&game->cl_info->progs[0].krls[0], 11, CL_MEM_READ_WRITE);
+	game->cl_info->ret = cl_krl_mem_create(game->cl_info,\
+	&game->cl_info->progs[0].krls[0], 12, CL_MEM_READ_WRITE);
 	cl_krl_write_all(game->cl_info, &game->cl_info->progs[0].krls[0]);
 	cl_krl_set_all_args(&game->cl_info->progs[0].krls[0]);
 }
@@ -84,6 +86,9 @@ static void			opencl_init_args(t_game *game)
 	&(game->global_tex_id));
 	cl_krl_init_arg(&game->cl_info->progs[0].krls[0], 11,\
 	sizeof(cl_float3) * (int)WIN_H * (int)WIN_W, game->gpu.vec_temp1);
+	cl_krl_init_arg(&game->cl_info->progs[0].krls[0], 12,\
+	sizeof(float) * (game->mask_size * 2 + 1) * (game->mask_size * 2 + 1),\
+	 game->mask);
 }
 
 void				opencl(t_game *game, char *argv)

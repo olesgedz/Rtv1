@@ -193,8 +193,8 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 		if (objecthit.normal || objecthit.texture)
 			interpolate_uv(&objecthit, intersection->hitpoint, scene, &img_coord);
 		objecthit.color = get_color(&objecthit, intersection->hitpoint, scene, &img_coord);
-		// if (length(objecthit.emission) != 0.0f && bounces == 0)
-		// 	return (objecthit.color);
+		if (length(objecthit.emission) != 0.0f && bounces == 0)
+			return (objecthit.color);
 		/* compute the surface normal and flip it if necessary to face the incoming ray */
 		intersection->normal = get_normal(&objecthit, intersection, &img_coord, scene);
 		if (scene->lightsampling)
@@ -236,7 +236,7 @@ static void scene_new(__global t_obj* objects, int n_objects,\
 	scene->global_texture_id = global_texture_id;
 }
 
-static int filter_mode(float3 finalcolor, t_cam camera, int samples)
+static int filter_mode(float3 finalcolor, t_cam camera, int samples,__global float3 *vect_temp, t_scene *scene,  __global float *mask)
 {
 	int red;
 	int green;
@@ -260,19 +260,25 @@ static int filter_mode(float3 finalcolor, t_cam camera, int samples)
 		finalcolor.z = floor(finalcolor.z * CARTOON) / CARTOON;
 		color = ft_rgb_to_hex(toInt(finalcolor.x  / (float)samples), toInt(finalcolor.y  / (float)samples), toInt(finalcolor.z  / (float)samples));
 	}
-	// if (camera.motion_blur > 0.0)
-	// {
-	// 	int maskSize = 2;
-	// 	float3 sum = 0.f;
-	// 	for(int a = -maskSize; a < maskSize+1; a++) {
-	// 		for(int b = -maskSize; b < maskSize+1; b++) {
-	// 			sum += vect_temp[[y_coord + a][x_coord  + b];
-
-	// 		}
-	// 	}
-	// 	color = ft_rgb_to_hex(toInt(sum.x / (float)samples),
-	// 		toInt(sum.y / (float)samples), toInt(sum.z / (float)samples));
-	// }
+	if (camera.motion_blur > 0.0 && scene->samples > 5)
+	{
+		float3 sum = float3(0.f);
+		int i, j;
+		i = 0;
+		j = 0;
+		for(int a = -camera.mask_size ; a < camera.mask_size + 1; a++) {
+			j = 0;
+			for(int b = -camera.mask_size ; b < camera.mask_size  + 1; b++) {
+				if (scene->x_coord + b < 0 || scene->y_coord + a < 0 || scene->x_coord + b >= scene->width || scene->y_coord + a >= scene->height)
+					continue;;
+				sum +=  vect_temp[(scene->x_coord + b) + (scene->y_coord + a) * scene->width] * mask[i * (camera.mask_size * 2 + 1) + j];
+				j++;
+			}
+			i++;
+		}
+		color = ft_rgb_to_hex(toInt(sum.x / (float)samples),
+			toInt(sum.y / (float)samples), toInt(sum.z / (float)samples));
+	}
 		return (color);
 }
 
@@ -290,7 +296,7 @@ static int stereo_mode(int color0, int color1)
 
 __kernel void render_kernel(__global int *output, __global t_obj *objects,
 __global float3 *vect_temp,  __global ulong * random,  __global t_txture *textures,\
- __global t_txture *normals, int n_objects, int samples, t_cam camera, int lightsampling, int global_texture_id, __global float3 *vect_temp1)
+ __global t_txture *normals, int n_objects, int samples, t_cam camera, int lightsampling, int global_texture_id, __global float3 *vect_temp1, __global float *mask)
 {
 
 	t_scene scene;
@@ -330,6 +336,6 @@ __global float3 *vect_temp,  __global ulong * random,  __global t_txture *textur
 		output[scene.x_coord + scene.y_coord * scene.width] = stereo_mode(hex_finalcolor, hex_finalcolor1);
 	}
 	else
-		output[scene.x_coord + scene.y_coord * scene.width] = filter_mode(finalcolor, camera, samples);
+		output[scene.x_coord + scene.y_coord * scene.width] = filter_mode(finalcolor, camera, samples, vect_temp, &scene, mask) ;
 	 /* simple interpolated colour gradient based on pixel coordinates */
 }

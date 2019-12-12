@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:54:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 16:29:21 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/12 16:55:32 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void		ft_run_kernel(t_game *game, t_cl_krl * kernel, int w, int h)
+void			ft_run_kernel(t_game *game, t_cl_krl *kernel, int w, int h)
 {
 	size_t	global[2];
 
