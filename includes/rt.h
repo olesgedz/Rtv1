@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 16:12:47 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/12 16:15:39 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,10 +255,7 @@ typedef struct			s_json
 	cJSON				*name;
 	cJSON				*size;
 	cJSON				*negative;
-<<<<<<< HEAD
 	cJSON				*music;
-=======
->>>>>>> jblack-b
 }						t_json;
 
 typedef struct		s_gui
