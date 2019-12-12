@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 17:25:49 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/12/12 17:30:41 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,7 @@ typedef struct			s_game
 	int					samples_to_do;
 	char				*music;
 	cl_float			*mask;
+	int					mask_size;
 }						t_game;
 
 typedef struct	s_filter

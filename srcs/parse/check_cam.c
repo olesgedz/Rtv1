@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 20:32:27 by srobert-          #+#    #+#             */
-/*   Updated: 2019/12/12 17:20:46 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/12/12 19:58:04 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void		check_cam(t_json parse, t_game *game, t_filter *filter)
 	camera->sepia = filter->sepia;
 	camera->motion_blur = filter->motion_blur;
 	camera->stereo = filter->stereo;
-	game->mask = create_blur_mask(10.f, &camera->mask_size);
+	game->mask = create_blur_mask(camera->motion_blur, &camera->mask_size);
+	game->mask_size = camera->mask_size;
 	reconfigure_camera(camera);
 	ft_cam_push(game, camera);
 }

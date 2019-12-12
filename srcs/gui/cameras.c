@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cameras.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 21:32:09 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/06 17:37:45 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/12 20:27:38 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,23 @@ void		pars_cam_box(t_gui *gui, t_cam *cam)
 	fov = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
 	cam->fov = fov * M_PI / 180;
 	cam->ambience = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
-	cam->motion_blur = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
+	if (cam->motion_blur != atof(KW_GetEditboxText(gui->c_c.ed_b[i])))
+	{
+		cam->motion_blur = atof(KW_GetEditboxText(gui->c_c.ed_b[i++]));
+		free(gui->game->mask);
+		gui->game->mask = create_blur_mask(cam->motion_blur, &cam->mask_size);
+		gui->game->mask_size = cam->mask_size;
+		clReleaseMemObject(gui->game->cl_info->progs[0].krls[0].args[12]);
+cl_krl_init_arg(&gui->game->cl_info->progs[0].krls[0], 12,
+	sizeof(float) * (gui->game->mask_size * 2 + 1) *
+	(gui->game->mask_size * 2 + 1), gui->game->mask);
+cl_krl_mem_create(gui->game->cl_info, &gui->game->cl_info->progs[0].krls[0], 12,
+	CL_MEM_READ_WRITE);
+cl_krl_set_arg(&gui->game->cl_info->progs[0].krls[0], 12);
+		cl_write(gui->game->cl_info, gui->game->cl_info->progs[0].krls[0].
+		args[12], sizeof(float) * (gui->game->mask_size * 2 + 1) *
+		(gui->game->mask_size * 2 + 1), gui->game->mask);
+	}
 }
 
 void		cam_save_click(KW_Widget *widget, int b)
