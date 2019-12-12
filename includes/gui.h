@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gui.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 18:40:18 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/12 20:21:08 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ typedef struct		s_network
 	char			*names[3];
 	int				show;
 	TCPsocket		server;
-	TCPsocket 		tcpsock;
+	TCPsocket		tcpsock;
 	TCPsocket		client[MAX_CL];
 	int				clients;
 	IPaddress		ip;

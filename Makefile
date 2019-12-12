@@ -114,8 +114,13 @@ SRCS_LIST = main.c \
 			gui/push_new.c\
 			gui/del_obj.c\
 			gui/change_cam.c\
+			gui/norma_from_obj_select.c\
+			gui/norma_from_cam_select.c\
 			gui/cam_buttons.c\
 			gui/init_kiwi.c\
+			gui/cam_click.c\
+			gui/show_hide.c\
+			gui/scene_click.c\
 			gui/cam_parser.c\
 			gui/cameras.c\
 			gui/add_camera.c\

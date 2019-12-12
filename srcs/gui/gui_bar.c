@@ -6,13 +6,13 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 19:10:18 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 23:20:39 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/12 17:22:53 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void	visibility(KW_Widget *widget, int b)
+void		visibility(KW_Widget *widget, int b)
 {
 	t_gui		*gui;
 	t_obj		*obj;
@@ -47,7 +47,7 @@ static void	click_create_r(KW_Widget *widget, int b, t_gui *gui, int num)
 		del_obj(0, gui->game);
 }
 
-void	click_create(KW_Widget *widget, int b)
+void		click_create(KW_Widget *widget, int b)
 {
 	t_gui		*gui;
 	int			num;
@@ -64,7 +64,7 @@ void	click_create(KW_Widget *widget, int b)
 		obj_click(gui->o_s.buttons[gui->game->obj_quantity - 1], 0);
 }
 
-void	save_click(KW_Widget *widget, int b)
+void		save_click(KW_Widget *widget, int b)
 {
 	t_gui		*gui;
 	t_obj		*obj;
@@ -89,7 +89,7 @@ void	save_click(KW_Widget *widget, int b)
 	gui->flag = 1;
 }
 
-void	del_click(KW_Widget *widget, int b)
+void		del_click(KW_Widget *widget, int b)
 {
 	t_gui		*gui;
 	t_obj		*obj;

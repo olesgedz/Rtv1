@@ -3,43 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   scene_select.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 16:30:29 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 18:03:00 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/12 17:43:54 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
-
-void		scene_click(KW_Widget *widget, int b)
-{
-	t_gui				*gui;
-	char				*name;
-	static KW_Widget	*wid = 0;
-
-	b = 0;
-	gui = g_gui(0, 0);
-	if (gui->main_screen)
-		if (gui->game->ev.button.button != SDL_BUTTON_LEFT)
-			return ;
-	if (!widget)
-	{
-		wid = 0;
-		return ;
-	}
-	name = KW_GetWidgetUserData(widget);
-	free(gui->av);
-	gui->av = ft_strjoin("scenes/", name);
-	gui->quit = 1;
-	if (wid)
-		KW_SetLabelTextColor(KW_GetButtonLabel(wid), (KW_Color){0, 0, 0, 255});
-	wid = widget;
-	KW_SetLabelTextColor(KW_GetButtonLabel(widget),
-	(KW_Color){255, 255, 255, 255});
-	obj_click(0, 0);
-	cam_click(0, 0);
-}
 
 static void	first_button(t_gui *gui, struct dirent *name_buff)
 {
@@ -50,16 +21,23 @@ static void	first_button(t_gui *gui, struct dirent *name_buff)
 	KW_RECT_ALIGN_MIDDLE);
 }
 
+static void	scan_dir_bzero(t_gui *gui, int *i)
+{
+	*i += 1;
+	while (*i < MAX_OBJ)
+	{
+		gui->s_s.buttons[*i] = 0;
+		gui->s_s.names[*i] = 0;
+		*i += 1;
+	}
+}
+
 static int	scan_dir(t_gui *gui, int i)
 {
 	DIR				*res;
 	struct dirent	*name_buff;
 
-	while (++i < MAX_OBJ)
-	{
-		gui->s_s.buttons[i] = 0;
-		gui->s_s.names[i] = 0;
-	}
+	scan_dir_bzero(gui, &i);
 	if (!(res = opendir("scenes")))
 		return (-1);
 	while ((name_buff = readdir(res)) && (name_buff->d_type != 8
