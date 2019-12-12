@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 21:28:47 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/12 22:06:05 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	client_side(t_game *game, t_gui *gui)
 	if (!(fp = fopen(buff[1], "w")))
 		exit(0);
 	game->samples_to_do = ft_atoi(buff[2]);
-	printf("game->samples_to_do = %d\n", game->samples_to_do);
+	printf("%d\n",game->samples_to_do);
 	len = ft_atoi(buff[0]) - len + ft_strlen(buff[0]);
 	fprintf(fp, "%s", buff[3]);
 	while (len > 0)
