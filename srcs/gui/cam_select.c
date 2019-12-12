@@ -6,58 +6,29 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 21:48:49 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 16:40:12 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/12 17:20:13 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void		cam_click(KW_Widget *widget, int b)
+static void		cam_mass_name_switch(t_cam *cam, int *con)
 {
-	static t_cam		*cam = 0;
-	static KW_Widget	*wid = 0;
-	t_gui				*gui;
-	KW_Widget			*label;
-
-	b = 0;
-	gui = g_gui(0, 0);
-	if (gui->game->ev.button.button != SDL_BUTTON_LEFT)
-		return ;
-	if (gui->c_c.show == 1)
-		norma_from_cam_select(gui, widget, wid);
-	if (widget && (cam != KW_GetWidgetUserData(widget)))
-	{
-		cam = KW_GetWidgetUserData(widget);
-		change_cam(gui, cam);
-		wid = widget;
-		KW_SetLabelTextColor(KW_GetButtonLabel(wid),
-		(KW_Color){255, 255, 255, 255});
-		gui->c_c.show = 1;
-	}
+	if (fabs(cam->position.s[0]) < 10 && fabs(cam->position.s[1]) < 10 &&
+		fabs(cam->position.s[0]) < 10)
+		*con = 2;
 	else
-	{
-		wid = 0;
-		cam = 0;
-	}
+		*con = 4;
 }
 
-// static char		*cam_mass_name_switch(t_cam *cam, char *res, char)
-// {
-
-// }
-
-char		*cam_mass_name(t_game *game, t_cam *cam)
+char			*cam_mass_name(t_game *game, t_cam *cam)
 {
 	char	*res;
 	char	*buff;
 	char	str[100];
 	int		con;
 
-	if (fabs(cam->position.s[0]) < 10 && fabs(cam->position.s[1]) < 10 &&
-	fabs(cam->position.s[0]) < 10)
-		con = 2;
-	else
-		con = 4;
+	cam_mass_name_switch(cam, &con);
 	gcvt(cam->position.s[0], con, str);
 	if (cam->id == game->cam_num)
 		res = ft_strjoin(">>(", str);
@@ -78,7 +49,7 @@ char		*cam_mass_name(t_game *game, t_cam *cam)
 	return (buff);
 }
 
-static void	first_button(t_gui *gui, char *name_buff)
+static void		first_button(t_gui *gui, char *name_buff)
 {
 	gui->c_s.names[0] = name_buff;
 	gui->c_s.rects[0] = &gui->c_s.buttonrect[0];
@@ -87,7 +58,7 @@ static void	first_button(t_gui *gui, char *name_buff)
 	KW_RECT_ALIGN_MIDDLE);
 }
 
-static int	scan_mass(t_gui *gui, t_cam *cams, int num, int i)
+static int		scan_mass(t_gui *gui, t_cam *cams, int num, int i)
 {
 	while (++i < MAX_OBJ)
 	{
@@ -114,7 +85,7 @@ static int	scan_mass(t_gui *gui, t_cam *cams, int num, int i)
 	return (i);
 }
 
-void		cam_select(t_gui *gui, t_cam *cams, int num)
+void			cam_select(t_gui *gui, t_cam *cams, int num)
 {
 	int					i;
 	unsigned			test;

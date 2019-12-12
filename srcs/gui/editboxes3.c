@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 21:58:12 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/12/10 22:44:46 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/12 17:22:13 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void			sep(KW_Widget *widget, int b)
 	sep_name(widget, cam);
 }
 
-void		gui_bar(t_game *game, t_gui *gui)
+void			gui_bar(t_game *game, t_gui *gui)
 {
 	unsigned			test;
 

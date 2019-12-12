@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 17:30:41 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/12/12 20:46:52 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # define CL_SILENCE_DEPRECATION
 # include <sys/types.h>
 # include "SDL2/SDL.h"
-# include "cl_error.h"
 # include "SDL_image.h"
 # include "SDL_mixer.h"
 # include "SDL_net.h"
@@ -205,15 +204,14 @@ typedef struct			s_game
 	int					mask_size;
 }						t_game;
 
-typedef struct	s_filter
+typedef struct			s_filter
 {
-	float	ambiance;
-	int		cartoon;
-	int		sepia;
-	int		stereo;
-	float	motion_blur;
-
-}				t_filter;
+	float				ambiance;
+	int					cartoon;
+	int					sepia;
+	int					stereo;
+	float				motion_blur;
+}						t_filter;
 
 typedef struct			s_json
 {
@@ -261,32 +259,32 @@ typedef struct			s_json
 	cJSON				*music;
 }						t_json;
 
-typedef struct		s_gui
+typedef struct			s_gui
 {
-	KW_Widget		*destroy[MAX_OBJ * 5];
-	int				to_destroy;
-	t_game			*game;
-	t_sdl			sdl;
-	SDL_Event		ev;
-	int				quit;
-	KW_RenderDriver	*driver;
-	KW_Surface		*set;
-	KW_GUI			*gui;
-	t_edit_win		ed_w;
-	t_scene_select	s_s;
-	t_object_select	o_s;
-	t_gui_bar		g_b;
-	t_obj_type		o_t;
-	t_change_obj	c_o;
-	t_change_cam	c_c;
-	t_camera_select	c_s;
-	t_network		n;
-	char			*av;
-	int				flag;
-	int				main_screen;
-	int				over_gui;
-	float			fps;
-}					t_gui;
+	KW_Widget			*destroy[MAX_OBJ * 5];
+	int					to_destroy;
+	t_game				*game;
+	t_sdl				sdl;
+	SDL_Event			ev;
+	int					quit;
+	KW_RenderDriver		*driver;
+	KW_Surface			*set;
+	KW_GUI				*gui;
+	t_edit_win			ed_w;
+	t_scene_select		s_s;
+	t_object_select		o_s;
+	t_gui_bar			g_b;
+	t_obj_type			o_t;
+	t_change_obj		c_o;
+	t_change_cam		c_c;
+	t_camera_select		c_s;
+	t_network			n;
+	char				*av;
+	int					flag;
+	int					main_screen;
+	int					over_gui;
+	float				fps;
+}						t_gui;
 
 int						bind_data(t_gpu *gpu, t_game *game);
 void					release_gpu(t_gpu *gpu);
@@ -344,7 +342,7 @@ void					loopa(t_game *game, t_gui *gui);
 void					screen_present(t_game *game, t_gui *gui);
 void					ft_render(t_game *game, t_gui *gui);
 void					play_stop_music(char *name);
-int 					compare_in_texture_dict(t_game *game,\
+int						compare_in_texture_dict(t_game *game,\
 char *texture_name);
 int						compare_in_normal_dict(t_game *game, char *normal_name);
 void					mouse_motion(t_game *game, t_gui *gui);
@@ -356,7 +354,7 @@ void					change_sphere(t_gui *gui, t_obj *obj);
 void					change_cylin(t_gui *gui, t_obj *obj);
 void					change_cone(t_gui *gui, t_obj *obj);
 void					change_trian(t_gui *gui, t_obj *obj);
-void 					obj_if(t_gui *gui, t_obj *obj);
+void					obj_if(t_gui *gui, t_obj *obj);
 char					*fill_name_mass(t_obj *obj, int num);
 void					obj_same(t_gui *gui, t_obj *obj);
 void					visibility_name(KW_Widget *widget, t_obj *obj);
@@ -447,7 +445,7 @@ void					add_cam_button(t_gui *gui);
 void					ddd_name(KW_Widget *widget, t_cam *cam);
 void					ddd(KW_Widget *widget, int b);
 void					push_tex(t_game *game, char *res);
-void 					obj3d_parse(const cJSON *object, t_game *game,
+void					obj3d_parse(const cJSON *object, t_game *game,
 t_json *parse);
 cl_float3				triangle_norm(cl_float3 *vertices);
 void					push_normal(t_game *game, char *res);

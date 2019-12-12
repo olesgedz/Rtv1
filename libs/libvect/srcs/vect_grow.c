@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vect_grow.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 20:05:38 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/10/17 18:03:11 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/12 20:00:58 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@ int			vect_grow
 	size_t	new_total;
 
 	new_total = v->total * GROWTH_FACTOR * n;
-	//MALLOC(new, new_total);
 	if (!(new = ft_memalloc(new_total)))
-			exit(1);
+		exit(1);
 	ft_memcpy(new, v->data, v->used);
 	free(v->data);
 	v->data = new;
