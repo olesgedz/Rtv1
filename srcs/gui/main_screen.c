@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main_screen.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 16:46:11 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:13:53 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 22:49:41 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void	cam_free(t_gui *gui)
+void		cam_free(t_gui *gui)
 {
 	int i;
 

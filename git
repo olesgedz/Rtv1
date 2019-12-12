@@ -20,6 +20,7 @@ if [ ${args[0]} == "pull" ]; then
 fi
 
 if [ ${args[0]} == "fix" ]; then
+  git submodule foreach --recursive git checkout master;
   git submodule update --init --recursive;
   git submodule foreach sync;
 fi
