@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/09 16:45:10 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 20:03:40 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,6 +205,7 @@ typedef struct			s_game
 	int					gui_mod;
 	int					server;
 	int					samples_to_do;
+	char				*music;
 }						t_game;
 
 typedef struct	s_filter
@@ -260,7 +261,8 @@ typedef struct			s_json
 	cJSON				*name;
 	cJSON				*size;
 	cJSON				*negative;
-}             			t_json;
+	cJSON				*music;
+}						t_json;
 
 typedef struct		s_gui
 {
@@ -491,4 +493,6 @@ void					parse_rest(const cJSON *object, t_obj *obj, t_json *parse);
 void					parse_triangle_vert(const cJSON *object, t_obj *obj, t_json *parse);
 void					prepare_data(char ***data, char *line);
 char					*make_string(char *name, int smpls, int fd);
+void					scene_click(KW_Widget *widget, int b);
+void					net_render(KW_Widget *widget, int b);
 #endif

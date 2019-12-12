@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 19:16:12 by srobert-          #+#    #+#             */
-/*   Updated: 2019/12/07 20:37:13 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/12/09 21:22:25 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,9 @@ void			check_scene(t_json parse, t_game *game)
 		set_default_tex(game);
 		filter = filter_default();
 	}
+	parse.music = cJSON_GetObjectItemCaseSensitive(scene, "music");
+	if (parse.music != NULL)
+		game->music = parse.music->string;
 	parse.cameras = cJSON_GetObjectItemCaseSensitive(parse.json, "cameras");
 	parse.camera = (parse.cameras != NULL) ? (parse.cameras)->child : NULL;
 	while (parse.camera)

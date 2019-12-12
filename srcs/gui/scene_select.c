@@ -6,13 +6,13 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 16:30:29 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/05 17:02:35 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 18:03:00 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static void	clicked(KW_Widget *widget, int b)
+void		scene_click(KW_Widget *widget, int b)
 {
 	t_gui				*gui;
 	char				*name;
@@ -23,6 +23,11 @@ static void	clicked(KW_Widget *widget, int b)
 	if (gui->main_screen)
 		if (gui->game->ev.button.button != SDL_BUTTON_LEFT)
 			return ;
+	if (!widget)
+	{
+		wid = 0;
+		return ;
+	}
 	name = KW_GetWidgetUserData(widget);
 	free(gui->av);
 	gui->av = ft_strjoin("scenes/", name);
@@ -106,7 +111,7 @@ void		scene_select(t_gui *gui, int i, KW_Widget *const *wid_arr)
 			gui->s_s.buttonrect[i].x -= 15;
 		gui->s_s.buttons[i] = KW_CreateButtonAndLabel(gui->gui,
 gui->s_s.frame, gui->s_s.names[i], &gui->s_s.buttonrect[i]);
-		KW_AddWidgetMouseDownHandler(gui->s_s.buttons[i], clicked);
+		KW_AddWidgetMouseDownHandler(gui->s_s.buttons[i], scene_click);
 		KW_SetWidgetUserData(gui->s_s.buttons[i], ft_strdup(gui->s_s.names[i]));
 		free(gui->s_s.names[i]);
 	}

@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:14:40 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/08 15:24:58 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/10 18:40:18 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ typedef struct		s_obj_type
 typedef struct		s_network
 {
 	KW_Rect			frect;
-	KW_Rect			buttonrect[3];
+	KW_Rect			buttonrect[4];
 	KW_Widget		*frame;
 	KW_Widget		*label;
 	KW_Rect			*rects[1];
@@ -169,7 +169,7 @@ typedef struct		s_network
 	int				clients;
 	IPaddress		ip;
 	char			*str_ip;
-//	IPaddress		*remoteip;
+	KW_Widget		*ed_b;
 }					t_network;
 
 #endif
