@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 21:33:44 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 17:20:24 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/12 18:18:57 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,32 +35,37 @@ static cl_float3	*fill_tmp(t_game *game, int len)
 	return (tmp);
 }
 
+static void			line_create(char *dest, char *src, int len)
+{
+	int	i;
+
+	i = -1;
+	while (++i < len)
+		dest[i] = src[i];
+}
+
 static void			serv_side(t_game *game, t_gui *gui, int len, cl_float3 *tmp)
 {
 	int			current;
 	int			i;
 	int			all;
-	cl_float3	buff[WIN_H / 10];
+	char		buff[2000];
+	char		*tmp_str;
 
 	i = -1;
 	game->gpu.samples *= gui->n.clients + 1;
+	tmp_str = (char *)malloc(len);
 	while (++i < gui->n.clients)
 	{
 		all = 0;
 		while (all < len)
 		{
 			current = 0;
-			current = SDLNet_TCP_Recv(gui->n.client[i],
-			buff, sizeof(cl_float3) * WIN_H / 10);
-			summator(&tmp[all / sizeof(cl_float3)], buff,
-			current / sizeof(cl_float3));
+			current = SDLNet_TCP_Recv(gui->n.client[i], buff, 2000);
+			line_create(&tmp_str[all], buff, current);
 			all += current;
-			if (current % sizeof(cl_float3))
-			{
-				all++;
-				printf("+++++\n");
-			}
 		}
+		summator(tmp, (cl_float3 *)tmp_str, len);
 	}
 	game->cl_info->ret = cl_write(game->cl_info,
 	game->cl_info->progs[0].krls[0].args[2], len, tmp);
