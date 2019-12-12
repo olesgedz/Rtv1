@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 21:33:44 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 15:48:11 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/12 15:48:35 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void			serv_side(t_game *game, t_gui *gui, int len, cl_float3 *tmp)
 			current / sizeof(cl_float3));
 			all += current;
 			if (current % sizeof(cl_float3))
-			all++;
+				all++;
 		}
 	}
 	printf(">>>>%f, %f, %f \n", tmp[1000].s[0], tmp[1000].s[2], tmp[1000].s[2]);
