@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   help_fun.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 14:11:26 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 16:49:21 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/12 17:02:40 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,24 @@ t_gui *gui, t_point *p, KW_Rect *frect)
 	return (0);
 }
 
+static int		check_ed_box_focus_n(t_game *game,\
+t_gui *gui, t_point *p, KW_Rect *frect)
+{
+	if (gui->n.show)
+	{
+		KW_GetWidgetGeometry(gui->n.ed_b, frect);
+		frect->x += gui->n.frect.x;
+		frect->y += gui->n.frect.y;
+		if (p->x > frect->x && p->x < frect->x + frect->w)
+			if (p->y > frect->y && p->y < frect->y + frect->h)
+			{
+				game->keys.ed_box = 1;
+				return (1);
+			}
+	}
+	return (0);
+}
+
 void			check_ed_box_focus(t_game *game, t_gui *gui, int x, int y)
 {
 	KW_Rect	frect;
@@ -81,11 +99,13 @@ void			check_ed_box_focus(t_game *game, t_gui *gui, int x, int y)
 
 	p.x = x;
 	p.y = y;
-	if (!check_ed_box_focus_c_o(game, gui, &p, &frect))
+	if (check_ed_box_focus_c_o(game, gui, &p, &frect))
 		return ;
-	if (!check_ed_box_focus_ed_b(game, gui, &p, &frect))
+	if (check_ed_box_focus_ed_b(game, gui, &p, &frect))
 		return ;
-	if (!check_ed_box_focus_ed_w(game, gui, &p, &frect))
+	if (check_ed_box_focus_ed_w(game, gui, &p, &frect))
+		return ;
+	if (check_ed_box_focus_n(game, gui, &p, &frect))
 		return ;
 	KW_SetFocusedWidget(gui->g_b.frame);
 	game->keys.ed_box = 0;
