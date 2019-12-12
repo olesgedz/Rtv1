@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_scene.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 19:16:12 by srobert-          #+#    #+#             */
-/*   Updated: 2019/12/09 21:22:25 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/12/11 21:45:24 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void			check_scene(t_json parse, t_game *game)
 	}
 	parse.music = cJSON_GetObjectItemCaseSensitive(scene, "music");
 	if (parse.music != NULL)
-		game->music = parse.music->string;
+		game->music = ft_strdup(parse.music->valuestring);
 	parse.cameras = cJSON_GetObjectItemCaseSensitive(parse.json, "cameras");
 	parse.camera = (parse.cameras != NULL) ? (parse.cameras)->child : NULL;
 	while (parse.camera)

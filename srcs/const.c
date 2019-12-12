@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   const.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:04:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 16:16:51 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/12 16:26:52 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void		set_const(t_game *game, t_gui *gui)
 	}
 	game->gpu.samples = 0;
 	game->quit = 0;
+	game->music = 0;
 	game->gui_mod = 0;
 	game->flag = 1;
 	gui->over_gui = 0;

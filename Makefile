@@ -89,6 +89,7 @@ SRCS_LIST = main.c \
 			net/net_connect.c\
 			net/net_srv.c\
 			net/net_string.c\
+			net/net_return.c\
 			gui/gui_main.c\
 			gui/add_obj.c\
 			gui/buttons.c\
