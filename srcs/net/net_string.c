@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/09 16:22:55 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 21:11:07 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/12 21:30:29 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void		net_render(KW_Widget *widget, int b)
 		return ;
 	b = 0;
 	i = ft_atoi(KW_GetEditboxText(gui->n.ed_b));
-	gui->game->samples_to_do = i;
 	send_map(gui->game, gui, 0, i);
+	gui->game->samples_to_do = i;
 }
 
 void		client_side_free(t_gui *gui, char **buff, FILE *fp)
