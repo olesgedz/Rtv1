@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 19:08:02 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/13 19:19:54 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/13 21:22:32 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void		obj_select(t_gui *gui, t_obj *objs, int num)
 	unsigned			test;
 	KW_Widget *const	*wid_arr;
 
+	if (num < 1)
+		terminate("no objects\n\n");
 	gui->o_s.max_i = scan_mass(gui, objs, num);
 	if ((i = -1) && gui->o_s.max_i > WIN_H / 45 - 12)
 	{
