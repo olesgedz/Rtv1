@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 21:48:49 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 17:20:13 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/13 21:27:42 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ void			cam_select(t_gui *gui, t_cam *cams, int num)
 	unsigned			test;
 	KW_Widget *const	*wid_arr;
 
+	if (num < 1)
+		terminate("no cameras\n");
 	gui->c_s.max_i = scan_mass(gui, cams, num, -1);
 	if ((i = -1) && gui->c_s.max_i > WIN_H / 45 - 12)
 	{
