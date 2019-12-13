@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/13 19:46:28 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/13 22:22:56 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -506,5 +506,6 @@ void					ft_run_kernel(t_game *game, t_cl_krl *kernel);
 void					client_side_free(t_gui *gui, char **buff, FILE *fp);
 void					new_mask_push(t_gui *gui, t_cam *cam, int *i);
 void					scroll_box_free(t_gui *gui, KW_Widget *frame);
+void					set_default_triangle(t_obj *obj);
 
 #endif

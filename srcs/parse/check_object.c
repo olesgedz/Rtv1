@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 18:47:46 by srobert-          #+#    #+#             */
-/*   Updated: 2019/12/08 22:47:09 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/12/13 21:32:58 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,9 @@ void		check_object(const cJSON *object, t_game *game, \
 	obj = (t_obj*)malloc(sizeof(t_obj));
 	obj->composed_pos = get_composed_pos(parse.composed_pos);
 	obj->composed_v = get_composed_v(parse.composed_v);
-	parse.type = cJSON_GetObjectItemCaseSensitive(object, "type");
+	if (!(parse.type = cJSON_GetObjectItemCaseSensitive(object, "type")) ||\
+	parse.type->valuestring == NULL)
+		terminate("TYPE NOT DEFINED\n");
 	set_type(obj, parse.type);
 	if (ft_strcmp(parse.type->valuestring, "obj3d") == 0)
 	{
