@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   del_obj.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 21:38:25 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/01 19:13:30 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/13 19:23:31 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	del_obj(t_obj *obj, t_game *game)
 
 	i = -1;
 	game_buff.gpu.objects = 0;
-	while (++i < game->obj_quantity)
+	while (++i < (int)game->obj_quantity)
 		if ((obj && obj != &game->gpu.objects[i]) ||
 		(!obj && game->gpu.objects[i].is_visible))
 		{

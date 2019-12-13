@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 19:08:02 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 23:05:36 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/13 19:19:54 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ static int	scan_mass(t_gui *gui, t_obj *objs, int num)
 	gui->o_s.frect = (KW_Rect){WIN_W - 5 - FR_FZ, 25, FR_FZ, 80};
 	gui->o_s.buttonrect[0] = (KW_Rect){0, 0, 30, 40};
 	i = 1;
-	first_button(gui, fill_name_mass(&objs[0], 0));
+	first_button(gui, fill_name_mass(&objs[0]));
 	while (i < num && i < MAX_OBJ)
 	{
-		gui->o_s.names[i] = fill_name_mass(&objs[i], i);
+		gui->o_s.names[i] = fill_name_mass(&objs[i]);
 		gui->o_s.buttonrect[i] = gui->o_s.buttonrect[i - 1];
 		gui->o_s.buttonrect[i].y += 45;
 		if (i < WIN_H / 45 - 12)

@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 16:46:11 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 22:49:41 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/13 18:56:57 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void		cam_free(t_gui *gui)
 		KW_HideWidget(gui->c_s.frame);
 		destr(gui, gui->c_s.frame);
 	}
+	if (gui->c_s.max_i > WIN_H / 45 - 12)
+		scroll_box_free(gui, gui->c_s.frame);
 }
 
 void		cam_screen(t_gui *gui, t_game *game)
@@ -70,10 +72,14 @@ void		main_screen_free(t_gui *gui)
 		KW_HideWidget(gui->o_s.frame);
 		destr(gui, gui->o_s.frame);
 	}
+	if (gui->o_s.max_i > WIN_H / 45 - 12)
+		scroll_box_free(gui, gui->o_s.frame);
 }
 
 void		quit_kiwi_main(t_gui *gui)
 {
+	if (gui->s_s.max_i > WIN_H / 45 - 12)
+		scroll_box_free(gui, gui->s_s.frame);
 	if (gui->s_s.max_i > 0)
 	{
 		KW_RemoveWidgetGeometryChangeHandler(gui->s_s.frame, 0);

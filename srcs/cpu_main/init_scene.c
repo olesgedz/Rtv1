@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_scene.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:53:01 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/13 16:53:38 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/13 19:05:00 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void				opencl_init(t_game *game)
 {
-	int fd;
-
 	game->kernels = ft_memalloc(sizeof(t_cl_krl) * 2);
 	game->cl_info = ft_memalloc(sizeof(t_cl_info));
 	game->gpu.objects = NULL;

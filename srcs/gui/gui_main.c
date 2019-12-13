@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 15:21:19 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 22:47:00 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/13 19:14:51 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_gui		*g_gui(t_gui *gui, int flag)
 	return (storage);
 }
 
-static void	rotator(t_game *game, t_gui *gui)
+static void	rotator(t_game *game)
 {
 	static float angle = 0;
 
@@ -52,7 +52,7 @@ void		loopa(t_game *game, t_gui *gui)
 	while (!gui->quit)
 	{
 		time = SDL_GetTicks();
-		rotator(game, gui);
+		rotator(game);
 		if (SDL_PollEvent(&gui->ev))
 			if (gui->ev.type == SDL_QUIT ||
 		(gui->ev.type == SDL_KEYDOWN &&

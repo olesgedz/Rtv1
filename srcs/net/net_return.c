@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   net_return.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 21:33:44 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 18:33:09 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/13 19:14:13 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void			serv_side(t_game *game, t_gui *gui, int len, cl_float3 *tmp)
 	}
 	game->cl_info->ret = cl_write(game->cl_info,
 	game->cl_info->progs[0].krls[0].args[2], len, tmp);
-	ft_run_kernel(game, &game->cl_info->progs[0].krls[0], WIN_W, WIN_H);
+	ft_run_kernel(game, &game->cl_info->progs[0].krls[0]);
 	screen_present(game, gui);
 }
 

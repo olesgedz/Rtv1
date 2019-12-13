@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 19:10:18 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 17:22:53 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/13 19:18:19 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void		visibility(KW_Widget *widget, int b)
 	gui->flag = 1;
 }
 
-static void	click_create_r(KW_Widget *widget, int b, t_gui *gui, int num)
+static void	click_create_r(t_gui *gui, int num)
 {
 	if (num == SPHERE)
 		create_sphere(gui->game);
@@ -57,7 +57,7 @@ void		click_create(KW_Widget *widget, int b)
 		return ;
 	b = 0;
 	num = *((int *)KW_GetWidgetUserData(widget));
-	click_create_r(widget, b, gui, num);
+	click_create_r(gui, num);
 	gui->flag = 1;
 	obj_click(0, 0);
 	if (num < 7)

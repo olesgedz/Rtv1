@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   net_srv.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/13 16:34:34 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/13 19:13:00 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	client_side(t_game *game, t_gui *gui)
 	client_side_free(gui, buff, fp);
 }
 
-void		send_ping(t_game *game, t_gui *gui)
+void		send_ping(t_gui *gui)
 {
 	int	i;
 
@@ -91,7 +91,7 @@ void		net_wait(t_game *game, t_gui *gui)
 	else if (gui->game->server)
 	{
 		gui->n.client[gui->n.clients] = SDLNet_TCP_Accept(gui->n.server);
-		send_ping(game, gui);
+		send_ping(gui);
 		if (gui->n.client[gui->n.clients] && gui->n.clients < MAX_CL)
 		{
 			gui->n.clients++;

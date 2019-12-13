@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_obj.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 18:45:37 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/06 17:39:47 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/13 19:16:58 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ static char	*fill_name(int num)
 		res = ft_strdup("Paraboloid");
 	else if (num == 7)
 		res = ft_strdup("Delete invisible");
+	else
+		res = 0;
 	return (res);
 }
 
@@ -87,7 +89,7 @@ static int	scan_mass(t_gui *gui)
 	return (8);
 }
 
-void		obj_type(t_game *game, t_gui *gui)
+void		obj_type(t_gui *gui)
 {
 	int					i;
 	int					*mas;

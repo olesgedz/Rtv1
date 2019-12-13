@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/13 16:23:34 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/13 19:27:11 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,7 +333,7 @@ Uint32					samples_to_line(t_game *game, t_gui *gui, Uint32 time0);
 void					info_button(t_game *game, t_gui *gui);
 void					show_hide(t_game *game, t_gui *gui);
 void					mouse_down(t_game *game, t_gui *gui);
-void					mouse_up(t_game *game, t_gui *gui);
+void					mouse_up(t_game *game);
 void					gui_bar(t_game *game, t_gui *gui);
 void					buttons(t_game *game, t_gui *gui);
 cl_float2				parse_vec2(cJSON *vec);
@@ -348,14 +348,14 @@ int						compare_in_normal_dict(t_game *game, char *normal_name);
 void					mouse_motion(t_game *game, t_gui *gui);
 void					free_list(t_game *game);
 void					add_obj(t_game *game, t_gui *gui);
-void					obj_type(t_game *game, t_gui *gui);
+void					obj_type(t_gui *gui);
 void					change_plane(t_gui *gui, t_obj *obj);
 void					change_sphere(t_gui *gui, t_obj *obj);
 void					change_cylin(t_gui *gui, t_obj *obj);
 void					change_cone(t_gui *gui, t_obj *obj);
 void					change_trian(t_gui *gui, t_obj *obj);
 void					obj_if(t_gui *gui, t_obj *obj);
-char					*fill_name_mass(t_obj *obj, int num);
+char					*fill_name_mass(t_obj *obj);
 void					obj_same(t_gui *gui, t_obj *obj);
 void					visibility_name(KW_Widget *widget, t_obj *obj);
 KW_Widget				*f_e(t_gui *gui, double db, KW_Rect *rect);
@@ -430,7 +430,7 @@ KW_Widget				*f_c(t_gui *gui, double db, KW_Rect *rect);
 void					cam_border(t_gui *gui, t_cam *cam, int *i);
 void					cam_fov(t_gui *gui, t_cam *cam, int *i);
 void					cam_amb_blur(t_gui *gui, t_cam *cam, int *i);
-void					cam_eff(t_gui *gui, t_cam *cam, int *i);
+void					cam_eff(t_gui *gui, t_cam *cam);
 void					sep_name(KW_Widget *widget, t_cam *cam);
 void					cart_name(KW_Widget *widget, t_cam *cam);
 void					cart(KW_Widget *widget, int b);
@@ -469,7 +469,7 @@ void					dump_obj(t_game *game, FILE *fp);
 void					dump_cam(t_game *game, FILE *fp);
 void					ss_free(t_gui *gui);
 void					net_butt(t_game *game, t_gui *gui);
-void					net_list(t_game *game, t_gui *gui);
+void					net_list(t_gui *gui);
 void					network_buttons(t_gui *gui);
 void					edit_ip(t_gui *gui);
 void					server_on(KW_Widget *widget, int b);
@@ -502,8 +502,9 @@ void					scene_click(KW_Widget *widget, int b);
 void					net_render(KW_Widget *widget, int b);
 float					*create_blur_mask(float sigma, int *mask_size_pointer);
 void					net_return(t_game *game, t_gui *gui);
-void					ft_run_kernel(t_game *game,
-t_cl_krl *kernel, int w, int h);
+void					ft_run_kernel(t_game *game, t_cl_krl *kernel);
 void					client_side_free(t_gui *gui, char **buff, FILE *fp);
 void					new_mask_push(t_gui *gui, t_cam *cam, int *i);
+void					scroll_box_free(t_gui *gui, KW_Widget *frame);
+
 #endif

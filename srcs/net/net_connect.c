@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   net_connect.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 15:27:04 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/11 19:29:28 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/13 19:12:26 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static void	clicked_connect(KW_Widget *widget, int b)
 {
 	t_gui		*gui;
-	t_game		*game;
 
 	b = 0;
 	gui = g_gui(0, 0);

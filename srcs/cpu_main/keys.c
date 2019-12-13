@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:10:38 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 18:57:44 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/13 19:07:49 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void		key_check(t_game *game)
 		else if (game->ev.type == SDL_KEYUP && !game->samples_to_do)
 			key_up(game);
 		else if (game->ev.type == SDL_MOUSEBUTTONUP && !game->samples_to_do)
-			mouse_up(game, g_gui(0, 0));
+			mouse_up(game);
 		else if (game->ev.type == SDL_MOUSEBUTTONDOWN && !game->samples_to_do)
 			mouse_down(game, g_gui(0, 0));
 		else if (game->ev.type == SDL_MOUSEMOTION && !game->samples_to_do)

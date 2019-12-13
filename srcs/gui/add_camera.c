@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_camera.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 17:19:57 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/05 17:23:40 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/13 19:28:35 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void		add_cam_click(KW_Widget *widget, int b)
 	t_gui		*gui;
 
 	b = 0;
+	widget = 0;
 	gui = g_gui(0, 0);
 	if (gui->game->ev.button.button != SDL_BUTTON_LEFT)
 		return ;

@@ -6,13 +6,13 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 21:38:08 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 22:44:49 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/13 19:30:24 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static void		del_cam_h(t_cam *cam, t_game *game)
+static void		del_cam_h(void)
 {
 	cam_free(g_gui(0, 0));
 	cam_screen(g_gui(0, 0), g_gui(0, 0)->game);
@@ -44,12 +44,11 @@ void			del_cam(t_cam *cam, t_game *game)
 		game->cam_num = 0;
 		game->flag = 1;
 	}
-	del_cam_h(cam, game);
+	del_cam_h();
 }
 
 void			cart_name(KW_Widget *widget, t_cam *cam)
 {
-	char		*buff;
 	KW_Widget	*wid;
 
 	wid = KW_GetButtonLabel(widget);
@@ -61,7 +60,6 @@ void			cart_name(KW_Widget *widget, t_cam *cam)
 
 void			sep_name(KW_Widget *widget, t_cam *cam)
 {
-	char		*buff;
 	KW_Widget	*wid;
 
 	wid = KW_GetButtonLabel(widget);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dumper_parts.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 15:13:55 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/13 16:16:27 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/13 19:31:35 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void		dump_obj(t_game *game, FILE *fp)
 
 	i = -1;
 	fprintf(fp, "    \"objects\":[\n");
-	while (++i < game->obj_quantity)
+	while (++i < (int)game->obj_quantity)
 	{
 		obj = &game->gpu.objects[i];
 		fprintf(fp, "        {\n");
@@ -104,7 +104,7 @@ void		dump_obj(t_game *game, FILE *fp)
 			tex_obj_print(obj, fp, game);
 		else
 			vert_print(obj, fp);
-		if (i != game->obj_quantity - 1)
+		if (i != (int)game->obj_quantity - 1)
 			fprintf(fp, "        },\n");
 	}
 	fprintf(fp, "        }\n    ],\n\n");

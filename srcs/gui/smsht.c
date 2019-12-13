@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   smsht.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 19:27:34 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/04 21:48:50 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/13 19:22:29 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void		obj_if(t_gui *gui, t_obj *obj)
 
 void		visibility_name(KW_Widget *widget, t_obj *obj)
 {
-	char		*buff;
 	KW_Widget	*wid;
 
 	wid = KW_GetButtonLabel(widget);
@@ -52,7 +51,7 @@ KW_Widget	*f_e(t_gui *gui, double db, KW_Rect *rect)
 	return (result);
 }
 
-static void	move_eb(t_gui *gui, t_obj *obj)
+static void	move_eb(t_gui *gui)
 {
 	gui->c_o.labelrect = (KW_Rect){5, 5, 1, 30};
 	gui->c_o.editboxrect[0] = (KW_Rect){5, 5, 1, 30};
@@ -80,7 +79,7 @@ void		obj_same(t_gui *gui, t_obj *obj)
 	KW_CreateFrame(gui->gui, NULL, &gui->c_o.frect);
 	gui->c_o.labelrect = (KW_Rect){5, 5, 100, 30};
 	KW_RectHorizontallyCenterInParent(&gui->c_o.frect, &gui->c_o.labelrect);
-	buff = fill_name_mass(obj, 0);
+	buff = fill_name_mass(obj);
 	KW_CreateLabel(gui->gui, gui->c_o.frame, buff, &gui->c_o.labelrect);
 	free(buff);
 	gui->c_o.buttonrect[0] = (KW_Rect){5, gui->c_o.frect.h - 45, FR_FZ, 40};
@@ -95,5 +94,5 @@ void		obj_same(t_gui *gui, t_obj *obj)
 	gui->c_o.rects[1] = &gui->c_o.editboxrect[0];
 	gui->c_o.rects[2] = &gui->c_o.editboxrect[1];
 	gui->c_o.rects[3] = &gui->c_o.editboxrect[2];
-	move_eb(gui, obj);
+	move_eb(gui);
 }

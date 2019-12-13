@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   net_string.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/09 16:22:55 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/13 16:36:44 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/13 19:13:21 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void		net_render(KW_Widget *widget, int b)
 	if (gui->game->ev.button.button != SDL_BUTTON_LEFT)
 		return ;
 	b = 0;
+	widget = 0;
 	i = ft_atoi(KW_GetEditboxText(gui->n.ed_b));
 	send_map(gui->game, gui, 0, i);
 	gui->game->samples_to_do = i;

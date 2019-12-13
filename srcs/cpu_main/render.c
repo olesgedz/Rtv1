@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:54:28 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/13 17:12:58 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/13 19:06:28 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void			ft_run_kernel(t_game *game, t_cl_krl *kernel, int w, int h)
+void			ft_run_kernel(t_game *game, t_cl_krl *kernel)
 {
 	size_t	global[2];
 
@@ -39,7 +39,7 @@ void			ft_render(t_game *game, t_gui *gui)
 		return ;
 	game->flag = 0;
 	gui->flag = 0;
-	ft_run_kernel(game, &game->cl_info->progs[0].krls[0], WIN_W, WIN_H);
+	ft_run_kernel(game, &game->cl_info->progs[0].krls[0]);
 }
 
 void			screen_present(t_game *game, t_gui *gui)
