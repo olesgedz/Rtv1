@@ -131,9 +131,9 @@ SRCS_LIST = main.c \
 			gui/tor_hyper.c\
 			gui/basis.c\
 			gui/pars_tor_hyper.c\
-			gui/dumper_butt.c\
-			gui/dumper_parts.c\
-			gui/dumper_parts2.c\
+			dumper/dumper_butt.c\
+			dumper/dumper_parts.c\
+			dumper/dumper_parts2.c\
 			../cJSON/cJSON.c\
 			analyse_dienstprogramme.c\
 			util.c\

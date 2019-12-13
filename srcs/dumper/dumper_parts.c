@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 15:13:55 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/05 16:49:38 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/13 16:16:27 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ static void	tex_obj_print(t_obj *obj, FILE *fp, t_game *game)
 	fprintf(fp, "            \"position\": [%.3f, %.3f, %.3f],\n",
 	obj->position.s[0], obj->position.s[1], obj->position.s[2]);
 	fprintf(fp, "            \"radius\": %.3f,\n", obj->radius);
+	if (obj->type == TORUS)
+		fprintf(fp, "            \"tor radius\": %f,\n", obj->tor_radius);
 	if (obj->texture > 0)
 		fprintf(fp, "            \"texture\": \"%s\",\n",
 		game->texture_list[obj->texture - 1]);
