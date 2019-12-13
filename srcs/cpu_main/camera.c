@@ -6,13 +6,13 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:50:13 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 18:08:56 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/13 19:04:27 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static void	mouse_mov_switch(t_game *game, t_gui *gui)
+static void	mouse_mov_switch(t_game *game)
 {
 	game->cl_info->ret =
 	cl_write(game->cl_info, game->cl_info->progs[0].krls[0].args[2],
@@ -49,9 +49,7 @@ static void	mouse_mov(t_game *game, t_gui *gui)
 		}
 	}
 	else if (gui->flag)
-	{
-		mouse_mov_switch(game, gui);
-	}
+		mouse_mov_switch(game);
 	else if (game->keys.space || game->keys.r)
 		game->flag = 1;
 }

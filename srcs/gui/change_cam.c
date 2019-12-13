@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 17:24:43 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 21:53:22 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/13 19:27:17 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,5 @@ void			change_cam(t_gui *gui, t_cam *cam)
 	cam_border(gui, cam, &i);
 	cam_fov(gui, cam, &i);
 	cam_amb_blur(gui, cam, &i);
-	cam_eff(gui, cam, &i);
+	cam_eff(gui, cam);
 }

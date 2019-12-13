@@ -6,13 +6,13 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 17:25:34 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/12/12 17:44:20 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/13 19:26:23 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static void		show_gui(t_game *game, t_gui *gui)
+static void		show_gui(t_gui *gui)
 {
 	KW_ShowWidget(gui->g_b.frame);
 	gui->g_b.show = 1;
@@ -34,7 +34,7 @@ static void		show_gui(t_game *game, t_gui *gui)
 		KW_ShowWidget(gui->ed_w.frame);
 }
 
-static void		hide_gui(t_game *game, t_gui *gui)
+static void		hide_gui(t_gui *gui)
 {
 	KW_HideWidget(gui->g_b.frame);
 	gui->g_b.show = 0;
@@ -54,7 +54,7 @@ void			show_hide(t_game *game, t_gui *gui)
 {
 	game->keys.show_gui = !game->keys.show_gui;
 	if (game->keys.show_gui)
-		show_gui(game, gui);
+		show_gui(gui);
 	else
-		hide_gui(game, gui);
+		hide_gui(gui);
 }

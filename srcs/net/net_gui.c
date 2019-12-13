@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 13:50:08 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/13 16:29:31 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/13 19:47:25 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,9 @@ static void	net_name(t_gui *gui)
 	gui->n.names[2] = "Net Render";
 }
 
-void		net_list(t_game *game, t_gui *gui)
+void		net_list(t_gui *gui)
 {
 	int					i;
-	unsigned			test;
 
 	net_name(gui);
 	gui->n.rects[0] = &gui->n.buttonrect[0];
@@ -93,5 +92,6 @@ void		clicked_send(KW_Widget *widget, int b)
 	if (gui->game->ev.button.button != SDL_BUTTON_LEFT)
 		return ;
 	b = 0;
+	widget = 0;
 	send_map(gui->game, gui, 0, 0);
 }

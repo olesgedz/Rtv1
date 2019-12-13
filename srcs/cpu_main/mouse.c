@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 18:31:59 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/04 17:34:43 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/13 19:07:57 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void		mouse_motion(t_game *game, t_gui *gui)
 	game->mouse.mm = 1;
 }
 
-void		mouse_up(t_game *game, t_gui *gui)
+void		mouse_up(t_game *game)
 {
 	if (game->ev.button.button == SDL_BUTTON_RIGHT)
 	{

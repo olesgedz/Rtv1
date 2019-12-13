@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 23:05:06 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/12/12 16:51:05 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/13 19:20:56 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static char			*fill_name_mass_switch(t_obj *obj, char *number)
 {
 	char	*res;
 
+	res = 0;
 	if (obj->type == SPHERE)
 		res = ft_strjoin("Sphere ", number);
 	else if (obj->type == CONE)
@@ -33,7 +34,7 @@ static char			*fill_name_mass_switch(t_obj *obj, char *number)
 	return (res);
 }
 
-char				*fill_name_mass(t_obj *obj, int num)
+char				*fill_name_mass(t_obj *obj)
 {
 	char	*number;
 	char	*res;
@@ -67,8 +68,6 @@ void				obj_click(KW_Widget *widget, int b)
 	static t_obj		*obj;
 	static KW_Widget	*wid = 0;
 	t_gui				*gui;
-	KW_Widget			*label;
-	t_obj				*obje;
 
 	b = 0;
 	gui = g_gui(0, 0);

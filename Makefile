@@ -14,7 +14,7 @@
 
 NAME = rt
 
-FLAGS = -g #-Wall -Wextra -Werror
+FLAGS = -g -Wall -Wextra -Werror
 CC = clang
 LIBRARIES =  $(GUI_LIB) -lSDL2_image  -lSDL2_mixer  -lsdl -L$(LIBSDL_DIRECTORY)   -lcl -L$(LIBCL_DIR) -lgnl -L$(LIBGNL_DIR) -lvect -L$(LIBVECT_DIR) -lft -L$(LIBFT_DIRECTORY) -lm -lpthread -ljson -L$(cJSON_DIRECTORY)
 INCLUDES = $(GUI_INC) -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS)  -I$(SDL_HEADERS) -I$(LIBMATH_HEADERS) -I$(LIBSDL_HEADERS) -I$(LIBVECT_DIR)includes/ -Isrcs/cl_error/ -I$(LIBGNL_DIR)includes/ -I$(LIBCL_DIR)includes/ -I$(cJSON_DIRECTORY)

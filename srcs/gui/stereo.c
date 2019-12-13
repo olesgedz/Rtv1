@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 17:58:24 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 17:44:47 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/13 19:30:42 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void		ddd_name(KW_Widget *widget, t_cam *cam)
 {
-	char		*buff;
 	KW_Widget	*wid;
 
 	wid = KW_GetButtonLabel(widget);

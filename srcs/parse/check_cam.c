@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_cam.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 20:32:27 by srobert-          #+#    #+#             */
-/*   Updated: 2019/12/12 19:58:04 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/12/13 19:01:40 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void		check_cam(t_json parse, t_game *game, t_filter *filter)
 	camera->sepia = filter->sepia;
 	camera->motion_blur = filter->motion_blur;
 	camera->stereo = filter->stereo;
+	ft_memdel((void **)&game->mask);
 	game->mask = create_blur_mask(camera->motion_blur, &camera->mask_size);
 	game->mask_size = camera->mask_size;
 	reconfigure_camera(camera);

@@ -6,10 +6,12 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 16:13:54 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 21:56:29 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/13 19:00:59 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "KW_scrollbox_internal.h"
+#include "KW_widget_internal.h"
 #include "rt.h"
 
 void		basis_print(t_obj *obj, FILE *fp)
@@ -70,4 +72,25 @@ void		ss_free(t_gui *gui)
 		KW_HideWidget(gui->s_s.frame);
 		destr(gui, gui->s_s.frame);
 	}
+	if (gui->s_s.max_i > WIN_H / 45 - 12)
+		scroll_box_free(gui, gui->s_s.frame);
+}
+
+void		scroll_box_free(t_gui *gui, KW_Widget *frame)
+{
+	KW_Scrollbox			*edit;
+
+	edit = (KW_Scrollbox *)frame->privdata;
+	KW_ReleaseTexture(gui->driver, edit->framerender);
+	KW_RemoveWidgetKeyUpHandler(edit->hscroll, 0);
+	KW_RemoveWidgetGeometryChangeHandler(edit->hscroll, 0);
+	KW_RemoveWidgetTilesetChangeHandler(edit->hscroll, 0);
+	KW_RemoveWidgetDragHandler(edit->hscroll, 0);
+	KW_RemoveWidgetKeyUpHandler(edit->vscroll, 0);
+	KW_RemoveWidgetGeometryChangeHandler(edit->vscroll, 0);
+	KW_RemoveWidgetTilesetChangeHandler(edit->vscroll, 0);
+	KW_RemoveWidgetDragHandler(edit->vscroll, 0);
+	KW_RemoveWidgetChildrenChangeHandler(frame, 0);
+	KW_RemoveWidgetKeyUpHandler(edit->inner, 0);
+	KW_RemoveWidgetKeyUpHandler(edit->root, 0);
 }

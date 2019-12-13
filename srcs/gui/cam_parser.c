@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cam_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 18:49:58 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/02 17:07:10 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/13 19:27:06 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void			cam_amb_blur(t_gui *gui, t_cam *cam, int *i)
 	gui->c_c.ed_b[(*i)++] = f_c(gui, cam->motion_blur, gui->c_c.rects[3]);
 }
 
-void			cam_eff(t_gui *gui, t_cam *cam, int *i)
+void			cam_eff(t_gui *gui, t_cam *cam)
 {
 	gui->c_c.labelrect.y += 30;
 	gui->c_c.editboxrect[0].y += 30;

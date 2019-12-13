@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   help_fun.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 14:11:26 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 20:48:27 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/13 19:05:33 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,6 @@ t_gui *gui, t_point *p, KW_Rect *frect)
 void			check_ed_box_focus(t_game *game, t_gui *gui, int x, int y)
 {
 	KW_Rect	frect;
-	KW_Rect	win;
-	int		i;
 	t_point p;
 
 	p.x = x;

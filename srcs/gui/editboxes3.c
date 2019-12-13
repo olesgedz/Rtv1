@@ -6,7 +6,7 @@
 /*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 21:58:12 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/12/12 17:22:13 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/13 19:22:52 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ void			sep(KW_Widget *widget, int b)
 
 void			gui_bar(t_game *game, t_gui *gui)
 {
-	unsigned			test;
-
 	gui->g_b.label = 0;
 	gui->g_b.show = 1;
 	gui->g_b.frect = (KW_Rect){0, 0, WIN_W, 38};
@@ -79,8 +77,8 @@ void			gui_bar(t_game *game, t_gui *gui)
 	gui_mod_but(game, gui);
 	dumper_butt(game, gui);
 	net_butt(game, gui);
-	obj_type(game, gui);
+	obj_type(gui);
 	KW_HideWidget(gui->o_t.frame);
-	net_list(game, gui);
+	net_list(gui);
 	KW_HideWidget(gui->n.frame);
 }
