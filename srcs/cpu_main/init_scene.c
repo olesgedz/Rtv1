@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:53:01 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 22:56:57 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/13 16:53:38 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ static void			opencl_mem_create(t_game *game)
 
 static void			opencl_init_args(t_game *game)
 {
-	cl_krl_init_arg(&game->cl_info->progs[0].krls[0], 0,\
-	sizeof(cl_int) * WIN_H * WIN_W, game->sdl.surface->pixels);
 	cl_krl_init_arg(&game->cl_info->progs[0].krls[0], 1,\
 	sizeof(t_obj) * game->obj_quantity, game->gpu.objects);
 	cl_krl_init_arg(&game->cl_info->progs[0].krls[0], 2,\
@@ -88,7 +86,7 @@ static void			opencl_init_args(t_game *game)
 	sizeof(cl_float3) * (int)WIN_H * (int)WIN_W, game->gpu.vec_temp1);
 	cl_krl_init_arg(&game->cl_info->progs[0].krls[0], 12,\
 	sizeof(float) * (game->mask_size * 2 + 1) * (game->mask_size * 2 + 1),\
-	 game->mask);
+	game->mask);
 }
 
 void				opencl(t_game *game, char *argv)
@@ -98,6 +96,8 @@ void				opencl(t_game *game, char *argv)
 	game->obj_quantity = 0;
 	ft_memdel((void **)&game->gpu.camera);
 	read_scene(argv, game);
+	cl_krl_init_arg(&game->cl_info->progs[0].krls[0], 0,\
+	sizeof(cl_int) * WIN_H * WIN_W, game->sdl.surface->pixels);
 	opencl_init_args(game);
 	opencl_mem_create(game);
 }
