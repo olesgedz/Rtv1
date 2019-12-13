@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   norma_from_cam_select.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 18:24:37 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/12/12 18:33:08 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/13 16:24:54 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,22 @@ void		norma_from_cam_select(t_gui *gui, KW_Widget *widget, KW_Widget *wid)
 			KW_SetLabelTextColor(label, (KW_Color){0, 0, 0, 255});
 	}
 	gui->c_c.show = 0;
+}
+
+void		new_mask_push(t_gui *gui, t_cam *cam, int *i)
+{
+	cam->motion_blur = atof(KW_GetEditboxText(gui->c_c.ed_b[(*i)++]));
+	free(gui->game->mask);
+	gui->game->mask = create_blur_mask(cam->motion_blur, &cam->mask_size);
+	gui->game->mask_size = cam->mask_size;
+	clReleaseMemObject(gui->game->cl_info->progs[0].krls[0].args[12]);
+	cl_krl_init_arg(&gui->game->cl_info->progs[0].krls[0], 12,
+	sizeof(float) * (gui->game->mask_size * 2 + 1) *
+	(gui->game->mask_size * 2 + 1), gui->game->mask);
+	cl_krl_mem_create(gui->game->cl_info, &gui->game->cl_info->progs[0].krls[0],
+	12, CL_MEM_READ_WRITE);
+	cl_krl_set_arg(&gui->game->cl_info->progs[0].krls[0], 12);
+	cl_write(gui->game->cl_info, gui->game->cl_info->progs[0].krls[0].
+	args[12], sizeof(float) * (gui->game->mask_size * 2 + 1) *
+	(gui->game->mask_size * 2 + 1), gui->game->mask);
 }

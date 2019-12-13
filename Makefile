@@ -69,22 +69,25 @@ LIB_LIST =	libSDL2.a\
 
 SRCS_DIRECTORY = ./srcs/
 
-SRCS_LIST = main.c \
-			textures.c\
-			schwimmer_verwalten.c\
-			cl_float3_rotate.c\
-			keys.c\
-			camera.c\
-			const.c\
-			hilfefunktionen.c\
-			init_scene.c\
-			help_fun.c\
-			render.c\
-			mouse.c\
-			object_push.c\
-			mouse_mov.c\
-			math_cl4.c\
-			check_gui_entrance.c\
+SRCS_LIST = cpu_main/main.c \
+			cpu_main/textures.c\
+			cpu_main/schwimmer_verwalten.c\
+			cpu_main/cl_float3_rotate.c\
+			cpu_main/keys.c\
+			cpu_main/camera.c\
+			cpu_main/const.c\
+			cpu_main/hilfefunktionen.c\
+			cpu_main/init_scene.c\
+			cpu_main/help_fun.c\
+			cpu_main/render.c\
+			cpu_main/mouse.c\
+			cpu_main/object_push.c\
+			cpu_main/mouse_mov.c\
+			cpu_main/math_cl4.c\
+			cpu_main/check_gui_entrance.c\
+			cpu_main/create_blur_mask.c\
+			cpu_main/analyse_dienstprogramme.c\
+			cpu_main/util.c\
 			net/net_gui.c\
 			net/net_connect.c\
 			net/net_srv.c\
@@ -131,12 +134,9 @@ SRCS_LIST = main.c \
 			gui/tor_hyper.c\
 			gui/basis.c\
 			gui/pars_tor_hyper.c\
-			gui/dumper_butt.c\
-			gui/dumper_parts.c\
-			gui/dumper_parts2.c\
-			../cJSON/cJSON.c\
-			analyse_dienstprogramme.c\
-			util.c\
+			dumper/dumper_butt.c\
+			dumper/dumper_parts.c\
+			dumper/dumper_parts2.c\
 			parse/obj3d_parser.c\
 			parse/read_scene.c\
 			parse/check_scene.c\
@@ -147,7 +147,8 @@ SRCS_LIST = main.c \
 			parse/parse_basis.c\
 			parse/parse_facing.c\
 			parse/parse_necessary.c\
-			create_blur_mask.c
+			../cJSON/cJSON.c
+
 
 
 OBJS_DIRECTORY = objects/

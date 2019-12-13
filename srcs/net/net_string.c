@@ -6,40 +6,38 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/09 16:22:55 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 21:30:29 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/13 16:36:44 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-char	*make_string(char *name, int smpls, int fd)
+char		*make_string(char *name, int smpls, int fd)
 {
 	char	buff[FILE_SIZE];
 	int		len;
-	char	*res;
-	char	*tmp;
-	char	*str_smpl;
+	char	*res[3];
 
 	fd = open(name, O_RDONLY);
 	len = read(fd, buff, FILE_SIZE);
 	buff[len] = 0;
-	res = ft_strjoin(name, "|");
-	str_smpl = ft_itoa(smpls);
-	tmp = ft_strjoin(res, str_smpl);
-	free(res);
-	free(str_smpl);
-	res = ft_strjoin(tmp, "|");
-	free(tmp);
-	tmp = ft_strjoin(res, buff);
-	free(res);
-	res = ft_strjoin("|", tmp);
-	free(tmp);
-	str_smpl = ft_itoa(ft_strlen(res));
-	tmp = ft_strjoin(str_smpl, res);
-	free(res);
-	free(str_smpl);
+	res[0] = ft_strjoin(name, "|");
+	res[2] = ft_itoa(smpls);
+	res[1] = ft_strjoin(res[0], res[2]);
+	free(res[0]);
+	free(res[2]);
+	res[0] = ft_strjoin(res[1], "|");
+	free(res[1]);
+	res[1] = ft_strjoin(res[0], buff);
+	free(res[0]);
+	res[0] = ft_strjoin("|", res[1]);
+	free(res[1]);
+	res[2] = ft_itoa(ft_strlen(res[0]));
+	res[1] = ft_strjoin(res[2], res[0]);
+	free(res[0]);
+	free(res[2]);
 	close(fd);
-	return (tmp);
+	return (res[1]);
 }
 
 void		net_render(KW_Widget *widget, int b)
