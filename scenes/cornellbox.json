@@ -1,37 +1,79 @@
 {
     "scene":{
         "global texture":"HDRX1.jpg",
-        "ambiance": 0.5,
+        "ambiance": 0.0,
         "cartoon": 0,
-        "motion blur" : 0.0,
+        "motion blur" : 0.6,
         "sepia" : 0
     },
 
     "objects":[
         {
+            "type": "plane",
+            "position": [1.000, 0.000, 0.000],
+            "color": [0.9, 0.000, 0.0],
+            "dir": [-1, 0, 0]
+        },
+        {
+            "type": "plane",
+            "position": [-1.000, 0.000, 0.000],
+            "color": [0.0, 0.000, 0.9],
+            "dir": [1, 0, 0]
+        },
+        {
+            "type": "plane",
+            "position": [0.000, -1.000, 0.000],
+            "color": [0.8,0.8,0.8],
+            "dir": [0, 1, 0]
+        },
+        {
+            "type": "plane",
+            "position": [0.000, 1.000, 0.000],
+            "color": [0.8,0.8,0.8],
+            "dir": [0, -1, 0]
+        },
+        {
+            "type": "plane",
+            "position": [0.000, 0.000, 5.000],
+            "color": [0.8,0.8,0.8],
+            "dir": [0, 0, 1]
+        },
+        {
+            "type": "plane",
+            "position": [0.000, 0.000, -2.000],
+            "color": [0.8,0.8,0.8],
+            "dir": [0, 0, -1]
+        },
+        {
             "type": "sphere",
-            "transparency": 0.000,
-            "metalness": 0.000,
-            "refraction": 0.000,
-            "color": [0.000, 0.000, 0.000],
-            "emition": [80.000, 80.000, 80.000],
-            "position": [0.000, 0.200, 1.000],
-            "radius": 0.150,
-            "texture": "sun.jpg",
-            "prolapse": [1.000, 1.000],
-            "shift": [0.000, 0.000],
-            "x_basis": [1.000, 0.000, 0.000],
-            "y_basis": [0.000, 1.000, 0.000],
-            "z_basis": [0.000, 0.000, 1.000]
+            "position": [0,1,0],
+            "color": [1,1,1],
+            "radius" : 0.3,
+            "emition" : [80.0,80.0,80.0]
+        },
+        {
+            "type": "sphere",
+            "position": [0,-0.1,0],
+            "color": [1,1,1],
+            "radius" : 0.3,
+            "transparency": 1.0,
+            "refraction": 2.0
+        },
+        {
+            "type": "sphere",
+            "position": [0,-0.7,0],
+            "color": [1,1,1],
+            "metalness":1,
+            "radius" : 0.3
         }
     ],
 
 
     "cameras":[
         {
-            "position": [18.000, 6.000, -10.000],
-            "dir": [-0.884, -0.145, 0.444],
-            "normal": [-0.129, 0.989, 0.065],
+            "position": [0, 0, 4],
+            "dir": [0, 0, -1],
+            "normal":[0.0,1.0,0.0],
             "fov": 60.000
         },
         {
