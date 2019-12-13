@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 19:14:35 by srobert-          #+#    #+#             */
-/*   Updated: 2019/12/08 19:22:14 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/12/13 21:37:55 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	check_tex_and_norm(const cJSON *object, t_obj *obj, \
 													t_json *parse, t_game *game)
 {
 	parse->texture = cJSON_GetObjectItemCaseSensitive(object, "texture");
-	if (parse->texture != NULL)
+	if (parse->texture != NULL && parse->texture->valuestring != NULL)
 	{
 		obj->texture = compare_in_texture_dict(game, \
 												parse->texture->valuestring);
@@ -27,7 +27,7 @@ static void	check_tex_and_norm(const cJSON *object, t_obj *obj, \
 	else
 		obj->texture = 0;
 	parse->normal = cJSON_GetObjectItemCaseSensitive(object, "normal");
-	if (parse->normal != NULL)
+	if (parse->normal != NULL && parse->normal->valuestring != NULL)
 	{
 		obj->normal = compare_in_normal_dict(game, parse->normal->valuestring);
 		if (obj->normal == game->normals_num + 1)

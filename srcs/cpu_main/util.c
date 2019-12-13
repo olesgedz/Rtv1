@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 17:35:09 by srobert-          #+#    #+#             */
-/*   Updated: 2019/12/10 21:43:14 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/13 22:15:57 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,19 @@ void	feel_free(char **str)
 	while (str[++i] != NULL)
 		free(str[i]);
 	free(str);
+}
+
+void	set_default_triangle(t_obj *obj)
+{
+	obj->v = triangle_norm(obj->vertices);
+	obj->id = 100;
+	obj->color = create_cfloat3(1, 1, 1);
+	obj->metalness = 1;
+	obj->radius = 0;
+	obj->emission = create_cfloat3(0, 0, 0);
+	obj->is_visible = 1;
+	obj->transparency = 0;
+	obj->refraction = 0;
+	obj->texture = 0;
+	obj->normal = 0;
 }

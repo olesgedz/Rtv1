@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_scene.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 19:16:12 by srobert-          #+#    #+#             */
-/*   Updated: 2019/12/11 21:45:24 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/13 21:47:15 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void		check_global_tex(cJSON *scene, t_game *game)
 	cJSON *global_texture;
 
 	global_texture = cJSON_GetObjectItemCaseSensitive(scene, "global texture");
-	if (global_texture != NULL)
+	if (global_texture != NULL && global_texture->valuestring != NULL)
 	{
 		game->global_tex_id = compare_in_texture_dict(game, \
 		global_texture->valuestring);
@@ -92,7 +92,7 @@ void			check_scene(t_json parse, t_game *game)
 		filter = filter_default();
 	}
 	parse.music = cJSON_GetObjectItemCaseSensitive(scene, "music");
-	if (parse.music != NULL)
+	if (parse.music != NULL && parse.music->valuestring != NULL)
 		game->music = ft_strdup(parse.music->valuestring);
 	parse.cameras = cJSON_GetObjectItemCaseSensitive(parse.json, "cameras");
 	parse.camera = (parse.cameras != NULL) ? (parse.cameras)->child : NULL;
