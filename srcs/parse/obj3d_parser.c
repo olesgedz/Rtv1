@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:17:38 by srobert-          #+#    #+#             */
-/*   Updated: 2019/12/08 20:26:26 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/12/13 22:13:43 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static void	parse_vertice(char **data, t_game *game, t_json *parse, \
 	cl_float3 vert;
 
 	parse->size = cJSON_GetObjectItemCaseSensitive(object, "size");
+	if (data[1] == NULL || data[2] == NULL || data[3] == NULL)
+		terminate("zochem ti slomal .obj file?");
 	vert = create_cfloat3(atof(data[1]) * parse->size->valuedouble, \
 							atof(data[2]) * parse->size->valuedouble, \
 							atof(data[3]) * parse->size->valuedouble);
@@ -44,23 +46,15 @@ static void	push_facing(char **data, t_game *game, t_json *parse, \
 	parse->composed_pos = cJSON_GetObjectItemCaseSensitive(object, "position");
 	shift = parse_vec3(parse->composed_pos, 0);
 	obj->type = TRIANGLE;
+	if (data[1] == NULL || data[2] == NULL || data[3] == NULL)
+		terminate("zochem ti slomal .obj file?");
 	obj->vertices[0] = sum_cfloat3(game->vertices_list[ft_atoi(data[1]) - 1], \
 																		shift);
 	obj->vertices[1] = sum_cfloat3(game->vertices_list[ft_atoi(data[2]) - 1], \
 														shift);
 	obj->vertices[2] = sum_cfloat3(game->vertices_list[ft_atoi(data[3]) - 1], \
 																		shift);
-	obj->v = triangle_norm(obj->vertices);
-	obj->id = 100;
-	obj->color = create_cfloat3(1, 1, 1);
-	obj->metalness = 1;
-	obj->radius = 0;
-	obj->emission = create_cfloat3(0, 0, 0);
-	obj->is_visible = 1;
-	obj->transparency = 0;
-	obj->refraction = 0;
-	obj->texture = 0;
-	obj->normal = 0;
+	set_default_triangle(obj);
 	ft_object_push(game, obj);
 }
 
@@ -82,6 +76,8 @@ void		obj3d_parse(const cJSON *object, t_game *game, t_json *parse)
 	char	*m;
 
 	parse->name = cJSON_GetObjectItemCaseSensitive(object, "name");
+	if (parse->name == NULL || parse->name->valuestring == NULL)
+		terminate("name of obj3d is govno\n");
 	m = ft_strjoin("./obj3d/", parse->name->valuestring);
 	if ((fd = open(m, O_RDONLY)) <= 0)
 		terminate("No file\n");

@@ -1,6 +1,6 @@
 {
     "scene":{
-        "global texture": "sun.jpg",
+        "global texture": 434,
         "ambiance": 0.0,
         "music": "gui/res/main_menu.wav",
         "cartoon": 0,
