@@ -182,9 +182,6 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 		if (!intersect_scene(scene, intersection, &ray) || length(mask) < EPSILON)
 			return accum_color + mask * global_texture(&ray, scene);
 
-		/* Russian roulette*/
-		// if (bounces > 4 && cl_float3_max(scene->objects[intersection->object_id].color) < rng(scene->random))
-		// 	break;
 		t_obj objecthit = scene->objects[intersection->object_id];
 
 		/* compute the hitpoint using the ray equation */
