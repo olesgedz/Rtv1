@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 20:46:52 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/12/13 16:23:34 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -500,9 +500,10 @@ void					prepare_data(char ***data, char *line);
 char					*make_string(char *name, int smpls, int fd);
 void					scene_click(KW_Widget *widget, int b);
 void					net_render(KW_Widget *widget, int b);
-float					*create_blur_mask(float sigma, int * mask_size_pointer);
+float					*create_blur_mask(float sigma, int *mask_size_pointer);
 void					net_return(t_game *game, t_gui *gui);
 void					ft_run_kernel(t_game *game,
 t_cl_krl *kernel, int w, int h);
 void					client_side_free(t_gui *gui, char **buff, FILE *fp);
+void					new_mask_push(t_gui *gui, t_cam *cam, int *i);
 #endif

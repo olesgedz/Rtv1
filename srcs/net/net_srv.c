@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 21:14:07 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/12 22:16:56 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/13 16:34:34 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,16 @@ void		server_on(KW_Widget *widget, int b)
 		free(gui->n.str_ip);
 		gui->n.str_ip = 0;
 		SDLNet_TCP_Close(gui->n.tcpsock);
-		if ((SDLNet_ResolveHost(&gui->n.ip, NULL, 9999)) == -1)
+		if ((SDLNet_ResolveHost(&gui->n.ip, NULL, 9999)) == -1 ||
+		!(gui->n.server = SDLNet_TCP_Open(&gui->n.ip)))
 			exit(0);
-		if (!(gui->n.server = SDLNet_TCP_Open(&gui->n.ip)))
-			exit(0);
+		return ;
 	}
-	else
-	{
-		KW_SetLabelText(wid, "Client");
-		SDLNet_TCP_Close(gui->n.server);
-		while (gui->n.clients)
-			SDLNet_TCP_Close(gui->n.client[--gui->n.clients]);
-		KW_SetLabelText(gui->ed_w.label, "Enter host's IP");
-	}
+	KW_SetLabelText(wid, "Client");
+	SDLNet_TCP_Close(gui->n.server);
+	while (gui->n.clients)
+		SDLNet_TCP_Close(gui->n.client[--gui->n.clients]);
+	KW_SetLabelText(gui->ed_w.label, "Enter host's IP");
 }
 
 static void	client_side(t_game *game, t_gui *gui)

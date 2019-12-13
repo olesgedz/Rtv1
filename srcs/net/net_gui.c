@@ -6,7 +6,7 @@
 /*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 13:50:08 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 18:39:16 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/13 16:29:31 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void		net_butt(t_game *game, t_gui *gui)
 	KW_SetWidgetUserData(gui->g_b.buttons[7], (void *)game);
 }
 
-void	clicked_send(KW_Widget *widget, int b)
+void		clicked_send(KW_Widget *widget, int b)
 {
 	t_gui		*gui;
 
