@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   editboxes3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 21:58:12 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/12/14 14:56:38 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/12/14 16:28:24 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,13 @@ void			text_normal(t_gui *gui, t_obj *obj, int *i)
 		gui->c_o.ed_b[(*i)++] = KW_CreateEditbox(gui->gui, gui->c_o.frame,
 		"No texture", gui->c_o.rects[1]);
 	KW_CreateLabel(gui->gui, gui->c_o.frame, "Normals", gui->c_o.rects[2]);
-	if (obj->normal)
+	if (obj->normal > 0)
 		gui->c_o.ed_b[(*i)++] = KW_CreateEditbox(gui->gui, gui->c_o.frame,
 		gui->game->normal_list[obj->normal - 1], gui->c_o.rects[3]);
-	else
+	else if (obj->normal == -1)
+		gui->c_o.ed_b[(*i)++] = KW_CreateEditbox(gui->gui, gui->c_o.frame,
+		"wave", gui->c_o.rects[3]);
+	else if (obj->normal == 0)
 		gui->c_o.ed_b[(*i)++] = KW_CreateEditbox(gui->gui, gui->c_o.frame,
 		"No normal", gui->c_o.rects[3]);
 }

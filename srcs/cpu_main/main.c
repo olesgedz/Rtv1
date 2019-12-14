@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/12/13 17:46:41 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/14 16:40:00 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,18 @@ static void	set_icon(t_gui *gui, const char *filename)
 	}
 	SDL_SetWindowIcon(gui->sdl.window, surf);
 	SDL_FreeSurface(surf);
+}
+
+static void	cam_shot(char *name)
+{
+	char	*buff;
+	char	*res;
+
+	buff = ft_strjoin("./gui/ImageSnap-v0.2.5/imagesnap '", name);
+	res = ft_strjoin(buff, "'");
+	free(buff);
+	system(res);
+	free(res);
 }
 
 static void	main_loop_free(t_game *game, t_gui *gui)
@@ -70,7 +82,7 @@ int			main(int argc, char **argv)
 	t_gui	gui;
 
 	gui.game = &game;
-	system("./gui/ImageSnap-v0.2.5/imagesnap './textures/sviborg_you.jpg'");
+	cam_shot("./textures/sviborg_you.jpg");
 	gui.main_screen = 0;
 	ft_init_window(&game.sdl, WIN_W, WIN_H);
 	set_const(&game, &gui);
