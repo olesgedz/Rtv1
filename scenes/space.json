@@ -1,0 +1,99 @@
+{
+    "scene":{
+        "global texture":"milky_way.jpg",
+        "ambiance": 0.01,
+        "cartoon": 0,
+        "motion blur" : 0.6,
+        "sepia" : 0
+    },
+
+    "objects":[
+        {
+            "type": "sphere",
+            "position": [0,0,0],
+            "color": [1,1,1],
+            "radius" : 3,
+            "texture": "sun.jpg",
+            "emition" : [10.0,10.0, 10.0]
+        },
+        {
+            "type": "sphere",
+            "position": [-4, 0, 0],
+            "color": [1,1,1],
+            "radius" : 0.3,
+            "texture": "mercury.jpg"
+        },
+        {
+            "type": "sphere",
+            "position": [5, 0, 0],
+            "color": [1,1,1],
+            "radius" : 0.5,
+            "texture": "venus.jpg"
+        },
+        {
+            "type": "sphere",
+            "position": [-3, 0, 6],
+            "color": [1,1,1],
+            "radius" : 0.5,
+            "texture": "earth_texture.jpg"
+        },
+        {
+            "type": "sphere",
+            "position": [-3.9, 0, 6],
+            "color": [1,1,1],
+            "radius" : 0.15,
+            "texture": "2k_moon.jpg"
+        },
+        {
+            "type": "sphere",
+            "position": [4.5, 0, -7],
+            "color": [1,1,1],
+            "radius" : 0.4,
+            "texture": "mars.jpg"
+        },
+        {
+            "type": "sphere",
+            "position": [-5.2, 0, -8],
+            "color": [1,1,1],
+            "radius" : 0.9,
+            "texture": "jupiter.jpg"
+        },
+        {
+            "type": "sphere",
+            "position": [-7, 0, 8],
+            "color": [1,1,1],
+            "radius" : 1.5,
+            "texture": "saturn.jpg"
+        },
+        {
+            "type": "sphere",
+            "position": [1, 0, 13],
+            "color": [1,1,1],
+            "radius" : 0.85,
+            "texture": "uranus.jpg"
+        },
+        {
+            "type": "sphere",
+            "position": [13, 0, 1],
+            "color": [1,1,1],
+            "radius" : 0.75,
+            "texture": "neptune.jpg"
+        }
+    ],
+
+
+    "cameras":[
+        {
+            "position": [1.9, 35, 8],
+            "dir": [0, -1, 0],
+            "normal":[0.0,0.0,1.0],
+            "fov": 60.000
+        },
+        {
+            "position": [0.0,0.1,2.0],
+            "dir": [0.0,0.0,1.0],
+            "normal":[0.0,1.0,0.0],
+            "fov": 120
+        }
+    ]
+}
