@@ -35,8 +35,7 @@
             "position": [-3, 0, 6],
             "color": [1,1,1],
             "radius" : 0.5,
-            "texture": "earth_texture.jpg",
-            "normal": "2k_earth_normal_map.tif"
+            "texture": "earth_texture.jpg"
         },
         {
             "type": "sphere",
@@ -85,9 +84,9 @@
 
     "cameras":[
         {
-            "position": [0, 0, 5],
-            "dir": [0, 0, -1],
-            "normal":[0.0,1.0,0.0],
+            "position": [1.9, 35, 8],
+            "dir": [0, -1, 0],
+            "normal":[0.0,0.0,1.0],
             "fov": 60.000
         },
         {
