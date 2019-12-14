@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 15:34:45 by sdurgan           #+#    #+#             */
-/*   Updated: 2019/12/14 16:40:00 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/14 18:01:53 by jblack-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	cam_shot(char *name)
 	char	*res;
 
 	buff = ft_strjoin("./gui/ImageSnap-v0.2.5/imagesnap '", name);
-	res = ft_strjoin(buff, "'");
+	res = ft_strjoin(buff, "' >> /dev/null");
 	free(buff);
 	system(res);
 	free(res);
