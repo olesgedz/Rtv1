@@ -29,6 +29,36 @@ static float3			plane_normal_map(t_obj *object, t_intersection *intersection, fl
 	return (end_vector);
 }
 
+static float3			cone_normal_map(t_obj *object, t_intersection *intersection, float3 normal, float2 *coord, t_scene *scene)
+{
+	float3				inter_vector;
+	float3				end_vector;
+	float3				third_basis;
+	__global t_txture	*normal_map;
+	int					i;
+
+	normal_map = &((scene->normals)[object->normal - 1]);
+	i = normal_map->texture[((int)(coord->y * (float)(normal_map->height))) * (normal_map->width) + (int)(coord->x * (float)(normal_map->width))];
+	inter_vector = interpolate_color_as_vector(i);
+	third_basis = cross(object->v, normal);
+	end_vector = inter_vector.x * normal + third_basis * inter_vector.z + object->v * inter_vector.y;
+	return (end_vector);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 static float3			cylinder_normal_map(t_obj *object, t_intersection *intersection, float3 normal, float2 *coord, t_scene *scene)
 {
 	float3				inter_vector;
@@ -67,10 +97,8 @@ float3					normal_map(t_obj *object, t_intersection *intersection, float3 normal
 	 	normal = plane_normal_map(object, intersection, normal, coord, scene);
 	else if (object->type == CYLINDER)
 	 	normal = cylinder_normal_map(object, intersection, normal, coord, scene);
-	// else if (object->type == CONE)
-	//  	normal = get_cone_normal_map(object, intersection, normal, coord);
-	// else if (object->type == TRIANGLE)
-	// 	normal = object->v;
+	else if (object->type == CONE)
+	 	normal = cone_normal_map(object, intersection, normal, coord, scene);
 	else
 		normal = sphere_normal_map(object, intersection, normal, coord, scene);
 	return (normalize(normal));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   editboxes3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 21:58:12 by jblack-b          #+#    #+#             */
-/*   Updated: 2019/12/13 19:22:52 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/14 14:56:38 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ static void		text_normal_exists(t_gui *gui, t_obj *obj, int *i)
 	{
 		gui->c_o.ed_b[(*i)++] = KW_CreateEditbox(gui->gui, gui->c_o.frame,
 		"perlin", gui->c_o.rects[1]);
+	}
+	else if (obj->texture == -3)
+	{
+		gui->c_o.ed_b[(*i)++] = KW_CreateEditbox(gui->gui, gui->c_o.frame,
+		"wave", gui->c_o.rects[1]);
 	}
 }
 

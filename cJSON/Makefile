@@ -2,9 +2,9 @@ NAME = libjson.a
 
 FLAGS = -Wall -Wextra -Werror
 
-SRCS = *.c
+SRCS = cJSON.c
 
-OUT = *.o
+OUT = cJSON.o
 
 all: $(NAME)
 
