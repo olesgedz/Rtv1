@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_obj.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 18:45:37 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/13 19:16:58 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/14 18:46:07 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void		obj_type(t_gui *gui)
 	unsigned			test;
 	KW_Widget *const	*wid_arr;
 
-	mas = (int *)malloc(sizeof(int) * 8);
+	mas = (int *)malloc_exit(sizeof(int) * 8);
 	gui->o_t.max_i = scan_mass(gui);
 	if ((i = -1) && gui->o_t.max_i > WIN_H / 45 - 3)
 	{

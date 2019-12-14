@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_blur_mask.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 21:08:49 by srobert-          #+#    #+#             */
-/*   Updated: 2019/12/13 19:46:57 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/14 18:49:02 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ float		*create_blur_mask(float sigma, int *mask_size_pointer)
 	float	temp;
 
 	mask_size = (int)ceil(3.0f * sigma);
-	mask = (float*)malloc(sizeof(float) * (mask_size * 2 + 1) *
+	mask = (float*)malloc_exit(sizeof(float) * (mask_size * 2 + 1) *
 	(mask_size * 2 + 1));
 	sum = 0.0f;
 	cntr[0] = -mask_size - 1;
@@ -50,4 +50,13 @@ float		*create_blur_mask(float sigma, int *mask_size_pointer)
 	}
 	mask_fill(mask, mask_size_pointer, mask_size, sum);
 	return (mask);
+}
+
+void		*malloc_exit(size_t len)
+{
+	void	*res;
+
+	if (!(res = malloc(len)))
+		terminate("Malloc ne ok\n");
+	return (res);
 }

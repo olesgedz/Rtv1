@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:49:06 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/13 22:22:56 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/14 18:45:30 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -507,5 +507,6 @@ void					client_side_free(t_gui *gui, char **buff, FILE *fp);
 void					new_mask_push(t_gui *gui, t_cam *cam, int *i);
 void					scroll_box_free(t_gui *gui, KW_Widget *frame);
 void					set_default_triangle(t_obj *obj);
+void					*malloc_exit(size_t len);
 
 #endif

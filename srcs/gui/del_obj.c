@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   del_obj.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 21:38:25 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/13 19:23:31 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/14 18:46:07 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	del_obj(t_obj *obj, t_game *game)
 		if ((obj && obj != &game->gpu.objects[i]) ||
 		(!obj && game->gpu.objects[i].is_visible))
 		{
-			buff = (t_obj *)malloc(sizeof(t_obj));
+			buff = (t_obj *)malloc_exit(sizeof(t_obj));
 			*buff = game->gpu.objects[i];
 			ft_object_push(&game_buff, buff);
 		}

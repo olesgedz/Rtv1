@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj3d_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:17:38 by srobert-          #+#    #+#             */
-/*   Updated: 2019/12/13 23:02:38 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/14 18:46:07 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	push_facing(char **data, t_game *game, t_json *parse, \
 	int			num[4];
 
 	num[3] = game->vertices_num;
-	obj = (t_obj*)malloc(sizeof(t_obj));
+	obj = (t_obj*)malloc_exit(sizeof(t_obj));
 	parse->composed_pos = cJSON_GetObjectItemCaseSensitive(object, "position");
 	shift = parse_vec3(parse->composed_pos, 0);
 	obj->type = TRIANGLE;

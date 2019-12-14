@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_cam.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 20:32:27 by srobert-          #+#    #+#             */
-/*   Updated: 2019/12/13 19:01:40 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/14 18:46:07 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void		check_cam(t_json parse, t_game *game, t_filter *filter)
 {
 	t_cam *camera;
 
-	camera = (t_cam*)malloc(sizeof(t_cam));
+	camera = (t_cam*)malloc_exit(sizeof(t_cam));
 	parse.position = cJSON_GetObjectItemCaseSensitive(parse.camera, "position");
 	parse.v = cJSON_GetObjectItemCaseSensitive(parse.camera, "dir");
 	parse.normal = cJSON_GetObjectItemCaseSensitive(parse.camera, "normal");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   net_return.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 21:33:44 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/13 19:14:13 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/14 18:46:07 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static cl_float3	*fill_tmp(t_game *game, int len)
 {
 	cl_float3	*tmp;
 
-	tmp = (cl_float3 *)malloc(len);
+	tmp = (cl_float3 *)malloc_exit(len);
 	game->cl_info->ret = cl_read(game->cl_info,
 	game->cl_info->progs[0].krls[0].args[2], len, tmp);
 	return (tmp);
@@ -55,7 +55,7 @@ static void			serv_side(t_game *game, t_gui *gui, int len, cl_float3 *tmp)
 
 	i = -1;
 	game->gpu.samples *= gui->n.clients + 1;
-	tmp_str = (char *)malloc(len);
+	tmp_str = (char *)malloc_exit(len);
 	while (++i < gui->n.clients)
 	{
 		all = 0;
