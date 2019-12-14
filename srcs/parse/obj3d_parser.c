@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj3d_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:17:38 by srobert-          #+#    #+#             */
-/*   Updated: 2019/12/13 22:13:43 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/12/13 23:02:38 by lminta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,23 @@ static void	push_facing(char **data, t_game *game, t_json *parse, \
 {
 	t_obj		*obj;
 	cl_float3	shift;
+	int			num[4];
 
+	num[3] = game->vertices_num;
 	obj = (t_obj*)malloc(sizeof(t_obj));
 	parse->composed_pos = cJSON_GetObjectItemCaseSensitive(object, "position");
 	shift = parse_vec3(parse->composed_pos, 0);
 	obj->type = TRIANGLE;
 	if (data[1] == NULL || data[2] == NULL || data[3] == NULL)
 		terminate("zochem ti slomal .obj file?");
-	obj->vertices[0] = sum_cfloat3(game->vertices_list[ft_atoi(data[1]) - 1], \
-																		shift);
-	obj->vertices[1] = sum_cfloat3(game->vertices_list[ft_atoi(data[2]) - 1], \
-														shift);
-	obj->vertices[2] = sum_cfloat3(game->vertices_list[ft_atoi(data[3]) - 1], \
-																		shift);
+	num[0] = ft_atoi(data[1]) > 0 ? ft_atoi(data[1]) : -ft_atoi(data[1]);
+	num[1] = ft_atoi(data[2]) > 0 ? ft_atoi(data[2]) : -ft_atoi(data[2]);
+	num[2] = ft_atoi(data[3]) > 0 ? ft_atoi(data[3]) : -ft_atoi(data[3]);
+	if (num[0] > num[3] || num[1] > num[3] || num[2] > num[3])
+		terminate("zochem ti slomal .obj file?");
+	obj->vertices[0] = sum_cfloat3(game->vertices_list[num[0] - 1], shift);
+	obj->vertices[1] = sum_cfloat3(game->vertices_list[num[1] - 1], shift);
+	obj->vertices[2] = sum_cfloat3(game->vertices_list[num[2] - 1], shift);
 	set_default_triangle(obj);
 	ft_object_push(game, obj);
 }
