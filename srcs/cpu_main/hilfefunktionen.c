@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hilfefunktionen.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 14:51:09 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/10 21:42:49 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/14 14:56:07 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int			compare_in_texture_dict(t_game *game, char *texture_name)
 		return (-1);
 	if (ft_strcmp(texture_name, "perlin") == 0)
 		return (-2);
+	if (ft_strcmp(texture_name, "wave") == 0)
+		return (-3);
 	if (game->texture_list == NULL)
 		return (game->textures_num + 1);
 	while (i < game->textures_num)
