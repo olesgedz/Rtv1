@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dumper_parts.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 15:13:55 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/13 19:31:35 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/14 15:01:02 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ static void	tex_obj_print(t_obj *obj, FILE *fp, t_game *game)
 		fprintf(fp, "            \"texture\": \"chess\",\n");
 	else if (obj->texture == -2)
 		fprintf(fp, "            \"texture\": \"perlin\",\n");
+	else if (obj->texture == -3)
+		fprintf(fp, "            \"texture\": \"wave\",\n");
 	fprintf(fp, "            \"prolapse\": [%.3f, %.3f],\n",
 	obj->prolapse.s[0], obj->prolapse.s[1]);
 	fprintf(fp, "            \"shift\": [%.3f, %.3f],\n",
