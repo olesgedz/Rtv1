@@ -85,7 +85,7 @@ float3					get_color(t_obj *object, float3 hitpoint, t_scene *scene, float2 *coo
 	{
 		texture = &((scene->textures)[object->texture - 1]);
 		i = ((int)(coord->y * (float)(texture->height))) * (texture->width) + (int)(coord->x * (float)(texture->width));
-	//	if (((texture->texture[i] >> 24) & 0xFF) != 255)
+	if (object->transparency == 0)
 		{
 			object->transparency = 1.f - (float)(texture->texture[i] >> 24 & 0xFF) / 255.f;
 			if (object->transparency > 0.99)
