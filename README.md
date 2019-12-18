@@ -18,7 +18,6 @@ The final project of the graphic branch of ["School 21"](https://21-school.ru/) 
 
 ## Screenshots
 <img src = https://github.com/Aldarius/RT/blob/master/screens/screen_1.png>
-<img src = https://github.com/Aldarius/RT/blob/master/screens/screen_0.png>
 <img src = https://github.com/Aldarius/RT/blob/master/screens/screen_2.png>
 <img src = https://github.com/Aldarius/RT/blob/master/screens/screen_3.png>
 <img src = https://github.com/Aldarius/RT/blob/master/screens/screen_4.png>
