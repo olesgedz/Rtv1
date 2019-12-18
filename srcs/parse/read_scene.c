@@ -6,7 +6,7 @@
 /*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 18:07:07 by srobert-          #+#    #+#             */
-/*   Updated: 2019/12/09 18:35:49 by srobert-         ###   ########.fr       */
+/*   Updated: 2019/12/14 18:50:44 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,17 @@ void			read_scene(char *argv, t_game *game)
 	json.object = (json.objects != NULL) ? (json.objects)->child : NULL;
 	while (json.object)
 	{
-		check_object(json.object, game, json, id);
-		id++;
+		check_object(json.object, game, json, id++);
 		json.object = json.object->next;
 	}
 	id = -1;
-	game->textures = (t_txture*)malloc(sizeof(t_txture) * game->textures_num);
+	game->textures = (t_txture*)malloc_exit(sizeof(t_txture) *
+	game->textures_num);
 	while (++id < game->textures_num)
 		get_texture(game->texture_list[id], &(game->textures[id]), \
 		"./textures/");
-	game->normals = (t_txture*)malloc(sizeof(t_txture) * game->normals_num);
+	game->normals = (t_txture*)malloc_exit(sizeof(t_txture) *
+	game->normals_num);
 	id = -1;
 	while (++id < game->normals_num)
 		get_texture(game->normal_list[id], &(game->normals[id]), "./normals/");

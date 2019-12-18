@@ -75,6 +75,11 @@ float	perlin_noise(float2 coord)
 	return (fin / div);
 }
 
+float3					wave(float2 *coord, t_obj *object)
+{
+		float len = length((*coord - (float2)(0.5f)) * 2 * PI * 10);
+		return (object->color * (sin(len) * 0.5f + 0.5f));
+}
 
 float3					get_color(t_obj *object, float3 hitpoint, t_scene *scene, float2 *coord)
 {
@@ -102,11 +107,7 @@ float3					get_color(t_obj *object, float3 hitpoint, t_scene *scene, float2 *coo
 	}
 	else if (object->texture == -3)
 	{
-		float cos1 = cos(coord->y * PI);
-		cos1 = cos1 < 0 ? -cos1 : cos1;
-		float cos2 = cos(coord->x * PI);
-		cos2 = cos2 < 0 ? -cos2 : cos2;
-		return object->color * cos1 * cos2;
+		return(wave(coord, object));
 		//return (object->color * clamp(fabs(sin((coord->x + coord->y) * object->prolapse.x * object->prolapse.y)), 0.5f, 1.0f));
 	}
 	else

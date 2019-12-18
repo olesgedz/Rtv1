@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   eff.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 21:38:08 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/13 19:30:24 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/14 18:46:07 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void			del_cam(t_cam *cam, t_game *game)
 	while (++i < game->cam_quantity)
 		if (cam && cam != &game->gpu.camera[i])
 		{
-			buff = (t_cam *)malloc(sizeof(t_cam));
+			buff = (t_cam *)malloc_exit(sizeof(t_cam));
 			*buff = game->gpu.camera[i];
 			ft_cam_push(&game_buff, buff);
 		}

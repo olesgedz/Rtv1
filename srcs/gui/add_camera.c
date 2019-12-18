@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_camera.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jblack-b <jblack-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 17:19:57 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/13 19:28:35 by jblack-b         ###   ########.fr       */
+/*   Updated: 2019/12/14 18:46:07 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static t_cam	*new_cam(void)
 {
 	t_cam		*cam;
 
-	cam = (t_cam *)malloc(sizeof(t_cam));
+	cam = (t_cam *)malloc_exit(sizeof(t_cam));
 	cam->position = create_cfloat3(0, 0, 0);
 	cam->direction = create_cfloat3(0, 0, 1);
 	cam->normal = create_cfloat3(0, 1, 0);

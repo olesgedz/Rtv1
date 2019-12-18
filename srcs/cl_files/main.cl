@@ -187,7 +187,7 @@ static float3 trace(t_scene * scene, t_intersection * intersection)
 		/* compute the hitpoint using the ray equation */
 		intersection->hitpoint =  ray.origin + ray.dir * ray.t;
 
-		if (objecthit.normal || objecthit.texture)
+		if (objecthit.normal != 0 || objecthit.texture != 0)
 			interpolate_uv(&objecthit, intersection->hitpoint, scene, &img_coord);
 		objecthit.color = get_color(&objecthit, intersection->hitpoint, scene, &img_coord);
 		if (length(objecthit.emission) != 0.0f && bounces == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tor_hyper.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lminta <lminta@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: srobert- <srobert-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 19:43:23 by lminta            #+#    #+#             */
-/*   Updated: 2019/12/09 19:59:06 by lminta           ###   ########.fr       */
+/*   Updated: 2019/12/14 18:46:07 by srobert-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	create_hyper(t_game *game)
 {
 	t_obj *obj;
 
-	obj = (t_obj*)malloc(sizeof(t_obj));
+	obj = (t_obj*)malloc_exit(sizeof(t_obj));
 	obj->v = create_cfloat3(0, 1, 0);
 	obj->radius = 0.1;
 	same_new(game, obj, PARABOLOID);
@@ -26,7 +26,7 @@ void	create_tor(t_game *game)
 {
 	t_obj *obj;
 
-	obj = (t_obj*)malloc(sizeof(t_obj));
+	obj = (t_obj*)malloc_exit(sizeof(t_obj));
 	obj->radius = 0.1;
 	obj->tor_radius = 0.05;
 	same_new(game, obj, TORUS);
